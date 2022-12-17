@@ -1,10 +1,9 @@
 import type {Attributes} from './Attributes';
 import type {Race} from './Race';
-import {RaceFactory} from './RaceFactory';
 
 type CharacterParams = {
 	initialAttributes: Attributes;
-	race: string;
+	race: Race;
 };
 
 export class Character {
@@ -18,7 +17,7 @@ export class Character {
 		this.attributes = params.initialAttributes;
 
 		// Step 2
-		this.race = RaceFactory.create(params.race);
+		this.race = params.race;
 		this.attributes = this.race.applyAttributesModifiers(this.attributes);
 	}
 }
