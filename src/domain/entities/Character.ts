@@ -1,4 +1,5 @@
 import type {Attributes} from './Attributes';
+import {CharacterSnapshot} from './CharacterSnapshot';
 import type {Race} from './Race';
 
 type CharacterParams = {
@@ -9,15 +10,16 @@ type CharacterParams = {
 export class Character {
 	readonly attributes: Attributes;
 	readonly race: Race;
+	readonly snapshots: CharacterSnapshot[] = [];
 
 	constructor(
 		params: CharacterParams,
 	) {
-		// Step 1
 		this.attributes = params.initialAttributes;
+		this.snapshots.push(new CharacterSnapshot('Definição inicial de atributos', this.attributes));
 
-		// Step 2
 		this.race = params.race;
 		this.attributes = this.race.applyAttributesModifiers(this.attributes);
+		this.snapshots.push(new CharacterSnapshot('Aplicação de modificadores de atributo da raça', this.attributes));
 	}
 }
