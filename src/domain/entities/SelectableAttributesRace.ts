@@ -1,41 +1,39 @@
-import type {Attribute, Attributes} from './Attributes';
+import type {Attribute} from './Attributes';
+import type {AttributeModifier} from './Race';
 import {Race} from './Race';
 
 export abstract class SelectableAttributesRace extends Race {
-	constructor(protected readonly selectedAttributes: Attribute[]) {
+	readonly attributeModifiers: AttributeModifier[];
+
+	constructor(attributes: Attribute[]) {
 		super();
+
+		this.attributeModifiers = attributes.map<AttributeModifier>(attribute => ({
+			attribute,
+			modifier: this.fixedModifier,
+		}));
 
 		this.validateSelectedAttributes();
 	}
 
-	applyAttributesModifiers(attributes: Attributes): Attributes {
-		const modifiedAttributes: Partial<Attributes> = {};
-
-		this.selectedAttributes.forEach(selectedAttribute => {
-			modifiedAttributes[selectedAttribute] = attributes[selectedAttribute] + this.attributesModifier;
-		});
-
-		return {
-			...attributes,
-			...modifiedAttributes,
-		};
-	}
-
 	private validateSelectedAttributes() {
-		if (this.selectedAttributes.length !== this.selectableQuantity) {
+		if (this.attributeModifiers.length !== this.selectableQuantity) {
 			throw new Error('INVALID_ATTRIBUTES_SELECTION');
 		}
 
-		const isSomeAttributeRepeated = this.selectedAttributes
-			.some((selectedAttribute, index) => this.selectedAttributes
-				.find((nestedSelectedAttribute, nestedIndex) => nestedSelectedAttribute === selectedAttribute && nestedIndex !== index));
+		const isSomeAttributeRepeated = this.attributeModifiers
+			.some((selectedAttribute, index) => this.attributeModifiers
+				.find((nestedSelectedAttribute, nestedIndex) =>
+					nestedSelectedAttribute.attribute === selectedAttribute.attribute
+					&& nestedIndex !== index,
+				));
 
 		if (isSomeAttributeRepeated) {
 			throw new Error('INVALID_ATTRIBUTES_SELECTION');
 		}
 
-		const isSomeSelectedAttributeRestricted = this.selectedAttributes
-			.some(selectedAttribute => this.restrictedAttributes.includes(selectedAttribute));
+		const isSomeSelectedAttributeRestricted = this.attributeModifiers
+			.some(selectedAttribute => this.restrictedAttributes.includes(selectedAttribute.attribute));
 
 		if (isSomeSelectedAttributeRestricted) {
 			throw new Error('RESTRICTED_ATTRIBUTE');
@@ -44,6 +42,6 @@ export abstract class SelectableAttributesRace extends Race {
 
 	protected abstract get restrictedAttributes(): string[];
 	protected abstract get selectableQuantity(): number;
-	protected abstract get attributesModifier(): number;
+	protected abstract get fixedModifier(): number;
 }
 

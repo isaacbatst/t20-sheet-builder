@@ -1,17 +1,10 @@
-import type {Attributes} from '../Attributes';
+import type {AttributeModifier} from '../Race';
 import {Race} from '../Race';
 
 export class Dwarf extends Race {
-	applyAttributesModifiers(attributes: Attributes): Attributes {
-		return {
-			...attributes,
-			constitution: attributes.constitution + 2,
-			wisdom: attributes.wisdom + 1,
-			dexterity: attributes.dexterity - 1,
-		};
-	}
-
-	get attributeModifiersText(): string {
-		return 'Destreza -1, Constituição +2 e Sabedoria +1';
-	}
+	readonly attributeModifiers: AttributeModifier[] = [
+		{attribute: 'dexterity', modifier: -1},
+		{attribute: 'constitution', modifier: 2},
+		{attribute: 'wisdom', modifier: 1},
+	];
 }

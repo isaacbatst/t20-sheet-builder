@@ -1,12 +1,14 @@
-import type {Character} from './Character';
+import type {Character} from '../Character';
+import {InitialAttributesDefinition} from './InitialAttributesDefinition';
+import {RaceAttributeModifiersAppliance} from './RaceAttributeModifiersAppliance';
 
 export enum StepType {
 	initialAttributesDefinition = 'initialAttributesDefinition',
 	raceAttributesModifiersAppliance = 'raceAttributesModifiersAppliance',
 }
 
-export class StepDescriptionGenerator {
-	static generateDescription(
+export abstract class StepDescriptionGenerator {
+	static generate(
 		stepType: string,
 		character: Character,
 	): string {
@@ -20,15 +22,12 @@ export class StepDescriptionGenerator {
 	}
 
 	private static readonly stepTypeToDescription: Record<StepType, (character: Character) => string> = {
-		initialAttributesDefinition(character: Character) {
-			return `Definição inicial de atributos: Força ${character.attributes.strength}, Destreza ${character.attributes.dexterity}, Constituição ${character.attributes.constitution}, Inteligência ${character.attributes.intelligence}, Sabedoria ${character.attributes.wisdom} e Carisma ${character.attributes.charisma}`;
-		},
-		raceAttributesModifiersAppliance(character: Character) {
-			return `Aplicação dos modificadores de atributo da raça: ${character.race.attributeModifiersText}`;
-		},
+		initialAttributesDefinition: InitialAttributesDefinition.generate,
+		raceAttributesModifiersAppliance: RaceAttributeModifiersAppliance.generate,
 	};
 
 	private static validateStepType(stepType: string): stepType is StepType {
 		return stepType in StepType;
 	}
 }
+

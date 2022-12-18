@@ -1,7 +1,7 @@
 import type {Attributes} from './Attributes';
 import {ProgressionStep} from './ProgressionStep';
 import type {Race} from './Race';
-import {StepType} from './StepDescriptionGenerator';
+import {StepType} from './StepDescriptionGenerator/StepDescriptionGenerator';
 
 type CharacterParams = {
 	initialAttributes: Attributes;

@@ -39,7 +39,7 @@ describe('Character', () => {
 			race: new Dwarf(),
 		});
 
-		expect(character.progressionSteps[0].description).toBe('Definição inicial de atributos: Força 0, Destreza 0, Constituição 0, Inteligência 0, Sabedoria 0 e Carisma 0');
+		expect(character.progressionSteps[0].description).toBe('Definição inicial de atributos: Força 0, Destreza 0, Constituição 0, Inteligência 0, Sabedoria 0 e Carisma 0.');
 	});
 
 	it('should save race modifiers appliance step', () => {
@@ -55,6 +55,6 @@ describe('Character', () => {
 			race: new Dwarf(),
 		});
 
-		expect(character.progressionSteps[1].description).toBe('Aplicação dos modificadores de atributo da raça: Destreza -1, Constituição +2 e Sabedoria +1');
+		expect(character.progressionSteps[1].description).toBe('Aplicação dos modificadores de atributo da raça: -1 Destreza, +2 Constituição e +1 Sabedoria.');
 	});
 });

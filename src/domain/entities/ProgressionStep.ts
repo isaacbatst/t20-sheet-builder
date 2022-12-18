@@ -1,5 +1,5 @@
 import type {Character} from './Character';
-import {StepDescriptionGenerator} from './StepDescriptionGenerator';
+import {StepDescriptionGenerator} from './StepDescriptionGenerator/StepDescriptionGenerator';
 
 export class ProgressionStep {
 	readonly description: string;
@@ -8,6 +8,6 @@ export class ProgressionStep {
 		readonly stepType: string,
 		character: Character,
 	) {
-		this.description = StepDescriptionGenerator.generateDescription(stepType, character);
+		this.description = StepDescriptionGenerator.generate(stepType, character);
 	}
 }
