@@ -23,6 +23,6 @@ export class Human extends SelectableAttributesRace {
 			return acc + `${modifier} ${translatedAttribute}${separator}`;
 		}, '');
 
-		return `Aplicação dos modificadores de atributo da raça: +1 ${modifiers}`;
+		return `Aplicação dos modificadores de atributo da raça: ${modifiers}`;
 	}
 }
