@@ -1,11 +1,10 @@
 import {AttributeTranslator} from '../AttributeTranslator';
-import type {Character} from '../Character';
 import type {AttributeModifier} from '../Race';
 import {TextSeparatorGenerator} from '../TextSeparatorGenerator';
 
 export class RaceAttributeModifiersAppliance {
 	static generate(
-		character: Character,
+		character: {race: {attributeModifiers: AttributeModifier[]}},
 	): string {
 		return `Aplicação dos modificadores de atributo da raça: ${RaceAttributeModifiersAppliance.generateAttributeModifiersText(character.race.attributeModifiers)}.`;
 	}
