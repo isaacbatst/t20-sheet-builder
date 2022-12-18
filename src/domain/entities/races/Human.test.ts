@@ -28,6 +28,16 @@ describe('Human', () => {
 		});
 	});
 
+	it('should return attributes modifiers text', () => {
+		const human = new Human([
+			'charisma',
+			'constitution',
+			'dexterity',
+		]);
+
+		expect(human.attributeModifiersText).toBe('Aplicação dos modificadores de atributo da raça: +1 Carisma, +1 Constituição e +1 Destreza.');
+	});
+
 	it('should throw error with more than 3 selections', () => {
 		expect(() => {
 			const human = new Human([
