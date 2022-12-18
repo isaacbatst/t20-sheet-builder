@@ -1,6 +1,7 @@
 import type {Attributes} from './Attributes';
-import {CharacterSnapshot} from './CharacterSnapshot';
+import {ProgressionStep} from './ProgressionStep';
 import type {Race} from './Race';
+import {StepType} from './StepDescriptionGenerator';
 
 type CharacterParams = {
 	initialAttributes: Attributes;
@@ -10,16 +11,16 @@ type CharacterParams = {
 export class Character {
 	readonly attributes: Attributes;
 	readonly race: Race;
-	readonly snapshots: CharacterSnapshot[] = [];
+	readonly progressionSteps: ProgressionStep[] = [];
 
 	constructor(
 		params: CharacterParams,
 	) {
 		this.attributes = params.initialAttributes;
-		this.snapshots.push(new CharacterSnapshot('Definição inicial de atributos', this.attributes));
+		this.progressionSteps.push(new ProgressionStep(StepType.initialAttributesDefinition, this));
 
 		this.race = params.race;
 		this.attributes = this.race.applyAttributesModifiers(this.attributes);
-		this.snapshots.push(new CharacterSnapshot('Aplicação de modificadores de atributo da raça', this.attributes));
+		this.progressionSteps.push(new ProgressionStep(StepType.raceAttributesModifiersAppliance, this));
 	}
 }

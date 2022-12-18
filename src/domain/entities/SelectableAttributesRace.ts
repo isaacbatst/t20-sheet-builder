@@ -2,7 +2,7 @@ import type {Attribute, Attributes} from './Attributes';
 import {Race} from './Race';
 
 export abstract class SelectableAttributesRace extends Race {
-	constructor(private readonly selectedAttributes: Attribute[]) {
+	constructor(protected readonly selectedAttributes: Attribute[]) {
 		super();
 
 		this.validateSelectedAttributes();

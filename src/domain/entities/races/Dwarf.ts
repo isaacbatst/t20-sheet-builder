@@ -10,4 +10,8 @@ export class Dwarf extends Race {
 			dexterity: attributes.dexterity - 1,
 		};
 	}
+
+	get attributeModifiersText(): string {
+		return 'Destreza -1, Constituição +2 e Sabedoria +1';
+	}
 }
