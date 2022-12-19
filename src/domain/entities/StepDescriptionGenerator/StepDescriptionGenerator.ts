@@ -16,12 +16,12 @@ export abstract class StepDescriptionGenerator {
 			throw new Error('INVALID_STEP_TYPE');
 		}
 
-		const generateThisDescription = StepDescriptionGenerator.stepTypeToDescription[stepType];
+		const generateDescription = StepDescriptionGenerator.stepTypeToGenerateFunction[stepType];
 
-		return generateThisDescription(character);
+		return generateDescription(character);
 	}
 
-	private static readonly stepTypeToDescription: Record<StepType, (character: Character) => string> = {
+	private static readonly stepTypeToGenerateFunction: Record<StepType, (character: Character) => string> = {
 		initialAttributesDefinition: InitialAttributesDefinition.generate,
 		raceAttributesModifiersAppliance: RaceAttributeModifiersAppliance.generate,
 	};
