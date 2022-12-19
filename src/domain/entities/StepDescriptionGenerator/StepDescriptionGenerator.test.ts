@@ -1,10 +1,10 @@
 import {Character} from '../Character';
-import {StepDescriptionGenerator, StepType} from './StepDescriptionGenerator';
+import {StepDescriptionGenerator, Step} from './StepDescriptionGenerator';
 
 describe('StepDescriptionGenerator', () => {
 	it('should generate initialAttributesDefinition description', () => {
 		const description = StepDescriptionGenerator.generate(
-			StepType.initialAttributesDefinition,
+			Step.initialAttributesDefinition,
 			new Character({
 				initialAttributes: {
 					charisma: 1,

@@ -1,13 +1,14 @@
 import type {Ability} from './Ability';
 import type {Attribute, Attributes} from './Attributes';
 import type {CharacterInterface} from './Character';
+import type {RaceInterface} from './RaceInterface';
 
 export type AttributeModifier = {
 	attribute: Attribute;
 	modifier: number;
 };
 
-export abstract class Race {
+export abstract class Race implements RaceInterface {
 	abstract readonly attributeModifiers: AttributeModifier[];
 	abstract readonly abilities: Record<string, Ability>;
 

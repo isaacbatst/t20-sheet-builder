@@ -1,4 +1,4 @@
-import type {Character} from './Character';
+import type {CharacterInterface} from './Character';
 import {StepDescriptionGenerator} from './StepDescriptionGenerator/StepDescriptionGenerator';
 
 export class ProgressionStep {
@@ -6,7 +6,7 @@ export class ProgressionStep {
 
 	constructor(
 		readonly stepType: string,
-		character: Character,
+		character: CharacterInterface,
 	) {
 		this.description = StepDescriptionGenerator.generate(stepType, character);
 	}

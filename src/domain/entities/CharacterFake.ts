@@ -1,10 +1,14 @@
 import type {Attributes} from './Attributes';
-import type {AttributesCharacter, LeveledCharacter, OtherModifierAdderCharacter, SkilledCharacter} from './Character';
+import type {CharacterInterface} from './Character';
+import {ProgressionStep} from './ProgressionStep';
+import {RaceFake} from './RaceFake';
+import type {RaceInterface} from './RaceInterface';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
 import type {Skill} from './Skill/Skill';
 import type {SkillNameEnum} from './Skill/SkillName';
+import type {Step} from './StepDescriptionGenerator/StepDescriptionGenerator';
 
-export class CharacterFake implements SkilledCharacter, LeveledCharacter, AttributesCharacter, OtherModifierAdderCharacter {
+export class CharacterFake implements CharacterInterface {
 	public level = 1;
 	public attributes: Attributes = {
 		charisma: 0,
@@ -15,10 +19,21 @@ export class CharacterFake implements SkilledCharacter, LeveledCharacter, Attrib
 		wisdom: 0,
 	};
 
+	readonly progressionSteps: ProgressionStep[] = [];
+
+	public race = new RaceFake();
 	public skills: Record<SkillNameEnum, Skill> = InitialSkillsGenerator.generate(this);
 
 	private readonly trainedSkills: SkillNameEnum[] = [];
 	private readonly defenseOtherModifiers: Array<{sourceName: string; value: number}> = [];
+
+	saveStep(step: Step) {
+		this.progressionSteps.push(new ProgressionStep(step, this));
+	}
+
+	getRace(): RaceInterface | undefined {
+		return this.race;
+	}
 
 	getTrainedSkills() {
 		return this.trainedSkills;

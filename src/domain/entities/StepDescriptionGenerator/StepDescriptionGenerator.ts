@@ -1,8 +1,8 @@
-import type {Character} from '../Character';
+import type {CharacterInterface} from '../Character';
 import {InitialAttributesDefinition} from './InitialAttributesDefinition';
 import {RaceAttributeModifiersAppliance} from './RaceAttributeModifiersAppliance';
 
-export enum StepType {
+export enum Step {
 	initialAttributesDefinition = 'initialAttributesDefinition',
 	raceAttributesModifiersAppliance = 'raceAttributesModifiersAppliance',
 }
@@ -10,7 +10,7 @@ export enum StepType {
 export abstract class StepDescriptionGenerator {
 	static generate(
 		stepType: string,
-		character: Character,
+		character: CharacterInterface,
 	): string {
 		if (!this.validateStepType(stepType)) {
 			throw new Error('INVALID_STEP_TYPE');
@@ -21,13 +21,13 @@ export abstract class StepDescriptionGenerator {
 		return generateDescription(character);
 	}
 
-	private static readonly stepTypeToGenerateFunction: Record<StepType, (character: Character) => string> = {
+	private static readonly stepTypeToGenerateFunction: Record<Step, (character: CharacterInterface) => string> = {
 		initialAttributesDefinition: InitialAttributesDefinition.generate,
 		raceAttributesModifiersAppliance: RaceAttributeModifiersAppliance.generate,
 	};
 
-	private static validateStepType(stepType: string): stepType is StepType {
-		return stepType in StepType;
+	private static validateStepType(stepType: string): stepType is Step {
+		return stepType in Step;
 	}
 }
 

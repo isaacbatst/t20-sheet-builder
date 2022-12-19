@@ -1,12 +1,12 @@
 import type {Attributes} from './Attributes';
 import {Defense} from './Defense';
 import {ProgressionStep} from './ProgressionStep';
-import type {Race} from './Race';
+import type {RaceInterface} from './RaceInterface';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
 import type {Skill} from './Skill/Skill';
 import type {SkillNameEnum} from './Skill/SkillName';
 import {SkillName} from './Skill/SkillName';
-import {StepType} from './StepDescriptionGenerator/StepDescriptionGenerator';
+import {Step} from './StepDescriptionGenerator/StepDescriptionGenerator';
 
 type CharacterParams = {
 	initialAttributes: Attributes;
@@ -31,15 +31,26 @@ export type OtherModifierAdderCharacter = {
 	addOtherModifierToSkill(sourceName: string, modifier: number, skill: SkillNameEnum): void;
 };
 
+export type ProgressingCharacter = {
+	progressionSteps: ProgressionStep[];
+	saveStep(step: Step): void;
+};
+
+export type RaceCharacter = {
+	getRace(): RaceInterface | undefined;
+};
+
 export type CharacterInterface = SkilledCharacter
 & LeveledCharacter
 & AttributesCharacter
-& OtherModifierAdderCharacter;
+& OtherModifierAdderCharacter
+& ProgressingCharacter
+& RaceCharacter;
 
 export class Character implements CharacterInterface {
 	readonly progressionSteps: ProgressionStep[] = [];
 	private attributes: Attributes;
-	private race?: Race;
+	private race?: RaceInterface;
 	// eslint-disable-next-line @typescript-eslint/prefer-readonly
 	private level = 1;
 	private readonly skills: Record<SkillNameEnum, Skill>;
@@ -49,15 +60,15 @@ export class Character implements CharacterInterface {
 		params: CharacterParams,
 	) {
 		this.attributes = params.initialAttributes;
-		this.progressionSteps.push(new ProgressionStep(StepType.initialAttributesDefinition, this));
+		this.progressionSteps.push(new ProgressionStep(Step.initialAttributesDefinition, this));
 
 		this.skills = InitialSkillsGenerator.generate(this);
 	}
 
-	chooseRace(race: Race) {
+	chooseRace(race: RaceInterface) {
 		this.race = race;
 		this.attributes = this.race.applyAttributesModifiers(this.attributes);
-		this.progressionSteps.push(new ProgressionStep(StepType.raceAttributesModifiersAppliance, this));
+		this.progressionSteps.push(new ProgressionStep(Step.raceAttributesModifiersAppliance, this));
 
 		this.race.applyAbilities(this);
 	}
@@ -76,11 +87,15 @@ export class Character implements CharacterInterface {
 		this.skills[skill].modifierOthers.addOtherModifier({sourceName, value});
 	}
 
+	saveStep(step: Step): void {
+		this.progressionSteps.push(new ProgressionStep(step, this));
+	}
+
 	getAttributes(): Attributes {
 		return this.attributes;
 	}
 
-	getRace(): Race | undefined {
+	getRace(): RaceInterface | undefined {
 		return this.race;
 	}
 
