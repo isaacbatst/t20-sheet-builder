@@ -1,6 +1,7 @@
 import type {Attributes} from './Attributes';
 import {Character} from './Character';
 import {Dwarf} from './Race/Dwarf';
+import {Skill} from './Skill/Skill';
 
 describe('Character', () => {
 	it('should save initial attributes definition step', () => {
@@ -16,6 +17,26 @@ describe('Character', () => {
 		});
 
 		expect(character.progressionSteps[0].description).toBe('Definição inicial de atributos: Força 0, Destreza 0, Constituição 0, Inteligência 0, Sabedoria 0 e Carisma 0.');
+	});
+
+	it('should set initial skills', () => {
+		const character = new Character({
+			initialAttributes: {
+				strength: 0,
+				dexterity: 2,
+				constitution: 0,
+				intelligence: 0,
+				wisdom: 0,
+				charisma: 0,
+			},
+		});
+
+		const skills = character.getSkills();
+
+		expect(skills.acrobacia).toEqual(new Skill({
+			attribute: 'dexterity',
+			character,
+		}));
 	});
 
 	it('should apply Dwarf attributes modifiers', () => {
