@@ -1,6 +1,6 @@
 import type {Ability} from '../Ability';
 import type {Attribute, Attributes} from '../Attributes';
-import type {CharacterInterface} from '../Character';
+import type {CharacterInterface} from '../CharacterInterface';
 import {RaceName} from './RaceName';
 import type {RaceInterface} from '../RaceInterface';
 

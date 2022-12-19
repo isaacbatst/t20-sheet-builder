@@ -1,4 +1,4 @@
-import type {Character, CharacterInterface, SkilledCharacter} from '../Character';
+import type {CharacterInterface} from '../CharacterInterface';
 import {GeneralPowerFactory} from '../Power/PowerFactory';
 import type {PowerNameEnum} from '../Power/PowerName';
 import type {SkillNameEnum} from '../Skill/SkillName';

@@ -1,5 +1,5 @@
 import type {Attributes} from './Attributes';
-import type {CharacterInterface} from './Character';
+import type {CharacterInterface} from './CharacterInterface';
 import {ProgressionStep} from './ProgressionStep';
 import {RaceFake} from './RaceFake';
 import type {RaceInterface} from './RaceInterface';
@@ -21,6 +21,7 @@ export class CharacterFake implements CharacterInterface {
 
 	readonly progressionSteps: ProgressionStep[] = [];
 
+	public defenseTotal = 10;
 	public race = new RaceFake();
 	public skills: Record<SkillNameEnum, Skill> = InitialSkillsGenerator.generate(this);
 
@@ -33,6 +34,10 @@ export class CharacterFake implements CharacterInterface {
 
 	getRace(): RaceInterface | undefined {
 		return this.race;
+	}
+
+	getDefenseTotal(): number {
+		return this.defenseTotal;
 	}
 
 	getTrainedSkills() {

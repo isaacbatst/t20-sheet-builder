@@ -1,4 +1,5 @@
 import type {Attributes} from './Attributes';
+import type {CharacterInterface} from './CharacterInterface';
 import {Defense} from './Defense';
 import {ProgressionStep} from './ProgressionStep';
 import type {RaceInterface} from './RaceInterface';
@@ -11,41 +12,6 @@ import {Step} from './StepDescriptionGenerator/StepDescriptionGenerator';
 type CharacterParams = {
 	initialAttributes: Attributes;
 };
-
-export type SkilledCharacter = {
-	getTrainedSkills(): SkillNameEnum[];
-	getSkills(): Record<SkillNameEnum, Skill>;
-	trainSkill(name: string): void;
-};
-
-export type LeveledCharacter = {
-	getLevel(): number;
-};
-
-export type AttributesCharacter = {
-	getAttributes(): Attributes;
-};
-
-export type OtherModifierAdderCharacter = {
-	addOtherModifierToDefense(sourceName: string, modifier: number): void;
-	addOtherModifierToSkill(sourceName: string, modifier: number, skill: SkillNameEnum): void;
-};
-
-export type ProgressingCharacter = {
-	progressionSteps: ProgressionStep[];
-	saveStep(step: Step): void;
-};
-
-export type RaceCharacter = {
-	getRace(): RaceInterface | undefined;
-};
-
-export type CharacterInterface = SkilledCharacter
-& LeveledCharacter
-& AttributesCharacter
-& OtherModifierAdderCharacter
-& ProgressingCharacter
-& RaceCharacter;
 
 export class Character implements CharacterInterface {
 	readonly progressionSteps: ProgressionStep[] = [];
@@ -89,6 +55,14 @@ export class Character implements CharacterInterface {
 
 	saveStep(step: Step): void {
 		this.progressionSteps.push(new ProgressionStep(step, this));
+	}
+
+	getDefense(): Defense {
+		return this.defense;
+	}
+
+	getDefenseTotal(): number {
+		return this.defense.getTotal(this.attributes.dexterity, 0, 0);
 	}
 
 	getAttributes(): Attributes {

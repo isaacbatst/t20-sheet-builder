@@ -1,5 +1,5 @@
 import type {Attributes} from './Attributes';
-import type {CharacterInterface} from './Character';
+import type {CharacterInterface} from './CharacterInterface';
 import type {AttributeModifier} from './Race/Race';
 
 export type RaceInterface = {

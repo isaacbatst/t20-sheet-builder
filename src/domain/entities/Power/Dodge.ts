@@ -1,4 +1,4 @@
-import type {OtherModifierAdderCharacter, ProgressingCharacter} from '../Character';
+import type {CharacterInterface} from '../CharacterInterface';
 import {SkillNameEnum} from '../Skill/SkillName';
 import {Step} from '../StepDescriptionGenerator/StepDescriptionGenerator';
 import {GeneralPower} from './GeneralPower';
@@ -12,9 +12,9 @@ export class Dodge extends GeneralPower {
 		);
 	}
 
-	apply(character: OtherModifierAdderCharacter & ProgressingCharacter) {
+	apply(character: CharacterInterface) {
 		character.addOtherModifierToDefense(GeneralPowerNameEnum.dodge, 2);
 		character.addOtherModifierToSkill(GeneralPowerNameEnum.dodge, 2, SkillNameEnum.reflexos);
-		character.saveStep(Step.raceAbilitiesAppliance);
+		character.saveStep(Step.dodgeAppliance);
 	}
 }

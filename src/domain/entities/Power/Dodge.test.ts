@@ -32,6 +32,6 @@ describe('Dodge', () => {
 		dodge.apply(character);
 
 		expect(character.progressionSteps)
-			.toContainEqual(new ProgressionStep(Step.raceAbilitiesAppliance, character));
+			.toContainEqual(new ProgressionStep(Step.dodgeAppliance, character));
 	});
 });

@@ -1,5 +1,5 @@
 import type {Attribute} from '../Attributes';
-import type {CharacterInterface} from '../Character';
+import type {CharacterInterface} from '../CharacterInterface';
 import type {VersatileChoice} from '../RaceAbility/Versatile';
 import {Versatile} from '../RaceAbility/Versatile';
 import {SelectableAttributesRace} from '../SelectableAttributesRace';

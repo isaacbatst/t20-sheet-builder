@@ -1,4 +1,5 @@
-import type {CharacterInterface} from '../Character';
+import type {CharacterInterface} from '../CharacterInterface';
+import {DodgeAppliance} from './DodgeAppliance';
 import {InitialAttributesDefinition} from './InitialAttributesDefinition';
 import {RaceAbilitiesAppliance} from './RaceAbilitiesAppliance';
 import {RaceAttributeModifiersAppliance} from './RaceAttributeModifiersAppliance';
@@ -7,6 +8,7 @@ export enum Step {
 	initialAttributesDefinition = 'initialAttributesDefinition',
 	raceAttributesModifiersAppliance = 'raceAttributesModifiersAppliance',
 	raceAbilitiesAppliance = 'raceAbilitiesAppliance',
+	dodgeAppliance = 'dodgeAppliance',
 }
 
 export abstract class StepDescriptionGenerator {
@@ -27,6 +29,7 @@ export abstract class StepDescriptionGenerator {
 		initialAttributesDefinition: InitialAttributesDefinition.generate,
 		raceAttributesModifiersAppliance: RaceAttributeModifiersAppliance.generate,
 		raceAbilitiesAppliance: RaceAbilitiesAppliance.generate,
+		dodgeAppliance: DodgeAppliance.generate,
 	};
 
 	private static validateStep(step: string): step is Step {

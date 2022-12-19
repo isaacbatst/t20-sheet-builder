@@ -1,4 +1,4 @@
-import type {CharacterInterface} from './Character';
+import type {CharacterInterface} from './CharacterInterface';
 
 export type AbilityEffectType = 'active' | 'passive';
 
