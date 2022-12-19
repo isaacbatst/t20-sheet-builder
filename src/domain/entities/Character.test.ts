@@ -1,5 +1,6 @@
 import type {Attributes} from './Attributes';
 import {Character} from './Character';
+import {GeneralPowerNameEnum} from './Power/GeneralPowerName';
 import {Dwarf} from './Race/Dwarf';
 import {Human} from './Race/Human';
 import {Skill} from './Skill/Skill';
@@ -81,5 +82,41 @@ describe('Character', () => {
 
 		expect(character.getTrainedSkills()).toContain(SkillNameEnum.acrobacia);
 		expect(character.getTrainedSkills()).toContain(SkillNameEnum.luta);
+	});
+
+	it('should apply human versatile ability with one power', () => {
+		const character = new Character({
+			initialAttributes,
+		});
+
+		const human = new Human(
+			['strength', 'charisma', 'constitution'],
+			[
+				{name: SkillNameEnum.acrobacia, type: 'skill'},
+				{name: GeneralPowerNameEnum.dodge, type: 'power'},
+			],
+		);
+		character.chooseRace(human);
+
+		expect(character.getTrainedSkills()).toContain(SkillNameEnum.acrobacia);
+		expect(character.getDefenseTotal()).toBe(12);
+		expect(character.getSkills().reflexos.getTotal()).toBe(2);
+	});
+
+	it('should save dodge applience step', () => {
+		const character = new Character({
+			initialAttributes,
+		});
+
+		const human = new Human(
+			['strength', 'charisma', 'constitution'],
+			[
+				{name: SkillNameEnum.acrobacia, type: 'skill'},
+				{name: GeneralPowerNameEnum.dodge, type: 'power'},
+			],
+		);
+
+		character.chooseRace(human);
+		expect(character.progressionSteps[2].description).toBe('Esquiva: você recebe +2 na defesa (12) e reflexos (2).');
 	});
 });
