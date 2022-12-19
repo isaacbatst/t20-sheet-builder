@@ -1,6 +1,4 @@
 import type {Attribute, Attributes} from './Attributes';
-import {AttributeTranslator} from './AttributeTranslator';
-import {TextSeparatorGenerator} from './TextSeparatorGenerator';
 
 export type AttributeModifier = {
 	attribute: Attribute;
