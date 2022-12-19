@@ -1,13 +1,22 @@
+import {Character} from '../Character';
 import {Skill} from './Skill';
+
+const initialAttributes = {
+	charisma: 0,
+	constitution: 0,
+	dexterity: 0,
+	intelligence: 0,
+	strength: 0,
+	wisdom: 0,
+};
 
 describe('Skill', () => {
 	it('should calculate level 1 untrained skill', () => {
 		const skill = new Skill({
-			attributeModifier: {attribute: 'dexterity', modifier: 0},
-			characterLevel: 1,
-			isTrained: false,
-			name: 'any-name',
-			other: 0,
+			character: new Character({
+				initialAttributes,
+			}),
+			attribute: 'dexterity',
 		});
 
 		expect(skill.getTotal()).toBe(0);
@@ -15,11 +24,13 @@ describe('Skill', () => {
 
 	it('should calculate level 1 untrained skill with modifier', () => {
 		const skill = new Skill({
-			attributeModifier: {attribute: 'dexterity', modifier: 2},
-			characterLevel: 1,
-			isTrained: false,
-			name: 'any-name',
-			other: 0,
+			character: new Character({
+				initialAttributes: {
+					...initialAttributes,
+					dexterity: 2,
+				},
+			}),
+			attribute: 'dexterity',
 		});
 
 		expect(skill.getTotal()).toBe(2);
@@ -27,23 +38,25 @@ describe('Skill', () => {
 
 	it('should calculate level 1 trained skill', () => {
 		const skill = new Skill({
-			attributeModifier: {attribute: 'dexterity', modifier: 0},
-			characterLevel: 1,
+			character: new Character({
+				initialAttributes,
+			}),
 			isTrained: true,
-			name: 'any-name',
-			other: 0,
+			attribute: 'dexterity',
 		});
-
 		expect(skill.getTotal()).toBe(2);
 	});
 
 	it('should calculate level 1 trained skill with modifier', () => {
 		const skill = new Skill({
-			attributeModifier: {attribute: 'dexterity', modifier: 2},
-			characterLevel: 1,
+			character: new Character({
+				initialAttributes: {
+					...initialAttributes,
+					dexterity: 2,
+				},
+			}),
 			isTrained: true,
-			name: 'any-name',
-			other: 0,
+			attribute: 'dexterity',
 		});
 
 		expect(skill.getTotal()).toBe(4);
@@ -51,10 +64,14 @@ describe('Skill', () => {
 
 	it('should calculate level 1 trained skill with modifier and other bonus', () => {
 		const skill = new Skill({
-			attributeModifier: {attribute: 'dexterity', modifier: 2},
-			characterLevel: 1,
+			character: new Character({
+				initialAttributes: {
+					...initialAttributes,
+					dexterity: 2,
+				},
+			}),
 			isTrained: true,
-			name: 'any-name',
+			attribute: 'dexterity',
 			other: 2,
 		});
 
@@ -63,10 +80,19 @@ describe('Skill', () => {
 
 	it('should calculate level 10 trained skill with modifier and other bonus', () => {
 		const skill = new Skill({
-			attributeModifier: {attribute: 'dexterity', modifier: 2},
-			characterLevel: 10,
+			character: {
+				getAttributes() {
+					return {
+						...initialAttributes,
+						dexterity: 2,
+					};
+				},
+				getLevel() {
+					return 10;
+				},
+			},
 			isTrained: true,
-			name: 'any-name',
+			attribute: 'dexterity',
 			other: 2,
 		});
 

@@ -1,9 +1,8 @@
-import type {Attribute} from '../Attributes';
-import type {Character} from '../Character';
+import type {Attribute, Attributes} from '../Attributes';
 import type {AttributeModifier} from '../Race';
 
 type SkillParams = {
-	character: Character;
+	character: {getAttributes(): Attributes; getLevel(): number};
 	attribute: Attribute;
 	isTrained?: boolean;
 	other?: number;
