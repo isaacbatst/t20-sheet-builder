@@ -1,4 +1,6 @@
 import {CharacterFake} from '../CharacterFake';
+import {ProgressionStep} from '../ProgressionStep';
+import {Step} from '../StepDescriptionGenerator/StepDescriptionGenerator';
 import {Dodge} from './Dodge';
 import {GeneralPowerNameEnum} from './GeneralPowerName';
 
@@ -7,8 +9,6 @@ describe('Dodge', () => {
 		const dodge = new Dodge();
 		const character = new CharacterFake();
 		dodge.apply(character);
-
-		const skills = character.getSkills();
 
 		expect(character.getDefenseOtherModifiers()).toContainEqual({
 			sourceName: GeneralPowerNameEnum.dodge,
@@ -24,5 +24,14 @@ describe('Dodge', () => {
 		const skills = character.getSkills();
 
 		expect(skills.reflexos.modifierOthers.getTotal()).toBe(2);
+	});
+
+	it('should save dodge appliance step', () => {
+		const dodge = new Dodge();
+		const character = new CharacterFake();
+		dodge.apply(character);
+
+		expect(character.progressionSteps)
+			.toContainEqual(new ProgressionStep(Step.raceAbilitiesAppliance, character));
 	});
 });

@@ -1,7 +1,8 @@
-import type {Ability} from './Ability';
-import type {Attribute, Attributes} from './Attributes';
-import type {CharacterInterface} from './Character';
-import type {RaceInterface} from './RaceInterface';
+import type {Ability} from '../Ability';
+import type {Attribute, Attributes} from '../Attributes';
+import type {CharacterInterface} from '../Character';
+import {RaceName} from './RaceName';
+import type {RaceInterface} from '../RaceInterface';
 
 export type AttributeModifier = {
 	attribute: Attribute;
@@ -11,6 +12,11 @@ export type AttributeModifier = {
 export abstract class Race implements RaceInterface {
 	abstract readonly attributeModifiers: AttributeModifier[];
 	abstract readonly abilities: Record<string, Ability>;
+	private readonly raceName: RaceName;
+
+	constructor(name: string) {
+		this.raceName = new RaceName(name);
+	}
 
 	applyAttributesModifiers(attributes: Attributes): Attributes {
 		const modifiedAttributes: Partial<Attributes> = {};
@@ -29,5 +35,9 @@ export abstract class Race implements RaceInterface {
 		Object.values(this.abilities).forEach(ability => {
 			ability.apply(character);
 		});
+	}
+
+	get name() {
+		return this.raceName.value;
 	}
 }

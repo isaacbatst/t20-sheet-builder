@@ -1,6 +1,6 @@
 import type {Attribute, Attributes} from '../Attributes';
 import {ModifierOthers} from '../ModifierOthers';
-import type {AttributeModifier} from '../Race';
+import type {AttributeModifier} from '../Race/Race';
 import {SkillName} from './SkillName';
 
 type SkillParams = {

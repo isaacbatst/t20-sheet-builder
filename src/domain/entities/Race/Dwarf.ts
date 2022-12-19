@@ -1,6 +1,6 @@
 import type {Ability} from '../Ability';
-import type {AttributeModifier} from '../Race';
-import {Race} from '../Race';
+import type {AttributeModifier} from './Race';
+import {Race} from './Race';
 
 export class Dwarf extends Race {
 	readonly abilities: Record<string, Ability> = {};

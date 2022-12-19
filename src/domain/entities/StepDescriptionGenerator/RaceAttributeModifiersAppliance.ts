@@ -1,5 +1,5 @@
 import {AttributeTranslator} from '../AttributeTranslator';
-import type {AttributeModifier} from '../Race';
+import type {AttributeModifier} from '../Race/Race';
 import {TextSeparatorGenerator} from '../TextSeparatorGenerator';
 
 export class RaceAttributeModifiersAppliance {

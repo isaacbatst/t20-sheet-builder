@@ -1,12 +1,12 @@
 import type {Attribute} from './Attributes';
-import type {AttributeModifier} from './Race';
-import {Race} from './Race';
+import type {AttributeModifier} from './Race/Race';
+import {Race} from './Race/Race';
 
 export abstract class SelectableAttributesRace extends Race {
 	readonly attributeModifiers: AttributeModifier[];
 
-	constructor(attributes: Attribute[]) {
-		super();
+	constructor(attributes: Attribute[], name: string) {
+		super(name);
 
 		this.attributeModifiers = attributes.map<AttributeModifier>(attribute => ({
 			attribute,

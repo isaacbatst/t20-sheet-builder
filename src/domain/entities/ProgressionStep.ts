@@ -5,9 +5,9 @@ export class ProgressionStep {
 	readonly description: string;
 
 	constructor(
-		readonly stepType: string,
+		readonly step: string,
 		character: CharacterInterface,
 	) {
-		this.description = StepDescriptionGenerator.generate(stepType, character);
+		this.description = StepDescriptionGenerator.generate(step, character);
 	}
 }
