@@ -4,9 +4,17 @@ import {TextSeparatorGenerator} from '../TextSeparatorGenerator';
 
 export class RaceAttributeModifiersAppliance {
 	static generate(
-		character: {race: {attributeModifiers: AttributeModifier[]}},
+		character: {getRace(): {attributeModifiers: AttributeModifier[]} | undefined},
 	): string {
-		return `Aplicação dos modificadores de atributo da raça: ${RaceAttributeModifiersAppliance.generateAttributeModifiersText(character.race.attributeModifiers)}.`;
+		const race = character.getRace();
+
+		if (!race) {
+			throw new Error('MISSING_CHARACTER_RACE');
+		}
+
+		const attributesModifiersText = RaceAttributeModifiersAppliance.generateAttributeModifiersText(race.attributeModifiers);
+
+		return `Aplicação dos modificadores de atributo da raça: ${attributesModifiersText}.`;
 	}
 
 	private static generateAttributeModifiersText(attributeModifiers: AttributeModifier[]): string {
