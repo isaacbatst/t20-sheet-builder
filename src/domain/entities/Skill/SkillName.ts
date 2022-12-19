@@ -4,6 +4,7 @@ export enum SkillNameEnum {
 	acrobacia = 'acrobacia',
 	adestramento = 'adestramento',
 	luta = 'luta',
+	reflexos = 'reflexos',
 }
 
 export class SkillName extends Name<SkillNameEnum> {

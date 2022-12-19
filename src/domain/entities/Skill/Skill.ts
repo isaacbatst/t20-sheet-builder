@@ -1,30 +1,35 @@
-import type {Attribute} from '../Attributes';
-import type {AttributesCharacter} from '../Character';
+import type {Attribute, Attributes} from '../Attributes';
+import {ModifierOthers} from '../ModifierOthers';
 import type {AttributeModifier} from '../Race';
 import {SkillName} from './SkillName';
 
 type SkillParams = {
-	character: AttributesCharacter;
+	characterAttributes: Attributes;
 	attribute: Attribute;
 	isTrained?: boolean;
-	other?: number;
+	otherModifiers?: Array<{sourceName: string; value: number}>;
 	name: string;
 };
 
 export class Skill {
 	readonly name: SkillName;
 	readonly attributeModifier: AttributeModifier;
-	readonly otherPoints: number;
-	isTrained: boolean;
+	readonly modifierOthers: ModifierOthers = new ModifierOthers(Skill.repeatedOtherModifierError);
+	private isTrained: boolean;
+
+	static get repeatedOtherModifierError() {
+		return 'REPEATED_OTHER_SKILL_MODIFIER';
+	}
 
 	constructor(params: SkillParams) {
 		this.name = new SkillName(params.name);
 		this.isTrained = Boolean(params.isTrained);
 
-		const characterAttributes = params.character.getAttributes();
+		this.attributeModifier = {attribute: params.attribute, modifier: params.characterAttributes[params.attribute]};
 
-		this.attributeModifier = {attribute: params.attribute, modifier: characterAttributes[params.attribute]};
-		this.otherPoints = params.other ?? 0;
+		params.otherModifiers?.forEach(modifier => {
+			this.modifierOthers.addOtherModifier(modifier);
+		});
 	}
 
 	train() {
@@ -42,7 +47,8 @@ export class Skill {
 	getTotal(level = 1) {
 		const halfLevelPoints = this.calculateHalfLevel(level);
 		const trainingPoints = this.calculateTrainingPoints(level);
-		return halfLevelPoints + this.attributeModifier.modifier + trainingPoints + this.otherPoints;
+		const otherModifiersSum = this.modifierOthers.getTotal();
+		return halfLevelPoints + this.attributeModifier.modifier + trainingPoints + otherModifiersSum;
 	}
 
 	private calculateTrainingPoints(level: number): number {

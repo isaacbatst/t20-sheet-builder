@@ -80,10 +80,13 @@ describe('Versatile', () => {
 		const character = new CharacterFake();
 		versatile.apply(character);
 
+		const skills = character.getSkills();
+
 		expect(character.getTrainedSkills()).toContain(SkillNameEnum.acrobacia);
 		expect(character.getDefenseOtherModifiers()).toContainEqual({
 			sourceName: GeneralPowerNameEnum.dodge,
 			value: 2,
 		});
+		expect(skills.reflexos.modifierOthers.getTotal()).toBe(2);
 	});
 });

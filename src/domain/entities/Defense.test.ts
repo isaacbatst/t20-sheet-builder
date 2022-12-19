@@ -1,5 +1,4 @@
 import {Defense} from './Defense';
-import {OtherModifier} from './OtherModifier';
 
 describe('Defense', () => {
 	it('should calc defense total', () => {
@@ -11,7 +10,7 @@ describe('Defense', () => {
 	it('should calc defense total with other modifier', () => {
 		const defense = new Defense();
 
-		defense.addOtherModifier(new OtherModifier('any-source', 2));
+		defense.modifierOthers.addOtherModifier({sourceName: 'any-source', value: 2});
 
 		expect(defense.getTotal(0, 0, 0)).toBe(12);
 	});

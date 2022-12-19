@@ -1,25 +1,18 @@
-import type {OtherModifier} from './OtherModifier';
+import {ModifierOthers} from './ModifierOthers';
 
 export class Defense {
-	static get base() {
+	readonly modifierOthers = new ModifierOthers(Defense.modifierRepeatedError);
+
+	private static get base() {
 		return 10;
 	}
 
-	readonly otherModifiers: OtherModifier[] = [];
-
-	addOtherModifier(newModifier: OtherModifier) {
-		const isRepeated = this.otherModifiers.some(otherModifier => otherModifier.sourceName === newModifier.sourceName);
-
-		if (isRepeated) {
-			throw new Error('REPEATED_OTHER_DEFENSE_MODIFIER');
-		}
-
-		this.otherModifiers.push(newModifier);
+	private static get modifierRepeatedError() {
+		return 'REPEATED_OTHER_DEFENSE_MODIFIER';
 	}
 
 	getTotal(dexterity: number, armorBonus: number, shieldBonus: number) {
-		const otherModifiersSum = this.otherModifiers
-			.reduce<number>((acc, modifier) => modifier.value + acc, 0);
+		const otherModifiersSum = this.modifierOthers.getTotal();
 		return Defense.base + dexterity + armorBonus + shieldBonus + otherModifiersSum;
 	}
 }

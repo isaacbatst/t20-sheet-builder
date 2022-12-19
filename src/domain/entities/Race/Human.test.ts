@@ -124,9 +124,17 @@ describe('Human', () => {
 		const trainedSkills = character.getTrainedSkills();
 
 		expect(trainedSkills).toContain(SkillNameEnum.acrobacia);
+
 		expect(character.getDefenseOtherModifiers()).toContainEqual({
 			sourceName: GeneralPowerNameEnum.dodge,
 			value: 2,
 		});
+
+		const skills = character.getSkills();
+		expect(skills.reflexos.modifierOthers.modifiers).toContainEqual({
+			sourceName: GeneralPowerNameEnum.dodge,
+			value: 2,
+		});
+		expect(skills.reflexos.modifierOthers.getTotal()).toBe(2);
 	});
 });

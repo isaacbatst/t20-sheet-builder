@@ -35,7 +35,7 @@ describe('Character', () => {
 
 		expect(skills.acrobacia).toEqual(new Skill({
 			attribute: 'dexterity',
-			character,
+			characterAttributes: character.getAttributes(),
 			name: SkillNameEnum.acrobacia,
 		}));
 	});

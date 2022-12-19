@@ -1,10 +1,13 @@
 import {CharacterFake} from '../CharacterFake';
 import {Skill} from './Skill';
 
+const attributes = {};
+
 describe('Skill', () => {
 	it('should calculate level 1 untrained skill', () => {
+		const character = new CharacterFake();
 		const skill = new Skill({
-			character: new CharacterFake(),
+			characterAttributes: character.getAttributes(),
 			attribute: 'dexterity',
 			name: 'acrobacia',
 		});
@@ -19,7 +22,7 @@ describe('Skill', () => {
 			dexterity: 2,
 		};
 		const skill = new Skill({
-			character,
+			characterAttributes: character.getAttributes(),
 			attribute: 'dexterity',
 			name: 'acrobacia',
 		});
@@ -28,8 +31,10 @@ describe('Skill', () => {
 	});
 
 	it('should calculate level 1 trained skill', () => {
+		const character = new CharacterFake();
+
 		const skill = new Skill({
-			character: new CharacterFake(),
+			characterAttributes: character.getAttributes(),
 			isTrained: true,
 			attribute: 'dexterity',
 			name: 'acrobacia',
@@ -45,7 +50,7 @@ describe('Skill', () => {
 		};
 
 		const skill = new Skill({
-			character,
+			characterAttributes: character.getAttributes(),
 			isTrained: true,
 			attribute: 'dexterity',
 			name: 'acrobacia',
@@ -62,10 +67,10 @@ describe('Skill', () => {
 		};
 
 		const skill = new Skill({
-			character,
+			characterAttributes: character.getAttributes(),
 			isTrained: true,
 			attribute: 'dexterity',
-			other: 2,
+			otherModifiers: [{sourceName: 'any-source', value: 2}],
 			name: 'acrobacia',
 		});
 
@@ -80,10 +85,10 @@ describe('Skill', () => {
 		};
 		character.level = 10;
 		const skill = new Skill({
-			character,
+			characterAttributes: character.getAttributes(),
 			isTrained: true,
 			attribute: 'dexterity',
-			other: 2,
+			otherModifiers: [{sourceName: 'any-source', value: 2}],
 			name: 'acrobacia',
 		});
 
@@ -93,7 +98,7 @@ describe('Skill', () => {
 	it('should update total by training', () => {
 		const character = new CharacterFake();
 		const skill = new Skill({
-			character,
+			characterAttributes: character.getAttributes(),
 			attribute: 'dexterity',
 			name: 'acrobacia',
 		});

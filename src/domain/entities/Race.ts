@@ -1,6 +1,6 @@
 import type {Ability} from './Ability';
 import type {Attribute, Attributes} from './Attributes';
-import type {Character} from './Character';
+import type {CharacterInterface} from './Character';
 
 export type AttributeModifier = {
 	attribute: Attribute;
@@ -24,7 +24,7 @@ export abstract class Race {
 		};
 	}
 
-	applyAbilities(character: Character): void {
+	applyAbilities(character: CharacterInterface): void {
 		Object.values(this.abilities).forEach(ability => {
 			ability.apply(character);
 		});

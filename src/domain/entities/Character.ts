@@ -1,6 +1,5 @@
 import type {Attributes} from './Attributes';
 import {Defense} from './Defense';
-import {OtherModifier} from './OtherModifier';
 import {ProgressionStep} from './ProgressionStep';
 import type {Race} from './Race';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
@@ -15,6 +14,7 @@ type CharacterParams = {
 
 export type SkilledCharacter = {
 	getTrainedSkills(): SkillNameEnum[];
+	getSkills(): Record<SkillNameEnum, Skill>;
 	trainSkill(name: string): void;
 };
 
@@ -27,7 +27,8 @@ export type AttributesCharacter = {
 };
 
 export type OtherModifierAdderCharacter = {
-	addOtherModifierToDefense(sourceName: string, value: number): void;
+	addOtherModifierToDefense(sourceName: string, modifier: number): void;
+	addOtherModifierToSkill(sourceName: string, modifier: number, skill: SkillNameEnum): void;
 };
 
 export type CharacterInterface = SkilledCharacter
@@ -68,7 +69,11 @@ export class Character implements CharacterInterface {
 	}
 
 	addOtherModifierToDefense(sourceName: string, value: number) {
-		this.defense.addOtherModifier(new OtherModifier(sourceName, value));
+		this.defense.modifierOthers.addOtherModifier({sourceName, value});
+	}
+
+	addOtherModifierToSkill(sourceName: string, value: number, skill: SkillNameEnum): void {
+		this.skills[skill].modifierOthers.addOtherModifier({sourceName, value});
 	}
 
 	getAttributes(): Attributes {
@@ -89,7 +94,7 @@ export class Character implements CharacterInterface {
 
 	getTrainedSkills(): SkillNameEnum[] {
 		return Object.values(this.skills)
-			.filter(skill => skill.isTrained)
+			.filter(skill => skill.getIsTrained())
 			.map(skill => skill.name.value);
 	}
 }
