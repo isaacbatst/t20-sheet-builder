@@ -1,4 +1,6 @@
+import type {Ability} from './Ability/Ability';
 import type {Attribute, Attributes} from './Attributes';
+import type {Character} from './Character';
 
 export type AttributeModifier = {
 	attribute: Attribute;
@@ -7,6 +9,7 @@ export type AttributeModifier = {
 
 export abstract class Race {
 	abstract readonly attributeModifiers: AttributeModifier[];
+	abstract readonly abilities: Record<string, Ability>;
 
 	applyAttributesModifiers(attributes: Attributes): Attributes {
 		const modifiedAttributes: Partial<Attributes> = {};
@@ -19,5 +22,11 @@ export abstract class Race {
 			...attributes,
 			...modifiedAttributes,
 		};
+	}
+
+	applyAbilities(character: Character): void {
+		Object.values(this.abilities).forEach(ability => {
+			ability.apply(character);
+		});
 	}
 }

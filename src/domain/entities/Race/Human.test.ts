@@ -57,4 +57,22 @@ describe('Human', () => {
 			]);
 		}).toThrow('INVALID_ATTRIBUTES_SELECTION');
 	});
+
+	it('should add skills with versatile', () => {
+		const human = new Human([
+			'constitution',
+			'dexterity',
+			'strength',
+		]);
+
+		human.addVersatileChoice({
+			name: 'acrobacia',
+			type: 'skill',
+		});
+
+		expect(human.versatileChoices).toContainEqual({
+			name: 'acrobacia',
+			type: 'skill',
+		});
+	});
 });
