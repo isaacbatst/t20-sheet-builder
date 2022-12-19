@@ -1,4 +1,4 @@
-import type {Ability} from '../Ability/Ability';
+import type {Ability} from '../Ability';
 import type {AttributeModifier} from '../Race';
 import {Race} from '../Race';
 

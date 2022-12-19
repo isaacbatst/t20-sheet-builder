@@ -1,9 +1,14 @@
 import type {SkilledCharacter} from '../Character';
+import type {PowerNameEnum} from '../Power/PowerName';
 import type {SkillNameEnum} from '../Skill/SkillName';
-import {Ability} from './Ability';
+import {RaceAbility} from './RaceAbility';
 
-export class Versatile extends Ability {
-	readonly choices: Array<{type: 'skill' | 'power'; name: string}> = [];
+export type VersatileChoice =
+	{type: 'skill'; name: SkillNameEnum} |
+	{type: 'power'; name: PowerNameEnum};
+
+export class Versatile extends RaceAbility {
+	readonly choices: VersatileChoice[] = [];
 
 	constructor() {
 		super(
@@ -13,7 +18,7 @@ export class Versatile extends Ability {
 		);
 	}
 
-	addChoice(newChoice: {type: 'skill' | 'power'; name: string}) {
+	addChoice(newChoice: VersatileChoice) {
 		if (this.choices.length >= 2) {
 			throw new Error('EXCEEDED_CHOICES_QUANTITY');
 		}

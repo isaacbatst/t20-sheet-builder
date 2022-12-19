@@ -1,4 +1,3 @@
-import type {Ability} from './Ability/Ability';
 import type {Attributes} from './Attributes';
 import {ProgressionStep} from './ProgressionStep';
 import type {Race} from './Race';
@@ -31,7 +30,6 @@ export class Character implements SkilledCharacter, LeveledCharacter, Attributes
 	private race?: Race;
 	// eslint-disable-next-line @typescript-eslint/prefer-readonly
 	private level = 1;
-	private readonly abilities: Ability[] = [];
 	private readonly skills: Record<SkillNameEnum, Skill>;
 
 	constructor(
@@ -61,10 +59,6 @@ export class Character implements SkilledCharacter, LeveledCharacter, Attributes
 
 	getLevel(): number {
 		return this.level;
-	}
-
-	getAbilities() {
-		return this.abilities;
 	}
 
 	getSkills() {

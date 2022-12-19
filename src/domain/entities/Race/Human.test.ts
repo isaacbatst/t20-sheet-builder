@@ -1,5 +1,6 @@
 import type {Attributes} from '../Attributes';
 import {CharacterFake} from '../CharacterFake';
+import {SkillNameEnum} from '../Skill/SkillName';
 import {Human} from './Human';
 
 describe('Human', () => {
@@ -66,13 +67,13 @@ describe('Human', () => {
 			'strength',
 		], [
 			{
-				name: 'acrobacia',
+				name: SkillNameEnum.acrobacia,
 				type: 'skill',
 			},
 		]);
 
 		expect(human.versatileChoices).toContainEqual({
-			name: 'acrobacia',
+			name: SkillNameEnum.acrobacia,
 			type: 'skill',
 		});
 	});
@@ -84,11 +85,11 @@ describe('Human', () => {
 			'strength',
 		], [
 			{
-				name: 'acrobacia',
+				name: SkillNameEnum.acrobacia,
 				type: 'skill',
 			},
 			{
-				name: 'adestramento',
+				name: SkillNameEnum.adestramento,
 				type: 'skill',
 			},
 		]);
@@ -97,7 +98,7 @@ describe('Human', () => {
 		human.applyAbilities(character);
 		const trainedSkills = character.getTrainedSkills();
 
-		expect(trainedSkills).toContain('acrobacia');
-		expect(trainedSkills).toContain('adestramento');
+		expect(trainedSkills).toContain(SkillNameEnum.acrobacia);
+		expect(trainedSkills).toContain(SkillNameEnum.adestramento);
 	});
 });

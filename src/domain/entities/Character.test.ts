@@ -3,6 +3,7 @@ import {Character} from './Character';
 import {Dwarf} from './Race/Dwarf';
 import {Human} from './Race/Human';
 import {Skill} from './Skill/Skill';
+import {SkillNameEnum} from './Skill/SkillName';
 
 const initialAttributes = {
 	strength: 0,
@@ -35,7 +36,7 @@ describe('Character', () => {
 		expect(skills.acrobacia).toEqual(new Skill({
 			attribute: 'dexterity',
 			character,
-			name: 'acrobacia',
+			name: SkillNameEnum.acrobacia,
 		}));
 	});
 
@@ -72,13 +73,13 @@ describe('Character', () => {
 		const human = new Human(
 			['strength', 'charisma', 'constitution'],
 			[
-				{name: 'acrobacia', type: 'skill'},
-				{name: 'adestramento', type: 'skill'},
+				{name: SkillNameEnum.acrobacia, type: 'skill'},
+				{name: SkillNameEnum.luta, type: 'skill'},
 			],
 		);
 		character.chooseRace(human);
 
-		expect(character.getTrainedSkills()).toContain('acrobacia');
-		expect(character.getTrainedSkills()).toContain('adestramento');
+		expect(character.getTrainedSkills()).toContain(SkillNameEnum.acrobacia);
+		expect(character.getTrainedSkills()).toContain(SkillNameEnum.luta);
 	});
 });

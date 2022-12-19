@@ -1,4 +1,5 @@
-import {Versatile} from '../Ability/Versatile';
+import type {VersatileChoice} from '../RaceAbility/Versatile';
+import {Versatile} from '../RaceAbility/Versatile';
 import type {Attribute} from '../Attributes';
 import type {SkilledCharacter} from '../Character';
 import {SelectableAttributesRace} from '../SelectableAttributesRace';
@@ -8,7 +9,7 @@ export class Human extends SelectableAttributesRace {
 		versatile: new Versatile(),
 	};
 
-	constructor(attributes: Attribute[], versatileChoices: Array<{type: 'skill' | 'power'; name: string}> = []) {
+	constructor(attributes: Attribute[], versatileChoices: VersatileChoice[] = []) {
 		super(attributes);
 
 		versatileChoices.forEach(choice => {
