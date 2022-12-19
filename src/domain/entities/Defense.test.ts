@@ -11,7 +11,7 @@ describe('Defense', () => {
 	it('should calc defense total with other modifier', () => {
 		const defense = new Defense();
 
-		defense.addOtherModifiers(new OtherModifier('any-source', 'any-description', 2));
+		defense.addOtherModifier(new OtherModifier('any-source', 2));
 
 		expect(defense.getTotal(0, 0, 0)).toBe(12);
 	});

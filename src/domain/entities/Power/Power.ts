@@ -1,12 +1,14 @@
-import {PowerName} from './PowerName';
+import type {AbilityEffectType} from '../Ability';
+import {Ability} from '../Ability';
+import type {PowerNameEnum} from './PowerName';
 
-export class Power {
-	readonly name: PowerName;
+export type PowerType = 'general' | 'class';
 
-	constructor(
-		name: string,
-		readonly description: string,
-	) {
-		this.name = new PowerName(name);
+export abstract class Power extends Ability {
+	readonly powerType: PowerType;
+
+	constructor(name: PowerNameEnum, effectType: AbilityEffectType, powerType: PowerType) {
+		super(name, effectType);
+		this.powerType = powerType;
 	}
 }

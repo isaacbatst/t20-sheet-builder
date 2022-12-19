@@ -1,5 +1,6 @@
 import type {Attributes} from '../Attributes';
 import {CharacterFake} from '../CharacterFake';
+import {GeneralPowerNameEnum} from '../Power/GeneralPowerName';
 import {SkillNameEnum} from '../Skill/SkillName';
 import {Human} from './Human';
 
@@ -100,5 +101,32 @@ describe('Human', () => {
 
 		expect(trainedSkills).toContain(SkillNameEnum.acrobacia);
 		expect(trainedSkills).toContain(SkillNameEnum.adestramento);
+	});
+
+	it('should apply versatile training chosen skill and power', () => {
+		const human = new Human([
+			'constitution',
+			'dexterity',
+			'strength',
+		], [
+			{
+				name: SkillNameEnum.acrobacia,
+				type: 'skill',
+			},
+			{
+				name: GeneralPowerNameEnum.dodge,
+				type: 'power',
+			},
+		]);
+
+		const character = new CharacterFake();
+		human.applyAbilities(character);
+		const trainedSkills = character.getTrainedSkills();
+
+		expect(trainedSkills).toContain(SkillNameEnum.acrobacia);
+		expect(character.getDefenseOtherModifiers()).toContainEqual({
+			sourceName: GeneralPowerNameEnum.dodge,
+			value: 2,
+		});
 	});
 });

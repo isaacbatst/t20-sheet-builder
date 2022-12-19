@@ -1,21 +1,14 @@
-export enum PowerNameEnum {
-	esquiva = 'esquiva',
-	twoHandsStyle = 'twoHandsStyle',
-	swordAndShieldStyle = 'swordAndShieldStyle',
-}
+import {Name} from '../Name';
+import {GeneralPowerNameEnum} from './GeneralPowerName';
 
-export class PowerName {
-	static validatePowerName(name: string): name is PowerNameEnum {
-		return name in PowerNameEnum;
+export type PowerNameEnum = GeneralPowerNameEnum;
+
+export class PowerName extends Name<PowerNameEnum> {
+	protected isValidName(name: string): name is PowerNameEnum {
+		return name in GeneralPowerNameEnum;
 	}
 
-	readonly value: PowerNameEnum;
-
-	constructor(name: string) {
-		if (!PowerName.validatePowerName(name)) {
-			throw new Error('INVALID_POWER_NAME');
-		}
-
-		this.value = name;
+	protected getInvalidMessage(): string {
+		return 'INVALID_POWER_NAME';
 	}
 }

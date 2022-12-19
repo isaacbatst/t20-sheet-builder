@@ -1,5 +1,5 @@
 import {CharacterFake} from '../CharacterFake';
-import {PowerNameEnum} from '../Power/PowerName';
+import {GeneralPowerNameEnum} from '../Power/GeneralPowerName';
 import {SkillNameEnum} from '../Skill/SkillName';
 import {Versatile} from './Versatile';
 
@@ -34,21 +34,21 @@ describe('Versatile', () => {
 	it('should not allow 2 powers', () => {
 		const versatile = new Versatile();
 
-		versatile.addChoice({type: 'power', name: PowerNameEnum.twoHandsStyle});
+		versatile.addChoice({type: 'power', name: GeneralPowerNameEnum.twoHandsStyle});
 
 		expect(() => {
-			versatile.addChoice({type: 'power', name: PowerNameEnum.swordAndShieldStyle});
+			versatile.addChoice({type: 'power', name: GeneralPowerNameEnum.swordAndShieldStyle});
 		}).toThrow('FORBIDDEN_TWO_POWERS');
 	});
 
 	it('should allow 1 power and 1 skill', () => {
 		const versatile = new Versatile();
 		versatile.addChoice({type: 'skill', name: SkillNameEnum.acrobacia});
-		versatile.addChoice({type: 'power', name: PowerNameEnum.twoHandsStyle});
+		versatile.addChoice({type: 'power', name: GeneralPowerNameEnum.twoHandsStyle});
 
 		expect(versatile.choices).toEqual([
 			{type: 'skill', name: SkillNameEnum.acrobacia},
-			{type: 'power', name: PowerNameEnum.twoHandsStyle},
+			{type: 'power', name: GeneralPowerNameEnum.twoHandsStyle},
 		]);
 	});
 
@@ -75,6 +75,15 @@ describe('Versatile', () => {
 	it('should apply chosen power', () => {
 		const versatile = new Versatile();
 		versatile.addChoice({type: 'skill', name: SkillNameEnum.acrobacia});
-		versatile.addChoice({type: 'power', name: PowerNameEnum.esquiva});
+		versatile.addChoice({type: 'power', name: GeneralPowerNameEnum.dodge});
+
+		const character = new CharacterFake();
+		versatile.apply(character);
+
+		expect(character.getTrainedSkills()).toContain(SkillNameEnum.acrobacia);
+		expect(character.getDefenseOtherModifiers()).toContainEqual({
+			sourceName: GeneralPowerNameEnum.dodge,
+			value: 2,
+		});
 	});
 });

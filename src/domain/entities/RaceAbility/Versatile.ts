@@ -1,7 +1,9 @@
-import type {SkilledCharacter} from '../Character';
+import type {Character, CharacterInterface, SkilledCharacter} from '../Character';
+import {GeneralPowerFactory} from '../Power/PowerFactory';
 import type {PowerNameEnum} from '../Power/PowerName';
 import type {SkillNameEnum} from '../Skill/SkillName';
 import {RaceAbility} from './RaceAbility';
+import {RaceAbilityNameEnum} from './RaceAbilityName';
 
 export type VersatileChoice =
 	{type: 'skill'; name: SkillNameEnum} |
@@ -12,8 +14,7 @@ export class Versatile extends RaceAbility {
 
 	constructor() {
 		super(
-			'Versátil',
-			'Você se torna treinado em duas perícias a sua escolha (não precisam ser da sua classe). Você pode trocar uma dessas perícias por um poder geral a sua escolha.',
+			RaceAbilityNameEnum.versatile,
 			'passive',
 		);
 	}
@@ -38,7 +39,7 @@ export class Versatile extends RaceAbility {
 		this.choices.push(newChoice);
 	}
 
-	apply(character: SkilledCharacter): void {
+	apply(character: CharacterInterface): void {
 		if (this.choices.length !== 2) {
 			throw new Error('MISSING_CHOICES');
 		}
@@ -46,6 +47,11 @@ export class Versatile extends RaceAbility {
 		this.choices.forEach(choice => {
 			if (choice.type === 'skill') {
 				character.trainSkill(choice.name);
+			}
+
+			if (choice.type === 'power') {
+				const power = GeneralPowerFactory.make(choice.name);
+				power.apply(character);
 			}
 		});
 	}

@@ -7,7 +7,7 @@ export class Defense {
 
 	readonly otherModifiers: OtherModifier[] = [];
 
-	addOtherModifiers(newModifier: OtherModifier) {
+	addOtherModifier(newModifier: OtherModifier) {
 		const isRepeated = this.otherModifiers.some(otherModifier => otherModifier.sourceName === newModifier.sourceName);
 
 		if (isRepeated) {
