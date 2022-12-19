@@ -1,7 +1,6 @@
 import type {Attributes} from './Attributes';
 import {Character} from './Character';
-import {Dwarf} from './races/Dwarf';
-import {Human} from './races/Human';
+import {Dwarf} from './Race/Dwarf';
 
 describe('Character', () => {
 	it('should save initial attributes definition step', () => {
