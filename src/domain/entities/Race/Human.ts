@@ -1,11 +1,20 @@
 import {Versatile} from '../Ability/Versatile';
-import type {Character} from '../Character';
+import type {Attribute} from '../Attributes';
+import type {SkilledCharacter} from '../Character';
 import {SelectableAttributesRace} from '../SelectableAttributesRace';
 
 export class Human extends SelectableAttributesRace {
 	readonly abilities = {
 		versatile: new Versatile(),
 	};
+
+	constructor(attributes: Attribute[], versatileChoices: Array<{type: 'skill' | 'power'; name: string}> = []) {
+		super(attributes);
+
+		versatileChoices.forEach(choice => {
+			this.abilities.versatile.addChoice(choice);
+		});
+	}
 
 	protected get restrictedAttributes(): string[] {
 		return [];
@@ -23,7 +32,9 @@ export class Human extends SelectableAttributesRace {
 		return this.abilities.versatile.choices;
 	}
 
-	addVersatileChoice(choice: {type: 'skill' | 'power'; name: string}) {
-		this.abilities.versatile.addChoice(choice);
+	applyAbilities(character: SkilledCharacter): void {
+		Object.values(this.abilities).forEach(ability => {
+			ability.apply(character);
+		});
 	}
 }

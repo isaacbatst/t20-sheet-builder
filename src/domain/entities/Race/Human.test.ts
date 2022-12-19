@@ -1,4 +1,5 @@
 import type {Attributes} from '../Attributes';
+import {CharacterFake} from '../CharacterFake';
 import {Human} from './Human';
 
 describe('Human', () => {
@@ -63,16 +64,40 @@ describe('Human', () => {
 			'constitution',
 			'dexterity',
 			'strength',
+		], [
+			{
+				name: 'acrobacia',
+				type: 'skill',
+			},
 		]);
-
-		human.addVersatileChoice({
-			name: 'acrobacia',
-			type: 'skill',
-		});
 
 		expect(human.versatileChoices).toContainEqual({
 			name: 'acrobacia',
 			type: 'skill',
 		});
+	});
+
+	it('should apply versatile training chosen skills', () => {
+		const human = new Human([
+			'constitution',
+			'dexterity',
+			'strength',
+		], [
+			{
+				name: 'acrobacia',
+				type: 'skill',
+			},
+			{
+				name: 'adestramento',
+				type: 'skill',
+			},
+		]);
+
+		const character = new CharacterFake();
+		human.applyAbilities(character);
+		const trainedSkills = character.getTrainedSkills();
+
+		expect(trainedSkills).toContain('acrobacia');
+		expect(trainedSkills).toContain('adestramento');
 	});
 });

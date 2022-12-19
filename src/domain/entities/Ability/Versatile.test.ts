@@ -1,4 +1,4 @@
-import {Character} from '../Character';
+import {CharacterFake} from '../CharacterFake';
 import {Versatile} from './Versatile';
 
 describe('Versatile', () => {
@@ -52,18 +52,21 @@ describe('Versatile', () => {
 
 	it('should not allow apply without choices', () => {
 		const versatile = new Versatile();
-
+		const character = new CharacterFake();
 		expect(() => {
-			versatile.apply(new Character({
-				initialAttributes: {
-					strength: 0,
-					charisma: 0,
-					constitution: 0,
-					dexterity: 0,
-					intelligence: 0,
-					wisdom: 0,
-				},
-			}));
+			versatile.apply(character);
 		}).toThrow('MISSING_CHOICES');
+	});
+
+	it('should train choosed skills', () => {
+		const versatile = new Versatile();
+		versatile.addChoice({type: 'skill', name: 'acrobacia'});
+		versatile.addChoice({type: 'skill', name: 'adestramento'});
+
+		const character = new CharacterFake();
+		versatile.apply(character);
+
+		expect(character.getTrainedSkills()).toContain('acrobacia');
+		expect(character.getTrainedSkills()).toContain('adestramento');
 	});
 });

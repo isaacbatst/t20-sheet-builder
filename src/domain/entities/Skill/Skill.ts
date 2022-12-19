@@ -1,35 +1,52 @@
-import type {Attribute, Attributes} from '../Attributes';
+import type {Attribute} from '../Attributes';
+import type {AttributesCharacter} from '../Character';
 import type {AttributeModifier} from '../Race';
+import {SkillName} from './SkillName';
 
 type SkillParams = {
-	character: {getAttributes(): Attributes; getLevel(): number};
+	character: AttributesCharacter;
 	attribute: Attribute;
 	isTrained?: boolean;
 	other?: number;
+	name: string;
 };
 
 export class Skill {
-	readonly halfLevelPoints: number;
+	readonly name: SkillName;
 	readonly attributeModifier: AttributeModifier;
-	readonly trainingPoints: number;
 	readonly otherPoints: number;
+	isTrained: boolean;
 
 	constructor(params: SkillParams) {
+		this.name = new SkillName(params.name);
+		this.isTrained = Boolean(params.isTrained);
+
 		const characterAttributes = params.character.getAttributes();
-		const characterLevel = params.character.getLevel();
 
 		this.attributeModifier = {attribute: params.attribute, modifier: characterAttributes[params.attribute]};
 		this.otherPoints = params.other ?? 0;
-		this.trainingPoints = this.calculateTraining(params.isTrained ?? false, characterLevel);
-		this.halfLevelPoints = this.calculateHalfLevel(characterLevel);
 	}
 
-	getTotal() {
-		return this.halfLevelPoints + this.attributeModifier.modifier + this.trainingPoints + this.otherPoints;
+	train() {
+		if (this.isTrained) {
+			throw new Error('TRAINING_TRAINED_SKILL');
+		}
+
+		this.isTrained = true;
 	}
 
-	private calculateTraining(isTrained: boolean, level: number): number {
-		if (!isTrained) {
+	getIsTrained() {
+		return this.isTrained;
+	}
+
+	getTotal(level = 1) {
+		const halfLevelPoints = this.calculateHalfLevel(level);
+		const trainingPoints = this.calculateTrainingPoints(level);
+		return halfLevelPoints + this.attributeModifier.modifier + trainingPoints + this.otherPoints;
+	}
+
+	private calculateTrainingPoints(level: number): number {
+		if (!this.isTrained) {
 			return 0;
 		}
 

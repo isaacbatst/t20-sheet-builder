@@ -1,4 +1,5 @@
-import type {Character} from '../Character';
+import type {SkilledCharacter} from '../Character';
+import type {SkillNameEnum} from '../Skill/SkillName';
 import {Ability} from './Ability';
 
 export class Versatile extends Ability {
@@ -32,9 +33,15 @@ export class Versatile extends Ability {
 		this.choices.push(newChoice);
 	}
 
-	apply(character: Character): void {
+	apply(character: SkilledCharacter): void {
 		if (this.choices.length !== 2) {
 			throw new Error('MISSING_CHOICES');
 		}
+
+		this.choices.forEach(choice => {
+			if (choice.type === 'skill') {
+				character.trainSkill(choice.name);
+			}
+		});
 	}
 }
