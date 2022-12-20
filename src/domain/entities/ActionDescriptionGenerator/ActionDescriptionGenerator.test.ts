@@ -1,6 +1,8 @@
 import {CharacterFake} from '../CharacterFake';
 import {GeneralPowerNameEnum} from '../Power/GeneralPowerName';
+import {PowerFake} from '../PowerFake';
 import {RaceAbilityNameEnum} from '../RaceAbility/RaceAbilityName';
+import {RaceAbilityFake} from '../RaceAbilityFake';
 import {RaceFake} from '../RaceFake';
 import {Skill} from '../Skill/Skill';
 import {SkillNameEnum} from '../Skill/SkillName';
@@ -17,7 +19,7 @@ describe('ActionDescriptionGenerator', () => {
 			character,
 			{type: 'setInitialAttributes', payload: {attributes: character.attributes}},
 		);
-		expect(description).toBe('Definição inicial de atributos: Força 0, Destreza 0, Constituição -1, Inteligência 0, Sabedoria 0 e Carisma 1.');
+		expect(description).toBe('Definição inicial de atributos: +0 Força, +0 Destreza, -1 Constituição, +0 Inteligência, +0 Sabedoria e +1 Carisma.');
 	});
 
 	it('should generate applyAbility description', () => {
@@ -28,8 +30,8 @@ describe('ActionDescriptionGenerator', () => {
 		const description = ActionDescriptionGenerator.generate(
 			character,
 			{
-				type: 'applyAbility',
-				payload: {name: RaceAbilityNameEnum.versatile},
+				type: 'applyRaceAbility',
+				payload: {ability: new RaceAbilityFake()},
 			},
 		);
 		expect(description).toBe('Habilidade Versátil aplicada.');
@@ -175,10 +177,25 @@ describe('ActionDescriptionGenerator', () => {
 			character,
 			{
 				type: 'trainSkill',
-				payload: {name: SkillNameEnum.fight},
+				payload: {name: SkillNameEnum.fight, source: RaceAbilityNameEnum.versatile},
 			},
 		);
 
-		expect(description).toBe('Perícia treinada: Luta, bônus de treino +2. Atual 2');
+		expect(description).toBe('Versátil: Perícia Luta treinada, bônus de treino +2. Atual 2');
+	});
+
+	it('should generate pickPower description', () => {
+		const character = new CharacterFake();
+		character.skills.fight = new Skill({attribute: 'strength', isTrained: true});
+
+		const description = ActionDescriptionGenerator.generate(
+			character,
+			{
+				type: 'pickPower',
+				payload: {power: new PowerFake(), source: RaceAbilityNameEnum.versatile},
+			},
+		);
+
+		expect(description).toBe('Versátil: poder Esquiva escolhido.');
 	});
 });

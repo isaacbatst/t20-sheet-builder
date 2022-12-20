@@ -17,7 +17,7 @@ export class StringHelper {
 	static getAttributesText(attributes: Partial<Attributes>) {
 		return Object.entries(attributes).reduce<string>((acc, [attribute, value], index, array) => {
 			const separator = TextSeparatorGenerator.generateSeparator(index, array.length);
-			const translatedAttribute = Translator.getTranslatedAttribute(attribute as Attribute);
+			const translatedAttribute = Translator.getAttributeTranslation(attribute as Attribute);
 			const modifierWithSign = StringHelper.addNumberSign(value);
 			return acc + `${modifierWithSign} ${translatedAttribute}${separator}`;
 		}, '');

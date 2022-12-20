@@ -1,7 +1,7 @@
 import type {CharacterInterface} from '../../CharacterInterface';
 import {GeneralPowerFactory} from '../../Power/PowerFactory';
 import type {PowerNameEnum} from '../../Power/PowerName';
-import type {SkillNameEnum} from '../../Skill/SkillName';
+import {SkillNameEnum} from '../../Skill/SkillName';
 import {RaceAbility} from '../RaceAbility';
 import {RaceAbilityNameEnum} from '../RaceAbilityName';
 
@@ -46,12 +46,18 @@ export class Versatile extends RaceAbility {
 
 		this.choices.forEach(choice => {
 			if (choice.type === 'skill') {
-				character.trainSkill(choice.name);
+				character.dispatch({
+					type: 'trainSkill',
+					payload: {
+						source: this.name,
+						name: SkillNameEnum[choice.name],
+					},
+				});
 			}
 
 			if (choice.type === 'power') {
 				const power = GeneralPowerFactory.make(choice.name);
-				power.apply(character);
+				character.dispatch({type: 'pickPower', payload: {power, source: this.name}});
 			}
 		});
 	}

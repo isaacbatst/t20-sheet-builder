@@ -1,7 +1,5 @@
 import type {Action} from '../CharacterAction';
-import {CharacterActionPayload} from '../CharacterAction';
 import {CharacterFake} from '../CharacterFake';
-import {ProgressionStep} from '../ProgressionStep';
 import {SkillNameEnum} from '../Skill/SkillName';
 import {Dodge} from './Dodge';
 import {GeneralPowerNameEnum} from './GeneralPowerName';

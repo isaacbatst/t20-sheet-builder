@@ -1,15 +1,16 @@
 import type {Attribute} from './Attributes';
 import type {GeneralPowerNameEnum} from './Power/GeneralPowerName';
+import type {PowerNameEnum} from './Power/PowerName';
 import type {RaceNameEnum} from './Race/RaceName';
 import type {RaceAbilityNameEnum} from './RaceAbility/RaceAbilityName';
 import type {SkillNameEnum} from './Skill/SkillName';
 import {StringHelper} from './StringHelper';
 import type {Vision} from './Vision';
 
-export type Translatable = Attribute | RaceAbilityNameEnum | SkillNameEnum | GeneralPowerNameEnum | RaceNameEnum | Vision;
+export type Translatable = Attribute | RaceAbilityNameEnum | SkillNameEnum | PowerNameEnum | RaceNameEnum | Vision;
 
 export class Translator {
-	static getTranslatedAttribute(attribute: Attribute, capitalized = true) {
+	static getAttributeTranslation(attribute: Attribute, capitalized = true) {
 		const translatedAttribute = Translator.attributesTranslation[attribute];
 
 		if (capitalized) {
@@ -19,20 +20,24 @@ export class Translator {
 		return translatedAttribute;
 	}
 
-	static getTranslatedAbility(ability: RaceAbilityNameEnum) {
+	static getAbilityTranslation(ability: RaceAbilityNameEnum) {
 		return Translator.abilitiesTranslation[ability];
 	}
 
-	static getTranslatedSkill(skill: SkillNameEnum) {
+	static getSkillTranslation(skill: SkillNameEnum) {
 		return Translator.skillsTranslation[skill];
 	}
 
-	static getTranslatedVision(vision: Vision) {
+	static getVisionTranslation(vision: Vision) {
 		return Translator.visionsTranslation[vision];
 	}
 
-	static getTranslatedRace(race: RaceNameEnum) {
+	static getRaceTranslation(race: RaceNameEnum) {
 		return Translator.racesTranslation[race];
+	}
+
+	static getPowerTranslation(power: PowerNameEnum) {
+		return Translator.powersTranslation[power];
 	}
 
 	static getTranslation(string: Translatable) {
@@ -62,7 +67,7 @@ export class Translator {
 		survival: 'Sobrevivência',
 	};
 
-	private static readonly generalPowersTranslation: Record<GeneralPowerNameEnum, string> = {
+	private static readonly powersTranslation: Record<PowerNameEnum, string> = {
 		dodge: 'Esquiva',
 		swordAndShieldStyle: 'Esttilo Espada e Escudo',
 		twoHandsStyle: 'Estilo de Duas Mãos',
@@ -83,7 +88,7 @@ export class Translator {
 		...Translator.attributesTranslation,
 		...Translator.abilitiesTranslation,
 		...Translator.skillsTranslation,
-		...Translator.generalPowersTranslation,
+		...Translator.powersTranslation,
 		...Translator.visionsTranslation,
 		...Translator.racesTranslation,
 	};

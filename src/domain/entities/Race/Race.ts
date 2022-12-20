@@ -32,7 +32,6 @@ export abstract class Race implements RaceInterface {
 	applyAbilities(character: CharacterInterface): void {
 		Object.values(this.abilities).forEach(ability => {
 			character.dispatch({type: 'applyAbility', payload: {name: ability.name}});
-			ability.apply(character);
 		});
 	}
 

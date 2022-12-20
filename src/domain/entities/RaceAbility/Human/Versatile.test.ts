@@ -1,6 +1,9 @@
+import type {Action} from '../../CharacterAction';
 import {CharacterFake} from '../../CharacterFake';
+import {Dodge} from '../../Power/Dodge';
 import {GeneralPowerNameEnum} from '../../Power/GeneralPowerName';
 import {SkillNameEnum} from '../../Skill/SkillName';
+import {RaceAbilityNameEnum} from '../RaceAbilityName';
 import {Versatile} from './Versatile';
 
 describe('Versatile', () => {
@@ -68,8 +71,21 @@ describe('Versatile', () => {
 		const character = new CharacterFake();
 		versatile.apply(character);
 
-		expect(character.getTrainedSkills()).toContain(SkillNameEnum.acrobatics);
-		expect(character.getTrainedSkills()).toContain(SkillNameEnum.animalHandling);
+		expect(character.dispatch).toHaveBeenCalledWith<[Action<'trainSkill'>]>({
+			type: 'trainSkill',
+			payload: {
+				name: SkillNameEnum.acrobatics,
+				source: RaceAbilityNameEnum.versatile,
+			},
+		});
+
+		expect(character.dispatch).toHaveBeenCalledWith<[Action<'trainSkill'>]>({
+			type: 'trainSkill',
+			payload: {
+				name: SkillNameEnum.acrobatics,
+				source: RaceAbilityNameEnum.versatile,
+			},
+		});
 	});
 
 	it('should apply chosen power', () => {
@@ -80,13 +96,20 @@ describe('Versatile', () => {
 		const character = new CharacterFake();
 		versatile.apply(character);
 
-		const skills = character.getSkills();
-
-		expect(character.getTrainedSkills()).toContain(SkillNameEnum.acrobatics);
-		expect(character.getDefenseOtherModifiers()).toContainEqual({
-			sourceName: GeneralPowerNameEnum.dodge,
-			value: 2,
+		expect(character.dispatch).toHaveBeenCalledWith<[Action<'trainSkill'>]>({
+			type: 'trainSkill',
+			payload: {
+				name: SkillNameEnum.acrobatics,
+				source: RaceAbilityNameEnum.versatile,
+			},
 		});
-		expect(skills.reflexes.modifierOthers.getTotal()).toBe(2);
+
+		expect(character.dispatch).toHaveBeenCalledWith<[Action<'pickPower'>]>({
+			type: 'pickPower',
+			payload: {
+				power: new Dodge(),
+				source: RaceAbilityNameEnum.versatile,
+			},
+		});
 	});
 });

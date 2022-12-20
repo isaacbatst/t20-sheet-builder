@@ -1,7 +1,8 @@
 import type {Attributes} from './Attributes';
 import type {CharacterInterface} from './CharacterInterface';
 import type {Modifier} from './ModifierOthers';
-import type {RaceAbilityNameEnum} from './RaceAbility/RaceAbilityName';
+import type {PowerInterface} from './Power/Power';
+import type {RaceAbilityInterface} from './RaceAbility/RaceAbility';
 import type {RaceInterface} from './RaceInterface';
 import type {SkillNameEnum} from './Skill/SkillName';
 import type {Translatable} from './Translator';
@@ -12,10 +13,11 @@ type CharacterActionsToHandlers = {
 	addOtherModifierToSkill(payload: Modifier & {skill: SkillNameEnum}): void;
 	addOtherModifierToDefense(payload: Modifier): void;
 	chooseRace(payload: {race: RaceInterface}): void;
-	trainSkill(payload: {name: SkillNameEnum}): void;
+	trainSkill(payload: {name: SkillNameEnum; source: Translatable}): void;
 	changeVision(payload: {vision: Vision; source: Translatable}): void;
 	applyRaceModifiers(payload: {modifiers: Partial<Attributes>; updatedAttributes: Partial<Attributes>}): void;
-	applyAbility(payload: {name: RaceAbilityNameEnum}): void;
+	applyRaceAbility(payload: {ability: RaceAbilityInterface}): void;
+	pickPower(payload: {power: PowerInterface; source: Translatable}): void;
 };
 
 export type CharacterAction = keyof CharacterActionsToHandlers;

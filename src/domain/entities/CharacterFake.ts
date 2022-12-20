@@ -17,12 +17,12 @@ import {Vision} from './Vision';
 export class CharacterFake implements CharacterInterface {
 	public level = 1;
 	public attributes: Attributes = {
-		charisma: 0,
-		constitution: 0,
-		dexterity: 0,
-		intelligence: 0,
 		strength: 0,
+		dexterity: 0,
+		constitution: 0,
+		intelligence: 0,
 		wisdom: 0,
+		charisma: 0,
 	};
 
 	public vision: Vision = Vision.default;

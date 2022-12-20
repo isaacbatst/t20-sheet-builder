@@ -37,14 +37,15 @@ export class Character implements CharacterInterface {
 		changeVision: this.changeVision,
 		setInitialAttributes: this.setInitialAttributes,
 		applyRaceModifiers: this.applyRaceModifiers,
-		applyAbility: this.applyAbility,
+		applyRaceAbility: this.applyRaceAbility,
+		pickPower: this.pickPower,
 	};
 
 	constructor(
 		params: CharacterParams,
 	) {
 		this.context = params.context ?? new BuildContext();
-		this.skills = InitialSkillsGenerator.generate(this.getAttributes());
+		this.skills = InitialSkillsGenerator.generate();
 
 		this.dispatch({type: 'setInitialAttributes', payload: {attributes: params.initialAttributes}});
 	}
@@ -92,9 +93,13 @@ export class Character implements CharacterInterface {
 	}
 
 	getTrainedSkills(): SkillNameEnum[] {
-		return Object.values(this.skills)
-			.filter(skill => skill.getIsTrained())
-			.map(skill => skill.name.value);
+		return Object.entries(this.skills)
+			.filter(([name, skill]) => skill.getIsTrained())
+			.map(([name]) => name as SkillNameEnum);
+	}
+
+	private pickPower(payload: CharacterActionPayload<'pickPower'>) {
+		payload.power.apply(this);
 	}
 
 	private setInitialAttributes(payload: CharacterActionPayload<'setInitialAttributes'>) {
@@ -126,10 +131,13 @@ export class Character implements CharacterInterface {
 	}
 
 	private applyRaceModifiers(payload: CharacterActionPayload<'applyRaceModifiers'>) {
-		this.attributes = payload.updatedAttributes;
+		this.attributes = {
+			...this.attributes,
+			...payload.updatedAttributes,
+		};
 	}
 
-	private applyAbility(payload: CharacterActionPayload<'applyAbility'>) {
-		this.abilities.push(payload.name);
+	private applyRaceAbility(payload: CharacterActionPayload<'applyRaceAbility'>) {
+		payload.ability.apply(this);
 	}
 }
