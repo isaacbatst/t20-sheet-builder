@@ -1,4 +1,7 @@
 import type {Attribute, Attributes} from '../Attributes';
+import {BuildContext} from '../BuildContext';
+import type {CharacterInterface} from '../CharacterInterface';
+import type {Context} from '../Context';
 import {ModifierOthers} from '../ModifierOthers';
 import type {AttributeModifier} from '../Race/Race';
 import {SkillName} from './SkillName';
@@ -44,10 +47,10 @@ export class Skill {
 		return this.isTrained;
 	}
 
-	getTotal(level = 1) {
+	getTotal(level = 1, context: Context = new BuildContext()) {
 		const halfLevelPoints = this.calculateHalfLevel(level);
 		const trainingPoints = this.calculateTrainingPoints(level);
-		const otherModifiersSum = this.modifierOthers.getTotal();
+		const otherModifiersSum = this.modifierOthers.getTotal(context);
 		return halfLevelPoints + this.attributeModifier.modifier + trainingPoints + otherModifiersSum;
 	}
 

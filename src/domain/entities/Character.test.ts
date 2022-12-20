@@ -117,6 +117,6 @@ describe('Character', () => {
 		);
 
 		character.chooseRace(human);
-		expect(character.progressionSteps[2].description).toBe('Esquiva: você recebe +2 na defesa (12) e reflexes (2).');
+		expect(character.progressionSteps[2].description).toBe('Esquiva: você recebe +2 na defesa (12) e reflexos (2).');
 	});
 });

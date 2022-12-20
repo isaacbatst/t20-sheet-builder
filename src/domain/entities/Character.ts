@@ -1,5 +1,7 @@
 import type {Attributes} from './Attributes';
+import {BuildContext} from './BuildContext';
 import type {CharacterInterface} from './CharacterInterface';
+import type {Context} from './Context';
 import {Defense} from './Defense';
 import {ProgressionStep} from './ProgressionStep';
 import type {RaceInterface} from './RaceInterface';
@@ -8,9 +10,11 @@ import type {Skill} from './Skill/Skill';
 import type {SkillNameEnum} from './Skill/SkillName';
 import {SkillName} from './Skill/SkillName';
 import {Step} from './StepDescriptionGenerator/StepDescriptionGenerator';
+import {Vision} from './Vision';
 
 type CharacterParams = {
 	initialAttributes: Attributes;
+	context?: Context;
 };
 
 export class Character implements CharacterInterface {
@@ -19,15 +23,17 @@ export class Character implements CharacterInterface {
 	private race?: RaceInterface;
 	// eslint-disable-next-line @typescript-eslint/prefer-readonly
 	private level = 1;
-	private readonly skills: Record<SkillNameEnum, Skill>;
+	private vision: Vision = Vision.default;
 	private readonly defense = new Defense();
+	private readonly skills: Record<SkillNameEnum, Skill>;
+	private readonly context: Context;
 
 	constructor(
 		params: CharacterParams,
 	) {
 		this.attributes = params.initialAttributes;
+		this.context = params.context ?? new BuildContext();
 		this.progressionSteps.push(new ProgressionStep(Step.initialAttributesDefinition, this));
-
 		this.skills = InitialSkillsGenerator.generate(this);
 	}
 
@@ -57,12 +63,24 @@ export class Character implements CharacterInterface {
 		this.progressionSteps.push(new ProgressionStep(step, this));
 	}
 
+	setVision(vision: Vision): void {
+		this.vision = vision;
+	}
+
+	getVision(): Vision {
+		return this.vision;
+	}
+
+	getContext(): Context {
+		return this.context;
+	}
+
 	getDefense(): Defense {
 		return this.defense;
 	}
 
 	getDefenseTotal(): number {
-		return this.defense.getTotal(this.attributes.dexterity, 0, 0);
+		return this.defense.getTotal(this.attributes.dexterity, 0, 0, this.context);
 	}
 
 	getAttributes(): Attributes {

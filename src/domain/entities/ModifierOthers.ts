@@ -1,4 +1,9 @@
-type Modifier = {
+import {BuildContext} from './BuildContext';
+import type {Context} from './Context';
+import type {InGameContext} from './InGameContext';
+
+export type Modifier = {
+	condition?: (context: InGameContext) => boolean;
 	sourceName: string;
 	value: number;
 };
@@ -7,11 +12,8 @@ export class ModifierOthers {
 	readonly modifiers: Modifier[] = [];
 	constructor(private readonly modifierRepeatedError: string) {}
 
-	getTotal() {
-		const total = this.modifiers
-			.reduce<number>((acc, modifier) => modifier.value + acc, 0);
-
-		return total;
+	getTotal(context: Context = new BuildContext()) {
+		return context.getModifierOthersTotal(this.modifiers);
 	}
 
 	add(newModifier: Modifier) {

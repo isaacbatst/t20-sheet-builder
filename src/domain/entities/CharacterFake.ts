@@ -1,5 +1,8 @@
 import type {Attributes} from './Attributes';
-import type {CharacterInterface} from './CharacterInterface';
+import {BuildContext} from './BuildContext';
+import type {CharacterInterface, OtherModifierCondition} from './CharacterInterface';
+import type {Context} from './Context';
+import type {Modifier} from './ModifierOthers';
 import {ProgressionStep} from './ProgressionStep';
 import {RaceFake} from './RaceFake';
 import type {RaceInterface} from './RaceInterface';
@@ -21,6 +24,7 @@ export class CharacterFake implements CharacterInterface {
 	};
 
 	public vision: Vision = Vision.default;
+	public context: Context = new BuildContext();
 
 	readonly progressionSteps: ProgressionStep[] = [];
 
@@ -29,7 +33,7 @@ export class CharacterFake implements CharacterInterface {
 	public skills: Record<SkillNameEnum, Skill> = InitialSkillsGenerator.generate(this);
 
 	private readonly trainedSkills: SkillNameEnum[] = [];
-	private readonly defenseOtherModifiers: Array<{sourceName: string; value: number}> = [];
+	private readonly defenseOtherModifiers: Modifier[] = [];
 
 	saveStep(step: Step) {
 		this.progressionSteps.push(new ProgressionStep(step, this));
@@ -39,12 +43,12 @@ export class CharacterFake implements CharacterInterface {
 		this.trainedSkills.push(name);
 	}
 
-	addOtherModifierToDefense(sourceName: string, value: number): void {
-		this.defenseOtherModifiers.push({sourceName, value});
+	addOtherModifierToDefense(sourceName: string, value: number, condition?: OtherModifierCondition): void {
+		this.defenseOtherModifiers.push({sourceName, value, condition});
 	}
 
-	addOtherModifierToSkill(sourceName: string, value: number, skill: SkillNameEnum): void {
-		this.skills[skill].modifierOthers.add({sourceName, value});
+	addOtherModifierToSkill(sourceName: string, value: number, skill: SkillNameEnum, condition?: OtherModifierCondition): void {
+		this.skills[skill].modifierOthers.add({sourceName, value, condition});
 	}
 
 	setVision(vision: Vision): void {
@@ -53,6 +57,10 @@ export class CharacterFake implements CharacterInterface {
 
 	getRace(): RaceInterface | undefined {
 		return this.race;
+	}
+
+	getContext(): Context {
+		return this.context;
 	}
 
 	getVision(): Vision {

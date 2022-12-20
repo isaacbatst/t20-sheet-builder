@@ -1,5 +1,6 @@
 import type {Attributes} from './Attributes';
-import type {Defense} from './Defense';
+import type {Context} from './Context';
+import type {InGameContext} from './InGameContext';
 import type {ProgressionStep} from './ProgressionStep';
 import type {RaceInterface} from './RaceInterface';
 import type {Skill} from './Skill/Skill';
@@ -21,9 +22,11 @@ export type AttributesCharacter = {
 	getAttributes(): Attributes;
 };
 
+export type OtherModifierCondition = (context: InGameContext) => boolean;
+
 export type OtherModifierAdderCharacter = {
-	addOtherModifierToDefense(sourceName: string, modifier: number): void;
-	addOtherModifierToSkill(sourceName: string, modifier: number, skill: SkillNameEnum): void;
+	addOtherModifierToDefense(sourceName: string, modifier: number, condition?: OtherModifierCondition): void;
+	addOtherModifierToSkill(sourceName: string, modifier: number, skill: SkillNameEnum, condition?: OtherModifierCondition): void;
 };
 
 export type ProgressingCharacter = {
@@ -44,8 +47,10 @@ export type VisionCharacter = {
 	setVision(vision: Vision): void;
 };
 
-export type InMapCharacter = {
-	getTerrain(): {isUnderground: boolean};
+export type Location = {isUnderground: boolean};
+
+export type ContextCharacter = {
+	getContext(): Context;
 };
 
 export type CharacterInterface = SkilledCharacter
@@ -55,4 +60,5 @@ export type CharacterInterface = SkilledCharacter
 & ProgressingCharacter
 & RaceCharacter
 & DefensibleCharacter
-& VisionCharacter;
+& VisionCharacter
+& ContextCharacter;

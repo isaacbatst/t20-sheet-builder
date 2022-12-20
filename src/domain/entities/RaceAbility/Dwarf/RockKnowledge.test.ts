@@ -1,7 +1,6 @@
 import {CharacterFake} from '../../CharacterFake';
-import type {InMapCharacter} from '../../CharacterInterface';
+import {InGameContext} from '../../InGameContext';
 import {Vision} from '../../Vision';
-import {RaceAbilityNameEnum} from '../RaceAbilityName';
 import {RockKnowledge} from './RockKnowledge';
 
 describe('RockKnowledge', () => {
@@ -13,25 +12,42 @@ describe('RockKnowledge', () => {
 		expect(character.getVision()).toBe(Vision.dark);
 	});
 
-	it('should provide +2 at perception and survival', () => {
+	it('should not activate +2 at perception and survival in build context', () => {
 		const rockKnowledge = new RockKnowledge();
 		const character = new CharacterFake();
 		rockKnowledge.apply(character);
 
 		const {perception, survival} = character.getSkills();
 
-		expect(perception.modifierOthers.modifiers[0]).toEqual(
-			expect.objectContaining({
-				sourceName: RaceAbilityNameEnum.rockKnowledge,
-				value: 2,
-			}),
-		);
+		expect(perception.getTotal()).toBe(0);
+		expect(survival.getTotal()).toBe(0);
+	});
 
-		expect(survival.modifierOthers.modifiers[0]).toEqual(
-			expect.objectContaining({
-				sourceName: RaceAbilityNameEnum.rockKnowledge,
-				value: 2,
-			}),
-		);
+	it('should not activate +2 at perception and survival in game context outside underground', () => {
+		const rockKnowledge = new RockKnowledge();
+		const character = new CharacterFake();
+		character.context = new InGameContext({isUnderground: false});
+		rockKnowledge.apply(character);
+
+		const {perception, survival} = character.getSkills();
+		const level = character.getLevel();
+		const context = character.getContext();
+
+		expect(perception.getTotal(level, context)).toBe(0);
+		expect(survival.getTotal(level, context)).toBe(0);
+	});
+
+	it('should activate +2 at perception and survival in game context inside underground', () => {
+		const rockKnowledge = new RockKnowledge();
+		const character = new CharacterFake();
+		character.context = new InGameContext({isUnderground: true});
+		rockKnowledge.apply(character);
+
+		const {perception, survival} = character.getSkills();
+		const level = character.getLevel();
+		const context = character.getContext();
+
+		expect(perception.getTotal(level, context)).toBe(2);
+		expect(survival.getTotal(level, context)).toBe(2);
 	});
 });

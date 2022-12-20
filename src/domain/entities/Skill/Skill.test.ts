@@ -1,8 +1,6 @@
 import {CharacterFake} from '../CharacterFake';
 import {Skill} from './Skill';
 
-const attributes = {};
-
 describe('Skill', () => {
 	it('should calculate level 1 untrained skill', () => {
 		const character = new CharacterFake();
