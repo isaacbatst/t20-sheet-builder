@@ -13,6 +13,6 @@ export class ProgressionStep<T extends CharacterAction> implements ProgressionSt
 		readonly action: Action<T>,
 		character: CharacterInterface,
 	) {
-		this.description = ActionDescriptionGenerator.generate(action, character);
+		this.description = ActionDescriptionGenerator.generate(character, action);
 	}
 }

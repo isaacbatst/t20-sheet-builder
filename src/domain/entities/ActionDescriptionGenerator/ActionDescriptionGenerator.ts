@@ -2,7 +2,6 @@ import type {Action, CharacterAction, CharacterActionDescriptionGenerators} from
 import type {CharacterInterface} from '../CharacterInterface';
 import {StringHelper} from '../StringHelper';
 import {Translator} from '../Translator';
-import {InitialAttributesDefinition} from './InitialAttributesDefinition';
 
 export abstract class ActionDescriptionGenerator {
 	static generate<T extends CharacterAction>(
@@ -14,7 +13,7 @@ export abstract class ActionDescriptionGenerator {
 	}
 
 	private static readonly actionToDescriptionGenerate: CharacterActionDescriptionGenerators = {
-		setInitialAttributes: InitialAttributesDefinition.generate,
+		setInitialAttributes: (character, action) => `Definição inicial de atributos: ${StringHelper.getAttributesText(action.payload.attributes)}`,
 		addOtherModifierToDefense: (character, action) => `${Translator.getTranslation(action.payload.source)}: ${StringHelper.addNumberSign(action.payload.value)} Defesa aplicado ao modificador "outros". Atual ${character.getDefenseTotal()}.${action.payload.condition ? ` Ativação em: ${action.payload.condition.description}.` : ''}`,
 		addOtherModifierToSkill: (character, {payload: {skill, value, source, condition}}) => `${Translator.getTranslation(source)}: ${StringHelper.addNumberSign(value)} ${Translator.getTranslatedSkill(skill)} aplicado ao modificador "outros". Atual ${character.getSkillTotal(skill)}.${condition ? ` Ativação em: ${condition.description}.` : ''}`,
 		applyAbility: (_character, action) => `Habilidade ${Translator.getTranslatedAbility(action.payload.name)} aplicada.`,

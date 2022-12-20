@@ -28,18 +28,18 @@ export class CharacterFake implements CharacterInterface {
 	public vision: Vision = Vision.default;
 	public context: Context = new BuildContext();
 
-	readonly progressionSteps: Array<ProgressionStep<CharacterAction>> = [];
+	readonly progressionSteps: Array<ProgressionStepFake<CharacterAction>> = [];
 
 	public defenseTotal = 10;
 	public race = new RaceFake();
 	public skills: Record<SkillNameEnum, Skill> = InitialSkillsGenerator.generate();
 
+	dispatch = jest.fn(<T extends CharacterAction>(action: Action<T>) => {
+		this.progressionSteps.push(new ProgressionStepFake(action));
+	});
+
 	private readonly trainedSkills: SkillNameEnum[] = [];
 	private readonly defenseOtherModifiers: Modifier[] = [];
-
-	dispatch<T extends CharacterAction>(action: Action<T>) {
-		this.progressionSteps.push(new ProgressionStepFake(action));
-	}
 
 	setVision(vision: Vision): void {
 		this.vision = vision;
