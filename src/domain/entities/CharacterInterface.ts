@@ -2,6 +2,7 @@ import type {Attributes} from './Attributes';
 import type {Action, CharacterAction} from './CharacterAction';
 import type {Context} from './Context';
 import type {InGameContext} from './InGameContext';
+import type {ProgressionStepInterface} from './ProgressionStep';
 import type {RaceInterface} from './RaceInterface';
 import type {Skill} from './Skill/Skill';
 import type {SkillNameEnum} from './Skill/SkillName';
@@ -11,6 +12,7 @@ export type SkilledCharacter = {
 	getTrainedSkills(): SkillNameEnum[];
 	getSkills(): Record<SkillNameEnum, Skill>;
 	getSkillTotal(skill: SkillNameEnum): number;
+	getSkillTrainingPoints(skill: SkillNameEnum): number;
 };
 
 export type LeveledCharacter = {
@@ -21,12 +23,11 @@ export type AttributesCharacter = {
 	getAttributes(): Attributes;
 };
 
-export type OtherModifierCondition = (context: InGameContext) => boolean;
-
 export type CharacterDispatch = <T extends CharacterAction>(action: Action<T>) => void;
 
 export type ProgressingCharacter = {
 	dispatch: CharacterDispatch;
+	progressionSteps: ProgressionStepInterface[];
 };
 
 export type RaceCharacter = {

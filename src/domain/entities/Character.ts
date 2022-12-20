@@ -106,11 +106,11 @@ export class Character implements CharacterInterface {
 	}
 
 	private addOtherModifierToDefense(payload: CharacterActionPayload<'addOtherModifierToDefense'>) {
-		this.defense.modifierOthers.add({sourceName: payload.source, value: payload.value, condition: payload.condition});
+		this.defense.modifierOthers.add({source: payload.source, value: payload.value, condition: payload.condition});
 	}
 
 	private addOtherModifierToSkill(payload: CharacterActionPayload<'addOtherModifierToSkill'>): void {
-		this.skills[payload.skill].modifierOthers.add({sourceName: payload.source, value: payload.value, condition: payload.condition});
+		this.skills[payload.skill].modifierOthers.add({source: payload.source, value: payload.value, condition: payload.condition});
 	}
 
 	private chooseRace(payload: CharacterActionPayload<'chooseRace'>) {

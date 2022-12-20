@@ -68,7 +68,7 @@ describe('Skill', () => {
 			characterAttributes: character.getAttributes(),
 			isTrained: true,
 			attribute: 'dexterity',
-			otherModifiers: [{sourceName: 'any-source', value: 2}],
+			otherModifiers: [{source: 'any-source', value: 2}],
 			name: 'acrobatics',
 		});
 
@@ -86,7 +86,7 @@ describe('Skill', () => {
 			characterAttributes: character.getAttributes(),
 			isTrained: true,
 			attribute: 'dexterity',
-			otherModifiers: [{sourceName: 'any-source', value: 2}],
+			otherModifiers: [{source: 'any-source', value: 2}],
 			name: 'acrobatics',
 		});
 

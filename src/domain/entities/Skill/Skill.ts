@@ -1,22 +1,17 @@
 import type {Attribute, Attributes} from '../Attributes';
 import {BuildContext} from '../BuildContext';
-import type {CharacterInterface} from '../CharacterInterface';
 import type {Context} from '../Context';
+import type {Modifier} from '../ModifierOthers';
 import {ModifierOthers} from '../ModifierOthers';
-import type {AttributeModifier} from '../Race/Race';
-import {SkillName} from './SkillName';
 
 export type SkillParams = {
-	characterAttributes: Attributes;
 	attribute: Attribute;
 	isTrained?: boolean;
-	otherModifiers?: Array<{sourceName: string; value: number}>;
-	name: string;
+	otherModifiers?: Modifier[];
 };
 
 export class Skill {
-	readonly name: SkillName;
-	readonly attributeModifier: AttributeModifier;
+	readonly attribute: Attribute;
 	readonly modifierOthers: ModifierOthers = new ModifierOthers(Skill.repeatedOtherModifierError);
 	private isTrained: boolean;
 
@@ -25,10 +20,8 @@ export class Skill {
 	}
 
 	constructor(params: SkillParams) {
-		this.name = new SkillName(params.name);
 		this.isTrained = Boolean(params.isTrained);
-
-		this.attributeModifier = {attribute: params.attribute, modifier: params.characterAttributes[params.attribute]};
+		this.attribute = params.attribute;
 
 		params.otherModifiers?.forEach(modifier => {
 			this.modifierOthers.add(modifier);
@@ -47,11 +40,15 @@ export class Skill {
 		return this.isTrained;
 	}
 
-	getTotal(level = 1, context: Context = new BuildContext()) {
+	getTotal(attributes: Attributes, level = 1, context: Context = new BuildContext()) {
 		const halfLevelPoints = this.calculateHalfLevel(level);
 		const trainingPoints = this.calculateTrainingPoints(level);
 		const otherModifiersSum = this.modifierOthers.getTotal(context);
-		return halfLevelPoints + this.attributeModifier.modifier + trainingPoints + otherModifiersSum;
+		return halfLevelPoints + attributes[this.attribute] + trainingPoints + otherModifiersSum;
+	}
+
+	getTrainingPoints(level = 1) {
+		return this.calculateTrainingPoints(level);
 	}
 
 	private calculateTrainingPoints(level: number): number {

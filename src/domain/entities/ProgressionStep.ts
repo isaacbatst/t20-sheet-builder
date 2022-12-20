@@ -1,14 +1,18 @@
 import type {Action, CharacterAction} from './CharacterAction';
 import type {CharacterInterface} from './CharacterInterface';
-import {StepDescriptionGenerator} from './StepDescriptionGenerator/StepDescriptionGenerator';
+import {ActionDescriptionGenerator} from './ActionDescriptionGenerator/ActionDescriptionGenerator';
 
-export class ProgressionStep<T extends CharacterAction> {
+export type ProgressionStepInterface = {
+	description: string;
+};
+
+export class ProgressionStep<T extends CharacterAction> implements ProgressionStepInterface {
 	readonly description: string;
 
 	constructor(
 		readonly action: Action<T>,
 		character: CharacterInterface,
 	) {
-		this.description = StepDescriptionGenerator.generate(action, character);
+		this.description = ActionDescriptionGenerator.generate(action, character);
 	}
 }

@@ -11,7 +11,7 @@ export class InGameContext extends Context {
 	}
 
 	getContextualValue(modifier: Modifier): number {
-		if (modifier.condition && !modifier?.condition(this)) {
+		if (modifier.condition && !modifier?.condition.verify(this)) {
 			return 0;
 		}
 

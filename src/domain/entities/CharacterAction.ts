@@ -1,19 +1,20 @@
 import type {Attributes} from './Attributes';
-import type {CharacterInterface, OtherModifierCondition} from './CharacterInterface';
-import type {AttributeModifier} from './Race/Race';
+import type {CharacterInterface} from './CharacterInterface';
+import type {Modifier} from './ModifierOthers';
 import type {RaceAbilityNameEnum} from './RaceAbility/RaceAbilityName';
 import type {RaceInterface} from './RaceInterface';
 import type {SkillNameEnum} from './Skill/SkillName';
+import type {Translatable} from './Translator';
 import type {Vision} from './Vision';
 
 type CharacterActionsToHandlers = {
 	setInitialAttributes(payload: {attributes: Attributes}): void;
-	addOtherModifierToSkill(payload: {source: string; value: number; skill: SkillNameEnum; condition?: OtherModifierCondition}): void;
-	addOtherModifierToDefense(payload: {source: string; value: number; condition?: OtherModifierCondition}): void;
+	addOtherModifierToSkill(payload: Modifier & {skill: SkillNameEnum}): void;
+	addOtherModifierToDefense(payload: Modifier): void;
 	chooseRace(payload: {race: RaceInterface}): void;
-	trainSkill(payload: {name: string}): void;
-	changeVision(payload: {vision: Vision}): void;
-	applyRaceModifiers(payload: {modifiers: AttributeModifier[]; updatedAttributes: Attributes}): void;
+	trainSkill(payload: {name: SkillNameEnum}): void;
+	changeVision(payload: {vision: Vision; source: Translatable}): void;
+	applyRaceModifiers(payload: {modifiers: Partial<Attributes>; updatedAttributes: Partial<Attributes>}): void;
 	applyAbility(payload: {name: RaceAbilityNameEnum}): void;
 };
 

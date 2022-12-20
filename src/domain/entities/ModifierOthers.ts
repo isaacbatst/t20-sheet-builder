@@ -1,10 +1,16 @@
 import {BuildContext} from './BuildContext';
 import type {Context} from './Context';
 import type {InGameContext} from './InGameContext';
+import type {Translatable} from './Translator';
+
+export type ModifierCondition = {
+	description: string;
+	verify: (context: InGameContext) => boolean;
+};
 
 export type Modifier = {
-	condition?: (context: InGameContext) => boolean;
-	sourceName: string;
+	condition?: ModifierCondition;
+	source: Translatable;
 	value: number;
 };
 
@@ -17,7 +23,7 @@ export class ModifierOthers {
 	}
 
 	add(newModifier: Modifier) {
-		const isRepeated = this.modifiers.some(otherModifier => otherModifier.sourceName === newModifier.sourceName);
+		const isRepeated = this.modifiers.some(otherModifier => otherModifier.source === newModifier.source);
 
 		if (isRepeated) {
 			throw new Error(this.modifierRepeatedError);

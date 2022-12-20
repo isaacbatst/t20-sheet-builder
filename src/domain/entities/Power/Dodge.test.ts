@@ -1,6 +1,6 @@
 import {CharacterFake} from '../CharacterFake';
 import {ProgressionStep} from '../ProgressionStep';
-import {Step} from '../StepDescriptionGenerator/StepDescriptionGenerator';
+import {Step} from '../ActionDescriptionGenerator/ActionDescriptionGenerator';
 import {Dodge} from './Dodge';
 import {GeneralPowerNameEnum} from './GeneralPowerName';
 

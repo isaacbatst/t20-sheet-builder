@@ -9,10 +9,10 @@ export class Dwarf extends Race {
 		rockKnowledge: new RockKnowledge(),
 	};
 
-	readonly attributeModifiers: AttributeModifier[] = [
-		{attribute: 'dexterity', modifier: -1},
-		{attribute: 'constitution', modifier: 2},
-		{attribute: 'wisdom', modifier: 1},
+	readonly modifiers: AttributeModifier[] = [
+		{attribute: 'dexterity', value: -1},
+		{attribute: 'constitution', value: 2},
+		{attribute: 'wisdom', value: 1},
 	];
 
 	constructor() {

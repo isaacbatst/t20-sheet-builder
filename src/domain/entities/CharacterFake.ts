@@ -1,15 +1,17 @@
 import type {Attributes} from './Attributes';
 import {BuildContext} from './BuildContext';
-import type {CharacterInterface, OtherModifierCondition} from './CharacterInterface';
+import type {Action, CharacterAction} from './CharacterAction';
+import type {CharacterInterface} from './CharacterInterface';
 import type {Context} from './Context';
-import type {Modifier} from './ModifierOthers';
-import {ProgressionStep} from './ProgressionStep';
+import type {Modifier, ModifierCondition} from './ModifierOthers';
+import type {ProgressionStep} from './ProgressionStep';
+import {ProgressionStepFake} from './ProgressionStepFake';
 import {RaceFake} from './RaceFake';
 import type {RaceInterface} from './RaceInterface';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
 import type {Skill} from './Skill/Skill';
 import type {SkillNameEnum} from './Skill/SkillName';
-import type {Step} from './StepDescriptionGenerator/StepDescriptionGenerator';
+import type {Translatable} from './Translator';
 import {Vision} from './Vision';
 
 export class CharacterFake implements CharacterInterface {
@@ -26,33 +28,17 @@ export class CharacterFake implements CharacterInterface {
 	public vision: Vision = Vision.default;
 	public context: Context = new BuildContext();
 
-	readonly progressionSteps: ProgressionStep[] = [];
+	readonly progressionSteps: Array<ProgressionStep<CharacterAction>> = [];
 
 	public defenseTotal = 10;
 	public race = new RaceFake();
-	public skills: Record<SkillNameEnum, Skill> = InitialSkillsGenerator.generate(this);
+	public skills: Record<SkillNameEnum, Skill> = InitialSkillsGenerator.generate();
 
 	private readonly trainedSkills: SkillNameEnum[] = [];
 	private readonly defenseOtherModifiers: Modifier[] = [];
 
-	saveStep(step: Step) {
-		this.progressionSteps.push(new ProgressionStep(step, this));
-	}
-
-	trainSkill(name: SkillNameEnum): void {
-		this.trainedSkills.push(name);
-	}
-
-	getSkillTotal(skill: SkillNameEnum): number {
-		return this.skills[skill].getTotal(this.level, this.context);
-	}
-
-	addOtherModifierToDefense(sourceName: string, value: number, condition?: OtherModifierCondition): void {
-		this.defenseOtherModifiers.push({sourceName, value, condition});
-	}
-
-	addOtherModifierToSkill(sourceName: string, value: number, skill: SkillNameEnum, condition?: OtherModifierCondition): void {
-		this.skills[skill].modifierOthers.add({sourceName, value, condition});
+	dispatch<T extends CharacterAction>(action: Action<T>) {
+		this.progressionSteps.push(new ProgressionStepFake(action));
 	}
 
 	setVision(vision: Vision): void {
@@ -93,5 +79,25 @@ export class CharacterFake implements CharacterInterface {
 
 	getDefenseOtherModifiers() {
 		return this.defenseOtherModifiers;
+	}
+
+	getSkillTotal(skill: SkillNameEnum): number {
+		return this.skills[skill].getTotal(this.attributes, this.level, this.context);
+	}
+
+	getSkillTrainingPoints(skill: SkillNameEnum): number {
+		return this.skills[skill].getTrainingPoints(this.level);
+	}
+
+	private trainSkill(name: SkillNameEnum): void {
+		this.trainedSkills.push(name);
+	}
+
+	private addOtherModifierToDefense(sourceName: Translatable, value: number, condition?: ModifierCondition): void {
+		this.defenseOtherModifiers.push({source: sourceName, value, condition});
+	}
+
+	private addOtherModifierToSkill(sourceName: Translatable, value: number, skill: SkillNameEnum, condition?: ModifierCondition): void {
+		this.skills[skill].modifierOthers.add({source: sourceName, value, condition});
 	}
 }
