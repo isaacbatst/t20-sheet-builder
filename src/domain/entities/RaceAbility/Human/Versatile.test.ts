@@ -1,6 +1,6 @@
-import {CharacterFake} from '../CharacterFake';
-import {GeneralPowerNameEnum} from '../Power/GeneralPowerName';
-import {SkillNameEnum} from '../Skill/SkillName';
+import {CharacterFake} from '../../CharacterFake';
+import {GeneralPowerNameEnum} from '../../Power/GeneralPowerName';
+import {SkillNameEnum} from '../../Skill/SkillName';
 import {Versatile} from './Versatile';
 
 describe('Versatile', () => {

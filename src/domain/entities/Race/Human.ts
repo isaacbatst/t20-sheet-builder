@@ -1,7 +1,7 @@
 import type {Attribute} from '../Attributes';
 import type {CharacterInterface} from '../CharacterInterface';
-import type {VersatileChoice} from '../RaceAbility/Versatile';
-import {Versatile} from '../RaceAbility/Versatile';
+import type {VersatileChoice} from '../RaceAbility/Human/Versatile';
+import {Versatile} from '../RaceAbility/Human/Versatile';
 import {SelectableAttributesRace} from '../SelectableAttributesRace';
 import {RaceNameEnum} from './RaceName';
 

@@ -1,9 +1,9 @@
-import type {CharacterInterface} from '../CharacterInterface';
-import {GeneralPowerFactory} from '../Power/PowerFactory';
-import type {PowerNameEnum} from '../Power/PowerName';
-import type {SkillNameEnum} from '../Skill/SkillName';
-import {RaceAbility} from './RaceAbility';
-import {RaceAbilityNameEnum} from './RaceAbilityName';
+import type {CharacterInterface} from '../../CharacterInterface';
+import {GeneralPowerFactory} from '../../Power/PowerFactory';
+import type {PowerNameEnum} from '../../Power/PowerName';
+import type {SkillNameEnum} from '../../Skill/SkillName';
+import {RaceAbility} from '../RaceAbility';
+import {RaceAbilityNameEnum} from '../RaceAbilityName';
 
 export type VersatileChoice =
 	{type: 'skill'; name: SkillNameEnum} |
