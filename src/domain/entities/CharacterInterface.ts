@@ -5,6 +5,7 @@ import type {RaceInterface} from './RaceInterface';
 import type {Skill} from './Skill/Skill';
 import type {SkillNameEnum} from './Skill/SkillName';
 import type {Step} from './StepDescriptionGenerator/StepDescriptionGenerator';
+import type {Vision} from './Vision';
 
 export type SkilledCharacter = {
 	getTrainedSkills(): SkillNameEnum[];
@@ -38,10 +39,20 @@ export type DefensibleCharacter = {
 	getDefenseTotal(): number;
 };
 
+export type VisionCharacter = {
+	getVision(): Vision;
+	setVision(vision: Vision): void;
+};
+
+export type InMapCharacter = {
+	getTerrain(): {isUnderground: boolean};
+};
+
 export type CharacterInterface = SkilledCharacter
 & LeveledCharacter
 & AttributesCharacter
 & OtherModifierAdderCharacter
 & ProgressingCharacter
 & RaceCharacter
-& DefensibleCharacter;
+& DefensibleCharacter
+& VisionCharacter;

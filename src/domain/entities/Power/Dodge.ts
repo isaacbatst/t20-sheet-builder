@@ -14,7 +14,7 @@ export class Dodge extends GeneralPower {
 
 	apply(character: CharacterInterface) {
 		character.addOtherModifierToDefense(GeneralPowerNameEnum.dodge, 2);
-		character.addOtherModifierToSkill(GeneralPowerNameEnum.dodge, 2, SkillNameEnum.reflexos);
+		character.addOtherModifierToSkill(GeneralPowerNameEnum.dodge, 2, SkillNameEnum.reflexes);
 		character.saveStep(Step.dodgeAppliance);
 	}
 }

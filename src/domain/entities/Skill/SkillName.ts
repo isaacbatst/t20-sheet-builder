@@ -1,10 +1,12 @@
 import {Name} from '../Name';
 
 export enum SkillNameEnum {
-	acrobacia = 'acrobacia',
-	adestramento = 'adestramento',
-	luta = 'luta',
-	reflexos = 'reflexos',
+	acrobatics = 'acrobatics',
+	animalHandling = 'animalHandling',
+	fight = 'fight',
+	reflexes = 'reflexes',
+	perception = 'perception',
+	survival = 'survival',
 }
 
 export class SkillName extends Name<SkillNameEnum> {

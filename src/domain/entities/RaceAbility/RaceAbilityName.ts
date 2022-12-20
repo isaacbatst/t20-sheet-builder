@@ -2,6 +2,7 @@ import {Name} from '../Name';
 
 export enum RaceAbilityNameEnum {
 	versatile = 'versatile',
+	rockKnowledge = 'rockKnownledge',
 }
 
 export class RaceAbilityName extends Name<RaceAbilityNameEnum> {

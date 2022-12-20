@@ -3,7 +3,7 @@ import {ModifierOthers} from '../ModifierOthers';
 import type {AttributeModifier} from '../Race/Race';
 import {SkillName} from './SkillName';
 
-type SkillParams = {
+export type SkillParams = {
 	characterAttributes: Attributes;
 	attribute: Attribute;
 	isTrained?: boolean;
@@ -28,7 +28,7 @@ export class Skill {
 		this.attributeModifier = {attribute: params.attribute, modifier: params.characterAttributes[params.attribute]};
 
 		params.otherModifiers?.forEach(modifier => {
-			this.modifierOthers.addOtherModifier(modifier);
+			this.modifierOthers.add(modifier);
 		});
 	}
 

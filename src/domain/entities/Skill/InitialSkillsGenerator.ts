@@ -5,25 +5,35 @@ import type {SkillNameEnum} from './SkillName';
 export class InitialSkillsGenerator {
 	static generate(character: CharacterInterface): Record<SkillNameEnum, Skill> {
 		return {
-			acrobacia: new Skill({
+			acrobatics: new Skill({
 				attribute: 'dexterity',
 				characterAttributes: character.getAttributes(),
-				name: 'acrobacia',
+				name: 'acrobatics',
 			}),
-			adestramento: new Skill({
+			animalHandling: new Skill({
 				attribute: 'charisma',
 				characterAttributes: character.getAttributes(),
-				name: 'adestramento',
+				name: 'animalHandling',
 			}),
-			luta: new Skill({
+			fight: new Skill({
 				attribute: 'strength',
 				characterAttributes: character.getAttributes(),
-				name: 'luta',
+				name: 'fight',
 			}),
-			reflexos: new Skill({
+			reflexes: new Skill({
 				attribute: 'dexterity',
 				characterAttributes: character.getAttributes(),
-				name: 'reflexos',
+				name: 'reflexes',
+			}),
+			perception: new Skill({
+				attribute: 'wisdom',
+				characterAttributes: character.getAttributes(),
+				name: 'perception',
+			}),
+			survival: new Skill({
+				attribute: 'wisdom',
+				characterAttributes: character.getAttributes(),
+				name: 'survival',
 			}),
 		};
 	}

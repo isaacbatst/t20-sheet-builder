@@ -14,7 +14,7 @@ export class ModifierOthers {
 		return total;
 	}
 
-	addOtherModifier(newModifier: Modifier) {
+	add(newModifier: Modifier) {
 		const isRepeated = this.modifiers.some(otherModifier => otherModifier.sourceName === newModifier.sourceName);
 
 		if (isRepeated) {

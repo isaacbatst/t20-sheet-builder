@@ -7,6 +7,7 @@ import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
 import type {Skill} from './Skill/Skill';
 import type {SkillNameEnum} from './Skill/SkillName';
 import type {Step} from './StepDescriptionGenerator/StepDescriptionGenerator';
+import {Vision} from './Vision';
 
 export class CharacterFake implements CharacterInterface {
 	public level = 1;
@@ -18,6 +19,8 @@ export class CharacterFake implements CharacterInterface {
 		strength: 0,
 		wisdom: 0,
 	};
+
+	public vision: Vision = Vision.default;
 
 	readonly progressionSteps: ProgressionStep[] = [];
 
@@ -32,8 +35,28 @@ export class CharacterFake implements CharacterInterface {
 		this.progressionSteps.push(new ProgressionStep(step, this));
 	}
 
+	trainSkill(name: SkillNameEnum): void {
+		this.trainedSkills.push(name);
+	}
+
+	addOtherModifierToDefense(sourceName: string, value: number): void {
+		this.defenseOtherModifiers.push({sourceName, value});
+	}
+
+	addOtherModifierToSkill(sourceName: string, value: number, skill: SkillNameEnum): void {
+		this.skills[skill].modifierOthers.add({sourceName, value});
+	}
+
+	setVision(vision: Vision): void {
+		this.vision = vision;
+	}
+
 	getRace(): RaceInterface | undefined {
 		return this.race;
+	}
+
+	getVision(): Vision {
+		return this.vision;
 	}
 
 	getDefenseTotal(): number {
@@ -42,10 +65,6 @@ export class CharacterFake implements CharacterInterface {
 
 	getTrainedSkills() {
 		return this.trainedSkills;
-	}
-
-	trainSkill(name: SkillNameEnum): void {
-		this.trainedSkills.push(name);
 	}
 
 	getLevel(): number {
@@ -62,13 +81,5 @@ export class CharacterFake implements CharacterInterface {
 
 	getDefenseOtherModifiers() {
 		return this.defenseOtherModifiers;
-	}
-
-	addOtherModifierToDefense(sourceName: string, value: number): void {
-		this.defenseOtherModifiers.push({sourceName, value});
-	}
-
-	addOtherModifierToSkill(sourceName: string, value: number, skill: SkillNameEnum): void {
-		this.skills[skill].modifierOthers.addOtherModifier({sourceName, value});
 	}
 }

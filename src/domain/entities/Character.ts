@@ -46,11 +46,11 @@ export class Character implements CharacterInterface {
 	}
 
 	addOtherModifierToDefense(sourceName: string, value: number) {
-		this.defense.modifierOthers.addOtherModifier({sourceName, value});
+		this.defense.modifierOthers.add({sourceName, value});
 	}
 
 	addOtherModifierToSkill(sourceName: string, value: number, skill: SkillNameEnum): void {
-		this.skills[skill].modifierOthers.addOtherModifier({sourceName, value});
+		this.skills[skill].modifierOthers.add({sourceName, value});
 	}
 
 	saveStep(step: Step): void {

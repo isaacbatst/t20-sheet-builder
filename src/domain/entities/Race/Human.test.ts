@@ -68,13 +68,13 @@ describe('Human', () => {
 			'strength',
 		], [
 			{
-				name: SkillNameEnum.acrobacia,
+				name: SkillNameEnum.acrobatics,
 				type: 'skill',
 			},
 		]);
 
 		expect(human.versatileChoices).toContainEqual({
-			name: SkillNameEnum.acrobacia,
+			name: SkillNameEnum.acrobatics,
 			type: 'skill',
 		});
 	});
@@ -86,11 +86,11 @@ describe('Human', () => {
 			'strength',
 		], [
 			{
-				name: SkillNameEnum.acrobacia,
+				name: SkillNameEnum.acrobatics,
 				type: 'skill',
 			},
 			{
-				name: SkillNameEnum.adestramento,
+				name: SkillNameEnum.animalHandling,
 				type: 'skill',
 			},
 		]);
@@ -99,8 +99,8 @@ describe('Human', () => {
 		human.applyAbilities(character);
 		const trainedSkills = character.getTrainedSkills();
 
-		expect(trainedSkills).toContain(SkillNameEnum.acrobacia);
-		expect(trainedSkills).toContain(SkillNameEnum.adestramento);
+		expect(trainedSkills).toContain(SkillNameEnum.acrobatics);
+		expect(trainedSkills).toContain(SkillNameEnum.animalHandling);
 	});
 
 	it('should apply versatile training chosen skill and power', () => {
@@ -110,7 +110,7 @@ describe('Human', () => {
 			'strength',
 		], [
 			{
-				name: SkillNameEnum.acrobacia,
+				name: SkillNameEnum.acrobatics,
 				type: 'skill',
 			},
 			{
@@ -123,7 +123,7 @@ describe('Human', () => {
 		human.applyAbilities(character);
 		const trainedSkills = character.getTrainedSkills();
 
-		expect(trainedSkills).toContain(SkillNameEnum.acrobacia);
+		expect(trainedSkills).toContain(SkillNameEnum.acrobatics);
 
 		expect(character.getDefenseOtherModifiers()).toContainEqual({
 			sourceName: GeneralPowerNameEnum.dodge,
@@ -131,10 +131,10 @@ describe('Human', () => {
 		});
 
 		const skills = character.getSkills();
-		expect(skills.reflexos.modifierOthers.modifiers).toContainEqual({
+		expect(skills.reflexes.modifierOthers.modifiers).toContainEqual({
 			sourceName: GeneralPowerNameEnum.dodge,
 			value: 2,
 		});
-		expect(skills.reflexos.modifierOthers.getTotal()).toBe(2);
+		expect(skills.reflexes.modifierOthers.getTotal()).toBe(2);
 	});
 });

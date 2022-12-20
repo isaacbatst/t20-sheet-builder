@@ -9,7 +9,7 @@ describe('Skill', () => {
 		const skill = new Skill({
 			characterAttributes: character.getAttributes(),
 			attribute: 'dexterity',
-			name: 'acrobacia',
+			name: 'acrobatics',
 		});
 
 		expect(skill.getTotal()).toBe(0);
@@ -24,7 +24,7 @@ describe('Skill', () => {
 		const skill = new Skill({
 			characterAttributes: character.getAttributes(),
 			attribute: 'dexterity',
-			name: 'acrobacia',
+			name: 'acrobatics',
 		});
 
 		expect(skill.getTotal()).toBe(2);
@@ -37,7 +37,7 @@ describe('Skill', () => {
 			characterAttributes: character.getAttributes(),
 			isTrained: true,
 			attribute: 'dexterity',
-			name: 'acrobacia',
+			name: 'acrobatics',
 		});
 		expect(skill.getTotal()).toBe(2);
 	});
@@ -53,7 +53,7 @@ describe('Skill', () => {
 			characterAttributes: character.getAttributes(),
 			isTrained: true,
 			attribute: 'dexterity',
-			name: 'acrobacia',
+			name: 'acrobatics',
 		});
 
 		expect(skill.getTotal()).toBe(4);
@@ -71,7 +71,7 @@ describe('Skill', () => {
 			isTrained: true,
 			attribute: 'dexterity',
 			otherModifiers: [{sourceName: 'any-source', value: 2}],
-			name: 'acrobacia',
+			name: 'acrobatics',
 		});
 
 		expect(skill.getTotal()).toBe(6);
@@ -89,7 +89,7 @@ describe('Skill', () => {
 			isTrained: true,
 			attribute: 'dexterity',
 			otherModifiers: [{sourceName: 'any-source', value: 2}],
-			name: 'acrobacia',
+			name: 'acrobatics',
 		});
 
 		expect(skill.getTotal(10)).toBe(13);
@@ -100,7 +100,7 @@ describe('Skill', () => {
 		const skill = new Skill({
 			characterAttributes: character.getAttributes(),
 			attribute: 'dexterity',
-			name: 'acrobacia',
+			name: 'acrobatics',
 		});
 		skill.train();
 		const total = skill.getTotal();

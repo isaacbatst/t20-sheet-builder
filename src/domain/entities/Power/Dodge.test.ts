@@ -16,14 +16,14 @@ describe('Dodge', () => {
 		});
 	});
 
-	it('should apply +2 to reflexos skill', () => {
+	it('should apply +2 to reflexes skill', () => {
 		const dodge = new Dodge();
 		const character = new CharacterFake();
 		dodge.apply(character);
 
 		const skills = character.getSkills();
 
-		expect(skills.reflexos.modifierOthers.getTotal()).toBe(2);
+		expect(skills.reflexes.modifierOthers.getTotal()).toBe(2);
 	});
 
 	it('should save dodge appliance step', () => {

@@ -34,10 +34,10 @@ describe('Character', () => {
 
 		const skills = character.getSkills();
 
-		expect(skills.acrobacia).toEqual(new Skill({
+		expect(skills.acrobatics).toEqual(new Skill({
 			attribute: 'dexterity',
 			characterAttributes: character.getAttributes(),
-			name: SkillNameEnum.acrobacia,
+			name: SkillNameEnum.acrobatics,
 		}));
 	});
 
@@ -74,14 +74,14 @@ describe('Character', () => {
 		const human = new Human(
 			['strength', 'charisma', 'constitution'],
 			[
-				{name: SkillNameEnum.acrobacia, type: 'skill'},
-				{name: SkillNameEnum.luta, type: 'skill'},
+				{name: SkillNameEnum.acrobatics, type: 'skill'},
+				{name: SkillNameEnum.fight, type: 'skill'},
 			],
 		);
 		character.chooseRace(human);
 
-		expect(character.getTrainedSkills()).toContain(SkillNameEnum.acrobacia);
-		expect(character.getTrainedSkills()).toContain(SkillNameEnum.luta);
+		expect(character.getTrainedSkills()).toContain(SkillNameEnum.acrobatics);
+		expect(character.getTrainedSkills()).toContain(SkillNameEnum.fight);
 	});
 
 	it('should apply human versatile ability with one power', () => {
@@ -92,15 +92,15 @@ describe('Character', () => {
 		const human = new Human(
 			['strength', 'charisma', 'constitution'],
 			[
-				{name: SkillNameEnum.acrobacia, type: 'skill'},
+				{name: SkillNameEnum.acrobatics, type: 'skill'},
 				{name: GeneralPowerNameEnum.dodge, type: 'power'},
 			],
 		);
 		character.chooseRace(human);
 
-		expect(character.getTrainedSkills()).toContain(SkillNameEnum.acrobacia);
+		expect(character.getTrainedSkills()).toContain(SkillNameEnum.acrobatics);
 		expect(character.getDefenseTotal()).toBe(12);
-		expect(character.getSkills().reflexos.getTotal()).toBe(2);
+		expect(character.getSkills().reflexes.getTotal()).toBe(2);
 	});
 
 	it('should save dodge applience step', () => {
@@ -111,12 +111,12 @@ describe('Character', () => {
 		const human = new Human(
 			['strength', 'charisma', 'constitution'],
 			[
-				{name: SkillNameEnum.acrobacia, type: 'skill'},
+				{name: SkillNameEnum.acrobatics, type: 'skill'},
 				{name: GeneralPowerNameEnum.dodge, type: 'power'},
 			],
 		);
 
 		character.chooseRace(human);
-		expect(character.progressionSteps[2].description).toBe('Esquiva: você recebe +2 na defesa (12) e reflexos (2).');
+		expect(character.progressionSteps[2].description).toBe('Esquiva: você recebe +2 na defesa (12) e reflexes (2).');
 	});
 });
