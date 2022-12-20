@@ -1,5 +1,4 @@
 import type {Attribute} from '../Attributes';
-import type {CharacterInterface} from '../CharacterInterface';
 import type {VersatileChoice} from '../RaceAbility/Human/Versatile';
 import {Versatile} from '../RaceAbility/Human/Versatile';
 import {SelectableAttributesRace} from '../SelectableAttributesRace';
@@ -32,11 +31,5 @@ export class Human extends SelectableAttributesRace {
 
 	get versatileChoices() {
 		return this.abilities.versatile.choices;
-	}
-
-	applyAbilities(character: CharacterInterface): void {
-		Object.values(this.abilities).forEach(ability => {
-			ability.apply(character);
-		});
 	}
 }
