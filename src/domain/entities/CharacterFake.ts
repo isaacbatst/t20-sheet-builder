@@ -43,6 +43,10 @@ export class CharacterFake implements CharacterInterface {
 		this.trainedSkills.push(name);
 	}
 
+	getSkillTotal(skill: SkillNameEnum): number {
+		return this.skills[skill].getTotal(this.level, this.context);
+	}
+
 	addOtherModifierToDefense(sourceName: string, value: number, condition?: OtherModifierCondition): void {
 		this.defenseOtherModifiers.push({sourceName, value, condition});
 	}

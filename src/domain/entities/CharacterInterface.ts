@@ -11,6 +11,7 @@ import type {Vision} from './Vision';
 export type SkilledCharacter = {
 	getTrainedSkills(): SkillNameEnum[];
 	getSkills(): Record<SkillNameEnum, Skill>;
+	getSkillTotal(skill: SkillNameEnum): number;
 	trainSkill(name: string): void;
 };
 
