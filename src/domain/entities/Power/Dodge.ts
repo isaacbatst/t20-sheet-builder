@@ -1,6 +1,5 @@
 import type {CharacterInterface} from '../CharacterInterface';
 import {SkillNameEnum} from '../Skill/SkillName';
-import {Step} from '../StepDescriptionGenerator/StepDescriptionGenerator';
 import {GeneralPower} from './GeneralPower';
 import {GeneralPowerNameEnum} from './GeneralPowerName';
 
@@ -13,8 +12,7 @@ export class Dodge extends GeneralPower {
 	}
 
 	apply(character: CharacterInterface) {
-		character.addOtherModifierToDefense(GeneralPowerNameEnum.dodge, 2);
-		character.addOtherModifierToSkill(GeneralPowerNameEnum.dodge, 2, SkillNameEnum.reflexes);
-		character.saveStep(Step.dodgeAppliance);
+		character.dispatch({type: 'addOtherModifierToDefense', payload: {source: GeneralPowerNameEnum.dodge, value: 2}});
+		character.dispatch({type: 'addOtherModifierToSkill', payload: {source: GeneralPowerNameEnum.dodge, value: 2, skill: SkillNameEnum.reflexes}});
 	}
 }

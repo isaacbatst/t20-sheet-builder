@@ -1,8 +1,9 @@
 import type {Ability} from '../Ability';
 import type {Attribute, Attributes} from '../Attributes';
-import type {CharacterInterface} from '../CharacterInterface';
+import type {CharacterDispatch, CharacterInterface} from '../CharacterInterface';
 import {RaceName} from './RaceName';
 import type {RaceInterface} from '../RaceInterface';
+import type {RaceAbility} from '../RaceAbility/RaceAbility';
 
 export type AttributeModifier = {
 	attribute: Attribute;
@@ -11,28 +12,31 @@ export type AttributeModifier = {
 
 export abstract class Race implements RaceInterface {
 	abstract readonly attributeModifiers: AttributeModifier[];
-	abstract readonly abilities: Record<string, Ability>;
+	abstract readonly abilities: Record<string, RaceAbility>;
 	private readonly raceName: RaceName;
 
 	constructor(name: string) {
 		this.raceName = new RaceName(name);
 	}
 
-	applyAttributesModifiers(attributes: Attributes): Attributes {
+	applyAttributesModifiers(attributes: Attributes, dispatch: CharacterDispatch): void {
 		const modifiedAttributes: Partial<Attributes> = {};
 
 		this.attributeModifiers.forEach(attributeModifier => {
 			modifiedAttributes[attributeModifier.attribute] = attributes[attributeModifier.attribute] + attributeModifier.modifier;
 		});
 
-		return {
+		const updatedAttributes = {
 			...attributes,
 			...modifiedAttributes,
 		};
+
+		dispatch({type: 'applyRaceModifiers', payload: {modifiers: this.attributeModifiers, updatedAttributes}});
 	}
 
 	applyAbilities(character: CharacterInterface): void {
 		Object.values(this.abilities).forEach(ability => {
+			character.dispatch({type: 'applyAbility', payload: {name: ability.name}});
 			ability.apply(character);
 		});
 	}

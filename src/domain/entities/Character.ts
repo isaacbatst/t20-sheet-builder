@@ -1,15 +1,16 @@
 import type {Attributes} from './Attributes';
 import {BuildContext} from './BuildContext';
-import type {CharacterInterface, OtherModifierCondition} from './CharacterInterface';
+import type {Action, CharacterAction, CharacterActionHandlers, CharacterActionPayload} from './CharacterAction';
+import type {CharacterInterface} from './CharacterInterface';
 import type {Context} from './Context';
 import {Defense} from './Defense';
 import {ProgressionStep} from './ProgressionStep';
+import type {RaceAbilityNameEnum} from './RaceAbility/RaceAbilityName';
 import type {RaceInterface} from './RaceInterface';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
 import type {Skill} from './Skill/Skill';
 import type {SkillNameEnum} from './Skill/SkillName';
 import {SkillName} from './Skill/SkillName';
-import {Step} from './StepDescriptionGenerator/StepDescriptionGenerator';
 import {Vision} from './Vision';
 
 type CharacterParams = {
@@ -18,53 +19,40 @@ type CharacterParams = {
 };
 
 export class Character implements CharacterInterface {
-	readonly progressionSteps: ProgressionStep[] = [];
-	private attributes: Attributes;
+	readonly progressionSteps: Array<ProgressionStep<CharacterAction>> = [];
+	private attributes: Attributes = {charisma: 0, constitution: 0, dexterity: 0, intelligence: 0, strength: 0, wisdom: 0};
 	private race?: RaceInterface;
 	// eslint-disable-next-line @typescript-eslint/prefer-readonly
 	private level = 1;
 	private vision: Vision = Vision.default;
-	private readonly defense = new Defense();
 	private readonly skills: Record<SkillNameEnum, Skill>;
+	private readonly defense = new Defense();
 	private readonly context: Context;
+	private readonly abilities: RaceAbilityNameEnum[] = [];
+	private readonly actionHandlers: CharacterActionHandlers = {
+		addOtherModifierToDefense: this.addOtherModifierToDefense,
+		addOtherModifierToSkill: this.addOtherModifierToSkill,
+		chooseRace: this.chooseRace,
+		trainSkill: this.trainSkill,
+		changeVision: this.changeVision,
+		setInitialAttributes: this.setInitialAttributes,
+		applyRaceModifiers: this.applyRaceModifiers,
+		applyAbility: this.applyAbility,
+	};
 
 	constructor(
 		params: CharacterParams,
 	) {
-		this.attributes = params.initialAttributes;
 		this.context = params.context ?? new BuildContext();
-		this.progressionSteps.push(new ProgressionStep(Step.initialAttributesDefinition, this));
-		this.skills = InitialSkillsGenerator.generate(this);
+		this.skills = InitialSkillsGenerator.generate(this.getAttributes());
+
+		this.dispatch({type: 'setInitialAttributes', payload: {attributes: params.initialAttributes}});
 	}
 
-	chooseRace(race: RaceInterface) {
-		this.race = race;
-		this.attributes = this.race.applyAttributesModifiers(this.attributes);
-		this.progressionSteps.push(new ProgressionStep(Step.raceAttributesModifiersAppliance, this));
-
-		this.race.applyAbilities(this);
-	}
-
-	trainSkill(name: string): void {
-		const skillName = new SkillName(name);
-		const skill = this.skills[skillName.value];
-		skill.train();
-	}
-
-	addOtherModifierToDefense(sourceName: string, value: number, condition?: OtherModifierCondition) {
-		this.defense.modifierOthers.add({sourceName, value, condition});
-	}
-
-	addOtherModifierToSkill(sourceName: string, value: number, skill: SkillNameEnum, condition?: OtherModifierCondition): void {
-		this.skills[skill].modifierOthers.add({sourceName, value, condition});
-	}
-
-	saveStep(step: Step): void {
-		this.progressionSteps.push(new ProgressionStep(step, this));
-	}
-
-	setVision(vision: Vision): void {
-		this.vision = vision;
+	dispatch<T extends CharacterAction>(action: Action<T>): void {
+		const handle = this.actionHandlers[action.type];
+		handle(action.payload);
+		this.progressionSteps.push(new ProgressionStep(action, this));
 	}
 
 	getVision(): Vision {
@@ -107,5 +95,41 @@ export class Character implements CharacterInterface {
 		return Object.values(this.skills)
 			.filter(skill => skill.getIsTrained())
 			.map(skill => skill.name.value);
+	}
+
+	private setInitialAttributes(payload: CharacterActionPayload<'setInitialAttributes'>) {
+		this.attributes = payload.attributes;
+	}
+
+	private changeVision(payload: CharacterActionPayload<'changeVision'>): void {
+		this.vision = payload.vision;
+	}
+
+	private addOtherModifierToDefense(payload: CharacterActionPayload<'addOtherModifierToDefense'>) {
+		this.defense.modifierOthers.add({sourceName: payload.source, value: payload.value, condition: payload.condition});
+	}
+
+	private addOtherModifierToSkill(payload: CharacterActionPayload<'addOtherModifierToSkill'>): void {
+		this.skills[payload.skill].modifierOthers.add({sourceName: payload.source, value: payload.value, condition: payload.condition});
+	}
+
+	private chooseRace(payload: CharacterActionPayload<'chooseRace'>) {
+		this.race = payload.race;
+		this.race.applyAttributesModifiers(this.attributes, this.dispatch);
+		this.race.applyAbilities(this);
+	}
+
+	private trainSkill(payload: CharacterActionPayload<'trainSkill'>): void {
+		const skillName = new SkillName(payload.name);
+		const skill = this.skills[skillName.value];
+		skill.train();
+	}
+
+	private applyRaceModifiers(payload: CharacterActionPayload<'applyRaceModifiers'>) {
+		this.attributes = payload.updatedAttributes;
+	}
+
+	private applyAbility(payload: CharacterActionPayload<'applyAbility'>) {
+		this.abilities.push(payload.name);
 	}
 }

@@ -1,8 +1,6 @@
+import type {Action, CharacterAction, CharacterActionDescriptionGenerators} from '../CharacterAction';
 import type {CharacterInterface} from '../CharacterInterface';
-import {DodgeAppliance} from './DodgeAppliance';
 import {InitialAttributesDefinition} from './InitialAttributesDefinition';
-import {RaceAbilitiesAppliance} from './RaceAbilitiesAppliance';
-import {RaceAttributeModifiersAppliance} from './RaceAttributeModifiersAppliance';
 
 export enum Step {
 	initialAttributesDefinition = 'initialAttributesDefinition',
@@ -12,28 +10,23 @@ export enum Step {
 }
 
 export abstract class StepDescriptionGenerator {
-	static generate(
-		step: string,
+	static generate<T extends CharacterAction>(
+		action: Action<T>,
 		character: CharacterInterface,
 	): string {
-		if (!this.validateStep(step)) {
-			throw new Error('INVALID_STEP_TYPE');
-		}
-
-		const generateDescription = StepDescriptionGenerator.stepTypeToGenerateFunction[step];
-
-		return generateDescription(character);
+		const generateDescription = StepDescriptionGenerator.actionToDescriptionGenerate[action.type];
+		return generateDescription(character, action);
 	}
 
-	private static readonly stepTypeToGenerateFunction: Record<Step, (character: CharacterInterface) => string> = {
-		initialAttributesDefinition: InitialAttributesDefinition.generate,
-		raceAttributesModifiersAppliance: RaceAttributeModifiersAppliance.generate,
-		raceAbilitiesAppliance: RaceAbilitiesAppliance.generate,
-		dodgeAppliance: DodgeAppliance.generate,
+	private static readonly actionToDescriptionGenerate: CharacterActionDescriptionGenerators = {
+		setInitialAttributes: InitialAttributesDefinition.generate,
+		addOtherModifierToDefense: () => '',
+		addOtherModifierToSkill: () => '',
+		applyAbility: () => '',
+		applyRaceModifiers: () => '',
+		changeVision: () => '',
+		chooseRace: () => '',
+		trainSkill: () => '',
 	};
-
-	private static validateStep(step: string): step is Step {
-		return step in Step;
-	}
 }
 
