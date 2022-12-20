@@ -1,10 +1,12 @@
 import type {Attributes} from './Attributes';
 import {Character} from './Character';
+import {InGameContext} from './InGameContext';
 import {GeneralPowerNameEnum} from './Power/GeneralPowerName';
 import {Dwarf} from './Race/Dwarf';
 import {Human} from './Race/Human';
 import {Skill} from './Skill/Skill';
 import {SkillNameEnum} from './Skill/SkillName';
+import {Vision} from './Vision';
 
 const initialAttributes = {
 	strength: 0,
@@ -118,5 +120,63 @@ describe('Character', () => {
 
 		character.chooseRace(human);
 		expect(character.progressionSteps[2].description).toBe('Esquiva: você recebe +2 na defesa (12) e reflexos (2).');
+	});
+
+	it('should apply night vision', () => {
+		const character = new Character({
+			initialAttributes,
+		});
+
+		const dwarf = new Dwarf();
+		character.chooseRace(dwarf);
+
+		expect(character.getVision()).toBe(Vision.dark);
+	});
+
+	it('should not activate +2 at perception and survival in build context', () => {
+		const character = new Character({
+			initialAttributes,
+		});
+
+		const dwarf = new Dwarf();
+		character.chooseRace(dwarf);
+
+		const perception = character.getSkillTotal(SkillNameEnum.perception);
+		const survival = character.getSkillTotal(SkillNameEnum.survival);
+
+		expect(perception).toBe(0);
+		expect(survival).toBe(0);
+	});
+
+	it('should not activate +2 at perception and survival in game context outside underground', () => {
+		const character = new Character({
+			initialAttributes,
+			context: new InGameContext({isUnderground: false}),
+		});
+
+		const dwarf = new Dwarf();
+		character.chooseRace(dwarf);
+
+		const perception = character.getSkillTotal(SkillNameEnum.perception);
+		const survival = character.getSkillTotal(SkillNameEnum.survival);
+
+		expect(perception).toBe(0);
+		expect(survival).toBe(0);
+	});
+
+	it('should activate +2 at perception and survival in game context in the underground', () => {
+		const character = new Character({
+			initialAttributes,
+			context: new InGameContext({isUnderground: true}),
+		});
+
+		const dwarf = new Dwarf();
+		character.chooseRace(dwarf);
+
+		const perception = character.getSkillTotal(SkillNameEnum.perception);
+		const survival = character.getSkillTotal(SkillNameEnum.survival);
+
+		expect(perception).toBe(2);
+		expect(survival).toBe(2);
 	});
 });

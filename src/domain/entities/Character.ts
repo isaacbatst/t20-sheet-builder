@@ -1,6 +1,6 @@
 import type {Attributes} from './Attributes';
 import {BuildContext} from './BuildContext';
-import type {CharacterInterface} from './CharacterInterface';
+import type {CharacterInterface, OtherModifierCondition} from './CharacterInterface';
 import type {Context} from './Context';
 import {Defense} from './Defense';
 import {ProgressionStep} from './ProgressionStep';
@@ -51,12 +51,12 @@ export class Character implements CharacterInterface {
 		skill.train();
 	}
 
-	addOtherModifierToDefense(sourceName: string, value: number) {
-		this.defense.modifierOthers.add({sourceName, value});
+	addOtherModifierToDefense(sourceName: string, value: number, condition?: OtherModifierCondition) {
+		this.defense.modifierOthers.add({sourceName, value, condition});
 	}
 
-	addOtherModifierToSkill(sourceName: string, value: number, skill: SkillNameEnum): void {
-		this.skills[skill].modifierOthers.add({sourceName, value});
+	addOtherModifierToSkill(sourceName: string, value: number, skill: SkillNameEnum, condition?: OtherModifierCondition): void {
+		this.skills[skill].modifierOthers.add({sourceName, value, condition});
 	}
 
 	saveStep(step: Step): void {
@@ -97,6 +97,10 @@ export class Character implements CharacterInterface {
 
 	getSkills() {
 		return this.skills;
+	}
+
+	getSkillTotal(skill: SkillNameEnum) {
+		return this.skills[skill].getTotal(this.level, this.context);
 	}
 
 	getTrainedSkills(): SkillNameEnum[] {
