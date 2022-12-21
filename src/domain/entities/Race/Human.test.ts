@@ -1,6 +1,6 @@
 import {ApplyRaceAbility} from '../Action/ApplyRaceAbility';
 import {ApplyRaceModifiers} from '../Action/ApplyRaceModifiers';
-import {CharacterFake} from '../CharacterFake';
+import {SheetFake} from '../SheetFake';
 import {GeneralPowerNameEnum} from '../Power/GeneralPowerName';
 import type {VersatileChoice} from '../RaceAbility/Human/Versatile';
 import {Versatile} from '../RaceAbility/Human/Versatile';
@@ -15,7 +15,7 @@ describe('Human', () => {
 			'strength',
 		]);
 
-		const character = new CharacterFake();
+		const sheet = new SheetFake();
 
 		human.applyAttributesModifiers({
 			strength: 0,
@@ -24,9 +24,9 @@ describe('Human', () => {
 			dexterity: 0,
 			intelligence: 0,
 			wisdom: 0,
-		}, character.dispatch);
+		}, sheet.dispatch);
 
-		expect(character.dispatch).toHaveBeenCalledWith(new ApplyRaceModifiers({
+		expect(sheet.dispatch).toHaveBeenCalledWith(new ApplyRaceModifiers({
 			modifiers: {
 				constitution: 1,
 				dexterity: 1,
@@ -107,14 +107,14 @@ describe('Human', () => {
 			animalHandling,
 		]);
 
-		const character = new CharacterFake();
-		human.applyAbilities(character);
+		const sheet = new SheetFake();
+		human.applyAbilities(sheet);
 
 		const versatile = new Versatile();
 		versatile.addChoice(acrobatics);
 		versatile.addChoice(animalHandling);
 
-		expect(character.dispatch).toHaveBeenCalledWith(new ApplyRaceAbility({
+		expect(sheet.dispatch).toHaveBeenCalledWith(new ApplyRaceAbility({
 			ability: versatile,
 		}));
 	});
@@ -135,14 +135,14 @@ describe('Human', () => {
 			'strength',
 		], [acrobatics, dodge]);
 
-		const character = new CharacterFake();
-		human.applyAbilities(character);
+		const sheet = new SheetFake();
+		human.applyAbilities(sheet);
 
 		const versatile = new Versatile();
 		versatile.addChoice(acrobatics);
 		versatile.addChoice(dodge);
 
-		expect(character.dispatch).toHaveBeenCalledWith(new ApplyRaceAbility({
+		expect(sheet.dispatch).toHaveBeenCalledWith(new ApplyRaceAbility({
 			ability: versatile,
 		}));
 	});

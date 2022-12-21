@@ -1,5 +1,6 @@
+import {Modifier} from '../Modifier/Modifier';
 import type {ActionInterface} from '../SheetActions';
-import {CharacterFake} from '../CharacterFake';
+import {SheetFake} from '../SheetFake';
 import {SkillName} from '../Skill/SkillName';
 import {Dodge} from './Dodge';
 import {GeneralPowerNameEnum} from './GeneralPowerName';
@@ -7,29 +8,27 @@ import {GeneralPowerNameEnum} from './GeneralPowerName';
 describe('Dodge', () => {
 	it('should dispatch defense bonus', () => {
 		const dodge = new Dodge();
-		const character = new CharacterFake();
-		dodge.apply(character);
+		const sheet = new SheetFake();
+		dodge.apply(sheet);
 
-		expect(character.dispatch).toHaveBeenCalledWith<[ActionInterface<'addOtherModifierToDefense'>]>({
+		expect(sheet.dispatch).toHaveBeenCalledWith<[ActionInterface<'addOtherModifierToDefense'>]>({
 			type: 'addOtherModifierToDefense',
 			payload: {
-				source: GeneralPowerNameEnum.dodge,
-				value: 2,
+				modifier: new Modifier(GeneralPowerNameEnum.dodge, 2),
 			},
 		});
 	});
 
 	it('should dispatch reflexes bonus', () => {
 		const dodge = new Dodge();
-		const character = new CharacterFake();
-		dodge.apply(character);
+		const sheet = new SheetFake();
+		dodge.apply(sheet);
 
-		expect(character.dispatch).toHaveBeenCalledWith<[ActionInterface<'addOtherModifierToSkill'>]>({
+		expect(sheet.dispatch).toHaveBeenCalledWith<[ActionInterface<'addOtherModifierToSkill'>]>({
 			type: 'addOtherModifierToSkill',
 			payload: {
-				source: GeneralPowerNameEnum.dodge,
 				skill: SkillName.reflexes,
-				value: 2,
+				modifier: new Modifier(GeneralPowerNameEnum.dodge, 2),
 			},
 		});
 	});

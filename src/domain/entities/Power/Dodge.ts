@@ -1,3 +1,4 @@
+import {Modifier} from '../Modifier/Modifier';
 import type {SheetInterface} from '../SheetInterface';
 import {SkillName} from '../Skill/SkillName';
 import {GeneralPower} from './GeneralPower';
@@ -12,7 +13,8 @@ export class Dodge extends GeneralPower {
 	}
 
 	apply(character: SheetInterface) {
-		character.dispatch({type: 'addOtherModifierToDefense', payload: {source: GeneralPowerNameEnum.dodge, value: 2}});
-		character.dispatch({type: 'addOtherModifierToSkill', payload: {source: GeneralPowerNameEnum.dodge, value: 2, skill: SkillName.reflexes}});
+		const modifier = new Modifier(this.name, 2);
+		character.dispatch({type: 'addOtherModifierToDefense', payload: {modifier}});
+		character.dispatch({type: 'addOtherModifierToSkill', payload: {modifier, skill: SkillName.reflexes}});
 	}
 }

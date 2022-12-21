@@ -1,9 +1,10 @@
 import type {Attributes} from './Attributes';
-import type {ActionInterface, ActionPayload, ActionType, SheetActionHandlers} from './SheetActions';
 import type {Context} from './Context';
 import {Defense} from './Defense';
+import {LifePoints} from './LifePoints';
 import {ProgressionStep} from './ProgressionStep';
 import type {RaceInterface} from './RaceInterface';
+import type {ActionInterface, ActionPayload, ActionType, SheetActionHandlers} from './SheetActions';
 import type {SheetInterface} from './SheetInterface';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
 import type {Skill} from './Skill/Skill';
@@ -16,7 +17,8 @@ type SheetParams = {
 
 export class Sheet implements SheetInterface {
 	readonly progressionSteps: Array<ProgressionStep<ActionType>> = [];
-	private attributes: Attributes = {charisma: 0, constitution: 0, dexterity: 0, intelligence: 0, strength: 0, wisdom: 0};
+	readonly lifePoints = new LifePoints();
+	private attributes: Attributes = {strength: 0, dexterity: 0, constitution: 0, intelligence: 0, wisdom: 0, charisma: 0};
 	private race?: RaceInterface;
 	// eslint-disable-next-line @typescript-eslint/prefer-readonly
 	private level = 1;
@@ -24,6 +26,7 @@ export class Sheet implements SheetInterface {
 	private displacement = 9;
 	private readonly skills: Record<SkillName, Skill>;
 	private readonly defense = new Defense();
+
 	private readonly actionHandlers: SheetActionHandlers = {
 		addOtherModifierToDefense: this.addOtherModifierToDefense.bind(this),
 		addOtherModifierToSkill: this.addOtherModifierToSkill.bind(this),
@@ -35,6 +38,7 @@ export class Sheet implements SheetInterface {
 		applyRaceAbility: this.applyRaceAbility.bind(this),
 		pickPower: this.pickPower.bind(this),
 		changeDisplacement: this.changeDisplacement.bind(this),
+		addModifierToLifePoints: this.addModifierToLifePoints.bind(this),
 	};
 
 	constructor(
@@ -98,12 +102,16 @@ export class Sheet implements SheetInterface {
 		this.vision = payload.vision;
 	}
 
+	private addModifierToLifePoints(payload: ActionPayload<'addModifierToLifePoints'>) {
+		this.lifePoints.addModifier(payload.modifier);
+	}
+
 	private addOtherModifierToDefense(payload: ActionPayload<'addOtherModifierToDefense'>) {
-		this.defense.modifierOthers.add({source: payload.source, value: payload.value, condition: payload.condition});
+		this.defense.others.add(payload.modifier);
 	}
 
 	private addOtherModifierToSkill(payload: ActionPayload<'addOtherModifierToSkill'>): void {
-		this.skills[payload.skill].modifierOthers.add({source: payload.source, value: payload.value, condition: payload.condition});
+		this.skills[payload.skill].addOtherModifier(payload.modifier);
 	}
 
 	private chooseRace(payload: ActionPayload<'chooseRace'>) {

@@ -1,24 +1,13 @@
-import type {Modifier} from './ModifierOthers';
+import type {ModifierCondition} from './ModifierList';
 
-type ContextType = 'build' | 'ingame';
+export type ContextType = 'build' | 'ingame';
 
 export type ContextInterface = {
 	type: ContextType;
-	getModifierOthersTotal(modifiers: Modifier[]): number;
+	getConditionalModifierValue(value: number, condition: ModifierCondition): number;
 };
 
 export abstract class Context implements ContextInterface {
 	constructor(readonly type: ContextType) {}
-	getModifierOthersTotal(modifiers: Modifier[]): number {
-		const total = modifiers
-			.reduce<number>((acc, modifier) => {
-			const result = this.getContextualValue(modifier);
-
-			return acc + result;
-		}, 0);
-
-		return total;
-	}
-
-	protected abstract getContextualValue(modifier: Modifier): number;
+	abstract getConditionalModifierValue(value: number, condition: ModifierCondition): number;
 }

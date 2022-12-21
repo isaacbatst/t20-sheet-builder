@@ -3,7 +3,7 @@ import {BuildingSheetContext} from './BuildingSheetContext';
 import type {ActionInterface, ActionType} from './SheetActions';
 import type {SheetInterface} from './SheetInterface';
 import type {Context} from './Context';
-import type {Modifier, ModifierCondition} from './ModifierOthers';
+import type {ModifierInterface, ModifierCondition} from './ModifierList';
 import type {ProgressionStep} from './ProgressionStep';
 import {ProgressionStepFake} from './ProgressionStepFake';
 import {RaceFake} from './RaceFake';
@@ -13,8 +13,10 @@ import type {Skill} from './Skill/Skill';
 import type {SkillName} from './Skill/SkillName';
 import type {Translatable} from './Translator';
 import {Vision} from './Vision';
+import {ConditionalModifier} from './Modifier/ConditionalModifier';
+import {RaceAbilityName} from './RaceAbility/RaceAbilityName';
 
-export class CharacterFake implements SheetInterface {
+export class SheetFake implements SheetInterface {
 	public level = 1;
 	public attributes: Attributes = {
 		strength: 0,
@@ -39,7 +41,7 @@ export class CharacterFake implements SheetInterface {
 	});
 
 	private readonly trainedSkills: SkillName[] = [];
-	private readonly defenseOtherModifiers: Modifier[] = [];
+	private readonly defenseOtherModifiers: ModifierInterface[] = [];
 
 	setVision(vision: Vision): void {
 		this.vision = vision;
@@ -93,11 +95,11 @@ export class CharacterFake implements SheetInterface {
 		this.trainedSkills.push(name);
 	}
 
-	private addOtherModifierToDefense(sourceName: Translatable, value: number, condition?: ModifierCondition): void {
-		this.defenseOtherModifiers.push({source: sourceName, value, condition});
+	private addOtherModifierToDefense(modifier: ModifierInterface): void {
+		this.defenseOtherModifiers.push(modifier);
 	}
 
-	private addOtherModifierToSkill(sourceName: Translatable, value: number, skill: SkillName, condition?: ModifierCondition): void {
-		this.skills[skill].modifierOthers.add({source: sourceName, value, condition});
+	private addOtherModifierToSkill(modifier: ModifierInterface, skill: SkillName): void {
+		this.skills[skill].addOtherModifier(modifier);
 	}
 }

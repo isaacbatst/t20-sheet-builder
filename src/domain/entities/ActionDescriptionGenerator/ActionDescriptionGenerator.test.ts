@@ -1,4 +1,4 @@
-import {CharacterFake} from '../CharacterFake';
+import {SheetFake} from '../SheetFake';
 import {GeneralPowerNameEnum} from '../Power/GeneralPowerName';
 import {PowerFake} from '../PowerFake';
 import {RaceAbilityName} from '../RaceAbility/RaceAbilityName';
@@ -8,27 +8,30 @@ import {Skill} from '../Skill/Skill';
 import {SkillName} from '../Skill/SkillName';
 import {Vision} from '../Vision';
 import {ActionDescriptionGenerator} from './ActionDescriptionGenerator';
+import {Modifier} from '../Modifier/Modifier';
+import {HardAsRock} from '../RaceAbility/Dwarf/HardAsRock';
+import {ConditionalModifier} from '../Modifier/ConditionalModifier';
 
 describe('ActionDescriptionGenerator', () => {
 	it('should generate setInitialAttributes description', () => {
-		const character = new CharacterFake();
-		character.attributes.charisma = 1;
-		character.attributes.constitution = -1;
+		const sheet = new SheetFake();
+		sheet.attributes.charisma = 1;
+		sheet.attributes.constitution = -1;
 
 		const description = ActionDescriptionGenerator.generate(
-			character,
-			{type: 'setInitialAttributes', payload: {attributes: character.attributes}},
+			sheet,
+			{type: 'setInitialAttributes', payload: {attributes: sheet.attributes}},
 		);
 		expect(description).toBe('Definição inicial de atributos: +0 Força, +0 Destreza, -1 Constituição, +0 Inteligência, +0 Sabedoria e +1 Carisma.');
 	});
 
 	it('should generate applyAbility description', () => {
-		const character = new CharacterFake();
-		character.attributes.charisma = 1;
-		character.attributes.constitution = -1;
+		const sheet = new SheetFake();
+		sheet.attributes.charisma = 1;
+		sheet.attributes.constitution = -1;
 
 		const description = ActionDescriptionGenerator.generate(
-			character,
+			sheet,
 			{
 				type: 'applyRaceAbility',
 				payload: {ability: new RaceAbilityFake()},
@@ -38,12 +41,12 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate applyRaceModifiers description', () => {
-		const character = new CharacterFake();
-		character.attributes.charisma = 1;
-		character.attributes.constitution = -1;
+		const sheet = new SheetFake();
+		sheet.attributes.charisma = 1;
+		sheet.attributes.constitution = -1;
 
 		const description = ActionDescriptionGenerator.generate(
-			character,
+			sheet,
 			{
 				type: 'applyRaceModifiers',
 				payload: {modifiers: {charisma: 2, dexterity: -1}, updatedAttributes: {charisma: 3, dexterity: -1}},
@@ -54,14 +57,16 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate addOtherModifierToDefense description', () => {
-		const character = new CharacterFake();
-		character.defenseTotal = 12;
+		const sheet = new SheetFake();
+		sheet.defenseTotal = 12;
 
 		const description = ActionDescriptionGenerator.generate(
-			character,
+			sheet,
 			{
 				type: 'addOtherModifierToDefense',
-				payload: {source: GeneralPowerNameEnum.dodge, value: 2},
+				payload: {
+					modifier: new Modifier(GeneralPowerNameEnum.dodge, 2),
+				},
 			},
 		);
 
@@ -69,14 +74,16 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate addOtherModifierToDefense description with conditional', () => {
-		const character = new CharacterFake();
-		character.defenseTotal = 12;
+		const sheet = new SheetFake();
+		sheet.defenseTotal = 12;
 
 		const description = ActionDescriptionGenerator.generate(
-			character,
+			sheet,
 			{
 				type: 'addOtherModifierToDefense',
-				payload: {source: GeneralPowerNameEnum.dodge, value: 2, condition: {verify: jest.fn(), description: 'testes realizados no subterrâneo'}},
+				payload: {
+					modifier: new ConditionalModifier(GeneralPowerNameEnum.dodge, 2, {verify: jest.fn(), description: 'testes realizados no subterrâneo'}),
+				},
 			},
 		);
 
@@ -84,14 +91,16 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate addOtherModifierToDefense description', () => {
-		const character = new CharacterFake();
-		character.defenseTotal = 12;
+		const sheet = new SheetFake();
+		sheet.defenseTotal = 12;
 
 		const description = ActionDescriptionGenerator.generate(
-			character,
+			sheet,
 			{
 				type: 'addOtherModifierToDefense',
-				payload: {source: GeneralPowerNameEnum.dodge, value: 2},
+				payload: {
+					modifier: new Modifier(GeneralPowerNameEnum.dodge, 2),
+				},
 			},
 		);
 
@@ -99,14 +108,16 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate addOtherModifierToDefense description with conditional', () => {
-		const character = new CharacterFake();
-		character.defenseTotal = 12;
+		const sheet = new SheetFake();
+		sheet.defenseTotal = 12;
 
 		const description = ActionDescriptionGenerator.generate(
-			character,
+			sheet,
 			{
 				type: 'addOtherModifierToDefense',
-				payload: {source: GeneralPowerNameEnum.dodge, value: 2, condition: {verify: jest.fn(), description: 'testes realizados no subterrâneo'}},
+				payload: {
+					modifier: new ConditionalModifier(GeneralPowerNameEnum.dodge, 2, {verify: jest.fn(), description: 'testes realizados no subterrâneo'}),
+				},
 			},
 		);
 
@@ -114,13 +125,16 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate addOtherModifierToSkill description', () => {
-		const character = new CharacterFake();
+		const sheet = new SheetFake();
 
 		const description = ActionDescriptionGenerator.generate(
-			character,
+			sheet,
 			{
 				type: 'addOtherModifierToSkill',
-				payload: {source: GeneralPowerNameEnum.dodge, value: 2, skill: SkillName.reflexes},
+				payload: {
+					skill: SkillName.reflexes,
+					modifier: new Modifier(GeneralPowerNameEnum.dodge, 2),
+				},
 			},
 		);
 
@@ -128,13 +142,16 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate addOtherModifierToSkill description with conditional', () => {
-		const character = new CharacterFake();
+		const sheet = new SheetFake();
 
 		const description = ActionDescriptionGenerator.generate(
-			character,
+			sheet,
 			{
 				type: 'addOtherModifierToSkill',
-				payload: {source: RaceAbilityName.rockKnowledge, value: 2, skill: SkillName.perception, condition: {verify: jest.fn(), description: 'testes realizados no subterrâneo'}},
+				payload: {
+					skill: SkillName.perception,
+					modifier: new ConditionalModifier(RaceAbilityName.rockKnowledge, 2, {verify: jest.fn(), description: 'testes realizados no subterrâneo'}),
+				},
 			},
 		);
 
@@ -142,10 +159,10 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate changeVision description', () => {
-		const character = new CharacterFake();
+		const sheet = new SheetFake();
 
 		const description = ActionDescriptionGenerator.generate(
-			character,
+			sheet,
 			{
 				type: 'changeVision',
 				payload: {vision: Vision.dark, source: RaceAbilityName.rockKnowledge},
@@ -156,10 +173,10 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate chooseRace description', () => {
-		const character = new CharacterFake();
+		const sheet = new SheetFake();
 
 		const description = ActionDescriptionGenerator.generate(
-			character,
+			sheet,
 			{
 				type: 'chooseRace',
 				payload: {race: new RaceFake()},
@@ -170,11 +187,11 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate trainSkill description', () => {
-		const character = new CharacterFake();
-		character.skills.fight = new Skill({attribute: 'strength', isTrained: true});
+		const sheet = new SheetFake();
+		sheet.skills.fight = new Skill({attribute: 'strength', isTrained: true});
 
 		const description = ActionDescriptionGenerator.generate(
-			character,
+			sheet,
 			{
 				type: 'trainSkill',
 				payload: {name: SkillName.fight, source: RaceAbilityName.versatile},
@@ -185,11 +202,11 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate pickPower description', () => {
-		const character = new CharacterFake();
-		character.skills.fight = new Skill({attribute: 'strength', isTrained: true});
+		const sheet = new SheetFake();
+		sheet.skills.fight = new Skill({attribute: 'strength', isTrained: true});
 
 		const description = ActionDescriptionGenerator.generate(
-			character,
+			sheet,
 			{
 				type: 'pickPower',
 				payload: {power: new PowerFake(), source: RaceAbilityName.versatile},
@@ -200,10 +217,10 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate changeDisplacement description', () => {
-		const character = new CharacterFake();
+		const sheet = new SheetFake();
 
 		const description = ActionDescriptionGenerator.generate(
-			character,
+			sheet,
 			{
 				type: 'changeDisplacement',
 				payload: {
@@ -214,5 +231,19 @@ describe('ActionDescriptionGenerator', () => {
 		);
 
 		expect(description).toBe('Devagar e Sempre: deslocamento alterado para 6m.');
+	});
+
+	it('should generate addModifierToLifePoints description', () => {
+		const sheet = new SheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			{
+				type: 'addModifierToLifePoints',
+				payload: {modifier: new Modifier(RaceAbilityName.hardAsRock, 3)},
+			},
+		);
+
+		expect(description).toBe('Duro como pedra: +3 PV.');
 	});
 });

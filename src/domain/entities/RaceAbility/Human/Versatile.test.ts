@@ -1,5 +1,5 @@
 import type {ActionInterface} from '../../SheetActions';
-import {CharacterFake} from '../../CharacterFake';
+import {SheetFake} from '../../SheetFake';
 import {Dodge} from '../../Power/Dodge';
 import {GeneralPowerNameEnum} from '../../Power/GeneralPowerName';
 import {SkillName} from '../../Skill/SkillName';
@@ -57,9 +57,9 @@ describe('Versatile', () => {
 
 	it('should not allow apply without choices', () => {
 		const versatile = new Versatile();
-		const character = new CharacterFake();
+		const sheet = new SheetFake();
 		expect(() => {
-			versatile.apply(character);
+			versatile.apply(sheet);
 		}).toThrow('MISSING_CHOICES');
 	});
 
@@ -68,10 +68,10 @@ describe('Versatile', () => {
 		versatile.addChoice({type: 'skill', name: SkillName.acrobatics});
 		versatile.addChoice({type: 'skill', name: SkillName.animalHandling});
 
-		const character = new CharacterFake();
-		versatile.apply(character);
+		const sheet = new SheetFake();
+		versatile.apply(sheet);
 
-		expect(character.dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
+		expect(sheet.dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
 			type: 'trainSkill',
 			payload: {
 				name: SkillName.acrobatics,
@@ -79,7 +79,7 @@ describe('Versatile', () => {
 			},
 		});
 
-		expect(character.dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
+		expect(sheet.dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
 			type: 'trainSkill',
 			payload: {
 				name: SkillName.acrobatics,
@@ -93,10 +93,10 @@ describe('Versatile', () => {
 		versatile.addChoice({type: 'skill', name: SkillName.acrobatics});
 		versatile.addChoice({type: 'power', name: GeneralPowerNameEnum.dodge});
 
-		const character = new CharacterFake();
-		versatile.apply(character);
+		const sheet = new SheetFake();
+		versatile.apply(sheet);
 
-		expect(character.dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
+		expect(sheet.dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
 			type: 'trainSkill',
 			payload: {
 				name: SkillName.acrobatics,
@@ -104,7 +104,7 @@ describe('Versatile', () => {
 			},
 		});
 
-		expect(character.dispatch).toHaveBeenCalledWith<[ActionInterface<'pickPower'>]>({
+		expect(sheet.dispatch).toHaveBeenCalledWith<[ActionInterface<'pickPower'>]>({
 			type: 'pickPower',
 			payload: {
 				power: new Dodge(),

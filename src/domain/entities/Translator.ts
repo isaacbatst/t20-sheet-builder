@@ -57,6 +57,7 @@ export class Translator {
 		rockKnownledge: 'Conhecimento das Rochas',
 		versatile: 'Versátil',
 		slowAndAlways: 'Devagar e Sempre',
+		hardAsRock: 'Duro como pedra',
 	};
 
 	private static readonly skillsTranslation: Record<SkillName, string> = {
