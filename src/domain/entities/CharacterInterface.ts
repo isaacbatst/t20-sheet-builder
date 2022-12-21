@@ -1,5 +1,5 @@
 import type {Attributes} from './Attributes';
-import type {Action, CharacterAction} from './CharacterAction';
+import type {ActionInterface, ActionType} from './CharacterAction';
 import type {Context} from './Context';
 import type {InGameContext} from './InGameContext';
 import type {ProgressionStepInterface} from './ProgressionStep';
@@ -23,7 +23,7 @@ export type AttributesCharacter = {
 	getAttributes(): Attributes;
 };
 
-export type CharacterDispatch = <T extends CharacterAction>(action: Action<T>) => void;
+export type CharacterDispatch = <T extends ActionType>(action: ActionInterface<T>) => void;
 
 export type ProgressingCharacter = {
 	dispatch: CharacterDispatch;

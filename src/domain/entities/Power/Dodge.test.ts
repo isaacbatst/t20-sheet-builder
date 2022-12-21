@@ -1,4 +1,4 @@
-import type {Action} from '../CharacterAction';
+import type {ActionInterface} from '../CharacterAction';
 import {CharacterFake} from '../CharacterFake';
 import {SkillNameEnum} from '../Skill/SkillName';
 import {Dodge} from './Dodge';
@@ -10,7 +10,7 @@ describe('Dodge', () => {
 		const character = new CharacterFake();
 		dodge.apply(character);
 
-		expect(character.dispatch).toHaveBeenCalledWith<[Action<'addOtherModifierToDefense'>]>({
+		expect(character.dispatch).toHaveBeenCalledWith<[ActionInterface<'addOtherModifierToDefense'>]>({
 			type: 'addOtherModifierToDefense',
 			payload: {
 				source: GeneralPowerNameEnum.dodge,
@@ -24,7 +24,7 @@ describe('Dodge', () => {
 		const character = new CharacterFake();
 		dodge.apply(character);
 
-		expect(character.dispatch).toHaveBeenCalledWith<[Action<'addOtherModifierToSkill'>]>({
+		expect(character.dispatch).toHaveBeenCalledWith<[ActionInterface<'addOtherModifierToSkill'>]>({
 			type: 'addOtherModifierToSkill',
 			payload: {
 				source: GeneralPowerNameEnum.dodge,

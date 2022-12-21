@@ -1,10 +1,13 @@
+import {ChooseRace} from './Action/ChooseRace';
 import type {Attributes} from './Attributes';
 import {Character} from './Character';
 import {InGameContext} from './InGameContext';
+import type {ConditionVerify, Modifier, ModifierCondition} from './ModifierOthers';
 import {GeneralPowerNameEnum} from './Power/GeneralPowerName';
 import {Dwarf} from './Race/Dwarf';
 import {Human} from './Race/Human';
-import {Skill} from './Skill/Skill';
+import {RaceAbilityName, RaceAbilityNameEnum} from './RaceAbility/RaceAbilityName';
+import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
 import {SkillNameEnum} from './Skill/SkillName';
 import {Vision} from './Vision';
 
@@ -23,7 +26,7 @@ describe('Character', () => {
 			initialAttributes,
 		});
 
-		expect(character.progressionSteps[0].description).toBe('Definição inicial de atributos: Força 0, Destreza 0, Constituição 0, Inteligência 0, Sabedoria 0 e Carisma 0.');
+		expect(character.progressionSteps[0].description).toBe('Definição inicial de atributos: +0 Força, +0 Destreza, +0 Constituição, +0 Inteligência, +0 Sabedoria e +0 Carisma.');
 	});
 
 	it('should set initial skills', () => {
@@ -36,11 +39,7 @@ describe('Character', () => {
 
 		const skills = character.getSkills();
 
-		expect(skills.acrobatics).toEqual(new Skill({
-			attribute: 'dexterity',
-			characterAttributes: character.getAttributes(),
-			name: SkillNameEnum.acrobatics,
-		}));
+		expect(skills).toEqual(InitialSkillsGenerator.generate());
 	});
 
 	it('should apply Dwarf attributes modifiers', () => {
@@ -48,7 +47,9 @@ describe('Character', () => {
 			initialAttributes,
 		});
 
-		character.chooseRace(new Dwarf());
+		character.dispatch(new ChooseRace({
+			race: new Dwarf(),
+		}));
 
 		expect(character.getAttributes()).toEqual<Attributes>({
 			...initialAttributes,
@@ -63,9 +64,11 @@ describe('Character', () => {
 			initialAttributes,
 		});
 
-		character.chooseRace(new Dwarf());
+		character.dispatch(new ChooseRace({
+			race: new Dwarf(),
+		}));
 
-		expect(character.progressionSteps[1].description).toBe('Aplicação dos modificadores de atributo da raça: -1 Destreza, +2 Constituição e +1 Sabedoria.');
+		expect(character.progressionSteps).toContainEqual(expect.objectContaining({description: 'Modificadores de raça aplicados: -1 Destreza, +2 Constituição e +1 Sabedoria.'}));
 	});
 
 	it('should apply human versatile ability', () => {
@@ -80,7 +83,9 @@ describe('Character', () => {
 				{name: SkillNameEnum.fight, type: 'skill'},
 			],
 		);
-		character.chooseRace(human);
+		character.dispatch(new ChooseRace({
+			race: human,
+		}));
 
 		expect(character.getTrainedSkills()).toContain(SkillNameEnum.acrobatics);
 		expect(character.getTrainedSkills()).toContain(SkillNameEnum.fight);
@@ -98,11 +103,12 @@ describe('Character', () => {
 				{name: GeneralPowerNameEnum.dodge, type: 'power'},
 			],
 		);
-		character.chooseRace(human);
-
+		character.dispatch(new ChooseRace({
+			race: human,
+		}));
 		expect(character.getTrainedSkills()).toContain(SkillNameEnum.acrobatics);
 		expect(character.getDefenseTotal()).toBe(12);
-		expect(character.getSkills().reflexes.getTotal()).toBe(2);
+		expect(character.getSkillTotal(SkillNameEnum.reflexes)).toBe(2);
 	});
 
 	it('should save dodge applience step', () => {
@@ -118,8 +124,16 @@ describe('Character', () => {
 			],
 		);
 
-		character.chooseRace(human);
-		expect(character.progressionSteps[2].description).toBe('Esquiva: você recebe +2 na defesa (12) e reflexos (2).');
+		character.dispatch(new ChooseRace({
+			race: human,
+		}));
+
+		character.progressionSteps.forEach(step => {
+			console.log(step.description);
+		},
+		);
+		expect(character.progressionSteps).toContainEqual(expect.objectContaining({description: 'Esquiva: +2 Defesa aplicado ao modificador "outros".'}));
+		expect(character.progressionSteps).toContainEqual(expect.objectContaining({description: 'Esquiva: +2 Reflexos aplicado ao modificador "outros".'}));
 	});
 
 	it('should apply night vision', () => {
@@ -127,56 +141,33 @@ describe('Character', () => {
 			initialAttributes,
 		});
 
-		const dwarf = new Dwarf();
-		character.chooseRace(dwarf);
-
+		character.dispatch(new ChooseRace({
+			race: new Dwarf(),
+		}));
 		expect(character.getVision()).toBe(Vision.dark);
 	});
 
-	it('should not activate +2 at perception and survival in build context', () => {
+	it('should have perception and survival rock knowledge modifiers', () => {
 		const character = new Character({
 			initialAttributes,
 		});
-
-		const dwarf = new Dwarf();
-		character.chooseRace(dwarf);
-
-		const perception = character.getSkillTotal(SkillNameEnum.perception);
-		const survival = character.getSkillTotal(SkillNameEnum.survival);
-
-		expect(perception).toBe(0);
-		expect(survival).toBe(0);
-	});
-
-	it('should not activate +2 at perception and survival in game context outside underground', () => {
-		const character = new Character({
-			initialAttributes,
-			context: new InGameContext({isUnderground: false}),
+		character.dispatch({
+			type: 'chooseRace',
+			payload: {
+				race: new Dwarf(),
+			},
 		});
+		const skills = character.getSkills();
+		const modifier: Modifier = {
+			source: RaceAbilityNameEnum.rockKnowledge,
+			value: 2,
+			condition: {
+				description: 'testes devem ser realizados no subterrâneo',
+				verify: expect.any(Function) as ConditionVerify,
+			},
+		};
 
-		const dwarf = new Dwarf();
-		character.chooseRace(dwarf);
-
-		const perception = character.getSkillTotal(SkillNameEnum.perception);
-		const survival = character.getSkillTotal(SkillNameEnum.survival);
-
-		expect(perception).toBe(0);
-		expect(survival).toBe(0);
-	});
-
-	it('should activate +2 at perception and survival in game context in the underground', () => {
-		const character = new Character({
-			initialAttributes,
-			context: new InGameContext({isUnderground: true}),
-		});
-
-		const dwarf = new Dwarf();
-		character.chooseRace(dwarf);
-
-		const perception = character.getSkillTotal(SkillNameEnum.perception);
-		const survival = character.getSkillTotal(SkillNameEnum.survival);
-
-		expect(perception).toBe(2);
-		expect(survival).toBe(2);
+		expect(skills.perception.modifierOthers.modifiers).toContainEqual<Modifier>(modifier);
+		expect(skills.survival.modifierOthers.modifiers).toContainEqual<Modifier>(modifier);
 	});
 });

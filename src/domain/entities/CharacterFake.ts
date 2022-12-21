@@ -1,6 +1,6 @@
 import type {Attributes} from './Attributes';
 import {BuildContext} from './BuildContext';
-import type {Action, CharacterAction} from './CharacterAction';
+import type {ActionInterface, ActionType} from './CharacterAction';
 import type {CharacterInterface} from './CharacterInterface';
 import type {Context} from './Context';
 import type {Modifier, ModifierCondition} from './ModifierOthers';
@@ -28,13 +28,13 @@ export class CharacterFake implements CharacterInterface {
 	public vision: Vision = Vision.default;
 	public context: Context = new BuildContext();
 
-	readonly progressionSteps: Array<ProgressionStepFake<CharacterAction>> = [];
+	readonly progressionSteps: Array<ProgressionStepFake<ActionType>> = [];
 
 	public defenseTotal = 10;
 	public race = new RaceFake();
 	public skills: Record<SkillNameEnum, Skill> = InitialSkillsGenerator.generate();
 
-	dispatch = jest.fn(<T extends CharacterAction>(action: Action<T>) => {
+	dispatch = jest.fn(<T extends ActionType>(action: ActionInterface<T>) => {
 		this.progressionSteps.push(new ProgressionStepFake(action));
 	});
 

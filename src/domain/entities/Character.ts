@@ -1,6 +1,6 @@
 import type {Attributes} from './Attributes';
 import {BuildContext} from './BuildContext';
-import type {Action, CharacterAction, CharacterActionHandlers, CharacterActionPayload} from './CharacterAction';
+import type {ActionInterface, ActionType, CharacterActionHandlers, ActionPayload} from './CharacterAction';
 import type {CharacterInterface} from './CharacterInterface';
 import type {Context} from './Context';
 import {Defense} from './Defense';
@@ -19,7 +19,7 @@ type CharacterParams = {
 };
 
 export class Character implements CharacterInterface {
-	readonly progressionSteps: Array<ProgressionStep<CharacterAction>> = [];
+	readonly progressionSteps: Array<ProgressionStep<ActionType>> = [];
 	private attributes: Attributes = {charisma: 0, constitution: 0, dexterity: 0, intelligence: 0, strength: 0, wisdom: 0};
 	private race?: RaceInterface;
 	// eslint-disable-next-line @typescript-eslint/prefer-readonly
@@ -28,17 +28,16 @@ export class Character implements CharacterInterface {
 	private readonly skills: Record<SkillNameEnum, Skill>;
 	private readonly defense = new Defense();
 	private readonly context: Context;
-	private readonly abilities: RaceAbilityNameEnum[] = [];
 	private readonly actionHandlers: CharacterActionHandlers = {
-		addOtherModifierToDefense: this.addOtherModifierToDefense,
-		addOtherModifierToSkill: this.addOtherModifierToSkill,
-		chooseRace: this.chooseRace,
-		trainSkill: this.trainSkill,
-		changeVision: this.changeVision,
-		setInitialAttributes: this.setInitialAttributes,
-		applyRaceModifiers: this.applyRaceModifiers,
-		applyRaceAbility: this.applyRaceAbility,
-		pickPower: this.pickPower,
+		addOtherModifierToDefense: this.addOtherModifierToDefense.bind(this),
+		addOtherModifierToSkill: this.addOtherModifierToSkill.bind(this),
+		chooseRace: this.chooseRace.bind(this),
+		trainSkill: this.trainSkill.bind(this),
+		changeVision: this.changeVision.bind(this),
+		setInitialAttributes: this.setInitialAttributes.bind(this),
+		applyRaceModifiers: this.applyRaceModifiers.bind(this),
+		applyRaceAbility: this.applyRaceAbility.bind(this),
+		pickPower: this.pickPower.bind(this),
 	};
 
 	constructor(
@@ -46,14 +45,15 @@ export class Character implements CharacterInterface {
 	) {
 		this.context = params.context ?? new BuildContext();
 		this.skills = InitialSkillsGenerator.generate();
+		this.dispatch = this.dispatch.bind(this);
 
 		this.dispatch({type: 'setInitialAttributes', payload: {attributes: params.initialAttributes}});
 	}
 
-	dispatch<T extends CharacterAction>(action: Action<T>): void {
+	dispatch<T extends ActionType>(action: ActionInterface<T>): void {
+		this.progressionSteps.push(new ProgressionStep(action, this));
 		const handle = this.actionHandlers[action.type];
 		handle(action.payload);
-		this.progressionSteps.push(new ProgressionStep(action, this));
 	}
 
 	getVision(): Vision {
@@ -89,7 +89,7 @@ export class Character implements CharacterInterface {
 	}
 
 	getSkillTotal(skill: SkillNameEnum) {
-		return this.skills[skill].getTotal(this.level, this.context);
+		return this.skills[skill].getTotal(this.attributes, this.level, this.context);
 	}
 
 	getTrainedSkills(): SkillNameEnum[] {
@@ -98,46 +98,50 @@ export class Character implements CharacterInterface {
 			.map(([name]) => name as SkillNameEnum);
 	}
 
-	private pickPower(payload: CharacterActionPayload<'pickPower'>) {
+	getSkillTrainingPoints(skill: SkillNameEnum): number {
+		return this.skills[skill].getTrainingPoints(this.level);
+	}
+
+	private pickPower(payload: ActionPayload<'pickPower'>) {
 		payload.power.apply(this);
 	}
 
-	private setInitialAttributes(payload: CharacterActionPayload<'setInitialAttributes'>) {
+	private setInitialAttributes(payload: ActionPayload<'setInitialAttributes'>) {
 		this.attributes = payload.attributes;
 	}
 
-	private changeVision(payload: CharacterActionPayload<'changeVision'>): void {
+	private changeVision(payload: ActionPayload<'changeVision'>): void {
 		this.vision = payload.vision;
 	}
 
-	private addOtherModifierToDefense(payload: CharacterActionPayload<'addOtherModifierToDefense'>) {
+	private addOtherModifierToDefense(payload: ActionPayload<'addOtherModifierToDefense'>) {
 		this.defense.modifierOthers.add({source: payload.source, value: payload.value, condition: payload.condition});
 	}
 
-	private addOtherModifierToSkill(payload: CharacterActionPayload<'addOtherModifierToSkill'>): void {
+	private addOtherModifierToSkill(payload: ActionPayload<'addOtherModifierToSkill'>): void {
 		this.skills[payload.skill].modifierOthers.add({source: payload.source, value: payload.value, condition: payload.condition});
 	}
 
-	private chooseRace(payload: CharacterActionPayload<'chooseRace'>) {
+	private chooseRace(payload: ActionPayload<'chooseRace'>) {
 		this.race = payload.race;
 		this.race.applyAttributesModifiers(this.attributes, this.dispatch);
 		this.race.applyAbilities(this);
 	}
 
-	private trainSkill(payload: CharacterActionPayload<'trainSkill'>): void {
+	private trainSkill(payload: ActionPayload<'trainSkill'>): void {
 		const skillName = new SkillName(payload.name);
 		const skill = this.skills[skillName.value];
 		skill.train();
 	}
 
-	private applyRaceModifiers(payload: CharacterActionPayload<'applyRaceModifiers'>) {
+	private applyRaceModifiers(payload: ActionPayload<'applyRaceModifiers'>) {
 		this.attributes = {
 			...this.attributes,
 			...payload.updatedAttributes,
 		};
 	}
 
-	private applyRaceAbility(payload: CharacterActionPayload<'applyRaceAbility'>) {
+	private applyRaceAbility(payload: ActionPayload<'applyRaceAbility'>) {
 		payload.ability.apply(this);
 	}
 }

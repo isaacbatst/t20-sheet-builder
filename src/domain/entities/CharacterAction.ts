@@ -8,7 +8,7 @@ import type {SkillNameEnum} from './Skill/SkillName';
 import type {Translatable} from './Translator';
 import type {Vision} from './Vision';
 
-type CharacterActionsToHandlers = {
+type ActionTypesToHandlers = {
 	setInitialAttributes(payload: {attributes: Attributes}): void;
 	addOtherModifierToSkill(payload: Modifier & {skill: SkillNameEnum}): void;
 	addOtherModifierToDefense(payload: Modifier): void;
@@ -20,15 +20,15 @@ type CharacterActionsToHandlers = {
 	pickPower(payload: {power: PowerInterface; source: Translatable}): void;
 };
 
-export type CharacterAction = keyof CharacterActionsToHandlers;
-export type CharacterActionPayload<T extends CharacterAction> = Parameters<CharacterActionsToHandlers[T]>[0];
-export type Action<T extends CharacterAction> = {
+export type ActionType = keyof ActionTypesToHandlers;
+export type ActionPayload<T extends ActionType> = Parameters<ActionTypesToHandlers[T]>[0];
+export type ActionInterface<T extends ActionType> = {
 	type: T;
-	payload: CharacterActionPayload<T>;
+	payload: ActionPayload<T>;
 };
 export type CharacterActionHandlers = {
-	[Property in keyof CharacterActionsToHandlers]: (payload: CharacterActionPayload<Property>) => void
+	[Property in keyof ActionTypesToHandlers]: (payload: ActionPayload<Property>) => void
 };
 export type CharacterActionDescriptionGenerators = {
-	[Property in keyof CharacterActionsToHandlers]: (character: CharacterInterface, action: Action<Property>) => string
+	[Property in keyof ActionTypesToHandlers]: (character: CharacterInterface, action: ActionInterface<Property>) => string
 };

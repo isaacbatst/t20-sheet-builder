@@ -21,17 +21,12 @@ export abstract class Race implements RaceInterface {
 			modifiedAttributes[attributeCasted] = attributes[attributeCasted] + value;
 		});
 
-		const updatedAttributes = {
-			...attributes,
-			...modifiedAttributes,
-		};
-
-		dispatch({type: 'applyRaceModifiers', payload: {modifiers: this.attributeModifiers, updatedAttributes}});
+		dispatch({type: 'applyRaceModifiers', payload: {modifiers: this.attributeModifiers, updatedAttributes: modifiedAttributes}});
 	}
 
 	applyAbilities(character: CharacterInterface): void {
 		Object.values(this.abilities).forEach(ability => {
-			character.dispatch({type: 'applyAbility', payload: {name: ability.name}});
+			character.dispatch({type: 'applyRaceAbility', payload: {ability}});
 		});
 	}
 

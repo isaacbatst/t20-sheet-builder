@@ -50,7 +50,7 @@ describe('ActionDescriptionGenerator', () => {
 			},
 		);
 
-		expect(description).toBe('Modificadores de raça aplicados, +2 Carisma e -1 Destreza. Atual +3 Carisma e -1 Destreza.');
+		expect(description).toBe('Modificadores de raça aplicados: +2 Carisma e -1 Destreza.');
 	});
 
 	it('should generate addOtherModifierToDefense description', () => {
@@ -65,7 +65,7 @@ describe('ActionDescriptionGenerator', () => {
 			},
 		);
 
-		expect(description).toBe('Esquiva: +2 Defesa aplicado ao modificador "outros". Atual 12.');
+		expect(description).toBe('Esquiva: +2 Defesa aplicado ao modificador "outros".');
 	});
 
 	it('should generate addOtherModifierToDefense description with conditional', () => {
@@ -80,7 +80,7 @@ describe('ActionDescriptionGenerator', () => {
 			},
 		);
 
-		expect(description).toBe('Esquiva: +2 Defesa aplicado ao modificador "outros". Atual 12. Ativação em: testes realizados no subterrâneo.');
+		expect(description).toBe('Esquiva: +2 Defesa aplicado ao modificador "outros". Ativação em: testes realizados no subterrâneo.');
 	});
 
 	it('should generate addOtherModifierToDefense description', () => {
@@ -95,7 +95,7 @@ describe('ActionDescriptionGenerator', () => {
 			},
 		);
 
-		expect(description).toBe('Esquiva: +2 Defesa aplicado ao modificador "outros". Atual 12.');
+		expect(description).toBe('Esquiva: +2 Defesa aplicado ao modificador "outros".');
 	});
 
 	it('should generate addOtherModifierToDefense description with conditional', () => {
@@ -110,7 +110,7 @@ describe('ActionDescriptionGenerator', () => {
 			},
 		);
 
-		expect(description).toBe('Esquiva: +2 Defesa aplicado ao modificador "outros". Atual 12. Ativação em: testes realizados no subterrâneo.');
+		expect(description).toBe('Esquiva: +2 Defesa aplicado ao modificador "outros". Ativação em: testes realizados no subterrâneo.');
 	});
 
 	it('should generate addOtherModifierToSkill description', () => {
@@ -124,7 +124,7 @@ describe('ActionDescriptionGenerator', () => {
 			},
 		);
 
-		expect(description).toBe('Esquiva: +2 Reflexos aplicado ao modificador "outros". Atual 0.');
+		expect(description).toBe('Esquiva: +2 Reflexos aplicado ao modificador "outros".');
 	});
 
 	it('should generate addOtherModifierToSkill description with conditional', () => {
@@ -138,7 +138,7 @@ describe('ActionDescriptionGenerator', () => {
 			},
 		);
 
-		expect(description).toBe('Conhecimento das Rochas: +2 Percepção aplicado ao modificador "outros". Atual 0. Ativação em: testes realizados no subterrâneo.');
+		expect(description).toBe('Conhecimento das Rochas: +2 Percepção aplicado ao modificador "outros". Ativação em: testes realizados no subterrâneo.');
 	});
 
 	it('should generate changeVision description', () => {
@@ -181,7 +181,7 @@ describe('ActionDescriptionGenerator', () => {
 			},
 		);
 
-		expect(description).toBe('Versátil: Perícia Luta treinada, bônus de treino +2. Atual 2');
+		expect(description).toBe('Versátil: Perícia Luta treinada, bônus de treino +2.');
 	});
 
 	it('should generate pickPower description', () => {

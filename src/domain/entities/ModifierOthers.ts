@@ -3,9 +3,11 @@ import type {Context} from './Context';
 import type {InGameContext} from './InGameContext';
 import type {Translatable} from './Translator';
 
+export type ConditionVerify = (context: InGameContext) => boolean;
+
 export type ModifierCondition = {
 	description: string;
-	verify: (context: InGameContext) => boolean;
+	verify: ConditionVerify;
 };
 
 export type Modifier = {

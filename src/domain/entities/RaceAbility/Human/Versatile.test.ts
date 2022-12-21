@@ -1,4 +1,4 @@
-import type {Action} from '../../CharacterAction';
+import type {ActionInterface} from '../../CharacterAction';
 import {CharacterFake} from '../../CharacterFake';
 import {Dodge} from '../../Power/Dodge';
 import {GeneralPowerNameEnum} from '../../Power/GeneralPowerName';
@@ -71,7 +71,7 @@ describe('Versatile', () => {
 		const character = new CharacterFake();
 		versatile.apply(character);
 
-		expect(character.dispatch).toHaveBeenCalledWith<[Action<'trainSkill'>]>({
+		expect(character.dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
 			type: 'trainSkill',
 			payload: {
 				name: SkillNameEnum.acrobatics,
@@ -79,7 +79,7 @@ describe('Versatile', () => {
 			},
 		});
 
-		expect(character.dispatch).toHaveBeenCalledWith<[Action<'trainSkill'>]>({
+		expect(character.dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
 			type: 'trainSkill',
 			payload: {
 				name: SkillNameEnum.acrobatics,
@@ -96,7 +96,7 @@ describe('Versatile', () => {
 		const character = new CharacterFake();
 		versatile.apply(character);
 
-		expect(character.dispatch).toHaveBeenCalledWith<[Action<'trainSkill'>]>({
+		expect(character.dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
 			type: 'trainSkill',
 			payload: {
 				name: SkillNameEnum.acrobatics,
@@ -104,7 +104,7 @@ describe('Versatile', () => {
 			},
 		});
 
-		expect(character.dispatch).toHaveBeenCalledWith<[Action<'pickPower'>]>({
+		expect(character.dispatch).toHaveBeenCalledWith<[ActionInterface<'pickPower'>]>({
 			type: 'pickPower',
 			payload: {
 				power: new Dodge(),
