@@ -75,6 +75,10 @@ export class BuildingSheet implements BuildingSheetInterface {
 		return this.lifePoints;
 	}
 
+	getRole() {
+		return this.role;
+	}
+
 	dispatch: Dispatch = <T extends ActionType>(buildStep: ActionInterface<T>): void => {
 		this.buildSteps.push(new BuildStep(buildStep, this));
 		const handle = this.actionHandlers[buildStep.type];

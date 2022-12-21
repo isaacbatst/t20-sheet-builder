@@ -8,6 +8,7 @@ import {GeneralPowerName} from './Power/GeneralPowerName';
 import {Dwarf} from './Race/Dwarf';
 import {Human} from './Race/Human';
 import {RaceAbilityName} from './RaceAbility/RaceAbilityName';
+import {Warrior} from './Role/Warrior';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
 import {SkillName} from './Skill/SkillName';
 import {Vision} from './Vision';
@@ -84,6 +85,16 @@ describe('BuildingSheet', () => {
 
 		it('should have 9m displacement', () => {
 			expect(humanSheet.getDisplacement()).toBe(9);
+		});
+
+		it('should choose role', () => {
+			const role = new Warrior();
+			humanSheet.dispatch({
+				type: 'chooseRole',
+				payload: {role},
+			});
+
+			expect(humanSheet.getRole()).toBe(role);
 		});
 	});
 
