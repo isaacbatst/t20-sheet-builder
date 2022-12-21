@@ -1,20 +1,16 @@
 import type {Attributes} from './Attributes';
 import {BuildingSheetContext} from './BuildingSheetContext';
-import type {ActionInterface, ActionType} from './SheetActions';
-import type {SheetInterface} from './SheetInterface';
 import type {Context} from './Context';
-import type {ModifierInterface, ModifierCondition} from './ModifierList';
-import type {ProgressionStep} from './ProgressionStep';
+import type {ModifierInterface} from './ModifierList';
 import {ProgressionStepFake} from './ProgressionStepFake';
 import {RaceFake} from './RaceFake';
 import type {RaceInterface} from './RaceInterface';
+import type {ActionInterface, ActionType} from './SheetActions';
+import type {SheetInterface} from './SheetInterface';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
 import type {Skill} from './Skill/Skill';
 import type {SkillName} from './Skill/SkillName';
-import type {Translatable} from './Translator';
 import {Vision} from './Vision';
-import {ConditionalModifier} from './Modifier/ConditionalModifier';
-import {RaceAbilityName} from './RaceAbility/RaceAbilityName';
 
 export class SheetFake implements SheetInterface {
 	public level = 1;

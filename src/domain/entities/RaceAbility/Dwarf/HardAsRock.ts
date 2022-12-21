@@ -9,8 +9,8 @@ export class HardAsRock extends RaceAbility {
 		super(RaceAbilityName.hardAsRock, 'passive');
 	}
 
-	apply(character: SheetInterface): void {
+	apply(sheet: SheetInterface): void {
 		const modifier = new Modifier(this.name, 3);
-		character.dispatch(new AddModifierToLifePoints({modifier}));
+		sheet.dispatch(new AddModifierToLifePoints({modifier}));
 	}
 }

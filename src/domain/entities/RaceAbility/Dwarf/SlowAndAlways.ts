@@ -8,8 +8,8 @@ export class SlowAndAlways extends RaceAbility {
 		super(RaceAbilityName.slowAndAlways, 'passive');
 	}
 
-	apply(character: SheetInterface): void {
-		character.dispatch(new ChangeDisplacement({
+	apply(sheet: SheetInterface): void {
+		sheet.dispatch(new ChangeDisplacement({
 			displacement: 6,
 			source: this.name,
 		}));

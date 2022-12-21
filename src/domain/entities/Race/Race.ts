@@ -1,7 +1,7 @@
 import type {Attribute, Attributes} from '../Attributes';
 import type {RaceAbility} from '../RaceAbility/RaceAbility';
 import type {RaceInterface} from '../RaceInterface';
-import type {CharacterDispatch, SheetInterface} from '../SheetInterface';
+import type {Dispatch, SheetInterface} from '../SheetInterface';
 import type {RaceName} from './RaceName';
 
 export abstract class Race implements RaceInterface {
@@ -10,7 +10,7 @@ export abstract class Race implements RaceInterface {
 
 	constructor(readonly name: RaceName) {}
 
-	applyAttributesModifiers(attributes: Attributes, dispatch: CharacterDispatch): void {
+	applyAttributesModifiers(attributes: Attributes, dispatch: Dispatch): void {
 		const modifiedAttributes: Partial<Attributes> = {};
 
 		Object.entries(this.attributeModifiers).forEach(([attribute, value]) => {
@@ -21,9 +21,9 @@ export abstract class Race implements RaceInterface {
 		dispatch({type: 'applyRaceModifiers', payload: {modifiers: this.attributeModifiers, updatedAttributes: modifiedAttributes}});
 	}
 
-	applyAbilities(character: SheetInterface): void {
+	applyAbilities(sheet: SheetInterface): void {
 		Object.values(this.abilities).forEach(ability => {
-			character.dispatch({type: 'applyRaceAbility', payload: {ability}});
+			sheet.dispatch({type: 'applyRaceAbility', payload: {ability}});
 		});
 	}
 }

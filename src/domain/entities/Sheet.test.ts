@@ -29,15 +29,8 @@ describe('Sheet', () => {
 	});
 
 	it('should set initial skills', () => {
-		const sheet = new Sheet({
-			initialAttributes: {
-				...initialAttributes,
-				dexterity: 2,
-			},
-		});
-
+		const sheet = new Sheet({attributes: {dexterity: 2}});
 		const skills = sheet.getSkills();
-
 		expect(skills).toEqual(InitialSkillsGenerator.generate());
 	});
 
@@ -45,7 +38,7 @@ describe('Sheet', () => {
 		let humanSheet: Sheet;
 
 		beforeEach(() => {
-			humanSheet = new Sheet();
+			humanSheet = new Sheet({attributes: {dexterity: 1}});
 
 			const human = new Human(
 				['strength', 'charisma', 'constitution'],
@@ -62,8 +55,8 @@ describe('Sheet', () => {
 		it('should apply human versatile ability with one power and one skill', () => {
 			const context = new BuildingSheetContext();
 			expect(humanSheet.getTrainedSkills()).toContain(SkillName.acrobatics);
-			expect(humanSheet.getDefenseTotal(context)).toBe(12);
-			expect(humanSheet.getSkillTotal(SkillName.reflexes, context)).toBe(2);
+			expect(humanSheet.getDefenseTotal(context)).toBe(13);
+			expect(humanSheet.getSkillTotal(SkillName.reflexes, context)).toBe(3);
 		});
 
 		it('should apply human versatile ability with two skills', () => {

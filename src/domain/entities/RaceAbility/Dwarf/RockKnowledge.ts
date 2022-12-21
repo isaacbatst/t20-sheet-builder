@@ -26,12 +26,12 @@ export class RockKnowledge extends RaceAbility {
 		);
 	}
 
-	apply(character: SheetInterface): void {
-		character.dispatch(new ChangeVision({source: this.name, vision: Vision.dark}));
+	apply(sheet: SheetInterface): void {
+		sheet.dispatch(new ChangeVision({source: this.name, vision: Vision.dark}));
 
 		const modifier = new ConditionalModifier(this.name, RockKnowledge.skillModifier, RockKnowledge.condition);
 
-		character.dispatch(new AddOtherModifierToSkill({modifier, skill: SkillName.perception}));
-		character.dispatch(new AddOtherModifierToSkill({modifier, skill: SkillName.survival}));
+		sheet.dispatch(new AddOtherModifierToSkill({modifier, skill: SkillName.perception}));
+		sheet.dispatch(new AddOtherModifierToSkill({modifier, skill: SkillName.survival}));
 	}
 }

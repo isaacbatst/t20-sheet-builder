@@ -70,7 +70,7 @@ export class Skill {
 		return 6;
 	}
 
-	private calculateHalfLevel(characterLevel: number) {
-		return Math.floor(characterLevel / 2);
+	private calculateHalfLevel(level: number) {
+		return Math.floor(level / 2);
 	}
 }
