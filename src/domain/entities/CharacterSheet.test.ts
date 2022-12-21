@@ -127,10 +127,6 @@ describe('Character', () => {
 			race: human,
 		}));
 
-		character.progressionSteps.forEach(step => {
-			console.log(step.description);
-		},
-		);
 		expect(character.progressionSteps).toContainEqual(expect.objectContaining({description: 'Esquiva: +2 Defesa aplicado ao modificador "outros".'}));
 		expect(character.progressionSteps).toContainEqual(expect.objectContaining({description: 'Esquiva: +2 Reflexos aplicado ao modificador "outros".'}));
 	});

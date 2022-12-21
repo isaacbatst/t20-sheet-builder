@@ -31,7 +31,7 @@ describe('RockKnowledge', () => {
 			skill: SkillNameEnum.perception,
 			source: RaceAbilityNameEnum.rockKnowledge,
 			value: 2,
-			condition: {description: 'testes realizados no subterrâneo', verify: expect.any(Function) as ConditionVerify},
+			condition: {description: 'testes devem ser realizados no subterrâneo', verify: expect.any(Function) as ConditionVerify},
 		})));
 	});
 
@@ -44,7 +44,7 @@ describe('RockKnowledge', () => {
 			skill: SkillNameEnum.survival,
 			source: RaceAbilityNameEnum.rockKnowledge,
 			value: 2,
-			condition: {description: 'testes realizados no subterrâneo', verify: expect.any(Function) as ConditionVerify},
+			condition: {description: 'testes devem ser realizados no subterrâneo', verify: expect.any(Function) as ConditionVerify},
 		})));
 	});
 
