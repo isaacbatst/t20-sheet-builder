@@ -1,4 +1,4 @@
-import {BuildContext} from './BuildContext';
+import {BuildingSheetContext} from './BuildingSheetContext';
 import type {Context} from './Context';
 import type {InGameContext} from './InGameContext';
 import type {Translatable} from './Translator';
@@ -20,7 +20,7 @@ export class ModifierOthers {
 	readonly modifiers: Modifier[] = [];
 	constructor(private readonly modifierRepeatedError: string) {}
 
-	getTotal(context: Context = new BuildContext()) {
+	getTotal(context: Context = new BuildingSheetContext()) {
 		return context.getModifierOthersTotal(this.modifiers);
 	}
 

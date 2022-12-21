@@ -1,5 +1,5 @@
 import type {Attributes} from './Attributes';
-import {BuildContext} from './BuildContext';
+import {BuildingSheetContext} from './BuildingSheetContext';
 import type {ActionInterface, ActionType} from './CharacterAction';
 import type {SheetInterface} from './SheetInterface';
 import type {Context} from './Context';
@@ -26,7 +26,7 @@ export class CharacterFake implements SheetInterface {
 	};
 
 	public vision: Vision = Vision.default;
-	public context: Context = new BuildContext();
+	public context: Context = new BuildingSheetContext();
 
 	readonly progressionSteps: Array<ProgressionStepFake<ActionType>> = [];
 

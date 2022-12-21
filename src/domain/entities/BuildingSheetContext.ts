@@ -1,7 +1,7 @@
 import {Context} from './Context';
 import type {Modifier} from './ModifierOthers';
 
-export class BuildContext extends Context {
+export class BuildingSheetContext extends Context {
 	constructor() {
 		super('build');
 	}

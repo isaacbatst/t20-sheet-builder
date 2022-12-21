@@ -1,5 +1,4 @@
 import type {Attributes} from './Attributes';
-import {BuildContext} from './BuildContext';
 import type {ActionInterface, ActionPayload, ActionType, CharacterActionHandlers} from './CharacterAction';
 import type {Context} from './Context';
 import {Defense} from './Defense';
@@ -14,7 +13,6 @@ import {Vision} from './Vision';
 
 type CharacterParams = {
 	initialAttributes: Attributes;
-	context?: Context;
 };
 
 export class CharacterSheet implements SheetInterface {
@@ -26,7 +24,6 @@ export class CharacterSheet implements SheetInterface {
 	private vision: Vision = Vision.default;
 	private readonly skills: Record<SkillNameEnum, Skill>;
 	private readonly defense = new Defense();
-	private readonly context: Context;
 	private readonly actionHandlers: CharacterActionHandlers = {
 		addOtherModifierToDefense: this.addOtherModifierToDefense.bind(this),
 		addOtherModifierToSkill: this.addOtherModifierToSkill.bind(this),
@@ -42,7 +39,6 @@ export class CharacterSheet implements SheetInterface {
 	constructor(
 		params: CharacterParams,
 	) {
-		this.context = params.context ?? new BuildContext();
 		this.skills = InitialSkillsGenerator.generate();
 		this.dispatch = this.dispatch.bind(this);
 
@@ -59,16 +55,12 @@ export class CharacterSheet implements SheetInterface {
 		return this.vision;
 	}
 
-	getContext(): Context {
-		return this.context;
-	}
-
 	getDefense(): Defense {
 		return this.defense;
 	}
 
-	getDefenseTotal(): number {
-		return this.defense.getTotal(this.attributes.dexterity, 0, 0, this.context);
+	getDefenseTotal(context: Context): number {
+		return this.defense.getTotal(this.attributes.dexterity, 0, 0, context);
 	}
 
 	getAttributes(): Attributes {
@@ -87,8 +79,8 @@ export class CharacterSheet implements SheetInterface {
 		return this.skills;
 	}
 
-	getSkillTotal(skill: SkillNameEnum) {
-		return this.skills[skill].getTotal(this.attributes, this.level, this.context);
+	getSkillTotal(skill: SkillNameEnum, context: Context) {
+		return this.skills[skill].getTotal(this.attributes, this.level, context);
 	}
 
 	getTrainedSkills(): SkillNameEnum[] {

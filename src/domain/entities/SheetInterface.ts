@@ -10,7 +10,7 @@ import type {Vision} from './Vision';
 export type SkilledCharacter = {
 	getTrainedSkills(): SkillNameEnum[];
 	getSkills(): Record<SkillNameEnum, Skill>;
-	getSkillTotal(skill: SkillNameEnum): number;
+	getSkillTotal(skill: SkillNameEnum, context: Context): number;
 	getSkillTrainingPoints(skill: SkillNameEnum): number;
 };
 
@@ -34,7 +34,7 @@ export type RaceCharacter = {
 };
 
 export type DefensibleCharacter = {
-	getDefenseTotal(): number;
+	getDefenseTotal(context: Context): number;
 };
 
 export type VisionCharacter = {
@@ -43,15 +43,10 @@ export type VisionCharacter = {
 
 export type Location = {isUnderground: boolean};
 
-export type ContextCharacter = {
-	getContext(): Context;
-};
-
 export type SheetInterface = SkilledCharacter
 & LeveledCharacter
 & AttributesCharacter
 & ProgressingCharacter
 & RaceCharacter
 & DefensibleCharacter
-& VisionCharacter
-& ContextCharacter;
+& VisionCharacter;

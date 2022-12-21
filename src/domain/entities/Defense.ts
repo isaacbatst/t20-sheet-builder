@@ -1,4 +1,4 @@
-import {BuildContext} from './BuildContext';
+import {BuildingSheetContext} from './BuildingSheetContext';
 import type {Context} from './Context';
 import {ModifierOthers} from './ModifierOthers';
 
@@ -13,7 +13,7 @@ export class Defense {
 		return 'REPEATED_OTHER_DEFENSE_MODIFIER';
 	}
 
-	getTotal(dexterity: number, armorBonus: number, shieldBonus: number, context: Context = new BuildContext()) {
+	getTotal(dexterity: number, armorBonus: number, shieldBonus: number, context: Context = new BuildingSheetContext()) {
 		const otherModifiersSum = this.modifierOthers.getTotal(context);
 		return Defense.base + dexterity + armorBonus + shieldBonus + otherModifiersSum;
 	}

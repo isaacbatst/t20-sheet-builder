@@ -1,5 +1,6 @@
 import {ChooseRace} from './Action/ChooseRace';
 import type {Attributes} from './Attributes';
+import {BuildingSheetContext} from './BuildingSheetContext';
 import {CharacterSheet} from './CharacterSheet';
 import type {ConditionVerify, Modifier} from './ModifierOthers';
 import {GeneralPowerNameEnum} from './Power/GeneralPowerName';
@@ -105,9 +106,11 @@ describe('Character', () => {
 		character.dispatch(new ChooseRace({
 			race: human,
 		}));
+
+		const context = new BuildingSheetContext();
 		expect(character.getTrainedSkills()).toContain(SkillNameEnum.acrobatics);
-		expect(character.getDefenseTotal()).toBe(12);
-		expect(character.getSkillTotal(SkillNameEnum.reflexes)).toBe(2);
+		expect(character.getDefenseTotal(context)).toBe(12);
+		expect(character.getSkillTotal(SkillNameEnum.reflexes, context)).toBe(2);
 	});
 
 	it('should save dodge applience step', () => {

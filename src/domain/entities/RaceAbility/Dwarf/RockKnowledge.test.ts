@@ -1,6 +1,6 @@
 import {AddOtherModifierToSkill} from '../../Action/AddOtherModifierToSkill';
 import {ChangeVision} from '../../Action/ChangeVision';
-import {BuildContext} from '../../BuildContext';
+import {BuildingSheetContext} from '../../BuildingSheetContext';
 import type {ActionPayload} from '../../CharacterAction';
 import {CharacterFake} from '../../CharacterFake';
 import {InGameContext} from '../../InGameContext';
