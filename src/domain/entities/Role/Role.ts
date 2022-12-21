@@ -1,15 +1,14 @@
 import type {Proficiency} from '../Proficiency';
 import type {SkillName} from '../Skill/SkillName';
-import type {ClassName} from './ClassName';
+import type {ChooseableSkills, RoleInterface} from './RoleInterface';
+import type {RoleName} from './RoleName';
 
-export type ChooseableSkills = {skills: SkillName[]; amount: number};
-
-export abstract class Class {
+export abstract class Role implements RoleInterface {
 	abstract readonly initialLifePoints: number;
 	abstract readonly lifePointsPerLevel: number;
 	abstract readonly manaPerLevel: number;
 	abstract readonly mandatorySkills: SkillName[];
 	abstract readonly chooseableSkills: ChooseableSkills[];
 	abstract readonly proficiencies: Proficiency[];
-	abstract readonly name: ClassName;
+	abstract readonly name: RoleName;
 }

@@ -1,7 +1,7 @@
 import {ApplyRaceAbility} from '../Action/ApplyRaceAbility';
 import {ApplyRaceModifiers} from '../Action/ApplyRaceModifiers';
-import {SheetFake} from '../SheetFake';
-import {GeneralPowerNameEnum} from '../Power/GeneralPowerName';
+import {BuildingSheetFake} from '../SheetFake';
+import {GeneralPowerName} from '../Power/GeneralPowerName';
 import type {VersatileChoice} from '../RaceAbility/Human/Versatile';
 import {Versatile} from '../RaceAbility/Human/Versatile';
 import {SkillName} from '../Skill/SkillName';
@@ -15,7 +15,7 @@ describe('Human', () => {
 			'strength',
 		]);
 
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 
 		human.applyAttributesModifiers({
 			strength: 0,
@@ -107,7 +107,7 @@ describe('Human', () => {
 			animalHandling,
 		]);
 
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 		human.applyAbilities(sheet);
 
 		const versatile = new Versatile();
@@ -125,7 +125,7 @@ describe('Human', () => {
 			type: 'skill',
 		};
 		const dodge: VersatileChoice = {
-			name: GeneralPowerNameEnum.dodge,
+			name: GeneralPowerName.dodge,
 			type: 'power',
 		};
 
@@ -135,7 +135,7 @@ describe('Human', () => {
 			'strength',
 		], [acrobatics, dodge]);
 
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 		human.applyAbilities(sheet);
 
 		const versatile = new Versatile();

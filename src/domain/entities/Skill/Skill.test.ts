@@ -1,11 +1,11 @@
-import {SheetFake} from '../SheetFake';
+import {BuildingSheetFake} from '../SheetFake';
 import {RaceAbilityName} from '../RaceAbility/RaceAbilityName';
 import {Skill} from './Skill';
 import {Modifier} from '../Modifier/Modifier';
 
 describe('Skill', () => {
 	it('should calculate level 1 untrained skill', () => {
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 		const skill = new Skill({
 			attribute: 'dexterity',
 		});
@@ -14,7 +14,7 @@ describe('Skill', () => {
 	});
 
 	it('should calculate level 1 untrained skill with modifier', () => {
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 		sheet.attributes = {
 			...sheet.attributes,
 			dexterity: 2,
@@ -27,7 +27,7 @@ describe('Skill', () => {
 	});
 
 	it('should calculate level 1 trained skill', () => {
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 
 		const skill = new Skill({
 			isTrained: true,
@@ -37,7 +37,7 @@ describe('Skill', () => {
 	});
 
 	it('should calculate level 1 trained skill with modifier', () => {
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 		sheet.attributes = {
 			...sheet.attributes,
 			dexterity: 2,
@@ -52,7 +52,7 @@ describe('Skill', () => {
 	});
 
 	it('should calculate level 1 trained skill with modifier and other bonus', () => {
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 		sheet.attributes = {
 			...sheet.attributes,
 			dexterity: 2,
@@ -68,7 +68,7 @@ describe('Skill', () => {
 	});
 
 	it('should calculate level 10 trained skill with modifier and other bonus', () => {
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 		sheet.attributes = {
 			...sheet.attributes,
 			dexterity: 2,
@@ -84,7 +84,7 @@ describe('Skill', () => {
 	});
 
 	it('should update total by training', () => {
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 		const skill = new Skill({
 			attribute: 'dexterity',
 		});

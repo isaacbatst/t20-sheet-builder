@@ -1,13 +1,14 @@
 import type {Attribute} from './Attributes';
-import type {GeneralPowerNameEnum} from './Power/GeneralPowerName';
+import type {GeneralPowerName} from './Power/GeneralPowerName';
 import type {PowerName} from './Power/PowerName';
 import type {RaceName} from './Race/RaceName';
 import type {RaceAbilityName} from './RaceAbility/RaceAbilityName';
+import type {RoleName} from './Role/RoleName';
 import type {SkillName} from './Skill/SkillName';
 import {StringHelper} from './StringHelper';
 import type {Vision} from './Vision';
 
-export type Translatable = Attribute | RaceAbilityName | SkillName | PowerName | RaceName | Vision;
+export type Translatable = Attribute | RaceAbilityName | SkillName | PowerName | RaceName | Vision | RoleName;
 
 export class Translator {
 	static getAttributeTranslation(attribute: Attribute, capitalized = true) {
@@ -34,6 +35,10 @@ export class Translator {
 
 	static getRaceTranslation(race: RaceName) {
 		return Translator.racesTranslation[race];
+	}
+
+	static getRoleTranslation(role: RoleName) {
+		return Translator.rolesTranslation[role];
 	}
 
 	static getPowerTranslation(power: PowerName) {
@@ -67,6 +72,14 @@ export class Translator {
 		perception: 'Percepção',
 		reflexes: 'Reflexos',
 		survival: 'Sobrevivência',
+		aim: 'Pontaria',
+		animalRide: 'Cavalgar',
+		athletics: 'Atletismo',
+		craft: 'Ofício',
+		fortitude: 'Fortitude',
+		initiative: 'Iniciativa',
+		intimidation: 'Intimidação',
+		war: 'Guerra',
 	};
 
 	private static readonly powersTranslation: Record<PowerName, string> = {
@@ -86,6 +99,10 @@ export class Translator {
 		human: 'Humano',
 	};
 
+	private static readonly rolesTranslation: Record<RoleName, string> = {
+		warrior: 'Guerreiro',
+	};
+
 	private static readonly translation: Record<Translatable, string> = {
 		...Translator.attributesTranslation,
 		...Translator.abilitiesTranslation,
@@ -93,5 +110,6 @@ export class Translator {
 		...Translator.powersTranslation,
 		...Translator.visionsTranslation,
 		...Translator.racesTranslation,
+		...Translator.rolesTranslation,
 	};
 }

@@ -1,8 +1,8 @@
+import type {BuildingSheetInterface} from '../BuildingSheetInterface';
 import {Modifier} from '../Modifier/Modifier';
-import type {SheetInterface} from '../SheetInterface';
 import {SkillName} from '../Skill/SkillName';
 import {GeneralPower} from './GeneralPower';
-import {GeneralPowerNameEnum} from './GeneralPowerName';
+import {GeneralPowerName} from './GeneralPowerName';
 import type {Requirement} from './Power';
 
 export class Dodge extends GeneralPower {
@@ -13,13 +13,13 @@ export class Dodge extends GeneralPower {
 
 	constructor() {
 		super(
-			GeneralPowerNameEnum.dodge,
+			GeneralPowerName.dodge,
 			'passive',
 		);
 		super.addRequirement(Dodge.requirement);
 	}
 
-	apply(sheet: SheetInterface) {
+	apply(sheet: BuildingSheetInterface) {
 		super.verifyRequirements(sheet);
 
 		const modifier = new Modifier(this.name, 2);

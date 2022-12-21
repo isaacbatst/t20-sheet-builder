@@ -1,10 +1,10 @@
 import {Proficiency} from '../Proficiency';
 import {SkillName} from '../Skill/SkillName';
-import type {ChooseableSkills} from './Class';
-import {Class} from './Class';
-import {ClassName} from './ClassName';
+import {Role} from './Role';
+import type {ChooseableSkills} from './RoleInterface';
+import {RoleName} from './RoleName';
 
-export class Warrior extends Class {
+export class Warrior extends Role {
 	get initialLifePoints() {
 		return 20;
 	}
@@ -24,5 +24,5 @@ export class Warrior extends Class {
 	];
 
 	readonly proficiencies: Proficiency[] = [Proficiency.martial, Proficiency.shield, Proficiency.heavyArmor];
-	readonly name: ClassName = ClassName.warrior;
+	readonly name: RoleName = RoleName.warrior;
 }

@@ -1,6 +1,6 @@
 import type {ModifierCondition} from './ModifierList';
 
-export type ContextType = 'build' | 'ingame';
+export type ContextType = 'outgame' | 'ingame';
 
 export type ContextInterface = {
 	type: ContextType;

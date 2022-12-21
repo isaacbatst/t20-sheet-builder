@@ -1,11 +1,11 @@
-import type {SheetInterface} from './SheetInterface';
+import type {BuildingSheet} from './BuildingSheet';
 
 export type AbilityEffectType = 'active' | 'passive';
 
 export type AbilityInterface = {
 	name: string;
 	effectType: AbilityEffectType;
-	apply(sheet: SheetInterface): void;
+	apply(sheet: BuildingSheet): void;
 };
 
 export abstract class Ability implements AbilityInterface {
@@ -14,5 +14,5 @@ export abstract class Ability implements AbilityInterface {
 		readonly effectType: AbilityEffectType,
 	) {}
 
-	abstract apply(sheet: SheetInterface): void;
+	abstract apply(sheet: BuildingSheet): void;
 }

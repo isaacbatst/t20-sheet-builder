@@ -1,8 +1,8 @@
 import {Context} from './Context';
 
-export class BuildingSheetContext extends Context {
+export class OutGameContext extends Context {
 	constructor() {
-		super('build');
+		super('outgame');
 	}
 
 	getConditionalModifierValue() {

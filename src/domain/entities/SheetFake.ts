@@ -1,18 +1,21 @@
 import type {Attributes} from './Attributes';
-import {BuildingSheetContext} from './BuildingSheetContext';
+import {OutGameContext} from './BuildingSheetContext';
+import type {BuildingSheetInterface, DefenseInterface} from './BuildingSheetInterface';
 import type {Context} from './Context';
+import type {Defense} from './Defense';
+import {DefenseFake} from './DefenseFake';
+import {LifePoints} from './LifePoints';
 import type {ModifierInterface} from './ModifierList';
 import {ProgressionStepFake} from './ProgressionStepFake';
 import {RaceFake} from './RaceFake';
 import type {RaceInterface} from './RaceInterface';
 import type {ActionInterface, ActionType} from './SheetActions';
-import type {SheetInterface} from './SheetInterface';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
 import type {Skill} from './Skill/Skill';
 import type {SkillName} from './Skill/SkillName';
 import {Vision} from './Vision';
 
-export class SheetFake implements SheetInterface {
+export class BuildingSheetFake implements BuildingSheetInterface {
 	public level = 1;
 	public attributes: Attributes = {
 		strength: 0,
@@ -23,17 +26,20 @@ export class SheetFake implements SheetInterface {
 		charisma: 0,
 	};
 
+	public lifePoints = new LifePoints();
+
 	public vision: Vision = Vision.default;
-	public context: Context = new BuildingSheetContext();
+	public displacement = 9;
+	public context: Context = new OutGameContext();
 
-	readonly progressionSteps: Array<ProgressionStepFake<ActionType>> = [];
+	readonly buildSteps: Array<ProgressionStepFake<ActionType>> = [];
 
-	public defenseTotal = 10;
+	public defense = new DefenseFake();
 	public race = new RaceFake();
 	public skills: Record<SkillName, Skill> = InitialSkillsGenerator.generate();
 
 	dispatch = jest.fn(<T extends ActionType>(action: ActionInterface<T>) => {
-		this.progressionSteps.push(new ProgressionStepFake(action));
+		this.buildSteps.push(new ProgressionStepFake(action));
 	});
 
 	private readonly trainedSkills: SkillName[] = [];
@@ -41,6 +47,18 @@ export class SheetFake implements SheetInterface {
 
 	setVision(vision: Vision): void {
 		this.vision = vision;
+	}
+
+	getDefense(): DefenseInterface {
+		return this.defense;
+	}
+
+	getDisplacement(): number {
+		return this.displacement;
+	}
+
+	getLifePoints(): LifePoints {
+		return this.lifePoints;
 	}
 
 	getRace(): RaceInterface | undefined {
@@ -53,10 +71,6 @@ export class SheetFake implements SheetInterface {
 
 	getVision(): Vision {
 		return this.vision;
-	}
-
-	getDefenseTotal(): number {
-		return this.defenseTotal;
 	}
 
 	getTrainedSkills() {

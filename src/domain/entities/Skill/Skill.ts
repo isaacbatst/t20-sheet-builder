@@ -1,5 +1,5 @@
 import type {Attribute, Attributes} from '../Attributes';
-import {BuildingSheetContext} from '../BuildingSheetContext';
+import {OutGameContext} from '../BuildingSheetContext';
 import type {Context} from '../Context';
 import type {ModifierInterface} from '../ModifierList';
 import {ModifiersList} from '../ModifierList';
@@ -39,7 +39,7 @@ export class Skill {
 		return this.isTrained;
 	}
 
-	getTotal(attributes: Attributes, level = 1, context: Context = new BuildingSheetContext()) {
+	getTotal(attributes: Attributes, level = 1, context: Context = new OutGameContext()) {
 		const halfLevelPoints = this.calculateHalfLevel(level);
 		const trainingPoints = this.calculateTrainingPoints(level);
 		const otherModifiersSum = this.others.getTotal(context);

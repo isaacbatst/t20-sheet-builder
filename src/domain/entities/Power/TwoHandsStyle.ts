@@ -1,16 +1,17 @@
+import type {BuildingSheetInterface} from '../BuildingSheetInterface';
 import type {SheetInterface} from '../SheetInterface';
 import {GeneralPower} from './GeneralPower';
-import {GeneralPowerNameEnum} from './GeneralPowerName';
+import {GeneralPowerName} from './GeneralPowerName';
 
 export class TwoHandsStyle extends GeneralPower {
 	constructor() {
 		super(
-			GeneralPowerNameEnum.twoHandsStyle,
+			GeneralPowerName.twoHandsStyle,
 			'passive',
 		);
 	}
 
-	apply(sheet: SheetInterface): void {
+	apply(sheet: BuildingSheetInterface): void {
 		throw new Error('NOT_IMPLEMENTED');
 	}
 }

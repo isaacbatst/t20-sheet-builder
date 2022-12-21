@@ -1,3 +1,3 @@
-export enum ClassName {
+export enum RoleName {
 	warrior = 'warrior',
 }

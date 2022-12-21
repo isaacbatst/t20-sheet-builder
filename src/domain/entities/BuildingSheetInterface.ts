@@ -1,0 +1,33 @@
+import type {Attributes} from './Attributes';
+import type {ContextInterface} from './Context';
+import type {LifePoints} from './LifePoints';
+import type {ModifierInterface} from './ModifierList';
+import type {BuildStep} from './ProgressionStep';
+import type {SheetSkills} from './Sheet';
+import type {Dispatch} from './SheetInterface';
+import type {SkillName} from './Skill/SkillName';
+import type {Vision} from './Vision';
+
+export type DefenseInterface = {
+	others: ModifiersListInterface;
+	getTotal(dexterity: number, armorBonus: number, shieldBonus: number, context: ContextInterface): number;
+};
+
+export type ModifiersListInterface = {
+	modifiers: ModifierInterface[];
+	getTotal(context: ContextInterface): number;
+	getMaxPossibleTotal(): number;
+	add(newModifier: ModifierInterface): void;
+};
+
+export type BuildingSheetInterface = {
+	buildSteps: BuildStep[];
+	dispatch: Dispatch;
+	getAttributes(): Attributes;
+	getDefense(): DefenseInterface;
+	getDisplacement(): number;
+	getLevel(): number;
+	getSkills(): SheetSkills;
+	getVision(): Vision;
+	getLifePoints(): LifePoints;
+};

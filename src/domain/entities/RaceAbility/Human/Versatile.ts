@@ -1,4 +1,4 @@
-import type {SheetInterface} from '../../SheetInterface';
+import type {BuildingSheetInterface} from '../../BuildingSheetInterface';
 import {GeneralPowerFactory} from '../../Power/PowerFactory';
 import type {PowerName} from '../../Power/PowerName';
 import {SkillName} from '../../Skill/SkillName';
@@ -39,7 +39,7 @@ export class Versatile extends RaceAbility {
 		this.choices.push(newChoice);
 	}
 
-	apply(sheet: SheetInterface): void {
+	apply(sheet: BuildingSheetInterface): void {
 		if (this.choices.length !== 2) {
 			throw new Error('MISSING_CHOICES');
 		}

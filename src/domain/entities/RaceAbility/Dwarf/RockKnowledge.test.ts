@@ -4,7 +4,7 @@ import {InGameContext} from '../../InGameContext';
 import {ConditionalModifier} from '../../Modifier/ConditionalModifier';
 import type {ConditionVerify} from '../../ModifierList';
 import type {ActionPayload} from '../../SheetActions';
-import {SheetFake} from '../../SheetFake';
+import {BuildingSheetFake} from '../../SheetFake';
 import {SkillName} from '../../Skill/SkillName';
 import {Vision} from '../../Vision';
 import {RaceAbilityName} from '../RaceAbilityName';
@@ -13,7 +13,7 @@ import {RockKnowledge} from './RockKnowledge';
 describe('RockKnowledge', () => {
 	it('should provide dark vision', () => {
 		const rockKnowledge = new RockKnowledge();
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 		rockKnowledge.apply(sheet);
 
 		expect(sheet.dispatch).toHaveBeenCalledWith(new ChangeVision({
@@ -24,7 +24,7 @@ describe('RockKnowledge', () => {
 
 	it('should dispatch +2 perception bonus', () => {
 		const rockKnowledge = new RockKnowledge();
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 		rockKnowledge.apply(sheet);
 
 		expect(sheet.dispatch).toHaveBeenCalledWith(expect.objectContaining(new AddOtherModifierToSkill({
@@ -35,7 +35,7 @@ describe('RockKnowledge', () => {
 
 	it('should dispatch +2 survival bonus', () => {
 		const rockKnowledge = new RockKnowledge();
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 		rockKnowledge.apply(sheet);
 
 		expect(sheet.dispatch).toHaveBeenCalledWith(expect.objectContaining(new AddOtherModifierToSkill({
@@ -46,9 +46,9 @@ describe('RockKnowledge', () => {
 
 	it('should not activate bonus in game context outside underground', () => {
 		const rockKnowledge = new RockKnowledge();
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 		rockKnowledge.apply(sheet);
-		const [_, secondStep, thirdStep] = sheet.progressionSteps;
+		const [_, secondStep, thirdStep] = sheet.buildSteps;
 
 		const verifyPerception = (secondStep.action.payload as ActionPayload<'addOtherModifierToSkill'>).modifier.condition!.verify;
 		const verifySurvival = (thirdStep.action.payload as ActionPayload<'addOtherModifierToSkill'>).modifier.condition!.verify;
@@ -59,9 +59,9 @@ describe('RockKnowledge', () => {
 
 	it('should activate bonus in game context inside underground', () => {
 		const rockKnowledge = new RockKnowledge();
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 		rockKnowledge.apply(sheet);
-		const [_, secondStep, thirdStep] = sheet.progressionSteps;
+		const [_, secondStep, thirdStep] = sheet.buildSteps;
 
 		const verifyPerception = (secondStep.action.payload as ActionPayload<'addOtherModifierToSkill'>).modifier.condition!.verify;
 		const verifySurvival = (thirdStep.action.payload as ActionPayload<'addOtherModifierToSkill'>).modifier.condition!.verify;

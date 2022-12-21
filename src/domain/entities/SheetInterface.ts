@@ -1,6 +1,6 @@
 import type {Attributes} from './Attributes';
 import type {Context} from './Context';
-import type {ProgressionStepInterface} from './ProgressionStep';
+import type {BuildStepInterface} from './ProgressionStep';
 import type {ActionInterface, ActionType} from './SheetActions';
 import type {Skill} from './Skill/Skill';
 import type {SkillName} from './Skill/SkillName';
@@ -17,11 +17,10 @@ export type SheetWithAttributes = {
 	getAttributes(): Attributes;
 };
 
-export type Dispatch = <T extends ActionType>(action: ActionInterface<T>) => void;
+export type Dispatch = <T extends ActionType>(buildStep: ActionInterface<T>) => void;
 
-export type ProgressingSheet = {
-	dispatch: Dispatch;
-	progressionSteps: Array<ProgressionStepInterface<ActionType>>;
+export type BuildedSheet = {
+	buildSteps: BuildStepInterface[];
 };
 
 export type DefensibleSheet = {
@@ -36,6 +35,6 @@ export type Location = {isUnderground: boolean};
 
 export type SheetInterface = SkilledSheet
 & SheetWithAttributes
-& ProgressingSheet
+& BuildedSheet
 & DefensibleSheet
 & SheetWithVision;

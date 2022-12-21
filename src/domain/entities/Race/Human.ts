@@ -9,8 +9,14 @@ export class Human extends SelectableAttributesRace {
 		versatile: new Versatile(),
 	};
 
-	constructor(attributes: Attribute[], versatileChoices: VersatileChoice[] = []) {
-		super(attributes, RaceName.human);
+	/**
+ * Returns an instance of Human race.
+ * @param selectedAttributes - 3 different attributes
+ * @param versatileChoices - 2 skills or 1 skill and 1 general power
+  **/
+
+	constructor(selectedAttributes: Attribute[], versatileChoices: VersatileChoice[] = []) {
+		super(selectedAttributes, RaceName.human);
 
 		versatileChoices.forEach(choice => {
 			this.abilities.versatile.addChoice(choice);

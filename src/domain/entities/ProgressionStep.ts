@@ -1,19 +1,18 @@
-import type {ActionInterface, ActionType} from './SheetActions';
-import type {SheetInterface} from './SheetInterface';
 import {ActionDescriptionGenerator} from './ActionDescriptionGenerator/ActionDescriptionGenerator';
-import type {Action} from './Action/Action';
+import type {BuildingSheetInterface} from './BuildingSheetInterface';
+import type {ActionType, ActionInterface} from './SheetActions';
 
-export type ProgressionStepInterface<T extends ActionType> = {
+export type BuildStepInterface<T extends ActionType = ActionType> = {
 	description: string;
-	action: Action<T>;
+	action: ActionInterface<T>;
 };
 
-export class ProgressionStep<T extends ActionType> implements ProgressionStepInterface<T> {
+export class BuildStep<T extends ActionType = ActionType> implements BuildStepInterface<T> {
 	readonly description: string;
 
 	constructor(
 		readonly action: ActionInterface<T>,
-		sheet: SheetInterface,
+		sheet: BuildingSheetInterface,
 	) {
 		this.description = ActionDescriptionGenerator.generate(sheet, action);
 	}

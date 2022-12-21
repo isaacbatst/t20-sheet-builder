@@ -1,16 +1,16 @@
-import type {SheetInterface} from '../SheetInterface';
+import type {BuildingSheetInterface} from '../BuildingSheetInterface';
 import {GeneralPower} from './GeneralPower';
-import {GeneralPowerNameEnum} from './GeneralPowerName';
+import {GeneralPowerName} from './GeneralPowerName';
 
 export class SwordAndShieldStyle extends GeneralPower {
 	constructor() {
 		super(
-			GeneralPowerNameEnum.swordAndShieldStyle,
+			GeneralPowerName.swordAndShieldStyle,
 			'passive',
 		);
 	}
 
-	apply(sheet: SheetInterface): void {
+	apply(sheet: BuildingSheetInterface): void {
 		throw new Error('NOT_IMPLEMENTED');
 	}
 }

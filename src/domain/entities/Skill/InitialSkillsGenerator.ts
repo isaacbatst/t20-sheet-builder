@@ -24,6 +24,30 @@ export class InitialSkillsGenerator {
 			survival: new Skill({
 				attribute: 'wisdom',
 			}),
+			aim: new Skill({
+				attribute: 'dexterity',
+			}),
+			animalRide: new Skill({
+				attribute: 'dexterity',
+			}),
+			athletics: new Skill({
+				attribute: 'strength',
+			}),
+			craft: new Skill({
+				attribute: 'intelligence',
+			}),
+			fortitude: new Skill({
+				attribute: 'constitution',
+			}),
+			initiative: new Skill({
+				attribute: 'dexterity',
+			}),
+			intimidation: new Skill({
+				attribute: 'charisma',
+			}),
+			war: new Skill({
+				attribute: 'intelligence',
+			}),
 		};
 	}
 }
