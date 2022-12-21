@@ -2,7 +2,7 @@ import type {Attributes} from '../Attributes';
 import {RockKnowledge} from '../RaceAbility/Dwarf/RockKnowledge';
 import type {RaceAbility} from '../RaceAbility/RaceAbility';
 import {Race} from './Race';
-import {RaceNameEnum} from './RaceName';
+import {RaceName} from './RaceName';
 
 export class Dwarf extends Race {
 	readonly abilities: Record<string, RaceAbility> = {
@@ -16,6 +16,6 @@ export class Dwarf extends Race {
 	};
 
 	constructor() {
-		super(RaceNameEnum.dwarf);
+		super(RaceName.dwarf);
 	}
 }

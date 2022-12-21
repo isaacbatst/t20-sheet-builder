@@ -1,13 +1,13 @@
 import type {Attribute} from './Attributes';
 import type {GeneralPowerNameEnum} from './Power/GeneralPowerName';
-import type {PowerNameEnum} from './Power/PowerName';
-import type {RaceNameEnum} from './Race/RaceName';
-import type {RaceAbilityNameEnum} from './RaceAbility/RaceAbilityName';
-import type {SkillNameEnum} from './Skill/SkillName';
+import type {PowerName} from './Power/PowerName';
+import type {RaceName} from './Race/RaceName';
+import type {RaceAbilityName} from './RaceAbility/RaceAbilityName';
+import type {SkillName} from './Skill/SkillName';
 import {StringHelper} from './StringHelper';
 import type {Vision} from './Vision';
 
-export type Translatable = Attribute | RaceAbilityNameEnum | SkillNameEnum | PowerNameEnum | RaceNameEnum | Vision;
+export type Translatable = Attribute | RaceAbilityName | SkillName | PowerName | RaceName | Vision;
 
 export class Translator {
 	static getAttributeTranslation(attribute: Attribute, capitalized = true) {
@@ -20,11 +20,11 @@ export class Translator {
 		return translatedAttribute;
 	}
 
-	static getAbilityTranslation(ability: RaceAbilityNameEnum) {
+	static getAbilityTranslation(ability: RaceAbilityName) {
 		return Translator.abilitiesTranslation[ability];
 	}
 
-	static getSkillTranslation(skill: SkillNameEnum) {
+	static getSkillTranslation(skill: SkillName) {
 		return Translator.skillsTranslation[skill];
 	}
 
@@ -32,11 +32,11 @@ export class Translator {
 		return Translator.visionsTranslation[vision];
 	}
 
-	static getRaceTranslation(race: RaceNameEnum) {
+	static getRaceTranslation(race: RaceName) {
 		return Translator.racesTranslation[race];
 	}
 
-	static getPowerTranslation(power: PowerNameEnum) {
+	static getPowerTranslation(power: PowerName) {
 		return Translator.powersTranslation[power];
 	}
 
@@ -53,12 +53,12 @@ export class Translator {
 		wisdom: 'sabedoria',
 	};
 
-	private static readonly abilitiesTranslation: Record<RaceAbilityNameEnum, string> = {
+	private static readonly abilitiesTranslation: Record<RaceAbilityName, string> = {
 		rockKnownledge: 'Conhecimento das Rochas',
 		versatile: 'Versátil',
 	};
 
-	private static readonly skillsTranslation: Record<SkillNameEnum, string> = {
+	private static readonly skillsTranslation: Record<SkillName, string> = {
 		acrobatics: 'Acrobacia',
 		animalHandling: 'Adestramento',
 		fight: 'Luta',
@@ -67,7 +67,7 @@ export class Translator {
 		survival: 'Sobrevivência',
 	};
 
-	private static readonly powersTranslation: Record<PowerNameEnum, string> = {
+	private static readonly powersTranslation: Record<PowerName, string> = {
 		dodge: 'Esquiva',
 		swordAndShieldStyle: 'Esttilo Espada e Escudo',
 		twoHandsStyle: 'Estilo de Duas Mãos',
@@ -79,7 +79,7 @@ export class Translator {
 		dark: 'Visão no escuro',
 	};
 
-	private static readonly racesTranslation: Record<RaceNameEnum, string> = {
+	private static readonly racesTranslation: Record<RaceName, string> = {
 		dwarf: 'Anão',
 		human: 'Humano',
 	};

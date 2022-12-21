@@ -5,9 +5,9 @@ import type {ActionPayload} from '../../CharacterAction';
 import {CharacterFake} from '../../CharacterFake';
 import {InGameContext} from '../../InGameContext';
 import type {ConditionVerify} from '../../ModifierOthers';
-import {SkillNameEnum} from '../../Skill/SkillName';
+import {SkillName} from '../../Skill/SkillName';
 import {Vision} from '../../Vision';
-import {RaceAbilityNameEnum} from '../RaceAbilityName';
+import {RaceAbilityName} from '../RaceAbilityName';
 import {RockKnowledge} from './RockKnowledge';
 
 describe('RockKnowledge', () => {
@@ -17,7 +17,7 @@ describe('RockKnowledge', () => {
 		rockKnowledge.apply(character);
 
 		expect(character.dispatch).toHaveBeenCalledWith(new ChangeVision({
-			source: RaceAbilityNameEnum.rockKnowledge,
+			source: RaceAbilityName.rockKnowledge,
 			vision: Vision.dark,
 		}));
 	});
@@ -28,8 +28,8 @@ describe('RockKnowledge', () => {
 		rockKnowledge.apply(character);
 
 		expect(character.dispatch).toHaveBeenCalledWith(expect.objectContaining(new AddOtherModifierToSkill({
-			skill: SkillNameEnum.perception,
-			source: RaceAbilityNameEnum.rockKnowledge,
+			skill: SkillName.perception,
+			source: RaceAbilityName.rockKnowledge,
 			value: 2,
 			condition: {description: 'testes devem ser realizados no subterrâneo', verify: expect.any(Function) as ConditionVerify},
 		})));
@@ -41,8 +41,8 @@ describe('RockKnowledge', () => {
 		rockKnowledge.apply(character);
 
 		expect(character.dispatch).toHaveBeenCalledWith(expect.objectContaining(new AddOtherModifierToSkill({
-			skill: SkillNameEnum.survival,
-			source: RaceAbilityNameEnum.rockKnowledge,
+			skill: SkillName.survival,
+			source: RaceAbilityName.rockKnowledge,
 			value: 2,
 			condition: {description: 'testes devem ser realizados no subterrâneo', verify: expect.any(Function) as ConditionVerify},
 		})));

@@ -4,16 +4,16 @@ import type {Modifier} from './ModifierOthers';
 import type {PowerInterface} from './Power/Power';
 import type {RaceAbilityInterface} from './RaceAbility/RaceAbility';
 import type {RaceInterface} from './RaceInterface';
-import type {SkillNameEnum} from './Skill/SkillName';
+import type {SkillName} from './Skill/SkillName';
 import type {Translatable} from './Translator';
 import type {Vision} from './Vision';
 
 type ActionTypesToHandlers = {
 	setInitialAttributes(payload: {attributes: Attributes}): void;
-	addOtherModifierToSkill(payload: Modifier & {skill: SkillNameEnum}): void;
+	addOtherModifierToSkill(payload: Modifier & {skill: SkillName}): void;
 	addOtherModifierToDefense(payload: Modifier): void;
 	chooseRace(payload: {race: RaceInterface}): void;
-	trainSkill(payload: {name: SkillNameEnum; source: Translatable}): void;
+	trainSkill(payload: {name: SkillName; source: Translatable}): void;
 	changeVision(payload: {vision: Vision; source: Translatable}): void;
 	applyRaceModifiers(payload: {modifiers: Partial<Attributes>; updatedAttributes: Partial<Attributes>}): void;
 	applyRaceAbility(payload: {ability: RaceAbilityInterface}): void;

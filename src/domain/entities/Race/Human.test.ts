@@ -4,7 +4,7 @@ import {CharacterFake} from '../CharacterFake';
 import {GeneralPowerNameEnum} from '../Power/GeneralPowerName';
 import type {VersatileChoice} from '../RaceAbility/Human/Versatile';
 import {Versatile} from '../RaceAbility/Human/Versatile';
-import {SkillNameEnum} from '../Skill/SkillName';
+import {SkillName} from '../Skill/SkillName';
 import {Human} from './Human';
 
 describe('Human', () => {
@@ -77,24 +77,24 @@ describe('Human', () => {
 			'strength',
 		], [
 			{
-				name: SkillNameEnum.acrobatics,
+				name: SkillName.acrobatics,
 				type: 'skill',
 			},
 		]);
 
 		expect(human.versatileChoices).toContainEqual({
-			name: SkillNameEnum.acrobatics,
+			name: SkillName.acrobatics,
 			type: 'skill',
 		});
 	});
 
 	it('should apply versatile with chosen skills', () => {
 		const acrobatics: VersatileChoice = {
-			name: SkillNameEnum.acrobatics,
+			name: SkillName.acrobatics,
 			type: 'skill',
 		};
 		const animalHandling: VersatileChoice = {
-			name: SkillNameEnum.animalHandling,
+			name: SkillName.animalHandling,
 			type: 'skill',
 		};
 
@@ -121,7 +121,7 @@ describe('Human', () => {
 
 	it('should apply versatile training chosen skill and power', () => {
 		const acrobatics: VersatileChoice = {
-			name: SkillNameEnum.acrobatics,
+			name: SkillName.acrobatics,
 			type: 'skill',
 		};
 		const dodge: VersatileChoice = {

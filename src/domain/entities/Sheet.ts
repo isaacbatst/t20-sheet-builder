@@ -7,8 +7,7 @@ import type {RaceInterface} from './RaceInterface';
 import type {SheetInterface} from './SheetInterface';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
 import type {Skill} from './Skill/Skill';
-import type {SkillNameEnum} from './Skill/SkillName';
-import {SkillName} from './Skill/SkillName';
+import type {SkillName} from './Skill/SkillName';
 import {Vision} from './Vision';
 
 type SheetParams = {
@@ -22,7 +21,7 @@ export class Sheet implements SheetInterface {
 	// eslint-disable-next-line @typescript-eslint/prefer-readonly
 	private level = 1;
 	private vision: Vision = Vision.default;
-	private readonly skills: Record<SkillNameEnum, Skill>;
+	private readonly skills: Record<SkillName, Skill>;
 	private readonly defense = new Defense();
 	private readonly actionHandlers: SheetActionHandlers = {
 		addOtherModifierToDefense: this.addOtherModifierToDefense.bind(this),
@@ -55,10 +54,6 @@ export class Sheet implements SheetInterface {
 		return this.vision;
 	}
 
-	getDefense(): Defense {
-		return this.defense;
-	}
-
 	getDefenseTotal(context: Context): number {
 		return this.defense.getTotal(this.attributes.dexterity, 0, 0, context);
 	}
@@ -67,29 +62,21 @@ export class Sheet implements SheetInterface {
 		return this.attributes;
 	}
 
-	getRace(): RaceInterface | undefined {
-		return this.race;
-	}
-
-	getLevel(): number {
-		return this.level;
-	}
-
 	getSkills() {
 		return this.skills;
 	}
 
-	getSkillTotal(skill: SkillNameEnum, context: Context) {
+	getSkillTotal(skill: SkillName, context: Context) {
 		return this.skills[skill].getTotal(this.attributes, this.level, context);
 	}
 
-	getTrainedSkills(): SkillNameEnum[] {
+	getTrainedSkills(): SkillName[] {
 		return Object.entries(this.skills)
 			.filter(([name, skill]) => skill.getIsTrained())
-			.map(([name]) => name as SkillNameEnum);
+			.map(([name]) => name as SkillName);
 	}
 
-	getSkillTrainingPoints(skill: SkillNameEnum): number {
+	getSkillTrainingPoints(skill: SkillName): number {
 		return this.skills[skill].getTrainingPoints(this.level);
 	}
 
@@ -120,8 +107,7 @@ export class Sheet implements SheetInterface {
 	}
 
 	private trainSkill(payload: ActionPayload<'trainSkill'>): void {
-		const skillName = new SkillName(payload.name);
-		const skill = this.skills[skillName.value];
+		const skill = this.skills[payload.name];
 		skill.train();
 	}
 

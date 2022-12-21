@@ -1,10 +1,11 @@
 import type {Attribute, Attributes} from './Attributes';
 import {Race} from './Race/Race';
+import type {RaceName} from './Race/RaceName';
 
 export abstract class SelectableAttributesRace extends Race {
 	readonly attributeModifiers: Partial<Attributes> = {};
 
-	constructor(selectedAttributes: Attribute[], name: string) {
+	constructor(selectedAttributes: Attribute[], name: RaceName) {
 		super(name);
 		this.validateSelectedAttributes(selectedAttributes);
 

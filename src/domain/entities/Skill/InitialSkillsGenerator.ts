@@ -1,10 +1,10 @@
 import type {Attributes} from '../Attributes';
 import type {SheetInterface} from '../SheetInterface';
 import {Skill} from './Skill';
-import type {SkillNameEnum} from './SkillName';
+import type {SkillName} from './SkillName';
 
 export class InitialSkillsGenerator {
-	static generate(): Record<SkillNameEnum, Skill> {
+	static generate(): Record<SkillName, Skill> {
 		return {
 			acrobatics: new Skill({
 				attribute: 'dexterity',

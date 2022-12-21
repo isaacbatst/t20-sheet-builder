@@ -4,7 +4,7 @@ import {Character} from './Character';
 import {Sheet} from './Sheet';
 import {InGameContext} from './InGameContext';
 import {Dwarf} from './Race/Dwarf';
-import {SkillNameEnum} from './Skill/SkillName';
+import {SkillName} from './Skill/SkillName';
 
 describe('Character', () => {
 	it('should calculate defense', () => {
@@ -21,7 +21,21 @@ describe('Character', () => {
 		expect(defense).toBe(11);
 	});
 
-	it('should calculate dwarf perception underground', () => {
+	it('should not calculate dwarf rock knowledge perception in build context', () => {
+		const sheet = new Sheet({
+			initialAttributes: {charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 1, wisdom: 1},
+		});
+		sheet.dispatch(new ChooseRace({
+			race: new Dwarf(),
+		}));
+		const context = new BuildingSheetContext();
+		const character = new Character(sheet, context);
+		const perception = character.getSkillTotal(SkillName.perception);
+
+		expect(perception).toBe(2);
+	});
+
+	it('should calculate dwarf rock knowledge perception underground', () => {
 		const sheet = new Sheet({
 			initialAttributes: {charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 1, wisdom: 1},
 		});
@@ -30,12 +44,12 @@ describe('Character', () => {
 		}));
 		const context = new InGameContext({isUnderground: true});
 		const character = new Character(sheet, context);
-		const perception = character.getSkillTotal(SkillNameEnum.perception);
+		const perception = character.getSkillTotal(SkillName.perception);
 
 		expect(perception).toBe(4);
 	});
 
-	it('should calculate dwarf perception outside underground', () => {
+	it('should calculate dwarf rock knowledge perception outside underground', () => {
 		const sheet = new Sheet({
 			initialAttributes: {charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 1, wisdom: 1},
 		});
@@ -44,7 +58,7 @@ describe('Character', () => {
 		}));
 		const context = new InGameContext({isUnderground: false});
 		const character = new Character(sheet, context);
-		const perception = character.getSkillTotal(SkillNameEnum.perception);
+		const perception = character.getSkillTotal(SkillName.perception);
 
 		expect(perception).toBe(2);
 	});

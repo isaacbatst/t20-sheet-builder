@@ -1,6 +1,6 @@
 import type {Context} from './Context';
 import type {SheetInterface} from './SheetInterface';
-import type {SkillNameEnum} from './Skill/SkillName';
+import type {SkillName} from './Skill/SkillName';
 
 export class Character {
 	constructor(
@@ -12,7 +12,7 @@ export class Character {
 		return this.sheet.getDefenseTotal(this.context);
 	}
 
-	getSkillTotal(skill: SkillNameEnum) {
+	getSkillTotal(skill: SkillName) {
 		return this.sheet.getSkillTotal(skill, this.context);
 	}
 }

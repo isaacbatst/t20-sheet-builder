@@ -2,7 +2,12 @@ import type {Modifier} from './ModifierOthers';
 
 type ContextType = 'build' | 'ingame';
 
-export abstract class Context {
+export type ContextInterface = {
+	type: ContextType;
+	getModifierOthersTotal(modifiers: Modifier[]): number;
+};
+
+export abstract class Context implements ContextInterface {
 	constructor(readonly type: ContextType) {}
 	getModifierOthersTotal(modifiers: Modifier[]): number {
 		const total = modifiers

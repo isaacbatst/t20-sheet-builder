@@ -3,10 +3,10 @@ import {ChangeVision} from '../../Action/ChangeVision';
 import type {SheetInterface} from '../../SheetInterface';
 import type {InGameContext} from '../../InGameContext';
 import type {ModifierCondition} from '../../ModifierOthers';
-import {SkillNameEnum} from '../../Skill/SkillName';
+import {SkillName} from '../../Skill/SkillName';
 import {Vision} from '../../Vision';
 import {RaceAbility} from '../RaceAbility';
-import {RaceAbilityNameEnum} from '../RaceAbilityName';
+import {RaceAbilityName} from '../RaceAbilityName';
 
 export class RockKnowledge extends RaceAbility {
 	private static readonly condition: ModifierCondition = {
@@ -20,7 +20,7 @@ export class RockKnowledge extends RaceAbility {
 
 	constructor() {
 		super(
-			RaceAbilityNameEnum.rockKnowledge,
+			RaceAbilityName.rockKnowledge,
 			'passive',
 		);
 	}
@@ -30,13 +30,13 @@ export class RockKnowledge extends RaceAbility {
 		character.dispatch(new AddOtherModifierToSkill({
 			source: this.name,
 			value: RockKnowledge.skillModifier,
-			skill: SkillNameEnum.perception,
+			skill: SkillName.perception,
 			condition: RockKnowledge.condition,
 		}));
 		character.dispatch(new AddOtherModifierToSkill({
 			source: this.name,
 			value: RockKnowledge.skillModifier,
-			skill: SkillNameEnum.survival,
+			skill: SkillName.survival,
 			condition: RockKnowledge.condition,
 		}));
 		// Character.addOtherModifierToSkill(

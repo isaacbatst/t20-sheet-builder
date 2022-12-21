@@ -1,11 +1,11 @@
 import {CharacterFake} from '../CharacterFake';
 import {GeneralPowerNameEnum} from '../Power/GeneralPowerName';
 import {PowerFake} from '../PowerFake';
-import {RaceAbilityNameEnum} from '../RaceAbility/RaceAbilityName';
+import {RaceAbilityName} from '../RaceAbility/RaceAbilityName';
 import {RaceAbilityFake} from '../RaceAbilityFake';
 import {RaceFake} from '../RaceFake';
 import {Skill} from '../Skill/Skill';
-import {SkillNameEnum} from '../Skill/SkillName';
+import {SkillName} from '../Skill/SkillName';
 import {Vision} from '../Vision';
 import {ActionDescriptionGenerator} from './ActionDescriptionGenerator';
 
@@ -120,7 +120,7 @@ describe('ActionDescriptionGenerator', () => {
 			character,
 			{
 				type: 'addOtherModifierToSkill',
-				payload: {source: GeneralPowerNameEnum.dodge, value: 2, skill: SkillNameEnum.reflexes},
+				payload: {source: GeneralPowerNameEnum.dodge, value: 2, skill: SkillName.reflexes},
 			},
 		);
 
@@ -134,7 +134,7 @@ describe('ActionDescriptionGenerator', () => {
 			character,
 			{
 				type: 'addOtherModifierToSkill',
-				payload: {source: RaceAbilityNameEnum.rockKnowledge, value: 2, skill: SkillNameEnum.perception, condition: {verify: jest.fn(), description: 'testes realizados no subterrâneo'}},
+				payload: {source: RaceAbilityName.rockKnowledge, value: 2, skill: SkillName.perception, condition: {verify: jest.fn(), description: 'testes realizados no subterrâneo'}},
 			},
 		);
 
@@ -148,7 +148,7 @@ describe('ActionDescriptionGenerator', () => {
 			character,
 			{
 				type: 'changeVision',
-				payload: {vision: Vision.dark, source: RaceAbilityNameEnum.rockKnowledge},
+				payload: {vision: Vision.dark, source: RaceAbilityName.rockKnowledge},
 			},
 		);
 
@@ -177,7 +177,7 @@ describe('ActionDescriptionGenerator', () => {
 			character,
 			{
 				type: 'trainSkill',
-				payload: {name: SkillNameEnum.fight, source: RaceAbilityNameEnum.versatile},
+				payload: {name: SkillName.fight, source: RaceAbilityName.versatile},
 			},
 		);
 
@@ -192,7 +192,7 @@ describe('ActionDescriptionGenerator', () => {
 			character,
 			{
 				type: 'pickPower',
-				payload: {power: new PowerFake(), source: RaceAbilityNameEnum.versatile},
+				payload: {power: new PowerFake(), source: RaceAbilityName.versatile},
 			},
 		);
 

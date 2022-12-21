@@ -6,9 +6,9 @@ import type {ConditionVerify, Modifier} from './ModifierOthers';
 import {GeneralPowerNameEnum} from './Power/GeneralPowerName';
 import {Dwarf} from './Race/Dwarf';
 import {Human} from './Race/Human';
-import {RaceAbilityNameEnum} from './RaceAbility/RaceAbilityName';
+import {RaceAbilityName} from './RaceAbility/RaceAbilityName';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
-import {SkillNameEnum} from './Skill/SkillName';
+import {SkillName} from './Skill/SkillName';
 import {Vision} from './Vision';
 
 const initialAttributes = {
@@ -79,16 +79,16 @@ describe('Character', () => {
 		const human = new Human(
 			['strength', 'charisma', 'constitution'],
 			[
-				{name: SkillNameEnum.acrobatics, type: 'skill'},
-				{name: SkillNameEnum.fight, type: 'skill'},
+				{name: SkillName.acrobatics, type: 'skill'},
+				{name: SkillName.fight, type: 'skill'},
 			],
 		);
 		character.dispatch(new ChooseRace({
 			race: human,
 		}));
 
-		expect(character.getTrainedSkills()).toContain(SkillNameEnum.acrobatics);
-		expect(character.getTrainedSkills()).toContain(SkillNameEnum.fight);
+		expect(character.getTrainedSkills()).toContain(SkillName.acrobatics);
+		expect(character.getTrainedSkills()).toContain(SkillName.fight);
 	});
 
 	it('should apply human versatile ability with one power', () => {
@@ -99,7 +99,7 @@ describe('Character', () => {
 		const human = new Human(
 			['strength', 'charisma', 'constitution'],
 			[
-				{name: SkillNameEnum.acrobatics, type: 'skill'},
+				{name: SkillName.acrobatics, type: 'skill'},
 				{name: GeneralPowerNameEnum.dodge, type: 'power'},
 			],
 		);
@@ -108,9 +108,9 @@ describe('Character', () => {
 		}));
 
 		const context = new BuildingSheetContext();
-		expect(character.getTrainedSkills()).toContain(SkillNameEnum.acrobatics);
+		expect(character.getTrainedSkills()).toContain(SkillName.acrobatics);
 		expect(character.getDefenseTotal(context)).toBe(12);
-		expect(character.getSkillTotal(SkillNameEnum.reflexes, context)).toBe(2);
+		expect(character.getSkillTotal(SkillName.reflexes, context)).toBe(2);
 	});
 
 	it('should save dodge applience step', () => {
@@ -121,7 +121,7 @@ describe('Character', () => {
 		const human = new Human(
 			['strength', 'charisma', 'constitution'],
 			[
-				{name: SkillNameEnum.acrobatics, type: 'skill'},
+				{name: SkillName.acrobatics, type: 'skill'},
 				{name: GeneralPowerNameEnum.dodge, type: 'power'},
 			],
 		);
@@ -157,7 +157,7 @@ describe('Character', () => {
 		});
 		const skills = character.getSkills();
 		const modifier: Modifier = {
-			source: RaceAbilityNameEnum.rockKnowledge,
+			source: RaceAbilityName.rockKnowledge,
 			value: 2,
 			condition: {
 				description: 'testes devem ser realizados no subterrâneo',

@@ -1,5 +1,5 @@
 import {CharacterFake} from '../CharacterFake';
-import {RaceAbilityNameEnum} from '../RaceAbility/RaceAbilityName';
+import {RaceAbilityName} from '../RaceAbility/RaceAbilityName';
 import {Skill} from './Skill';
 
 describe('Skill', () => {
@@ -60,7 +60,7 @@ describe('Skill', () => {
 		const skill = new Skill({
 			isTrained: true,
 			attribute: 'dexterity',
-			otherModifiers: [{source: RaceAbilityNameEnum.versatile, value: 2}],
+			otherModifiers: [{source: RaceAbilityName.versatile, value: 2}],
 		});
 
 		expect(skill.getTotal(character.attributes)).toBe(6);
@@ -76,7 +76,7 @@ describe('Skill', () => {
 		const skill = new Skill({
 			isTrained: true,
 			attribute: 'dexterity',
-			otherModifiers: [{source: RaceAbilityNameEnum.versatile, value: 2}],
+			otherModifiers: [{source: RaceAbilityName.versatile, value: 2}],
 		});
 
 		expect(skill.getTotal(character.attributes, 10)).toBe(13);

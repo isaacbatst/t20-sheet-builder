@@ -1,6 +1,6 @@
 import type {ActionInterface} from '../CharacterAction';
 import {CharacterFake} from '../CharacterFake';
-import {SkillNameEnum} from '../Skill/SkillName';
+import {SkillName} from '../Skill/SkillName';
 import {Dodge} from './Dodge';
 import {GeneralPowerNameEnum} from './GeneralPowerName';
 
@@ -28,7 +28,7 @@ describe('Dodge', () => {
 			type: 'addOtherModifierToSkill',
 			payload: {
 				source: GeneralPowerNameEnum.dodge,
-				skill: SkillNameEnum.reflexes,
+				skill: SkillName.reflexes,
 				value: 2,
 			},
 		});

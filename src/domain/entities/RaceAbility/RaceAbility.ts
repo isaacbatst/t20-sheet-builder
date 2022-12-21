@@ -1,14 +1,14 @@
 import type {AbilityEffectType, AbilityInterface} from '../Ability';
 import {Ability} from '../Ability';
-import type {RaceAbilityNameEnum} from './RaceAbilityName';
+import type {RaceAbilityName} from './RaceAbilityName';
 
 export type RaceAbilityInterface = AbilityInterface & {
-	name: RaceAbilityNameEnum;
+	name: RaceAbilityName;
 };
 
 export abstract class RaceAbility extends Ability implements RaceAbilityInterface {
 	constructor(
-		readonly name: RaceAbilityNameEnum,
+		readonly name: RaceAbilityName,
 		effectType: AbilityEffectType,
 	) {
 		super(name, effectType);
