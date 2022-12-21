@@ -1,7 +1,7 @@
 import {ChooseRace} from './Action/ChooseRace';
 import type {Attributes} from './Attributes';
 import {BuildingSheetContext} from './BuildingSheetContext';
-import {CharacterSheet} from './CharacterSheet';
+import {Sheet} from './Sheet';
 import type {ConditionVerify, Modifier} from './ModifierOthers';
 import {GeneralPowerNameEnum} from './Power/GeneralPowerName';
 import {Dwarf} from './Race/Dwarf';
@@ -22,7 +22,7 @@ const initialAttributes = {
 
 describe('Character', () => {
 	it('should save initial attributes definition step', () => {
-		const character = new CharacterSheet({
+		const character = new Sheet({
 			initialAttributes,
 		});
 
@@ -30,7 +30,7 @@ describe('Character', () => {
 	});
 
 	it('should set initial skills', () => {
-		const character = new CharacterSheet({
+		const character = new Sheet({
 			initialAttributes: {
 				...initialAttributes,
 				dexterity: 2,
@@ -43,7 +43,7 @@ describe('Character', () => {
 	});
 
 	it('should apply Dwarf attributes modifiers', () => {
-		const character = new CharacterSheet({
+		const character = new Sheet({
 			initialAttributes,
 		});
 
@@ -60,7 +60,7 @@ describe('Character', () => {
 	});
 
 	it('should save race modifiers appliance step after choose race', () => {
-		const character = new CharacterSheet({
+		const character = new Sheet({
 			initialAttributes,
 		});
 
@@ -72,7 +72,7 @@ describe('Character', () => {
 	});
 
 	it('should apply human versatile ability', () => {
-		const character = new CharacterSheet({
+		const character = new Sheet({
 			initialAttributes,
 		});
 
@@ -92,7 +92,7 @@ describe('Character', () => {
 	});
 
 	it('should apply human versatile ability with one power', () => {
-		const character = new CharacterSheet({
+		const character = new Sheet({
 			initialAttributes,
 		});
 
@@ -114,7 +114,7 @@ describe('Character', () => {
 	});
 
 	it('should save dodge applience step', () => {
-		const character = new CharacterSheet({
+		const character = new Sheet({
 			initialAttributes,
 		});
 
@@ -135,7 +135,7 @@ describe('Character', () => {
 	});
 
 	it('should apply night vision', () => {
-		const character = new CharacterSheet({
+		const character = new Sheet({
 			initialAttributes,
 		});
 
@@ -146,7 +146,7 @@ describe('Character', () => {
 	});
 
 	it('should have perception and survival rock knowledge modifiers', () => {
-		const character = new CharacterSheet({
+		const character = new Sheet({
 			initialAttributes,
 		});
 		character.dispatch({

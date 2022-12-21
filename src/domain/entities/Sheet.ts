@@ -1,5 +1,5 @@
 import type {Attributes} from './Attributes';
-import type {ActionInterface, ActionPayload, ActionType, CharacterActionHandlers} from './CharacterAction';
+import type {ActionInterface, ActionPayload, ActionType, SheetActionHandlers} from './CharacterAction';
 import type {Context} from './Context';
 import {Defense} from './Defense';
 import {ProgressionStep} from './ProgressionStep';
@@ -11,11 +11,11 @@ import type {SkillNameEnum} from './Skill/SkillName';
 import {SkillName} from './Skill/SkillName';
 import {Vision} from './Vision';
 
-type CharacterParams = {
+type SheetParams = {
 	initialAttributes: Attributes;
 };
 
-export class CharacterSheet implements SheetInterface {
+export class Sheet implements SheetInterface {
 	readonly progressionSteps: Array<ProgressionStep<ActionType>> = [];
 	private attributes: Attributes = {charisma: 0, constitution: 0, dexterity: 0, intelligence: 0, strength: 0, wisdom: 0};
 	private race?: RaceInterface;
@@ -24,7 +24,7 @@ export class CharacterSheet implements SheetInterface {
 	private vision: Vision = Vision.default;
 	private readonly skills: Record<SkillNameEnum, Skill>;
 	private readonly defense = new Defense();
-	private readonly actionHandlers: CharacterActionHandlers = {
+	private readonly actionHandlers: SheetActionHandlers = {
 		addOtherModifierToDefense: this.addOtherModifierToDefense.bind(this),
 		addOtherModifierToSkill: this.addOtherModifierToSkill.bind(this),
 		chooseRace: this.chooseRace.bind(this),
@@ -37,7 +37,7 @@ export class CharacterSheet implements SheetInterface {
 	};
 
 	constructor(
-		params: CharacterParams,
+		params: SheetParams,
 	) {
 		this.skills = InitialSkillsGenerator.generate();
 		this.dispatch = this.dispatch.bind(this);

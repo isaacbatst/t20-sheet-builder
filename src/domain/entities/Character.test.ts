@@ -1,14 +1,14 @@
 import {ChooseRace} from './Action/ChooseRace';
 import {BuildingSheetContext} from './BuildingSheetContext';
 import {Character} from './Character';
-import {CharacterSheet} from './CharacterSheet';
+import {Sheet} from './Sheet';
 import {InGameContext} from './InGameContext';
 import {Dwarf} from './Race/Dwarf';
 import {SkillNameEnum} from './Skill/SkillName';
 
 describe('Character', () => {
 	it('should calculate defense', () => {
-		const sheet = new CharacterSheet({
+		const sheet = new Sheet({
 			initialAttributes: {charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 0, wisdom: 0},
 		});
 		sheet.dispatch(new ChooseRace({
@@ -22,7 +22,7 @@ describe('Character', () => {
 	});
 
 	it('should calculate dwarf perception underground', () => {
-		const sheet = new CharacterSheet({
+		const sheet = new Sheet({
 			initialAttributes: {charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 1, wisdom: 1},
 		});
 		sheet.dispatch(new ChooseRace({
@@ -36,7 +36,7 @@ describe('Character', () => {
 	});
 
 	it('should calculate dwarf perception outside underground', () => {
-		const sheet = new CharacterSheet({
+		const sheet = new Sheet({
 			initialAttributes: {charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 1, wisdom: 1},
 		});
 		sheet.dispatch(new ChooseRace({

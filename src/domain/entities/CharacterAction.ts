@@ -26,7 +26,7 @@ export type ActionInterface<T extends ActionType> = {
 	type: T;
 	payload: ActionPayload<T>;
 };
-export type CharacterActionHandlers = {
+export type SheetActionHandlers = {
 	[Property in keyof ActionTypesToHandlers]: (payload: ActionPayload<Property>) => void
 };
 export type CharacterActionDescriptionGenerators = {
