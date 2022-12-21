@@ -1,43 +1,29 @@
-import type {Ability} from '../Ability';
 import type {Attribute, Attributes} from '../Attributes';
-import type {CharacterInterface} from '../CharacterInterface';
-import {RaceName} from './RaceName';
+import type {RaceAbility} from '../RaceAbility/RaceAbility';
 import type {RaceInterface} from '../RaceInterface';
-
-export type AttributeModifier = {
-	attribute: Attribute;
-	modifier: number;
-};
+import type {CharacterDispatch, SheetInterface} from '../SheetInterface';
+import type {RaceName} from './RaceName';
 
 export abstract class Race implements RaceInterface {
-	abstract readonly attributeModifiers: AttributeModifier[];
-	abstract readonly abilities: Record<string, Ability>;
-	private readonly raceName: RaceName;
+	abstract readonly attributeModifiers: Partial<Attributes>;
+	abstract readonly abilities: Record<string, RaceAbility>;
 
-	constructor(name: string) {
-		this.raceName = new RaceName(name);
-	}
+	constructor(readonly name: RaceName) {}
 
-	applyAttributesModifiers(attributes: Attributes): Attributes {
+	applyAttributesModifiers(attributes: Attributes, dispatch: CharacterDispatch): void {
 		const modifiedAttributes: Partial<Attributes> = {};
 
-		this.attributeModifiers.forEach(attributeModifier => {
-			modifiedAttributes[attributeModifier.attribute] = attributes[attributeModifier.attribute] + attributeModifier.modifier;
+		Object.entries(this.attributeModifiers).forEach(([attribute, value]) => {
+			const attributeCasted = attribute as Attribute;
+			modifiedAttributes[attributeCasted] = attributes[attributeCasted] + value;
 		});
 
-		return {
-			...attributes,
-			...modifiedAttributes,
-		};
+		dispatch({type: 'applyRaceModifiers', payload: {modifiers: this.attributeModifiers, updatedAttributes: modifiedAttributes}});
 	}
 
-	applyAbilities(character: CharacterInterface): void {
+	applyAbilities(character: SheetInterface): void {
 		Object.values(this.abilities).forEach(ability => {
-			ability.apply(character);
+			character.dispatch({type: 'applyRaceAbility', payload: {ability}});
 		});
-	}
-
-	get name() {
-		return this.raceName.value;
 	}
 }

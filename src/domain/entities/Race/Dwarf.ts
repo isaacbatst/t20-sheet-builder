@@ -1,18 +1,25 @@
-import type {Ability} from '../Ability';
-import type {AttributeModifier} from './Race';
+import type {Attributes} from '../Attributes';
+import {HardAsRock} from '../RaceAbility/Dwarf/HardAsRock';
+import {RockKnowledge} from '../RaceAbility/Dwarf/RockKnowledge';
+import {SlowAndAlways} from '../RaceAbility/Dwarf/SlowAndAlways';
+import type {RaceAbility} from '../RaceAbility/RaceAbility';
 import {Race} from './Race';
-import {RaceNameEnum} from './RaceName';
+import {RaceName} from './RaceName';
 
 export class Dwarf extends Race {
-	readonly abilities: Record<string, Ability> = {};
+	readonly abilities: Record<string, RaceAbility> = {
+		rockKnowledge: new RockKnowledge(),
+		slowAndAlways: new SlowAndAlways(),
+		hardAsRock: new HardAsRock(),
+	};
 
-	readonly attributeModifiers: AttributeModifier[] = [
-		{attribute: 'dexterity', modifier: -1},
-		{attribute: 'constitution', modifier: 2},
-		{attribute: 'wisdom', modifier: 1},
-	];
+	readonly attributeModifiers: Partial<Attributes> = {
+		dexterity: -1,
+		constitution: 2,
+		wisdom: 1,
+	};
 
 	constructor() {
-		super(RaceNameEnum.dwarf);
+		super(RaceName.dwarf);
 	}
 }

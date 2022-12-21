@@ -1,122 +1,65 @@
-import type {Attributes} from './Attributes';
+import {ChooseRace} from './Action/ChooseRace';
+import {BuildingSheetContext} from './BuildingSheetContext';
 import {Character} from './Character';
-import {GeneralPowerNameEnum} from './Power/GeneralPowerName';
+import {Sheet} from './Sheet';
+import {InGameContext} from './InGameContext';
 import {Dwarf} from './Race/Dwarf';
-import {Human} from './Race/Human';
-import {Skill} from './Skill/Skill';
-import {SkillNameEnum} from './Skill/SkillName';
-
-const initialAttributes = {
-	strength: 0,
-	dexterity: 0,
-	constitution: 0,
-	intelligence: 0,
-	wisdom: 0,
-	charisma: 0,
-};
+import {SkillName} from './Skill/SkillName';
 
 describe('Character', () => {
-	it('should save initial attributes definition step', () => {
-		const character = new Character({
-			initialAttributes,
+	it('should calculate defense', () => {
+		const sheet = new Sheet({
+			initialAttributes: {charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 0, wisdom: 0},
 		});
-
-		expect(character.progressionSteps[0].description).toBe('Definição inicial de atributos: Força 0, Destreza 0, Constituição 0, Inteligência 0, Sabedoria 0 e Carisma 0.');
-	});
-
-	it('should set initial skills', () => {
-		const character = new Character({
-			initialAttributes: {
-				...initialAttributes,
-				dexterity: 2,
-			},
-		});
-
-		const skills = character.getSkills();
-
-		expect(skills.acrobacia).toEqual(new Skill({
-			attribute: 'dexterity',
-			characterAttributes: character.getAttributes(),
-			name: SkillNameEnum.acrobacia,
+		sheet.dispatch(new ChooseRace({
+			race: new Dwarf(),
 		}));
+		const context = new BuildingSheetContext();
+		const character = new Character(sheet, context);
+		const defense = character.getDefenseTotal();
+
+		expect(defense).toBe(11);
 	});
 
-	it('should apply Dwarf attributes modifiers', () => {
-		const character = new Character({
-			initialAttributes,
+	it('should not calculate dwarf rock knowledge perception in build context', () => {
+		const sheet = new Sheet({
+			initialAttributes: {charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 1, wisdom: 1},
 		});
+		sheet.dispatch(new ChooseRace({
+			race: new Dwarf(),
+		}));
+		const context = new BuildingSheetContext();
+		const character = new Character(sheet, context);
+		const perception = character.getSkillTotal(SkillName.perception);
 
-		character.chooseRace(new Dwarf());
-
-		expect(character.getAttributes()).toEqual<Attributes>({
-			...initialAttributes,
-			dexterity: -1,
-			constitution: 2,
-			wisdom: 1,
-		});
+		expect(perception).toBe(2);
 	});
 
-	it('should save race modifiers appliance step after choose race', () => {
-		const character = new Character({
-			initialAttributes,
+	it('should calculate dwarf rock knowledge perception underground', () => {
+		const sheet = new Sheet({
+			initialAttributes: {charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 1, wisdom: 1},
 		});
+		sheet.dispatch(new ChooseRace({
+			race: new Dwarf(),
+		}));
+		const context = new InGameContext({isUnderground: true});
+		const character = new Character(sheet, context);
+		const perception = character.getSkillTotal(SkillName.perception);
 
-		character.chooseRace(new Dwarf());
-
-		expect(character.progressionSteps[1].description).toBe('Aplicação dos modificadores de atributo da raça: -1 Destreza, +2 Constituição e +1 Sabedoria.');
+		expect(perception).toBe(4);
 	});
 
-	it('should apply human versatile ability', () => {
-		const character = new Character({
-			initialAttributes,
+	it('should calculate dwarf rock knowledge perception outside underground', () => {
+		const sheet = new Sheet({
+			initialAttributes: {charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 1, wisdom: 1},
 		});
+		sheet.dispatch(new ChooseRace({
+			race: new Dwarf(),
+		}));
+		const context = new InGameContext({isUnderground: false});
+		const character = new Character(sheet, context);
+		const perception = character.getSkillTotal(SkillName.perception);
 
-		const human = new Human(
-			['strength', 'charisma', 'constitution'],
-			[
-				{name: SkillNameEnum.acrobacia, type: 'skill'},
-				{name: SkillNameEnum.luta, type: 'skill'},
-			],
-		);
-		character.chooseRace(human);
-
-		expect(character.getTrainedSkills()).toContain(SkillNameEnum.acrobacia);
-		expect(character.getTrainedSkills()).toContain(SkillNameEnum.luta);
-	});
-
-	it('should apply human versatile ability with one power', () => {
-		const character = new Character({
-			initialAttributes,
-		});
-
-		const human = new Human(
-			['strength', 'charisma', 'constitution'],
-			[
-				{name: SkillNameEnum.acrobacia, type: 'skill'},
-				{name: GeneralPowerNameEnum.dodge, type: 'power'},
-			],
-		);
-		character.chooseRace(human);
-
-		expect(character.getTrainedSkills()).toContain(SkillNameEnum.acrobacia);
-		expect(character.getDefenseTotal()).toBe(12);
-		expect(character.getSkills().reflexos.getTotal()).toBe(2);
-	});
-
-	it('should save dodge applience step', () => {
-		const character = new Character({
-			initialAttributes,
-		});
-
-		const human = new Human(
-			['strength', 'charisma', 'constitution'],
-			[
-				{name: SkillNameEnum.acrobacia, type: 'skill'},
-				{name: GeneralPowerNameEnum.dodge, type: 'power'},
-			],
-		);
-
-		character.chooseRace(human);
-		expect(character.progressionSteps[2].description).toBe('Esquiva: você recebe +2 na defesa (12) e reflexos (2).');
+		expect(perception).toBe(2);
 	});
 });

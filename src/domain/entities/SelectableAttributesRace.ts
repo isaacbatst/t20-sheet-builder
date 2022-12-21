@@ -1,39 +1,33 @@
-import type {Attribute} from './Attributes';
-import type {AttributeModifier} from './Race/Race';
+import type {Attribute, Attributes} from './Attributes';
 import {Race} from './Race/Race';
+import type {RaceName} from './Race/RaceName';
 
 export abstract class SelectableAttributesRace extends Race {
-	readonly attributeModifiers: AttributeModifier[];
+	readonly attributeModifiers: Partial<Attributes> = {};
 
-	constructor(attributes: Attribute[], name: string) {
+	constructor(selectedAttributes: Attribute[], name: RaceName) {
 		super(name);
+		this.validateSelectedAttributes(selectedAttributes);
 
-		this.attributeModifiers = attributes.map<AttributeModifier>(attribute => ({
-			attribute,
-			modifier: this.fixedModifier,
-		}));
-
-		this.validateSelectedAttributes();
+		selectedAttributes.forEach(attribute => {
+			this.attributeModifiers[attribute] = this.fixedModifier;
+		});
 	}
 
-	private validateSelectedAttributes() {
-		if (this.attributeModifiers.length !== this.selectableQuantity) {
+	private validateSelectedAttributes(attributes: Attribute[]) {
+		if (attributes.length !== this.selectableQuantity) {
 			throw new Error('INVALID_ATTRIBUTES_SELECTION');
 		}
 
-		const isSomeAttributeRepeated = this.attributeModifiers
-			.some((selectedAttribute, index) => this.attributeModifiers
-				.find((nestedSelectedAttribute, nestedIndex) =>
-					nestedSelectedAttribute.attribute === selectedAttribute.attribute
-					&& nestedIndex !== index,
-				));
+		const isSomeAttributeRepeated = attributes
+			.some((selectedAttribute, index) => attributes.indexOf(selectedAttribute) !== index);
 
 		if (isSomeAttributeRepeated) {
 			throw new Error('INVALID_ATTRIBUTES_SELECTION');
 		}
 
-		const isSomeSelectedAttributeRestricted = this.attributeModifiers
-			.some(selectedAttribute => this.restrictedAttributes.includes(selectedAttribute.attribute));
+		const isSomeSelectedAttributeRestricted = attributes
+			.some(selectedAttribute => this.restrictedAttributes.includes(selectedAttribute));
 
 		if (isSomeSelectedAttributeRestricted) {
 			throw new Error('RESTRICTED_ATTRIBUTE');

@@ -1,20 +1,17 @@
 import type {Attribute, Attributes} from '../Attributes';
-import {ModifierOthers} from '../ModifierOthers';
-import type {AttributeModifier} from '../Race/Race';
-import {SkillName} from './SkillName';
+import {BuildingSheetContext} from '../BuildingSheetContext';
+import type {Context} from '../Context';
+import type {ModifierInterface} from '../ModifierList';
+import {ModifiersList} from '../ModifierList';
 
-type SkillParams = {
-	characterAttributes: Attributes;
+export type SkillParams = {
 	attribute: Attribute;
 	isTrained?: boolean;
-	otherModifiers?: Array<{sourceName: string; value: number}>;
-	name: string;
 };
 
 export class Skill {
-	readonly name: SkillName;
-	readonly attributeModifier: AttributeModifier;
-	readonly modifierOthers: ModifierOthers = new ModifierOthers(Skill.repeatedOtherModifierError);
+	readonly attribute: Attribute;
+	private readonly others: ModifiersList = new ModifiersList(Skill.repeatedOtherModifierError);
 	private isTrained: boolean;
 
 	static get repeatedOtherModifierError() {
@@ -22,14 +19,12 @@ export class Skill {
 	}
 
 	constructor(params: SkillParams) {
-		this.name = new SkillName(params.name);
 		this.isTrained = Boolean(params.isTrained);
+		this.attribute = params.attribute;
+	}
 
-		this.attributeModifier = {attribute: params.attribute, modifier: params.characterAttributes[params.attribute]};
-
-		params.otherModifiers?.forEach(modifier => {
-			this.modifierOthers.addOtherModifier(modifier);
-		});
+	addOtherModifier(modifier: ModifierInterface) {
+		this.others.add(modifier);
 	}
 
 	train() {
@@ -44,11 +39,19 @@ export class Skill {
 		return this.isTrained;
 	}
 
-	getTotal(level = 1) {
+	getTotal(attributes: Attributes, level = 1, context: Context = new BuildingSheetContext()) {
 		const halfLevelPoints = this.calculateHalfLevel(level);
 		const trainingPoints = this.calculateTrainingPoints(level);
-		const otherModifiersSum = this.modifierOthers.getTotal();
-		return halfLevelPoints + this.attributeModifier.modifier + trainingPoints + otherModifiersSum;
+		const otherModifiersSum = this.others.getTotal(context);
+		return halfLevelPoints + attributes[this.attribute] + trainingPoints + otherModifiersSum;
+	}
+
+	getTrainingPoints(level = 1) {
+		return this.calculateTrainingPoints(level);
+	}
+
+	getOthersModifiers() {
+		return this.others.modifiers;
 	}
 
 	private calculateTrainingPoints(level: number): number {

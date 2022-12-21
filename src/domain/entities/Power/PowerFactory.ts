@@ -1,10 +1,10 @@
 import {Dodge} from './Dodge';
-import type {PowerNameEnum} from './PowerName';
+import type {PowerName} from './PowerName';
 import {SwordAndShieldStyle} from './SwordAndShieldStyle';
 import {TwoHandsStyle} from './TwoHandsStyle';
 
 export class GeneralPowerFactory {
-	static make(powerName: PowerNameEnum) {
+	static make(powerName: PowerName) {
 		// eslint-disable-next-line @typescript-eslint/naming-convention
 		const Power = GeneralPowerFactory.nameToClass[powerName];
 

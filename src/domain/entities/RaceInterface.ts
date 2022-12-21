@@ -1,10 +1,10 @@
 import type {Attributes} from './Attributes';
-import type {CharacterInterface} from './CharacterInterface';
-import type {AttributeModifier} from './Race/Race';
+import type {CharacterDispatch, SheetInterface} from './SheetInterface';
+import type {RaceName} from './Race/RaceName';
 
 export type RaceInterface = {
-	name: string;
-	attributeModifiers: AttributeModifier[];
-	applyAttributesModifiers(attributes: Attributes): Attributes;
-	applyAbilities(character: CharacterInterface): void;
+	name: RaceName;
+	attributeModifiers: Partial<Attributes>;
+	applyAttributesModifiers(attributes: Attributes, dispatch: CharacterDispatch): void;
+	applyAbilities(character: SheetInterface): void;
 };

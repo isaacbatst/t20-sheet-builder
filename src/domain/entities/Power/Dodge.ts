@@ -1,6 +1,6 @@
-import type {CharacterInterface} from '../CharacterInterface';
-import {SkillNameEnum} from '../Skill/SkillName';
-import {Step} from '../StepDescriptionGenerator/StepDescriptionGenerator';
+import {Modifier} from '../Modifier/Modifier';
+import type {SheetInterface} from '../SheetInterface';
+import {SkillName} from '../Skill/SkillName';
 import {GeneralPower} from './GeneralPower';
 import {GeneralPowerNameEnum} from './GeneralPowerName';
 
@@ -12,9 +12,9 @@ export class Dodge extends GeneralPower {
 		);
 	}
 
-	apply(character: CharacterInterface) {
-		character.addOtherModifierToDefense(GeneralPowerNameEnum.dodge, 2);
-		character.addOtherModifierToSkill(GeneralPowerNameEnum.dodge, 2, SkillNameEnum.reflexos);
-		character.saveStep(Step.dodgeAppliance);
+	apply(character: SheetInterface) {
+		const modifier = new Modifier(this.name, 2);
+		character.dispatch({type: 'addOtherModifierToDefense', payload: {modifier}});
+		character.dispatch({type: 'addOtherModifierToSkill', payload: {modifier, skill: SkillName.reflexes}});
 	}
 }

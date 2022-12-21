@@ -1,9 +1,8 @@
 import type {Attribute} from '../Attributes';
-import type {CharacterInterface} from '../CharacterInterface';
-import type {VersatileChoice} from '../RaceAbility/Versatile';
-import {Versatile} from '../RaceAbility/Versatile';
+import type {VersatileChoice} from '../RaceAbility/Human/Versatile';
+import {Versatile} from '../RaceAbility/Human/Versatile';
 import {SelectableAttributesRace} from '../SelectableAttributesRace';
-import {RaceNameEnum} from './RaceName';
+import {RaceName} from './RaceName';
 
 export class Human extends SelectableAttributesRace {
 	readonly abilities = {
@@ -11,7 +10,7 @@ export class Human extends SelectableAttributesRace {
 	};
 
 	constructor(attributes: Attribute[], versatileChoices: VersatileChoice[] = []) {
-		super(attributes, RaceNameEnum.human);
+		super(attributes, RaceName.human);
 
 		versatileChoices.forEach(choice => {
 			this.abilities.versatile.addChoice(choice);
@@ -32,11 +31,5 @@ export class Human extends SelectableAttributesRace {
 
 	get versatileChoices() {
 		return this.abilities.versatile.choices;
-	}
-
-	applyAbilities(character: CharacterInterface): void {
-		Object.values(this.abilities).forEach(ability => {
-			ability.apply(character);
-		});
 	}
 }

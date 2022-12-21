@@ -1,20 +1,20 @@
-import type {CharacterInterface} from '../CharacterInterface';
-import {GeneralPowerFactory} from '../Power/PowerFactory';
-import type {PowerNameEnum} from '../Power/PowerName';
-import type {SkillNameEnum} from '../Skill/SkillName';
-import {RaceAbility} from './RaceAbility';
-import {RaceAbilityNameEnum} from './RaceAbilityName';
+import type {SheetInterface} from '../../SheetInterface';
+import {GeneralPowerFactory} from '../../Power/PowerFactory';
+import type {PowerName} from '../../Power/PowerName';
+import {SkillName} from '../../Skill/SkillName';
+import {RaceAbility} from '../RaceAbility';
+import {RaceAbilityName} from '../RaceAbilityName';
 
 export type VersatileChoice =
-	{type: 'skill'; name: SkillNameEnum} |
-	{type: 'power'; name: PowerNameEnum};
+	{type: 'skill'; name: SkillName} |
+	{type: 'power'; name: PowerName};
 
 export class Versatile extends RaceAbility {
 	readonly choices: VersatileChoice[] = [];
 
 	constructor() {
 		super(
-			RaceAbilityNameEnum.versatile,
+			RaceAbilityName.versatile,
 			'passive',
 		);
 	}
@@ -39,19 +39,25 @@ export class Versatile extends RaceAbility {
 		this.choices.push(newChoice);
 	}
 
-	apply(character: CharacterInterface): void {
+	apply(character: SheetInterface): void {
 		if (this.choices.length !== 2) {
 			throw new Error('MISSING_CHOICES');
 		}
 
 		this.choices.forEach(choice => {
 			if (choice.type === 'skill') {
-				character.trainSkill(choice.name);
+				character.dispatch({
+					type: 'trainSkill',
+					payload: {
+						source: this.name,
+						name: SkillName[choice.name],
+					},
+				});
 			}
 
 			if (choice.type === 'power') {
 				const power = GeneralPowerFactory.make(choice.name);
-				power.apply(character);
+				character.dispatch({type: 'pickPower', payload: {power, source: this.name}});
 			}
 		});
 	}

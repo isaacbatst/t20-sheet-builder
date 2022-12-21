@@ -1,10 +1,10 @@
 import type {Attributes} from './Attributes';
-import type {AttributeModifier} from './Race/Race';
+import {RaceName} from './Race/RaceName';
 import type {RaceInterface} from './RaceInterface';
 
 export class RaceFake implements RaceInterface {
-	name = 'any-race';
-	attributeModifiers: AttributeModifier[] = [];
+	name = RaceName.human;
+	attributeModifiers: Partial<Attributes> = {};
 	applyAbilities = jest.fn();
 	applyAttributesModifiers = jest.fn((attributes: Attributes): Attributes => attributes);
 }

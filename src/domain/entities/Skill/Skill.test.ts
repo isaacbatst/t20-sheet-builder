@@ -1,109 +1,95 @@
-import {CharacterFake} from '../CharacterFake';
+import {SheetFake} from '../SheetFake';
+import {RaceAbilityName} from '../RaceAbility/RaceAbilityName';
 import {Skill} from './Skill';
-
-const attributes = {};
+import {Modifier} from '../Modifier/Modifier';
 
 describe('Skill', () => {
 	it('should calculate level 1 untrained skill', () => {
-		const character = new CharacterFake();
+		const sheet = new SheetFake();
 		const skill = new Skill({
-			characterAttributes: character.getAttributes(),
 			attribute: 'dexterity',
-			name: 'acrobacia',
 		});
 
-		expect(skill.getTotal()).toBe(0);
+		expect(skill.getTotal(sheet.attributes)).toBe(0);
 	});
 
 	it('should calculate level 1 untrained skill with modifier', () => {
-		const character = new CharacterFake();
-		character.attributes = {
-			...character.attributes,
+		const sheet = new SheetFake();
+		sheet.attributes = {
+			...sheet.attributes,
 			dexterity: 2,
 		};
 		const skill = new Skill({
-			characterAttributes: character.getAttributes(),
 			attribute: 'dexterity',
-			name: 'acrobacia',
 		});
 
-		expect(skill.getTotal()).toBe(2);
+		expect(skill.getTotal(sheet.attributes)).toBe(2);
 	});
 
 	it('should calculate level 1 trained skill', () => {
-		const character = new CharacterFake();
+		const sheet = new SheetFake();
 
 		const skill = new Skill({
-			characterAttributes: character.getAttributes(),
 			isTrained: true,
 			attribute: 'dexterity',
-			name: 'acrobacia',
 		});
-		expect(skill.getTotal()).toBe(2);
+		expect(skill.getTotal(sheet.attributes)).toBe(2);
 	});
 
 	it('should calculate level 1 trained skill with modifier', () => {
-		const character = new CharacterFake();
-		character.attributes = {
-			...character.attributes,
+		const sheet = new SheetFake();
+		sheet.attributes = {
+			...sheet.attributes,
 			dexterity: 2,
 		};
 
 		const skill = new Skill({
-			characterAttributes: character.getAttributes(),
 			isTrained: true,
 			attribute: 'dexterity',
-			name: 'acrobacia',
 		});
 
-		expect(skill.getTotal()).toBe(4);
+		expect(skill.getTotal(sheet.attributes)).toBe(4);
 	});
 
 	it('should calculate level 1 trained skill with modifier and other bonus', () => {
-		const character = new CharacterFake();
-		character.attributes = {
-			...character.attributes,
+		const sheet = new SheetFake();
+		sheet.attributes = {
+			...sheet.attributes,
 			dexterity: 2,
 		};
 
 		const skill = new Skill({
-			characterAttributes: character.getAttributes(),
 			isTrained: true,
 			attribute: 'dexterity',
-			otherModifiers: [{sourceName: 'any-source', value: 2}],
-			name: 'acrobacia',
 		});
+		skill.addOtherModifier(new Modifier(RaceAbilityName.versatile, 2));
 
-		expect(skill.getTotal()).toBe(6);
+		expect(skill.getTotal(sheet.attributes)).toBe(6);
 	});
 
 	it('should calculate level 10 trained skill with modifier and other bonus', () => {
-		const character = new CharacterFake();
-		character.attributes = {
-			...character.attributes,
+		const sheet = new SheetFake();
+		sheet.attributes = {
+			...sheet.attributes,
 			dexterity: 2,
 		};
-		character.level = 10;
+		sheet.level = 10;
 		const skill = new Skill({
-			characterAttributes: character.getAttributes(),
 			isTrained: true,
 			attribute: 'dexterity',
-			otherModifiers: [{sourceName: 'any-source', value: 2}],
-			name: 'acrobacia',
 		});
+		skill.addOtherModifier(new Modifier(RaceAbilityName.versatile, 2));
 
-		expect(skill.getTotal(10)).toBe(13);
+		expect(skill.getTotal(sheet.attributes, 10)).toBe(13);
 	});
 
 	it('should update total by training', () => {
-		const character = new CharacterFake();
+		const sheet = new SheetFake();
 		const skill = new Skill({
-			characterAttributes: character.getAttributes(),
 			attribute: 'dexterity',
-			name: 'acrobacia',
 		});
 		skill.train();
-		const total = skill.getTotal();
+		const total = skill.getTotal(sheet.attributes);
 		expect(total).toBe(2);
 	});
 });
