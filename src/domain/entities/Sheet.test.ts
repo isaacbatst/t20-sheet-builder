@@ -20,11 +20,9 @@ const initialAttributes = {
 	charisma: 0,
 };
 
-describe('Character', () => {
+describe('Sheet', () => {
 	it('should save initial attributes definition step', () => {
-		const character = new Sheet({
-			initialAttributes,
-		});
+		const character = new Sheet();
 
 		expect(character.progressionSteps[0].description).toBe('Definição inicial de atributos: +0 Força, +0 Destreza, +0 Constituição, +0 Inteligência, +0 Sabedoria e +0 Carisma.');
 	});
@@ -42,130 +40,149 @@ describe('Character', () => {
 		expect(skills).toEqual(InitialSkillsGenerator.generate());
 	});
 
-	it('should apply Dwarf attributes modifiers', () => {
-		const character = new Sheet({
-			initialAttributes,
+	describe('Human', () => {
+		it('should apply human versatile ability with one power', () => {
+			const character = new Sheet();
+
+			const human = new Human(
+				['strength', 'charisma', 'constitution'],
+				[
+					{name: SkillName.acrobatics, type: 'skill'},
+					{name: GeneralPowerNameEnum.dodge, type: 'power'},
+				],
+			);
+			character.dispatch(new ChooseRace({
+				race: human,
+			}));
+
+			const context = new BuildingSheetContext();
+			expect(character.getTrainedSkills()).toContain(SkillName.acrobatics);
+			expect(character.getDefenseTotal(context)).toBe(12);
+			expect(character.getSkillTotal(SkillName.reflexes, context)).toBe(2);
 		});
 
-		character.dispatch(new ChooseRace({
-			race: new Dwarf(),
-		}));
+		it('should save dodge applience step', () => {
+			const character = new Sheet();
 
-		expect(character.getAttributes()).toEqual<Attributes>({
-			...initialAttributes,
-			dexterity: -1,
-			constitution: 2,
-			wisdom: 1,
+			const human = new Human(
+				['strength', 'charisma', 'constitution'],
+				[
+					{name: SkillName.acrobatics, type: 'skill'},
+					{name: GeneralPowerNameEnum.dodge, type: 'power'},
+				],
+			);
+
+			character.dispatch(new ChooseRace({
+				race: human,
+			}));
+
+			expect(character.progressionSteps).toContainEqual(expect.objectContaining({description: 'Esquiva: +2 Defesa aplicado ao modificador "outros".'}));
+			expect(character.progressionSteps).toContainEqual(expect.objectContaining({description: 'Esquiva: +2 Reflexos aplicado ao modificador "outros".'}));
+		});
+
+		it('should have 9m displacement', () => {
+			const character = new Sheet();
+
+			const human = new Human(
+				['strength', 'charisma', 'constitution'],
+				[
+					{name: SkillName.acrobatics, type: 'skill'},
+					{name: GeneralPowerNameEnum.dodge, type: 'power'},
+				],
+			);
+
+			character.dispatch(new ChooseRace({
+				race: human,
+			}));
+
+			expect(character.getDisplacement()).toBe(9);
 		});
 	});
 
-	it('should save race modifiers appliance step after choose race', () => {
-		const character = new Sheet({
-			initialAttributes,
-		});
+	describe('Dwarf', () => {
+		it('should apply Dwarf attributes modifiers', () => {
+			const character = new Sheet();
 
-		character.dispatch(new ChooseRace({
-			race: new Dwarf(),
-		}));
-
-		expect(character.progressionSteps).toContainEqual(expect.objectContaining({description: 'Modificadores de raça aplicados: -1 Destreza, +2 Constituição e +1 Sabedoria.'}));
-	});
-
-	it('should apply human versatile ability', () => {
-		const character = new Sheet({
-			initialAttributes,
-		});
-
-		const human = new Human(
-			['strength', 'charisma', 'constitution'],
-			[
-				{name: SkillName.acrobatics, type: 'skill'},
-				{name: SkillName.fight, type: 'skill'},
-			],
-		);
-		character.dispatch(new ChooseRace({
-			race: human,
-		}));
-
-		expect(character.getTrainedSkills()).toContain(SkillName.acrobatics);
-		expect(character.getTrainedSkills()).toContain(SkillName.fight);
-	});
-
-	it('should apply human versatile ability with one power', () => {
-		const character = new Sheet({
-			initialAttributes,
-		});
-
-		const human = new Human(
-			['strength', 'charisma', 'constitution'],
-			[
-				{name: SkillName.acrobatics, type: 'skill'},
-				{name: GeneralPowerNameEnum.dodge, type: 'power'},
-			],
-		);
-		character.dispatch(new ChooseRace({
-			race: human,
-		}));
-
-		const context = new BuildingSheetContext();
-		expect(character.getTrainedSkills()).toContain(SkillName.acrobatics);
-		expect(character.getDefenseTotal(context)).toBe(12);
-		expect(character.getSkillTotal(SkillName.reflexes, context)).toBe(2);
-	});
-
-	it('should save dodge applience step', () => {
-		const character = new Sheet({
-			initialAttributes,
-		});
-
-		const human = new Human(
-			['strength', 'charisma', 'constitution'],
-			[
-				{name: SkillName.acrobatics, type: 'skill'},
-				{name: GeneralPowerNameEnum.dodge, type: 'power'},
-			],
-		);
-
-		character.dispatch(new ChooseRace({
-			race: human,
-		}));
-
-		expect(character.progressionSteps).toContainEqual(expect.objectContaining({description: 'Esquiva: +2 Defesa aplicado ao modificador "outros".'}));
-		expect(character.progressionSteps).toContainEqual(expect.objectContaining({description: 'Esquiva: +2 Reflexos aplicado ao modificador "outros".'}));
-	});
-
-	it('should apply night vision', () => {
-		const character = new Sheet({
-			initialAttributes,
-		});
-
-		character.dispatch(new ChooseRace({
-			race: new Dwarf(),
-		}));
-		expect(character.getVision()).toBe(Vision.dark);
-	});
-
-	it('should have perception and survival rock knowledge modifiers', () => {
-		const character = new Sheet({
-			initialAttributes,
-		});
-		character.dispatch({
-			type: 'chooseRace',
-			payload: {
+			character.dispatch(new ChooseRace({
 				race: new Dwarf(),
-			},
-		});
-		const skills = character.getSkills();
-		const modifier: Modifier = {
-			source: RaceAbilityName.rockKnowledge,
-			value: 2,
-			condition: {
-				description: 'testes devem ser realizados no subterrâneo',
-				verify: expect.any(Function) as ConditionVerify,
-			},
-		};
+			}));
 
-		expect(skills.perception.modifierOthers.modifiers).toContainEqual<Modifier>(modifier);
-		expect(skills.survival.modifierOthers.modifiers).toContainEqual<Modifier>(modifier);
+			expect(character.getAttributes()).toEqual<Attributes>({
+				...initialAttributes,
+				dexterity: -1,
+				constitution: 2,
+				wisdom: 1,
+			});
+		});
+
+		it('should save race modifiers appliance step after choose race', () => {
+			const character = new Sheet();
+
+			character.dispatch(new ChooseRace({
+				race: new Dwarf(),
+			}));
+
+			expect(character.progressionSteps).toContainEqual(expect.objectContaining({description: 'Modificadores de raça aplicados: -1 Destreza, +2 Constituição e +1 Sabedoria.'}));
+		});
+
+		it('should apply human versatile ability', () => {
+			const character = new Sheet();
+
+			const human = new Human(
+				['strength', 'charisma', 'constitution'],
+				[
+					{name: SkillName.acrobatics, type: 'skill'},
+					{name: SkillName.fight, type: 'skill'},
+				],
+			);
+			character.dispatch(new ChooseRace({
+				race: human,
+			}));
+
+			expect(character.getTrainedSkills()).toContain(SkillName.acrobatics);
+			expect(character.getTrainedSkills()).toContain(SkillName.fight);
+		});
+
+		it('should apply night vision', () => {
+			const character = new Sheet();
+
+			character.dispatch(new ChooseRace({
+				race: new Dwarf(),
+			}));
+			expect(character.getVision()).toBe(Vision.dark);
+		});
+
+		it('should have perception and survival rock knowledge modifiers', () => {
+			const character = new Sheet();
+			character.dispatch({
+				type: 'chooseRace',
+				payload: {
+					race: new Dwarf(),
+				},
+			});
+			const skills = character.getSkills();
+			const modifier: Modifier = {
+				source: RaceAbilityName.rockKnowledge,
+				value: 2,
+				condition: {
+					description: 'testes devem ser realizados no subterrâneo',
+					verify: expect.any(Function) as ConditionVerify,
+				},
+			};
+
+			expect(skills.perception.modifierOthers.modifiers).toContainEqual<Modifier>(modifier);
+			expect(skills.survival.modifierOthers.modifiers).toContainEqual<Modifier>(modifier);
+		});
+
+		it('should have 6m displacement', () => {
+			const character = new Sheet();
+			character.dispatch({
+				type: 'chooseRace',
+				payload: {
+					race: new Dwarf(),
+				},
+			});
+			expect(character.getDisplacement()).toBe(6);
+		});
 	});
 });

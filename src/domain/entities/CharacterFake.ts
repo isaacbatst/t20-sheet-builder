@@ -1,6 +1,6 @@
 import type {Attributes} from './Attributes';
 import {BuildingSheetContext} from './BuildingSheetContext';
-import type {ActionInterface, ActionType} from './CharacterAction';
+import type {ActionInterface, ActionType} from './SheetActions';
 import type {SheetInterface} from './SheetInterface';
 import type {Context} from './Context';
 import type {Modifier, ModifierCondition} from './ModifierOthers';

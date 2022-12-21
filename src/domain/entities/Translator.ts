@@ -56,6 +56,7 @@ export class Translator {
 	private static readonly abilitiesTranslation: Record<RaceAbilityName, string> = {
 		rockKnownledge: 'Conhecimento das Rochas',
 		versatile: 'Versátil',
+		slowAndAlways: 'Devagar e Sempre',
 	};
 
 	private static readonly skillsTranslation: Record<SkillName, string> = {

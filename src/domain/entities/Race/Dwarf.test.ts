@@ -2,6 +2,7 @@ import {ApplyRaceAbility} from '../Action/ApplyRaceAbility';
 import {ApplyRaceModifiers} from '../Action/ApplyRaceModifiers';
 import {CharacterFake} from '../CharacterFake';
 import {RockKnowledge} from '../RaceAbility/Dwarf/RockKnowledge';
+import {SlowAndAlways} from '../RaceAbility/Dwarf/SlowAndAlways';
 import {Dwarf} from './Dwarf';
 
 describe('Dwarf', () => {
@@ -39,6 +40,15 @@ describe('Dwarf', () => {
 
 		expect(character.dispatch).toHaveBeenCalledWith(new ApplyRaceAbility({
 			ability: new RockKnowledge(),
+		}));
+	});
+
+	it('should dispatch slow and always appliance', () => {
+		const dwarf = new Dwarf();
+		const character = new CharacterFake();
+		dwarf.applyAbilities(character);
+		expect(character.dispatch).toHaveBeenCalledWith(new ApplyRaceAbility({
+			ability: new SlowAndAlways(),
 		}));
 	});
 });

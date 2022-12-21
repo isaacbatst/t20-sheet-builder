@@ -18,6 +18,7 @@ type ActionTypesToHandlers = {
 	applyRaceModifiers(payload: {modifiers: Partial<Attributes>; updatedAttributes: Partial<Attributes>}): void;
 	applyRaceAbility(payload: {ability: RaceAbilityInterface}): void;
 	pickPower(payload: {power: PowerInterface; source: Translatable}): void;
+	changeDisplacement(payload: {displacement: number; source: Translatable}): void;
 };
 
 export type ActionType = keyof ActionTypesToHandlers;

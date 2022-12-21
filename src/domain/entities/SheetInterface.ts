@@ -1,5 +1,5 @@
 import type {Attributes} from './Attributes';
-import type {ActionInterface, ActionType} from './CharacterAction';
+import type {ActionInterface, ActionType} from './SheetActions';
 import type {Context} from './Context';
 import type {ProgressionStepInterface} from './ProgressionStep';
 import type {RaceInterface} from './RaceInterface';

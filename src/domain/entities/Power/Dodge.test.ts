@@ -1,4 +1,4 @@
-import type {ActionInterface} from '../CharacterAction';
+import type {ActionInterface} from '../SheetActions';
 import {CharacterFake} from '../CharacterFake';
 import {SkillName} from '../Skill/SkillName';
 import {Dodge} from './Dodge';

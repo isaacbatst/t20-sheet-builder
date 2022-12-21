@@ -1,4 +1,4 @@
-import type {ActionInterface, ActionType, CharacterActionDescriptionGenerators} from '../CharacterAction';
+import type {ActionInterface, ActionType, CharacterActionDescriptionGenerators} from '../SheetActions';
 import type {SheetInterface} from '../SheetInterface';
 import {StringHelper} from '../StringHelper';
 import {Translator} from '../Translator';
@@ -25,6 +25,7 @@ export abstract class ActionDescriptionGenerator {
 		chooseRace: (character, action) => `Raça escolhida: ${Translator.getRaceTranslation(action.payload.race.name)}.`,
 		trainSkill: (character, action) => `${Translator.getTranslation(action.payload.source)}: Perícia ${Translator.getSkillTranslation(action.payload.name)} treinada, bônus de treino ${StringHelper.addNumberSign(character.getSkillTrainingPoints(action.payload.name))}.`,
 		pickPower: (character, action) => `${Translator.getTranslation(action.payload.source)}: poder ${Translator.getPowerTranslation(action.payload.power.name)} escolhido.`,
+		changeDisplacement: (character, action) => `${Translator.getTranslation(action.payload.source)}: deslocamento alterado para ${action.payload.displacement}m.`,
 	};
 }
 

@@ -1,4 +1,4 @@
-import type {ActionInterface} from '../../CharacterAction';
+import type {ActionInterface} from '../../SheetActions';
 import {CharacterFake} from '../../CharacterFake';
 import {Dodge} from '../../Power/Dodge';
 import {GeneralPowerNameEnum} from '../../Power/GeneralPowerName';

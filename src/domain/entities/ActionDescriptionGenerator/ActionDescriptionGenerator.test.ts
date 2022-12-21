@@ -198,4 +198,21 @@ describe('ActionDescriptionGenerator', () => {
 
 		expect(description).toBe('Versátil: poder Esquiva escolhido.');
 	});
+
+	it('should generate changeDisplacement description', () => {
+		const character = new CharacterFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			character,
+			{
+				type: 'changeDisplacement',
+				payload: {
+					displacement: 6,
+					source: RaceAbilityName.slowAndAlways,
+				},
+			},
+		);
+
+		expect(description).toBe('Devagar e Sempre: deslocamento alterado para 6m.');
+	});
 });

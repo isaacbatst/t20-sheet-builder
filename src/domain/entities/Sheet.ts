@@ -1,5 +1,5 @@
 import type {Attributes} from './Attributes';
-import type {ActionInterface, ActionPayload, ActionType, SheetActionHandlers} from './CharacterAction';
+import type {ActionInterface, ActionPayload, ActionType, SheetActionHandlers} from './SheetActions';
 import type {Context} from './Context';
 import {Defense} from './Defense';
 import {ProgressionStep} from './ProgressionStep';
@@ -11,7 +11,7 @@ import type {SkillName} from './Skill/SkillName';
 import {Vision} from './Vision';
 
 type SheetParams = {
-	initialAttributes: Attributes;
+	initialAttributes?: Attributes;
 };
 
 export class Sheet implements SheetInterface {
@@ -21,6 +21,7 @@ export class Sheet implements SheetInterface {
 	// eslint-disable-next-line @typescript-eslint/prefer-readonly
 	private level = 1;
 	private vision: Vision = Vision.default;
+	private displacement = 9;
 	private readonly skills: Record<SkillName, Skill>;
 	private readonly defense = new Defense();
 	private readonly actionHandlers: SheetActionHandlers = {
@@ -33,21 +34,26 @@ export class Sheet implements SheetInterface {
 		applyRaceModifiers: this.applyRaceModifiers.bind(this),
 		applyRaceAbility: this.applyRaceAbility.bind(this),
 		pickPower: this.pickPower.bind(this),
+		changeDisplacement: this.changeDisplacement.bind(this),
 	};
 
 	constructor(
-		params: SheetParams,
+		params?: SheetParams,
 	) {
 		this.skills = InitialSkillsGenerator.generate();
 		this.dispatch = this.dispatch.bind(this);
 
-		this.dispatch({type: 'setInitialAttributes', payload: {attributes: params.initialAttributes}});
+		this.dispatch({type: 'setInitialAttributes', payload: {attributes: params?.initialAttributes ?? this.attributes}});
 	}
 
 	dispatch<T extends ActionType>(action: ActionInterface<T>): void {
 		this.progressionSteps.push(new ProgressionStep(action, this));
 		const handle = this.actionHandlers[action.type];
 		handle(action.payload);
+	}
+
+	getDisplacement() {
+		return this.displacement;
 	}
 
 	getVision(): Vision {
@@ -120,5 +126,13 @@ export class Sheet implements SheetInterface {
 
 	private applyRaceAbility(payload: ActionPayload<'applyRaceAbility'>) {
 		payload.ability.apply(this);
+	}
+
+	private changeDisplacement(payload: ActionPayload<'changeDisplacement'>) {
+		if (payload.displacement < 0) {
+			throw new Error('INVALID_NEGATIVE_DISPLACEMENT');
+		}
+
+		this.displacement = payload.displacement;
 	}
 }

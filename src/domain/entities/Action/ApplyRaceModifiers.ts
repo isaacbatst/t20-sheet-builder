@@ -1,4 +1,4 @@
-import type {ActionPayload} from '../CharacterAction';
+import type {ActionPayload} from '../SheetActions';
 import {Action} from './Action';
 
 export class ApplyRaceModifiers extends Action<'applyRaceModifiers'> {

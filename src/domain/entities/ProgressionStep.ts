@@ -1,4 +1,4 @@
-import type {ActionInterface, ActionType} from './CharacterAction';
+import type {ActionInterface, ActionType} from './SheetActions';
 import type {SheetInterface} from './SheetInterface';
 import {ActionDescriptionGenerator} from './ActionDescriptionGenerator/ActionDescriptionGenerator';
 import type {Action} from './Action/Action';
