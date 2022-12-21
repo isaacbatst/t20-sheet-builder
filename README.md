@@ -4,7 +4,7 @@ Simulates the brazilian RPG: [Tormenta 20](https://jamboeditora.com.br/produto/t
 
 ## Races
 - Human
-- Dwarf :loading:
+- Dwarf
 
 ## Classes
 Soon..
