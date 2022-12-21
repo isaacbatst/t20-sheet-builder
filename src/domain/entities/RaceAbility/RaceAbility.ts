@@ -8,7 +8,7 @@ export type RaceAbilityInterface = AbilityInterface & {
 
 export abstract class RaceAbility extends Ability implements RaceAbilityInterface {
 	constructor(
-		readonly name: RaceAbilityName,
+		override readonly name: RaceAbilityName,
 		effectType: AbilityEffectType,
 	) {
 		super(name, effectType);

@@ -4,7 +4,7 @@ import {Defense} from './Defense';
 import {LifePoints} from './LifePoints';
 import {ProgressionStep} from './ProgressionStep';
 import type {RaceInterface} from './RaceInterface';
-import type {ActionInterface, ActionPayload, ActionType, SheetActionHandlers} from './SheetActions';
+import type {ActionInterface, ActionPayload, ActionType, ActionHandlers} from './SheetActions';
 import type {SheetInterface} from './SheetInterface';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
 import type {Skill} from './Skill/Skill';
@@ -12,13 +12,14 @@ import type {SkillName} from './Skill/SkillName';
 import {Vision} from './Vision';
 
 type SheetParams = {
-	initialAttributes?: Attributes;
+	attributes?: Partial<Attributes>;
 };
 
 export class Sheet implements SheetInterface {
+	static readonly initialAttributes = {strength: 0, dexterity: 0, constitution: 0, intelligence: 0, wisdom: 0, charisma: 0};
 	readonly progressionSteps: Array<ProgressionStep<ActionType>> = [];
 	readonly lifePoints = new LifePoints();
-	private attributes: Attributes = {strength: 0, dexterity: 0, constitution: 0, intelligence: 0, wisdom: 0, charisma: 0};
+	private attributes: Attributes = Sheet.initialAttributes;
 	private race?: RaceInterface;
 	// eslint-disable-next-line @typescript-eslint/prefer-readonly
 	private level = 1;
@@ -27,7 +28,7 @@ export class Sheet implements SheetInterface {
 	private readonly skills: Record<SkillName, Skill>;
 	private readonly defense = new Defense();
 
-	private readonly actionHandlers: SheetActionHandlers = {
+	private readonly actionHandlers: ActionHandlers = {
 		addOtherModifierToDefense: this.addOtherModifierToDefense.bind(this),
 		addOtherModifierToSkill: this.addOtherModifierToSkill.bind(this),
 		chooseRace: this.chooseRace.bind(this),
@@ -47,7 +48,9 @@ export class Sheet implements SheetInterface {
 		this.skills = InitialSkillsGenerator.generate();
 		this.dispatch = this.dispatch.bind(this);
 
-		this.dispatch({type: 'setInitialAttributes', payload: {attributes: params?.initialAttributes ?? this.attributes}});
+		const attributes = params?.attributes ? {...Sheet.initialAttributes, ...params.attributes} : Sheet.initialAttributes;
+
+		this.dispatch({type: 'setInitialAttributes', payload: {attributes}});
 	}
 
 	dispatch<T extends ActionType>(action: ActionInterface<T>): void {

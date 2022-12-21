@@ -12,7 +12,7 @@ export class ConditionalModifier extends Modifier {
 		super(source, value);
 	}
 
-	getValue(context: ContextInterface): number {
+	override getValue(context: ContextInterface): number {
 		return context.getConditionalModifierValue(super.getValue(context), this.condition);
 	}
 }

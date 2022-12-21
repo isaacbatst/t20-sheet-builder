@@ -10,7 +10,7 @@ export class TwoHandsStyle extends GeneralPower {
 		);
 	}
 
-	apply(character: SheetInterface): void {
+	apply(sheet: SheetInterface): void {
 		throw new Error('NOT_IMPLEMENTED');
 	}
 }

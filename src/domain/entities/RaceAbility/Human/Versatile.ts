@@ -39,14 +39,14 @@ export class Versatile extends RaceAbility {
 		this.choices.push(newChoice);
 	}
 
-	apply(character: SheetInterface): void {
+	apply(sheet: SheetInterface): void {
 		if (this.choices.length !== 2) {
 			throw new Error('MISSING_CHOICES');
 		}
 
 		this.choices.forEach(choice => {
 			if (choice.type === 'skill') {
-				character.dispatch({
+				sheet.dispatch({
 					type: 'trainSkill',
 					payload: {
 						source: this.name,
@@ -57,7 +57,7 @@ export class Versatile extends RaceAbility {
 
 			if (choice.type === 'power') {
 				const power = GeneralPowerFactory.make(choice.name);
-				character.dispatch({type: 'pickPower', payload: {power, source: this.name}});
+				sheet.dispatch({type: 'pickPower', payload: {power, source: this.name}});
 			}
 		});
 	}

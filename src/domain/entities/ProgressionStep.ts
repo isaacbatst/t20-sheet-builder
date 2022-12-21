@@ -13,8 +13,8 @@ export class ProgressionStep<T extends ActionType> implements ProgressionStepInt
 
 	constructor(
 		readonly action: ActionInterface<T>,
-		character: SheetInterface,
+		sheet: SheetInterface,
 	) {
-		this.description = ActionDescriptionGenerator.generate(character, action);
+		this.description = ActionDescriptionGenerator.generate(sheet, action);
 	}
 }

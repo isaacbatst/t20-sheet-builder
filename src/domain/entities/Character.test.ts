@@ -9,7 +9,7 @@ import {SkillName} from './Skill/SkillName';
 describe('Character', () => {
 	it('should calculate defense', () => {
 		const sheet = new Sheet({
-			initialAttributes: {charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 0, wisdom: 0},
+			attributes: {charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 0, wisdom: 0},
 		});
 		sheet.dispatch(new ChooseRace({
 			race: new Dwarf(),
@@ -23,7 +23,7 @@ describe('Character', () => {
 
 	it('should not calculate dwarf rock knowledge perception in build context', () => {
 		const sheet = new Sheet({
-			initialAttributes: {charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 1, wisdom: 1},
+			attributes: {charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 1, wisdom: 1},
 		});
 		sheet.dispatch(new ChooseRace({
 			race: new Dwarf(),
@@ -37,7 +37,7 @@ describe('Character', () => {
 
 	it('should calculate dwarf rock knowledge perception underground', () => {
 		const sheet = new Sheet({
-			initialAttributes: {charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 1, wisdom: 1},
+			attributes: {charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 1, wisdom: 1},
 		});
 		sheet.dispatch(new ChooseRace({
 			race: new Dwarf(),
@@ -51,7 +51,7 @@ describe('Character', () => {
 
 	it('should calculate dwarf rock knowledge perception outside underground', () => {
 		const sheet = new Sheet({
-			initialAttributes: {charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 1, wisdom: 1},
+			attributes: {charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 1, wisdom: 1},
 		});
 		sheet.dispatch(new ChooseRace({
 			race: new Dwarf(),
