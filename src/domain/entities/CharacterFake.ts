@@ -1,7 +1,7 @@
 import type {Attributes} from './Attributes';
 import {BuildContext} from './BuildContext';
 import type {ActionInterface, ActionType} from './CharacterAction';
-import type {CharacterInterface} from './CharacterInterface';
+import type {SheetInterface} from './SheetInterface';
 import type {Context} from './Context';
 import type {Modifier, ModifierCondition} from './ModifierOthers';
 import type {ProgressionStep} from './ProgressionStep';
@@ -14,7 +14,7 @@ import type {SkillNameEnum} from './Skill/SkillName';
 import type {Translatable} from './Translator';
 import {Vision} from './Vision';
 
-export class CharacterFake implements CharacterInterface {
+export class CharacterFake implements SheetInterface {
 	public level = 1;
 	public attributes: Attributes = {
 		strength: 0,

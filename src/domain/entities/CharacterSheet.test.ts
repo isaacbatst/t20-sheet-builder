@@ -1,12 +1,11 @@
 import {ChooseRace} from './Action/ChooseRace';
 import type {Attributes} from './Attributes';
-import {Character} from './Character';
-import {InGameContext} from './InGameContext';
-import type {ConditionVerify, Modifier, ModifierCondition} from './ModifierOthers';
+import {CharacterSheet} from './CharacterSheet';
+import type {ConditionVerify, Modifier} from './ModifierOthers';
 import {GeneralPowerNameEnum} from './Power/GeneralPowerName';
 import {Dwarf} from './Race/Dwarf';
 import {Human} from './Race/Human';
-import {RaceAbilityName, RaceAbilityNameEnum} from './RaceAbility/RaceAbilityName';
+import {RaceAbilityNameEnum} from './RaceAbility/RaceAbilityName';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
 import {SkillNameEnum} from './Skill/SkillName';
 import {Vision} from './Vision';
@@ -22,7 +21,7 @@ const initialAttributes = {
 
 describe('Character', () => {
 	it('should save initial attributes definition step', () => {
-		const character = new Character({
+		const character = new CharacterSheet({
 			initialAttributes,
 		});
 
@@ -30,7 +29,7 @@ describe('Character', () => {
 	});
 
 	it('should set initial skills', () => {
-		const character = new Character({
+		const character = new CharacterSheet({
 			initialAttributes: {
 				...initialAttributes,
 				dexterity: 2,
@@ -43,7 +42,7 @@ describe('Character', () => {
 	});
 
 	it('should apply Dwarf attributes modifiers', () => {
-		const character = new Character({
+		const character = new CharacterSheet({
 			initialAttributes,
 		});
 
@@ -60,7 +59,7 @@ describe('Character', () => {
 	});
 
 	it('should save race modifiers appliance step after choose race', () => {
-		const character = new Character({
+		const character = new CharacterSheet({
 			initialAttributes,
 		});
 
@@ -72,7 +71,7 @@ describe('Character', () => {
 	});
 
 	it('should apply human versatile ability', () => {
-		const character = new Character({
+		const character = new CharacterSheet({
 			initialAttributes,
 		});
 
@@ -92,7 +91,7 @@ describe('Character', () => {
 	});
 
 	it('should apply human versatile ability with one power', () => {
-		const character = new Character({
+		const character = new CharacterSheet({
 			initialAttributes,
 		});
 
@@ -112,7 +111,7 @@ describe('Character', () => {
 	});
 
 	it('should save dodge applience step', () => {
-		const character = new Character({
+		const character = new CharacterSheet({
 			initialAttributes,
 		});
 
@@ -137,7 +136,7 @@ describe('Character', () => {
 	});
 
 	it('should apply night vision', () => {
-		const character = new Character({
+		const character = new CharacterSheet({
 			initialAttributes,
 		});
 
@@ -148,7 +147,7 @@ describe('Character', () => {
 	});
 
 	it('should have perception and survival rock knowledge modifiers', () => {
-		const character = new Character({
+		const character = new CharacterSheet({
 			initialAttributes,
 		});
 		character.dispatch({

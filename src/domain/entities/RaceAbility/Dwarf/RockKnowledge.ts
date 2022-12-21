@@ -1,6 +1,6 @@
 import {AddOtherModifierToSkill} from '../../Action/AddOtherModifierToSkill';
 import {ChangeVision} from '../../Action/ChangeVision';
-import type {CharacterInterface} from '../../CharacterInterface';
+import type {SheetInterface} from '../../SheetInterface';
 import type {InGameContext} from '../../InGameContext';
 import type {ModifierCondition} from '../../ModifierOthers';
 import {SkillNameEnum} from '../../Skill/SkillName';
@@ -25,7 +25,7 @@ export class RockKnowledge extends RaceAbility {
 		);
 	}
 
-	apply(character: CharacterInterface): void {
+	apply(character: SheetInterface): void {
 		character.dispatch(new ChangeVision({source: this.name, vision: Vision.dark}));
 		character.dispatch(new AddOtherModifierToSkill({
 			source: this.name,

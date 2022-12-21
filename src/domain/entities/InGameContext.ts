@@ -1,4 +1,4 @@
-import type {Location} from './CharacterInterface';
+import type {Location} from './SheetInterface';
 import {Context} from './Context';
 import type {Modifier} from './ModifierOthers';
 

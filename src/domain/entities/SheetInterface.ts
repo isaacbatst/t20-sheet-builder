@@ -1,7 +1,6 @@
 import type {Attributes} from './Attributes';
 import type {ActionInterface, ActionType} from './CharacterAction';
 import type {Context} from './Context';
-import type {InGameContext} from './InGameContext';
 import type {ProgressionStepInterface} from './ProgressionStep';
 import type {RaceInterface} from './RaceInterface';
 import type {Skill} from './Skill/Skill';
@@ -27,7 +26,7 @@ export type CharacterDispatch = <T extends ActionType>(action: ActionInterface<T
 
 export type ProgressingCharacter = {
 	dispatch: CharacterDispatch;
-	progressionSteps: ProgressionStepInterface[];
+	progressionSteps: Array<ProgressionStepInterface<ActionType>>;
 };
 
 export type RaceCharacter = {
@@ -48,7 +47,7 @@ export type ContextCharacter = {
 	getContext(): Context;
 };
 
-export type CharacterInterface = SkilledCharacter
+export type SheetInterface = SkilledCharacter
 & LeveledCharacter
 & AttributesCharacter
 & ProgressingCharacter

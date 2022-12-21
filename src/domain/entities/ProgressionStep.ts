@@ -1,5 +1,5 @@
 import type {ActionInterface, ActionType} from './CharacterAction';
-import type {CharacterInterface} from './CharacterInterface';
+import type {SheetInterface} from './SheetInterface';
 import {ActionDescriptionGenerator} from './ActionDescriptionGenerator/ActionDescriptionGenerator';
 import type {Action} from './Action/Action';
 
@@ -13,7 +13,7 @@ export class ProgressionStep<T extends ActionType> implements ProgressionStepInt
 
 	constructor(
 		readonly action: ActionInterface<T>,
-		character: CharacterInterface,
+		character: SheetInterface,
 	) {
 		this.description = ActionDescriptionGenerator.generate(character, action);
 	}

@@ -1,5 +1,5 @@
 import type {Attributes} from './Attributes';
-import type {CharacterInterface} from './CharacterInterface';
+import type {SheetInterface} from './SheetInterface';
 import type {Modifier} from './ModifierOthers';
 import type {PowerInterface} from './Power/Power';
 import type {RaceAbilityInterface} from './RaceAbility/RaceAbility';
@@ -30,5 +30,5 @@ export type CharacterActionHandlers = {
 	[Property in keyof ActionTypesToHandlers]: (payload: ActionPayload<Property>) => void
 };
 export type CharacterActionDescriptionGenerators = {
-	[Property in keyof ActionTypesToHandlers]: (character: CharacterInterface, action: ActionInterface<Property>) => string
+	[Property in keyof ActionTypesToHandlers]: (character: SheetInterface, action: ActionInterface<Property>) => string
 };

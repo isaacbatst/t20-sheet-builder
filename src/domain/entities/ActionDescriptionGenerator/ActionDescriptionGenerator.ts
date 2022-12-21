@@ -1,11 +1,11 @@
 import type {ActionInterface, ActionType, CharacterActionDescriptionGenerators} from '../CharacterAction';
-import type {CharacterInterface} from '../CharacterInterface';
+import type {SheetInterface} from '../SheetInterface';
 import {StringHelper} from '../StringHelper';
 import {Translator} from '../Translator';
 
 export abstract class ActionDescriptionGenerator {
 	static generate<T extends ActionType>(
-		character: CharacterInterface,
+		character: SheetInterface,
 		action: ActionInterface<T>,
 	): string {
 		const generateDescription = ActionDescriptionGenerator.actionToDescriptionGenerate[action.type];

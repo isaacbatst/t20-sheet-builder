@@ -1,4 +1,4 @@
-import type {CharacterInterface} from '../../CharacterInterface';
+import type {SheetInterface} from '../../SheetInterface';
 import {GeneralPowerFactory} from '../../Power/PowerFactory';
 import type {PowerNameEnum} from '../../Power/PowerName';
 import {SkillNameEnum} from '../../Skill/SkillName';
@@ -39,7 +39,7 @@ export class Versatile extends RaceAbility {
 		this.choices.push(newChoice);
 	}
 
-	apply(character: CharacterInterface): void {
+	apply(character: SheetInterface): void {
 		if (this.choices.length !== 2) {
 			throw new Error('MISSING_CHOICES');
 		}

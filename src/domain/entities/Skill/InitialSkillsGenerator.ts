@@ -1,5 +1,5 @@
 import type {Attributes} from '../Attributes';
-import type {CharacterInterface} from '../CharacterInterface';
+import type {SheetInterface} from '../SheetInterface';
 import {Skill} from './Skill';
 import type {SkillNameEnum} from './SkillName';
 

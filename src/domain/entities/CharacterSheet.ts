@@ -1,12 +1,11 @@
 import type {Attributes} from './Attributes';
 import {BuildContext} from './BuildContext';
-import type {ActionInterface, ActionType, CharacterActionHandlers, ActionPayload} from './CharacterAction';
-import type {CharacterInterface} from './CharacterInterface';
+import type {ActionInterface, ActionPayload, ActionType, CharacterActionHandlers} from './CharacterAction';
 import type {Context} from './Context';
 import {Defense} from './Defense';
 import {ProgressionStep} from './ProgressionStep';
-import type {RaceAbilityNameEnum} from './RaceAbility/RaceAbilityName';
 import type {RaceInterface} from './RaceInterface';
+import type {SheetInterface} from './SheetInterface';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
 import type {Skill} from './Skill/Skill';
 import type {SkillNameEnum} from './Skill/SkillName';
@@ -18,7 +17,7 @@ type CharacterParams = {
 	context?: Context;
 };
 
-export class Character implements CharacterInterface {
+export class CharacterSheet implements SheetInterface {
 	readonly progressionSteps: Array<ProgressionStep<ActionType>> = [];
 	private attributes: Attributes = {charisma: 0, constitution: 0, dexterity: 0, intelligence: 0, strength: 0, wisdom: 0};
 	private race?: RaceInterface;
