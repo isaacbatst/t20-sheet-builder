@@ -80,6 +80,14 @@ export class Translator {
 		initiative: 'Iniciativa',
 		intimidation: 'Intimidação',
 		war: 'Guerra',
+		cheat: 'Enganação',
+		diplomacy: 'Diplomacia',
+		intuition: 'Intuição',
+		investigation: 'Investigação',
+		knowledge: 'Conhecimento',
+		mysticism: 'Misticismo',
+		nobility: 'Nobreza',
+		will: 'Vontade',
 	};
 
 	private static readonly powersTranslation: Record<PowerName, string> = {
@@ -101,6 +109,7 @@ export class Translator {
 
 	private static readonly rolesTranslation: Record<RoleName, string> = {
 		warrior: 'Guerreiro',
+		arcanist: 'Arcanista',
 	};
 
 	private static readonly translation: Record<Translatable, string> = {

@@ -48,6 +48,30 @@ export class InitialSkillsGenerator {
 			war: new Skill({
 				attribute: 'intelligence',
 			}),
+			cheat: new Skill({
+				attribute: 'charisma',
+			}),
+			diplomacy: new Skill({
+				attribute: 'charisma',
+			}),
+			intuition: new Skill({
+				attribute: 'wisdom',
+			}),
+			investigation: new Skill({
+				attribute: 'intelligence',
+			}),
+			knowledge: new Skill({
+				attribute: 'intelligence',
+			}),
+			mysticism: new Skill({
+				attribute: 'intelligence',
+			}),
+			nobility: new Skill({
+				attribute: 'intelligence',
+			}),
+			will: new Skill({
+				attribute: 'wisdom',
+			}),
 		};
 	}
 }

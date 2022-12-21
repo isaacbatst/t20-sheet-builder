@@ -13,4 +13,12 @@ export enum SkillName {
 	initiative = 'initiative',
 	intimidation = 'intimidation',
 	craft = 'craft',
+	mysticism = 'mysticism',
+	will = 'will',
+	knowledge = 'knowledge',
+	diplomacy = 'diplomacy',
+	cheat = 'cheat',
+	intuition = 'intuition',
+	investigation = 'investigation',
+	nobility = 'nobility',
 }
