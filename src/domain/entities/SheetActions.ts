@@ -8,6 +8,7 @@ import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import type {SkillName} from './Skill/SkillName';
 import type {Translatable} from './Translator';
 import type {Vision} from './Vision';
+import type {Proficiency} from './Proficiency';
 
 type ActionTypesToHandlers = {
 	setInitialAttributes(payload: {attributes: Attributes}): void;
@@ -22,6 +23,7 @@ type ActionTypesToHandlers = {
 	changeDisplacement(payload: {displacement: number; source: Translatable}): void;
 	addModifierToLifePoints(payload: {modifier: ModifierInterface}): void;
 	chooseRole(payload: {role: RoleInterface}): void;
+	addProficiency(payload: {proficiency: Proficiency; source: Translatable}): void;
 };
 
 export type ActionType = keyof ActionTypesToHandlers;

@@ -5,6 +5,7 @@ import {OutGameContext} from './BuildingSheetContext';
 import {Modifier} from './Modifier/Modifier';
 import type {ConditionVerify} from './ModifierList';
 import {GeneralPowerName} from './Power/GeneralPowerName';
+import {Proficiency} from './Proficiency';
 import {Dwarf} from './Race/Dwarf';
 import {Human} from './Race/Human';
 import {RaceAbilityName} from './RaceAbility/RaceAbilityName';
@@ -143,6 +144,11 @@ describe('BuildingSheet', () => {
 					});
 				expect(maxLifePoints).toBe(6);
 			});
+
+			it('should have basic proficiencies', () => {
+				expect(humanSheet.getProficiencies()).toContain(Proficiency.simple);
+				expect(humanSheet.getProficiencies()).toContain(Proficiency.lightArmor);
+			});
 		});
 	});
 });
@@ -246,6 +252,13 @@ describe('Dwarf', () => {
 			expect(skills.fight.getIsTrained()).toBe(true);
 			expect(skills.animalHandling.getIsTrained()).toBe(true);
 			expect(skills.athletics.getIsTrained()).toBe(true);
+		});
+
+		it('should have warrior and basic proficiencies', () => {
+			expect(dwarfSheet.getProficiencies()).toContain(Proficiency.simple);
+			expect(dwarfSheet.getProficiencies()).toContain(Proficiency.lightArmor);
+			expect(dwarfSheet.getProficiencies()).toContain(Proficiency.martial);
+			expect(dwarfSheet.getProficiencies()).toContain(Proficiency.heavyArmor);
 		});
 	});
 });

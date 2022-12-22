@@ -3,6 +3,7 @@ import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import {Defense} from './Defense';
 import {LifePoints} from './LifePoints';
 import {ManaPoints} from './ManaPoints';
+import {Proficiency} from './Proficiency';
 import {BuildStep} from './ProgressionStep';
 import type {RaceInterface} from './RaceInterface';
 import type {RoleInterface} from './Role/RoleInterface';
@@ -23,6 +24,7 @@ export class BuildingSheet implements BuildingSheetInterface {
 	private level = 1;
 	private vision: Vision = Vision.default;
 	private displacement = 9;
+	private readonly proficiencies: Proficiency[] = [Proficiency.simple, Proficiency.lightArmor];
 	private readonly skills: SheetSkills = InitialSkillsGenerator.generate();
 	private readonly defense = new Defense();
 	private readonly manaPoints = new ManaPoints();
@@ -40,6 +42,7 @@ export class BuildingSheet implements BuildingSheetInterface {
 		changeDisplacement: this.changeDisplacement.bind(this),
 		addModifierToLifePoints: this.addModifierToLifePoints.bind(this),
 		chooseRole: this.chooseRole.bind(this),
+		addProficiency: this.addProficiency.bind(this),
 	};
 
 	constructor(attributes?: Partial<Attributes>) {
@@ -95,9 +98,14 @@ export class BuildingSheet implements BuildingSheetInterface {
 		return this.attributes;
 	}
 
+	getProficiencies() {
+		return this.proficiencies;
+	}
+
 	private chooseRole(payload: ActionPayload<'chooseRole'>) {
 		this.role = payload.role;
 		this.role.trainSkills(this);
+		this.role.addProficiencies(this);
 	}
 
 	private pickPower(payload: ActionPayload<'pickPower'>) {
@@ -133,6 +141,14 @@ export class BuildingSheet implements BuildingSheetInterface {
 	private trainSkill(payload: ActionPayload<'trainSkill'>): void {
 		const skill = this.skills[payload.name];
 		skill.train();
+	}
+
+	private addProficiency(payload: ActionPayload<'addProficiency'>) {
+		if (this.proficiencies.includes(payload.proficiency)) {
+			throw new Error('REPEATED_PROFICIENCY');
+		}
+
+		this.proficiencies.push(payload.proficiency);
 	}
 
 	private applyRaceModifiers(payload: ActionPayload<'applyRaceModifiers'>) {

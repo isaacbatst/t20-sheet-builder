@@ -11,7 +11,7 @@ describe('Character', () => {
 		const sheet = SheetBuilder
 			.setInitialAttributes({charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 0, wisdom: 1})
 			.choseRace(new Dwarf())
-			.chooseRole(new Warrior([]));
+			.chooseRole(new Warrior([SkillName.fight, SkillName.aim, SkillName.athletics]));
 		const context = new OutGameContext();
 		const character = new Character(sheet, context);
 		const defense = character.getDefenseTotal();
@@ -23,7 +23,7 @@ describe('Character', () => {
 		const sheet = SheetBuilder
 			.setInitialAttributes({charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 0, wisdom: 1})
 			.choseRace(new Dwarf())
-			.chooseRole(new Warrior([]));
+			.chooseRole(new Warrior([SkillName.fight, SkillName.aim, SkillName.athletics]));
 		const context = new OutGameContext();
 		const character = new Character(sheet, context);
 		const perception = character.getSkillTotal(SkillName.perception);
@@ -35,7 +35,7 @@ describe('Character', () => {
 		const sheet = SheetBuilder
 			.setInitialAttributes({charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 0, wisdom: 1})
 			.choseRace(new Dwarf())
-			.chooseRole(new Warrior([]));
+			.chooseRole(new Warrior([SkillName.fight, SkillName.aim, SkillName.athletics]));
 		const context = new InGameContext({isUnderground: true});
 		const character = new Character(sheet, context);
 		const perception = character.getSkillTotal(SkillName.perception);
@@ -47,7 +47,7 @@ describe('Character', () => {
 		const sheet = SheetBuilder
 			.setInitialAttributes({charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 0, wisdom: 1})
 			.choseRace(new Dwarf())
-			.chooseRole(new Warrior([]));
+			.chooseRole(new Warrior([SkillName.fight, SkillName.aim, SkillName.athletics]));
 		const context = new InGameContext({isUnderground: false});
 		const character = new Character(sheet, context);
 		const perception = character.getSkillTotal(SkillName.perception);

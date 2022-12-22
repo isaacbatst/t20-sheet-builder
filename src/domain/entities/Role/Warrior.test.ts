@@ -1,6 +1,9 @@
+import {AddProficiency} from '../Action/AddProficiency';
 import {TrainSkill} from '../Action/TrainSkill';
+import {Proficiency} from '../Proficiency';
 import {BuildingSheetFake} from '../SheetFake';
 import {SkillName} from '../Skill/SkillName';
+import {Role} from './Role';
 import {RoleName} from './RoleName';
 import {Warrior} from './Warrior';
 
@@ -44,5 +47,25 @@ describe('Warrior', () => {
 		expect(() => {
 			const warrior = new Warrior([SkillName.fight, SkillName.fight]);
 		}).toThrow('REPEATED_ROLE_SKILLS');
+	});
+
+	it('should dispatch profiencies add', () => {
+		const warrior = new Warrior([SkillName.fight, SkillName.animalHandling, SkillName.aim]);
+		const sheet = new BuildingSheetFake();
+
+		warrior.addProficiencies(sheet);
+
+		expect(sheet.dispatch).toHaveBeenCalledWith(new AddProficiency({
+			proficiency: Proficiency.martial,
+			source: RoleName.warrior,
+		}));
+		expect(sheet.dispatch).toHaveBeenCalledWith(new AddProficiency({
+			proficiency: Proficiency.heavyArmor,
+			source: RoleName.warrior,
+		}));
+		expect(sheet.dispatch).toHaveBeenCalledWith(new AddProficiency({
+			proficiency: Proficiency.shield,
+			source: RoleName.warrior,
+		}));
 	});
 });

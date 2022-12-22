@@ -2,6 +2,7 @@ import type {Attributes} from './Attributes';
 import type {ContextInterface} from './Context';
 import type {LifePoints} from './LifePoints';
 import type {ModifierInterface} from './ModifierList';
+import type {Proficiency} from './Proficiency';
 import type {BuildStep} from './ProgressionStep';
 import type {SheetSkills} from './Sheet';
 import type {Dispatch} from './SheetInterface';
@@ -30,4 +31,5 @@ export type BuildingSheetInterface = {
 	getSkills(): SheetSkills;
 	getVision(): Vision;
 	getLifePoints(): LifePoints;
+	getProficiencies(): Proficiency[];
 };

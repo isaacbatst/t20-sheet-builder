@@ -4,5 +4,6 @@ export enum Proficiency {
 	exotic = 'exotic',
 	fire = 'fire',
 	shield = 'shield',
+	lightArmor = 'lightArmor',
 	heavyArmor = 'heavyArmor',
 }

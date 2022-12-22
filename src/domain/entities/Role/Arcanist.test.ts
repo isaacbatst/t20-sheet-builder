@@ -49,4 +49,13 @@ describe('Arcanist', () => {
 			arcanist.trainSkills(sheet);
 		}).toThrow('INVALID_CHOSEN_SKILLS');
 	});
+
+	it('should not dispatch profiency add', () => {
+		const arcanist = new Arcanist([SkillName.knowledge, SkillName.athletics]);
+		const sheet = new BuildingSheetFake();
+
+		arcanist.addProficiencies(sheet);
+
+		expect(sheet.dispatch).not.toHaveBeenCalled();
+	});
 });

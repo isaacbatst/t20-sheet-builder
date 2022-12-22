@@ -1,8 +1,10 @@
 import {OutGameContext} from './BuildingSheetContext';
 import type {ContextInterface} from './Context';
 import {GeneralPowerName} from './Power/GeneralPowerName';
+import {Proficiency} from './Proficiency';
 import {Dwarf} from './Race/Dwarf';
 import {Human} from './Race/Human';
+import type {Race} from './Race/Race';
 import type {VersatileChoice} from './RaceAbility/Human/Versatile';
 import {Arcanist} from './Role/Arcanist';
 import type {Role} from './Role/Role';
@@ -10,16 +12,18 @@ import {Warrior} from './Role/Warrior';
 import type {Sheet} from './Sheet';
 import {SheetBuilder} from './SheetBuilder';
 import {SkillName} from './Skill/SkillName';
+import {Vision} from './Vision';
 
 describe('Sheet', () => {
 	describe('Human Warrior', () => {
 		let humanWarrior: Sheet;
 		let role: Role;
+		let race: Race;
 		let context: ContextInterface;
 
 		beforeEach(() => {
 			const choices: VersatileChoice[] = [{name: SkillName.acrobatics, type: 'skill'}, {name: GeneralPowerName.dodge, type: 'power'}];
-			const race = new Human(['charisma', 'constitution', 'dexterity'], choices);
+			race = new Human(['charisma', 'constitution', 'dexterity'], choices);
 			context = new OutGameContext();
 			role = new Warrior([SkillName.fight, SkillName.aim, SkillName.athletics]);
 
@@ -29,7 +33,19 @@ describe('Sheet', () => {
 				.chooseRole(role);
 		});
 
-		it('should choose class', () => {
+		it('should choose race', () => {
+			expect(humanWarrior.getRace()).toBe(race);
+		});
+
+		it('should have displacement 9', () => {
+			expect(humanWarrior.getDisplacement()).toBe(9);
+		});
+
+		it('should have default vision', () => {
+			expect(humanWarrior.getVision()).toBe(Vision.default);
+		});
+
+		it('should choose role', () => {
 			expect(humanWarrior.getRole()).toBe(role);
 		});
 
@@ -50,15 +66,28 @@ describe('Sheet', () => {
 		let dwarfArcanist: Sheet;
 		let role: Role;
 		let context: ContextInterface;
+		let race: Race;
 
 		beforeEach(() => {
 			context = new OutGameContext();
 			role = new Arcanist([SkillName.knowledge, SkillName.diplomacy]);
-
+			race = new Dwarf();
 			dwarfArcanist = SheetBuilder
 				.setInitialAttributes()
-				.choseRace(new Dwarf())
+				.choseRace(race)
 				.chooseRole(role);
+		});
+
+		it('should choose race', () => {
+			expect(dwarfArcanist.getRace()).toBe(race);
+		});
+
+		it('should have displacement 9', () => {
+			expect(dwarfArcanist.getDisplacement()).toBe(6);
+		});
+
+		it('should have dark vision', () => {
+			expect(dwarfArcanist.getVision()).toBe(Vision.dark);
 		});
 
 		it('should choose class', () => {
@@ -75,6 +104,11 @@ describe('Sheet', () => {
 			expect(trainedSkills).toContain(SkillName.will);
 			expect(trainedSkills).toContain(SkillName.knowledge);
 			expect(trainedSkills).toContain(SkillName.diplomacy);
+		});
+
+		it('should have basic proficiencies', () => {
+			expect(dwarfArcanist.getProficiencies()).toContain(Proficiency.simple);
+			expect(dwarfArcanist.getProficiencies()).toContain(Proficiency.lightArmor);
 		});
 	});
 });

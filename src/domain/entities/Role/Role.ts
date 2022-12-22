@@ -1,3 +1,4 @@
+import {AddProficiency} from '../Action/AddProficiency';
 import {TrainSkill} from '../Action/TrainSkill';
 import type {BuildingSheet} from '../BuildingSheet';
 import type {BuildingSheetInterface} from '../BuildingSheetInterface';
@@ -15,6 +16,11 @@ export abstract class Role implements RoleInterface {
 	abstract readonly proficiencies: Proficiency[];
 	abstract readonly name: RoleName;
 
+	/**
+ * Returns an instance of this role.
+ * @param chosenSkills - Role skills to be trained
+  **/
+
 	constructor(readonly chosenSkills: SkillName[]) {
 		const isSomeRepeated = chosenSkills.some((skill, index) => chosenSkills.indexOf(skill) !== index);
 
@@ -25,6 +31,15 @@ export abstract class Role implements RoleInterface {
 
 	getTotalInitialSkills(): number {
 		return this.mandatorySkills.length + this.chooseableSkills.reduce((acc, curr) => curr.amount + acc, 0);
+	}
+
+	addProficiencies(sheet: BuildingSheetInterface): void {
+		this.proficiencies.forEach(proficiency => {
+			sheet.dispatch(new AddProficiency({
+				proficiency,
+				source: this.name,
+			}));
+		});
 	}
 
 	trainSkills(sheet: BuildingSheetInterface): void {

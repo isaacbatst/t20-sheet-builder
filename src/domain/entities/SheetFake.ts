@@ -6,6 +6,7 @@ import type {Defense} from './Defense';
 import {DefenseFake} from './DefenseFake';
 import {LifePoints} from './LifePoints';
 import type {ModifierInterface} from './ModifierList';
+import type {Proficiency} from './Proficiency';
 import {ProgressionStepFake} from './ProgressionStepFake';
 import {RaceFake} from './RaceFake';
 import type {RaceInterface} from './RaceInterface';
@@ -37,6 +38,7 @@ export class BuildingSheetFake implements BuildingSheetInterface {
 	public defense = new DefenseFake();
 	public race = new RaceFake();
 	public skills: Record<SkillName, Skill> = InitialSkillsGenerator.generate();
+	public proficiencies: Proficiency[] = [];
 
 	dispatch = jest.fn(<T extends ActionType>(action: ActionInterface<T>) => {
 		this.buildSteps.push(new ProgressionStepFake(action));
@@ -99,6 +101,10 @@ export class BuildingSheetFake implements BuildingSheetInterface {
 
 	getSkillTrainingPoints(skill: SkillName): number {
 		return this.skills[skill].getTrainingPoints(this.level);
+	}
+
+	getProficiencies(): Proficiency[] {
+		return this.proficiencies;
 	}
 
 	private trainSkill(name: SkillName): void {

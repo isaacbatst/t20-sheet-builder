@@ -2,9 +2,11 @@ import {ConditionalModifier} from '../Modifier/ConditionalModifier';
 import {Modifier} from '../Modifier/Modifier';
 import {GeneralPowerName} from '../Power/GeneralPowerName';
 import {PowerFake} from '../PowerFake';
+import {Proficiency} from '../Proficiency';
 import {RaceAbilityName} from '../RaceAbility/RaceAbilityName';
 import {RaceAbilityFake} from '../RaceAbilityFake';
 import {RaceFake} from '../RaceFake';
+import {RoleName} from '../Role/RoleName';
 import {Warrior} from '../Role/Warrior';
 import {BuildingSheetFake} from '../SheetFake';
 import {Skill} from '../Skill/Skill';
@@ -252,5 +254,19 @@ describe('ActionDescriptionGenerator', () => {
 		);
 
 		expect(description).toBe('Classe escolhida: Guerreiro. 20 PV, 3 PM e 4 perícias iniciais.');
+	});
+
+	it('should generate addProficiency description', () => {
+		const sheet = new BuildingSheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			{
+				type: 'addProficiency',
+				payload: {proficiency: Proficiency.martial, source: RoleName.warrior},
+			},
+		);
+
+		expect(description).toBe('Guerreiro: você é proficiente com armas marciais.');
 	});
 });

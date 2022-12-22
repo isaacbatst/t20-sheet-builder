@@ -4,9 +4,6 @@ import type {Location} from './SheetInterface';
 
 export class InGameContext extends Context {
 	private readonly location: Location;
-	get isInGameContext() {
-		return true;
-	}
 
 	constructor(initialLocation: Location) {
 		super('ingame');

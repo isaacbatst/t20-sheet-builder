@@ -47,6 +47,7 @@ export class SheetBuilder {
 				lifePoints: sheet.getLifePoints(),
 				skills: sheet.getSkills(),
 				vision: sheet.getVision(),
+				proficiencies: sheet.getProficiencies(),
 			});
 		};
 	}

@@ -2,13 +2,11 @@ import type {Attributes} from './Attributes';
 import type {Context} from './Context';
 import type {BuildStepInterface} from './ProgressionStep';
 import type {ActionInterface, ActionType} from './SheetActions';
-import type {Skill} from './Skill/Skill';
 import type {SkillName} from './Skill/SkillName';
 import type {Vision} from './Vision';
 
 export type SkilledSheet = {
 	getTrainedSkills(): SkillName[];
-	getSkills(): Record<SkillName, Skill>;
 	getSkillTotal(skill: SkillName, context: Context): number;
 	getSkillTrainingPoints(skill: SkillName): number;
 };

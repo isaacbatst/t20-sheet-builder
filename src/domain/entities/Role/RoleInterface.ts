@@ -16,4 +16,5 @@ export type RoleInterface = {
 
 	getTotalInitialSkills(): number;
 	trainSkills(sheet: BuildingSheetInterface): void;
+	addProficiencies(sheet: BuildingSheetInterface): void;
 };

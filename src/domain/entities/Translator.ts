@@ -1,6 +1,7 @@
 import type {Attribute} from './Attributes';
 import type {GeneralPowerName} from './Power/GeneralPowerName';
 import type {PowerName} from './Power/PowerName';
+import type {Proficiency} from './Proficiency';
 import type {RaceName} from './Race/RaceName';
 import type {RaceAbilityName} from './RaceAbility/RaceAbilityName';
 import type {RoleName} from './Role/RoleName';
@@ -8,7 +9,7 @@ import type {SkillName} from './Skill/SkillName';
 import {StringHelper} from './StringHelper';
 import type {Vision} from './Vision';
 
-export type Translatable = Attribute | RaceAbilityName | SkillName | PowerName | RaceName | Vision | RoleName;
+export type Translatable = Attribute | RaceAbilityName | SkillName | PowerName | RaceName | Proficiency | Vision | RoleName;
 
 export class Translator {
 	static getAttributeTranslation(attribute: Attribute, capitalized = true) {
@@ -43,6 +44,10 @@ export class Translator {
 
 	static getPowerTranslation(power: PowerName) {
 		return Translator.powersTranslation[power];
+	}
+
+	static getProficiencyTranslation(proficiency: Proficiency) {
+		return Translator.proficienciesTranslation[proficiency];
 	}
 
 	static getTranslation(string: Translatable) {
@@ -112,6 +117,16 @@ export class Translator {
 		arcanist: 'Arcanista',
 	};
 
+	private static readonly proficienciesTranslation: Record<Proficiency, string> = {
+		exotic: 'armas exóticas',
+		fire: 'armas de fogo',
+		heavyArmor: 'armaduras pesadas',
+		lightArmor: 'armaduras leves',
+		martial: 'armas marciais',
+		shield: 'escudos',
+		simple: 'armas simples',
+	};
+
 	private static readonly translation: Record<Translatable, string> = {
 		...Translator.attributesTranslation,
 		...Translator.abilitiesTranslation,
@@ -120,5 +135,6 @@ export class Translator {
 		...Translator.visionsTranslation,
 		...Translator.racesTranslation,
 		...Translator.rolesTranslation,
+		...Translator.proficienciesTranslation,
 	};
 }
