@@ -1,6 +1,6 @@
 import type {Attributes} from './Attributes';
 import type {DefenseInterface} from './BuildingSheetInterface';
-import type {Context} from './Context';
+import type {Context, ContextInterface} from './Context';
 import type {LifePoints} from './LifePoints';
 import type {BuildStep, BuildStepInterface} from './ProgressionStep';
 import type {RaceInterface} from './RaceInterface';
@@ -71,6 +71,10 @@ export class Sheet implements SheetInterface {
 
 	getSkills() {
 		return this.skills;
+	}
+
+	getMaxLifePoints(context: ContextInterface) {
+		return this.lifePoints.getMax({constitution: this.attributes.constitution, context, level: this.level, role: this.role});
 	}
 
 	getSkillTotal(skill: SkillName, context: Context) {

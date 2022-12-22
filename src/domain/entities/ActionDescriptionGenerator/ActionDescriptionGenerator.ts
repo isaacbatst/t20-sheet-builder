@@ -29,7 +29,7 @@ export abstract class ActionDescriptionGenerator {
 		trainSkill: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: Perícia ${Translator.getSkillTranslation(action.payload.name)} treinada, bônus de treino ${StringHelper.addNumberSign(sheet.getSkills()[action.payload.name].getTrainingPoints())}.`,
 		pickPower: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: poder ${Translator.getPowerTranslation(action.payload.power.name)} escolhido.`,
 		changeDisplacement: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: deslocamento alterado para ${action.payload.displacement}m.`,
-		chooseRole: (sheet, action) => `Classe escolhida: ${Translator.getRoleTranslation(action.payload.role.name)}.`,
+		chooseRole: (sheet, {payload: {role}}) => `Classe escolhida: ${Translator.getRoleTranslation(role.name)}. ${role.initialLifePoints} PV, ${role.manaPerLevel} PM e ${role.getTotalInitialSkills()} perícias iniciais.`,
 	};
 
 	private static getModifierConditionText(condition?: ModifierCondition) {

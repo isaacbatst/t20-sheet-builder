@@ -92,7 +92,7 @@ describe('BuildingSheet', () => {
 		describe('Human Warrior', () => {
 			let role: Role;
 			beforeEach(() => {
-				role = new Warrior();
+				role = new Warrior([SkillName.fight, SkillName.animalHandling, SkillName.athletics]);
 				humanSheet.dispatch({
 					type: 'chooseRole',
 					payload: {role},
@@ -114,7 +114,7 @@ describe('BuildingSheet', () => {
 		describe('Human Arcanist', () => {
 			let role: Role;
 			beforeEach(() => {
-				role = new Arcanist();
+				role = new Arcanist([SkillName.knowledge, SkillName.diplomacy]);
 				humanSheet.dispatch({
 					type: 'chooseRole',
 					payload: {role},
@@ -198,10 +198,10 @@ describe('Dwarf', () => {
 		expect(dwarfSheet.lifePoints.modifiers.modifiers).toContainEqual(new Modifier(RaceAbilityName.hardAsRock, 3));
 	});
 
-	describe('Human Warrior', () => {
+	describe('Dwarf Warrior', () => {
 		let role: Role;
 		beforeEach(() => {
-			role = new Warrior();
+			role = new Warrior([SkillName.fight, SkillName.animalHandling, SkillName.athletics]);
 			dwarfSheet.dispatch({
 				type: 'chooseRole',
 				payload: {role},
@@ -235,6 +235,17 @@ describe('Dwarf', () => {
 					level: dwarfSheet.getLevel(),
 				});
 			expect(maxLifePoints).toBe(3);
+		});
+
+		it('should have role skills trained', () => {
+			const context = new OutGameContext();
+			const skills = dwarfSheet
+				.getSkills();
+
+			expect(skills.fortitude.getIsTrained()).toBe(true);
+			expect(skills.fight.getIsTrained()).toBe(true);
+			expect(skills.animalHandling.getIsTrained()).toBe(true);
+			expect(skills.athletics.getIsTrained()).toBe(true);
 		});
 	});
 });

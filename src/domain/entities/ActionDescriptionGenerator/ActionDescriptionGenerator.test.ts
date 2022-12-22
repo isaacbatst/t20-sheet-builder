@@ -241,7 +241,7 @@ describe('ActionDescriptionGenerator', () => {
 
 	it('should generate chooseRole description', () => {
 		const sheet = new BuildingSheetFake();
-		const warrior = new Warrior();
+		const warrior = new Warrior([]);
 
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
@@ -251,6 +251,6 @@ describe('ActionDescriptionGenerator', () => {
 			},
 		);
 
-		expect(description).toBe('Classe escolhida: Guerreiro.');
+		expect(description).toBe('Classe escolhida: Guerreiro. 20 PV, 3 PM e 4 perícias iniciais.');
 	});
 });

@@ -97,6 +97,7 @@ export class BuildingSheet implements BuildingSheetInterface {
 
 	private chooseRole(payload: ActionPayload<'chooseRole'>) {
 		this.role = payload.role;
+		this.role.trainSkills(this);
 	}
 
 	private pickPower(payload: ActionPayload<'pickPower'>) {
