@@ -1,5 +1,5 @@
-import type {AbilityEffectType, AbilityInterface} from '../Ability';
-import {Ability} from '../Ability';
+import type {AbilityEffectType, AbilityInterface} from '../Ability/Ability';
+import {Ability} from '../Ability/Ability';
 import type {BuildingSheetInterface} from '../BuildingSheetInterface';
 import type {PowerName} from './PowerName';
 

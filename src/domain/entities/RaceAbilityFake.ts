@@ -1,4 +1,4 @@
-import type {AbilityEffectType} from './Ability';
+import type {AbilityEffectType} from './Ability/Ability';
 import type {RaceAbilityInterface} from './RaceAbility/RaceAbility';
 import {RaceAbilityName} from './RaceAbility/RaceAbilityName';
 

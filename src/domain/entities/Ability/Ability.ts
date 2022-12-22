@@ -1,4 +1,4 @@
-import type {BuildingSheet} from './BuildingSheet';
+import type {BuildingSheet} from '../BuildingSheet';
 
 export type AbilityEffectType = 'active' | 'passive';
 

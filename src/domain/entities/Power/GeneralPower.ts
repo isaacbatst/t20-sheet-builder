@@ -1,4 +1,4 @@
-import type {AbilityEffectType} from '../Ability';
+import type {AbilityEffectType} from '../Ability/Ability';
 import type {GeneralPowerName} from './GeneralPowerName';
 import {Power} from './Power';
 
