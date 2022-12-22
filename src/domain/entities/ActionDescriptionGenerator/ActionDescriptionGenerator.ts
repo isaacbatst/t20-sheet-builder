@@ -1,10 +1,9 @@
-import type {ModifierCondition} from '../ModifierList';
-import type {ActionInterface, ActionType, ActionDescriptionGenerators} from '../SheetActions';
 import type {BuildingSheetInterface} from '../BuildingSheetInterface';
-import type {SheetInterface} from '../SheetInterface';
+import type {ModifierCondition} from '../ModifierList';
+import type {ActionDescriptionGenerators, ActionInterface, ActionType} from '../SheetActions';
+import {Skill} from '../Skill/Skill';
 import {StringHelper} from '../StringHelper';
 import {Translator} from '../Translator';
-import {Skill} from '../Skill/Skill';
 
 export abstract class ActionDescriptionGenerator {
 	static generate<T extends ActionType>(
