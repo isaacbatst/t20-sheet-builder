@@ -10,6 +10,18 @@ export type SkillParams = {
 };
 
 export class Skill {
+	public static calculateTrainedSkillPoints(level = 1) {
+		if (level <= 6) {
+			return 2;
+		}
+
+		if (level <= 14) {
+			return 4;
+		}
+
+		return 6;
+	}
+
 	readonly attribute: Attribute;
 	private readonly others: ModifiersList = new ModifiersList(Skill.repeatedOtherModifierError);
 	private isTrained: boolean;
@@ -41,33 +53,25 @@ export class Skill {
 
 	getTotal(attributes: Attributes, level = 1, context: Context = new OutGameContext()) {
 		const halfLevelPoints = this.calculateHalfLevel(level);
-		const trainingPoints = this.calculateTrainingPoints(level);
+		const trainingPoints = this.calculateTrainingPoings(level);
 		const otherModifiersSum = this.others.getTotal(context);
 		return halfLevelPoints + attributes[this.attribute] + trainingPoints + otherModifiersSum;
 	}
 
-	getTrainingPoints(level = 1) {
-		return this.calculateTrainingPoints(level);
+	getSkillTrainingPoints(level = 1) {
+		return this.calculateTrainingPoings(level);
 	}
 
 	getOthersModifiers() {
 		return this.others.modifiers;
 	}
 
-	private calculateTrainingPoints(level: number): number {
+	private calculateTrainingPoings(level: number): number {
 		if (!this.isTrained) {
 			return 0;
 		}
 
-		if (level <= 6) {
-			return 2;
-		}
-
-		if (level <= 14) {
-			return 4;
-		}
-
-		return 6;
+		return Skill.calculateTrainedSkillPoints(level);
 	}
 
 	private calculateHalfLevel(level: number) {

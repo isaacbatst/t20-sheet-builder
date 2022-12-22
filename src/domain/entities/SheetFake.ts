@@ -100,7 +100,7 @@ export class BuildingSheetFake implements BuildingSheetInterface {
 	}
 
 	getSkillTrainingPoints(skill: SkillName): number {
-		return this.skills[skill].getTrainingPoints(this.level);
+		return this.skills[skill].getSkillTrainingPoints(this.level);
 	}
 
 	getProficiencies(): Proficiency[] {
