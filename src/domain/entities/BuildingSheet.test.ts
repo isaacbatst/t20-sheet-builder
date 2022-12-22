@@ -8,6 +8,8 @@ import {GeneralPowerName} from './Power/GeneralPowerName';
 import {Dwarf} from './Race/Dwarf';
 import {Human} from './Race/Human';
 import {RaceAbilityName} from './RaceAbility/RaceAbilityName';
+import {Arcanist} from './Role/Arcanist';
+import type {Role} from './Role/Role';
 import {Warrior} from './Role/Warrior';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
 import {SkillName} from './Skill/SkillName';
@@ -87,66 +89,122 @@ describe('BuildingSheet', () => {
 			expect(humanSheet.getDisplacement()).toBe(9);
 		});
 
-		it('should choose role', () => {
-			const role = new Warrior();
-			humanSheet.dispatch({
-				type: 'chooseRole',
-				payload: {role},
+		describe('Human Warrior', () => {
+			let role: Role;
+			beforeEach(() => {
+				role = new Warrior();
+				humanSheet.dispatch({
+					type: 'chooseRole',
+					payload: {role},
+				});
 			});
 
-			expect(humanSheet.getRole()).toBe(role);
+			it('should choose role', () => {
+				expect(humanSheet.getRole()).toBe(role);
+			});
+
+			it('should have max life points 21', () => {
+				const context = new OutGameContext();
+
+				const maxLifePoints = humanSheet.getLifePoints().getMax({constitution: humanSheet.getAttributes().constitution, context, level: humanSheet.getLevel(), role});
+				expect(maxLifePoints).toBe(21);
+			});
+		});
+
+		describe('Human Arcanist', () => {
+			let role: Role;
+			beforeEach(() => {
+				role = new Arcanist();
+				humanSheet.dispatch({
+					type: 'chooseRole',
+					payload: {role},
+				});
+			});
+
+			it('should choose role', () => {
+				expect(humanSheet.getRole()).toBe(role);
+			});
+
+			it('should have max life points 9', () => {
+				const context = new OutGameContext();
+
+				const maxLifePoints = humanSheet.getLifePoints().getMax({constitution: humanSheet.getAttributes().constitution, context, level: humanSheet.getLevel(), role});
+				expect(maxLifePoints).toBe(9);
+			});
+		});
+	});
+});
+
+describe('Dwarf', () => {
+	let dwarfSheet: BuildingSheet;
+
+	beforeEach(() => {
+		dwarfSheet = new BuildingSheet();
+
+		dwarfSheet.dispatch(new ChooseRace({
+			race: new Dwarf(),
+		}));
+	});
+
+	it('should apply Dwarf attributes modifiers', () => {
+		expect(dwarfSheet.getAttributes()).toEqual<Attributes>({
+			...initialAttributes,
+			dexterity: -1,
+			constitution: 2,
+			wisdom: 1,
 		});
 	});
 
-	describe('Dwarf', () => {
-		let dwarfSheet: BuildingSheet;
+	it('should save race modifiers appliance step after choose race', () => {
+		expect(dwarfSheet.buildSteps).toContainEqual(expect.objectContaining({description: 'Modificadores de raça aplicados: -1 Destreza, +2 Constituição e +1 Sabedoria.'}));
+	});
 
+	it('should apply night vision', () => {
+		expect(dwarfSheet.getVision()).toBe(Vision.dark);
+	});
+
+	it('should have perception and survival rock knowledge modifiers', () => {
+		const skills = dwarfSheet.getSkills();
+		const modifier = {
+			source: RaceAbilityName.rockKnowledge,
+			value: 2,
+			condition: {
+				description: 'testes devem ser realizados no subterrâneo',
+				verify: expect.any(Function) as ConditionVerify,
+			},
+		};
+
+		expect(skills.perception.getOthersModifiers()).toContainEqual(modifier);
+		expect(skills.survival.getOthersModifiers()).toContainEqual(modifier);
+	});
+
+	it('should have 6m displacement', () => {
+		expect(dwarfSheet.getDisplacement()).toBe(6);
+	});
+
+	it('should have hard as rock +3 life points modifier', () => {
+		expect(dwarfSheet.lifePoints.modifiers.modifiers).toContainEqual(new Modifier(RaceAbilityName.hardAsRock, 3));
+	});
+
+	describe('Human Warrior', () => {
+		let role: Role;
 		beforeEach(() => {
-			dwarfSheet = new BuildingSheet();
-
-			dwarfSheet.dispatch(new ChooseRace({
-				race: new Dwarf(),
-			}));
-		});
-
-		it('should apply Dwarf attributes modifiers', () => {
-			expect(dwarfSheet.getAttributes()).toEqual<Attributes>({
-				...initialAttributes,
-				dexterity: -1,
-				constitution: 2,
-				wisdom: 1,
+			role = new Warrior();
+			dwarfSheet.dispatch({
+				type: 'chooseRole',
+				payload: {role},
 			});
 		});
 
-		it('should save race modifiers appliance step after choose race', () => {
-			expect(dwarfSheet.buildSteps).toContainEqual(expect.objectContaining({description: 'Modificadores de raça aplicados: -1 Destreza, +2 Constituição e +1 Sabedoria.'}));
+		it('should choose role', () => {
+			expect(dwarfSheet.getRole()).toBe(role);
 		});
 
-		it('should apply night vision', () => {
-			expect(dwarfSheet.getVision()).toBe(Vision.dark);
-		});
+		it('should have max life points 25', () => {
+			const context = new OutGameContext();
 
-		it('should have perception and survival rock knowledge modifiers', () => {
-			const skills = dwarfSheet.getSkills();
-			const modifier = {
-				source: RaceAbilityName.rockKnowledge,
-				value: 2,
-				condition: {
-					description: 'testes devem ser realizados no subterrâneo',
-					verify: expect.any(Function) as ConditionVerify,
-				},
-			};
-
-			expect(skills.perception.getOthersModifiers()).toContainEqual(modifier);
-			expect(skills.survival.getOthersModifiers()).toContainEqual(modifier);
-		});
-
-		it('should have 6m displacement', () => {
-			expect(dwarfSheet.getDisplacement()).toBe(6);
-		});
-
-		it('should have hard as rock +3 life points modifier', () => {
-			expect(dwarfSheet.lifePoints.modifiers.modifiers).toContainEqual(new Modifier(RaceAbilityName.hardAsRock, 3));
+			const maxLifePoints = dwarfSheet.getLifePoints().getMax({constitution: dwarfSheet.getAttributes().constitution, context, level: dwarfSheet.getLevel(), role});
+			expect(maxLifePoints).toBe(25);
 		});
 	});
 });
