@@ -2,6 +2,7 @@ import type {Attributes} from './Attributes';
 import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import {Defense} from './Defense';
 import {LifePoints} from './LifePoints';
+import {ManaPoints} from './ManaPoints';
 import {BuildStep} from './ProgressionStep';
 import type {RaceInterface} from './RaceInterface';
 import type {RoleInterface} from './Role/RoleInterface';
@@ -24,6 +25,7 @@ export class BuildingSheet implements BuildingSheetInterface {
 	private displacement = 9;
 	private readonly skills: SheetSkills = InitialSkillsGenerator.generate();
 	private readonly defense = new Defense();
+	private readonly manaPoints = new ManaPoints();
 
 	private readonly actionHandlers: ActionHandlers = {
 		addOtherModifierToDefense: this.addOtherModifierToDefense.bind(this),
@@ -49,6 +51,10 @@ export class BuildingSheet implements BuildingSheetInterface {
 				attributes: initialAttributes,
 			},
 		});
+	}
+
+	getManaPoints() {
+		return this.manaPoints;
 	}
 
 	getDefense(): Defense {

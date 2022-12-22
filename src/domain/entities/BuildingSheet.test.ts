@@ -131,6 +131,18 @@ describe('BuildingSheet', () => {
 				const maxLifePoints = humanSheet.getLifePoints().getMax({constitution: humanSheet.getAttributes().constitution, context, level: humanSheet.getLevel(), role});
 				expect(maxLifePoints).toBe(9);
 			});
+
+			it('should have max mana points 3', () => {
+				const context = new OutGameContext();
+				const maxLifePoints = humanSheet
+					.getManaPoints()
+					.getMax({
+						context,
+						role,
+						level: humanSheet.getLevel(),
+					});
+				expect(maxLifePoints).toBe(6);
+			});
 		});
 	});
 });
@@ -202,9 +214,27 @@ describe('Dwarf', () => {
 
 		it('should have max life points 25', () => {
 			const context = new OutGameContext();
-
-			const maxLifePoints = dwarfSheet.getLifePoints().getMax({constitution: dwarfSheet.getAttributes().constitution, context, level: dwarfSheet.getLevel(), role});
+			const maxLifePoints = dwarfSheet
+				.getLifePoints()
+				.getMax({
+					constitution: dwarfSheet.getAttributes().constitution,
+					context,
+					level: dwarfSheet.getLevel(),
+					role,
+				});
 			expect(maxLifePoints).toBe(25);
+		});
+
+		it('should have max mana points 3', () => {
+			const context = new OutGameContext();
+			const maxLifePoints = dwarfSheet
+				.getManaPoints()
+				.getMax({
+					context,
+					role,
+					level: dwarfSheet.getLevel(),
+				});
+			expect(maxLifePoints).toBe(3);
 		});
 	});
 });
