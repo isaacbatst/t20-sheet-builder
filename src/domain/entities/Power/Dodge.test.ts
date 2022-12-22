@@ -1,5 +1,6 @@
+import {AddOtherModifierToDefense} from '../Action/AddOtherModifierToDefense';
+import {AddOtherModifierToSkill} from '../Action/AddOtherModifierToSkill';
 import {Modifier} from '../Modifier/Modifier';
-import type {ActionInterface} from '../SheetActions';
 import {BuildingSheetFake} from '../SheetFake';
 import {SkillName} from '../Skill/SkillName';
 import {Dodge} from './Dodge';
@@ -12,12 +13,9 @@ describe('Dodge', () => {
 		sheet.attributes.dexterity = 1;
 		dodge.apply(sheet);
 
-		expect(sheet.dispatch).toHaveBeenCalledWith<[ActionInterface<'addOtherModifierToDefense'>]>({
-			type: 'addOtherModifierToDefense',
-			payload: {
-				modifier: new Modifier(GeneralPowerName.dodge, 2),
-			},
-		});
+		expect(sheet.dispatch).toHaveBeenCalledWith(new AddOtherModifierToDefense({
+			modifier: new Modifier(GeneralPowerName.dodge, 2),
+		}));
 	});
 
 	it('should dispatch reflexes bonus', () => {
@@ -26,13 +24,10 @@ describe('Dodge', () => {
 		sheet.attributes.dexterity = 1;
 		dodge.apply(sheet);
 
-		expect(sheet.dispatch).toHaveBeenCalledWith<[ActionInterface<'addOtherModifierToSkill'>]>({
-			type: 'addOtherModifierToSkill',
-			payload: {
-				skill: SkillName.reflexes,
-				modifier: new Modifier(GeneralPowerName.dodge, 2),
-			},
-		});
+		expect(sheet.dispatch).toHaveBeenCalledWith(new AddOtherModifierToSkill({
+			skill: SkillName.reflexes,
+			modifier: new Modifier(GeneralPowerName.dodge, 2),
+		}));
 	});
 
 	it('should require dexterity +1', () => {
