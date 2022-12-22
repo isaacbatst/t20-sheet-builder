@@ -27,7 +27,7 @@ export abstract class ActionDescriptionGenerator {
 		addModifierToLifePoints: (sheet, {payload: {modifier}}) => `${Translator.getTranslation(modifier.source)}: ${StringHelper.addNumberSign(modifier.getMaxPossibleValue())} PV.${ActionDescriptionGenerator.getModifierConditionText(modifier.condition)}`,
 		changeVision: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: ${Translator.getVisionTranslation(action.payload.vision)} recebida.`,
 		chooseRace: (sheet, action) => `Raça escolhida: ${Translator.getRaceTranslation(action.payload.race.name)}.`,
-		trainSkill: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: Perícia ${Translator.getSkillTranslation(action.payload.name)} treinada, bônus de treino ${StringHelper.addNumberSign(Skill.calculateTrainedSkillPoints(sheet.getLevel()))}.`,
+		trainSkill: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: perícia ${Translator.getSkillTranslation(action.payload.name)} treinada, bônus de treino ${StringHelper.addNumberSign(Skill.calculateTrainedSkillPoints(sheet.getLevel()))}.`,
 		pickPower: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: poder ${Translator.getPowerTranslation(action.payload.power.name)} escolhido.`,
 		changeDisplacement: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: deslocamento alterado para ${action.payload.displacement}m.`,
 		chooseRole: (sheet, {payload: {role}}) => `Classe escolhida: ${Translator.getRoleTranslation(role.name)}. ${role.initialLifePoints} PV, ${role.manaPerLevel} PM e ${role.getTotalInitialSkills()} perícias iniciais.`,

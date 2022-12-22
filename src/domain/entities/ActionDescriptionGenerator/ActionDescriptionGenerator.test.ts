@@ -192,7 +192,7 @@ describe('ActionDescriptionGenerator', () => {
 			},
 		);
 
-		expect(description).toBe('Versátil: Perícia Luta treinada, bônus de treino +2.');
+		expect(description).toBe('Versátil: perícia Luta treinada, bônus de treino +2.');
 	});
 
 	it('should generate pickPower description', () => {
