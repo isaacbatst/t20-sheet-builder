@@ -1,7 +1,7 @@
+import type {BuildStepInterface} from './ProgressionStep';
 import type {ActionInterface, ActionType} from './SheetActions';
-import type {ProgressionStepInterface} from './ProgressionStep';
 
-export class ProgressionStepFake<T extends ActionType> implements ProgressionStepInterface<T> {
+export class ProgressionStepFake<T extends ActionType> implements BuildStepInterface<T> {
 	readonly description: string;
 
 	constructor(

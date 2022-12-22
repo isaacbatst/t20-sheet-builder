@@ -1,20 +1,18 @@
-import {ChooseRace} from './Action/ChooseRace';
-import {BuildingSheetContext} from './BuildingSheetContext';
+import {OutGameContext} from './BuildingSheetContext';
 import {Character} from './Character';
-import {Sheet} from './Sheet';
 import {InGameContext} from './InGameContext';
 import {Dwarf} from './Race/Dwarf';
+import {Warrior} from './Role/Warrior';
+import {SheetBuilder} from './SheetBuilder';
 import {SkillName} from './Skill/SkillName';
 
 describe('Character', () => {
 	it('should calculate defense', () => {
-		const sheet = new Sheet({
-			attributes: {charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 0, wisdom: 0},
-		});
-		sheet.dispatch(new ChooseRace({
-			race: new Dwarf(),
-		}));
-		const context = new BuildingSheetContext();
+		const sheet = SheetBuilder
+			.setInitialAttributes({charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 0, wisdom: 1})
+			.choseRace(new Dwarf())
+			.chooseRole(new Warrior([SkillName.fight, SkillName.aim, SkillName.athletics]));
+		const context = new OutGameContext();
 		const character = new Character(sheet, context);
 		const defense = character.getDefenseTotal();
 
@@ -22,13 +20,11 @@ describe('Character', () => {
 	});
 
 	it('should not calculate dwarf rock knowledge perception in build context', () => {
-		const sheet = new Sheet({
-			attributes: {charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 1, wisdom: 1},
-		});
-		sheet.dispatch(new ChooseRace({
-			race: new Dwarf(),
-		}));
-		const context = new BuildingSheetContext();
+		const sheet = SheetBuilder
+			.setInitialAttributes({charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 0, wisdom: 1})
+			.choseRace(new Dwarf())
+			.chooseRole(new Warrior([SkillName.fight, SkillName.aim, SkillName.athletics]));
+		const context = new OutGameContext();
 		const character = new Character(sheet, context);
 		const perception = character.getSkillTotal(SkillName.perception);
 
@@ -36,12 +32,10 @@ describe('Character', () => {
 	});
 
 	it('should calculate dwarf rock knowledge perception underground', () => {
-		const sheet = new Sheet({
-			attributes: {charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 1, wisdom: 1},
-		});
-		sheet.dispatch(new ChooseRace({
-			race: new Dwarf(),
-		}));
+		const sheet = SheetBuilder
+			.setInitialAttributes({charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 0, wisdom: 1})
+			.choseRace(new Dwarf())
+			.chooseRole(new Warrior([SkillName.fight, SkillName.aim, SkillName.athletics]));
 		const context = new InGameContext({isUnderground: true});
 		const character = new Character(sheet, context);
 		const perception = character.getSkillTotal(SkillName.perception);
@@ -50,12 +44,10 @@ describe('Character', () => {
 	});
 
 	it('should calculate dwarf rock knowledge perception outside underground', () => {
-		const sheet = new Sheet({
-			attributes: {charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 1, wisdom: 1},
-		});
-		sheet.dispatch(new ChooseRace({
-			race: new Dwarf(),
-		}));
+		const sheet = SheetBuilder
+			.setInitialAttributes({charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 0, wisdom: 1})
+			.choseRace(new Dwarf())
+			.chooseRole(new Warrior([SkillName.fight, SkillName.aim, SkillName.athletics]));
 		const context = new InGameContext({isUnderground: false});
 		const character = new Character(sheet, context);
 		const perception = character.getSkillTotal(SkillName.perception);

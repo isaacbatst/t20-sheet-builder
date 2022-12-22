@@ -1,4 +1,6 @@
-import type {SheetInterface} from '../../SheetInterface';
+import {PickPower} from '../../Action/PickPower';
+import {TrainSkill} from '../../Action/TrainSkill';
+import type {BuildingSheetInterface} from '../../BuildingSheetInterface';
 import {GeneralPowerFactory} from '../../Power/PowerFactory';
 import type {PowerName} from '../../Power/PowerName';
 import {SkillName} from '../../Skill/SkillName';
@@ -39,25 +41,22 @@ export class Versatile extends RaceAbility {
 		this.choices.push(newChoice);
 	}
 
-	apply(sheet: SheetInterface): void {
+	apply(sheet: BuildingSheetInterface): void {
 		if (this.choices.length !== 2) {
 			throw new Error('MISSING_CHOICES');
 		}
 
 		this.choices.forEach(choice => {
 			if (choice.type === 'skill') {
-				sheet.dispatch({
-					type: 'trainSkill',
-					payload: {
-						source: this.name,
-						name: SkillName[choice.name],
-					},
-				});
+				sheet.dispatch(new TrainSkill({
+					source: this.name,
+					name: SkillName[choice.name],
+				}));
 			}
 
 			if (choice.type === 'power') {
 				const power = GeneralPowerFactory.make(choice.name);
-				sheet.dispatch({type: 'pickPower', payload: {power, source: this.name}});
+				sheet.dispatch(new PickPower({power, source: this.name}));
 			}
 		});
 	}

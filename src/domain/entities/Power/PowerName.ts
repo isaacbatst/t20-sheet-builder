@@ -1,3 +1,3 @@
-import type {GeneralPowerNameEnum} from './GeneralPowerName';
+import type {GeneralPowerName} from './GeneralPowerName';
 
-export type PowerName = GeneralPowerNameEnum;
+export type PowerName = GeneralPowerName;

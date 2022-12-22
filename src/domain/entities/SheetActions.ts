@@ -3,10 +3,12 @@ import type {ModifierInterface} from './ModifierList';
 import type {PowerInterface} from './Power/Power';
 import type {RaceAbilityInterface} from './RaceAbility/RaceAbility';
 import type {RaceInterface} from './RaceInterface';
-import type {SheetInterface} from './SheetInterface';
+import type {RoleInterface} from './Role/RoleInterface';
+import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import type {SkillName} from './Skill/SkillName';
 import type {Translatable} from './Translator';
 import type {Vision} from './Vision';
+import type {Proficiency} from './Proficiency';
 
 type ActionTypesToHandlers = {
 	setInitialAttributes(payload: {attributes: Attributes}): void;
@@ -20,6 +22,8 @@ type ActionTypesToHandlers = {
 	pickPower(payload: {power: PowerInterface; source: Translatable}): void;
 	changeDisplacement(payload: {displacement: number; source: Translatable}): void;
 	addModifierToLifePoints(payload: {modifier: ModifierInterface}): void;
+	chooseRole(payload: {role: RoleInterface}): void;
+	addProficiency(payload: {proficiency: Proficiency; source: Translatable}): void;
 };
 
 export type ActionType = keyof ActionTypesToHandlers;
@@ -32,5 +36,5 @@ export type ActionHandlers = {
 	[Property in keyof ActionTypesToHandlers]: (payload: ActionPayload<Property>) => void
 };
 export type ActionDescriptionGenerators = {
-	[Property in keyof ActionTypesToHandlers]: (sheet: SheetInterface, action: ActionInterface<Property>) => string
+	[Property in keyof ActionTypesToHandlers]: (sheet: BuildingSheetInterface, buildStep: ActionInterface<Property>) => string
 };

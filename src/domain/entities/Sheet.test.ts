@@ -1,141 +1,114 @@
-import {ChooseRace} from './Action/ChooseRace';
-import type {Attributes} from './Attributes';
-import {BuildingSheetContext} from './BuildingSheetContext';
-import {Sheet} from './Sheet';
-import type {ConditionVerify, ModifierInterface} from './ModifierList';
-import {GeneralPowerNameEnum} from './Power/GeneralPowerName';
+import {OutGameContext} from './BuildingSheetContext';
+import type {ContextInterface} from './Context';
+import {GeneralPowerName} from './Power/GeneralPowerName';
+import {Proficiency} from './Proficiency';
 import {Dwarf} from './Race/Dwarf';
 import {Human} from './Race/Human';
-import {RaceAbilityName} from './RaceAbility/RaceAbilityName';
-import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
+import type {Race} from './Race/Race';
+import type {VersatileChoice} from './RaceAbility/Human/Versatile';
+import {Arcanist} from './Role/Arcanist';
+import type {Role} from './Role/Role';
+import {Warrior} from './Role/Warrior';
+import type {Sheet} from './Sheet';
+import {SheetBuilder} from './SheetBuilder';
 import {SkillName} from './Skill/SkillName';
 import {Vision} from './Vision';
-import {Modifier} from './Modifier/Modifier';
-
-const initialAttributes = {
-	strength: 0,
-	dexterity: 0,
-	constitution: 0,
-	intelligence: 0,
-	wisdom: 0,
-	charisma: 0,
-};
 
 describe('Sheet', () => {
-	it('should save initial attributes definition step', () => {
-		const sheet = new Sheet();
-
-		expect(sheet.progressionSteps[0].description).toBe('Definição inicial de atributos: +0 Força, +0 Destreza, +0 Constituição, +0 Inteligência, +0 Sabedoria e +0 Carisma.');
-	});
-
-	it('should set initial skills', () => {
-		const sheet = new Sheet({attributes: {dexterity: 2}});
-		const skills = sheet.getSkills();
-		expect(skills).toEqual(InitialSkillsGenerator.generate());
-	});
-
-	describe('Human', () => {
-		let humanSheet: Sheet;
+	describe('Human Warrior', () => {
+		let humanWarrior: Sheet;
+		let role: Role;
+		let race: Race;
+		let context: ContextInterface;
 
 		beforeEach(() => {
-			humanSheet = new Sheet({attributes: {dexterity: 1}});
+			const choices: VersatileChoice[] = [{name: SkillName.acrobatics, type: 'skill'}, {name: GeneralPowerName.dodge, type: 'power'}];
+			race = new Human(['charisma', 'constitution', 'dexterity'], choices);
+			context = new OutGameContext();
+			role = new Warrior([SkillName.fight, SkillName.aim, SkillName.athletics]);
 
-			const human = new Human(
-				['strength', 'charisma', 'constitution'],
-				[
-					{name: SkillName.acrobatics, type: 'skill'},
-					{name: GeneralPowerNameEnum.dodge, type: 'power'},
-				],
-			);
-			humanSheet.dispatch(new ChooseRace({
-				race: human,
-			}));
+			humanWarrior = SheetBuilder
+				.setInitialAttributes()
+				.choseRace(race)
+				.chooseRole(role);
 		});
 
-		it('should apply human versatile ability with one power and one skill', () => {
-			const context = new BuildingSheetContext();
-			expect(humanSheet.getTrainedSkills()).toContain(SkillName.acrobatics);
-			expect(humanSheet.getDefenseTotal(context)).toBe(13);
-			expect(humanSheet.getSkillTotal(SkillName.reflexes, context)).toBe(3);
+		it('should choose race', () => {
+			expect(humanWarrior.getRace()).toBe(race);
 		});
 
-		it('should apply human versatile ability with two skills', () => {
-			humanSheet = new Sheet();
-
-			const human = new Human(
-				['strength', 'charisma', 'constitution'],
-				[
-					{name: SkillName.acrobatics, type: 'skill'},
-					{name: SkillName.fight, type: 'skill'},
-				],
-			);
-			humanSheet.dispatch(new ChooseRace({
-				race: human,
-			}));
-
-			expect(humanSheet.getTrainedSkills()).toContain(SkillName.acrobatics);
-			expect(humanSheet.getTrainedSkills()).toContain(SkillName.fight);
+		it('should have displacement 9', () => {
+			expect(humanWarrior.getDisplacement()).toBe(9);
 		});
 
-		it('should save dodge applience step', () => {
-			expect(humanSheet.progressionSteps).toContainEqual(expect.objectContaining({description: 'Esquiva: +2 Defesa aplicado ao modificador "outros".'}));
-			expect(humanSheet.progressionSteps).toContainEqual(expect.objectContaining({description: 'Esquiva: +2 Reflexos aplicado ao modificador "outros".'}));
+		it('should have default vision', () => {
+			expect(humanWarrior.getVision()).toBe(Vision.default);
 		});
 
-		it('should have 9m displacement', () => {
-			expect(humanSheet.getDisplacement()).toBe(9);
+		it('should choose role', () => {
+			expect(humanWarrior.getRole()).toBe(role);
+		});
+
+		it('should have initial role life points + constitution', () => {
+			expect(humanWarrior.getMaxLifePoints(context)).toBe(21);
+		});
+
+		it('should have role skills trained', () => {
+			const trainedSkills = humanWarrior.getTrainedSkills();
+			expect(trainedSkills).toContain(SkillName.fight);
+			expect(trainedSkills).toContain(SkillName.aim);
+			expect(trainedSkills).toContain(SkillName.fortitude);
+			expect(trainedSkills).toContain(SkillName.athletics);
 		});
 	});
 
-	describe('Dwarf', () => {
-		let dwarfSheet: Sheet;
+	describe('Dwarf Arcanist', () => {
+		let dwarfArcanist: Sheet;
+		let role: Role;
+		let context: ContextInterface;
+		let race: Race;
 
 		beforeEach(() => {
-			dwarfSheet = new Sheet();
-
-			dwarfSheet.dispatch(new ChooseRace({
-				race: new Dwarf(),
-			}));
+			context = new OutGameContext();
+			role = new Arcanist([SkillName.knowledge, SkillName.diplomacy]);
+			race = new Dwarf();
+			dwarfArcanist = SheetBuilder
+				.setInitialAttributes()
+				.choseRace(race)
+				.chooseRole(role);
 		});
 
-		it('should apply Dwarf attributes modifiers', () => {
-			expect(dwarfSheet.getAttributes()).toEqual<Attributes>({
-				...initialAttributes,
-				dexterity: -1,
-				constitution: 2,
-				wisdom: 1,
-			});
+		it('should choose race', () => {
+			expect(dwarfArcanist.getRace()).toBe(race);
 		});
 
-		it('should save race modifiers appliance step after choose race', () => {
-			expect(dwarfSheet.progressionSteps).toContainEqual(expect.objectContaining({description: 'Modificadores de raça aplicados: -1 Destreza, +2 Constituição e +1 Sabedoria.'}));
+		it('should have displacement 9', () => {
+			expect(dwarfArcanist.getDisplacement()).toBe(6);
 		});
 
-		it('should apply night vision', () => {
-			expect(dwarfSheet.getVision()).toBe(Vision.dark);
+		it('should have dark vision', () => {
+			expect(dwarfArcanist.getVision()).toBe(Vision.dark);
 		});
 
-		it('should have perception and survival rock knowledge modifiers', () => {
-			const skills = dwarfSheet.getSkills();
-			const modifier = {
-				source: RaceAbilityName.rockKnowledge,
-				value: 2,
-				condition: {
-					description: 'testes devem ser realizados no subterrâneo',
-					verify: expect.any(Function) as ConditionVerify,
-				},
-			};
-
-			expect(skills.perception.getOthersModifiers()).toContainEqual(modifier);
-			expect(skills.survival.getOthersModifiers()).toContainEqual(modifier);
+		it('should choose class', () => {
+			expect(dwarfArcanist.getRole()).toBe(role);
 		});
 
-		it('should have 6m displacement', () => {
-			expect(dwarfSheet.getDisplacement()).toBe(6);
+		it('should have initial role life points + constitution', () => {
+			expect(dwarfArcanist.getMaxLifePoints(context)).toBe(13);
 		});
 
-		it('should have hard as rock +3 life points modifier', () => {
-			expect(dwarfSheet.lifePoints.modifiers.modifiers).toContainEqual(new Modifier(RaceAbilityName.hardAsRock, 3));
+		it('should have role skills trained', () => {
+			const trainedSkills = dwarfArcanist.getTrainedSkills();
+			expect(trainedSkills).toContain(SkillName.mysticism);
+			expect(trainedSkills).toContain(SkillName.will);
+			expect(trainedSkills).toContain(SkillName.knowledge);
+			expect(trainedSkills).toContain(SkillName.diplomacy);
+		});
+
+		it('should have basic proficiencies', () => {
+			expect(dwarfArcanist.getProficiencies()).toContain(Proficiency.simple);
+			expect(dwarfArcanist.getProficiencies()).toContain(Proficiency.lightArmor);
 		});
 	});
 });

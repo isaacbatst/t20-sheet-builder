@@ -1,6 +1,6 @@
 import type {AbilityEffectType, AbilityInterface} from '../Ability';
 import {Ability} from '../Ability';
-import type {SheetInterface} from '../SheetInterface';
+import type {BuildingSheetInterface} from '../BuildingSheetInterface';
 import type {PowerName} from './PowerName';
 
 export type PowerType = 'general' | 'class';
@@ -12,7 +12,7 @@ export type PowerInterface = AbilityInterface & {
 
 export type Requirement = {
 	description: string;
-	verify: (sheet: SheetInterface) => boolean;
+	verify: (sheet: BuildingSheetInterface) => boolean;
 };
 
 export abstract class Power extends Ability implements PowerInterface {
@@ -28,7 +28,7 @@ export abstract class Power extends Ability implements PowerInterface {
 		this.requirements.push(requirement);
 	}
 
-	protected verifyRequirements(sheet: SheetInterface) {
+	protected verifyRequirements(sheet: BuildingSheetInterface) {
 		const everyRequirementAchieved = this.requirements.every(requirement => requirement.verify(sheet));
 
 		if (!everyRequirementAchieved) {

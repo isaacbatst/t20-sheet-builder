@@ -1,6 +1,6 @@
 import {ApplyRaceAbility} from '../Action/ApplyRaceAbility';
 import {ApplyRaceModifiers} from '../Action/ApplyRaceModifiers';
-import {SheetFake} from '../SheetFake';
+import {BuildingSheetFake} from '../SheetFake';
 import {RockKnowledge} from '../RaceAbility/Dwarf/RockKnowledge';
 import {SlowAndAlways} from '../RaceAbility/Dwarf/SlowAndAlways';
 import {Dwarf} from './Dwarf';
@@ -9,7 +9,7 @@ import {HardAsRock} from '../RaceAbility/Dwarf/HardAsRock';
 describe('Dwarf', () => {
 	it('should dispatch dwarf attributes modifiers appliance', () => {
 		const dwarf = new Dwarf();
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 
 		dwarf.applyAttributesModifiers({
 			charisma: 0,
@@ -36,7 +36,7 @@ describe('Dwarf', () => {
 
 	it('should dispatch rock knowledge appliance', () => {
 		const dwarf = new Dwarf();
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 		dwarf.applyAbilities(sheet);
 
 		expect(sheet.dispatch).toHaveBeenCalledWith(new ApplyRaceAbility({
@@ -46,7 +46,7 @@ describe('Dwarf', () => {
 
 	it('should dispatch slow and always appliance', () => {
 		const dwarf = new Dwarf();
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 		dwarf.applyAbilities(sheet);
 		expect(sheet.dispatch).toHaveBeenCalledWith(new ApplyRaceAbility({
 			ability: new SlowAndAlways(),
@@ -55,7 +55,7 @@ describe('Dwarf', () => {
 
 	it('should dispatch Hard as Rock appliance', () => {
 		const dwarf = new Dwarf();
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 		dwarf.applyAbilities(sheet);
 		expect(sheet.dispatch).toHaveBeenCalledWith(new ApplyRaceAbility({
 			ability: new HardAsRock(),

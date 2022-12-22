@@ -1,13 +1,13 @@
 import {AddOtherModifierToSkill} from '../../Action/AddOtherModifierToSkill';
 import {ChangeVision} from '../../Action/ChangeVision';
-import type {SheetInterface} from '../../SheetInterface';
+import type {BuildingSheetInterface} from '../../BuildingSheetInterface';
 import type {InGameContext} from '../../InGameContext';
+import {ConditionalModifier} from '../../Modifier/ConditionalModifier';
 import type {ModifierCondition} from '../../ModifierList';
 import {SkillName} from '../../Skill/SkillName';
 import {Vision} from '../../Vision';
 import {RaceAbility} from '../RaceAbility';
 import {RaceAbilityName} from '../RaceAbilityName';
-import {ConditionalModifier} from '../../Modifier/ConditionalModifier';
 
 export class RockKnowledge extends RaceAbility {
 	private static readonly condition: ModifierCondition = {
@@ -26,7 +26,7 @@ export class RockKnowledge extends RaceAbility {
 		);
 	}
 
-	apply(sheet: SheetInterface): void {
+	apply(sheet: BuildingSheetInterface): void {
 		sheet.dispatch(new ChangeVision({source: this.name, vision: Vision.dark}));
 
 		const modifier = new ConditionalModifier(this.name, RockKnowledge.skillModifier, RockKnowledge.condition);

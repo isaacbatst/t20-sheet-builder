@@ -1,3 +1,4 @@
+import type {ModifiersListInterface} from './BuildingSheetInterface';
 import type {ContextInterface} from './Context';
 import type {InGameContext} from './InGameContext';
 import type {Translatable} from './Translator';
@@ -16,7 +17,7 @@ export type ModifierInterface = {
 	getMaxPossibleValue(): number;
 };
 
-export class ModifiersList {
+export class ModifiersList implements ModifiersListInterface {
 	readonly modifiers: ModifierInterface[] = [];
 	constructor(private readonly repeatedModifierError: string) {}
 

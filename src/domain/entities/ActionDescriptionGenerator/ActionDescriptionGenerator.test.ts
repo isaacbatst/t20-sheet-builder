@@ -1,20 +1,22 @@
-import {SheetFake} from '../SheetFake';
-import {GeneralPowerNameEnum} from '../Power/GeneralPowerName';
+import {ConditionalModifier} from '../Modifier/ConditionalModifier';
+import {Modifier} from '../Modifier/Modifier';
+import {GeneralPowerName} from '../Power/GeneralPowerName';
 import {PowerFake} from '../PowerFake';
+import {Proficiency} from '../Proficiency';
 import {RaceAbilityName} from '../RaceAbility/RaceAbilityName';
 import {RaceAbilityFake} from '../RaceAbilityFake';
 import {RaceFake} from '../RaceFake';
+import {RoleName} from '../Role/RoleName';
+import {Warrior} from '../Role/Warrior';
+import {BuildingSheetFake} from '../SheetFake';
 import {Skill} from '../Skill/Skill';
 import {SkillName} from '../Skill/SkillName';
 import {Vision} from '../Vision';
 import {ActionDescriptionGenerator} from './ActionDescriptionGenerator';
-import {Modifier} from '../Modifier/Modifier';
-import {HardAsRock} from '../RaceAbility/Dwarf/HardAsRock';
-import {ConditionalModifier} from '../Modifier/ConditionalModifier';
 
 describe('ActionDescriptionGenerator', () => {
 	it('should generate setInitialAttributes description', () => {
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 		sheet.attributes.charisma = 1;
 		sheet.attributes.constitution = -1;
 
@@ -26,7 +28,7 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate applyAbility description', () => {
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 		sheet.attributes.charisma = 1;
 		sheet.attributes.constitution = -1;
 
@@ -41,7 +43,7 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate applyRaceModifiers description', () => {
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 		sheet.attributes.charisma = 1;
 		sheet.attributes.constitution = -1;
 
@@ -57,15 +59,13 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate addOtherModifierToDefense description', () => {
-		const sheet = new SheetFake();
-		sheet.defenseTotal = 12;
-
+		const sheet = new BuildingSheetFake();
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
 			{
 				type: 'addOtherModifierToDefense',
 				payload: {
-					modifier: new Modifier(GeneralPowerNameEnum.dodge, 2),
+					modifier: new Modifier(GeneralPowerName.dodge, 2),
 				},
 			},
 		);
@@ -74,15 +74,13 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate addOtherModifierToDefense description with conditional', () => {
-		const sheet = new SheetFake();
-		sheet.defenseTotal = 12;
-
+		const sheet = new BuildingSheetFake();
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
 			{
 				type: 'addOtherModifierToDefense',
 				payload: {
-					modifier: new ConditionalModifier(GeneralPowerNameEnum.dodge, 2, {verify: jest.fn(), description: 'testes realizados no subterrâneo'}),
+					modifier: new ConditionalModifier(GeneralPowerName.dodge, 2, {verify: jest.fn(), description: 'testes realizados no subterrâneo'}),
 				},
 			},
 		);
@@ -91,15 +89,13 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate addOtherModifierToDefense description', () => {
-		const sheet = new SheetFake();
-		sheet.defenseTotal = 12;
-
+		const sheet = new BuildingSheetFake();
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
 			{
 				type: 'addOtherModifierToDefense',
 				payload: {
-					modifier: new Modifier(GeneralPowerNameEnum.dodge, 2),
+					modifier: new Modifier(GeneralPowerName.dodge, 2),
 				},
 			},
 		);
@@ -108,15 +104,13 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate addOtherModifierToDefense description with conditional', () => {
-		const sheet = new SheetFake();
-		sheet.defenseTotal = 12;
-
+		const sheet = new BuildingSheetFake();
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
 			{
 				type: 'addOtherModifierToDefense',
 				payload: {
-					modifier: new ConditionalModifier(GeneralPowerNameEnum.dodge, 2, {verify: jest.fn(), description: 'testes realizados no subterrâneo'}),
+					modifier: new ConditionalModifier(GeneralPowerName.dodge, 2, {verify: jest.fn(), description: 'testes realizados no subterrâneo'}),
 				},
 			},
 		);
@@ -125,7 +119,7 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate addOtherModifierToSkill description', () => {
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
@@ -133,7 +127,7 @@ describe('ActionDescriptionGenerator', () => {
 				type: 'addOtherModifierToSkill',
 				payload: {
 					skill: SkillName.reflexes,
-					modifier: new Modifier(GeneralPowerNameEnum.dodge, 2),
+					modifier: new Modifier(GeneralPowerName.dodge, 2),
 				},
 			},
 		);
@@ -142,7 +136,7 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate addOtherModifierToSkill description with conditional', () => {
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
@@ -159,7 +153,7 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate changeVision description', () => {
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
@@ -173,7 +167,7 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate chooseRace description', () => {
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
@@ -187,7 +181,7 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate trainSkill description', () => {
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 		sheet.skills.fight = new Skill({attribute: 'strength', isTrained: true});
 
 		const description = ActionDescriptionGenerator.generate(
@@ -198,11 +192,11 @@ describe('ActionDescriptionGenerator', () => {
 			},
 		);
 
-		expect(description).toBe('Versátil: Perícia Luta treinada, bônus de treino +2.');
+		expect(description).toBe('Versátil: perícia Luta treinada, bônus de treino +2.');
 	});
 
 	it('should generate pickPower description', () => {
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 		sheet.skills.fight = new Skill({attribute: 'strength', isTrained: true});
 
 		const description = ActionDescriptionGenerator.generate(
@@ -217,7 +211,7 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate changeDisplacement description', () => {
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
@@ -234,7 +228,7 @@ describe('ActionDescriptionGenerator', () => {
 	});
 
 	it('should generate addModifierToLifePoints description', () => {
-		const sheet = new SheetFake();
+		const sheet = new BuildingSheetFake();
 
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
@@ -245,5 +239,34 @@ describe('ActionDescriptionGenerator', () => {
 		);
 
 		expect(description).toBe('Duro como pedra: +3 PV.');
+	});
+
+	it('should generate chooseRole description', () => {
+		const sheet = new BuildingSheetFake();
+		const warrior = new Warrior([]);
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			{
+				type: 'chooseRole',
+				payload: {role: warrior},
+			},
+		);
+
+		expect(description).toBe('Classe escolhida: Guerreiro. 20 PV, 3 PM e 4 perícias iniciais.');
+	});
+
+	it('should generate addProficiency description', () => {
+		const sheet = new BuildingSheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			{
+				type: 'addProficiency',
+				payload: {proficiency: Proficiency.martial, source: RoleName.warrior},
+			},
+		);
+
+		expect(description).toBe('Guerreiro: você é proficiente com armas marciais.');
 	});
 });
