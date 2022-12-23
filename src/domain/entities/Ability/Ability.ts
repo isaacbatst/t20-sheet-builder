@@ -1,18 +1,22 @@
-import type {BuildingSheet} from '../BuildingSheet';
+import type {BuildingSheetInterface} from '../BuildingSheetInterface';
+import type {Dispatch} from '../SheetInterface';
+import type {Translatable} from '../Translator';
 
 export type AbilityEffectType = 'active' | 'passive';
+export type AbilityType = 'role' | 'race';
 
 export type AbilityInterface = {
 	name: string;
 	effectType: AbilityEffectType;
-	apply(sheet: BuildingSheet): void;
+	addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch, source: Translatable): void;
 };
 
 export abstract class Ability implements AbilityInterface {
 	constructor(
 		readonly name: string,
 		readonly effectType: AbilityEffectType,
+		readonly type: AbilityType,
 	) {}
 
-	abstract apply(sheet: BuildingSheet): void;
+	abstract addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch, source: Translatable): void;
 }

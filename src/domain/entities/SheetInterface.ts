@@ -1,4 +1,5 @@
 import type {Attributes} from './Attributes';
+import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import type {Context} from './Context';
 import type {BuildStepInterface} from './ProgressionStep';
 import type {ActionInterface, ActionType} from './SheetActions';

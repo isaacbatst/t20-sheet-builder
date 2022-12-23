@@ -3,22 +3,54 @@ import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import {Defense} from './Defense';
 import {LifePoints} from './LifePoints';
 import {ManaPoints} from './ManaPoints';
+import type {GeneralPowerInterface} from './Power/GeneralPower';
+import type {GeneralPowerName} from './Power/GeneralPowerName';
 import {Proficiency} from './Proficiency';
-import {BuildStep} from './ProgressionStep';
+import type {BuildStep} from './ProgressionStep';
+import type {RaceAbility, RaceAbilityInterface} from './RaceAbility/RaceAbility';
+import type {RaceAbilityName} from './RaceAbility/RaceAbilityName';
 import type {RaceInterface} from './RaceInterface';
+import type {RoleAbility, RoleAbilityInterface} from './Role/RoleAbility';
+import type {RoleAbilityName} from './Role/RoleAbilityName';
 import type {RoleInterface} from './Role/RoleInterface';
+import type {RolePowerInterface} from './Role/RolePower';
+import type {RolePowerName} from './Role/RolePowerName';
 import type {SheetSkills} from './Sheet';
 import {Sheet} from './Sheet';
-import type {ActionHandlers, ActionInterface, ActionPayload, ActionType} from './SheetActions';
-import type {Dispatch} from './SheetInterface';
+import type {ActionsHandler, ActionPayload} from './SheetActions';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
 import {Vision} from './Vision';
+
+type GeneralPowerMap = Map<GeneralPowerName, GeneralPowerInterface>;
+type RolePowerMap = Map<RolePowerName, RolePowerInterface>;
+type RaceAbilityMap = Map<RaceAbilityName, RaceAbilityInterface>;
+type RoleAbilityMap = Map<RoleAbilityName, RoleAbilityInterface>;
 
 export class BuildingSheet implements BuildingSheetInterface {
 	readonly buildSteps: BuildStep[] = [];
 	readonly lifePoints = new LifePoints();
+
+	readonly actionHandlers: ActionsHandler = {
+		addOtherModifierToDefense: this.addOtherModifierToDefense.bind(this),
+		addOtherModifierToSkill: this.addOtherModifierToSkill.bind(this),
+		chooseRace: this.chooseRace.bind(this),
+		trainSkill: this.trainSkill.bind(this),
+		changeVision: this.changeVision.bind(this),
+		setInitialAttributes: this.setInitialAttributes.bind(this),
+		applyRaceModifiers: this.applyRaceModifiers.bind(this),
+		applyRaceAbility: this.applyRaceAbility.bind(this),
+		pickGeneralPower: this.pickGeneralPower.bind(this),
+		pickRolePower: this.pickRolePower.bind(this),
+		changeDisplacement: this.changeDisplacement.bind(this),
+		addModifierToLifePoints: this.addModifierToLifePoints.bind(this),
+		chooseRole: this.chooseRole.bind(this),
+		addProficiency: this.addProficiency.bind(this),
+	};
+
 	private race?: RaceInterface;
 	private role?: RoleInterface;
+	private readonly powers: {general: GeneralPowerMap; role: RolePowerMap} = {general: new Map(), role: new Map()};
+	private readonly abilities: {race: RaceAbilityMap; role: RoleAbilityMap} = {race: new Map(), role: new Map()};
 	private attributes: Attributes = Sheet.initialAttributes;
 	// eslint-disable-next-line @typescript-eslint/prefer-readonly
 	private level = 1;
@@ -28,33 +60,6 @@ export class BuildingSheet implements BuildingSheetInterface {
 	private readonly skills: SheetSkills = InitialSkillsGenerator.generate();
 	private readonly defense = new Defense();
 	private readonly manaPoints = new ManaPoints();
-
-	private readonly actionHandlers: ActionHandlers = {
-		addOtherModifierToDefense: this.addOtherModifierToDefense.bind(this),
-		addOtherModifierToSkill: this.addOtherModifierToSkill.bind(this),
-		chooseRace: this.chooseRace.bind(this),
-		trainSkill: this.trainSkill.bind(this),
-		changeVision: this.changeVision.bind(this),
-		setInitialAttributes: this.setInitialAttributes.bind(this),
-		applyRaceModifiers: this.applyRaceModifiers.bind(this),
-		applyRaceAbility: this.applyRaceAbility.bind(this),
-		pickPower: this.pickPower.bind(this),
-		changeDisplacement: this.changeDisplacement.bind(this),
-		addModifierToLifePoints: this.addModifierToLifePoints.bind(this),
-		chooseRole: this.chooseRole.bind(this),
-		addProficiency: this.addProficiency.bind(this),
-	};
-
-	constructor(attributes?: Partial<Attributes>) {
-		const initialAttributes = attributes ? {...Sheet.initialAttributes, ...attributes} : Sheet.initialAttributes;
-
-		this.dispatch({
-			type: 'setInitialAttributes',
-			payload: {
-				attributes: initialAttributes,
-			},
-		});
-	}
 
 	getManaPoints() {
 		return this.manaPoints;
@@ -88,12 +93,6 @@ export class BuildingSheet implements BuildingSheetInterface {
 		return this.role;
 	}
 
-	dispatch: Dispatch = <T extends ActionType>(buildStep: ActionInterface<T>): void => {
-		this.buildSteps.push(new BuildStep(buildStep, this));
-		const handle = this.actionHandlers[buildStep.type];
-		handle(buildStep.payload);
-	};
-
 	getAttributes() {
 		return this.attributes;
 	}
@@ -104,12 +103,18 @@ export class BuildingSheet implements BuildingSheetInterface {
 
 	private chooseRole(payload: ActionPayload<'chooseRole'>) {
 		this.role = payload.role;
-		this.role.trainSkills(this);
-		this.role.addProficiencies(this);
 	}
 
-	private pickPower(payload: ActionPayload<'pickPower'>) {
-		payload.power.apply(this);
+	private chooseRace(payload: ActionPayload<'chooseRace'>) {
+		this.race = payload.race;
+	}
+
+	private pickGeneralPower(payload: ActionPayload<'pickGeneralPower'>) {
+		return this.powers.general.set(payload.power.name, payload.power);
+	}
+
+	private pickRolePower(payload: ActionPayload<'pickRolePower'>) {
+		return this.powers.role.set(payload.power.name, payload.power);
 	}
 
 	private setInitialAttributes(payload: ActionPayload<'setInitialAttributes'>) {
@@ -130,12 +135,6 @@ export class BuildingSheet implements BuildingSheetInterface {
 
 	private addOtherModifierToSkill(payload: ActionPayload<'addOtherModifierToSkill'>): void {
 		this.skills[payload.skill].addOtherModifier(payload.modifier);
-	}
-
-	private chooseRace(payload: ActionPayload<'chooseRace'>) {
-		this.race = payload.race;
-		this.race.applyAttributesModifiers(this.attributes, this.dispatch);
-		this.race.applyAbilities(this);
 	}
 
 	private trainSkill(payload: ActionPayload<'trainSkill'>): void {
@@ -159,7 +158,7 @@ export class BuildingSheet implements BuildingSheetInterface {
 	}
 
 	private applyRaceAbility(payload: ActionPayload<'applyRaceAbility'>) {
-		payload.ability.apply(this);
+		this.abilities.race.set(payload.ability.name, payload.ability);
 	}
 
 	private changeDisplacement(payload: ActionPayload<'changeDisplacement'>) {

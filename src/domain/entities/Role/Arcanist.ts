@@ -5,6 +5,7 @@ import type {ChooseableSkills} from './RoleInterface';
 import {RoleName} from './RoleName';
 
 export class Arcanist extends Role {
+	static readonly chooseableSkills: ChooseableSkills[] = [{amount: 2, skills: [SkillName.knowledge, SkillName.diplomacy, SkillName.cheat, SkillName.war, SkillName.initiative, SkillName.intimidation, SkillName.intuition, SkillName.investigation, SkillName.nobility, SkillName.craft, SkillName.perception]}];
 	get initialLifePoints() {
 		return 8;
 	}
@@ -18,7 +19,10 @@ export class Arcanist extends Role {
 	}
 
 	readonly mandatorySkills: SkillName[] = [SkillName.mysticism, SkillName.will];
-	readonly chooseableSkills: ChooseableSkills[] = [{amount: 2, skills: [SkillName.knowledge, SkillName.diplomacy, SkillName.cheat, SkillName.war, SkillName.initiative, SkillName.intimidation, SkillName.intuition, SkillName.investigation, SkillName.nobility, SkillName.craft, SkillName.perception]}];
 	readonly proficiencies: Proficiency[] = [];
 	readonly name: RoleName = RoleName.arcanist;
+
+	constructor(chosenSkills: SkillName[]) {
+		super(chosenSkills, Arcanist.chooseableSkills);
+	}
 }

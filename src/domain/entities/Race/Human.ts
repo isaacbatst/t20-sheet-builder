@@ -23,6 +23,10 @@ export class Human extends SelectableAttributesRace {
 		});
 	}
 
+	addVersatilChoice(choice: VersatileChoice) {
+		this.abilities.versatile.addChoice(choice);
+	}
+
 	protected get restrictedAttributes(): string[] {
 		return [];
 	}

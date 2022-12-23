@@ -1,56 +1,70 @@
+import {ChooseRace} from './Action/ChooseRace';
+import {ChooseRole} from './Action/ChooseRole';
+import {SetInitialAttributes} from './Action/SetInitialAttributes';
 import type {Attributes} from './Attributes';
 import {BuildingSheet} from './BuildingSheet';
 import type {BuildingSheetInterface} from './BuildingSheetInterface';
+import {BuildStep} from './ProgressionStep';
 import type {RaceInterface} from './RaceInterface';
 import type {RoleInterface} from './Role/RoleInterface';
 import {Sheet} from './Sheet';
+import type {ActionInterface, ActionType} from './SheetActions';
+import type {Dispatch} from './SheetInterface';
 
 export class SheetBuilder {
-	static setInitialAttributes(attributes?: Partial<Attributes>) {
-		const sheet = new BuildingSheet(attributes);
+	constructor(private sheet: BuildingSheetInterface = new BuildingSheet()) {
+
+	}
+
+	reset(sheet: BuildingSheetInterface = new BuildingSheet()) {
+		this.sheet = sheet;
 
 		return {
-			choseRace: SheetBuilder.chooseRace(sheet),
+			setInitialAttributes: this.setInitialAttributes.bind(this),
 		};
 	}
 
-	private static chooseRace(sheet: BuildingSheetInterface) {
+	setInitialAttributes(attributes: Attributes) {
+		this.dispatch(new SetInitialAttributes({attributes}));
+
+		return {
+			choseRace: this.chooseRace(),
+		};
+	}
+
+	private chooseRace() {
 		return (race: RaceInterface) => {
-			sheet.dispatch({
-				type: 'chooseRace',
-				payload: {
-					race,
-				},
-			});
+			race.addToSheet(this.sheet, this.dispatch);
 
 			return {
-				chooseRole: SheetBuilder.chooseRole(sheet, race),
+				chooseRole: this.chooseRole(race),
 			};
 		};
 	}
 
-	private static chooseRole(sheet: BuildingSheetInterface, race: RaceInterface) {
+	private chooseRole(race: RaceInterface) {
 		return (role: RoleInterface) => {
-			sheet.dispatch({
-				type: 'chooseRole',
-				payload: {role},
-			});
+			role.addToSheet(this.sheet, this.dispatch);
 
 			return new Sheet({
-				attributes: sheet.getAttributes(),
+				attributes: this.sheet.getAttributes(),
 				race,
 				role,
-				buildSteps: sheet.buildSteps,
-				defense: sheet.getDefense(),
-				displacement: sheet.getDisplacement(),
-				level: sheet.getLevel(),
-				lifePoints: sheet.getLifePoints(),
-				skills: sheet.getSkills(),
-				vision: sheet.getVision(),
-				proficiencies: sheet.getProficiencies(),
+				buildSteps: this.sheet.buildSteps,
+				defense: this.sheet.getDefense(),
+				displacement: this.sheet.getDisplacement(),
+				level: this.sheet.getLevel(),
+				lifePoints: this.sheet.getLifePoints(),
+				skills: this.sheet.getSkills(),
+				vision: this.sheet.getVision(),
+				proficiencies: this.sheet.getProficiencies(),
 			});
 		};
 	}
 
-	readonly buildingSheet: BuildingSheetInterface = new BuildingSheet();
+	private readonly dispatch: Dispatch = <T extends ActionType>(buildStep: ActionInterface<T>): void => {
+		this.sheet.buildSteps.push(new BuildStep(buildStep, this.sheet));
+		const handle = this.sheet.actionHandlers[buildStep.type];
+		handle(buildStep.payload, this.dispatch);
+	};
 }

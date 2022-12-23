@@ -1,15 +1,17 @@
-import {PickPower} from '../../Action/PickPower';
 import {TrainSkill} from '../../Action/TrainSkill';
 import type {BuildingSheetInterface} from '../../BuildingSheetInterface';
+import type {GeneralPowerName} from '../../Power/GeneralPowerName';
 import {GeneralPowerFactory} from '../../Power/PowerFactory';
-import type {PowerName} from '../../Power/PowerName';
+import {RaceName} from '../../Race/RaceName';
+import type {Dispatch} from '../../SheetInterface';
 import {SkillName} from '../../Skill/SkillName';
+import type {Translatable} from '../../Translator';
 import {RaceAbility} from '../RaceAbility';
 import {RaceAbilityName} from '../RaceAbilityName';
 
 export type VersatileChoice =
 	{type: 'skill'; name: SkillName} |
-	{type: 'power'; name: PowerName};
+	{type: 'power'; name: GeneralPowerName};
 
 export class Versatile extends RaceAbility {
 	readonly choices: VersatileChoice[] = [];
@@ -41,14 +43,18 @@ export class Versatile extends RaceAbility {
 		this.choices.push(newChoice);
 	}
 
-	apply(sheet: BuildingSheetInterface): void {
+	override addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch): void {
+		super.addToSheet(sheet, dispatch, RaceName.human);
+	}
+
+	protected applyEffects(sheet: BuildingSheetInterface, dispatch: Dispatch): void {
 		if (this.choices.length !== 2) {
 			throw new Error('MISSING_CHOICES');
 		}
 
 		this.choices.forEach(choice => {
 			if (choice.type === 'skill') {
-				sheet.dispatch(new TrainSkill({
+				dispatch(new TrainSkill({
 					source: this.name,
 					name: SkillName[choice.name],
 				}));
@@ -56,7 +62,7 @@ export class Versatile extends RaceAbility {
 
 			if (choice.type === 'power') {
 				const power = GeneralPowerFactory.make(choice.name);
-				sheet.dispatch(new PickPower({power, source: this.name}));
+				power.addToSheet(sheet, dispatch, this.name);
 			}
 		});
 	}

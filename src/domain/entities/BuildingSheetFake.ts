@@ -2,21 +2,37 @@ import type {Attributes} from './Attributes';
 import {OutGameContext} from './BuildingSheetContext';
 import type {BuildingSheetInterface, DefenseInterface} from './BuildingSheetInterface';
 import type {Context} from './Context';
-import type {Defense} from './Defense';
 import {DefenseFake} from './DefenseFake';
 import {LifePoints} from './LifePoints';
 import type {ModifierInterface} from './ModifierList';
 import type {Proficiency} from './Proficiency';
-import {ProgressionStepFake} from './ProgressionStepFake';
+import type {ProgressionStepFake} from './ProgressionStepFake';
 import {RaceFake} from './RaceFake';
 import type {RaceInterface} from './RaceInterface';
-import type {ActionInterface, ActionType} from './SheetActions';
+import type {ActionsHandler, ActionType} from './SheetActions';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
 import type {Skill} from './Skill/Skill';
 import type {SkillName} from './Skill/SkillName';
 import {Vision} from './Vision';
 
 export class BuildingSheetFake implements BuildingSheetInterface {
+	actionHandlers: ActionsHandler = {
+		addOtherModifierToDefense: jest.fn(),
+		addOtherModifierToSkill: jest.fn(),
+		chooseRace: jest.fn(),
+		trainSkill: jest.fn(),
+		changeVision: jest.fn(),
+		setInitialAttributes: jest.fn(),
+		applyRaceModifiers: jest.fn(),
+		applyRaceAbility: jest.fn(),
+		pickGeneralPower: jest.fn(),
+		pickRolePower: jest.fn(),
+		changeDisplacement: jest.fn(),
+		addModifierToLifePoints: jest.fn(),
+		chooseRole: jest.fn(),
+		addProficiency: jest.fn(),
+	};
+
 	public level = 1;
 	public attributes: Attributes = {
 		strength: 0,
@@ -40,16 +56,8 @@ export class BuildingSheetFake implements BuildingSheetInterface {
 	public skills: Record<SkillName, Skill> = InitialSkillsGenerator.generate();
 	public proficiencies: Proficiency[] = [];
 
-	dispatch = jest.fn(<T extends ActionType>(action: ActionInterface<T>) => {
-		this.buildSteps.push(new ProgressionStepFake(action));
-	});
-
 	private readonly trainedSkills: SkillName[] = [];
 	private readonly defenseOtherModifiers: ModifierInterface[] = [];
-
-	setVision(vision: Vision): void {
-		this.vision = vision;
-	}
 
 	getDefense(): DefenseInterface {
 		return this.defense;
@@ -105,17 +113,5 @@ export class BuildingSheetFake implements BuildingSheetInterface {
 
 	getProficiencies(): Proficiency[] {
 		return this.proficiencies;
-	}
-
-	private trainSkill(name: SkillName): void {
-		this.trainedSkills.push(name);
-	}
-
-	private addOtherModifierToDefense(modifier: ModifierInterface): void {
-		this.defenseOtherModifiers.push(modifier);
-	}
-
-	private addOtherModifierToSkill(modifier: ModifierInterface, skill: SkillName): void {
-		this.skills[skill].addOtherModifier(modifier);
 	}
 }

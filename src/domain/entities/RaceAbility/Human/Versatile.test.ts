@@ -1,5 +1,5 @@
 import type {ActionInterface} from '../../SheetActions';
-import {BuildingSheetFake} from '../../SheetFake';
+import {BuildingSheetFake} from '../../BuildingSheetFake';
 import {Dodge} from '../../Power/Dodge';
 import {GeneralPowerName} from '../../Power/GeneralPowerName';
 import {SkillName} from '../../Skill/SkillName';
@@ -58,8 +58,9 @@ describe('Versatile', () => {
 	it('should not allow apply without choices', () => {
 		const versatile = new Versatile();
 		const sheet = new BuildingSheetFake();
+		const dispatch = jest.fn();
 		expect(() => {
-			versatile.apply(sheet);
+			versatile.addToSheet(sheet, dispatch);
 		}).toThrow('MISSING_CHOICES');
 	});
 
@@ -69,9 +70,10 @@ describe('Versatile', () => {
 		versatile.addChoice({type: 'skill', name: SkillName.animalHandling});
 
 		const sheet = new BuildingSheetFake();
-		versatile.apply(sheet);
+		const dispatch = jest.fn();
+		versatile.addToSheet(sheet, dispatch);
 
-		expect(sheet.dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
+		expect(dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
 			type: 'trainSkill',
 			payload: {
 				name: SkillName.acrobatics,
@@ -79,7 +81,7 @@ describe('Versatile', () => {
 			},
 		});
 
-		expect(sheet.dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
+		expect(dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
 			type: 'trainSkill',
 			payload: {
 				name: SkillName.acrobatics,
@@ -94,9 +96,11 @@ describe('Versatile', () => {
 		versatile.addChoice({type: 'power', name: GeneralPowerName.dodge});
 
 		const sheet = new BuildingSheetFake();
-		versatile.apply(sheet);
+		sheet.attributes.dexterity = 1;
+		const dispatch = jest.fn();
+		versatile.addToSheet(sheet, dispatch);
 
-		expect(sheet.dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
+		expect(dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
 			type: 'trainSkill',
 			payload: {
 				name: SkillName.acrobatics,
@@ -104,8 +108,8 @@ describe('Versatile', () => {
 			},
 		});
 
-		expect(sheet.dispatch).toHaveBeenCalledWith<[ActionInterface<'pickPower'>]>({
-			type: 'pickPower',
+		expect(dispatch).toHaveBeenCalledWith<[ActionInterface<'pickGeneralPower'>]>({
+			type: 'pickGeneralPower',
 			payload: {
 				power: new Dodge(),
 				source: RaceAbilityName.versatile,

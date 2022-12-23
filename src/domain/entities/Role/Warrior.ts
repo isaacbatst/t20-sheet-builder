@@ -5,6 +5,11 @@ import type {ChooseableSkills} from './RoleInterface';
 import {RoleName} from './RoleName';
 
 export class Warrior extends Role {
+	private static readonly chooseableSkills: ChooseableSkills[] = [
+		{amount: 1, skills: [SkillName.fight, SkillName.aim]},
+		{amount: 2, skills: [SkillName.animalHandling, SkillName.athletics, SkillName.animalRide, SkillName.war, SkillName.initiative, SkillName.intimidation, SkillName.fight, SkillName.craft, SkillName.perception, SkillName.aim, SkillName.reflexes]},
+	];
+
 	get initialLifePoints() {
 		return 20;
 	}
@@ -18,11 +23,11 @@ export class Warrior extends Role {
 	}
 
 	readonly mandatorySkills: SkillName[] = [SkillName.fortitude];
-	readonly chooseableSkills: ChooseableSkills[] = [
-		{amount: 1, skills: [SkillName.fight, SkillName.aim]},
-		{amount: 2, skills: [SkillName.animalHandling, SkillName.athletics, SkillName.animalRide, SkillName.war, SkillName.initiative, SkillName.intimidation, SkillName.fight, SkillName.craft, SkillName.perception, SkillName.aim, SkillName.reflexes]},
-	];
 
 	readonly proficiencies: Proficiency[] = [Proficiency.martial, Proficiency.shield, Proficiency.heavyArmor];
 	readonly name: RoleName = RoleName.warrior;
+
+	constructor(chosenSkills: SkillName[]) {
+		super(chosenSkills, Warrior.chooseableSkills);
+	}
 }

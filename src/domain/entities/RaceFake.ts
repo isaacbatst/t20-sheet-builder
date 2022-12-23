@@ -7,4 +7,5 @@ export class RaceFake implements RaceInterface {
 	attributeModifiers: Partial<Attributes> = {};
 	applyAbilities = jest.fn();
 	applyAttributesModifiers = jest.fn((attributes: Attributes): Attributes => attributes);
+	addToSheet = jest.fn();
 }

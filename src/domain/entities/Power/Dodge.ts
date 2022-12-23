@@ -2,7 +2,9 @@ import {AddOtherModifierToDefense} from '../Action/AddOtherModifierToDefense';
 import {AddOtherModifierToSkill} from '../Action/AddOtherModifierToSkill';
 import type {BuildingSheetInterface} from '../BuildingSheetInterface';
 import {Modifier} from '../Modifier/Modifier';
+import type {Dispatch} from '../SheetInterface';
 import {SkillName} from '../Skill/SkillName';
+import type {Translatable} from '../Translator';
 import {GeneralPower} from './GeneralPower';
 import {GeneralPowerName} from './GeneralPowerName';
 import type {Requirement} from './Power';
@@ -21,11 +23,9 @@ export class Dodge extends GeneralPower {
 		super.addRequirement(Dodge.requirement);
 	}
 
-	apply(sheet: BuildingSheetInterface) {
-		super.verifyRequirements(sheet);
-
+	applyEffects(sheet: BuildingSheetInterface, dispatch: Dispatch) {
 		const modifier = new Modifier(this.name, 2);
-		sheet.dispatch(new AddOtherModifierToDefense({modifier}));
-		sheet.dispatch(new AddOtherModifierToSkill({modifier, skill: SkillName.reflexes}));
+		dispatch(new AddOtherModifierToDefense({modifier}));
+		dispatch(new AddOtherModifierToSkill({modifier, skill: SkillName.reflexes}));
 	}
 }

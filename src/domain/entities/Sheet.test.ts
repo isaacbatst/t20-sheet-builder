@@ -20,15 +20,16 @@ describe('Sheet', () => {
 		let role: Role;
 		let race: Race;
 		let context: ContextInterface;
+		let sheetBuilder: SheetBuilder;
 
 		beforeEach(() => {
 			const choices: VersatileChoice[] = [{name: SkillName.acrobatics, type: 'skill'}, {name: GeneralPowerName.dodge, type: 'power'}];
 			race = new Human(['charisma', 'constitution', 'dexterity'], choices);
 			context = new OutGameContext();
 			role = new Warrior([SkillName.fight, SkillName.aim, SkillName.athletics]);
-
-			humanWarrior = SheetBuilder
-				.setInitialAttributes()
+			sheetBuilder = new SheetBuilder();
+			humanWarrior = sheetBuilder
+				.setInitialAttributes({strength: 0, dexterity: 0, charisma: 0, constitution: 0, intelligence: 0, wisdom: 0})
 				.choseRace(race)
 				.chooseRole(role);
 		});
@@ -67,13 +68,15 @@ describe('Sheet', () => {
 		let role: Role;
 		let context: ContextInterface;
 		let race: Race;
+		let sheetBuilder: SheetBuilder;
 
 		beforeEach(() => {
 			context = new OutGameContext();
 			role = new Arcanist([SkillName.knowledge, SkillName.diplomacy]);
 			race = new Dwarf();
-			dwarfArcanist = SheetBuilder
-				.setInitialAttributes()
+			sheetBuilder = new SheetBuilder();
+			dwarfArcanist = sheetBuilder
+				.setInitialAttributes({charisma: 0, constitution: 0, dexterity: 0, intelligence: 0, strength: 0, wisdom: 0})
 				.choseRace(race)
 				.chooseRole(role);
 		});
