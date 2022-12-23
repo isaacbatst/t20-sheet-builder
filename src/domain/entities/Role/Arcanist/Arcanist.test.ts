@@ -1,9 +1,9 @@
-import {AddProficiency} from '../Action/AddProficiency';
-import {TrainSkill} from '../Action/TrainSkill';
-import {BuildingSheetFake} from '../BuildingSheetFake';
-import {SkillName} from '../Skill/SkillName';
+import {AddProficiency} from '../../Action/AddProficiency';
+import {TrainSkill} from '../../Action/TrainSkill';
+import {BuildingSheetFake} from '../../BuildingSheetFake';
+import {SkillName} from '../../Skill/SkillName';
 import {Arcanist} from './Arcanist';
-import {RoleName} from './RoleName';
+import {RoleName} from '../RoleName';
 
 describe('Arcanist', () => {
 	it('should dispatch proper train skills', () => {

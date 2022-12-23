@@ -45,6 +45,7 @@ export class BuildingSheet implements BuildingSheetInterface {
 		addModifierToLifePoints: this.addModifierToLifePoints.bind(this),
 		chooseRole: this.chooseRole.bind(this),
 		addProficiency: this.addProficiency.bind(this),
+		applyRoleAbility: this.applyRoleAbility.bind(this),
 	};
 
 	private race?: RaceInterface;
@@ -167,5 +168,9 @@ export class BuildingSheet implements BuildingSheetInterface {
 		}
 
 		this.displacement = payload.displacement;
+	}
+
+	private applyRoleAbility(payload: ActionPayload<'applyRoleAbility'>) {
+		this.abilities.role.set(payload.ability.name, payload.ability);
 	}
 }

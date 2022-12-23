@@ -1,4 +1,3 @@
-import {ChooseRace} from './Action/ChooseRace';
 import type {Attributes} from './Attributes';
 import {BuildingSheet} from './BuildingSheet';
 import {OutGameContext} from './BuildingSheetContext';
@@ -10,9 +9,9 @@ import {Dwarf} from './Race/Dwarf';
 import {Human} from './Race/Human';
 import type {Race} from './Race/Race';
 import {RaceAbilityName} from './RaceAbility/RaceAbilityName';
-import {Arcanist} from './Role/Arcanist';
+import {Arcanist} from './Role/Arcanist/Arcanist';
 import type {Role} from './Role/Role';
-import {Warrior} from './Role/Warrior';
+import {Warrior} from './Role/Warrior/Warrior';
 import {SheetBuilder} from './SheetBuilder';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
 import {SkillName} from './Skill/SkillName';
@@ -138,6 +137,13 @@ describe('SheetBuilder', () => {
 			const maxLifePoints = sheet.getLifePoints().getMax({constitution: sheet.getAttributes().constitution, context, level: sheet.getLevel(), role});
 			expect(maxLifePoints).toBe(21);
 		});
+
+		it('should have max mana points 3', () => {
+			const context = new OutGameContext();
+
+			const maxLifePoints = sheet.getManaPoints().getMax({context, level: sheet.getLevel(), role});
+			expect(maxLifePoints).toBe(3);
+		});
 	});
 
 	describe('Human Arcanist', () => {
@@ -176,7 +182,7 @@ describe('SheetBuilder', () => {
 			expect(maxLifePoints).toBe(9);
 		});
 
-		it('should have max mana points 3', () => {
+		it('should have max mana points 6', () => {
 			const context = new OutGameContext();
 			const maxLifePoints = sheet
 				.getManaPoints()

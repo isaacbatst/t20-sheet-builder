@@ -1,8 +1,11 @@
-import {Proficiency} from '../Proficiency';
-import {SkillName} from '../Skill/SkillName';
-import {Role} from './Role';
-import type {ChooseableSkills} from './RoleInterface';
-import {RoleName} from './RoleName';
+import type {Levels} from '../../Levels';
+import {Proficiency} from '../../Proficiency';
+import {SkillName} from '../../Skill/SkillName';
+import {Role} from '../Role';
+import type {RoleAbility} from '../RoleAbility';
+import type {ChooseableSkills} from '../RoleInterface';
+import {RoleName} from '../RoleName';
+import {SpecialAttack} from './SpecialAttack';
 
 export class Warrior extends Role {
 	private static readonly chooseableSkills: ChooseableSkills[] = [
@@ -23,9 +26,11 @@ export class Warrior extends Role {
 	}
 
 	readonly mandatorySkills: SkillName[] = [SkillName.fortitude];
-
 	readonly proficiencies: Proficiency[] = [Proficiency.martial, Proficiency.shield, Proficiency.heavyArmor];
 	readonly name: RoleName = RoleName.warrior;
+	readonly abilities: Record<Levels, RoleAbility[]> = {
+		levelOne: [new SpecialAttack()],
+	};
 
 	constructor(chosenSkills: SkillName[]) {
 		super(chosenSkills, Warrior.chooseableSkills);

@@ -31,6 +31,7 @@ export class BuildingSheetFake implements BuildingSheetInterface {
 		addModifierToLifePoints: jest.fn(),
 		chooseRole: jest.fn(),
 		addProficiency: jest.fn(),
+		applyRoleAbility: jest.fn(),
 	};
 
 	public level = 1;

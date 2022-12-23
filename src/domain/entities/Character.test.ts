@@ -2,7 +2,7 @@ import {OutGameContext} from './BuildingSheetContext';
 import {Character} from './Character';
 import {InGameContext} from './InGameContext';
 import {Dwarf} from './Race/Dwarf';
-import {Warrior} from './Role/Warrior';
+import {Warrior} from './Role/Warrior/Warrior';
 import {SheetBuilder} from './SheetBuilder';
 import {SkillName} from './Skill/SkillName';
 

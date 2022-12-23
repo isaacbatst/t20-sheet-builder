@@ -5,6 +5,7 @@ import type {GeneralPowerInterface} from './Power/GeneralPower';
 import type {Proficiency} from './Proficiency';
 import type {RaceAbilityInterface} from './RaceAbility/RaceAbility';
 import type {RaceInterface} from './RaceInterface';
+import type {RoleAbilityInterface} from './Role/RoleAbility';
 import type {RoleInterface} from './Role/RoleInterface';
 import type {RolePowerInterface} from './Role/RolePower';
 import type {Dispatch} from './SheetInterface';
@@ -21,6 +22,7 @@ type ActionTypesToHandlers = {
 	changeVision(payload: {vision: Vision; source: Translatable}): void;
 	applyRaceModifiers(payload: {modifiers: Partial<Attributes>; updatedAttributes: Partial<Attributes>}): void;
 	applyRaceAbility(payload: {ability: RaceAbilityInterface; source: Translatable}): void;
+	applyRoleAbility(payload: {ability: RoleAbilityInterface; source: Translatable}): void;
 	pickGeneralPower(payload: ({power: GeneralPowerInterface;source: Translatable})): void;
 	pickRolePower(payload: ({power: RolePowerInterface;source: Translatable})): void;
 	changeDisplacement(payload: {displacement: number; source: Translatable}): void;

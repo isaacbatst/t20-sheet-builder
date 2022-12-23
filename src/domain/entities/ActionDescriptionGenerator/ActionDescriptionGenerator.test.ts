@@ -1,3 +1,6 @@
+import {AddProficiency} from '../Action/AddProficiency';
+import {ApplyRoleAbility} from '../Action/ApplyRoleAbility';
+import {ChooseRole} from '../Action/ChooseRole';
 import {BuildingSheetFake} from '../BuildingSheetFake';
 import {ConditionalModifier} from '../Modifier/ConditionalModifier';
 import {Modifier} from '../Modifier/Modifier';
@@ -8,8 +11,10 @@ import {RaceName} from '../Race/RaceName';
 import {RaceAbilityName} from '../RaceAbility/RaceAbilityName';
 import {RaceAbilityFake} from '../RaceAbilityFake';
 import {RaceFake} from '../RaceFake';
+import {RoleAbilityFake} from '../Role/RoleAbilityFake';
 import {RoleAbilityName} from '../Role/RoleAbilityName';
 import {RoleName} from '../Role/RoleName';
+import {SpecialAttack} from '../Role/Warrior/SpecialAttack';
 import {RoleFake} from '../RoleFake';
 import {Skill} from '../Skill/Skill';
 import {SkillName} from '../Skill/SkillName';
@@ -264,10 +269,7 @@ describe('ActionDescriptionGenerator', () => {
 
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
-			{
-				type: 'chooseRole',
-				payload: {role: warrior},
-			},
+			new ChooseRole({role: warrior}),
 		);
 
 		expect(description).toBe('Classe escolhida: Guerreiro. 10 PV, 5 PM e 5 perícias iniciais.');
@@ -278,12 +280,20 @@ describe('ActionDescriptionGenerator', () => {
 
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
-			{
-				type: 'addProficiency',
-				payload: {proficiency: Proficiency.martial, source: RoleName.warrior},
-			},
+			new AddProficiency({proficiency: Proficiency.martial, source: RoleName.warrior}),
 		);
 
 		expect(description).toBe('Guerreiro: você é proficiente com armas marciais.');
+	});
+
+	it('should generate applyRoleAbility description', () => {
+		const sheet = new BuildingSheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			new ApplyRoleAbility({ability: new RoleAbilityFake(), source: RoleName.warrior}),
+		);
+
+		expect(description).toBe('Guerreiro: habilidade Ataque Especial adicionada.');
 	});
 });

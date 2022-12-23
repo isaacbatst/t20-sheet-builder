@@ -5,9 +5,7 @@ import type {ModifierInterface} from './ModifierList';
 import type {Proficiency} from './Proficiency';
 import type {BuildStep} from './ProgressionStep';
 import type {SheetSkills} from './Sheet';
-import { ActionsHandler } from './SheetActions';
-import type {Dispatch} from './SheetInterface';
-import type {SkillName} from './Skill/SkillName';
+import type {ActionsHandler} from './SheetActions';
 import type {Vision} from './Vision';
 
 export type DefenseInterface = {

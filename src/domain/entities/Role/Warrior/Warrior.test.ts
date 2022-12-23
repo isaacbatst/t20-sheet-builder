@@ -1,9 +1,11 @@
-import {AddProficiency} from '../Action/AddProficiency';
-import {TrainSkill} from '../Action/TrainSkill';
-import {BuildingSheetFake} from '../BuildingSheetFake';
-import {Proficiency} from '../Proficiency';
-import {SkillName} from '../Skill/SkillName';
-import {RoleName} from './RoleName';
+import {AddProficiency} from '../../Action/AddProficiency';
+import {ApplyRoleAbility} from '../../Action/ApplyRoleAbility';
+import {TrainSkill} from '../../Action/TrainSkill';
+import {BuildingSheetFake} from '../../BuildingSheetFake';
+import {Proficiency} from '../../Proficiency';
+import {SkillName} from '../../Skill/SkillName';
+import {RoleName} from '../RoleName';
+import {SpecialAttack} from './SpecialAttack';
 import {Warrior} from './Warrior';
 
 describe('Warrior', () => {
@@ -61,6 +63,18 @@ describe('Warrior', () => {
 		}));
 		expect(dispatch).toHaveBeenCalledWith(new AddProficiency({
 			proficiency: Proficiency.shield,
+			source: RoleName.warrior,
+		}));
+	});
+
+	it('should dispatch abilities add', () => {
+		const warrior = new Warrior([SkillName.fight, SkillName.animalHandling, SkillName.aim]);
+		const sheet = new BuildingSheetFake();
+		const dispatch = jest.fn();
+		warrior.addToSheet(sheet, dispatch);
+
+		expect(dispatch).toHaveBeenCalledWith(new ApplyRoleAbility({
+			ability: new SpecialAttack(),
 			source: RoleName.warrior,
 		}));
 	});

@@ -1,11 +1,18 @@
-import type {Proficiency} from '../Proficiency';
-import {SkillName} from '../Skill/SkillName';
-import {Role} from './Role';
-import type {ChooseableSkills} from './RoleInterface';
-import {RoleName} from './RoleName';
+import type {Levels} from '../../Levels';
+import type {Proficiency} from '../../Proficiency';
+import {SkillName} from '../../Skill/SkillName';
+import {Role} from '../Role';
+import type {RoleAbility} from '../RoleAbility';
+import type {ChooseableSkills} from '../RoleInterface';
+import {RoleName} from '../RoleName';
 
 export class Arcanist extends Role {
 	static readonly chooseableSkills: ChooseableSkills[] = [{amount: 2, skills: [SkillName.knowledge, SkillName.diplomacy, SkillName.cheat, SkillName.war, SkillName.initiative, SkillName.intimidation, SkillName.intuition, SkillName.investigation, SkillName.nobility, SkillName.craft, SkillName.perception]}];
+
+	readonly abilities: Record<Levels, RoleAbility[]> = {
+		levelOne: [],
+	};
+
 	get initialLifePoints() {
 		return 8;
 	}

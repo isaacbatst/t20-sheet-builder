@@ -44,6 +44,10 @@ export class Translator {
 		return Translator.rolesTranslation[role];
 	}
 
+	static getRoleAbilityTranslation(role: RoleAbilityName) {
+		return Translator.roleAbilitiesTranslation[role];
+	}
+
 	static getPowerTranslation(power: PowerName) {
 		return Translator.powersTranslation[power];
 	}

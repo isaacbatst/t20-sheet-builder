@@ -1,11 +1,12 @@
 import {AddProficiency} from '../Action/AddProficiency';
 import {ChooseRole} from '../Action/ChooseRole';
 import {TrainSkill} from '../Action/TrainSkill';
-import type {BuildingSheet} from '../BuildingSheet';
 import type {BuildingSheetInterface} from '../BuildingSheetInterface';
+import type {Levels} from '../Levels';
 import type {Proficiency} from '../Proficiency';
 import type {Dispatch} from '../SheetInterface';
 import type {SkillName} from '../Skill/SkillName';
+import type {RoleAbility} from './RoleAbility';
 import type {ChooseableSkills, RoleInterface} from './RoleInterface';
 import type {RoleName} from './RoleName';
 
@@ -16,6 +17,7 @@ export abstract class Role implements RoleInterface {
 	abstract readonly mandatorySkills: SkillName[];
 	abstract readonly proficiencies: Proficiency[];
 	abstract readonly name: RoleName;
+	abstract readonly abilities: Record<Levels, RoleAbility[]>;
 
 	/**
  * Returns an instance of this role.
@@ -33,6 +35,15 @@ export abstract class Role implements RoleInterface {
 		dispatch(new ChooseRole({role: this}));
 		this.trainSkills(dispatch);
 		this.addProficiencies(dispatch);
+		this.addLevelOneAbilities(sheet, dispatch);
+	}
+
+	addLevelOneAbilities(sheet: BuildingSheetInterface, dispatch: Dispatch) {
+		const abilities = this.abilities.levelOne;
+
+		abilities.forEach(ability => {
+			ability.addToSheet(sheet, dispatch, this.name);
+		});
 	}
 
 	getTotalInitialSkills(): number {

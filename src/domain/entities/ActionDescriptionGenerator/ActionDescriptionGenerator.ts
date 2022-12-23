@@ -32,6 +32,7 @@ export abstract class ActionDescriptionGenerator {
 		changeDisplacement: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: deslocamento alterado para ${action.payload.displacement}m.`,
 		chooseRole: (sheet, {payload: {role}}) => `Classe escolhida: ${Translator.getRoleTranslation(role.name)}. ${role.initialLifePoints} PV, ${role.manaPerLevel} PM e ${role.getTotalInitialSkills()} perícias iniciais.`,
 		addProficiency: (sheet, {payload: {proficiency, source}}) => `${Translator.getTranslation(source)}: você é proficiente com ${Translator.getProficiencyTranslation(proficiency)}.`,
+		applyRoleAbility: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: habilidade ${Translator.getRoleAbilityTranslation(action.payload.ability.name)} adicionada.`,
 	};
 
 	private static getModifierConditionText(condition?: ModifierCondition) {
