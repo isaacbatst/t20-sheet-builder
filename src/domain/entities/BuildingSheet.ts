@@ -3,28 +3,17 @@ import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import {Defense} from './Defense';
 import {LifePoints} from './LifePoints';
 import {ManaPoints} from './ManaPoints';
-import type {GeneralPowerInterface} from './Power/GeneralPower';
-import type {GeneralPowerName} from './Power/GeneralPowerName';
+import type {GeneralPowerMap, RaceAbilityMap, RoleAbilityMap, RolePowerMap} from './Map';
 import {Proficiency} from './Proficiency';
 import type {BuildStep} from './ProgressionStep';
-import type {RaceAbility, RaceAbilityInterface} from './RaceAbility/RaceAbility';
-import type {RaceAbilityName} from './RaceAbility/RaceAbilityName';
 import type {RaceInterface} from './RaceInterface';
-import type {RoleAbility, RoleAbilityInterface} from './Role/RoleAbility';
-import type {RoleAbilityName} from './Role/RoleAbilityName';
 import type {RoleInterface} from './Role/RoleInterface';
-import type {RolePowerInterface} from './Role/RolePower';
-import type {RolePowerName} from './Role/RolePowerName';
 import type {SheetSkills} from './Sheet';
 import {Sheet} from './Sheet';
-import type {ActionsHandler, ActionPayload} from './SheetActions';
+import type {ActionPayload, ActionsHandler} from './SheetActions';
+import type {SheetAbilities, SheetPowers} from './SheetInterface';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
 import {Vision} from './Vision';
-
-type GeneralPowerMap = Map<GeneralPowerName, GeneralPowerInterface>;
-type RolePowerMap = Map<RolePowerName, RolePowerInterface>;
-type RaceAbilityMap = Map<RaceAbilityName, RaceAbilityInterface>;
-type RoleAbilityMap = Map<RoleAbilityName, RoleAbilityInterface>;
 
 export class BuildingSheet implements BuildingSheetInterface {
 	readonly buildSteps: BuildStep[] = [];
@@ -50,8 +39,8 @@ export class BuildingSheet implements BuildingSheetInterface {
 
 	private race?: RaceInterface;
 	private role?: RoleInterface;
-	private readonly powers: {general: GeneralPowerMap; role: RolePowerMap} = {general: new Map(), role: new Map()};
-	private readonly abilities: {race: RaceAbilityMap; role: RoleAbilityMap} = {race: new Map(), role: new Map()};
+	private readonly powers: SheetPowers = {general: new Map(), role: new Map()};
+	private readonly abilities: SheetAbilities = {race: new Map(), role: new Map()};
 	private attributes: Attributes = Sheet.initialAttributes;
 	// eslint-disable-next-line @typescript-eslint/prefer-readonly
 	private level = 1;
@@ -100,6 +89,14 @@ export class BuildingSheet implements BuildingSheetInterface {
 
 	getProficiencies() {
 		return this.proficiencies;
+	}
+
+	getAbilities(): SheetAbilities {
+		return this.abilities;
+	}
+
+	getPowers(): SheetPowers {
+		return this.powers;
 	}
 
 	private chooseRole(payload: ActionPayload<'chooseRole'>) {

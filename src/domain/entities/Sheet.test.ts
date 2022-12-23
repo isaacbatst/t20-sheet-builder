@@ -8,6 +8,7 @@ import type {Race} from './Race/Race';
 import type {VersatileChoice} from './RaceAbility/Human/Versatile';
 import {Arcanist} from './Role/Arcanist/Arcanist';
 import type {Role} from './Role/Role';
+import {RoleAbilityName} from './Role/RoleAbilityName';
 import {Warrior} from './Role/Warrior/Warrior';
 import type {Sheet} from './Sheet';
 import {SheetBuilder} from './SheetBuilder';
@@ -60,6 +61,16 @@ describe('Sheet', () => {
 			expect(trainedSkills).toContain(SkillName.aim);
 			expect(trainedSkills).toContain(SkillName.fortitude);
 			expect(trainedSkills).toContain(SkillName.athletics);
+		});
+
+		it('should have role abilities', () => {
+			const abilities = humanWarrior.getAbilities();
+			expect(abilities.role.has(RoleAbilityName.specialAttack)).toBeTruthy();
+		});
+
+		it('should have powers', () => {
+			const powers = humanWarrior.getPowers();
+			expect(powers.general.has(GeneralPowerName.dodge)).toBeTruthy();
 		});
 	});
 

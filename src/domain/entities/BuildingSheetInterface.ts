@@ -6,6 +6,7 @@ import type {Proficiency} from './Proficiency';
 import type {BuildStep} from './ProgressionStep';
 import type {SheetSkills} from './Sheet';
 import type {ActionsHandler} from './SheetActions';
+import type {SheetAbilities, SheetPowers} from './SheetInterface';
 import type {Vision} from './Vision';
 
 export type DefenseInterface = {
@@ -31,4 +32,6 @@ export type BuildingSheetInterface = {
 	getVision(): Vision;
 	getLifePoints(): LifePoints;
 	getProficiencies(): Proficiency[];
+	getAbilities(): SheetAbilities;
+	getPowers(): SheetPowers;
 };

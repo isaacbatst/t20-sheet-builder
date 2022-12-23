@@ -1,5 +1,3 @@
-import {ChooseRace} from './Action/ChooseRace';
-import {ChooseRole} from './Action/ChooseRole';
 import {SetInitialAttributes} from './Action/SetInitialAttributes';
 import type {Attributes} from './Attributes';
 import {BuildingSheet} from './BuildingSheet';
@@ -58,6 +56,8 @@ export class SheetBuilder {
 				skills: this.sheet.getSkills(),
 				vision: this.sheet.getVision(),
 				proficiencies: this.sheet.getProficiencies(),
+				abilities: this.sheet.getAbilities(),
+				powers: this.sheet.getPowers(),
 			});
 		};
 	}

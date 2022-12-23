@@ -6,7 +6,7 @@ import type {Proficiency} from './Proficiency';
 import type {BuildStep, BuildStepInterface} from './ProgressionStep';
 import type {RaceInterface} from './RaceInterface';
 import type {RoleInterface} from './Role/RoleInterface';
-import type {SheetInterface} from './SheetInterface';
+import type {SheetAbilities, SheetInterface, SheetPowers} from './SheetInterface';
 import type {Skill} from './Skill/Skill';
 import type {SkillName} from './Skill/SkillName';
 import type {Vision} from './Vision';
@@ -25,6 +25,8 @@ type SheetParams = {
 	displacement: number;
 	defense: DefenseInterface;
 	proficiencies: Proficiency[];
+	abilities: SheetAbilities;
+	powers: SheetPowers;
 };
 
 export class Sheet implements SheetInterface {
@@ -40,6 +42,8 @@ export class Sheet implements SheetInterface {
 	private readonly skills: SheetSkills;
 	private readonly defense: DefenseInterface;
 	private readonly proficiencies: Proficiency[];
+	private readonly abilities: SheetAbilities;
+	private readonly powers: SheetPowers;
 
 	constructor(
 		params: SheetParams,
@@ -55,6 +59,8 @@ export class Sheet implements SheetInterface {
 		this.defense = params.defense;
 		this.buildSteps = params.buildSteps;
 		this.proficiencies = params.proficiencies;
+		this.abilities = params.abilities;
+		this.powers = params.powers;
 	}
 
 	getDisplacement() {
@@ -71,6 +77,10 @@ export class Sheet implements SheetInterface {
 
 	getAttributes(): Attributes {
 		return this.attributes;
+	}
+
+	getAbilities(): SheetAbilities {
+		return this.abilities;
 	}
 
 	getMaxLifePoints(context: ContextInterface) {
@@ -101,5 +111,9 @@ export class Sheet implements SheetInterface {
 
 	getRace() {
 		return this.race;
+	}
+
+	getPowers(): SheetPowers {
+		return this.powers;
 	}
 }

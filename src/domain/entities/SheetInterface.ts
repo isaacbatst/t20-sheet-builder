@@ -1,6 +1,6 @@
 import type {Attributes} from './Attributes';
-import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import type {Context} from './Context';
+import type {GeneralPowerMap, RaceAbilityMap, RoleAbilityMap, RolePowerMap} from './Map';
 import type {BuildStepInterface} from './ProgressionStep';
 import type {ActionInterface, ActionType} from './SheetActions';
 import type {SkillName} from './Skill/SkillName';
@@ -30,10 +30,24 @@ export type SheetWithVision = {
 	getVision(): Vision;
 };
 
+export type SheetAbilities = {role: RoleAbilityMap; race: RaceAbilityMap};
+
+export type SheetWithAbilities = {
+	getAbilities(): SheetAbilities;
+};
+
+export type SheetPowers = {general: GeneralPowerMap; role: RolePowerMap};
+
+export type SheetWithPowers = {
+	getPowers(): SheetPowers;
+};
+
 export type Location = {isUnderground: boolean};
 
 export type SheetInterface = SkilledSheet
 & SheetWithAttributes
 & BuildedSheet
 & DefensibleSheet
-& SheetWithVision;
+& SheetWithVision
+& SheetWithAbilities
+& SheetWithPowers;

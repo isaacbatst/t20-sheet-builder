@@ -10,6 +10,7 @@ import type {ProgressionStepFake} from './ProgressionStepFake';
 import {RaceFake} from './RaceFake';
 import type {RaceInterface} from './RaceInterface';
 import type {ActionsHandler, ActionType} from './SheetActions';
+import type {SheetAbilities, SheetPowers} from './SheetInterface';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
 import type {Skill} from './Skill/Skill';
 import type {SkillName} from './Skill/SkillName';
@@ -45,17 +46,16 @@ export class BuildingSheetFake implements BuildingSheetInterface {
 	};
 
 	public lifePoints = new LifePoints();
-
 	public vision: Vision = Vision.default;
 	public displacement = 9;
 	public context: Context = new OutGameContext();
-
 	readonly buildSteps: Array<ProgressionStepFake<ActionType>> = [];
-
 	public defense = new DefenseFake();
 	public race = new RaceFake();
 	public skills: Record<SkillName, Skill> = InitialSkillsGenerator.generate();
 	public proficiencies: Proficiency[] = [];
+	public abilities: SheetAbilities = {race: new Map(), role: new Map()};
+	public powers: SheetPowers = {general: new Map(), role: new Map()};
 
 	private readonly trainedSkills: SkillName[] = [];
 	private readonly defenseOtherModifiers: ModifierInterface[] = [];
@@ -114,5 +114,13 @@ export class BuildingSheetFake implements BuildingSheetInterface {
 
 	getProficiencies(): Proficiency[] {
 		return this.proficiencies;
+	}
+
+	getAbilities(): SheetAbilities {
+		return this.abilities;
+	}
+
+	getPowers(): SheetPowers {
+		return this.powers;
 	}
 }
