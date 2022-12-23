@@ -10,11 +10,15 @@ import {Human} from './Race/Human';
 import type {Race} from './Race/Race';
 import {RaceAbilityName} from './RaceAbility/RaceAbilityName';
 import {Arcanist} from './Role/Arcanist/Arcanist';
+import {ArcanistPathName} from './Role/Arcanist/ArcanistPath';
 import type {Role} from './Role/Role';
 import {Warrior} from './Role/Warrior/Warrior';
 import {SheetBuilder} from './SheetBuilder';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
 import {SkillName} from './Skill/SkillName';
+import {ArcaneArmor} from './Spell/ArcaneArmor';
+import {IllusoryDisguise} from './Spell/IllusoryDisguise';
+import {MentalDagger} from './Spell/MentalDagger';
 import {Vision} from './Vision';
 
 const initialAttributes = {strength: 2, dexterity: 3, constitution: 0, intelligence: 2, wisdom: 2, charisma: 1};
@@ -163,7 +167,7 @@ describe('SheetBuilder', () => {
 					{name: GeneralPowerName.dodge, type: 'power'},
 				],
 			);
-			role = new Arcanist([SkillName.knowledge, SkillName.diplomacy]);
+			role = new Arcanist([SkillName.knowledge, SkillName.diplomacy], ArcanistPathName.sorcerer, [new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 
 			sheetBuilder
 				.setInitialAttributes(initialAttributes)

@@ -3,7 +3,7 @@ import type {Dispatch} from '../SheetInterface';
 import type {Translatable} from '../Translator';
 
 export type AbilityEffectType = 'active' | 'passive';
-export type AbilityType = 'role' | 'race';
+export type AbilityType = 'role' | 'race' | 'spell';
 
 export type AbilityInterface = {
 	name: string;
@@ -15,7 +15,7 @@ export abstract class Ability implements AbilityInterface {
 	constructor(
 		readonly name: string,
 		readonly effectType: AbilityEffectType,
-		readonly type: AbilityType,
+		readonly abilityType: AbilityType,
 	) {}
 
 	abstract addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch, source: Translatable): void;

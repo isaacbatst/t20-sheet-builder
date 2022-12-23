@@ -13,6 +13,9 @@ import {Sheet} from './Sheet';
 import type {ActionPayload, ActionsHandler} from './SheetActions';
 import type {SheetAbilities, SheetPowers} from './SheetInterface';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
+import type {Spell} from './Spell/Spell';
+import type {SpellCircle} from './Spell/SpellCircle';
+import type {SpellName} from './Spell/SpellName';
 import {Vision} from './Vision';
 
 export class BuildingSheet implements BuildingSheetInterface {
@@ -35,6 +38,8 @@ export class BuildingSheet implements BuildingSheetInterface {
 		chooseRole: this.chooseRole.bind(this),
 		addProficiency: this.addProficiency.bind(this),
 		applyRoleAbility: this.applyRoleAbility.bind(this),
+		learnCircle: this.learnCircle.bind(this),
+		learnSpell: this.learnSpell.bind(this),
 	};
 
 	private race?: RaceInterface;
@@ -50,6 +55,8 @@ export class BuildingSheet implements BuildingSheetInterface {
 	private readonly skills: SheetSkills = InitialSkillsGenerator.generate();
 	private readonly defense = new Defense();
 	private readonly manaPoints = new ManaPoints();
+	private readonly spells = new Map<SpellName, Spell>();
+	private readonly learnedCircles = new Set<SpellCircle>();
 
 	getManaPoints() {
 		return this.manaPoints;
@@ -169,5 +176,13 @@ export class BuildingSheet implements BuildingSheetInterface {
 
 	private applyRoleAbility(payload: ActionPayload<'applyRoleAbility'>) {
 		this.abilities.role.set(payload.ability.name, payload.ability);
+	}
+
+	private learnSpell(payload: ActionPayload<'learnSpell'>) {
+		this.spells.set(payload.spell.name, payload.spell);
+	}
+
+	private learnCircle(payload: ActionPayload<'learnCircle'>) {
+		this.learnedCircles.add(payload.circle);
 	}
 }

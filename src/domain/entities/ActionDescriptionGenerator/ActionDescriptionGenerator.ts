@@ -33,6 +33,8 @@ export abstract class ActionDescriptionGenerator {
 		chooseRole: (sheet, {payload: {role}}) => `Classe escolhida: ${Translator.getRoleTranslation(role.name)}. ${role.initialLifePoints} PV, ${role.manaPerLevel} PM e ${role.getTotalInitialSkills()} perícias iniciais.`,
 		addProficiency: (sheet, {payload: {proficiency, source}}) => `${Translator.getTranslation(source)}: você é proficiente com ${Translator.getProficiencyTranslation(proficiency)}.`,
 		applyRoleAbility: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: habilidade ${Translator.getRoleAbilityTranslation(action.payload.ability.name)} adicionada.`,
+		learnCircle: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: você pode lançar magias de ${Translator.getSpellCircleTranslation(action.payload.circle)} círculo.`,
+		learnSpell: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: você aprendeu a magia ${Translator.getSpellTranslation(action.payload.spell.name)}.`,
 	};
 
 	private static getModifierConditionText(condition?: ModifierCondition) {

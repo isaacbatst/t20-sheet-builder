@@ -6,12 +6,14 @@ import type {RaceAbilityName} from './RaceAbility/RaceAbilityName';
 import type {RoleAbilityName} from './Role/RoleAbilityName';
 import type {RoleName} from './Role/RoleName';
 import type {SkillName} from './Skill/SkillName';
+import {SpellCircle} from './Spell/SpellCircle';
+import type {SpellName} from './Spell/SpellName';
 import {StringHelper} from './StringHelper';
 import type {Vision} from './Vision';
 
 export type Translatable = Attribute
 | RaceAbilityName | SkillName | PowerName | RaceName | Proficiency
-| Vision | RoleName | RoleAbilityName;
+| Vision | RoleName | RoleAbilityName | SpellName | SpellCircle;
 
 export class Translator {
 	static getAttributeTranslation(attribute: Attribute, capitalized = true) {
@@ -54,6 +56,14 @@ export class Translator {
 
 	static getProficiencyTranslation(proficiency: Proficiency) {
 		return Translator.proficienciesTranslation[proficiency];
+	}
+
+	static getSpellTranslation(spell: SpellName) {
+		return Translator.spellsTranslation[spell];
+	}
+
+	static getSpellCircleTranslation(circle: SpellCircle) {
+		return Translator.spellCirclesTranslation[circle];
 	}
 
 	static getTranslation(string: Translatable) {
@@ -137,6 +147,18 @@ export class Translator {
 	private static readonly roleAbilitiesTranslation: Record<RoleAbilityName, string> = {
 		specialAttack: 'Ataque Especial',
 		warriorPower: 'Poder de Guerreiro',
+		arcanistPath: 'Caminho do Arcanista',
+		arcanistSpells: 'Magias do Arcanista',
+	};
+
+	private static readonly spellsTranslation: Record<SpellName, string> = {
+		arcaneArmor: 'Armadura Arcana',
+		illusoryDisguise: 'Disfarce Ilusório',
+		mentalDagger: 'Adaga Mental',
+	};
+
+	private static readonly spellCirclesTranslation: Record<SpellCircle, string> = {
+		[SpellCircle.first]: 'primeiro',
 	};
 
 	private static readonly translation: Record<Translatable, string> = {
@@ -149,5 +171,7 @@ export class Translator {
 		...Translator.rolesTranslation,
 		...Translator.proficienciesTranslation,
 		...Translator.roleAbilitiesTranslation,
+		...Translator.spellsTranslation,
+		...Translator.spellCirclesTranslation,
 	};
 }

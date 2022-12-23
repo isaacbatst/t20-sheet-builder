@@ -1,6 +1,7 @@
 import type {Attributes} from './Attributes';
 import type {ContextInterface} from './Context';
 import type {LifePoints} from './LifePoints';
+import type {ManaPoints} from './ManaPoints';
 import type {ModifierInterface} from './ModifierList';
 import type {Proficiency} from './Proficiency';
 import type {BuildStep} from './ProgressionStep';
@@ -34,4 +35,5 @@ export type BuildingSheetInterface = {
 	getProficiencies(): Proficiency[];
 	getAbilities(): SheetAbilities;
 	getPowers(): SheetPowers;
+	getManaPoints(): ManaPoints;
 };

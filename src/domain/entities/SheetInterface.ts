@@ -1,6 +1,7 @@
 import type {Attributes} from './Attributes';
 import type {Context} from './Context';
 import type {GeneralPowerMap, RaceAbilityMap, RoleAbilityMap, RolePowerMap} from './Map';
+import type {ModifierInterface} from './ModifierList';
 import type {BuildStepInterface} from './ProgressionStep';
 import type {ActionInterface, ActionType} from './SheetActions';
 import type {SkillName} from './Skill/SkillName';
@@ -24,6 +25,7 @@ export type BuildedSheet = {
 
 export type DefensibleSheet = {
 	getDefenseTotal(context: Context): number;
+	addDefenseModifier(modifier: ModifierInterface): void;
 };
 
 export type SheetWithVision = {
@@ -43,6 +45,9 @@ export type SheetWithPowers = {
 };
 
 export type Location = {isUnderground: boolean};
+export type SheetWithMana = {
+	useMana(value: number): void;
+};
 
 export type SheetInterface = SkilledSheet
 & SheetWithAttributes
@@ -50,4 +55,9 @@ export type SheetInterface = SkilledSheet
 & DefensibleSheet
 & SheetWithVision
 & SheetWithAbilities
-& SheetWithPowers;
+& SheetWithPowers
+& SheetWithMana;
+
+export type Appliable = {
+	apply(sheet: SheetInterface): void;
+};

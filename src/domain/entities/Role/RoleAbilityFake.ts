@@ -6,5 +6,5 @@ export class RoleAbilityFake implements RoleAbilityInterface {
 	name: RoleAbilityName = RoleAbilityName.specialAttack;
 	effectType: AbilityEffectType = 'active';
 	addToSheet = jest.fn();
-	type: AbilityType = 'role';
+	abilityType: AbilityType = 'role';
 }

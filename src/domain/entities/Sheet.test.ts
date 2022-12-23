@@ -7,12 +7,16 @@ import {Human} from './Race/Human';
 import type {Race} from './Race/Race';
 import type {VersatileChoice} from './RaceAbility/Human/Versatile';
 import {Arcanist} from './Role/Arcanist/Arcanist';
+import {ArcanistPath, ArcanistPathName} from './Role/Arcanist/ArcanistPath';
 import type {Role} from './Role/Role';
 import {RoleAbilityName} from './Role/RoleAbilityName';
 import {Warrior} from './Role/Warrior/Warrior';
 import type {Sheet} from './Sheet';
 import {SheetBuilder} from './SheetBuilder';
 import {SkillName} from './Skill/SkillName';
+import {ArcaneArmor} from './Spell/ArcaneArmor';
+import {IllusoryDisguise} from './Spell/IllusoryDisguise';
+import {MentalDagger} from './Spell/MentalDagger';
 import {Vision} from './Vision';
 
 describe('Sheet', () => {
@@ -83,7 +87,7 @@ describe('Sheet', () => {
 
 		beforeEach(() => {
 			context = new OutGameContext();
-			role = new Arcanist([SkillName.knowledge, SkillName.diplomacy]);
+			role = new Arcanist([SkillName.knowledge, SkillName.diplomacy], ArcanistPathName.sorcerer, [new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 			race = new Dwarf();
 			sheetBuilder = new SheetBuilder();
 			dwarfArcanist = sheetBuilder

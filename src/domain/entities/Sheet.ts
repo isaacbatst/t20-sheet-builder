@@ -2,6 +2,8 @@ import type {Attributes} from './Attributes';
 import type {DefenseInterface} from './BuildingSheetInterface';
 import type {Context, ContextInterface} from './Context';
 import type {LifePoints} from './LifePoints';
+import type {ManaPoints} from './ManaPoints';
+import type {ModifierInterface} from './ModifierList';
 import type {Proficiency} from './Proficiency';
 import type {BuildStep, BuildStepInterface} from './ProgressionStep';
 import type {RaceInterface} from './RaceInterface';
@@ -27,12 +29,14 @@ type SheetParams = {
 	proficiencies: Proficiency[];
 	abilities: SheetAbilities;
 	powers: SheetPowers;
+	manaPoints: ManaPoints;
 };
 
 export class Sheet implements SheetInterface {
 	static readonly initialAttributes: Attributes = {strength: 0, dexterity: 0, constitution: 0, intelligence: 0, wisdom: 0, charisma: 0};
 	readonly buildSteps: BuildStepInterface[];
 	readonly lifePoints: LifePoints;
+	readonly manaPoints: ManaPoints;
 	private readonly race: RaceInterface;
 	private readonly role: RoleInterface;
 	private readonly attributes: Attributes;
@@ -53,6 +57,7 @@ export class Sheet implements SheetInterface {
 		this.role = params.role;
 		this.attributes = params.attributes;
 		this.lifePoints = params.lifePoints;
+		this.manaPoints = params.manaPoints;
 		this.level = params.level;
 		this.vision = params.vision;
 		this.displacement = params.displacement;
@@ -61,6 +66,14 @@ export class Sheet implements SheetInterface {
 		this.proficiencies = params.proficiencies;
 		this.abilities = params.abilities;
 		this.powers = params.powers;
+	}
+
+	addDefenseModifier(modifier: ModifierInterface): void {
+		this.defense.others.add(modifier);
+	}
+
+	useMana(value: number): void {
+		this.manaPoints.setCurrent(value);
 	}
 
 	getDisplacement() {

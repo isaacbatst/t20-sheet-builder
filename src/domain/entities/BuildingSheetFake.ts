@@ -4,6 +4,7 @@ import type {BuildingSheetInterface, DefenseInterface} from './BuildingSheetInte
 import type {Context} from './Context';
 import {DefenseFake} from './DefenseFake';
 import {LifePoints} from './LifePoints';
+import {ManaPoints} from './ManaPoints';
 import type {ModifierInterface} from './ModifierList';
 import type {Proficiency} from './Proficiency';
 import type {ProgressionStepFake} from './ProgressionStepFake';
@@ -33,6 +34,8 @@ export class BuildingSheetFake implements BuildingSheetInterface {
 		chooseRole: jest.fn(),
 		addProficiency: jest.fn(),
 		applyRoleAbility: jest.fn(),
+		learnCircle: jest.fn(),
+		learnSpell: jest.fn(),
 	};
 
 	public level = 1;
@@ -56,6 +59,7 @@ export class BuildingSheetFake implements BuildingSheetInterface {
 	public proficiencies: Proficiency[] = [];
 	public abilities: SheetAbilities = {race: new Map(), role: new Map()};
 	public powers: SheetPowers = {general: new Map(), role: new Map()};
+	public manaPoints = new ManaPoints();
 
 	private readonly trainedSkills: SkillName[] = [];
 	private readonly defenseOtherModifiers: ModifierInterface[] = [];
@@ -122,5 +126,9 @@ export class BuildingSheetFake implements BuildingSheetInterface {
 
 	getPowers(): SheetPowers {
 		return this.powers;
+	}
+
+	getManaPoints(): ManaPoints {
+		return this.manaPoints;
 	}
 }

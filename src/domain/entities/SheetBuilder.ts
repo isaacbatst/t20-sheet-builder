@@ -58,6 +58,7 @@ export class SheetBuilder {
 				proficiencies: this.sheet.getProficiencies(),
 				abilities: this.sheet.getAbilities(),
 				powers: this.sheet.getPowers(),
+				manaPoints: this.sheet.getManaPoints(),
 			});
 		};
 	}

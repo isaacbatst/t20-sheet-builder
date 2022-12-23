@@ -17,7 +17,7 @@ export abstract class Role implements RoleInterface {
 	abstract readonly mandatorySkills: SkillName[];
 	abstract readonly proficiencies: Proficiency[];
 	abstract readonly name: RoleName;
-	abstract readonly abilities: Record<Levels, RoleAbility[]>;
+	abstract readonly abilities: Record<Levels, Record<string, RoleAbility>>;
 
 	/**
  * Returns an instance of this role.
@@ -41,7 +41,7 @@ export abstract class Role implements RoleInterface {
 	addLevelOneAbilities(sheet: BuildingSheetInterface, dispatch: Dispatch) {
 		const abilities = this.abilities.levelOne;
 
-		abilities.forEach(ability => {
+		Object.values(abilities).forEach(ability => {
 			ability.addToSheet(sheet, dispatch, this.name);
 		});
 	}

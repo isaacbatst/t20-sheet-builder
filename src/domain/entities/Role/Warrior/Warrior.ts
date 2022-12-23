@@ -28,8 +28,10 @@ export class Warrior extends Role {
 	readonly mandatorySkills: SkillName[] = [SkillName.fortitude];
 	readonly proficiencies: Proficiency[] = [Proficiency.martial, Proficiency.shield, Proficiency.heavyArmor];
 	readonly name: RoleName = RoleName.warrior;
-	readonly abilities: Record<Levels, RoleAbility[]> = {
-		levelOne: [new SpecialAttack()],
+	readonly abilities: Record<Levels, Record<string, RoleAbility>> = {
+		levelOne: {
+			specialAttack: new SpecialAttack(),
+		},
 	};
 
 	constructor(chosenSkills: SkillName[]) {

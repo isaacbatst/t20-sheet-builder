@@ -6,5 +6,5 @@ export class RaceAbilityFake implements RaceAbilityInterface {
 	name: RaceAbilityName = RaceAbilityName.versatile;
 	effectType: AbilityEffectType = 'passive';
 	addToSheet = jest.fn();
-	type: AbilityType = 'role';
+	abilityType: AbilityType = 'role';
 }
