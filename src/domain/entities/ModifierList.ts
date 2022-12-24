@@ -1,3 +1,4 @@
+import type {EffectDuration} from './Ability/ActivateableAbilityEffect';
 import type {ModifiersListInterface} from './BuildingSheetInterface';
 import type {ContextInterface} from './Context';
 import type {InGameContext} from './InGameContext';
@@ -17,9 +18,12 @@ export type ModifierInterface = {
 	getMaxPossibleValue(): number;
 };
 
+export type TemporaryModifierInterface = ModifierInterface & {
+	duration: EffectDuration;
+};
+
 export class ModifiersList implements ModifiersListInterface {
 	readonly modifiers: ModifierInterface[] = [];
-	constructor(private readonly repeatedModifierError: string) {}
 
 	getTotal(context: ContextInterface) {
 		const total = this.modifiers
@@ -39,7 +43,7 @@ export class ModifiersList implements ModifiersListInterface {
 		const isRepeated = this.modifiers.some(otherModifier => otherModifier.source === newModifier.source);
 
 		if (isRepeated) {
-			throw new Error(this.repeatedModifierError);
+			throw new Error('REPEATED_MODIFIER_SOURCE');
 		}
 
 		this.modifiers.push(newModifier);

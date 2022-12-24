@@ -1,6 +1,6 @@
 import {Context} from './Context';
 import type {ModifierCondition} from './ModifierList';
-import type {Location} from './SheetInterface';
+import type {Location} from './Sheet/SheetInterface';
 
 export class InGameContext extends Context {
 	private readonly location: Location;

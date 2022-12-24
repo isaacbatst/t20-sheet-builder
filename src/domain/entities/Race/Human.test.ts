@@ -1,32 +1,37 @@
 import {ApplyRaceAbility} from '../Action/ApplyRaceAbility';
 import {ApplyRaceModifiers} from '../Action/ApplyRaceModifiers';
-import {BuildingSheetFake} from '../SheetFake';
+import {BuildingSheetFake} from '../BuildingSheetFake';
 import {GeneralPowerName} from '../Power/GeneralPowerName';
-import type {VersatileChoice} from '../RaceAbility/Human/Versatile';
 import {Versatile} from '../RaceAbility/Human/Versatile';
+import type {VersatileChoice} from '../RaceAbility/Human/VersatileEffect';
 import {SkillName} from '../Skill/SkillName';
 import {Human} from './Human';
+import {RaceName} from './RaceName';
 
 describe('Human', () => {
 	it('should apply +1 to strength, dexterity and constitution', () => {
+		const acrobatics: VersatileChoice = {
+			name: SkillName.acrobatics,
+			type: 'skill',
+		};
+		const animalHandling: VersatileChoice = {
+			name: SkillName.animalHandling,
+			type: 'skill',
+		};
+
 		const human = new Human([
 			'constitution',
 			'dexterity',
 			'strength',
 		]);
+		human.addVersatilChoice(acrobatics);
+		human.addVersatilChoice(animalHandling);
 
 		const sheet = new BuildingSheetFake();
+		const dispatch = jest.fn();
+		human.addToSheet(sheet, dispatch);
 
-		human.applyAttributesModifiers({
-			strength: 0,
-			charisma: 0,
-			constitution: 0,
-			dexterity: 0,
-			intelligence: 0,
-			wisdom: 0,
-		}, sheet.dispatch);
-
-		expect(sheet.dispatch).toHaveBeenCalledWith(new ApplyRaceModifiers({
+		expect(dispatch).toHaveBeenCalledWith(new ApplyRaceModifiers({
 			modifiers: {
 				constitution: 1,
 				dexterity: 1,
@@ -108,14 +113,16 @@ describe('Human', () => {
 		]);
 
 		const sheet = new BuildingSheetFake();
-		human.applyAbilities(sheet);
+		const dispatch = jest.fn();
+		human.addToSheet(sheet, dispatch);
 
 		const versatile = new Versatile();
 		versatile.addChoice(acrobatics);
 		versatile.addChoice(animalHandling);
 
-		expect(sheet.dispatch).toHaveBeenCalledWith(new ApplyRaceAbility({
+		expect(dispatch).toHaveBeenCalledWith(new ApplyRaceAbility({
 			ability: versatile,
+			source: RaceName.human,
 		}));
 	});
 
@@ -136,14 +143,16 @@ describe('Human', () => {
 		], [acrobatics, dodge]);
 
 		const sheet = new BuildingSheetFake();
-		human.applyAbilities(sheet);
+		sheet.attributes.dexterity = 1;
+		const dispatch = jest.fn();
+		human.addToSheet(sheet, dispatch);
 
 		const versatile = new Versatile();
 		versatile.addChoice(acrobatics);
 		versatile.addChoice(dodge);
 
-		expect(sheet.dispatch).toHaveBeenCalledWith(new ApplyRaceAbility({
-			ability: versatile,
+		expect(dispatch).toHaveBeenCalledWith(new ApplyRaceAbility({
+			source: RaceName.human, ability: versatile,
 		}));
 	});
 });

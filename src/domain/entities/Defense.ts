@@ -1,16 +1,12 @@
-import {OutGameContext} from './BuildingSheetContext';
+import {OutGameContext} from './OutOfGameContext';
 import type {Context} from './Context';
 import {ModifiersList} from './ModifierList';
 
 export class Defense {
-	readonly others = new ModifiersList(Defense.modifierRepeatedError);
+	readonly others = new ModifiersList();
 
 	private static get base() {
 		return 10;
-	}
-
-	private static get modifierRepeatedError() {
-		return 'REPEATED_OTHER_DEFENSE_MODIFIER';
 	}
 
 	getTotal(dexterity: number, armorBonus: number, shieldBonus: number, context: Context = new OutGameContext()) {

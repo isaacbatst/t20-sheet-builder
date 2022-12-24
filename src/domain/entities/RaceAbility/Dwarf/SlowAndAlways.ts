@@ -1,17 +1,13 @@
-import {ChangeDisplacement} from '../../Action/ChangeDisplacement';
-import type {BuildingSheetInterface} from '../../BuildingSheetInterface';
 import {RaceAbility} from '../RaceAbility';
 import {RaceAbilityName} from '../RaceAbilityName';
+import {SlowAndAlwaysEffect} from './SlowAndAlwaysEffect';
 
 export class SlowAndAlways extends RaceAbility {
-	constructor() {
-		super(RaceAbilityName.slowAndAlways, 'passive');
-	}
+	effects = {
+		default: new SlowAndAlwaysEffect(),
+	};
 
-	apply(sheet: BuildingSheetInterface): void {
-		sheet.dispatch(new ChangeDisplacement({
-			displacement: 6,
-			source: this.name,
-		}));
+	constructor() {
+		super(RaceAbilityName.slowAndAlways);
 	}
 }

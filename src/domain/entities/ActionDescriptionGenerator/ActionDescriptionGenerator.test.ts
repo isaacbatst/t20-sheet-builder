@@ -1,14 +1,24 @@
+import {TriggeredEffectFake} from '../Ability/TriggeredEffectFake';
+import {AddPerLevelModifierToLifePoints} from '../Action/AddPerLevelModifierToLifePoints';
+import {AddProficiency} from '../Action/AddProficiency';
+import {AddTriggeredEffect} from '../Action/AddTriggeredEffect';
+import {ApplyRoleAbility} from '../Action/ApplyRoleAbility';
+import {ChooseRole} from '../Action/ChooseRole';
+import {BuildingSheetFake} from '../BuildingSheetFake';
 import {ConditionalModifier} from '../Modifier/ConditionalModifier';
 import {Modifier} from '../Modifier/Modifier';
+import {PerLevelModifier} from '../Modifier/PerLevelModifier';
 import {GeneralPowerName} from '../Power/GeneralPowerName';
-import {PowerFake} from '../PowerFake';
+import {GeneralPowerFake, RolePowerFake} from '../PowerFake';
 import {Proficiency} from '../Proficiency';
+import {RaceName} from '../Race/RaceName';
 import {RaceAbilityName} from '../RaceAbility/RaceAbilityName';
 import {RaceAbilityFake} from '../RaceAbilityFake';
 import {RaceFake} from '../RaceFake';
-import {RoleName} from '../Role/RoleName';
-import {Warrior} from '../Role/Warrior';
-import {BuildingSheetFake} from '../SheetFake';
+import {RoleAbilityFake} from '../Role/RoleAbilityFake';
+import {RoleAbilityName} from '../Role/RoleAbilityName';
+import {RegularRoleName} from '../Role/RoleName';
+import {RoleFake} from '../RoleFake';
 import {Skill} from '../Skill/Skill';
 import {SkillName} from '../Skill/SkillName';
 import {Vision} from '../Vision';
@@ -36,10 +46,10 @@ describe('ActionDescriptionGenerator', () => {
 			sheet,
 			{
 				type: 'applyRaceAbility',
-				payload: {ability: new RaceAbilityFake()},
+				payload: {ability: new RaceAbilityFake(), source: RaceName.human},
 			},
 		);
-		expect(description).toBe('Habilidade Versátil aplicada.');
+		expect(description).toBe('Humano: habilidade Versátil aplicada.');
 	});
 
 	it('should generate applyRaceModifiers description', () => {
@@ -195,19 +205,34 @@ describe('ActionDescriptionGenerator', () => {
 		expect(description).toBe('Versátil: perícia Luta treinada, bônus de treino +2.');
 	});
 
-	it('should generate pickPower description', () => {
+	it('should generate pickGeneralPower description', () => {
 		const sheet = new BuildingSheetFake();
 		sheet.skills.fight = new Skill({attribute: 'strength', isTrained: true});
 
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
 			{
-				type: 'pickPower',
-				payload: {power: new PowerFake(), source: RaceAbilityName.versatile},
+				type: 'pickGeneralPower',
+				payload: {power: new GeneralPowerFake(), source: RaceAbilityName.versatile},
 			},
 		);
 
 		expect(description).toBe('Versátil: poder Esquiva escolhido.');
+	});
+
+	it('should generate pickRolePower description', () => {
+		const sheet = new BuildingSheetFake();
+		sheet.skills.fight = new Skill({attribute: 'strength', isTrained: true});
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			{
+				type: 'pickRolePower',
+				payload: {power: new RolePowerFake(), source: RoleAbilityName.warriorPower},
+			},
+		);
+
+		expect(description).toBe('Poder de Guerreiro: Arqueiro.');
 	});
 
 	it('should generate changeDisplacement description', () => {
@@ -243,17 +268,14 @@ describe('ActionDescriptionGenerator', () => {
 
 	it('should generate chooseRole description', () => {
 		const sheet = new BuildingSheetFake();
-		const warrior = new Warrior([]);
+		const warrior = new RoleFake();
 
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
-			{
-				type: 'chooseRole',
-				payload: {role: warrior},
-			},
+			new ChooseRole({role: warrior}),
 		);
 
-		expect(description).toBe('Classe escolhida: Guerreiro. 20 PV, 3 PM e 4 perícias iniciais.');
+		expect(description).toBe('Classe escolhida: Guerreiro. 10 PV, 5 PM e 5 perícias iniciais.');
 	});
 
 	it('should generate addProficiency description', () => {
@@ -261,12 +283,53 @@ describe('ActionDescriptionGenerator', () => {
 
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
-			{
-				type: 'addProficiency',
-				payload: {proficiency: Proficiency.martial, source: RoleName.warrior},
-			},
+			new AddProficiency({proficiency: Proficiency.martial, source: RegularRoleName.warrior}),
 		);
 
 		expect(description).toBe('Guerreiro: você é proficiente com armas marciais.');
+	});
+
+	it('should generate applyRoleAbility description', () => {
+		const sheet = new BuildingSheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			new ApplyRoleAbility({ability: new RoleAbilityFake(), source: RegularRoleName.warrior}),
+		);
+
+		expect(description).toBe('Guerreiro: habilidade Ataque Especial adicionada.');
+	});
+
+	it('should generate addTriggeredEffect description', () => {
+		const sheet = new BuildingSheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			new AddTriggeredEffect({effect: new TriggeredEffectFake()}),
+		);
+
+		expect(description).toBe('Ataque Especial: efeito engatilhado.');
+	});
+
+	it('should generate addPerLevelModifierToLifePoints description removing level 1', () => {
+		const sheet = new BuildingSheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			new AddPerLevelModifierToLifePoints({modifier: new PerLevelModifier(1, true, RaceAbilityName.hardAsRock)}),
+		);
+
+		expect(description).toBe('Duro como pedra: +1 PV por nível após o nível 1.');
+	});
+
+	it('should generate addPerLevelModifierToLifePoints description', () => {
+		const sheet = new BuildingSheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			new AddPerLevelModifierToLifePoints({modifier: new PerLevelModifier(1, false, RaceAbilityName.hardAsRock)}),
+		);
+
+		expect(description).toBe('Duro como pedra: +1 PV por nível.');
 	});
 });

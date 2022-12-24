@@ -1,35 +1,33 @@
+import type {TriggeredEffectInterface, TriggerEvent} from './Ability/TriggeredEffect';
 import type {Attributes} from './Attributes';
 import type {BuildingSheetInterface} from './BuildingSheetInterface';
+import type {ContextInterface} from './Context';
 import {Defense} from './Defense';
-import {LifePoints} from './LifePoints';
-import {ManaPoints} from './ManaPoints';
+import {Level} from './Levels';
+import type {LifePoints} from './LifePoints';
+import {LifePointsBuilder} from './LifePointsBuilder';
+import type {ManaPoints} from './ManaPoints';
+import {ManaPointsBuilder} from './ManaPointsBuilder';
 import {Proficiency} from './Proficiency';
-import {BuildStep} from './ProgressionStep';
+import type {BuildStep} from './ProgressionStep';
 import type {RaceInterface} from './RaceInterface';
 import type {RoleInterface} from './Role/RoleInterface';
-import type {SheetSkills} from './Sheet';
-import {Sheet} from './Sheet';
-import type {ActionHandlers, ActionInterface, ActionPayload, ActionType} from './SheetActions';
-import type {Dispatch} from './SheetInterface';
+import type {SheetSkills} from './Sheet/Sheet';
+import {Sheet} from './Sheet/Sheet';
+import type {ActionPayload, ActionsHandler} from './Sheet/SheetActions';
+import type {SheetAbilities, SheetPowers} from './Sheet/SheetInterface';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
+import type {Spell} from './Spell/Spell';
+import type {SpellCircle} from './Spell/SpellCircle';
+import type {SpellName} from './Spell/SpellName';
 import {Vision} from './Vision';
 
 export class BuildingSheet implements BuildingSheetInterface {
 	readonly buildSteps: BuildStep[] = [];
-	readonly lifePoints = new LifePoints();
-	private race?: RaceInterface;
-	private role?: RoleInterface;
-	private attributes: Attributes = Sheet.initialAttributes;
-	// eslint-disable-next-line @typescript-eslint/prefer-readonly
-	private level = 1;
-	private vision: Vision = Vision.default;
-	private displacement = 9;
-	private readonly proficiencies: Proficiency[] = [Proficiency.simple, Proficiency.lightArmor];
-	private readonly skills: SheetSkills = InitialSkillsGenerator.generate();
-	private readonly defense = new Defense();
-	private readonly manaPoints = new ManaPoints();
+	readonly lifePoints = new LifePointsBuilder();
+	readonly manaPoints = new ManaPointsBuilder();
 
-	private readonly actionHandlers: ActionHandlers = {
+	readonly actionHandlers: ActionsHandler = {
 		addOtherModifierToDefense: this.addOtherModifierToDefense.bind(this),
 		addOtherModifierToSkill: this.addOtherModifierToSkill.bind(this),
 		chooseRace: this.chooseRace.bind(this),
@@ -38,23 +36,37 @@ export class BuildingSheet implements BuildingSheetInterface {
 		setInitialAttributes: this.setInitialAttributes.bind(this),
 		applyRaceModifiers: this.applyRaceModifiers.bind(this),
 		applyRaceAbility: this.applyRaceAbility.bind(this),
-		pickPower: this.pickPower.bind(this),
+		pickGeneralPower: this.pickGeneralPower.bind(this),
+		pickRolePower: this.pickRolePower.bind(this),
 		changeDisplacement: this.changeDisplacement.bind(this),
 		addModifierToLifePoints: this.addModifierToLifePoints.bind(this),
 		chooseRole: this.chooseRole.bind(this),
 		addProficiency: this.addProficiency.bind(this),
+		applyRoleAbility: this.applyRoleAbility.bind(this),
+		learnCircle: this.learnCircle.bind(this),
+		learnSpell: this.learnSpell.bind(this),
+		addTriggeredEffect: this.addTriggeredEffect.bind(this),
+		addPerLevelModifierToLifePoints: this.addPerLevelModifierToLifePoints.bind(this),
 	};
 
-	constructor(attributes?: Partial<Attributes>) {
-		const initialAttributes = attributes ? {...Sheet.initialAttributes, ...attributes} : Sheet.initialAttributes;
-
-		this.dispatch({
-			type: 'setInitialAttributes',
-			payload: {
-				attributes: initialAttributes,
-			},
-		});
-	}
+	private race?: RaceInterface;
+	private role?: RoleInterface;
+	private readonly powers: SheetPowers = {general: new Map(), role: new Map()};
+	private readonly abilities: SheetAbilities = {race: new Map(), role: new Map()};
+	private attributes: Attributes = Sheet.initialAttributes;
+	// eslint-disable-next-line @typescript-eslint/prefer-readonly
+	private level: Level = Level.levelOne;
+	private vision: Vision = Vision.default;
+	private displacement = 9;
+	private readonly proficiencies: Proficiency[] = [Proficiency.simple, Proficiency.lightArmor];
+	private readonly skills: SheetSkills = InitialSkillsGenerator.generate();
+	private readonly defense = new Defense();
+	private readonly spells = new Map<SpellName, Spell>();
+	private readonly learnedCircles = new Set<SpellCircle>();
+	private readonly triggeredEffects: Record<TriggerEvent, TriggeredEffectInterface[]> = {
+		attack: [],
+		defense: [],
+	};
 
 	getManaPoints() {
 		return this.manaPoints;
@@ -80,19 +92,13 @@ export class BuildingSheet implements BuildingSheetInterface {
 		return this.vision;
 	}
 
-	getLifePoints(): LifePoints {
+	getLifePoints(): LifePointsBuilder {
 		return this.lifePoints;
 	}
 
 	getRole() {
 		return this.role;
 	}
-
-	dispatch: Dispatch = <T extends ActionType>(buildStep: ActionInterface<T>): void => {
-		this.buildSteps.push(new BuildStep(buildStep, this));
-		const handle = this.actionHandlers[buildStep.type];
-		handle(buildStep.payload);
-	};
 
 	getAttributes() {
 		return this.attributes;
@@ -102,14 +108,45 @@ export class BuildingSheet implements BuildingSheetInterface {
 		return this.proficiencies;
 	}
 
-	private chooseRole(payload: ActionPayload<'chooseRole'>) {
-		this.role = payload.role;
-		this.role.trainSkills(this);
-		this.role.addProficiencies(this);
+	getAbilities(): SheetAbilities {
+		return this.abilities;
 	}
 
-	private pickPower(payload: ActionPayload<'pickPower'>) {
-		payload.power.apply(this);
+	getPowers(): SheetPowers {
+		return this.powers;
+	}
+
+	buildLifePoints(context: ContextInterface, role: RoleInterface): LifePoints {
+		return this.lifePoints.build({
+			context,
+			role,
+			constitution: this.attributes.constitution,
+			level: this.level,
+		});
+	}
+
+	buildManaPoints(context: ContextInterface, role: RoleInterface): ManaPoints {
+		return this.manaPoints.build({
+			context,
+			role,
+			level: this.level,
+		});
+	}
+
+	private chooseRole(payload: ActionPayload<'chooseRole'>) {
+		this.role = payload.role;
+	}
+
+	private chooseRace(payload: ActionPayload<'chooseRace'>) {
+		this.race = payload.race;
+	}
+
+	private pickGeneralPower(payload: ActionPayload<'pickGeneralPower'>) {
+		return this.powers.general.set(payload.power.name, payload.power);
+	}
+
+	private pickRolePower(payload: ActionPayload<'pickRolePower'>) {
+		return this.powers.role.set(payload.power.name, payload.power);
 	}
 
 	private setInitialAttributes(payload: ActionPayload<'setInitialAttributes'>) {
@@ -130,12 +167,6 @@ export class BuildingSheet implements BuildingSheetInterface {
 
 	private addOtherModifierToSkill(payload: ActionPayload<'addOtherModifierToSkill'>): void {
 		this.skills[payload.skill].addOtherModifier(payload.modifier);
-	}
-
-	private chooseRace(payload: ActionPayload<'chooseRace'>) {
-		this.race = payload.race;
-		this.race.applyAttributesModifiers(this.attributes, this.dispatch);
-		this.race.applyAbilities(this);
 	}
 
 	private trainSkill(payload: ActionPayload<'trainSkill'>): void {
@@ -159,7 +190,7 @@ export class BuildingSheet implements BuildingSheetInterface {
 	}
 
 	private applyRaceAbility(payload: ActionPayload<'applyRaceAbility'>) {
-		payload.ability.apply(this);
+		this.abilities.race.set(payload.ability.name, payload.ability);
 	}
 
 	private changeDisplacement(payload: ActionPayload<'changeDisplacement'>) {
@@ -168,5 +199,25 @@ export class BuildingSheet implements BuildingSheetInterface {
 		}
 
 		this.displacement = payload.displacement;
+	}
+
+	private applyRoleAbility(payload: ActionPayload<'applyRoleAbility'>) {
+		this.abilities.role.set(payload.ability.name, payload.ability);
+	}
+
+	private learnSpell(payload: ActionPayload<'learnSpell'>) {
+		this.spells.set(payload.spell.name, payload.spell);
+	}
+
+	private learnCircle(payload: ActionPayload<'learnCircle'>) {
+		this.learnedCircles.add(payload.circle);
+	}
+
+	private addTriggeredEffect(payload: ActionPayload<'addTriggeredEffect'>) {
+		this.triggeredEffects[payload.effect.triggerEvent].push(payload.effect);
+	}
+
+	private addPerLevelModifierToLifePoints(payload: ActionPayload<'addPerLevelModifierToLifePoints'>) {
+		this.lifePoints.addPerLevelModifier(payload.modifier);
 	}
 }

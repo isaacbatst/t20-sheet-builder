@@ -1,17 +1,18 @@
-import type {ActionInterface} from '../../SheetActions';
-import {BuildingSheetFake} from '../../SheetFake';
+import type {ActionInterface} from '../../Sheet/SheetActions';
+import {BuildingSheetFake} from '../../BuildingSheetFake';
 import {Dodge} from '../../Power/Dodge';
 import {GeneralPowerName} from '../../Power/GeneralPowerName';
 import {SkillName} from '../../Skill/SkillName';
 import {RaceAbilityName} from '../RaceAbilityName';
 import {Versatile} from './Versatile';
+import {RaceName} from '../../Race/RaceName';
 
 describe('Versatile', () => {
 	it('should add choice', () => {
 		const versatile = new Versatile();
 		versatile.addChoice({type: 'skill', name: SkillName.acrobatics});
 
-		expect(versatile.choices).toEqual([{type: 'skill', name: SkillName.acrobatics}]);
+		expect(versatile.effects.default.choices).toEqual([{type: 'skill', name: SkillName.acrobatics}]);
 	});
 
 	it('should not add repeated choice', () => {
@@ -49,7 +50,7 @@ describe('Versatile', () => {
 		versatile.addChoice({type: 'skill', name: SkillName.acrobatics});
 		versatile.addChoice({type: 'power', name: GeneralPowerName.twoHandsStyle});
 
-		expect(versatile.choices).toEqual([
+		expect(versatile.effects.default.choices).toEqual([
 			{type: 'skill', name: SkillName.acrobatics},
 			{type: 'power', name: GeneralPowerName.twoHandsStyle},
 		]);
@@ -58,8 +59,9 @@ describe('Versatile', () => {
 	it('should not allow apply without choices', () => {
 		const versatile = new Versatile();
 		const sheet = new BuildingSheetFake();
+		const dispatch = jest.fn();
 		expect(() => {
-			versatile.apply(sheet);
+			versatile.addToSheet(sheet, dispatch, RaceName.human);
 		}).toThrow('MISSING_CHOICES');
 	});
 
@@ -69,9 +71,10 @@ describe('Versatile', () => {
 		versatile.addChoice({type: 'skill', name: SkillName.animalHandling});
 
 		const sheet = new BuildingSheetFake();
-		versatile.apply(sheet);
+		const dispatch = jest.fn();
+		versatile.addToSheet(sheet, dispatch, RaceName.human);
 
-		expect(sheet.dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
+		expect(dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
 			type: 'trainSkill',
 			payload: {
 				name: SkillName.acrobatics,
@@ -79,7 +82,7 @@ describe('Versatile', () => {
 			},
 		});
 
-		expect(sheet.dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
+		expect(dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
 			type: 'trainSkill',
 			payload: {
 				name: SkillName.acrobatics,
@@ -94,9 +97,11 @@ describe('Versatile', () => {
 		versatile.addChoice({type: 'power', name: GeneralPowerName.dodge});
 
 		const sheet = new BuildingSheetFake();
-		versatile.apply(sheet);
+		sheet.attributes.dexterity = 1;
+		const dispatch = jest.fn();
+		versatile.addToSheet(sheet, dispatch, RaceName.human);
 
-		expect(sheet.dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
+		expect(dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
 			type: 'trainSkill',
 			payload: {
 				name: SkillName.acrobatics,
@@ -104,8 +109,8 @@ describe('Versatile', () => {
 			},
 		});
 
-		expect(sheet.dispatch).toHaveBeenCalledWith<[ActionInterface<'pickPower'>]>({
-			type: 'pickPower',
+		expect(dispatch).toHaveBeenCalledWith<[ActionInterface<'pickGeneralPower'>]>({
+			type: 'pickGeneralPower',
 			payload: {
 				power: new Dodge(),
 				source: RaceAbilityName.versatile,

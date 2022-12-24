@@ -1,15 +1,19 @@
 import type {Attribute} from './Attributes';
-import type {GeneralPowerName} from './Power/GeneralPowerName';
 import type {PowerName} from './Power/PowerName';
 import type {Proficiency} from './Proficiency';
 import type {RaceName} from './Race/RaceName';
 import type {RaceAbilityName} from './RaceAbility/RaceAbilityName';
+import type {RoleAbilityName} from './Role/RoleAbilityName';
 import type {RoleName} from './Role/RoleName';
 import type {SkillName} from './Skill/SkillName';
+import {SpellCircle} from './Spell/SpellCircle';
+import type {SpellName} from './Spell/SpellName';
 import {StringHelper} from './StringHelper';
 import type {Vision} from './Vision';
 
-export type Translatable = Attribute | RaceAbilityName | SkillName | PowerName | RaceName | Proficiency | Vision | RoleName;
+export type Translatable = Attribute
+| RaceAbilityName | SkillName | PowerName | RaceName | Proficiency
+| Vision | RoleName | RoleAbilityName | SpellName | SpellCircle;
 
 export class Translator {
 	static getAttributeTranslation(attribute: Attribute, capitalized = true) {
@@ -42,12 +46,24 @@ export class Translator {
 		return Translator.rolesTranslation[role];
 	}
 
+	static getRoleAbilityTranslation(role: RoleAbilityName) {
+		return Translator.roleAbilitiesTranslation[role];
+	}
+
 	static getPowerTranslation(power: PowerName) {
 		return Translator.powersTranslation[power];
 	}
 
 	static getProficiencyTranslation(proficiency: Proficiency) {
 		return Translator.proficienciesTranslation[proficiency];
+	}
+
+	static getSpellTranslation(spell: SpellName) {
+		return Translator.spellsTranslation[spell];
+	}
+
+	static getSpellCircleTranslation(circle: SpellCircle) {
+		return Translator.spellCirclesTranslation[circle];
 	}
 
 	static getTranslation(string: Translatable) {
@@ -99,6 +115,7 @@ export class Translator {
 		dodge: 'Esquiva',
 		swordAndShieldStyle: 'Esttilo Espada e Escudo',
 		twoHandsStyle: 'Estilo de Duas Mãos',
+		archer: 'Arqueiro',
 	};
 
 	private static readonly visionsTranslation: Record<Vision, string> = {
@@ -127,6 +144,25 @@ export class Translator {
 		simple: 'armas simples',
 	};
 
+	private static readonly roleAbilitiesTranslation: Record<RoleAbilityName, string> = {
+		specialAttack: 'Ataque Especial',
+		warriorPower: 'Poder de Guerreiro',
+		arcanistPath: 'Caminho do Arcanista',
+		arcanistSpells: 'Magias do Arcanista',
+	};
+
+	private static readonly spellsTranslation: Record<SpellName, string> = {
+		arcaneArmor: 'Armadura Arcana',
+		illusoryDisguise: 'Disfarce Ilusório',
+		mentalDagger: 'Adaga Mental',
+		flamesExplosion: 'Explosão de Chamas',
+	};
+
+	private static readonly spellCirclesTranslation: Record<SpellCircle, string> = {
+		[SpellCircle.first]: 'primeiro',
+		[SpellCircle.second]: 'segundo',
+	};
+
 	private static readonly translation: Record<Translatable, string> = {
 		...Translator.attributesTranslation,
 		...Translator.abilitiesTranslation,
@@ -136,5 +172,8 @@ export class Translator {
 		...Translator.racesTranslation,
 		...Translator.rolesTranslation,
 		...Translator.proficienciesTranslation,
+		...Translator.roleAbilitiesTranslation,
+		...Translator.spellsTranslation,
+		...Translator.spellCirclesTranslation,
 	};
 }

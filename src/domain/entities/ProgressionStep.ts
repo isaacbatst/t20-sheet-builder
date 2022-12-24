@@ -1,6 +1,6 @@
 import {ActionDescriptionGenerator} from './ActionDescriptionGenerator/ActionDescriptionGenerator';
 import type {BuildingSheetInterface} from './BuildingSheetInterface';
-import type {ActionType, ActionInterface} from './SheetActions';
+import type {ActionType, ActionInterface} from './Sheet/SheetActions';
 
 export type BuildStepInterface<T extends ActionType = ActionType> = {
 	description: string;

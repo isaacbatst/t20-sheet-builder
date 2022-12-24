@@ -1,5 +1,6 @@
 import type {BuildingSheetInterface} from '../BuildingSheetInterface';
 import type {Proficiency} from '../Proficiency';
+import type {Dispatch} from '../Sheet/SheetInterface';
 import type {SkillName} from '../Skill/SkillName';
 import type {RoleName} from './RoleName';
 
@@ -15,6 +16,5 @@ export type RoleInterface = {
 	name: RoleName;
 
 	getTotalInitialSkills(): number;
-	trainSkills(sheet: BuildingSheetInterface): void;
-	addProficiencies(sheet: BuildingSheetInterface): void;
+	addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch): void;
 };

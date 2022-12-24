@@ -1,17 +1,12 @@
-import type {BuildingSheetInterface} from '../BuildingSheetInterface';
-import type {SheetInterface} from '../SheetInterface';
+import type {AbilityEffect} from '../Ability/AbilityEffect';
 import {GeneralPower} from './GeneralPower';
 import {GeneralPowerName} from './GeneralPowerName';
 
 export class TwoHandsStyle extends GeneralPower {
+	effects: Record<string, AbilityEffect> = {};
 	constructor() {
 		super(
 			GeneralPowerName.twoHandsStyle,
-			'passive',
 		);
-	}
-
-	apply(sheet: BuildingSheetInterface): void {
-		throw new Error('NOT_IMPLEMENTED');
 	}
 }

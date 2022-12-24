@@ -1,14 +1,15 @@
-import {OutGameContext} from './BuildingSheetContext';
+import {OutGameContext} from './OutOfGameContext';
 import {Character} from './Character';
 import {InGameContext} from './InGameContext';
 import {Dwarf} from './Race/Dwarf';
-import {Warrior} from './Role/Warrior';
-import {SheetBuilder} from './SheetBuilder';
+import {Warrior} from './Role/Warrior/Warrior';
+import {SheetBuilder} from './Sheet/SheetBuilder';
 import {SkillName} from './Skill/SkillName';
 
 describe('Character', () => {
 	it('should calculate defense', () => {
-		const sheet = SheetBuilder
+		const sheetBuilder = new SheetBuilder();
+		const sheet = sheetBuilder
 			.setInitialAttributes({charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 0, wisdom: 1})
 			.choseRace(new Dwarf())
 			.chooseRole(new Warrior([SkillName.fight, SkillName.aim, SkillName.athletics]));
@@ -20,7 +21,8 @@ describe('Character', () => {
 	});
 
 	it('should not calculate dwarf rock knowledge perception in build context', () => {
-		const sheet = SheetBuilder
+		const sheetBuilder = new SheetBuilder();
+		const sheet = sheetBuilder
 			.setInitialAttributes({charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 0, wisdom: 1})
 			.choseRace(new Dwarf())
 			.chooseRole(new Warrior([SkillName.fight, SkillName.aim, SkillName.athletics]));
@@ -32,7 +34,8 @@ describe('Character', () => {
 	});
 
 	it('should calculate dwarf rock knowledge perception underground', () => {
-		const sheet = SheetBuilder
+		const sheetBuilder = new SheetBuilder();
+		const sheet = sheetBuilder
 			.setInitialAttributes({charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 0, wisdom: 1})
 			.choseRace(new Dwarf())
 			.chooseRole(new Warrior([SkillName.fight, SkillName.aim, SkillName.athletics]));
@@ -44,7 +47,8 @@ describe('Character', () => {
 	});
 
 	it('should calculate dwarf rock knowledge perception outside underground', () => {
-		const sheet = SheetBuilder
+		const sheetBuilder = new SheetBuilder();
+		const sheet = sheetBuilder
 			.setInitialAttributes({charisma: 0, constitution: 2, dexterity: 2, intelligence: 3, strength: 0, wisdom: 1})
 			.choseRace(new Dwarf())
 			.chooseRole(new Warrior([SkillName.fight, SkillName.aim, SkillName.athletics]));

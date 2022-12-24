@@ -1,16 +1,15 @@
-import {AddModifierToLifePoints} from '../../Action/AddModifierToLifePoints';
-import type {BuildingSheetInterface} from '../../BuildingSheetInterface';
-import {Modifier} from '../../Modifier/Modifier';
 import {RaceAbility} from '../RaceAbility';
 import {RaceAbilityName} from '../RaceAbilityName';
+import {HardAsRockInitialEffect} from './HardAsRockInitialEffect';
+import {HardAsRockPerLevelEffect} from './HardAsRockPerLevelEffect';
 
 export class HardAsRock extends RaceAbility {
-	constructor() {
-		super(RaceAbilityName.hardAsRock, 'passive');
-	}
+	effects = {
+		initial: new HardAsRockInitialEffect(),
+		perLevel: new HardAsRockPerLevelEffect(),
+	};
 
-	apply(sheet: BuildingSheetInterface): void {
-		const modifier = new Modifier(this.name, 3);
-		sheet.dispatch(new AddModifierToLifePoints({modifier}));
+	constructor() {
+		super(RaceAbilityName.hardAsRock);
 	}
 }

@@ -1,6 +1,6 @@
 import type {Attribute} from '../Attributes';
-import type {VersatileChoice} from '../RaceAbility/Human/Versatile';
 import {Versatile} from '../RaceAbility/Human/Versatile';
+import type {VersatileChoice} from '../RaceAbility/Human/VersatileEffect';
 import {SelectableAttributesRace} from '../SelectableAttributesRace';
 import {RaceName} from './RaceName';
 
@@ -23,6 +23,10 @@ export class Human extends SelectableAttributesRace {
 		});
 	}
 
+	addVersatilChoice(choice: VersatileChoice) {
+		this.abilities.versatile.addChoice(choice);
+	}
+
 	protected get restrictedAttributes(): string[] {
 		return [];
 	}
@@ -36,6 +40,6 @@ export class Human extends SelectableAttributesRace {
 	}
 
 	get versatileChoices() {
-		return this.abilities.versatile.choices;
+		return this.abilities.versatile.effects.default.choices;
 	}
 }

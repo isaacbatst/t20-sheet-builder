@@ -1,9 +1,12 @@
 import {AddProficiency} from '../Action/AddProficiency';
+import {ChooseRole} from '../Action/ChooseRole';
 import {TrainSkill} from '../Action/TrainSkill';
-import type {BuildingSheet} from '../BuildingSheet';
 import type {BuildingSheetInterface} from '../BuildingSheetInterface';
+import {Level} from '../Levels';
 import type {Proficiency} from '../Proficiency';
+import type {Dispatch} from '../Sheet/SheetInterface';
 import type {SkillName} from '../Skill/SkillName';
+import type {RoleAbility} from './RoleAbility';
 import type {ChooseableSkills, RoleInterface} from './RoleInterface';
 import type {RoleName} from './RoleName';
 
@@ -12,55 +15,73 @@ export abstract class Role implements RoleInterface {
 	abstract readonly lifePointsPerLevel: number;
 	abstract readonly manaPerLevel: number;
 	abstract readonly mandatorySkills: SkillName[];
-	abstract readonly chooseableSkills: ChooseableSkills[];
 	abstract readonly proficiencies: Proficiency[];
 	abstract readonly name: RoleName;
+	abstract readonly abilities: Record<Level, Record<string, RoleAbility>>;
 
 	/**
  * Returns an instance of this role.
- * @param chosenSkills - Role skills to be trained
+ * @param chosenSkills - Chosen role skills to be trained
   **/
 
-	constructor(readonly chosenSkills: SkillName[]) {
-		const isSomeRepeated = chosenSkills.some((skill, index) => chosenSkills.indexOf(skill) !== index);
+	constructor(
+		readonly chosenSkills: SkillName[],
+		readonly chooseableSkills: ChooseableSkills[],
+	) {
+		this.validateChosenSkills();
+	}
 
-		if (isSomeRepeated) {
-			throw new Error('REPEATED_ROLE_SKILLS');
-		}
+	addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch): void {
+		dispatch(new ChooseRole({role: this}));
+		this.trainSkills(dispatch);
+		this.addProficiencies(dispatch);
+		this.addLevelOneAbilities(sheet, dispatch);
+	}
+
+	addLevelOneAbilities(sheet: BuildingSheetInterface, dispatch: Dispatch) {
+		const abilities = this.abilities[Level.levelOne];
+
+		Object.values(abilities).forEach(ability => {
+			ability.addToSheet(sheet, dispatch, this.name);
+		});
 	}
 
 	getTotalInitialSkills(): number {
 		return this.mandatorySkills.length + this.chooseableSkills.reduce((acc, curr) => curr.amount + acc, 0);
 	}
 
-	addProficiencies(sheet: BuildingSheetInterface): void {
+	private addProficiencies(dispatch: Dispatch): void {
 		this.proficiencies.forEach(proficiency => {
-			sheet.dispatch(new AddProficiency({
+			dispatch(new AddProficiency({
 				proficiency,
 				source: this.name,
 			}));
 		});
 	}
 
-	trainSkills(sheet: BuildingSheetInterface): void {
-		this.verifyChosenSkills();
-
+	private trainSkills(dispatch: Dispatch): void {
 		this.mandatorySkills.forEach(skill => {
-			sheet.dispatch(new TrainSkill({
+			dispatch(new TrainSkill({
 				name: skill,
 				source: this.name,
 			}));
 		});
 
 		this.chosenSkills.forEach(skill => {
-			sheet.dispatch(new TrainSkill({
+			dispatch(new TrainSkill({
 				name: skill,
 				source: this.name,
 			}));
 		});
 	}
 
-	private verifyChosenSkills() {
+	private validateChosenSkills() {
+		const isSomeRepeated = this.chosenSkills.some((skill, index) => this.chosenSkills.indexOf(skill) !== index);
+
+		if (isSomeRepeated) {
+			throw new Error('REPEATED_ROLE_SKILLS');
+		}
+
 		const chosenSkills = this.chosenSkills.slice();
 		const groupCounters: number[] = [];
 

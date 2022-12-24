@@ -1,5 +1,5 @@
 import type {Context} from './Context';
-import type {SheetInterface} from './SheetInterface';
+import type {SheetInterface} from './Sheet/SheetInterface';
 import type {SkillName} from './Skill/SkillName';
 
 export class Character {
