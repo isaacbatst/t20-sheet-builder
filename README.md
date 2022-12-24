@@ -6,8 +6,9 @@ Simulates the brazilian RPG: [Tormenta 20](https://jamboeditora.com.br/produto/t
 - Human
 - Dwarf
 
-## Classes
-Soon..
+## Roles
+- Warrior
+- Arcanist
 
 ## Story
 Soon..
