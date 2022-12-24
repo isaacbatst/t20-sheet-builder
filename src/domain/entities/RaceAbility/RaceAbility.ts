@@ -1,27 +1,25 @@
-import type {AbilityEffectType} from '../Ability/Ability';
+import type {AbilityInterface} from '../Ability/Ability';
 import {Ability} from '../Ability/Ability';
 import {ApplyRaceAbility} from '../Action/ApplyRaceAbility';
-import type {BuildingSheetInterface} from '../BuildingSheetInterface';
-import type {Dispatch} from '../SheetInterface';
+import type {ActionInterface} from '../SheetActions';
 import type {Translatable} from '../Translator';
 import type {RaceAbilityName} from './RaceAbilityName';
 
-export type RaceAbilityInterface = Ability & {
+export type RaceAbilityInterface = AbilityInterface & {
 	name: RaceAbilityName;
 };
 
 export abstract class RaceAbility extends Ability implements RaceAbilityInterface {
 	constructor(
 		override readonly name: RaceAbilityName,
-		effectType: AbilityEffectType,
 	) {
-		super(name, effectType, 'race');
+		super(name, 'race');
 	}
 
-	addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch, source: Translatable): void {
-		dispatch(new ApplyRaceAbility({ability: this, source}));
-		this.applyEffects(sheet, dispatch);
+	protected getAddAction(source: Translatable): ActionInterface {
+		return new ApplyRaceAbility({
+			ability: this,
+			source,
+		});
 	}
-
-	protected abstract applyEffects(sheet: BuildingSheetInterface, dispatch: Dispatch): void;
 }

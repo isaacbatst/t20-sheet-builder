@@ -1,5 +1,7 @@
+import type {TriggeredEffectInterface} from './Ability/TriggeredEffect';
 import type {Attributes} from './Attributes';
 import type {BuildingSheetInterface} from './BuildingSheetInterface';
+import type {PerLevelModifier} from './Modifier/PerLevelModifier';
 import type {ModifierInterface} from './ModifierList';
 import type {GeneralPowerInterface} from './Power/GeneralPower';
 import type {Proficiency} from './Proficiency';
@@ -33,11 +35,13 @@ type ActionTypesToHandlers = {
 	addProficiency(payload: {proficiency: Proficiency; source: Translatable}): void;
 	learnCircle(payload: {circle: SpellCircle; source: Translatable}): void;
 	learnSpell(payload: {spell: Spell; source: Translatable}): void;
+	addTriggeredEffect(payload: {effect: TriggeredEffectInterface}): void;
+	addPerLevelModifierToLifePoints(payload: {modifier: PerLevelModifier}): void;
 };
 
 export type ActionType = keyof ActionTypesToHandlers;
 export type ActionPayload<T extends ActionType> = Parameters<ActionTypesToHandlers[T]>[0];
-export type ActionInterface<T extends ActionType> = {
+export type ActionInterface<T extends ActionType = ActionType> = {
 	type: T;
 	payload: ActionPayload<T>;
 };
@@ -45,5 +49,5 @@ export type ActionsHandler = {
 	[Property in keyof ActionTypesToHandlers]: (payload: ActionPayload<Property>, dispatch: Dispatch) => void
 };
 export type ActionDescriptionGenerators = {
-	[Property in keyof ActionTypesToHandlers]: (sheet: BuildingSheetInterface, buildStep: ActionInterface<Property>) => string
+	[Property in keyof ActionTypesToHandlers]: (sheet: BuildingSheetInterface, action: ActionInterface<Property>) => string
 };

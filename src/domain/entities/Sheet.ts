@@ -1,9 +1,10 @@
 import type {Attributes} from './Attributes';
 import type {DefenseInterface} from './BuildingSheetInterface';
 import type {Context, ContextInterface} from './Context';
+import type {Level} from './Levels';
 import type {LifePoints} from './LifePoints';
 import type {ManaPoints} from './ManaPoints';
-import type {ModifierInterface} from './ModifierList';
+import type {ModifierInterface, TemporaryModifierInterface} from './ModifierList';
 import type {Proficiency} from './Proficiency';
 import type {BuildStep, BuildStepInterface} from './ProgressionStep';
 import type {RaceInterface} from './RaceInterface';
@@ -40,7 +41,7 @@ export class Sheet implements SheetInterface {
 	private readonly race: RaceInterface;
 	private readonly role: RoleInterface;
 	private readonly attributes: Attributes;
-	private readonly level: number;
+	private readonly level: Level;
 	private readonly vision: Vision;
 	private readonly displacement;
 	private readonly skills: SheetSkills;
@@ -48,6 +49,8 @@ export class Sheet implements SheetInterface {
 	private readonly proficiencies: Proficiency[];
 	private readonly abilities: SheetAbilities;
 	private readonly powers: SheetPowers;
+	private readonly attackModifiers: ModifierInterface[] = [];
+	private readonly damageModifiers: ModifierInterface[] = [];
 
 	constructor(
 		params: SheetParams,
@@ -66,6 +69,34 @@ export class Sheet implements SheetInterface {
 		this.proficiencies = params.proficiencies;
 		this.abilities = params.abilities;
 		this.powers = params.powers;
+	}
+
+	addAttackTemporaryModifier(modifier: TemporaryModifierInterface): void {
+		this.attackModifiers.push(modifier);
+	}
+
+	addDamageTemporaryModifier(modifier: TemporaryModifierInterface): void {
+		this.damageModifiers.push(modifier);
+	}
+
+	addSkillTemporaryModifier(skill: SkillName, modifier: TemporaryModifierInterface): void {
+		this.skills[skill].addOtherModifier(modifier);
+	}
+
+	addDefenseTemporaryModifier(modifier: TemporaryModifierInterface): void {
+		this.defense.others.add(modifier);
+	}
+
+	getLevel(): Level {
+		return this.level;
+	}
+
+	setAttackTemporaryModifier(modifier: TemporaryModifierInterface): void {
+		this.attackModifiers.push(modifier);
+	}
+
+	setDamageTemporaryModifier(modifier: TemporaryModifierInterface): void {
+		this.damageModifiers.push(modifier);
 	}
 
 	addDefenseModifier(modifier: ModifierInterface): void {

@@ -5,18 +5,19 @@ import {Proficiency} from './Proficiency';
 import {Dwarf} from './Race/Dwarf';
 import {Human} from './Race/Human';
 import type {Race} from './Race/Race';
-import type {VersatileChoice} from './RaceAbility/Human/Versatile';
-import {Arcanist} from './Role/Arcanist/Arcanist';
-import {ArcanistPath, ArcanistPathName} from './Role/Arcanist/ArcanistPath';
+import type {VersatileChoice} from './RaceAbility/Human/VersatileEffect';
+import {ArcanistBuilder} from './Role/Arcanist/ArcanistBuider';
+import {ArcanistPathMage} from './Role/Arcanist/ArcanistPathMage';
 import type {Role} from './Role/Role';
 import {RoleAbilityName} from './Role/RoleAbilityName';
 import {Warrior} from './Role/Warrior/Warrior';
 import type {Sheet} from './Sheet';
 import {SheetBuilder} from './SheetBuilder';
 import {SkillName} from './Skill/SkillName';
-import {ArcaneArmor} from './Spell/ArcaneArmor';
-import {IllusoryDisguise} from './Spell/IllusoryDisguise';
-import {MentalDagger} from './Spell/MentalDagger';
+import {ArcaneArmor} from './Spell/ArcaneArmor/ArcaneArmor';
+import {FlamesExplosion} from './Spell/FlamesExplosion/FlamesExplosion';
+import {IllusoryDisguise} from './Spell/IllusoryDisguise/IllusoryDisguise';
+import {MentalDagger} from './Spell/MentalDagger/MentalDagger';
 import {Vision} from './Vision';
 
 describe('Sheet', () => {
@@ -87,7 +88,10 @@ describe('Sheet', () => {
 
 		beforeEach(() => {
 			context = new OutGameContext();
-			role = new Arcanist([SkillName.knowledge, SkillName.diplomacy], ArcanistPathName.sorcerer, [new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
+			role = ArcanistBuilder
+				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
+				.choosePath(new ArcanistPathMage(new FlamesExplosion()))
+				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 			race = new Dwarf();
 			sheetBuilder = new SheetBuilder();
 			dwarfArcanist = sheetBuilder

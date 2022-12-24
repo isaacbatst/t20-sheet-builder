@@ -1,7 +1,7 @@
-import type {AbilityEffectType, AbilityInterface} from '../Ability/Ability';
-import type {Action} from '../Action/Action';
+import type {AbilityInterface} from '../Ability/Ability';
+import {Ability} from '../Ability/Ability';
+import type {AbilityEffect} from '../Ability/AbilityEffect';
 import type {BuildingSheetInterface} from '../BuildingSheetInterface';
-import type {ActionType} from '../SheetActions';
 import type {Dispatch} from '../SheetInterface';
 import type {Translatable} from '../Translator';
 import type {PowerName} from './PowerName';
@@ -10,7 +10,7 @@ export type PowerType = 'general' | 'role';
 
 export type PowerInterface = AbilityInterface & {
 	name: PowerName;
-	type: PowerType;
+	powerType: PowerType;
 };
 
 export type Requirement = {
@@ -18,27 +18,24 @@ export type Requirement = {
 	verify: (sheet: BuildingSheetInterface) => boolean;
 };
 
-export abstract class Power implements PowerInterface {
+export abstract class Power extends Ability implements PowerInterface {
 	readonly requirements: Requirement[] = [];
 
 	constructor(
-		readonly name: PowerName,
-		readonly effectType: AbilityEffectType,
-		readonly type: PowerType,
-	) {}
+		override readonly name: PowerName,
+		readonly powerType: PowerType,
+	) {
+		super(name, 'power');
+	}
 
-	addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch, source: Translatable): void {
+	override addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch, source: Translatable): void {
 		this.verifyRequirements(sheet);
-		dispatch(this.getAction(source));
-		this.applyEffects(sheet, dispatch);
+		super.addToSheet(sheet, dispatch, source);
 	}
 
 	protected addRequirement(requirement: Requirement) {
 		this.requirements.push(requirement);
 	}
-
-	protected abstract getAction(source: Translatable): Action<ActionType>;
-	protected abstract applyEffects(sheet: BuildingSheetInterface, dispatch: Dispatch): void;
 
 	private verifyRequirements(sheet: BuildingSheetInterface) {
 		const everyRequirementAchieved = this.requirements.every(requirement => requirement.verify(sheet));

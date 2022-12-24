@@ -1,9 +1,10 @@
+import type {Affectable} from './Affectable/Affectable';
+import type {TriggeredEffect, TriggeredEffectInterface, TriggerEvent} from './Ability/TriggeredEffect';
 import type {Attributes} from './Attributes';
 import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import {Defense} from './Defense';
 import {LifePoints} from './LifePoints';
 import {ManaPoints} from './ManaPoints';
-import type {GeneralPowerMap, RaceAbilityMap, RoleAbilityMap, RolePowerMap} from './Map';
 import {Proficiency} from './Proficiency';
 import type {BuildStep} from './ProgressionStep';
 import type {RaceInterface} from './RaceInterface';
@@ -40,6 +41,8 @@ export class BuildingSheet implements BuildingSheetInterface {
 		applyRoleAbility: this.applyRoleAbility.bind(this),
 		learnCircle: this.learnCircle.bind(this),
 		learnSpell: this.learnSpell.bind(this),
+		addTriggeredEffect: this.addTriggeredEffect.bind(this),
+		addPerLevelModifierToLifePoints: this.addPerLevelModifierToLifePoints.bind(this),
 	};
 
 	private race?: RaceInterface;
@@ -57,6 +60,10 @@ export class BuildingSheet implements BuildingSheetInterface {
 	private readonly manaPoints = new ManaPoints();
 	private readonly spells = new Map<SpellName, Spell>();
 	private readonly learnedCircles = new Set<SpellCircle>();
+	private readonly triggeredEffects: Record<TriggerEvent, TriggeredEffectInterface[]> = {
+		attack: [],
+		defense: [],
+	};
 
 	getManaPoints() {
 		return this.manaPoints;
@@ -184,5 +191,13 @@ export class BuildingSheet implements BuildingSheetInterface {
 
 	private learnCircle(payload: ActionPayload<'learnCircle'>) {
 		this.learnedCircles.add(payload.circle);
+	}
+
+	private addTriggeredEffect(payload: ActionPayload<'addTriggeredEffect'>) {
+		this.triggeredEffects[payload.effect.triggerEvent].push(payload.effect);
+	}
+
+	private addPerLevelModifierToLifePoints(payload: ActionPayload<'addPerLevelModifierToLifePoints'>) {
+		this.lifePoints.addPerLevelModifier(payload.modifier);
 	}
 }

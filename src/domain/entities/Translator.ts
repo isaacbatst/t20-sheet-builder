@@ -155,10 +155,12 @@ export class Translator {
 		arcaneArmor: 'Armadura Arcana',
 		illusoryDisguise: 'Disfarce Ilusório',
 		mentalDagger: 'Adaga Mental',
+		flamesExplosion: 'Explosão de Chamas',
 	};
 
 	private static readonly spellCirclesTranslation: Record<SpellCircle, string> = {
 		[SpellCircle.first]: 'primeiro',
+		[SpellCircle.second]: 'segundo',
 	};
 
 	private static readonly translation: Record<Translatable, string> = {

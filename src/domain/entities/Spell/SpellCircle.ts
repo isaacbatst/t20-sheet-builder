@@ -1,3 +1,4 @@
 export enum SpellCircle {
-	first,
+	first = 1,
+	second = 2,
 }

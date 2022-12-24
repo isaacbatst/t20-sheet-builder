@@ -1,10 +1,11 @@
-import type {Levels} from '../../Levels';
+import {Level} from '../../Levels';
 import {Proficiency} from '../../Proficiency';
 import {SkillName} from '../../Skill/SkillName';
 import {Role} from '../Role';
 import type {RoleAbility} from '../RoleAbility';
 import type {ChooseableSkills} from '../RoleInterface';
-import {RoleName} from '../RoleName';
+import type {RoleName} from '../RoleName';
+import {RegularRoleName} from '../RoleName';
 import {SpecialAttack} from './SpecialAttack';
 
 export class Warrior extends Role {
@@ -27,11 +28,15 @@ export class Warrior extends Role {
 
 	readonly mandatorySkills: SkillName[] = [SkillName.fortitude];
 	readonly proficiencies: Proficiency[] = [Proficiency.martial, Proficiency.shield, Proficiency.heavyArmor];
-	readonly name: RoleName = RoleName.warrior;
-	readonly abilities: Record<Levels, Record<string, RoleAbility>> = {
-		levelOne: {
+	readonly name: RoleName = RegularRoleName.warrior;
+	readonly abilities: Record<Level, Record<string, RoleAbility>> = {
+		[Level.levelOne]: {
 			specialAttack: new SpecialAttack(),
 		},
+		[Level.levelTwo]: {},
+		[Level.levelThree]: {},
+		[Level.levelFour]: {},
+		[Level.levelFive]: {},
 	};
 
 	constructor(chosenSkills: SkillName[]) {

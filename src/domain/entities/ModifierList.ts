@@ -1,3 +1,4 @@
+import type {EffectDuration} from './Ability/ActivateableAbilityEffect';
 import type {ModifiersListInterface} from './BuildingSheetInterface';
 import type {ContextInterface} from './Context';
 import type {InGameContext} from './InGameContext';
@@ -15,6 +16,10 @@ export type ModifierInterface = {
 	source: Translatable;
 	getValue(context: ContextInterface): number;
 	getMaxPossibleValue(): number;
+};
+
+export type TemporaryModifierInterface = ModifierInterface & {
+	duration: EffectDuration;
 };
 
 export class ModifiersList implements ModifiersListInterface {

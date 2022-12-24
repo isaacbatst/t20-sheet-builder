@@ -1,9 +1,13 @@
+import {TriggeredEffectFake} from '../Ability/TriggeredEffectFake';
+import {AddPerLevelModifierToLifePoints} from '../Action/AddPerLevelModifierToLifePoints';
 import {AddProficiency} from '../Action/AddProficiency';
+import {AddTriggeredEffect} from '../Action/AddTriggeredEffect';
 import {ApplyRoleAbility} from '../Action/ApplyRoleAbility';
 import {ChooseRole} from '../Action/ChooseRole';
 import {BuildingSheetFake} from '../BuildingSheetFake';
 import {ConditionalModifier} from '../Modifier/ConditionalModifier';
 import {Modifier} from '../Modifier/Modifier';
+import {PerLevelModifier} from '../Modifier/PerLevelModifier';
 import {GeneralPowerName} from '../Power/GeneralPowerName';
 import {GeneralPowerFake, RolePowerFake} from '../PowerFake';
 import {Proficiency} from '../Proficiency';
@@ -13,8 +17,7 @@ import {RaceAbilityFake} from '../RaceAbilityFake';
 import {RaceFake} from '../RaceFake';
 import {RoleAbilityFake} from '../Role/RoleAbilityFake';
 import {RoleAbilityName} from '../Role/RoleAbilityName';
-import {RoleName} from '../Role/RoleName';
-import {SpecialAttack} from '../Role/Warrior/SpecialAttack';
+import {RegularRoleName} from '../Role/RoleName';
 import {RoleFake} from '../RoleFake';
 import {Skill} from '../Skill/Skill';
 import {SkillName} from '../Skill/SkillName';
@@ -280,7 +283,7 @@ describe('ActionDescriptionGenerator', () => {
 
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
-			new AddProficiency({proficiency: Proficiency.martial, source: RoleName.warrior}),
+			new AddProficiency({proficiency: Proficiency.martial, source: RegularRoleName.warrior}),
 		);
 
 		expect(description).toBe('Guerreiro: você é proficiente com armas marciais.');
@@ -291,9 +294,42 @@ describe('ActionDescriptionGenerator', () => {
 
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
-			new ApplyRoleAbility({ability: new RoleAbilityFake(), source: RoleName.warrior}),
+			new ApplyRoleAbility({ability: new RoleAbilityFake(), source: RegularRoleName.warrior}),
 		);
 
 		expect(description).toBe('Guerreiro: habilidade Ataque Especial adicionada.');
+	});
+
+	it('should generate addTriggeredEffect description', () => {
+		const sheet = new BuildingSheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			new AddTriggeredEffect({effect: new TriggeredEffectFake()}),
+		);
+
+		expect(description).toBe('Ataque Especial: efeito engatilhado.');
+	});
+
+	it('should generate addPerLevelModifierToLifePoints description removing level 1', () => {
+		const sheet = new BuildingSheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			new AddPerLevelModifierToLifePoints({modifier: new PerLevelModifier(1, true, RaceAbilityName.hardAsRock)}),
+		);
+
+		expect(description).toBe('Duro como pedra: +1 PV por nível após o nível 1.');
+	});
+
+	it('should generate addPerLevelModifierToLifePoints description', () => {
+		const sheet = new BuildingSheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			new AddPerLevelModifierToLifePoints({modifier: new PerLevelModifier(1, false, RaceAbilityName.hardAsRock)}),
+		);
+
+		expect(description).toBe('Duro como pedra: +1 PV por nível.');
 	});
 });

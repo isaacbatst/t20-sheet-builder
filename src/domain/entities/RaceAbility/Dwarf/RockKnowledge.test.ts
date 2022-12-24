@@ -1,10 +1,11 @@
 import {AddOtherModifierToSkill} from '../../Action/AddOtherModifierToSkill';
 import {ChangeVision} from '../../Action/ChangeVision';
+import {BuildingSheetFake} from '../../BuildingSheetFake';
 import {InGameContext} from '../../InGameContext';
 import {ConditionalModifier} from '../../Modifier/ConditionalModifier';
 import type {ConditionVerify} from '../../ModifierList';
-import type {ActionInterface, ActionPayload} from '../../SheetActions';
-import {BuildingSheetFake} from '../../BuildingSheetFake';
+import {RaceName} from '../../Race/RaceName';
+import type {ActionInterface} from '../../SheetActions';
 import {SkillName} from '../../Skill/SkillName';
 import {Vision} from '../../Vision';
 import {RaceAbilityName} from '../RaceAbilityName';
@@ -15,7 +16,7 @@ describe('RockKnowledge', () => {
 		const rockKnowledge = new RockKnowledge();
 		const sheet = new BuildingSheetFake();
 		const dispatch = jest.fn();
-		rockKnowledge.addToSheet(sheet, dispatch);
+		rockKnowledge.addToSheet(sheet, dispatch, RaceName.dwarf);
 
 		expect(dispatch).toHaveBeenCalledWith(new ChangeVision({
 			source: RaceAbilityName.rockKnowledge,
@@ -27,7 +28,7 @@ describe('RockKnowledge', () => {
 		const rockKnowledge = new RockKnowledge();
 		const sheet = new BuildingSheetFake();
 		const dispatch = jest.fn();
-		rockKnowledge.addToSheet(sheet, dispatch);
+		rockKnowledge.addToSheet(sheet, dispatch, RaceName.dwarf);
 
 		expect(dispatch).toHaveBeenCalledWith(expect.objectContaining(new AddOtherModifierToSkill({
 			modifier: new ConditionalModifier(RaceAbilityName.rockKnowledge, 2, {description: 'testes devem ser realizados no subterrâneo', verify: expect.any(Function) as ConditionVerify}),
@@ -39,7 +40,7 @@ describe('RockKnowledge', () => {
 		const rockKnowledge = new RockKnowledge();
 		const sheet = new BuildingSheetFake();
 		const dispatch = jest.fn();
-		rockKnowledge.addToSheet(sheet, dispatch);
+		rockKnowledge.addToSheet(sheet, dispatch, RaceName.dwarf);
 
 		expect(dispatch).toHaveBeenCalledWith(expect.objectContaining(new AddOtherModifierToSkill({
 			skill: SkillName.survival,
@@ -51,7 +52,7 @@ describe('RockKnowledge', () => {
 		const rockKnowledge = new RockKnowledge();
 		const sheet = new BuildingSheetFake();
 		const dispatch = jest.fn();
-		rockKnowledge.addToSheet(sheet, dispatch);
+		rockKnowledge.addToSheet(sheet, dispatch, RaceName.dwarf);
 
 		const perceptionCall = dispatch.mock.calls[2][0] as ActionInterface<'addOtherModifierToSkill'>;
 		const survivalCall = dispatch.mock.calls[3][0] as ActionInterface<'addOtherModifierToSkill'>;
@@ -67,7 +68,7 @@ describe('RockKnowledge', () => {
 		const rockKnowledge = new RockKnowledge();
 		const sheet = new BuildingSheetFake();
 		const dispatch = jest.fn();
-		rockKnowledge.addToSheet(sheet, dispatch);
+		rockKnowledge.addToSheet(sheet, dispatch, RaceName.dwarf);
 
 		const perceptionCall = dispatch.mock.calls[2][0] as ActionInterface<'addOtherModifierToSkill'>;
 		const survivalCall = dispatch.mock.calls[3][0] as ActionInterface<'addOtherModifierToSkill'>;

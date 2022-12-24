@@ -1,4 +1,5 @@
 import type {ContextInterface} from './Context';
+import type {PerLevelModifier} from './Modifier/PerLevelModifier';
 import type {ModifierInterface} from './ModifierList';
 import {ModifiersList} from './ModifierList';
 import type {RoleInterface} from './Role/RoleInterface';
@@ -12,15 +13,21 @@ export class LifePoints {
 	}
 
 	readonly modifiers: ModifiersList = new ModifiersList(LifePoints.repeatedModifierError);
+	readonly perLevelModifiers: PerLevelModifier[] = [];
 
 	addModifier(modifier: ModifierInterface) {
 		this.modifiers.add(modifier);
+	}
+
+	addPerLevelModifier(modifier: PerLevelModifier) {
+		this.perLevelModifiers.push(modifier);
 	}
 
 	getMax(params: GetMaxLifePointsParams) {
 		return this.modifiers.getTotal(params.context)
 			+ params.role.initialLifePoints
 			+ params.constitution
-			+ (params.role.lifePointsPerLevel * (params.level - 1));
+			+ (params.role.lifePointsPerLevel * (params.level - 1))
+			+ (this.perLevelModifiers.reduce((acc, num) => acc + num.getValue(params.level), 0));
 	}
 }

@@ -1,10 +1,4 @@
-import {AddOtherModifierToDefense} from '../Action/AddOtherModifierToDefense';
-import {AddOtherModifierToSkill} from '../Action/AddOtherModifierToSkill';
-import type {BuildingSheetInterface} from '../BuildingSheetInterface';
-import {Modifier} from '../Modifier/Modifier';
-import type {Dispatch} from '../SheetInterface';
-import {SkillName} from '../Skill/SkillName';
-import type {Translatable} from '../Translator';
+import {DodgeEffect} from './DodgeEffect';
 import {GeneralPower} from './GeneralPower';
 import {GeneralPowerName} from './GeneralPowerName';
 import type {Requirement} from './Power';
@@ -15,17 +9,17 @@ export class Dodge extends GeneralPower {
 		verify: sheet => sheet.getAttributes().dexterity >= 1,
 	};
 
+	effects: {
+		default: DodgeEffect;
+	};
+
 	constructor() {
 		super(
 			GeneralPowerName.dodge,
-			'passive',
 		);
 		super.addRequirement(Dodge.requirement);
-	}
-
-	applyEffects(sheet: BuildingSheetInterface, dispatch: Dispatch) {
-		const modifier = new Modifier(this.name, 2);
-		dispatch(new AddOtherModifierToDefense({modifier}));
-		dispatch(new AddOtherModifierToSkill({modifier, skill: SkillName.reflexes}));
+		this.effects = {
+			default: new DodgeEffect(),
+		};
 	}
 }

@@ -1,6 +1,5 @@
-import type {Attribute} from '../../Attributes';
-import {RoleAbility} from '../RoleAbility';
-import {RoleAbilityName} from '../RoleAbilityName';
+import type {BuildingSheetInterface} from '../../BuildingSheetInterface';
+import type {Dispatch} from '../../SheetInterface';
 
 export enum ArcanistPathName {
 	wizard = 'wizard',
@@ -8,28 +7,7 @@ export enum ArcanistPathName {
 	mage = 'mage',
 }
 
-export class ArcanistPath extends RoleAbility {
-	static pathToAttribute: Record<ArcanistPathName, Attribute> = {
-		mage: 'intelligence',
-		sorcerer: 'charisma',
-		wizard: 'intelligence',
-	};
-
-	static pathToLearnFrequency: Record<ArcanistPathName, 'all' | 'odd'> = {
-		mage: 'all',
-		sorcerer: 'odd',
-		wizard: 'all',
-	};
-
-	constructor(readonly chosenPath: ArcanistPathName) {
-		super(RoleAbilityName.arcanistPath, 'passive');
-	}
-
-	getPathAttribute() {
-		return ArcanistPath.pathToAttribute[this.chosenPath];
-	}
-
-	getPathLearnFrequency() {
-		return ArcanistPath.pathToLearnFrequency[this.chosenPath];
-	}
+export abstract class ArcanistPath {
+	abstract name: ArcanistPathName;
+	abstract addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch): void;
 }

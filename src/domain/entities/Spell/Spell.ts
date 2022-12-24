@@ -1,7 +1,9 @@
-import {ActiveAbility} from '../Ability/ActiveAbility';
+import {Ability} from '../Ability/Ability';
+import type {AbilityEffect} from '../Ability/AbilityEffect';
 import {LearnSpell} from '../Action/AddSpell';
-import type {BuildingSheetInterface} from '../BuildingSheetInterface';
-import type {Appliable, Dispatch} from '../SheetInterface';
+import type {Level} from '../Levels';
+import type {ActionInterface} from '../SheetActions';
+import type {Appliable} from '../SheetInterface';
 import type {Translatable} from '../Translator';
 import {SpellCircle} from './SpellCircle';
 import {SpellCost} from './SpellCost';
@@ -9,9 +11,10 @@ import type {SpellName} from './SpellName';
 
 export type SpellType = 'arcane' | 'divine' | 'universal';
 
-export abstract class Spell extends ActiveAbility {
+export abstract class Spell extends Ability {
 	static readonly circleManaCost: Record<SpellCircle, number> = {
 		[SpellCircle.first]: 1,
+		[SpellCircle.second]: 3,
 	};
 
 	readonly cost: Appliable;
@@ -25,7 +28,10 @@ export abstract class Spell extends ActiveAbility {
 		this.cost = new SpellCost(this.circle);
 	}
 
-	addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch, source: Translatable): void {
-		dispatch(new LearnSpell({source, spell: this}));
+	protected getAddAction(source: Translatable): ActionInterface {
+		return new LearnSpell({
+			source,
+			spell: this,
+		});
 	}
 }

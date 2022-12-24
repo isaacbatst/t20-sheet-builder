@@ -1,17 +1,13 @@
-import {LearnCircle} from '../../Action/LearnCircle';
-import type {BuildingSheetInterface} from '../../BuildingSheetInterface';
-import type {Levels} from '../../Levels';
-import type {Dispatch} from '../../SheetInterface';
-import {SpellCircle} from '../../Spell/SpellCircle';
+import {RoleAbility} from '../RoleAbility';
 import {RoleAbilityName} from '../RoleAbilityName';
-import {RoleAbilityPassive} from '../RoleAbilityPassive';
+import {ArcanistSpellsEffect} from './ArcanistSpellsEffect';
 
-export class ArcanistSpells extends RoleAbilityPassive {
-	constructor(readonly level: Levels) {
+export class ArcanistSpells extends RoleAbility {
+	effects = {
+		default: new ArcanistSpellsEffect(),
+	};
+
+	constructor() {
 		super(RoleAbilityName.arcanistSpells);
-	}
-
-	applyEffects(sheet: BuildingSheetInterface, dispatch: Dispatch): void {
-		dispatch(new LearnCircle({circle: SpellCircle.first, source: this.name}));
 	}
 }

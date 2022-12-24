@@ -35,6 +35,8 @@ export abstract class ActionDescriptionGenerator {
 		applyRoleAbility: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: habilidade ${Translator.getRoleAbilityTranslation(action.payload.ability.name)} adicionada.`,
 		learnCircle: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: você pode lançar magias de ${Translator.getSpellCircleTranslation(action.payload.circle)} círculo.`,
 		learnSpell: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: você aprendeu a magia ${Translator.getSpellTranslation(action.payload.spell.name)}.`,
+		addTriggeredEffect: (sheet, action) => `${Translator.getTranslation(action.payload.effect.source)}: efeito engatilhado.`,
+		addPerLevelModifierToLifePoints: (sheet, {payload: {modifier}}) => `${Translator.getTranslation(modifier.source)}: ${StringHelper.addNumberSign(modifier.perLevelValue)} PV por nível${modifier.removeFirstLevel ? ' após o nível 1' : ''}.`,
 	};
 
 	private static getModifierConditionText(condition?: ModifierCondition) {

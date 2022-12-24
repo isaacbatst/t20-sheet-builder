@@ -1,5 +1,6 @@
 import {ChangeDisplacement} from '../../Action/ChangeDisplacement';
 import {BuildingSheetFake} from '../../BuildingSheetFake';
+import {RaceName} from '../../Race/RaceName';
 import {RaceAbilityName} from '../RaceAbilityName';
 import {SlowAndAlways} from './SlowAndAlways';
 
@@ -8,7 +9,7 @@ describe('SlowAndAlways', () => {
 		const slowAndAlways = new SlowAndAlways();
 		const sheet = new BuildingSheetFake();
 		const dispatch = jest.fn();
-		slowAndAlways.addToSheet(sheet, dispatch);
+		slowAndAlways.addToSheet(sheet, dispatch, RaceName.dwarf);
 
 		expect(dispatch).toHaveBeenCalledWith(new ChangeDisplacement({
 			displacement: 6,

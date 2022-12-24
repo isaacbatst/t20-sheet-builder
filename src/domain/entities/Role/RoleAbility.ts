@@ -1,27 +1,25 @@
-import type {AbilityEffectType} from '../Ability/Ability';
+import type {AbilityInterface} from '../Ability/Ability';
 import {Ability} from '../Ability/Ability';
 import {ApplyRoleAbility} from '../Action/ApplyRoleAbility';
-import type {BuildingSheetInterface} from '../BuildingSheetInterface';
-import type {Dispatch} from '../SheetInterface';
+import type {ActionInterface} from '../SheetActions';
 import type {Translatable} from '../Translator';
 import type {RoleAbilityName} from './RoleAbilityName';
 
-export type RoleAbilityInterface = Ability & {
+export type RoleAbilityInterface = AbilityInterface & {
 	name: RoleAbilityName;
 };
 
 export abstract class RoleAbility extends Ability {
 	constructor(
 		override readonly name: RoleAbilityName,
-		effectType: AbilityEffectType,
 	) {
-		super(name, effectType, 'role');
+		super(name, 'role');
 	}
 
-	addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch, source: Translatable): void {
-		dispatch(new ApplyRoleAbility({
+	protected getAddAction(source: Translatable): ActionInterface {
+		return new ApplyRoleAbility({
 			ability: this,
 			source,
-		}));
+		});
 	}
 }

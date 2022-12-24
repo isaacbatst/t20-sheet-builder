@@ -2,7 +2,7 @@ import {AddProficiency} from '../Action/AddProficiency';
 import {ChooseRole} from '../Action/ChooseRole';
 import {TrainSkill} from '../Action/TrainSkill';
 import type {BuildingSheetInterface} from '../BuildingSheetInterface';
-import type {Levels} from '../Levels';
+import {Level} from '../Levels';
 import type {Proficiency} from '../Proficiency';
 import type {Dispatch} from '../SheetInterface';
 import type {SkillName} from '../Skill/SkillName';
@@ -17,7 +17,7 @@ export abstract class Role implements RoleInterface {
 	abstract readonly mandatorySkills: SkillName[];
 	abstract readonly proficiencies: Proficiency[];
 	abstract readonly name: RoleName;
-	abstract readonly abilities: Record<Levels, Record<string, RoleAbility>>;
+	abstract readonly abilities: Record<Level, Record<string, RoleAbility>>;
 
 	/**
  * Returns an instance of this role.
@@ -39,7 +39,7 @@ export abstract class Role implements RoleInterface {
 	}
 
 	addLevelOneAbilities(sheet: BuildingSheetInterface, dispatch: Dispatch) {
-		const abilities = this.abilities.levelOne;
+		const abilities = this.abilities[Level.levelOne];
 
 		Object.values(abilities).forEach(ability => {
 			ability.addToSheet(sheet, dispatch, this.name);

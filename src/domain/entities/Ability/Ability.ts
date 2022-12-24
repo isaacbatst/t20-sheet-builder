@@ -1,22 +1,44 @@
 import type {BuildingSheetInterface} from '../BuildingSheetInterface';
+import type {PowerName} from '../Power/PowerName';
+import type {RaceAbilityName} from '../RaceAbility/RaceAbilityName';
+import type {RoleAbilityName} from '../Role/RoleAbilityName';
+import type {ActionInterface} from '../SheetActions';
 import type {Dispatch} from '../SheetInterface';
+import type {SpellName} from '../Spell/SpellName';
 import type {Translatable} from '../Translator';
+import type {AbilityEffect} from './AbilityEffect';
+import {PassiveEffect} from './PassiveEffect';
 
-export type AbilityEffectType = 'active' | 'passive';
-export type AbilityType = 'role' | 'race' | 'spell';
+export type AbilityType = 'role' | 'race' | 'spell' | 'power';
 
 export type AbilityInterface = {
 	name: string;
-	effectType: AbilityEffectType;
+	effects: Record<string, AbilityEffect>;
+	abilityType: AbilityType;
 	addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch, source: Translatable): void;
 };
 
+export type AbilityName = RoleAbilityName | PowerName | RaceAbilityName | SpellName;
+
 export abstract class Ability implements AbilityInterface {
+	abstract readonly effects: Record<string, AbilityEffect>;
 	constructor(
-		readonly name: string,
-		readonly effectType: AbilityEffectType,
+		readonly name: AbilityName,
 		readonly abilityType: AbilityType,
 	) {}
 
-	abstract addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch, source: Translatable): void;
+	addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch, source: Translatable): void {
+		dispatch(this.getAddAction(source));
+		this.addPassiveEffectsToSheet(sheet, dispatch, source);
+	}
+
+	protected abstract getAddAction(source: Translatable): ActionInterface;
+
+	private addPassiveEffectsToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch, source: Translatable) {
+		Object.values(this.effects).forEach(effect => {
+			if (effect instanceof PassiveEffect) {
+				effect.addToSheet(sheet, dispatch, source);
+			}
+		});
+	}
 }

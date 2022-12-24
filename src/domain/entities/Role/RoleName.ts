@@ -1,4 +1,7 @@
-export enum RoleName {
+import type {SpellRoleName} from './SpellRole';
+
+export enum RegularRoleName {
 	warrior = 'warrior',
-	arcanist = 'arcanist',
 }
+
+export type RoleName = RegularRoleName | SpellRoleName;

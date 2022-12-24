@@ -5,13 +5,14 @@ import {GeneralPowerName} from '../../Power/GeneralPowerName';
 import {SkillName} from '../../Skill/SkillName';
 import {RaceAbilityName} from '../RaceAbilityName';
 import {Versatile} from './Versatile';
+import {RaceName} from '../../Race/RaceName';
 
 describe('Versatile', () => {
 	it('should add choice', () => {
 		const versatile = new Versatile();
 		versatile.addChoice({type: 'skill', name: SkillName.acrobatics});
 
-		expect(versatile.choices).toEqual([{type: 'skill', name: SkillName.acrobatics}]);
+		expect(versatile.effects.default.choices).toEqual([{type: 'skill', name: SkillName.acrobatics}]);
 	});
 
 	it('should not add repeated choice', () => {
@@ -49,7 +50,7 @@ describe('Versatile', () => {
 		versatile.addChoice({type: 'skill', name: SkillName.acrobatics});
 		versatile.addChoice({type: 'power', name: GeneralPowerName.twoHandsStyle});
 
-		expect(versatile.choices).toEqual([
+		expect(versatile.effects.default.choices).toEqual([
 			{type: 'skill', name: SkillName.acrobatics},
 			{type: 'power', name: GeneralPowerName.twoHandsStyle},
 		]);
@@ -60,7 +61,7 @@ describe('Versatile', () => {
 		const sheet = new BuildingSheetFake();
 		const dispatch = jest.fn();
 		expect(() => {
-			versatile.addToSheet(sheet, dispatch);
+			versatile.addToSheet(sheet, dispatch, RaceName.human);
 		}).toThrow('MISSING_CHOICES');
 	});
 
@@ -71,7 +72,7 @@ describe('Versatile', () => {
 
 		const sheet = new BuildingSheetFake();
 		const dispatch = jest.fn();
-		versatile.addToSheet(sheet, dispatch);
+		versatile.addToSheet(sheet, dispatch, RaceName.human);
 
 		expect(dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
 			type: 'trainSkill',
@@ -98,7 +99,7 @@ describe('Versatile', () => {
 		const sheet = new BuildingSheetFake();
 		sheet.attributes.dexterity = 1;
 		const dispatch = jest.fn();
-		versatile.addToSheet(sheet, dispatch);
+		versatile.addToSheet(sheet, dispatch, RaceName.human);
 
 		expect(dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
 			type: 'trainSkill',

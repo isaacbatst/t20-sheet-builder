@@ -4,7 +4,7 @@ import {TrainSkill} from '../../Action/TrainSkill';
 import {BuildingSheetFake} from '../../BuildingSheetFake';
 import {Proficiency} from '../../Proficiency';
 import {SkillName} from '../../Skill/SkillName';
-import {RoleName} from '../RoleName';
+import {RegularRoleName} from '../RoleName';
 import {SpecialAttack} from './SpecialAttack';
 import {Warrior} from './Warrior';
 
@@ -17,15 +17,15 @@ describe('Warrior', () => {
 
 		expect(dispatch).toHaveBeenCalledWith(new TrainSkill({
 			name: SkillName.fight,
-			source: RoleName.warrior,
+			source: RegularRoleName.warrior,
 		}));
 		expect(dispatch).toHaveBeenCalledWith(new TrainSkill({
 			name: SkillName.animalHandling,
-			source: RoleName.warrior,
+			source: RegularRoleName.warrior,
 		}));
 		expect(dispatch).toHaveBeenCalledWith(new TrainSkill({
 			name: SkillName.aim,
-			source: RoleName.warrior,
+			source: RegularRoleName.warrior,
 		}));
 	});
 
@@ -55,15 +55,15 @@ describe('Warrior', () => {
 
 		expect(dispatch).toHaveBeenCalledWith(new AddProficiency({
 			proficiency: Proficiency.martial,
-			source: RoleName.warrior,
+			source: RegularRoleName.warrior,
 		}));
 		expect(dispatch).toHaveBeenCalledWith(new AddProficiency({
 			proficiency: Proficiency.heavyArmor,
-			source: RoleName.warrior,
+			source: RegularRoleName.warrior,
 		}));
 		expect(dispatch).toHaveBeenCalledWith(new AddProficiency({
 			proficiency: Proficiency.shield,
-			source: RoleName.warrior,
+			source: RegularRoleName.warrior,
 		}));
 	});
 
@@ -75,7 +75,7 @@ describe('Warrior', () => {
 
 		expect(dispatch).toHaveBeenCalledWith(new ApplyRoleAbility({
 			ability: new SpecialAttack(),
-			source: RoleName.warrior,
+			source: RegularRoleName.warrior,
 		}));
 	});
 });

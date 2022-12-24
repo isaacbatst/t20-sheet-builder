@@ -1,7 +1,6 @@
-import type {AbilityEffectType} from '../Ability/Ability';
+import type {AbilityEffect} from '../Ability/AbilityEffect';
 import type {Action} from '../Action/Action';
 import {PickGeneralPower} from '../Action/PickGeneralPower';
-import type {ActionType} from '../SheetActions';
 import type {Translatable} from '../Translator';
 import type {GeneralPowerName} from './GeneralPowerName';
 import type {PowerInterface} from './Power';
@@ -13,12 +12,12 @@ export type GeneralPowerInterface = PowerInterface & {
 
 export abstract class GeneralPower extends Power implements GeneralPowerInterface {
 	constructor(
-		override readonly name: GeneralPowerName, effectType: AbilityEffectType,
+		override readonly name: GeneralPowerName,
 	) {
-		super(name, effectType, 'general');
+		super(name, 'general');
 	}
 
-	protected getAction(source: Translatable): Action<ActionType> {
+	protected getAddAction(source: Translatable): Action {
 		return new PickGeneralPower({
 			power: this,
 			source,

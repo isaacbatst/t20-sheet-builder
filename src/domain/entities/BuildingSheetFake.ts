@@ -36,6 +36,8 @@ export class BuildingSheetFake implements BuildingSheetInterface {
 		applyRoleAbility: jest.fn(),
 		learnCircle: jest.fn(),
 		learnSpell: jest.fn(),
+		addTriggeredEffect: jest.fn(),
+		addPerLevelModifierToLifePoints: jest.fn(),
 	};
 
 	public level = 1;
