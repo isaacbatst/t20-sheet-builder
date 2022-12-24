@@ -1,11 +1,11 @@
-import {ApplyRoleAbility} from '../../Action/ApplyRoleAbility';
-import {BuildingSheetFake} from '../../BuildingSheetFake';
-import {SheetFake} from '../../Sheet/SheetFake';
+import {ApplyRoleAbility} from '../../../Action/ApplyRoleAbility';
+import {BuildingSheetFake} from '../../../BuildingSheetFake';
+import {SheetFake} from '../../../Sheet/SheetFake';
 import {SpecialAttack} from './SpecialAttack';
 import {SpecialAttackEffectExecution} from './SpecialAttackEffectExecution';
 import {SpecialAttackEffectExecutionRecipientAttack} from './SpecialAttackEffectExecutionRecipientAttack';
 import {SpecialAttackManaCost} from './SpecialAttackManaCost';
-import {RegularRoleName} from '../RoleName';
+import {RegularRoleName} from '../../RoleName';
 
 describe('SpecialAttack', () => {
 	it('should dispatch add', () => {

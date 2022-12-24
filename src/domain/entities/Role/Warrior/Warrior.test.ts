@@ -5,7 +5,7 @@ import {BuildingSheetFake} from '../../BuildingSheetFake';
 import {Proficiency} from '../../Proficiency';
 import {SkillName} from '../../Skill/SkillName';
 import {RegularRoleName} from '../RoleName';
-import {SpecialAttack} from './SpecialAttack';
+import {SpecialAttack} from './SpecialAttack/SpecialAttack';
 import {Warrior} from './Warrior';
 
 describe('Warrior', () => {

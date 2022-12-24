@@ -1,4 +1,4 @@
-import {ManaCost} from '../../ManaCost';
+import {ManaCost} from '../../../ManaCost';
 
 export enum SpecialAttackEffectCosts {
 	oneManaPoint = 1,

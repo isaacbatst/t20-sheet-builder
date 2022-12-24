@@ -1,6 +1,6 @@
-import {TemporaryModifier} from '../../Modifier/TemporaryModifier';
-import {SheetFake} from '../../Sheet/SheetFake';
-import {RoleAbilityName} from '../RoleAbilityName';
+import {TemporaryModifier} from '../../../Modifier/TemporaryModifier';
+import {SheetFake} from '../../../Sheet/SheetFake';
+import {RoleAbilityName} from '../../RoleAbilityName';
 import {SpecialAttackEffectExecutionRecipientBoth} from './SpecialAttackEffectExecutionRecipientBoth';
 
 describe('SpecialAttackEffectExecutionRecipientBoth', () => {

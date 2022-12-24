@@ -6,7 +6,7 @@ import type {RoleAbility} from '../RoleAbility';
 import type {ChooseableSkills} from '../RoleInterface';
 import type {RoleName} from '../RoleName';
 import {RegularRoleName} from '../RoleName';
-import {SpecialAttack} from './SpecialAttack';
+import {SpecialAttack} from './SpecialAttack/SpecialAttack';
 
 export class Warrior extends Role {
 	private static readonly chooseableSkills: ChooseableSkills[] = [
