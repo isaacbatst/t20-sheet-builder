@@ -1,5 +1,5 @@
 import type {Attributes} from '../Attributes';
-import type {DefenseInterface} from '../BuildingSheetInterface';
+import type {DefenseInterface} from './BuildingSheetInterface';
 import type {Context, ContextInterface} from '../Context';
 import type {Level} from '../Levels';
 import type {LifePoints} from '../LifePoints';

@@ -1,6 +1,6 @@
 import {ApplyRaceAbility} from '../Action/ApplyRaceAbility';
 import {ApplyRaceModifiers} from '../Action/ApplyRaceModifiers';
-import {BuildingSheetFake} from '../BuildingSheetFake';
+import {BuildingSheetFake} from '../Sheet/BuildingSheetFake';
 import {GeneralPowerName} from '../Power/GeneralPowerName';
 import {Versatile} from '../RaceAbility/Human/Versatile';
 import type {VersatileChoice} from '../RaceAbility/Human/VersatileEffect';

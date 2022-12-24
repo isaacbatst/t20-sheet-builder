@@ -1,5 +1,5 @@
 import type {Attributes} from '../Attributes';
-import {BuildingSheet} from '../BuildingSheet';
+import {BuildingSheet} from './BuildingSheet';
 import {OutGameContext} from '../OutOfGameContext';
 import {Modifier} from '../Modifier/Modifier';
 import type {ConditionVerify} from '../ModifierList';

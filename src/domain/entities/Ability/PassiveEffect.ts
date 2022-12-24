@@ -1,4 +1,4 @@
-import type {BuildingSheetInterface} from '../BuildingSheetInterface';
+import type {BuildingSheetInterface} from '../Sheet/BuildingSheetInterface';
 import type {Dispatch} from '../Sheet/SheetInterface';
 import type {Translatable} from '../Translator';
 import type {AbilityName} from './Ability';

@@ -1,7 +1,7 @@
 import {ApplyRaceModifiers} from '../Action/ApplyRaceModifiers';
 import {ChooseRace} from '../Action/ChooseRace';
 import type {Attribute, Attributes} from '../Attributes';
-import type {BuildingSheetInterface} from '../BuildingSheetInterface';
+import type {BuildingSheetInterface} from '../Sheet/BuildingSheetInterface';
 import type {RaceAbility} from '../RaceAbility/RaceAbility';
 import type {RaceInterface} from '../RaceInterface';
 import type {Dispatch} from '../Sheet/SheetInterface';

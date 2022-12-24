@@ -1,5 +1,5 @@
 import type {EffectDuration} from './Ability/ActivateableAbilityEffect';
-import type {ModifiersListInterface} from './BuildingSheetInterface';
+import type {ModifiersListInterface} from './Sheet/BuildingSheetInterface';
 import type {ContextInterface} from './Context';
 import type {InGameContext} from './InGameContext';
 import type {Translatable} from './Translator';

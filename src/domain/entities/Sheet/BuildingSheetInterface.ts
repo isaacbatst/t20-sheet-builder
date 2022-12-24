@@ -1,16 +1,16 @@
-import type {Attributes} from './Attributes';
-import type {ContextInterface} from './Context';
-import type {LifePoints} from './LifePoints';
-import type {LifePointsBuilder} from './LifePointsBuilder';
-import type {ManaPoints} from './ManaPoints';
-import type {ModifierInterface} from './ModifierList';
-import type {Proficiency} from './Proficiency';
-import type {BuildStep} from './ProgressionStep';
-import type {RoleInterface} from './Role/RoleInterface';
-import type {SheetSkills} from './Sheet/Sheet';
-import type {ActionsHandler} from './Sheet/SheetActions';
-import type {SheetAbilities, SheetPowers} from './Sheet/SheetInterface';
-import type {Vision} from './Vision';
+import type {Attributes} from '../Attributes';
+import type {ContextInterface} from '../Context';
+import type {LifePoints} from '../LifePoints';
+import type {LifePointsBuilder} from '../LifePointsBuilder';
+import type {ManaPoints} from '../ManaPoints';
+import type {ModifierInterface} from '../ModifierList';
+import type {Proficiency} from '../Proficiency';
+import type {BuildStep} from '../ProgressionStep';
+import type {RoleInterface} from '../Role/RoleInterface';
+import type {SheetSkills} from './Sheet';
+import type {ActionsHandler} from './SheetActions';
+import type {SheetAbilities, SheetPowers} from './SheetInterface';
+import type {Vision} from '../Vision';
 
 export type DefenseInterface = {
 	others: ModifiersListInterface;

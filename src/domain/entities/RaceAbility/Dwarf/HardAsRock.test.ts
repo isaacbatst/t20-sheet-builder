@@ -1,6 +1,6 @@
 import {AddModifierToLifePoints} from '../../Action/AddModifierToLifePoints';
 import {Modifier} from '../../Modifier/Modifier';
-import {BuildingSheetFake} from '../../BuildingSheetFake';
+import {BuildingSheetFake} from '../../Sheet/BuildingSheetFake';
 import {RaceAbilityName} from '../RaceAbilityName';
 import {HardAsRock} from './HardAsRock';
 import {AddPerLevelModifierToLifePoints} from '../../Action/AddPerLevelModifierToLifePoints';

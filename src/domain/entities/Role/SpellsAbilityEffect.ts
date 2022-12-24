@@ -1,7 +1,7 @@
 import {PassiveEffect} from '../Ability/PassiveEffect';
 import {LearnCircle} from '../Action/LearnCircle';
 import type {Attribute} from '../Attributes';
-import type {BuildingSheetInterface} from '../BuildingSheetInterface';
+import type {BuildingSheetInterface} from '../Sheet/BuildingSheetInterface';
 import type {Level} from '../Levels';
 import type {Dispatch} from '../Sheet/SheetInterface';
 import type {LearnableSpellType, Spell} from '../Spell/Spell';

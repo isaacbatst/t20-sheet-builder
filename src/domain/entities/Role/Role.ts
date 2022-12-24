@@ -1,7 +1,7 @@
 import {AddProficiency} from '../Action/AddProficiency';
 import {ChooseRole} from '../Action/ChooseRole';
 import {TrainSkill} from '../Action/TrainSkill';
-import type {BuildingSheetInterface} from '../BuildingSheetInterface';
+import type {BuildingSheetInterface} from '../Sheet/BuildingSheetInterface';
 import {Level} from '../Levels';
 import type {Proficiency} from '../Proficiency';
 import type {Dispatch} from '../Sheet/SheetInterface';

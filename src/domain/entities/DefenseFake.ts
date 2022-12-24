@@ -1,4 +1,4 @@
-import type {DefenseInterface, ModifiersListInterface} from './BuildingSheetInterface';
+import type {DefenseInterface, ModifiersListInterface} from './Sheet/BuildingSheetInterface';
 import type {ContextInterface} from './Context';
 
 export class DefenseFake implements DefenseInterface {

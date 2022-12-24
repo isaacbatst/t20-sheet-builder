@@ -1,5 +1,5 @@
 import type {ActionInterface} from '../../Sheet/SheetActions';
-import {BuildingSheetFake} from '../../BuildingSheetFake';
+import {BuildingSheetFake} from '../../Sheet/BuildingSheetFake';
 import {Dodge} from '../../Power/Dodge';
 import {GeneralPowerName} from '../../Power/GeneralPowerName';
 import {SkillName} from '../../Skill/SkillName';

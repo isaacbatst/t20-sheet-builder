@@ -1,24 +1,24 @@
-import type {Attributes} from './Attributes';
+import type {Attributes} from '../Attributes';
 import type {BuildingSheetInterface, DefenseInterface} from './BuildingSheetInterface';
-import type {Context, ContextInterface} from './Context';
-import {DefenseFake} from './DefenseFake';
-import type {LifePoints} from './LifePoints';
-import {LifePointsBuilder} from './LifePointsBuilder';
-import type {ManaPoints} from './ManaPoints';
-import {ManaPointsBuilder} from './ManaPointsBuilder';
-import type {ModifierInterface} from './ModifierList';
-import {OutGameContext} from './OutOfGameContext';
-import type {Proficiency} from './Proficiency';
-import type {ProgressionStepFake} from './ProgressionStepFake';
-import {RaceFake} from './RaceFake';
-import type {RaceInterface} from './RaceInterface';
-import type {RoleInterface} from './Role/RoleInterface';
-import type {ActionsHandler, ActionType} from './Sheet/SheetActions';
-import type {SheetAbilities, SheetPowers} from './Sheet/SheetInterface';
-import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
-import type {Skill} from './Skill/Skill';
-import type {SkillName} from './Skill/SkillName';
-import {Vision} from './Vision';
+import type {Context, ContextInterface} from '../Context';
+import {DefenseFake} from '../DefenseFake';
+import type {LifePoints} from '../LifePoints';
+import {LifePointsBuilder} from '../LifePointsBuilder';
+import type {ManaPoints} from '../ManaPoints';
+import {ManaPointsBuilder} from '../ManaPointsBuilder';
+import type {ModifierInterface} from '../ModifierList';
+import {OutGameContext} from '../OutOfGameContext';
+import type {Proficiency} from '../Proficiency';
+import type {ProgressionStepFake} from '../ProgressionStepFake';
+import {RaceFake} from '../RaceFake';
+import type {RaceInterface} from '../RaceInterface';
+import type {RoleInterface} from '../Role/RoleInterface';
+import type {ActionsHandler, ActionType} from './SheetActions';
+import type {SheetAbilities, SheetPowers} from './SheetInterface';
+import {InitialSkillsGenerator} from '../Skill/InitialSkillsGenerator';
+import type {Skill} from '../Skill/Skill';
+import type {SkillName} from '../Skill/SkillName';
+import {Vision} from '../Vision';
 
 export class BuildingSheetFake implements BuildingSheetInterface {
 	actionHandlers: ActionsHandler = {

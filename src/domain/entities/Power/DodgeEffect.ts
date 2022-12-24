@@ -1,7 +1,7 @@
 import {PassiveEffect} from '../Ability/PassiveEffect';
 import {AddOtherModifierToDefense} from '../Action/AddOtherModifierToDefense';
 import {AddOtherModifierToSkill} from '../Action/AddOtherModifierToSkill';
-import type {BuildingSheetInterface} from '../BuildingSheetInterface';
+import type {BuildingSheetInterface} from '../Sheet/BuildingSheetInterface';
 import {Modifier} from '../Modifier/Modifier';
 import type {Dispatch} from '../Sheet/SheetInterface';
 import {SkillName} from '../Skill/SkillName';

@@ -1,4 +1,4 @@
-import type {BuildingSheetInterface} from '../BuildingSheetInterface';
+import type {BuildingSheetInterface} from '../Sheet/BuildingSheetInterface';
 import type {PowerName} from '../Power/PowerName';
 import type {RaceAbilityName} from '../RaceAbility/RaceAbilityName';
 import type {RoleAbilityName} from '../Role/RoleAbilityName';

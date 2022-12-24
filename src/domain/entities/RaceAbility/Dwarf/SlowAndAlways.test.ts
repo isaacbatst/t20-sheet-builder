@@ -1,5 +1,5 @@
 import {ChangeDisplacement} from '../../Action/ChangeDisplacement';
-import {BuildingSheetFake} from '../../BuildingSheetFake';
+import {BuildingSheetFake} from '../../Sheet/BuildingSheetFake';
 import {RaceName} from '../../Race/RaceName';
 import {RaceAbilityName} from '../RaceAbilityName';
 import {SlowAndAlways} from './SlowAndAlways';

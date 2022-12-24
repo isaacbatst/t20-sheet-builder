@@ -1,7 +1,7 @@
 import {SetInitialAttributes} from '../Action/SetInitialAttributes';
 import type {Attributes} from '../Attributes';
-import {BuildingSheet} from '../BuildingSheet';
-import type {BuildingSheetInterface} from '../BuildingSheetInterface';
+import {BuildingSheet} from './BuildingSheet';
+import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import {BuildStep} from '../ProgressionStep';
 import type {RaceInterface} from '../RaceInterface';
 import type {RoleInterface} from '../Role/RoleInterface';

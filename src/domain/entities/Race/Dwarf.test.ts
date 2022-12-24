@@ -1,6 +1,6 @@
 import {ApplyRaceAbility} from '../Action/ApplyRaceAbility';
 import {ApplyRaceModifiers} from '../Action/ApplyRaceModifiers';
-import {BuildingSheetFake} from '../BuildingSheetFake';
+import {BuildingSheetFake} from '../Sheet/BuildingSheetFake';
 import {RockKnowledge} from '../RaceAbility/Dwarf/RockKnowledge';
 import {SlowAndAlways} from '../RaceAbility/Dwarf/SlowAndAlways';
 import {Dwarf} from './Dwarf';

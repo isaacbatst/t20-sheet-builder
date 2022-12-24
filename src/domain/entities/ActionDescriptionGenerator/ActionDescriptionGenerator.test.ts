@@ -4,7 +4,7 @@ import {AddProficiency} from '../Action/AddProficiency';
 import {AddTriggeredEffect} from '../Action/AddTriggeredEffect';
 import {ApplyRoleAbility} from '../Action/ApplyRoleAbility';
 import {ChooseRole} from '../Action/ChooseRole';
-import {BuildingSheetFake} from '../BuildingSheetFake';
+import {BuildingSheetFake} from '../Sheet/BuildingSheetFake';
 import {ConditionalModifier} from '../Modifier/ConditionalModifier';
 import {Modifier} from '../Modifier/Modifier';
 import {PerLevelModifier} from '../Modifier/PerLevelModifier';

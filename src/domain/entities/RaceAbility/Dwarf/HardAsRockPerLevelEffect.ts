@@ -1,6 +1,6 @@
 import {PassiveEffect} from '../../Ability/PassiveEffect';
 import {AddPerLevelModifierToLifePoints} from '../../Action/AddPerLevelModifierToLifePoints';
-import type {BuildingSheetInterface} from '../../BuildingSheetInterface';
+import type {BuildingSheetInterface} from '../../Sheet/BuildingSheetInterface';
 import {PerLevelModifier} from '../../Modifier/PerLevelModifier';
 import type {Dispatch} from '../../Sheet/SheetInterface';
 import {RaceAbilityName} from '../RaceAbilityName';

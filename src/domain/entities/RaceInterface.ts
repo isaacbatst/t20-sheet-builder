@@ -1,5 +1,5 @@
 import type {Attributes} from './Attributes';
-import type {BuildingSheetInterface} from './BuildingSheetInterface';
+import type {BuildingSheetInterface} from './Sheet/BuildingSheetInterface';
 import type {RaceName} from './Race/RaceName';
 import type {Dispatch} from './Sheet/SheetInterface';
 

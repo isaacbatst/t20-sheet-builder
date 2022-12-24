@@ -1,4 +1,4 @@
-import {BuildingSheetFake} from '../BuildingSheetFake';
+import {BuildingSheetFake} from '../Sheet/BuildingSheetFake';
 import {RaceAbilityName} from '../RaceAbility/RaceAbilityName';
 import {Skill} from './Skill';
 import {Modifier} from '../Modifier/Modifier';

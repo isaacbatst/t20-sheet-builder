@@ -1,7 +1,7 @@
 import {PassiveEffect} from '../../Ability/PassiveEffect';
 import {AddOtherModifierToSkill} from '../../Action/AddOtherModifierToSkill';
 import {ChangeVision} from '../../Action/ChangeVision';
-import type {BuildingSheetInterface} from '../../BuildingSheetInterface';
+import type {BuildingSheetInterface} from '../../Sheet/BuildingSheetInterface';
 import type {InGameContext} from '../../InGameContext';
 import {ConditionalModifier} from '../../Modifier/ConditionalModifier';
 import type {ModifierCondition} from '../../ModifierList';

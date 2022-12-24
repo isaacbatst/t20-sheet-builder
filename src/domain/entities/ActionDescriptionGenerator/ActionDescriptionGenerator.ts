@@ -1,4 +1,4 @@
-import type {BuildingSheetInterface} from '../BuildingSheetInterface';
+import type {BuildingSheetInterface} from '../Sheet/BuildingSheetInterface';
 import type {ModifierCondition} from '../ModifierList';
 import type {ActionDescriptionGenerators, ActionInterface, ActionType} from '../Sheet/SheetActions';
 import {Skill} from '../Skill/Skill';

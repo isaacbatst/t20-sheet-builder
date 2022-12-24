@@ -1,6 +1,6 @@
 import {PassiveEffect} from '../../Ability/PassiveEffect';
 import {TrainSkill} from '../../Action/TrainSkill';
-import type {BuildingSheetInterface} from '../../BuildingSheetInterface';
+import type {BuildingSheetInterface} from '../../Sheet/BuildingSheetInterface';
 import type {GeneralPowerName} from '../../Power/GeneralPowerName';
 import {GeneralPowerFactory} from '../../Power/PowerFactory';
 import type {Dispatch} from '../../Sheet/SheetInterface';

@@ -1,6 +1,6 @@
 import {LearnSpell} from '../../Action/AddSpell';
 import {TrainSkill} from '../../Action/TrainSkill';
-import {BuildingSheetFake} from '../../BuildingSheetFake';
+import {BuildingSheetFake} from '../../Sheet/BuildingSheetFake';
 import {SkillName} from '../../Skill/SkillName';
 import {ArcaneArmor} from '../../Spell/ArcaneArmor/ArcaneArmor';
 import {FlamesExplosion} from '../../Spell/FlamesExplosion/FlamesExplosion';

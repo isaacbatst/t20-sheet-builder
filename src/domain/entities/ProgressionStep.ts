@@ -1,5 +1,5 @@
 import {ActionDescriptionGenerator} from './ActionDescriptionGenerator/ActionDescriptionGenerator';
-import type {BuildingSheetInterface} from './BuildingSheetInterface';
+import type {BuildingSheetInterface} from './Sheet/BuildingSheetInterface';
 import type {ActionType, ActionInterface} from './Sheet/SheetActions';
 
 export type BuildStepInterface<T extends ActionType = ActionType> = {

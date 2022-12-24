@@ -1,5 +1,5 @@
 import {LearnSpell} from '../../../Action/AddSpell';
-import type {BuildingSheetInterface} from '../../../BuildingSheetInterface';
+import type {BuildingSheetInterface} from '../../../Sheet/BuildingSheetInterface';
 import type {Dispatch} from '../../../Sheet/SheetInterface';
 import type {Spell} from '../../../Spell/Spell';
 import {RoleAbilityName} from '../../RoleAbilityName';

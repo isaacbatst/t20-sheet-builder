@@ -1,6 +1,6 @@
 import type {TriggeredEffectInterface} from '../Ability/TriggeredEffect';
 import type {Attributes} from '../Attributes';
-import type {BuildingSheetInterface} from '../BuildingSheetInterface';
+import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import type {PerLevelModifier} from '../Modifier/PerLevelModifier';
 import type {ModifierInterface} from '../ModifierList';
 import type {GeneralPowerInterface} from '../Power/GeneralPower';

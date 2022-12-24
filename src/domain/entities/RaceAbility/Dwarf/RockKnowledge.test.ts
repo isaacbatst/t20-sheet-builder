@@ -1,6 +1,6 @@
 import {AddOtherModifierToSkill} from '../../Action/AddOtherModifierToSkill';
 import {ChangeVision} from '../../Action/ChangeVision';
-import {BuildingSheetFake} from '../../BuildingSheetFake';
+import {BuildingSheetFake} from '../../Sheet/BuildingSheetFake';
 import {InGameContext} from '../../InGameContext';
 import {ConditionalModifier} from '../../Modifier/ConditionalModifier';
 import type {ConditionVerify} from '../../ModifierList';

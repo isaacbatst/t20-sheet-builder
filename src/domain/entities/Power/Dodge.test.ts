@@ -1,6 +1,6 @@
 import {AddOtherModifierToDefense} from '../Action/AddOtherModifierToDefense';
 import {AddOtherModifierToSkill} from '../Action/AddOtherModifierToSkill';
-import {BuildingSheetFake} from '../BuildingSheetFake';
+import {BuildingSheetFake} from '../Sheet/BuildingSheetFake';
 import {Modifier} from '../Modifier/Modifier';
 import {RaceAbilityName} from '../RaceAbility/RaceAbilityName';
 import {SkillName} from '../Skill/SkillName';
