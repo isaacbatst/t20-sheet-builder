@@ -8,6 +8,7 @@ import type {SpellName} from '../Spell/SpellName';
 import type {Translatable} from '../Translator';
 import type {AbilityEffect} from './AbilityEffect';
 import {PassiveEffect} from './PassiveEffect';
+import {TriggeredEffect} from './TriggeredEffect';
 
 export type AbilityType = 'role' | 'race' | 'spell' | 'power';
 
@@ -36,7 +37,7 @@ export abstract class Ability implements AbilityInterface {
 
 	private addPassiveEffectsToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch, source: Translatable) {
 		Object.values(this.effects).forEach(effect => {
-			if (effect instanceof PassiveEffect) {
+			if (effect instanceof PassiveEffect || effect instanceof TriggeredEffect) {
 				effect.addToSheet(sheet, dispatch, source);
 			}
 		});
