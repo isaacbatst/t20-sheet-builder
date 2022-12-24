@@ -1,6 +1,6 @@
-import type {Attribute} from '../../Attributes';
-import {RoleAbility} from '../RoleAbility';
-import {RoleAbilityName} from '../RoleAbilityName';
+import type {Attribute} from '../../../Attributes';
+import {RoleAbility} from '../../RoleAbility';
+import {RoleAbilityName} from '../../RoleAbilityName';
 import type {ArcanistPath, ArcanistPathName} from './ArcanistPath';
 import {ArcanistPathEffect} from './ArcanistPathEffect';
 

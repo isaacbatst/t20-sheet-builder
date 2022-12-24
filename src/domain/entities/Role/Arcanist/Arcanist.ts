@@ -7,9 +7,9 @@ import {SpellCircle} from '../../Spell/SpellCircle';
 import type {RoleAbility} from '../RoleAbility';
 import type {ChooseableSkills} from '../RoleInterface';
 import {SpellRole, SpellRoleName} from '../SpellRole';
-import type {ArcanistPath} from './ArcanistPath';
-import {ArcanistPathAbility} from './ArcanistPathAbility';
-import {ArcanistSpells} from './ArcanistSpells';
+import type {ArcanistPath} from './ArcanistPath/ArcanistPath';
+import {ArcanistPathAbility} from './ArcanistPath/ArcanistPathAbility';
+import {ArcanistSpells} from './ArcanistSpells/ArcanistSpells';
 
 export class Arcanist extends SpellRole {
 	static readonly chooseableSkills: ChooseableSkills[] = [{amount: 2, skills: [SkillName.knowledge, SkillName.diplomacy, SkillName.cheat, SkillName.war, SkillName.initiative, SkillName.intimidation, SkillName.intuition, SkillName.investigation, SkillName.nobility, SkillName.craft, SkillName.perception]}];

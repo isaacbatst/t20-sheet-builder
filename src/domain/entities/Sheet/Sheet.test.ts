@@ -7,7 +7,7 @@ import {Human} from '../Race/Human';
 import type {Race} from '../Race/Race';
 import type {VersatileChoice} from '../RaceAbility/Human/VersatileEffect';
 import {ArcanistBuilder} from '../Role/Arcanist/ArcanistBuider';
-import {ArcanistPathMage} from '../Role/Arcanist/ArcanistPathMage';
+import {ArcanistPathMage} from '../Role/Arcanist/ArcanistPath/ArcanistPathMage';
 import type {Role} from '../Role/Role';
 import {RoleAbilityName} from '../Role/RoleAbilityName';
 import {Warrior} from '../Role/Warrior/Warrior';

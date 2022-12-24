@@ -10,7 +10,7 @@ import {Human} from '../Race/Human';
 import type {Race} from '../Race/Race';
 import {RaceAbilityName} from '../RaceAbility/RaceAbilityName';
 import {ArcanistBuilder} from '../Role/Arcanist/ArcanistBuider';
-import {ArcanistPathMage} from '../Role/Arcanist/ArcanistPathMage';
+import {ArcanistPathMage} from '../Role/Arcanist/ArcanistPath/ArcanistPathMage';
 import type {Role} from '../Role/Role';
 import {Warrior} from '../Role/Warrior/Warrior';
 import {SheetBuilder} from '../Sheet/SheetBuilder';

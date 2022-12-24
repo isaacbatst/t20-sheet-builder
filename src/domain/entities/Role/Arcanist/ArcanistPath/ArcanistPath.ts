@@ -1,5 +1,5 @@
-import type {BuildingSheetInterface} from '../../BuildingSheetInterface';
-import type {Dispatch} from '../../Sheet/SheetInterface';
+import type {BuildingSheetInterface} from '../../../BuildingSheetInterface';
+import type {Dispatch} from '../../../Sheet/SheetInterface';
 
 export enum ArcanistPathName {
 	wizard = 'wizard',

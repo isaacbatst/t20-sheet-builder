@@ -8,7 +8,7 @@ import {IllusoryDisguise} from '../../Spell/IllusoryDisguise/IllusoryDisguise';
 import {MentalDagger} from '../../Spell/MentalDagger/MentalDagger';
 import {SpellRoleName} from '../SpellRole';
 import {ArcanistBuilder} from './ArcanistBuider';
-import {ArcanistPathMage} from './ArcanistPathMage';
+import {ArcanistPathMage} from './ArcanistPath/ArcanistPathMage';
 
 describe('Arcanist', () => {
 	it('should dispatch proper train skills', () => {

@@ -1,5 +1,5 @@
-import {RoleAbility} from '../RoleAbility';
-import {RoleAbilityName} from '../RoleAbilityName';
+import {RoleAbility} from '../../RoleAbility';
+import {RoleAbilityName} from '../../RoleAbilityName';
 import {ArcanistSpellsEffect} from './ArcanistSpellsEffect';
 
 export class ArcanistSpells extends RoleAbility {

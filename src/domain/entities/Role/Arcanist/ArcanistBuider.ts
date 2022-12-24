@@ -1,7 +1,7 @@
 import type {SkillName} from '../../Skill/SkillName';
 import type {Spell} from '../../Spell/Spell';
 import {Arcanist} from './Arcanist';
-import type {ArcanistPath} from './ArcanistPath';
+import type {ArcanistPath} from './ArcanistPath/ArcanistPath';
 
 export class ArcanistBuilder {
 	static chooseSkills(skills: SkillName[]) {
