@@ -6,7 +6,6 @@ import type {Spell, SpellType} from '../../Spell/Spell';
 import {SpellCircle} from '../../Spell/SpellCircle';
 import type {RoleAbility} from '../RoleAbility';
 import type {ChooseableSkills} from '../RoleInterface';
-import type {RoleName} from '../RoleName';
 import {SpellRole, SpellRoleName} from '../SpellRole';
 import type {ArcanistPath} from './ArcanistPath';
 import {ArcanistPathAbility} from './ArcanistPathAbility';

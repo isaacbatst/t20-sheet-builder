@@ -1,7 +1,5 @@
 import {Ability} from '../Ability/Ability';
-import type {AbilityEffect} from '../Ability/AbilityEffect';
 import {LearnSpell} from '../Action/AddSpell';
-import type {Level} from '../Levels';
 import type {ActionInterface} from '../Sheet/SheetActions';
 import type {Appliable} from '../Sheet/SheetInterface';
 import type {Translatable} from '../Translator';
