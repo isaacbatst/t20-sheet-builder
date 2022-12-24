@@ -1,5 +1,4 @@
 import {AffectableTargetCreatureFake} from '../../Affectable/AffectableTargetCreatureFake';
-import {SpellRoleFake} from '../../Role/SpellRolleFake';
 import {RollerFake} from '../../Roller/RollerFake';
 import {SheetFake} from '../../Sheet/SheetFake';
 import {MentalDagger} from './MentalDagger';
@@ -10,8 +9,7 @@ describe('MentalDagger', () => {
 		it('should damage area to area creatures', () => {
 			const roller = new RollerFake();
 			const creature = new AffectableTargetCreatureFake();
-			const role = new SpellRoleFake();
-			const execution = new MentalDaggerDefaultEffectExecution(roller, creature, role);
+			const execution = new MentalDaggerDefaultEffectExecution(roller, creature, 'charisma');
 			const sheet = new SheetFake();
 			const flamesExplosion = new MentalDagger();
 
@@ -23,8 +21,7 @@ describe('MentalDagger', () => {
 		it('should use mana', () => {
 			const roller = new RollerFake();
 			const creature = new AffectableTargetCreatureFake();
-			const role = new SpellRoleFake();
-			const execution = new MentalDaggerDefaultEffectExecution(roller, creature, role);
+			const execution = new MentalDaggerDefaultEffectExecution(roller, creature, 'charisma');
 			const sheet = new SheetFake();
 			const flamesExplosion = new MentalDagger();
 

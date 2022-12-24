@@ -7,7 +7,8 @@ import {SpellCircle} from './SpellCircle';
 import {SpellCost} from './SpellCost';
 import type {SpellName} from './SpellName';
 
-export type SpellType = 'arcane' | 'divine' | 'universal';
+export type LearnableSpellType = 'arcane' | 'divine';
+export type SpellType = LearnableSpellType | 'universal';
 
 export abstract class Spell extends Ability {
 	static readonly circleManaCost: Record<SpellCircle, number> = {
@@ -28,8 +29,8 @@ export abstract class Spell extends Ability {
 
 	protected getAddAction(source: Translatable): ActionInterface {
 		return new LearnSpell({
-			source,
 			spell: this,
+			source,
 		});
 	}
 }

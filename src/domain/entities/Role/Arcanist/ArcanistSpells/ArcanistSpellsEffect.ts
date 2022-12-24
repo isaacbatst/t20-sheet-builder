@@ -1,16 +1,24 @@
-import {PassiveEffect} from '../../../Ability/PassiveEffect';
-import {LearnCircle} from '../../../Action/LearnCircle';
-import type {BuildingSheetInterface} from '../../../BuildingSheetInterface';
-import type {Dispatch} from '../../../Sheet/SheetInterface';
+import type {Attribute} from '../../../Attributes';
+import {Level} from '../../../Levels';
+import type {LearnableSpellType, Spell} from '../../../Spell/Spell';
 import {SpellCircle} from '../../../Spell/SpellCircle';
 import {RoleAbilityName} from '../../RoleAbilityName';
+import type {SpellLearnFrequency} from '../../SpellsAbility';
+import {SpellsAbilityEffect} from '../../SpellsAbilityEffect';
 
-export class ArcanistSpellsEffect extends PassiveEffect {
-	constructor() {
-		super(RoleAbilityName.arcanistSpells);
-	}
+export class ArcanistSpellsEffect extends SpellsAbilityEffect {
+	spellsLearnFrequency: SpellLearnFrequency;
+	spellsAttribute: Attribute;
 
-	addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch): void {
-		dispatch(new LearnCircle({circle: SpellCircle.first, source: this.source}));
+	circleLearnLevel: Record<SpellCircle, Level> = {
+		[SpellCircle.first]: Level.levelOne,
+		[SpellCircle.second]: Level.levelTwo,
+	};
+
+	spellType: LearnableSpellType = 'arcane';
+	constructor(spells: Spell[], learnFrequency: SpellLearnFrequency, attribute: Attribute) {
+		super(spells, 3, RoleAbilityName.arcanistSpells);
+		this.spellsLearnFrequency = learnFrequency;
+		this.spellsAttribute = attribute;
 	}
 }

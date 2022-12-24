@@ -1,5 +1,4 @@
 import {AffectableAreaFake} from '../../Affectable/AffectableAreaFake';
-import {SpellRoleFake} from '../../Role/SpellRolleFake';
 import {RollerFake} from '../../Roller/RollerFake';
 import {SheetFake} from '../../Sheet/SheetFake';
 import {FlamesExplosionDefaultEffectExecution} from './FlamesExplosionDefaultEffectExecution';
@@ -8,8 +7,7 @@ describe('FlamesExplosionDefaultEffectExecution', () => {
 	it('should roll 2d6', () => {
 		const roller = new RollerFake();
 		const area = new AffectableAreaFake();
-		const role = new SpellRoleFake();
-		const execution = new FlamesExplosionDefaultEffectExecution(roller, area, role);
+		const execution = new FlamesExplosionDefaultEffectExecution(roller, area, 'charisma');
 		const sheet = new SheetFake();
 		execution.execute(sheet);
 
@@ -19,8 +17,7 @@ describe('FlamesExplosionDefaultEffectExecution', () => {
 	it('should deal damage to area creatures', () => {
 		const roller = new RollerFake();
 		const area = new AffectableAreaFake();
-		const role = new SpellRoleFake();
-		const execution = new FlamesExplosionDefaultEffectExecution(roller, area, role);
+		const execution = new FlamesExplosionDefaultEffectExecution(roller, area, 'charisma');
 		const sheet = new SheetFake();
 		execution.execute(sheet);
 

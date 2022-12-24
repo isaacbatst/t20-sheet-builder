@@ -13,7 +13,7 @@ import type {Vision} from './Vision';
 
 export type Translatable = Attribute
 | RaceAbilityName | SkillName | PowerName | RaceName | Proficiency
-| Vision | RoleName | RoleAbilityName | SpellName | SpellCircle;
+| Vision | RoleAbilityName | SpellName | SpellCircle | RoleName;
 
 export class Translator {
 	static getAttributeTranslation(attribute: Attribute, capitalized = true) {

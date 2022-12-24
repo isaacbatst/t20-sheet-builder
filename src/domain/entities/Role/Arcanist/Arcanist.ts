@@ -3,20 +3,16 @@ import {Level} from '../../Levels';
 import type {Proficiency} from '../../Proficiency';
 import {SkillName} from '../../Skill/SkillName';
 import type {Spell, SpellType} from '../../Spell/Spell';
-import {SpellCircle} from '../../Spell/SpellCircle';
+import {Role} from '../Role';
 import type {RoleAbility} from '../RoleAbility';
 import type {ChooseableSkills} from '../RoleInterface';
-import {SpellRole, SpellRoleName} from '../SpellRole';
+import {RoleName} from '../RoleName';
 import type {ArcanistPath} from './ArcanistPath/ArcanistPath';
 import {ArcanistPathAbility} from './ArcanistPath/ArcanistPathAbility';
 import {ArcanistSpells} from './ArcanistSpells/ArcanistSpells';
 
-export class Arcanist extends SpellRole {
+export class Arcanist extends Role {
 	static readonly chooseableSkills: ChooseableSkills[] = [{amount: 2, skills: [SkillName.knowledge, SkillName.diplomacy, SkillName.cheat, SkillName.war, SkillName.initiative, SkillName.intimidation, SkillName.intuition, SkillName.investigation, SkillName.nobility, SkillName.craft, SkillName.perception]}];
-	readonly circleMinLevel: Record<SpellCircle, Level> = {
-		[SpellCircle.first]: Level.levelOne,
-		[SpellCircle.second]: Level.levelTwo,
-	};
 
 	readonly abilities: {
 		[Level.levelOne]: {
@@ -43,25 +39,27 @@ export class Arcanist extends SpellRole {
 
 	readonly mandatorySkills: SkillName[] = [SkillName.mysticism, SkillName.will];
 	readonly proficiencies: Proficiency[] = [];
-	readonly name = SpellRoleName.arcanist;
+	readonly name = RoleName.arcanist;
 	spellsLearnFrequency: 'all' | 'even' | 'odd';
 	initialSpells = 3;
 	spellType: SpellType = 'arcane';
 	spellsAttribute: Attribute;
 
 	constructor(chosenSkills: SkillName[], path: ArcanistPath, spells: Spell[]) {
-		super(chosenSkills, Arcanist.chooseableSkills, spells);
+		super(chosenSkills, Arcanist.chooseableSkills);
+		const arcanistPath = new ArcanistPathAbility(path);
+		const arcanistSpells = new ArcanistSpells(spells, arcanistPath.getLearnFrequency(), arcanistPath.getSpellsAttribute());
 		this.abilities = {
 			[Level.levelOne]: {
-				arcanistPath: new ArcanistPathAbility(path),
-				arcanistSpells: new ArcanistSpells(),
+				arcanistSpells,
+				arcanistPath,
 			},
 			[Level.levelTwo]: {},
 			[Level.levelThree]: {},
 			[Level.levelFour]: {},
 			[Level.levelFive]: {},
 		};
-		this.spellsAttribute = this.abilities[Level.levelOne].arcanistPath.getPathSpellsAttribute();
-		this.spellsLearnFrequency = this.abilities[Level.levelOne].arcanistPath.getPathSpellsLearnFrequency();
+		this.spellsAttribute = this.abilities[Level.levelOne].arcanistPath.getSpellsAttribute();
+		this.spellsLearnFrequency = this.abilities[Level.levelOne].arcanistPath.getLearnFrequency();
 	}
 }

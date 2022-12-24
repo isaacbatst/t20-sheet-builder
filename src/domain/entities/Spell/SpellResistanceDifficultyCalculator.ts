@@ -1,4 +1,4 @@
-import type {SpellRoleInterface} from '../Role/SpellRole';
+import type {Attribute} from '../Attributes';
 import type {SheetInterface} from '../Sheet/SheetInterface';
 
 export class SpellResistanceDifficultyCalculator {
@@ -6,9 +6,9 @@ export class SpellResistanceDifficultyCalculator {
 		return 10;
 	}
 
-	static calculate(sheet: SheetInterface, role: SpellRoleInterface): number {
+	static calculate(sheet: SheetInterface, spellsAttribute: Attribute): number {
 		const attributes = sheet.getAttributes();
-		const spellsAttributeValue = attributes[role.spellsAttribute];
+		const spellsAttributeValue = attributes[spellsAttribute];
 		return 10 + Math.floor(sheet.getLevel() / 2) + spellsAttributeValue;
 	}
 }

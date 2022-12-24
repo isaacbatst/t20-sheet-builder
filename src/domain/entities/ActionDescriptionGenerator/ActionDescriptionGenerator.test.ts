@@ -17,7 +17,7 @@ import {RaceAbilityFake} from '../RaceAbilityFake';
 import {RaceFake} from '../RaceFake';
 import {RoleAbilityFake} from '../Role/RoleAbilityFake';
 import {RoleAbilityName} from '../Role/RoleAbilityName';
-import {RegularRoleName} from '../Role/RoleName';
+import {RoleName} from '../Role/RoleName';
 import {RoleFake} from '../RoleFake';
 import {Skill} from '../Skill/Skill';
 import {SkillName} from '../Skill/SkillName';
@@ -283,7 +283,7 @@ describe('ActionDescriptionGenerator', () => {
 
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
-			new AddProficiency({proficiency: Proficiency.martial, source: RegularRoleName.warrior}),
+			new AddProficiency({proficiency: Proficiency.martial, source: RoleName.warrior}),
 		);
 
 		expect(description).toBe('Guerreiro: você é proficiente com armas marciais.');
@@ -294,7 +294,7 @@ describe('ActionDescriptionGenerator', () => {
 
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
-			new ApplyRoleAbility({ability: new RoleAbilityFake(), source: RegularRoleName.warrior}),
+			new ApplyRoleAbility({ability: new RoleAbilityFake(), source: RoleName.warrior}),
 		);
 
 		expect(description).toBe('Guerreiro: habilidade Ataque Especial adicionada.');

@@ -17,7 +17,7 @@ import {Sheet} from './Sheet/Sheet';
 import type {ActionPayload, ActionsHandler} from './Sheet/SheetActions';
 import type {SheetAbilities, SheetPowers} from './Sheet/SheetInterface';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
-import type {Spell} from './Spell/Spell';
+import type {LearnableSpellType, Spell} from './Spell/Spell';
 import type {SpellCircle} from './Spell/SpellCircle';
 import type {SpellName} from './Spell/SpellName';
 import {Vision} from './Vision';
@@ -62,7 +62,11 @@ export class BuildingSheet implements BuildingSheetInterface {
 	private readonly skills: SheetSkills = InitialSkillsGenerator.generate();
 	private readonly defense = new Defense();
 	private readonly spells = new Map<SpellName, Spell>();
-	private readonly learnedCircles = new Set<SpellCircle>();
+	private readonly learnedCircles: Record<LearnableSpellType, Set<SpellCircle>> = {
+		arcane: new Set(),
+		divine: new Set(),
+	};
+
 	private readonly triggeredEffects: Record<TriggerEvent, TriggeredEffectInterface[]> = {
 		attack: [],
 		defense: [],
@@ -206,11 +210,23 @@ export class BuildingSheet implements BuildingSheetInterface {
 	}
 
 	private learnSpell(payload: ActionPayload<'learnSpell'>) {
+		if (!this.isSpellCircleLearned(payload.spell)) {
+			throw new Error('CIRCLE_NOT_LEARNED');
+		}
+
 		this.spells.set(payload.spell.name, payload.spell);
 	}
 
+	private isSpellCircleLearned(spell: Spell) {
+		if (spell.type !== 'universal') {
+			return this.learnedCircles[spell.type].has(spell.circle);
+		}
+
+		return this.learnedCircles.arcane.has(spell.circle) || this.learnedCircles.divine.has(spell.circle);
+	}
+
 	private learnCircle(payload: ActionPayload<'learnCircle'>) {
-		this.learnedCircles.add(payload.circle);
+		this.learnedCircles[payload.type].add(payload.circle);
 	}
 
 	private addTriggeredEffect(payload: ActionPayload<'addTriggeredEffect'>) {

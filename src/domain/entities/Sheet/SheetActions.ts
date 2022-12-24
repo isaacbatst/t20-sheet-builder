@@ -12,7 +12,7 @@ import type {RoleInterface} from '../Role/RoleInterface';
 import type {RolePowerInterface} from '../Role/RolePower';
 import type {Dispatch} from '../Sheet/SheetInterface';
 import type {SkillName} from '../Skill/SkillName';
-import type {Spell} from '../Spell/Spell';
+import type {LearnableSpellType, Spell} from '../Spell/Spell';
 import type {SpellCircle} from '../Spell/SpellCircle';
 import type {Translatable} from '../Translator';
 import type {Vision} from '../Vision';
@@ -33,7 +33,7 @@ type ActionTypesToHandlers = {
 	addModifierToLifePoints(payload: {modifier: ModifierInterface}): void;
 	chooseRole(payload: {role: RoleInterface}): void;
 	addProficiency(payload: {proficiency: Proficiency; source: Translatable}): void;
-	learnCircle(payload: {circle: SpellCircle; source: Translatable}): void;
+	learnCircle(payload: {circle: SpellCircle; source: Translatable; type: LearnableSpellType}): void;
 	learnSpell(payload: {spell: Spell; source: Translatable}): void;
 	addTriggeredEffect(payload: {effect: TriggeredEffectInterface}): void;
 	addPerLevelModifierToLifePoints(payload: {modifier: PerLevelModifier}): void;

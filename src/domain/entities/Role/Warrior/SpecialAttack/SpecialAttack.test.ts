@@ -5,17 +5,17 @@ import {SpecialAttack} from './SpecialAttack';
 import {SpecialAttackEffectExecution} from './SpecialAttackEffectExecution';
 import {SpecialAttackEffectExecutionRecipientAttack} from './SpecialAttackEffectExecutionRecipientAttack';
 import {SpecialAttackManaCost} from './SpecialAttackManaCost';
-import {RegularRoleName} from '../../RoleName';
+import {RoleName} from '../../RoleName';
 
 describe('SpecialAttack', () => {
 	it('should dispatch add', () => {
 		const specialAttack = new SpecialAttack();
 		const dispatch = jest.fn();
-		specialAttack.addToSheet(new BuildingSheetFake(), dispatch, RegularRoleName.warrior);
+		specialAttack.addToSheet(new BuildingSheetFake(), dispatch, RoleName.warrior);
 
 		expect(dispatch).toHaveBeenCalledWith(new ApplyRoleAbility({
 			ability: specialAttack,
-			source: RegularRoleName.warrior,
+			source: RoleName.warrior,
 		}));
 	});
 
