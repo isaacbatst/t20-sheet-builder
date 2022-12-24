@@ -23,6 +23,7 @@ type SheetParams = {
 	skills: SheetSkills;
 	buildSteps: BuildStep[];
 	lifePoints: LifePoints;
+	manaPoints: ManaPoints;
 	level: number;
 	vision: Vision;
 	displacement: number;
@@ -30,7 +31,6 @@ type SheetParams = {
 	proficiencies: Proficiency[];
 	abilities: SheetAbilities;
 	powers: SheetPowers;
-	manaPoints: ManaPoints;
 };
 
 export class Sheet implements SheetInterface {

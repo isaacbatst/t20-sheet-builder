@@ -24,7 +24,6 @@ export type TemporaryModifierInterface = ModifierInterface & {
 
 export class ModifiersList implements ModifiersListInterface {
 	readonly modifiers: ModifierInterface[] = [];
-	constructor(private readonly repeatedModifierError: string) {}
 
 	getTotal(context: ContextInterface) {
 		const total = this.modifiers
@@ -44,7 +43,7 @@ export class ModifiersList implements ModifiersListInterface {
 		const isRepeated = this.modifiers.some(otherModifier => otherModifier.source === newModifier.source);
 
 		if (isRepeated) {
-			throw new Error(this.repeatedModifierError);
+			throw new Error('REPEATED_MODIFIER_SOURCE');
 		}
 
 		this.modifiers.push(newModifier);

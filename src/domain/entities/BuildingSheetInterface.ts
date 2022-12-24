@@ -1,10 +1,12 @@
 import type {Attributes} from './Attributes';
 import type {ContextInterface} from './Context';
 import type {LifePoints} from './LifePoints';
+import type {LifePointsBuilder} from './LifePointsBuilder';
 import type {ManaPoints} from './ManaPoints';
 import type {ModifierInterface} from './ModifierList';
 import type {Proficiency} from './Proficiency';
 import type {BuildStep} from './ProgressionStep';
+import type {RoleInterface} from './Role/RoleInterface';
 import type {SheetSkills} from './Sheet/Sheet';
 import type {ActionsHandler} from './Sheet/SheetActions';
 import type {SheetAbilities, SheetPowers} from './Sheet/SheetInterface';
@@ -31,9 +33,10 @@ export type BuildingSheetInterface = {
 	getLevel(): number;
 	getSkills(): SheetSkills;
 	getVision(): Vision;
-	getLifePoints(): LifePoints;
+	getLifePoints(): LifePointsBuilder;
 	getProficiencies(): Proficiency[];
 	getAbilities(): SheetAbilities;
 	getPowers(): SheetPowers;
-	getManaPoints(): ManaPoints;
+	buildLifePoints(context: ContextInterface, role: RoleInterface): LifePoints;
+	buildManaPoints(context: ContextInterface, role: RoleInterface): ManaPoints;
 };

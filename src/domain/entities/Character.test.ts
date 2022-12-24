@@ -1,4 +1,4 @@
-import {OutGameContext} from './BuildingSheetContext';
+import {OutGameContext} from './OutOfGameContext';
 import {Character} from './Character';
 import {InGameContext} from './InGameContext';
 import {Dwarf} from './Race/Dwarf';

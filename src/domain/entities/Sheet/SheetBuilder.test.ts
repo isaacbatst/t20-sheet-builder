@@ -1,6 +1,6 @@
 import type {Attributes} from '../Attributes';
 import {BuildingSheet} from '../BuildingSheet';
-import {OutGameContext} from '../BuildingSheetContext';
+import {OutGameContext} from '../OutOfGameContext';
 import {Modifier} from '../Modifier/Modifier';
 import type {ConditionVerify} from '../ModifierList';
 import {GeneralPowerName} from '../Power/GeneralPowerName';
@@ -135,20 +135,6 @@ describe('SheetBuilder', () => {
 		it('should choose role', () => {
 			expect(sheet.getRole()).toBe(role);
 		});
-
-		it('should have max life points 21', () => {
-			const context = new OutGameContext();
-
-			const maxLifePoints = sheet.getLifePoints().getMax({constitution: sheet.getAttributes().constitution, context, level: sheet.getLevel(), role});
-			expect(maxLifePoints).toBe(21);
-		});
-
-		it('should have max mana points 3', () => {
-			const context = new OutGameContext();
-
-			const maxLifePoints = sheet.getManaPoints().getMax({context, level: sheet.getLevel(), role});
-			expect(maxLifePoints).toBe(3);
-		});
 	});
 
 	describe('Human Arcanist', () => {
@@ -181,25 +167,6 @@ describe('SheetBuilder', () => {
 
 		it('should choose role', () => {
 			expect(sheet.getRole()).toBe(role);
-		});
-
-		it('should have max life points 9', () => {
-			const context = new OutGameContext();
-
-			const maxLifePoints = sheet.getLifePoints().getMax({constitution: sheet.getAttributes().constitution, context, level: sheet.getLevel(), role});
-			expect(maxLifePoints).toBe(9);
-		});
-
-		it('should have max mana points 6', () => {
-			const context = new OutGameContext();
-			const maxLifePoints = sheet
-				.getManaPoints()
-				.getMax({
-					context,
-					role,
-					level: sheet.getLevel(),
-				});
-			expect(maxLifePoints).toBe(6);
 		});
 
 		it('should have basic proficiencies', () => {
@@ -284,31 +251,6 @@ describe('SheetBuilder', () => {
 
 		it('should choose role', () => {
 			expect(sheet.getRole()).toBe(role);
-		});
-
-		it('should have max life points 25', () => {
-			const context = new OutGameContext();
-			const maxLifePoints = sheet
-				.getLifePoints()
-				.getMax({
-					constitution: sheet.getAttributes().constitution,
-					context,
-					level: sheet.getLevel(),
-					role,
-				});
-			expect(maxLifePoints).toBe(25);
-		});
-
-		it('should have max mana points 3', () => {
-			const context = new OutGameContext();
-			const maxLifePoints = sheet
-				.getManaPoints()
-				.getMax({
-					context,
-					role,
-					level: sheet.getLevel(),
-				});
-			expect(maxLifePoints).toBe(3);
 		});
 
 		it('should have role skills trained', () => {

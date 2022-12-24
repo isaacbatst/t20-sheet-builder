@@ -8,8 +8,10 @@ import type {RoleInterface} from '../Role/RoleInterface';
 import {Sheet} from './Sheet';
 import type {ActionInterface, ActionType} from '../Sheet/SheetActions';
 import type {Dispatch} from '../Sheet/SheetInterface';
+import {OutGameContext} from '../OutOfGameContext';
 
 export class SheetBuilder {
+	readonly context = new OutGameContext();
 	constructor(private sheet: BuildingSheetInterface = new BuildingSheet()) {
 
 	}
@@ -52,13 +54,13 @@ export class SheetBuilder {
 				defense: this.sheet.getDefense(),
 				displacement: this.sheet.getDisplacement(),
 				level: this.sheet.getLevel(),
-				lifePoints: this.sheet.getLifePoints(),
 				skills: this.sheet.getSkills(),
 				vision: this.sheet.getVision(),
 				proficiencies: this.sheet.getProficiencies(),
 				abilities: this.sheet.getAbilities(),
 				powers: this.sheet.getPowers(),
-				manaPoints: this.sheet.getManaPoints(),
+				lifePoints: this.sheet.buildLifePoints(this.context, role),
+				manaPoints: this.sheet.buildManaPoints(this.context, role),
 			});
 		};
 	}

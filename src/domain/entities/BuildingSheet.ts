@@ -1,9 +1,13 @@
 import type {TriggeredEffectInterface, TriggerEvent} from './Ability/TriggeredEffect';
 import type {Attributes} from './Attributes';
 import type {BuildingSheetInterface} from './BuildingSheetInterface';
+import type {ContextInterface} from './Context';
 import {Defense} from './Defense';
-import {LifePoints} from './LifePoints';
-import {ManaPoints} from './ManaPoints';
+import {Level} from './Levels';
+import type {LifePoints} from './LifePoints';
+import {LifePointsBuilder} from './LifePointsBuilder';
+import type {ManaPoints} from './ManaPoints';
+import {ManaPointsBuilder} from './ManaPointsBuilder';
 import {Proficiency} from './Proficiency';
 import type {BuildStep} from './ProgressionStep';
 import type {RaceInterface} from './RaceInterface';
@@ -20,7 +24,8 @@ import {Vision} from './Vision';
 
 export class BuildingSheet implements BuildingSheetInterface {
 	readonly buildSteps: BuildStep[] = [];
-	readonly lifePoints = new LifePoints();
+	readonly lifePoints = new LifePointsBuilder();
+	readonly manaPoints = new ManaPointsBuilder();
 
 	readonly actionHandlers: ActionsHandler = {
 		addOtherModifierToDefense: this.addOtherModifierToDefense.bind(this),
@@ -50,13 +55,12 @@ export class BuildingSheet implements BuildingSheetInterface {
 	private readonly abilities: SheetAbilities = {race: new Map(), role: new Map()};
 	private attributes: Attributes = Sheet.initialAttributes;
 	// eslint-disable-next-line @typescript-eslint/prefer-readonly
-	private level = 1;
+	private level: Level = Level.levelOne;
 	private vision: Vision = Vision.default;
 	private displacement = 9;
 	private readonly proficiencies: Proficiency[] = [Proficiency.simple, Proficiency.lightArmor];
 	private readonly skills: SheetSkills = InitialSkillsGenerator.generate();
 	private readonly defense = new Defense();
-	private readonly manaPoints = new ManaPoints();
 	private readonly spells = new Map<SpellName, Spell>();
 	private readonly learnedCircles = new Set<SpellCircle>();
 	private readonly triggeredEffects: Record<TriggerEvent, TriggeredEffectInterface[]> = {
@@ -88,7 +92,7 @@ export class BuildingSheet implements BuildingSheetInterface {
 		return this.vision;
 	}
 
-	getLifePoints(): LifePoints {
+	getLifePoints(): LifePointsBuilder {
 		return this.lifePoints;
 	}
 
@@ -110,6 +114,23 @@ export class BuildingSheet implements BuildingSheetInterface {
 
 	getPowers(): SheetPowers {
 		return this.powers;
+	}
+
+	buildLifePoints(context: ContextInterface, role: RoleInterface): LifePoints {
+		return this.lifePoints.build({
+			context,
+			role,
+			constitution: this.attributes.constitution,
+			level: this.level,
+		});
+	}
+
+	buildManaPoints(context: ContextInterface, role: RoleInterface): ManaPoints {
+		return this.manaPoints.build({
+			context,
+			role,
+			level: this.level,
+		});
 	}
 
 	private chooseRole(payload: ActionPayload<'chooseRole'>) {

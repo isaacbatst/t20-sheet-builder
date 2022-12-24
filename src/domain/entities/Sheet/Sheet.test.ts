@@ -1,4 +1,4 @@
-import {OutGameContext} from '../BuildingSheetContext';
+import {OutGameContext} from '../OutOfGameContext';
 import type {ContextInterface} from '../Context';
 import {GeneralPowerName} from '../Power/GeneralPowerName';
 import {Proficiency} from '../Proficiency';

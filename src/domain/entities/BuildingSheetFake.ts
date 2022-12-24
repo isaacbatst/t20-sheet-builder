@@ -1,15 +1,18 @@
 import type {Attributes} from './Attributes';
-import {OutGameContext} from './BuildingSheetContext';
 import type {BuildingSheetInterface, DefenseInterface} from './BuildingSheetInterface';
-import type {Context} from './Context';
+import type {Context, ContextInterface} from './Context';
 import {DefenseFake} from './DefenseFake';
-import {LifePoints} from './LifePoints';
-import {ManaPoints} from './ManaPoints';
+import type {LifePoints} from './LifePoints';
+import {LifePointsBuilder} from './LifePointsBuilder';
+import type {ManaPoints} from './ManaPoints';
+import {ManaPointsBuilder} from './ManaPointsBuilder';
 import type {ModifierInterface} from './ModifierList';
+import {OutGameContext} from './OutOfGameContext';
 import type {Proficiency} from './Proficiency';
 import type {ProgressionStepFake} from './ProgressionStepFake';
 import {RaceFake} from './RaceFake';
 import type {RaceInterface} from './RaceInterface';
+import type {RoleInterface} from './Role/RoleInterface';
 import type {ActionsHandler, ActionType} from './Sheet/SheetActions';
 import type {SheetAbilities, SheetPowers} from './Sheet/SheetInterface';
 import {InitialSkillsGenerator} from './Skill/InitialSkillsGenerator';
@@ -50,7 +53,7 @@ export class BuildingSheetFake implements BuildingSheetInterface {
 		charisma: 0,
 	};
 
-	public lifePoints = new LifePoints();
+	public lifePoints = new LifePointsBuilder();
 	public vision: Vision = Vision.default;
 	public displacement = 9;
 	public context: Context = new OutGameContext();
@@ -61,10 +64,18 @@ export class BuildingSheetFake implements BuildingSheetInterface {
 	public proficiencies: Proficiency[] = [];
 	public abilities: SheetAbilities = {race: new Map(), role: new Map()};
 	public powers: SheetPowers = {general: new Map(), role: new Map()};
-	public manaPoints = new ManaPoints();
+	public manaPoints = new ManaPointsBuilder();
 
 	private readonly trainedSkills: SkillName[] = [];
 	private readonly defenseOtherModifiers: ModifierInterface[] = [];
+
+	buildLifePoints(context: ContextInterface, role: RoleInterface): LifePoints {
+		throw new Error('Method not implemented.');
+	}
+
+	buildManaPoints(context: ContextInterface, role: RoleInterface): ManaPoints {
+		throw new Error('Method not implemented.');
+	}
 
 	getDefense(): DefenseInterface {
 		return this.defense;
@@ -74,7 +85,7 @@ export class BuildingSheetFake implements BuildingSheetInterface {
 		return this.displacement;
 	}
 
-	getLifePoints(): LifePoints {
+	getLifePoints(): LifePointsBuilder {
 		return this.lifePoints;
 	}
 
@@ -128,9 +139,5 @@ export class BuildingSheetFake implements BuildingSheetInterface {
 
 	getPowers(): SheetPowers {
 		return this.powers;
-	}
-
-	getManaPoints(): ManaPoints {
-		return this.manaPoints;
 	}
 }

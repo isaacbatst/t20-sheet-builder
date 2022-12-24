@@ -1,5 +1,5 @@
 import type {Attribute, Attributes} from '../Attributes';
-import {OutGameContext} from '../BuildingSheetContext';
+import {OutGameContext} from '../OutOfGameContext';
 import type {Context} from '../Context';
 import type {ModifierInterface} from '../ModifierList';
 import {ModifiersList} from '../ModifierList';
@@ -23,7 +23,7 @@ export class Skill {
 	}
 
 	readonly attribute: Attribute;
-	private readonly others: ModifiersList = new ModifiersList(Skill.repeatedOtherModifierError);
+	private readonly others: ModifiersList = new ModifiersList();
 	private isTrained: boolean;
 
 	static get repeatedOtherModifierError() {
