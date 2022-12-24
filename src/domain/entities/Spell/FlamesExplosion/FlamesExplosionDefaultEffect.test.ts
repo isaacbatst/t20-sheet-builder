@@ -1,5 +1,5 @@
 import {EffectExecutionFake} from '../../EffectExecutionFake';
-import {SheetFake} from '../../SheetFake';
+import {SheetFake} from '../../Sheet/SheetFake';
 import {FlamesExplosionDefaultEffect} from './FlamesExplosionDefaultEffect';
 
 describe('FlameExplosionDefaultEffect', () => {

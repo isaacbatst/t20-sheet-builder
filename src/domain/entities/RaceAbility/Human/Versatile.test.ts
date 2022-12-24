@@ -1,4 +1,4 @@
-import type {ActionInterface} from '../../SheetActions';
+import type {ActionInterface} from '../../Sheet/SheetActions';
 import {BuildingSheetFake} from '../../BuildingSheetFake';
 import {Dodge} from '../../Power/Dodge';
 import {GeneralPowerName} from '../../Power/GeneralPowerName';

@@ -1,7 +1,7 @@
 import {AffectableTargetCreatureFake} from '../../Affectable/AffectableTargetCreatureFake';
 import {SpellRoleFake} from '../../Role/SpellRolleFake';
 import {RollerFake} from '../../Roller/RollerFake';
-import {SheetFake} from '../../SheetFake';
+import {SheetFake} from '../../Sheet/SheetFake';
 import {MentalDagger} from './MentalDagger';
 import {MentalDaggerDefaultEffectExecution} from './MentalDaggerDefaultEffectExecution';
 

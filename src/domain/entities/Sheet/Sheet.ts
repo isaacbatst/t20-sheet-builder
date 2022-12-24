@@ -1,18 +1,18 @@
-import type {Attributes} from './Attributes';
-import type {DefenseInterface} from './BuildingSheetInterface';
-import type {Context, ContextInterface} from './Context';
-import type {Level} from './Levels';
-import type {LifePoints} from './LifePoints';
-import type {ManaPoints} from './ManaPoints';
-import type {ModifierInterface, TemporaryModifierInterface} from './ModifierList';
-import type {Proficiency} from './Proficiency';
-import type {BuildStep, BuildStepInterface} from './ProgressionStep';
-import type {RaceInterface} from './RaceInterface';
-import type {RoleInterface} from './Role/RoleInterface';
-import type {SheetAbilities, SheetInterface, SheetPowers} from './SheetInterface';
-import type {Skill} from './Skill/Skill';
-import type {SkillName} from './Skill/SkillName';
-import type {Vision} from './Vision';
+import type {Attributes} from '../Attributes';
+import type {DefenseInterface} from '../BuildingSheetInterface';
+import type {Context, ContextInterface} from '../Context';
+import type {Level} from '../Levels';
+import type {LifePoints} from '../LifePoints';
+import type {ManaPoints} from '../ManaPoints';
+import type {ModifierInterface, TemporaryModifierInterface} from '../ModifierList';
+import type {Proficiency} from '../Proficiency';
+import type {BuildStep, BuildStepInterface} from '../ProgressionStep';
+import type {RaceInterface} from '../RaceInterface';
+import type {RoleInterface} from '../Role/RoleInterface';
+import type {SheetAbilities, SheetInterface, SheetPowers} from '../Sheet/SheetInterface';
+import type {Skill} from '../Skill/Skill';
+import type {SkillName} from '../Skill/SkillName';
+import type {Vision} from '../Vision';
 
 export type SheetSkills = Record<SkillName, Skill>;
 

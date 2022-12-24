@@ -1,4 +1,4 @@
-import type {ActionPayload} from '../SheetActions';
+import type {ActionPayload} from '../Sheet/SheetActions';
 import {Action} from './Action';
 
 export class ChooseRole extends Action<'chooseRole'> {

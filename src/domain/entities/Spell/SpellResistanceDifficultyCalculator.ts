@@ -1,5 +1,5 @@
 import type {SpellRoleInterface} from '../Role/SpellRole';
-import type {SheetInterface} from '../SheetInterface';
+import type {SheetInterface} from '../Sheet/SheetInterface';
 
 export class SpellResistanceDifficultyCalculator {
 	static get baseResistanceDifficulty() {

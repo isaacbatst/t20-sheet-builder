@@ -1,4 +1,4 @@
-import {SheetFake} from '../../SheetFake';
+import {SheetFake} from '../../Sheet/SheetFake';
 import {IllusoryDisguiseDefaultEffect} from './IllusoryDisguiseDefaultEffect';
 import {IllusoryDisguiseDefaultEffectExecution} from './IllusoryDisguiseDefaultEffectExecution';
 

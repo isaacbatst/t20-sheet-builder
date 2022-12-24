@@ -1,5 +1,5 @@
 import {TemporaryModifier} from '../../Modifier/TemporaryModifier';
-import {SheetFake} from '../../SheetFake';
+import {SheetFake} from '../../Sheet/SheetFake';
 import {RoleAbilityName} from '../RoleAbilityName';
 import {SpecialAttackEffectExecutionRecipientAttack} from './SpecialAttackEffectExecutionRecipientAttack';
 

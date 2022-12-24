@@ -1,7 +1,7 @@
 import type {AbilityInterface} from '../Ability/Ability';
 import {Ability} from '../Ability/Ability';
 import {ApplyRoleAbility} from '../Action/ApplyRoleAbility';
-import type {ActionInterface} from '../SheetActions';
+import type {ActionInterface} from '../Sheet/SheetActions';
 import type {Translatable} from '../Translator';
 import type {RoleAbilityName} from './RoleAbilityName';
 

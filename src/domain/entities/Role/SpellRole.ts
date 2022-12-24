@@ -1,7 +1,7 @@
 import type {Attribute} from '../Attributes';
 import type {BuildingSheetInterface} from '../BuildingSheetInterface';
 import {Level} from '../Levels';
-import type {Dispatch} from '../SheetInterface';
+import type {Dispatch} from '../Sheet/SheetInterface';
 import type {SkillName} from '../Skill/SkillName';
 import type {Spell, SpellType} from '../Spell/Spell';
 import type {SpellCircle} from '../Spell/SpellCircle';

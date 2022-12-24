@@ -1,11 +1,10 @@
-import type {Attributes} from './Attributes';
-import type {Context} from './Context';
-import {Level} from './Levels';
-import type {TemporaryModifierInterface} from './ModifierList';
-import type {BuildStepInterface} from './ProgressionStep';
-import type {SheetAbilities, SheetInterface, SheetPowers} from './SheetInterface';
-import type {SkillName} from './Skill/SkillName';
-import {Vision} from './Vision';
+import type {Attributes} from '../Attributes';
+import type {Context} from '../Context';
+import {Level} from '../Levels';
+import type {BuildStepInterface} from '../ProgressionStep';
+import type {SheetAbilities, SheetInterface, SheetPowers} from '../Sheet/SheetInterface';
+import type {SkillName} from '../Skill/SkillName';
+import {Vision} from '../Vision';
 
 export class SheetFake implements SheetInterface {
 	trainedSkills: SkillName[] = [];

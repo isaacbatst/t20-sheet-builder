@@ -1,7 +1,7 @@
 import type {AffectableArea} from '../../Affectable/AffectableArea';
 import type {SpellRoleInterface} from '../../Role/SpellRole';
 import type {Roller} from '../../Roller/Roller';
-import type {EffectExecution, SheetInterface} from '../../SheetInterface';
+import type {EffectExecution, SheetInterface} from '../../Sheet/SheetInterface';
 import {SkillName} from '../../Skill/SkillName';
 import {HalfResistanceDamageApplier} from '../HalfResistDamageApplier';
 import {SpellResistanceDifficultyCalculator} from '../SpellResistanceDifficultyCalculator';

@@ -1,24 +1,24 @@
-import {OutGameContext} from './BuildingSheetContext';
-import type {ContextInterface} from './Context';
-import {GeneralPowerName} from './Power/GeneralPowerName';
-import {Proficiency} from './Proficiency';
-import {Dwarf} from './Race/Dwarf';
-import {Human} from './Race/Human';
-import type {Race} from './Race/Race';
-import type {VersatileChoice} from './RaceAbility/Human/VersatileEffect';
-import {ArcanistBuilder} from './Role/Arcanist/ArcanistBuider';
-import {ArcanistPathMage} from './Role/Arcanist/ArcanistPathMage';
-import type {Role} from './Role/Role';
-import {RoleAbilityName} from './Role/RoleAbilityName';
-import {Warrior} from './Role/Warrior/Warrior';
+import {OutGameContext} from '../BuildingSheetContext';
+import type {ContextInterface} from '../Context';
+import {GeneralPowerName} from '../Power/GeneralPowerName';
+import {Proficiency} from '../Proficiency';
+import {Dwarf} from '../Race/Dwarf';
+import {Human} from '../Race/Human';
+import type {Race} from '../Race/Race';
+import type {VersatileChoice} from '../RaceAbility/Human/VersatileEffect';
+import {ArcanistBuilder} from '../Role/Arcanist/ArcanistBuider';
+import {ArcanistPathMage} from '../Role/Arcanist/ArcanistPathMage';
+import type {Role} from '../Role/Role';
+import {RoleAbilityName} from '../Role/RoleAbilityName';
+import {Warrior} from '../Role/Warrior/Warrior';
 import type {Sheet} from './Sheet';
 import {SheetBuilder} from './SheetBuilder';
-import {SkillName} from './Skill/SkillName';
-import {ArcaneArmor} from './Spell/ArcaneArmor/ArcaneArmor';
-import {FlamesExplosion} from './Spell/FlamesExplosion/FlamesExplosion';
-import {IllusoryDisguise} from './Spell/IllusoryDisguise/IllusoryDisguise';
-import {MentalDagger} from './Spell/MentalDagger/MentalDagger';
-import {Vision} from './Vision';
+import {SkillName} from '../Skill/SkillName';
+import {ArcaneArmor} from '../Spell/ArcaneArmor/ArcaneArmor';
+import {FlamesExplosion} from '../Spell/FlamesExplosion/FlamesExplosion';
+import {IllusoryDisguise} from '../Spell/IllusoryDisguise/IllusoryDisguise';
+import {MentalDagger} from '../Spell/MentalDagger/MentalDagger';
+import {Vision} from '../Vision';
 
 describe('Sheet', () => {
 	describe('Human Warrior', () => {

@@ -1,13 +1,13 @@
-import {SetInitialAttributes} from './Action/SetInitialAttributes';
-import type {Attributes} from './Attributes';
-import {BuildingSheet} from './BuildingSheet';
-import type {BuildingSheetInterface} from './BuildingSheetInterface';
-import {BuildStep} from './ProgressionStep';
-import type {RaceInterface} from './RaceInterface';
-import type {RoleInterface} from './Role/RoleInterface';
+import {SetInitialAttributes} from '../Action/SetInitialAttributes';
+import type {Attributes} from '../Attributes';
+import {BuildingSheet} from '../BuildingSheet';
+import type {BuildingSheetInterface} from '../BuildingSheetInterface';
+import {BuildStep} from '../ProgressionStep';
+import type {RaceInterface} from '../RaceInterface';
+import type {RoleInterface} from '../Role/RoleInterface';
 import {Sheet} from './Sheet';
-import type {ActionInterface, ActionType} from './SheetActions';
-import type {Dispatch} from './SheetInterface';
+import type {ActionInterface, ActionType} from '../Sheet/SheetActions';
+import type {Dispatch} from '../Sheet/SheetInterface';
 
 export class SheetBuilder {
 	constructor(private sheet: BuildingSheetInterface = new BuildingSheet()) {

@@ -1,7 +1,7 @@
 import type {EffectRange} from '../../Ability/ActivateableAbilityEffect';
 import {EffectAffectableTarget} from '../../Ability/EffectAffectable';
 import {ManaCost} from '../../ManaCost';
-import type {SpellRoleSheetInterface} from '../../SheetInterface';
+import type {SpellRoleSheetInterface} from '../../Sheet/SheetInterface';
 import {SpellEffect} from '../SpellEffect';
 import {SpellName} from '../SpellName';
 

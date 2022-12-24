@@ -1,6 +1,6 @@
 import {Level} from '../../Levels';
 import {ManaCost} from '../../ManaCost';
-import type {EffectExecution, SheetInterface} from '../../SheetInterface';
+import type {EffectExecution, SheetInterface} from '../../Sheet/SheetInterface';
 import type {SpecialAttackEffectExecutionRecipient} from './SpecialAttackEffectExecutionRecipient';
 import type {SpecialAttackManaCost} from './SpecialAttackManaCost';
 import {SpecialAttackEffectCosts} from './SpecialAttackManaCost';

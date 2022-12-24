@@ -5,7 +5,7 @@ import type {BuildingSheetInterface} from '../../BuildingSheetInterface';
 import type {InGameContext} from '../../InGameContext';
 import {ConditionalModifier} from '../../Modifier/ConditionalModifier';
 import type {ModifierCondition} from '../../ModifierList';
-import type {Dispatch} from '../../SheetInterface';
+import type {Dispatch} from '../../Sheet/SheetInterface';
 import {SkillName} from '../../Skill/SkillName';
 import {Vision} from '../../Vision';
 import {RaceAbilityName} from '../RaceAbilityName';

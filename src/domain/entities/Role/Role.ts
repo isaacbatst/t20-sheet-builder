@@ -4,7 +4,7 @@ import {TrainSkill} from '../Action/TrainSkill';
 import type {BuildingSheetInterface} from '../BuildingSheetInterface';
 import {Level} from '../Levels';
 import type {Proficiency} from '../Proficiency';
-import type {Dispatch} from '../SheetInterface';
+import type {Dispatch} from '../Sheet/SheetInterface';
 import type {SkillName} from '../Skill/SkillName';
 import type {RoleAbility} from './RoleAbility';
 import type {ChooseableSkills, RoleInterface} from './RoleInterface';

@@ -3,7 +3,7 @@ import {TrainSkill} from '../../Action/TrainSkill';
 import type {BuildingSheetInterface} from '../../BuildingSheetInterface';
 import type {GeneralPowerName} from '../../Power/GeneralPowerName';
 import {GeneralPowerFactory} from '../../Power/PowerFactory';
-import type {Dispatch} from '../../SheetInterface';
+import type {Dispatch} from '../../Sheet/SheetInterface';
 import {SkillName} from '../../Skill/SkillName';
 import {RaceAbilityName} from '../RaceAbilityName';
 export type VersatileChoice =

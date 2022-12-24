@@ -1,4 +1,4 @@
-import type {Appliable, SheetInterface} from './SheetInterface';
+import type {Appliable, SheetInterface} from './Sheet/SheetInterface';
 
 export class ManaCost implements Appliable {
 	constructor(readonly value: number) {}

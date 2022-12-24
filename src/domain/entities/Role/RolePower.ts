@@ -2,7 +2,7 @@ import type {AbilityEffect} from '../Ability/AbilityEffect';
 import {PickRolePower} from '../Action/PickRolePower';
 import type {PowerInterface} from '../Power/Power';
 import {Power} from '../Power/Power';
-import type {ActionInterface} from '../SheetActions';
+import type {ActionInterface} from '../Sheet/SheetActions';
 import type {Translatable} from '../Translator';
 import type {RolePowerName} from './RolePowerName';
 

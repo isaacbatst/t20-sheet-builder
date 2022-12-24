@@ -1,7 +1,7 @@
 import {AffectableAreaFake} from '../../Affectable/AffectableAreaFake';
 import {SpellRoleFake} from '../../Role/SpellRolleFake';
 import {RollerFake} from '../../Roller/RollerFake';
-import {SheetFake} from '../../SheetFake';
+import {SheetFake} from '../../Sheet/SheetFake';
 import {FlamesExplosion} from './FlamesExplosion';
 import {FlamesExplosionDefaultEffectExecution} from './FlamesExplosionDefaultEffectExecution';
 

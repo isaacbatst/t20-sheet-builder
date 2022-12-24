@@ -1,13 +1,13 @@
-import type {Attributes} from './Attributes';
-import type {Context} from './Context';
-import type {Level} from './Levels';
-import type {GeneralPowerMap, RaceAbilityMap, RoleAbilityMap, RolePowerMap} from './Map';
-import type {TemporaryModifierInterface} from './ModifierList';
-import type {BuildStepInterface} from './ProgressionStep';
-import type {SpellRole} from './Role/SpellRole';
-import type {ActionInterface, ActionType} from './SheetActions';
-import type {SkillName} from './Skill/SkillName';
-import type {Vision} from './Vision';
+import type {Attributes} from '../Attributes';
+import type {Context} from '../Context';
+import type {Level} from '../Levels';
+import type {GeneralPowerMap, RaceAbilityMap, RoleAbilityMap, RolePowerMap} from '../Map';
+import type {TemporaryModifierInterface} from '../ModifierList';
+import type {BuildStepInterface} from '../ProgressionStep';
+import type {SpellRole} from '../Role/SpellRole';
+import type {ActionInterface, ActionType} from '../Sheet/SheetActions';
+import type {SkillName} from '../Skill/SkillName';
+import type {Vision} from '../Vision';
 
 export type Dispatch = <T extends ActionType>(buildStep: ActionInterface<T>) => void;
 export type SkilledSheet = {

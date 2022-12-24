@@ -1,6 +1,6 @@
 import type {BuildingSheetInterface} from '../BuildingSheetInterface';
 import type {Proficiency} from '../Proficiency';
-import type {Dispatch} from '../SheetInterface';
+import type {Dispatch} from '../Sheet/SheetInterface';
 import type {SkillName} from '../Skill/SkillName';
 import type {RoleName} from './RoleName';
 

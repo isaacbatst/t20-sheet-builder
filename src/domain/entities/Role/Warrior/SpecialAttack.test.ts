@@ -1,6 +1,6 @@
 import {ApplyRoleAbility} from '../../Action/ApplyRoleAbility';
 import {BuildingSheetFake} from '../../BuildingSheetFake';
-import {SheetFake} from '../../SheetFake';
+import {SheetFake} from '../../Sheet/SheetFake';
 import {SpecialAttack} from './SpecialAttack';
 import {SpecialAttackEffectExecution} from './SpecialAttackEffectExecution';
 import {SpecialAttackEffectExecutionRecipientAttack} from './SpecialAttackEffectExecutionRecipientAttack';

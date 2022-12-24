@@ -1,5 +1,5 @@
 import {TemporaryModifier} from '../../Modifier/TemporaryModifier';
-import type {SheetInterface} from '../../SheetInterface';
+import type {SheetInterface} from '../../Sheet/SheetInterface';
 import {RoleAbilityName} from '../RoleAbilityName';
 import type {SpecialAttackEffectExecutionRecipientType} from './SpecialAttackEffectExecutionRecipient';
 import {SpecialAttackEffectExecutionRecipient} from './SpecialAttackEffectExecutionRecipient';

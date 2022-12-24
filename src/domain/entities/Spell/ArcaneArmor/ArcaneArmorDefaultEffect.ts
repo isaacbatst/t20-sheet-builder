@@ -1,7 +1,7 @@
 import type {EffectDuration, EffectRange} from '../../Ability/ActivateableAbilityEffect';
 import {AffectableTarget} from '../../Affectable/AffectableTarget';
 import {ManaCost} from '../../ManaCost';
-import type {EffectExecution, SheetInterface} from '../../SheetInterface';
+import type {EffectExecution, SheetInterface} from '../../Sheet/SheetInterface';
 import {SpellEffect} from '../SpellEffect';
 import {SpellName} from '../SpellName';
 

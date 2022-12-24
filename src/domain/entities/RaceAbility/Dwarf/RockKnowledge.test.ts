@@ -5,7 +5,7 @@ import {InGameContext} from '../../InGameContext';
 import {ConditionalModifier} from '../../Modifier/ConditionalModifier';
 import type {ConditionVerify} from '../../ModifierList';
 import {RaceName} from '../../Race/RaceName';
-import type {ActionInterface} from '../../SheetActions';
+import type {ActionInterface} from '../../Sheet/SheetActions';
 import {SkillName} from '../../Skill/SkillName';
 import {Vision} from '../../Vision';
 import {RaceAbilityName} from '../RaceAbilityName';

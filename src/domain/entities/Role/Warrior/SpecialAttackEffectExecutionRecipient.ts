@@ -1,4 +1,4 @@
-import type {SheetInterface} from '../../SheetInterface';
+import type {SheetInterface} from '../../Sheet/SheetInterface';
 
 export type SpecialAttackEffectExecutionRecipientType = 'damage' | 'attack' | 'both';
 export abstract class SpecialAttackEffectExecutionRecipient {

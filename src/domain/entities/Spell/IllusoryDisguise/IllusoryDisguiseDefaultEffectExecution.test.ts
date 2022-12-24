@@ -1,5 +1,5 @@
 import {TemporaryModifier} from '../../Modifier/TemporaryModifier';
-import {SheetFake} from '../../SheetFake';
+import {SheetFake} from '../../Sheet/SheetFake';
 import {SkillName} from '../../Skill/SkillName';
 import {SpellName} from '../SpellName';
 import {IllusoryDisguiseDefaultEffectExecution} from './IllusoryDisguiseDefaultEffectExecution';

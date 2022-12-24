@@ -1,6 +1,6 @@
 import {AddTriggeredEffect} from '../Action/AddTriggeredEffect';
 import type {BuildingSheetInterface} from '../BuildingSheetInterface';
-import type {Dispatch} from '../SheetInterface';
+import type {Dispatch} from '../Sheet/SheetInterface';
 import type {ActivateableAbilityEffectInterface, ActivateableEffectParams} from './ActivateableAbilityEffect';
 import {ActivateableAbilityEffect} from './ActivateableAbilityEffect';
 

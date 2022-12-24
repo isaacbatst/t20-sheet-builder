@@ -1,5 +1,5 @@
 import {TemporaryModifier} from '../../Modifier/TemporaryModifier';
-import type {EffectExecution, SheetInterface} from '../../SheetInterface';
+import type {EffectExecution, SheetInterface} from '../../Sheet/SheetInterface';
 import {ArcaneArmorDefaultEffect} from './ArcaneArmorDefaultEffect';
 import {SpellName} from '../SpellName';
 

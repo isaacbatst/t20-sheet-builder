@@ -1,5 +1,5 @@
 import type {Affectable} from '../Affectable/Affectable';
-import type {Activateable, Appliable, EffectExecution, SheetInterface} from '../SheetInterface';
+import type {Activateable, Appliable, EffectExecution, SheetInterface} from '../Sheet/SheetInterface';
 import type {AbilityName} from './Ability';
 import {AbilityEffect} from './AbilityEffect';
 

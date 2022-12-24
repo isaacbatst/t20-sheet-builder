@@ -3,7 +3,7 @@ import {Character} from './Character';
 import {InGameContext} from './InGameContext';
 import {Dwarf} from './Race/Dwarf';
 import {Warrior} from './Role/Warrior/Warrior';
-import {SheetBuilder} from './SheetBuilder';
+import {SheetBuilder} from './Sheet/SheetBuilder';
 import {SkillName} from './Skill/SkillName';
 
 describe('Character', () => {

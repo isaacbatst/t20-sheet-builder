@@ -1,5 +1,5 @@
 import type {Attributes} from '../Attributes';
-import type {SheetInterface} from '../SheetInterface';
+import type {SheetInterface} from '../Sheet/SheetInterface';
 import {Skill} from './Skill';
 import type {SkillName} from './SkillName';
 

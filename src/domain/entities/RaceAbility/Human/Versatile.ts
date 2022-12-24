@@ -1,6 +1,6 @@
 import type {BuildingSheetInterface} from '../../BuildingSheetInterface';
 import {RaceName} from '../../Race/RaceName';
-import type {Dispatch} from '../../SheetInterface';
+import type {Dispatch} from '../../Sheet/SheetInterface';
 import {RaceAbility} from '../RaceAbility';
 import {RaceAbilityName} from '../RaceAbilityName';
 import type {VersatileChoice} from './VersatileEffect';

@@ -1,5 +1,5 @@
 import {TemporaryModifier} from '../../Modifier/TemporaryModifier';
-import type {EffectExecution, SheetInterface} from '../../SheetInterface';
+import type {EffectExecution, SheetInterface} from '../../Sheet/SheetInterface';
 import {SkillName} from '../../Skill/SkillName';
 import {SpellName} from '../SpellName';
 import {IllusoryDisguiseDefaultEffect} from './IllusoryDisguiseDefaultEffect';

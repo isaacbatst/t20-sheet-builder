@@ -4,7 +4,7 @@ import type {Attribute, Attributes} from '../Attributes';
 import type {BuildingSheetInterface} from '../BuildingSheetInterface';
 import type {RaceAbility} from '../RaceAbility/RaceAbility';
 import type {RaceInterface} from '../RaceInterface';
-import type {Dispatch} from '../SheetInterface';
+import type {Dispatch} from '../Sheet/SheetInterface';
 import type {RaceName} from './RaceName';
 
 export abstract class Race implements RaceInterface {
