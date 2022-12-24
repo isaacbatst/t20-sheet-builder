@@ -22,7 +22,7 @@ import {Vision} from '../Vision';
 
 describe('Sheet', () => {
 	describe('Human Warrior', () => {
-		let humanWarrior: Sheet;
+		let sheet: Sheet;
 		let role: Role;
 		let race: Race;
 		let context: ContextInterface;
@@ -34,34 +34,34 @@ describe('Sheet', () => {
 			context = new OutGameContext();
 			role = new Warrior([SkillName.fight, SkillName.aim, SkillName.athletics]);
 			sheetBuilder = new SheetBuilder();
-			humanWarrior = sheetBuilder
+			sheet = sheetBuilder
 				.setInitialAttributes({strength: 0, dexterity: 0, charisma: 0, constitution: 0, intelligence: 0, wisdom: 0})
 				.choseRace(race)
 				.chooseRole(role);
 		});
 
 		it('should choose race', () => {
-			expect(humanWarrior.getRace()).toBe(race);
+			expect(sheet.getRace()).toBe(race);
 		});
 
 		it('should have displacement 9', () => {
-			expect(humanWarrior.getDisplacement()).toBe(9);
+			expect(sheet.getDisplacement()).toBe(9);
 		});
 
 		it('should have default vision', () => {
-			expect(humanWarrior.getVision()).toBe(Vision.default);
+			expect(sheet.getVision()).toBe(Vision.default);
 		});
 
 		it('should choose role', () => {
-			expect(humanWarrior.getRole()).toBe(role);
+			expect(sheet.getRole()).toBe(role);
 		});
 
 		it('should have initial role life points + constitution', () => {
-			expect(humanWarrior.getMaxLifePoints(context)).toBe(21);
+			expect(sheet.getMaxLifePoints(context)).toBe(21);
 		});
 
 		it('should have role skills trained', () => {
-			const trainedSkills = humanWarrior.getTrainedSkills();
+			const trainedSkills = sheet.getTrainedSkills();
 			expect(trainedSkills).toContain(SkillName.fight);
 			expect(trainedSkills).toContain(SkillName.aim);
 			expect(trainedSkills).toContain(SkillName.fortitude);
@@ -69,18 +69,18 @@ describe('Sheet', () => {
 		});
 
 		it('should have role abilities', () => {
-			const abilities = humanWarrior.getAbilities();
+			const abilities = sheet.getAbilities();
 			expect(abilities.role.has(RoleAbilityName.specialAttack)).toBeTruthy();
 		});
 
 		it('should have powers', () => {
-			const powers = humanWarrior.getPowers();
+			const powers = sheet.getPowers();
 			expect(powers.general.has(GeneralPowerName.dodge)).toBeTruthy();
 		});
 	});
 
 	describe('Dwarf Arcanist', () => {
-		let dwarfArcanist: Sheet;
+		let sheet: Sheet;
 		let role: Role;
 		let context: ContextInterface;
 		let race: Race;
@@ -94,34 +94,34 @@ describe('Sheet', () => {
 				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 			race = new Dwarf();
 			sheetBuilder = new SheetBuilder();
-			dwarfArcanist = sheetBuilder
+			sheet = sheetBuilder
 				.setInitialAttributes({charisma: 0, constitution: 0, dexterity: 0, intelligence: 0, strength: 0, wisdom: 0})
 				.choseRace(race)
 				.chooseRole(role);
 		});
 
 		it('should choose race', () => {
-			expect(dwarfArcanist.getRace()).toBe(race);
+			expect(sheet.getRace()).toBe(race);
 		});
 
 		it('should have displacement 9', () => {
-			expect(dwarfArcanist.getDisplacement()).toBe(6);
+			expect(sheet.getDisplacement()).toBe(6);
 		});
 
 		it('should have dark vision', () => {
-			expect(dwarfArcanist.getVision()).toBe(Vision.dark);
+			expect(sheet.getVision()).toBe(Vision.dark);
 		});
 
 		it('should choose class', () => {
-			expect(dwarfArcanist.getRole()).toBe(role);
+			expect(sheet.getRole()).toBe(role);
 		});
 
 		it('should have initial role life points + constitution', () => {
-			expect(dwarfArcanist.getMaxLifePoints(context)).toBe(13);
+			expect(sheet.getMaxLifePoints(context)).toBe(13);
 		});
 
 		it('should have role skills trained', () => {
-			const trainedSkills = dwarfArcanist.getTrainedSkills();
+			const trainedSkills = sheet.getTrainedSkills();
 			expect(trainedSkills).toContain(SkillName.mysticism);
 			expect(trainedSkills).toContain(SkillName.will);
 			expect(trainedSkills).toContain(SkillName.knowledge);
@@ -129,8 +129,8 @@ describe('Sheet', () => {
 		});
 
 		it('should have basic proficiencies', () => {
-			expect(dwarfArcanist.getProficiencies()).toContain(Proficiency.simple);
-			expect(dwarfArcanist.getProficiencies()).toContain(Proficiency.lightArmor);
+			expect(sheet.getProficiencies()).toContain(Proficiency.simple);
+			expect(sheet.getProficiencies()).toContain(Proficiency.lightArmor);
 		});
 	});
 });
