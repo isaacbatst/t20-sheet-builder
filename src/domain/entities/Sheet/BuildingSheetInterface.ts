@@ -1,16 +1,17 @@
 import type {Attributes} from '../Attributes';
 import type {ContextInterface} from '../Context';
 import type {LifePoints} from '../LifePoints';
-import type {LifePointsBuilder} from '../LifePointsBuilder';
+import type {BuildingLifePoints} from '../LifePointsBuilder';
 import type {ManaPoints} from '../ManaPoints';
 import type {ModifierInterface} from '../ModifierList';
 import type {Proficiency} from '../Proficiency';
 import type {BuildStep} from '../ProgressionStep';
 import type {RoleInterface} from '../Role/RoleInterface';
+import type {Vision} from '../Vision';
 import type {SheetSkills} from './Sheet';
 import type {ActionsHandler} from './SheetActions';
+import type {SheetLearnedCircles, SheetSpells, SheetTriggeredEffects} from './SheetBase';
 import type {SheetAbilities, SheetPowers} from './SheetInterface';
-import type {Vision} from '../Vision';
 
 export type DefenseInterface = {
 	others: ModifiersListInterface;
@@ -33,10 +34,13 @@ export type BuildingSheetInterface = {
 	getLevel(): number;
 	getSkills(): SheetSkills;
 	getVision(): Vision;
-	getLifePoints(): LifePointsBuilder;
+	getLifePoints(): BuildingLifePoints;
 	getProficiencies(): Proficiency[];
 	getAbilities(): SheetAbilities;
 	getPowers(): SheetPowers;
+	getSpells(): SheetSpells;
+	getLearnedCircles(): SheetLearnedCircles;
+	getTriggeredEffects(): SheetTriggeredEffects;
 	buildLifePoints(context: ContextInterface, role: RoleInterface): LifePoints;
 	buildManaPoints(context: ContextInterface, role: RoleInterface): ManaPoints;
 };

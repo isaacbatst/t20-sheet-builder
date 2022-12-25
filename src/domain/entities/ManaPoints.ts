@@ -12,7 +12,11 @@ type ManaPointsParams = GetMaxManaPointsParams & {
 	perLevelModifiers: PerLevelModifiersList;
 };
 
-export class ManaPoints {
+export type ManaPointsInterface = {
+	addModifier(modifier: ModifierInterface): void;
+};
+
+export class ManaPoints implements ManaPointsInterface {
 	static get repeatedModifierError() {
 		return 'REPEATED_MANA_POINTS_MODIFIER';
 	}

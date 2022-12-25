@@ -1,14 +1,14 @@
 import {SetInitialAttributes} from '../Action/SetInitialAttributes';
 import type {Attributes} from '../Attributes';
-import {BuildingSheet} from './BuildingSheet';
-import type {BuildingSheetInterface} from './BuildingSheetInterface';
+import {OutGameContext} from '../OutOfGameContext';
 import {BuildStep} from '../ProgressionStep';
 import type {RaceInterface} from '../RaceInterface';
 import type {RoleInterface} from '../Role/RoleInterface';
-import {Sheet} from './Sheet';
 import type {ActionInterface, ActionType} from '../Sheet/SheetActions';
 import type {Dispatch} from '../Sheet/SheetInterface';
-import {OutGameContext} from '../OutOfGameContext';
+import {BuildingSheet} from './BuildingSheet';
+import type {BuildingSheetInterface} from './BuildingSheetInterface';
+import {Sheet} from './Sheet';
 
 export class SheetBuilder {
 	readonly context = new OutGameContext();
@@ -61,6 +61,9 @@ export class SheetBuilder {
 				powers: this.sheet.getPowers(),
 				lifePoints: this.sheet.buildLifePoints(this.context, role),
 				manaPoints: this.sheet.buildManaPoints(this.context, role),
+				spells: this.sheet.getSpells(),
+				learnedCircles: this.sheet.getLearnedCircles(),
+				triggeredEffects: this.sheet.getTriggeredEffects(),
 			});
 		};
 	}

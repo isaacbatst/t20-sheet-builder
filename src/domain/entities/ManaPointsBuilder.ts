@@ -1,4 +1,5 @@
 import type {ContextInterface} from './Context';
+import type {ManaPointsInterface} from './ManaPoints';
 import {ManaPoints} from './ManaPoints';
 import type {PerLevelModifier} from './Modifier/PerLevelModifier';
 import type {ModifierInterface} from './ModifierList';
@@ -8,10 +9,9 @@ import type {RoleInterface} from './Role/RoleInterface';
 
 type BuildParams = {
 	context: ContextInterface; role: RoleInterface; level: number;
-
 };
 
-export class ManaPointsBuilder {
+export class BuildingManaPoints implements ManaPointsInterface {
 	static get repeatedModifierError() {
 		return 'REPEATED_MANA_POINTS_MODIFIER';
 	}

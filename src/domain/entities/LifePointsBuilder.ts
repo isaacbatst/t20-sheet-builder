@@ -1,4 +1,5 @@
 import type {ContextInterface} from './Context';
+import type {LifePointsInterface} from './LifePoints';
 import {LifePoints} from './LifePoints';
 import type {PerLevelModifier} from './Modifier/PerLevelModifier';
 import type {ModifierInterface} from './ModifierList';
@@ -11,7 +12,7 @@ type BuildParams = {
 
 };
 
-export class LifePointsBuilder {
+export class BuildingLifePoints implements LifePointsInterface {
 	readonly modifiers: ModifiersList = new ModifiersList();
 	readonly perLevelModifiers: PerLevelModifiersList = new PerLevelModifiersList();
 

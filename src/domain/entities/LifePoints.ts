@@ -14,7 +14,12 @@ type LifePointsParams = GetMaxLifePointsParams & {
 	perLevelModifiers: PerLevelModifiersList;
 };
 
-export class LifePoints {
+export type LifePointsInterface = {
+	addModifier(modifier: ModifierInterface): void;
+	addPerLevelModifier(modifier: PerLevelModifier): void;
+};
+
+export class LifePoints implements LifePointsInterface {
 	readonly modifiers: ModifiersList;
 	readonly perLevelModifiers: PerLevelModifiersList;
 	private current: number;

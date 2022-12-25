@@ -1,5 +1,4 @@
 import type {Attributes} from '../Attributes';
-import type {DefenseInterface} from './BuildingSheetInterface';
 import type {Context, ContextInterface} from '../Context';
 import type {Level} from '../Levels';
 import type {LifePoints} from '../LifePoints';
@@ -13,6 +12,9 @@ import type {SheetAbilities, SheetInterface, SheetPowers} from '../Sheet/SheetIn
 import type {Skill} from '../Skill/Skill';
 import type {SkillName} from '../Skill/SkillName';
 import type {Vision} from '../Vision';
+import type {DefenseInterface} from './BuildingSheetInterface';
+import type {SheetLearnedCircles, SheetSpells, SheetTriggeredEffects} from './SheetBase';
+import {SheetBase} from './SheetBase';
 
 export type SheetSkills = Record<SkillName, Skill>;
 
@@ -31,30 +33,37 @@ type SheetParams = {
 	proficiencies: Proficiency[];
 	abilities: SheetAbilities;
 	powers: SheetPowers;
+	learnedCircles: SheetLearnedCircles;
+	triggeredEffects: SheetTriggeredEffects;
+	spells: SheetSpells;
 };
 
-export class Sheet implements SheetInterface {
+export class Sheet extends SheetBase implements SheetInterface {
 	static readonly initialAttributes: Attributes = {strength: 0, dexterity: 0, constitution: 0, intelligence: 0, wisdom: 0, charisma: 0};
 	readonly buildSteps: BuildStepInterface[];
 	readonly lifePoints: LifePoints;
 	readonly manaPoints: ManaPoints;
-	private readonly race: RaceInterface;
-	private readonly role: RoleInterface;
-	private readonly attributes: Attributes;
-	private readonly level: Level;
-	private readonly vision: Vision;
-	private readonly displacement;
-	private readonly skills: SheetSkills;
-	private readonly defense: DefenseInterface;
-	private readonly proficiencies: Proficiency[];
-	private readonly abilities: SheetAbilities;
-	private readonly powers: SheetPowers;
-	private readonly attackModifiers: ModifierInterface[] = [];
-	private readonly damageModifiers: ModifierInterface[] = [];
+	override readonly race: RaceInterface;
+	override readonly role: RoleInterface;
+	readonly learnedCircles: SheetLearnedCircles;
+	readonly triggeredEffects: SheetTriggeredEffects;
+	readonly spells: SheetSpells;
+	readonly attributes: Attributes;
+	readonly level: Level;
+	readonly vision: Vision;
+	readonly displacement;
+	readonly skills: SheetSkills;
+	readonly defense: DefenseInterface;
+	readonly proficiencies: Proficiency[];
+	readonly abilities: SheetAbilities;
+	readonly powers: SheetPowers;
+	readonly attackModifiers: ModifierInterface[] = [];
+	readonly damageModifiers: ModifierInterface[] = [];
 
 	constructor(
 		params: SheetParams,
 	) {
+		super();
 		this.skills = params.skills;
 		this.race = params.race;
 		this.role = params.role;
@@ -69,6 +78,9 @@ export class Sheet implements SheetInterface {
 		this.proficiencies = params.proficiencies;
 		this.abilities = params.abilities;
 		this.powers = params.powers;
+		this.learnedCircles = params.learnedCircles;
+		this.triggeredEffects = params.triggeredEffects;
+		this.spells = params.spells;
 	}
 
 	addAttackTemporaryModifier(modifier: TemporaryModifierInterface): void {
@@ -87,10 +99,6 @@ export class Sheet implements SheetInterface {
 		this.defense.others.add(modifier);
 	}
 
-	getLevel(): Level {
-		return this.level;
-	}
-
 	setAttackTemporaryModifier(modifier: TemporaryModifierInterface): void {
 		this.attackModifiers.push(modifier);
 	}
@@ -107,24 +115,8 @@ export class Sheet implements SheetInterface {
 		this.manaPoints.setCurrent(value);
 	}
 
-	getDisplacement() {
-		return this.displacement;
-	}
-
-	getVision(): Vision {
-		return this.vision;
-	}
-
 	getDefenseTotal(context: Context): number {
 		return this.defense.getTotal(this.attributes.dexterity, 0, 0, context);
-	}
-
-	getAttributes(): Attributes {
-		return this.attributes;
-	}
-
-	getAbilities(): SheetAbilities {
-		return this.abilities;
 	}
 
 	getMaxLifePoints(context: ContextInterface) {
@@ -145,19 +137,11 @@ export class Sheet implements SheetInterface {
 		return this.skills[skill].getSkillTrainingPoints(this.level);
 	}
 
-	getProficiencies() {
-		return this.proficiencies;
-	}
-
 	getRole() {
 		return this.role;
 	}
 
 	getRace() {
 		return this.race;
-	}
-
-	getPowers(): SheetPowers {
-		return this.powers;
 	}
 }
