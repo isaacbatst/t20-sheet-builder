@@ -5,6 +5,7 @@ import {AddProficiency} from '../Action/AddProficiency';
 import {AddTriggeredEffect} from '../Action/AddTriggeredEffect';
 import {ApplyRoleAbility} from '../Action/ApplyRoleAbility';
 import {ChooseRole} from '../Action/ChooseRole';
+import {TrainIntelligenceSkills} from '../Action/TrainIntelligenceSkills';
 import {ContextualModifier} from '../Modifier/ContextualModifier/ContextualModifier';
 import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
 import {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
@@ -319,5 +320,31 @@ describe('ActionDescriptionGenerator', () => {
 		);
 
 		expect(description).toBe('Guerreiro: +3 PM (+ Sabedoria/Carisma) por nível após o nível 1.');
+	});
+
+	it('should generate trainIntelligenceSkills description', () => {
+		const sheet = new BuildingSheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			new TrainIntelligenceSkills({
+				skills: [SkillName.acrobatics, SkillName.aim],
+			}),
+		);
+
+		expect(description).toBe('Perícias treinadas pela inteligência: Acrobacia, Pontaria.');
+	});
+
+	it('should generate trainIntelligenceSkills description', () => {
+		const sheet = new BuildingSheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			new TrainIntelligenceSkills({
+				skills: [],
+			}),
+		);
+
+		expect(description).toBe('Nenhuma perícia treinada pela inteligência.');
 	});
 });
