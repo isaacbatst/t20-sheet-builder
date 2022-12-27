@@ -21,7 +21,7 @@ describe('RockKnowledge', () => {
 		expect(dispatch).toHaveBeenCalledWith(new ChangeVision({
 			source: RaceAbilityName.rockKnowledge,
 			vision: Vision.dark,
-		}));
+		}), sheet);
 	});
 
 	it('should dispatch +2 perception bonus', () => {
@@ -37,7 +37,7 @@ describe('RockKnowledge', () => {
 					verify: expect.any(Function) as ModifierConditionVerify,
 				}),
 			skill: SkillName.perception,
-		})));
+		})), sheet);
 	});
 
 	it('should dispatch +2 survival bonus', () => {
@@ -53,7 +53,7 @@ describe('RockKnowledge', () => {
 					description: 'testes devem ser realizados no subterrâneo',
 					verify: expect.any(Function) as ModifierConditionVerify,
 				}),
-		})));
+		})), sheet);
 	});
 
 	it('should not activate bonus in game context outside underground', () => {

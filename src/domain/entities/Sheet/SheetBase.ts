@@ -1,18 +1,19 @@
 import type {Attributes} from '../Attributes';
+import type {BuildStepInterface} from '../BuildStep';
+import {BuildStep} from '../BuildStep';
 import type {Defense} from '../Defense/Defense';
 import type {DefenseInterface} from '../Defense/DefenseInterface';
 import type {Level} from '../Levels';
 import type {PointsBase} from '../Points/PointsBase';
 import type {Proficiency} from '../Proficiency';
-import type {BuildStepInterface} from '../ProgressionStep';
-import {BuildStep} from '../ProgressionStep';
 import type {RaceInterface} from '../RaceInterface';
 import type {RoleInterface} from '../Role/RoleInterface';
 import type {Spell} from '../Spell/Spell';
+import type {Dispatch, TransactionInterface} from '../Transaction';
+import {Transaction} from '../Transaction';
 import type {Vision} from '../Vision';
 import type {ActionInterface, ActionPayload, ActionsHandler, ActionType} from './SheetActions';
 import type {SheetAbilities, SheetBaseInterface, SheetLearnedCircles, SheetPowers, SheetSkills, SheetSpells, SheetTriggeredEffects} from './SheetBaseInterface';
-import type {Dispatch} from './SheetInterface';
 export abstract class SheetBase implements SheetBaseInterface {
 	readonly actionHandlers: ActionsHandler = {
 		addFixedModifierToSkill: this.addFixedModifierToSkill.bind(this),
@@ -45,7 +46,7 @@ export abstract class SheetBase implements SheetBaseInterface {
 	protected abstract readonly powers: SheetPowers;
 	protected abstract readonly abilities: SheetAbilities;
 	protected abstract attributes: Attributes;
-	protected abstract level: Level;
+	protected abstract readonly level: Level;
 	protected abstract vision: Vision;
 	protected abstract readonly proficiencies: Proficiency[];
 	protected abstract readonly skills: SheetSkills;
@@ -54,14 +55,14 @@ export abstract class SheetBase implements SheetBaseInterface {
 	protected abstract readonly learnedCircles: SheetLearnedCircles;
 	protected abstract readonly triggeredEffects: SheetTriggeredEffects;
 	protected abstract displacement: number;
-	protected abstract lifePoints: PointsBase;
-	protected abstract manaPoints: PointsBase;
+	protected abstract readonly lifePoints: PointsBase;
+	protected abstract readonly manaPoints: PointsBase;
 
-	dispatch: Dispatch = <T extends ActionType>(buildStep: ActionInterface<T>): void => {
-		this.buildSteps.push(new BuildStep(buildStep, this));
-		const handle = this.actionHandlers[buildStep.type];
-		handle(buildStep.payload, this.dispatch);
-	};
+	initTransaction<T extends ActionType>(action: ActionInterface<T>): void {
+		const transaction = new Transaction();
+		transaction.dispatch(action, this);
+		this.saveBuildSteps(transaction);
+	}
 
 	getAttributes(): Attributes {
 		return this.attributes;
@@ -111,7 +112,14 @@ export abstract class SheetBase implements SheetBaseInterface {
 		return this.triggeredEffects;
 	}
 
-	protected changeDisplacement(payload: ActionPayload<'changeDisplacement'>) {
+	private saveBuildSteps(transaction: Transaction) {
+		while (transaction.actionsQueue.getSize() > 0) {
+			const action = transaction.actionsQueue.dequeue();
+			this.buildSteps.push(new BuildStep(action, this));
+		}
+	}
+
+	private changeDisplacement(payload: ActionPayload<'changeDisplacement'>) {
 		if (payload.displacement < 0) {
 			throw new Error('INVALID_NEGATIVE_DISPLACEMENT');
 		}
@@ -119,52 +127,54 @@ export abstract class SheetBase implements SheetBaseInterface {
 		this.displacement = payload.displacement;
 	}
 
-	protected chooseRole(payload: ActionPayload<'chooseRole'>) {
+	private chooseRole(payload: ActionPayload<'chooseRole'>, dispatch: Dispatch) {
+		payload.role.addToSheet(this, dispatch);
 		this.role = payload.role;
 	}
 
-	protected chooseRace(payload: ActionPayload<'chooseRace'>) {
+	private chooseRace(payload: ActionPayload<'chooseRace'>, dispatch: Dispatch) {
+		payload.race.addToSheet(this, dispatch);
 		this.race = payload.race;
 	}
 
-	protected pickGeneralPower(payload: ActionPayload<'pickGeneralPower'>) {
+	private pickGeneralPower(payload: ActionPayload<'pickGeneralPower'>) {
 		return this.powers.general.set(payload.power.name, payload.power);
 	}
 
-	protected pickRolePower(payload: ActionPayload<'pickRolePower'>) {
+	private pickRolePower(payload: ActionPayload<'pickRolePower'>) {
 		return this.powers.role.set(payload.power.name, payload.power);
 	}
 
-	protected setInitialAttributes(payload: ActionPayload<'setInitialAttributes'>) {
+	private setInitialAttributes(payload: ActionPayload<'setInitialAttributes'>) {
 		this.attributes = payload.attributes;
 	}
 
-	protected changeVision(payload: ActionPayload<'changeVision'>): void {
+	private changeVision(payload: ActionPayload<'changeVision'>): void {
 		this.vision = payload.vision;
 	}
 
-	protected addFixedModifierToLifePoints(payload: ActionPayload<'addFixedModifierToLifePoints'>) {
+	private addFixedModifierToLifePoints(payload: ActionPayload<'addFixedModifierToLifePoints'>) {
 		this.lifePoints.addModifier(payload.modifier);
 	}
 
-	protected addFixedModifierToDefense(payload: ActionPayload<'addFixedModifierToDefense'>) {
+	private addFixedModifierToDefense(payload: ActionPayload<'addFixedModifierToDefense'>) {
 		this.defense.fixedModifiers.add(payload.modifier);
 	}
 
-	protected addFixedModifierToSkill(payload: ActionPayload<'addFixedModifierToSkill'>): void {
+	private addFixedModifierToSkill(payload: ActionPayload<'addFixedModifierToSkill'>): void {
 		this.skills[payload.skill].fixedModifiers.add(payload.modifier);
 	}
 
-	protected addContextualModifierToSkill(payload: ActionPayload<'addContextualModifierToSkill'>): void {
+	private addContextualModifierToSkill(payload: ActionPayload<'addContextualModifierToSkill'>): void {
 		this.skills[payload.skill].contextualModifiers.add(payload.modifier);
 	}
 
-	protected trainSkill(payload: ActionPayload<'trainSkill'>): void {
+	private trainSkill(payload: ActionPayload<'trainSkill'>): void {
 		const skill = this.skills[payload.name];
 		skill.train();
 	}
 
-	protected addProficiency(payload: ActionPayload<'addProficiency'>) {
+	private addProficiency(payload: ActionPayload<'addProficiency'>) {
 		if (this.proficiencies.includes(payload.proficiency)) {
 			throw new Error('REPEATED_PROFICIENCY');
 		}
@@ -172,22 +182,22 @@ export abstract class SheetBase implements SheetBaseInterface {
 		this.proficiencies.push(payload.proficiency);
 	}
 
-	protected applyRaceModifiers(payload: ActionPayload<'applyRaceModifiers'>) {
+	private applyRaceModifiers(payload: ActionPayload<'applyRaceModifiers'>) {
 		this.attributes = {
 			...this.attributes,
 			...payload.updatedAttributes,
 		};
 	}
 
-	protected applyRaceAbility(payload: ActionPayload<'applyRaceAbility'>) {
+	private applyRaceAbility(payload: ActionPayload<'applyRaceAbility'>) {
 		this.abilities.race.set(payload.ability.name, payload.ability);
 	}
 
-	protected applyRoleAbility(payload: ActionPayload<'applyRoleAbility'>) {
+	private applyRoleAbility(payload: ActionPayload<'applyRoleAbility'>) {
 		this.abilities.role.set(payload.ability.name, payload.ability);
 	}
 
-	protected learnSpell(payload: ActionPayload<'learnSpell'>) {
+	private learnSpell(payload: ActionPayload<'learnSpell'>) {
 		if (!this.isSpellCircleLearned(payload.spell)) {
 			throw new Error('CIRCLE_NOT_LEARNED');
 		}
@@ -195,7 +205,7 @@ export abstract class SheetBase implements SheetBaseInterface {
 		this.spells.set(payload.spell.name, payload.spell);
 	}
 
-	protected isSpellCircleLearned(spell: Spell) {
+	private isSpellCircleLearned(spell: Spell) {
 		if (spell.type !== 'universal') {
 			return this.learnedCircles[spell.type].has(spell.circle);
 		}
@@ -203,23 +213,23 @@ export abstract class SheetBase implements SheetBaseInterface {
 		return this.learnedCircles.arcane.has(spell.circle) || this.learnedCircles.divine.has(spell.circle);
 	}
 
-	protected learnCircle(payload: ActionPayload<'learnCircle'>) {
+	private learnCircle(payload: ActionPayload<'learnCircle'>) {
 		this.learnedCircles[payload.type].add(payload.circle);
 	}
 
-	protected addTriggeredEffect(payload: ActionPayload<'addTriggeredEffect'>) {
+	private addTriggeredEffect(payload: ActionPayload<'addTriggeredEffect'>) {
 		this.triggeredEffects[payload.effect.triggerEvent].set(payload.effect.name, payload.effect);
 	}
 
-	protected addPerLevelModifierToLifePoints(payload: ActionPayload<'addPerLevelModifierToLifePoints'>) {
+	private addPerLevelModifierToLifePoints(payload: ActionPayload<'addPerLevelModifierToLifePoints'>) {
 		this.lifePoints.addPerLevelModifier(payload.modifier);
 	}
 
-	protected addPerLevelModifierToManaPoints(payload: ActionPayload<'addPerLevelModifierToManaPoints'>) {
+	private addPerLevelModifierToManaPoints(payload: ActionPayload<'addPerLevelModifierToManaPoints'>) {
 		this.manaPoints.addPerLevelModifier(payload.modifier);
 	}
 
-	protected trainIntelligenceSkills(payload: ActionPayload<'trainIntelligenceSkills'>) {
+	private trainIntelligenceSkills(payload: ActionPayload<'trainIntelligenceSkills'>) {
 		if (payload.skills.length !== this.attributes.intelligence) {
 			throw new Error('INVALID_INTELLIGENCE_SKILLS');
 		}

@@ -1,7 +1,7 @@
 import {PassiveEffect} from '../../Ability/PassiveEffect';
 import {ChangeDisplacement} from '../../Action/ChangeDisplacement';
 import type {SheetBaseInterface} from '../../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../../Sheet/SheetInterface';
+import type {Dispatch} from '../../Transaction';
 import {RaceAbilityName} from '../RaceAbilityName';
 
 export class SlowAndAlwaysEffect extends PassiveEffect {
@@ -13,6 +13,6 @@ export class SlowAndAlwaysEffect extends PassiveEffect {
 		dispatch(new ChangeDisplacement({
 			displacement: 6,
 			source: this.source,
-		}));
+		}), sheet);
 	}
 }

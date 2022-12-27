@@ -7,7 +7,7 @@ import {BuildingManaPoints} from '../Points/ManaPoints/BuildingManaPoints';
 import type {ManaPoints} from '../Points/ManaPoints/ManaPoints';
 import {PointsMaxCalculatorFactory} from '../Points/PointsMaxCalculatorFactory';
 import {Proficiency} from '../Proficiency';
-import type {BuildStep} from '../ProgressionStep';
+import type {BuildStep} from '../BuildStep';
 import {InitialSkillsGenerator} from '../Skill/InitialSkillsGenerator';
 import type {LearnableSpellType, Spell} from '../Spell/Spell';
 import type {SpellCircle} from '../Spell/SpellCircle';

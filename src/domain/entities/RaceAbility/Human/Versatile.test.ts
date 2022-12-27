@@ -74,21 +74,21 @@ describe('Versatile', () => {
 		const dispatch = jest.fn();
 		versatile.addToSheet(sheet, dispatch, RaceName.human);
 
-		expect(dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
+		expect(dispatch).toHaveBeenCalledWith({
 			type: 'trainSkill',
 			payload: {
 				name: SkillName.acrobatics,
 				source: RaceAbilityName.versatile,
 			},
-		});
+		}, sheet);
 
-		expect(dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
+		expect(dispatch).toHaveBeenCalledWith({
 			type: 'trainSkill',
 			payload: {
 				name: SkillName.acrobatics,
 				source: RaceAbilityName.versatile,
 			},
-		});
+		}, sheet);
 	});
 
 	it('should apply chosen power', () => {
@@ -101,20 +101,20 @@ describe('Versatile', () => {
 		const dispatch = jest.fn();
 		versatile.addToSheet(sheet, dispatch, RaceName.human);
 
-		expect(dispatch).toHaveBeenCalledWith<[ActionInterface<'trainSkill'>]>({
+		expect(dispatch).toHaveBeenCalledWith({
 			type: 'trainSkill',
 			payload: {
 				name: SkillName.acrobatics,
 				source: RaceAbilityName.versatile,
 			},
-		});
+		}, sheet);
 
-		expect(dispatch).toHaveBeenCalledWith<[ActionInterface<'pickGeneralPower'>]>({
+		expect(dispatch).toHaveBeenCalledWith({
 			type: 'pickGeneralPower',
 			payload: {
 				power: new Dodge(),
 				source: RaceAbilityName.versatile,
 			},
-		});
+		}, sheet);
 	});
 });

@@ -1,5 +1,5 @@
 import type {SheetBaseInterface} from '../../../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../../../Sheet/SheetInterface';
+import type {Dispatch} from '../../../Transaction';
 
 export enum ArcanistPathName {
 	wizard = 'wizard',

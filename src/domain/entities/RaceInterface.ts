@@ -1,7 +1,7 @@
 import type {Attributes} from './Attributes';
 import type {RaceName} from './Race/RaceName';
 import type {SheetBaseInterface} from './Sheet/SheetBaseInterface';
-import type {Dispatch} from './Sheet/SheetInterface';
+import type {Dispatch} from './Transaction';
 
 export type RaceInterface = {
 	name: RaceName;

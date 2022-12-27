@@ -4,7 +4,7 @@ import type {Attribute, Attributes} from '../Attributes';
 import type {RaceAbility} from '../RaceAbility/RaceAbility';
 import type {RaceInterface} from '../RaceInterface';
 import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../Sheet/SheetInterface';
+import type {Dispatch} from '../Transaction';
 import type {RaceName} from './RaceName';
 
 export abstract class Race implements RaceInterface {
@@ -14,7 +14,6 @@ export abstract class Race implements RaceInterface {
 	constructor(readonly name: RaceName) {}
 
 	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
-		dispatch(new ChooseRace({race: this}));
 		this.applyAttributesModifiers(sheet, dispatch);
 		this.applyAbilities(sheet, dispatch);
 	}
@@ -27,7 +26,7 @@ export abstract class Race implements RaceInterface {
 			modifiedAttributes[attributeCasted] = sheet.getAttributes()[attributeCasted] + value;
 		});
 
-		dispatch(new ApplyRaceModifiers({modifiers: this.attributeModifiers, updatedAttributes: modifiedAttributes}));
+		dispatch(new ApplyRaceModifiers({modifiers: this.attributeModifiers, updatedAttributes: modifiedAttributes}), sheet);
 	}
 
 	private applyAbilities(sheet: SheetBaseInterface, dispatch: Dispatch): void {

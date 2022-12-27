@@ -23,15 +23,15 @@ describe('Warrior', () => {
 		expect(dispatch).toHaveBeenCalledWith(new TrainSkill({
 			name: SkillName.fight,
 			source: RoleName.warrior,
-		}));
+		}), sheet);
 		expect(dispatch).toHaveBeenCalledWith(new TrainSkill({
 			name: SkillName.animalHandling,
 			source: RoleName.warrior,
-		}));
+		}), sheet);
 		expect(dispatch).toHaveBeenCalledWith(new TrainSkill({
 			name: SkillName.aim,
 			source: RoleName.warrior,
-		}));
+		}), sheet);
 	});
 
 	it('should not train skills choosing more than allowed from the same group', () => {
@@ -61,15 +61,15 @@ describe('Warrior', () => {
 		expect(dispatch).toHaveBeenCalledWith(new AddProficiency({
 			proficiency: Proficiency.martial,
 			source: RoleName.warrior,
-		}));
+		}), sheet);
 		expect(dispatch).toHaveBeenCalledWith(new AddProficiency({
 			proficiency: Proficiency.heavyArmor,
 			source: RoleName.warrior,
-		}));
+		}), sheet);
 		expect(dispatch).toHaveBeenCalledWith(new AddProficiency({
 			proficiency: Proficiency.shield,
 			source: RoleName.warrior,
-		}));
+		}), sheet);
 	});
 
 	it('should dispatch abilities add', () => {
@@ -81,7 +81,7 @@ describe('Warrior', () => {
 		expect(dispatch).toHaveBeenCalledWith(new ApplyRoleAbility({
 			ability: new SpecialAttack(),
 			source: RoleName.warrior,
-		}));
+		}), sheet);
 	});
 
 	it('should dispatch life points modifiers add', () => {
@@ -92,11 +92,11 @@ describe('Warrior', () => {
 
 		expect(dispatch).toHaveBeenCalledWith(new AddFixedModifierToLifePoints({
 			modifier: new FixedModifier(RoleName.warrior, 20, new Set(['constitution'])),
-		}));
+		}), sheet);
 
 		expect(dispatch).toHaveBeenCalledWith(new AddPerLevelModifierToLifePoints({
 			modifier: new PerLevelModifier(RoleName.warrior, 5, false, new Set(['constitution'])),
-		}));
+		}), sheet);
 	});
 
 	it('should dispatch mana points modifiers add', () => {
@@ -107,6 +107,6 @@ describe('Warrior', () => {
 
 		expect(dispatch).toHaveBeenCalledWith(new AddPerLevelModifierToManaPoints({
 			modifier: new PerLevelModifier(RoleName.warrior, 3, true),
-		}));
+		}), sheet);
 	});
 });

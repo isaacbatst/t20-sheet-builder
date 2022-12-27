@@ -1,6 +1,6 @@
 import type {Proficiency} from '../Proficiency';
 import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../Sheet/SheetInterface';
+import type {Dispatch} from '../Transaction';
 import type {SkillName} from '../Skill/SkillName';
 import type {RoleName} from './RoleName';
 

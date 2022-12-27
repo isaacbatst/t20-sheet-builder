@@ -14,6 +14,6 @@ describe('SlowAndAlways', () => {
 		expect(dispatch).toHaveBeenCalledWith(new ChangeDisplacement({
 			displacement: 6,
 			source: RaceAbilityName.slowAndAlways,
-		}));
+		}), sheet);
 	});
 });

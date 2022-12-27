@@ -42,7 +42,7 @@ describe('Human', () => {
 				dexterity: 1,
 				strength: 1,
 			},
-		}));
+		}), sheet);
 	});
 
 	it('should throw error with more than 3 selections', () => {
@@ -123,7 +123,7 @@ describe('Human', () => {
 		expect(dispatch).toHaveBeenCalledWith(new ApplyRaceAbility({
 			ability: versatile,
 			source: RaceName.human,
-		}));
+		}), sheet);
 	});
 
 	it('should apply versatile training chosen skill and power', () => {
@@ -153,6 +153,6 @@ describe('Human', () => {
 
 		expect(dispatch).toHaveBeenCalledWith(new ApplyRaceAbility({
 			source: RaceName.human, ability: versatile,
-		}));
+		}), sheet);
 	});
 });

@@ -1,5 +1,5 @@
 import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../Sheet/SheetInterface';
+import type {Dispatch} from '../Transaction';
 import type {Translatable} from '../Translator';
 import type {AbilityName} from './Ability';
 import {AbilityEffect} from './AbilityEffect';

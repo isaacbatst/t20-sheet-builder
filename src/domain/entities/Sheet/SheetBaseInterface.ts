@@ -3,15 +3,14 @@ import type {Attributes} from '../Attributes';
 import type {DefenseInterface} from '../Defense/DefenseInterface';
 import type {GeneralPowerMap, RaceAbilityMap, RoleAbilityMap, RolePowerMap, TriggeredEffectMap} from '../Map';
 import type {Proficiency} from '../Proficiency';
-import type {BuildStepInterface} from '../ProgressionStep';
+import type {BuildStepInterface} from '../BuildStep';
 import type {Skill} from '../Skill/Skill';
 import type {SkillName} from '../Skill/SkillName';
 import type {LearnableSpellType, Spell} from '../Spell/Spell';
 import type {SpellCircle} from '../Spell/SpellCircle';
 import type {SpellName} from '../Spell/SpellName';
 import type {Vision} from '../Vision';
-import type {ActionsHandler} from './SheetActions';
-import type {Dispatch} from './SheetInterface';
+import type {ActionInterface, ActionsHandler, ActionType} from './SheetActions';
 
 export type SheetLearnedCircles = Record<LearnableSpellType, Set<SpellCircle>>;
 export type SheetSpells = Map<SpellName, Spell>;
@@ -23,7 +22,7 @@ export type SheetSkills = Record<SkillName, Skill>;
 export type SheetBaseInterface = {
 	actionHandlers: ActionsHandler;
 	buildSteps: BuildStepInterface[];
-	dispatch: Dispatch;
+	initTransaction<T extends ActionType>(action: ActionInterface<T>): void;
 	getAttributes(): Attributes;
 	getDefense(): DefenseInterface;
 	getDisplacement(): number;

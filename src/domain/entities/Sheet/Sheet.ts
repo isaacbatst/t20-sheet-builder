@@ -10,7 +10,7 @@ import type {LifePoints} from '../Points/LifePoints/LifePoints';
 import type {ManaPoints} from '../Points/ManaPoints/ManaPoints';
 import type {PointsMaxCalculatorInterface} from '../Points/PointsMaxCalculator';
 import type {Proficiency} from '../Proficiency';
-import type {BuildStep, BuildStepInterface} from '../ProgressionStep';
+import type {BuildStep, BuildStepInterface} from '../BuildStep';
 import type {RaceInterface} from '../RaceInterface';
 import type {RoleInterface} from '../Role/RoleInterface';
 import type {SheetInterface} from '../Sheet/SheetInterface';

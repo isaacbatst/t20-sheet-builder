@@ -9,7 +9,7 @@ import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
 import {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
 import type {Proficiency} from '../Proficiency';
 import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../Sheet/SheetInterface';
+import type {Dispatch} from '../Transaction';
 import type {SkillName} from '../Skill/SkillName';
 import type {RoleAbility} from './RoleAbility';
 import type {ChooseableSkills, RoleInterface} from './RoleInterface';
@@ -37,15 +37,14 @@ export abstract class Role implements RoleInterface {
 	}
 
 	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
-		dispatch(new ChooseRole({role: this}));
-		this.addLifePointsModifiers(dispatch);
-		this.addManaPointsModifiers(dispatch);
-		this.trainSkills(dispatch);
-		this.addProficiencies(dispatch);
-		this.addLevelOneAbilities(sheet, dispatch);
+		this.addLifePointsModifiers(dispatch, sheet);
+		this.addManaPointsModifiers(dispatch, sheet);
+		this.trainSkills(dispatch, sheet);
+		this.addProficiencies(dispatch, sheet);
+		this.addLevelOneAbilities(dispatch, sheet);
 	}
 
-	addLevelOneAbilities(sheet: SheetBaseInterface, dispatch: Dispatch) {
+	addLevelOneAbilities(dispatch: Dispatch, sheet: SheetBaseInterface) {
 		const abilities = this.abilities[Level.levelOne];
 
 		Object.values(abilities).forEach(ability => {
@@ -57,44 +56,44 @@ export abstract class Role implements RoleInterface {
 		return this.mandatorySkills.length + this.chooseableSkills.reduce((acc, curr) => curr.amount + acc, 0);
 	}
 
-	private addLifePointsModifiers(dispatch: Dispatch) {
+	private addLifePointsModifiers(dispatch: Dispatch, sheet: SheetBaseInterface) {
 		dispatch(new AddFixedModifierToLifePoints({
 			modifier: new FixedModifier(this.name, this.initialLifePoints, new Set(['constitution'])),
-		}));
+		}), sheet);
 
 		dispatch(new AddPerLevelModifierToLifePoints({
 			modifier: new PerLevelModifier(this.name, this.lifePointsPerLevel, false, new Set(['constitution'])),
-		}));
+		}), sheet);
 	}
 
-	private addManaPointsModifiers(dispatch: Dispatch) {
+	private addManaPointsModifiers(dispatch: Dispatch, sheet: SheetBaseInterface) {
 		dispatch(new AddPerLevelModifierToManaPoints({
 			modifier: new PerLevelModifier(this.name, this.manaPerLevel, true),
-		}));
+		}), sheet);
 	}
 
-	private addProficiencies(dispatch: Dispatch): void {
+	private addProficiencies(dispatch: Dispatch, sheet: SheetBaseInterface): void {
 		this.proficiencies.forEach(proficiency => {
 			dispatch(new AddProficiency({
 				proficiency,
 				source: this.name,
-			}));
+			}), sheet);
 		});
 	}
 
-	private trainSkills(dispatch: Dispatch): void {
+	private trainSkills(dispatch: Dispatch, sheet: SheetBaseInterface): void {
 		this.mandatorySkills.forEach(skill => {
 			dispatch(new TrainSkill({
 				name: skill,
 				source: this.name,
-			}));
+			}), sheet);
 		});
 
 		this.chosenSkills.forEach(skill => {
 			dispatch(new TrainSkill({
 				name: skill,
 				source: this.name,
-			}));
+			}), sheet);
 		});
 	}
 

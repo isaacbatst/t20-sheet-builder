@@ -1,6 +1,6 @@
 import {AddTriggeredEffect} from '../Action/AddTriggeredEffect';
 import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../Sheet/SheetInterface';
+import type {Dispatch} from '../Transaction';
 import type {ActivateableAbilityEffectInterface, ActivateableEffectParams} from './ActivateableAbilityEffect';
 import {ActivateableAbilityEffect} from './ActivateableAbilityEffect';
 import type {TriggeredEffectName} from './TriggeredEffectName';
@@ -32,6 +32,6 @@ export abstract class TriggeredEffect extends ActivateableAbilityEffect {
 	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
 		dispatch(new AddTriggeredEffect({
 			effect: this,
-		}));
+		}), sheet);
 	}
 }

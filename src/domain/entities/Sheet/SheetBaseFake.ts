@@ -3,7 +3,7 @@ import {DefenseFake} from '../Defense/DefenseFake';
 import type {DefenseInterface} from '../Defense/DefenseInterface';
 import {Level} from '../Levels';
 import type {Proficiency} from '../Proficiency';
-import type {BuildStepInterface} from '../ProgressionStep';
+import type {BuildStepInterface} from '../BuildStep';
 import {InitialSkillsGenerator} from '../Skill/InitialSkillsGenerator';
 import {Vision} from '../Vision';
 import type {ActionsHandler} from './SheetActions';
@@ -36,6 +36,7 @@ export class SheetBaseFake implements SheetBaseInterface {
 	};
 
 	dispatch = jest.fn();
+	initTransaction = jest.fn();
 	buildSteps: BuildStepInterface[] = [];
 	attributes: Attributes = {charisma: 0, constitution: 0, dexterity: 0, intelligence: 0, strength: 0, wisdom: 0};
 	defense = new DefenseFake();

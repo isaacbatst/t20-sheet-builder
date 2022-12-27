@@ -1,6 +1,6 @@
 import {PassiveEffect} from '../../../Ability/PassiveEffect';
 import type {SheetBaseInterface} from '../../../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../../../Sheet/SheetInterface';
+import type {Dispatch} from '../../../Transaction';
 import {RoleAbilityName} from '../../RoleAbilityName';
 import type {ArcanistPath} from './ArcanistPath';
 

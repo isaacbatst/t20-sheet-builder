@@ -3,7 +3,7 @@ import {LearnCircle} from '../Action/LearnCircle';
 import type {Attribute} from '../Attributes';
 import type {Level} from '../Levels';
 import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../Sheet/SheetInterface';
+import type {Dispatch} from '../Transaction';
 import type {LearnableSpellType, Spell} from '../Spell/Spell';
 import {SpellCircle} from '../Spell/SpellCircle';
 import type {RoleAbilityName} from './RoleAbilityName';
@@ -21,7 +21,9 @@ export abstract class SpellsAbilityEffect extends PassiveEffect {
 	}
 
 	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
-		dispatch(new LearnCircle({circle: SpellCircle.first, source: this.source, type: this.spellType}));
+		dispatch(new LearnCircle(
+			{circle: SpellCircle.first, source: this.source, type: this.spellType},
+		), sheet);
 		this.learnSpells(sheet, dispatch);
 	}
 

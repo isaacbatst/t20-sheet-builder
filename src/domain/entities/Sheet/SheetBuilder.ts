@@ -1,3 +1,5 @@
+import {ChooseRace} from '../Action/ChooseRace';
+import {ChooseRole} from '../Action/ChooseRole';
 import {SetInitialAttributes} from '../Action/SetInitialAttributes';
 import {TrainIntelligenceSkills} from '../Action/TrainIntelligenceSkills';
 import type {Attributes} from '../Attributes';
@@ -24,7 +26,7 @@ export class SheetBuilder {
 	}
 
 	setInitialAttributes(attributes: Attributes) {
-		this.sheet.dispatch(new SetInitialAttributes({attributes}));
+		this.sheet.initTransaction(new SetInitialAttributes({attributes}));
 
 		return {
 			choseRace: this.chooseRace(),
@@ -33,7 +35,7 @@ export class SheetBuilder {
 
 	private chooseRace() {
 		return (race: RaceInterface) => {
-			race.addToSheet(this.sheet, this.sheet.dispatch);
+			this.sheet.initTransaction(new ChooseRace({race}));
 
 			return {
 				chooseRole: this.chooseRole(race),
@@ -43,7 +45,7 @@ export class SheetBuilder {
 
 	private chooseRole(race: RaceInterface) {
 		return (role: RoleInterface) => {
-			role.addToSheet(this.sheet, this.sheet.dispatch);
+			this.sheet.initTransaction(new ChooseRole({role}));
 
 			return {
 				trainIntelligenceSkills: this.trainIntelligenceSkills(race, role),
@@ -53,7 +55,7 @@ export class SheetBuilder {
 
 	private trainIntelligenceSkills(race: RaceInterface, role: RoleInterface) {
 		return (skills: SkillName[]) => {
-			this.sheet.dispatch(new TrainIntelligenceSkills({skills}));
+			this.sheet.initTransaction(new TrainIntelligenceSkills({skills}));
 
 			return new Sheet({
 				attributes: this.sheet.getAttributes(),

@@ -17,7 +17,7 @@ describe('Dodge', () => {
 
 		expect(dispatch).toHaveBeenCalledWith(new AddFixedModifierToDefense({
 			modifier: new FixedModifier(GeneralPowerName.dodge, 2),
-		}));
+		}), sheet);
 	});
 
 	it('should dispatch reflexes bonus', () => {
@@ -30,7 +30,7 @@ describe('Dodge', () => {
 		expect(dispatch).toHaveBeenCalledWith(new AddFixedModifierToSkill({
 			skill: SkillName.reflexes,
 			modifier: new FixedModifier(GeneralPowerName.dodge, 2),
-		}));
+		}), sheet);
 	});
 
 	it('should require dexterity +1', () => {

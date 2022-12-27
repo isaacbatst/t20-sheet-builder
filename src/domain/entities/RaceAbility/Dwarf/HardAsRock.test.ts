@@ -16,7 +16,7 @@ describe('HardAsRock', () => {
 
 		expect(dispatch).toHaveBeenCalledWith(new AddFixedModifierToLifePoints({
 			modifier: new FixedModifier(RaceAbilityName.hardAsRock, 3),
-		}));
+		}), sheet);
 	});
 
 	it('should dispatch addPerLevelModifierToLifePoints', () => {
@@ -27,6 +27,6 @@ describe('HardAsRock', () => {
 
 		expect(dispatch).toHaveBeenCalledWith(new AddPerLevelModifierToLifePoints({
 			modifier: new PerLevelModifier(RaceAbilityName.hardAsRock, 1, false),
-		}));
+		}), sheet);
 	});
 });

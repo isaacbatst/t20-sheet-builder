@@ -24,22 +24,22 @@ describe('Arcanist', () => {
 		expect(dispatch).toHaveBeenCalledWith(new TrainSkill({
 			name: SkillName.mysticism,
 			source: RoleName.arcanist,
-		}));
+		}), sheet);
 
 		expect(dispatch).toHaveBeenCalledWith(new TrainSkill({
 			name: SkillName.will,
 			source: RoleName.arcanist,
-		}));
+		}), sheet);
 
 		expect(dispatch).toHaveBeenCalledWith(new TrainSkill({
 			name: SkillName.knowledge,
 			source: RoleName.arcanist,
-		}));
+		}), sheet);
 
 		expect(dispatch).toHaveBeenCalledWith(new TrainSkill({
 			name: SkillName.diplomacy,
 			source: RoleName.arcanist,
-		}));
+		}), sheet);
 	});
 
 	it('should not train with missing chooses', () => {
@@ -68,7 +68,7 @@ describe('Arcanist', () => {
 		const sheet = new BuildingSheetFake();
 		const dispatch = jest.fn();
 		arcanist.addToSheet(sheet, dispatch);
-		expect(dispatch).not.toHaveBeenCalledWith(expect.objectContaining({type: 'addProficiency'}));
+		expect(dispatch).not.toHaveBeenCalledWith(expect.objectContaining({type: 'addProficiency'}), sheet);
 	});
 
 	it('should learn spells', () => {
@@ -84,21 +84,21 @@ describe('Arcanist', () => {
 		expect(dispatch).toHaveBeenCalledWith(new LearnSpell({
 			source: RoleAbilityName.arcanistSpells,
 			spell: new ArcaneArmor(),
-		}));
+		}), sheet);
 
 		expect(dispatch).toHaveBeenCalledWith(new LearnSpell({
 			source: RoleAbilityName.arcanistSpells,
 			spell: new MentalDagger(),
-		}));
+		}), sheet);
 
 		expect(dispatch).toHaveBeenCalledWith(new LearnSpell({
 			source: RoleAbilityName.arcanistSpells,
 			spell: new IllusoryDisguise(),
-		}));
+		}), sheet);
 
 		expect(dispatch).toHaveBeenCalledWith(new LearnSpell({
 			source: RoleAbilityName.arcanistPath,
 			spell: new FlamesExplosion(),
-		}));
+		}), sheet);
 	});
 });

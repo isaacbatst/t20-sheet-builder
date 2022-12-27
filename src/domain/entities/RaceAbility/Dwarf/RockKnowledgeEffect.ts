@@ -5,7 +5,7 @@ import type {InGameContextInterface} from '../../Context/InGameContextInterface'
 import {ContextualModifier} from '../../Modifier/ContextualModifier/ContextualModifier';
 import type {ModifierCondition} from '../../Modifier/ContextualModifier/ContextualModifiersListInterface';
 import type {SheetBaseInterface} from '../../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../../Sheet/SheetInterface';
+import type {Dispatch} from '../../Transaction';
 import {SkillName} from '../../Skill/SkillName';
 import {Vision} from '../../Vision';
 import {RaceAbilityName} from '../RaceAbilityName';
@@ -26,8 +26,8 @@ export class RockKnowledgeEffect extends PassiveEffect {
 
 	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
 		const modifier = new ContextualModifier(this.source, RockKnowledgeEffect.skillModifier, RockKnowledgeEffect.condition);
-		dispatch(new ChangeVision({source: this.source, vision: Vision.dark}));
-		dispatch(new AddContextualModifierToSkill({modifier, skill: SkillName.perception}));
-		dispatch(new AddContextualModifierToSkill({modifier, skill: SkillName.survival}));
+		dispatch(new ChangeVision({source: this.source, vision: Vision.dark}), sheet);
+		dispatch(new AddContextualModifierToSkill({modifier, skill: SkillName.perception}), sheet);
+		dispatch(new AddContextualModifierToSkill({modifier, skill: SkillName.survival}), sheet);
 	}
 }

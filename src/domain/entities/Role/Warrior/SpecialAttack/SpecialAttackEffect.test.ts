@@ -16,6 +16,8 @@ describe('SpecialAttackEffect', () => {
 			sheet.getLevel(),
 		);
 		effect.activate(sheet, execution);
-		expect(sheet.addAttackTemporaryModifier).toHaveBeenCalledWith(new TemporaryModifier(RoleAbilityName.specialAttack, 4, 'next'));
+		expect(sheet.addAttackTemporaryModifier).toHaveBeenCalledWith(
+			new TemporaryModifier(RoleAbilityName.specialAttack, 4, 'next'),
+		);
 	});
 });

@@ -1,10 +1,10 @@
-import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
 import type {PowerName} from '../Power/PowerName';
 import type {RaceAbilityName} from '../RaceAbility/RaceAbilityName';
 import type {RoleAbilityName} from '../Role/RoleAbilityName';
 import type {ActionInterface} from '../Sheet/SheetActions';
-import type {Dispatch} from '../Sheet/SheetInterface';
+import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
 import type {SpellName} from '../Spell/SpellName';
+import type {Dispatch} from '../Transaction';
 import type {Translatable} from '../Translator';
 import type {AbilityEffect} from './AbilityEffect';
 import {PassiveEffect} from './PassiveEffect';
@@ -29,7 +29,7 @@ export abstract class Ability implements AbilityInterface {
 	) {}
 
 	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch, source: Translatable): void {
-		dispatch(this.getAddAction(source));
+		dispatch(this.getAddAction(source), sheet);
 		this.addPassiveEffectsToSheet(sheet, dispatch, source);
 	}
 

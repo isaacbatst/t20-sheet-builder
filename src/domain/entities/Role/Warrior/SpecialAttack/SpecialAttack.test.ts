@@ -1,22 +1,23 @@
 import {ApplyRoleAbility} from '../../../Action/ApplyRoleAbility';
 import {BuildingSheetFake} from '../../../Sheet/BuildingSheetFake';
 import {SheetFake} from '../../../Sheet/SheetFake';
+import {RoleName} from '../../RoleName';
 import {SpecialAttack} from './SpecialAttack';
 import {SpecialAttackEffectExecution} from './SpecialAttackEffectExecution';
 import {SpecialAttackEffectExecutionRecipientAttack} from './SpecialAttackEffectExecutionRecipientAttack';
 import {SpecialAttackManaCost} from './SpecialAttackManaCost';
-import {RoleName} from '../../RoleName';
 
 describe('SpecialAttack', () => {
 	it('should dispatch add', () => {
 		const specialAttack = new SpecialAttack();
 		const dispatch = jest.fn();
-		specialAttack.addToSheet(new BuildingSheetFake(), dispatch, RoleName.warrior);
+		const sheet = new BuildingSheetFake();
+		specialAttack.addToSheet(sheet, dispatch, RoleName.warrior);
 
 		expect(dispatch).toHaveBeenCalledWith(new ApplyRoleAbility({
 			ability: specialAttack,
 			source: RoleName.warrior,
-		}));
+		}), sheet);
 	});
 
 	it('should add attack modifier', () => {

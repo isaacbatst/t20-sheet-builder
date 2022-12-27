@@ -24,7 +24,7 @@ describe('Dwarf', () => {
 				constitution: 2,
 				wisdom: 1,
 			},
-		}));
+		}), sheet);
 	});
 
 	it('should dispatch rock knowledge appliance', () => {
@@ -35,7 +35,7 @@ describe('Dwarf', () => {
 		expect(dispatch).toHaveBeenCalledWith(new ApplyRaceAbility({
 			ability: new RockKnowledge(),
 			source: RaceName.dwarf,
-		}));
+		}), sheet);
 	});
 
 	it('should dispatch slow and always appliance', () => {
@@ -46,7 +46,7 @@ describe('Dwarf', () => {
 		expect(dispatch).toHaveBeenCalledWith(new ApplyRaceAbility({
 			ability: new SlowAndAlways(),
 			source: RaceName.dwarf,
-		}));
+		}), sheet);
 	});
 
 	it('should dispatch Hard as Rock appliance', () => {
@@ -57,6 +57,6 @@ describe('Dwarf', () => {
 		expect(dispatch).toHaveBeenCalledWith(new ApplyRaceAbility({
 			ability: new HardAsRock(),
 			source: RaceName.dwarf,
-		}));
+		}), sheet);
 	});
 });
