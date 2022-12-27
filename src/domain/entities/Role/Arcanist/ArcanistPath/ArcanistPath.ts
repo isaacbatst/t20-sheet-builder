@@ -1,4 +1,4 @@
-import type {BuildingSheetInterface} from '../../../Sheet/BuildingSheetInterface';
+import type {SheetBaseInterface} from '../../../Sheet/SheetBaseInterface';
 import type {Dispatch} from '../../../Sheet/SheetInterface';
 
 export enum ArcanistPathName {
@@ -9,5 +9,5 @@ export enum ArcanistPathName {
 
 export abstract class ArcanistPath {
 	abstract name: ArcanistPathName;
-	abstract addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch): void;
+	abstract addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void;
 }

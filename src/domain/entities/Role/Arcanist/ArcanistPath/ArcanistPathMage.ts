@@ -1,5 +1,5 @@
 import {LearnSpell} from '../../../Action/AddSpell';
-import type {BuildingSheetInterface} from '../../../Sheet/BuildingSheetInterface';
+import type {SheetBaseInterface} from '../../../Sheet/SheetBaseInterface';
 import type {Dispatch} from '../../../Sheet/SheetInterface';
 import type {Spell} from '../../../Spell/Spell';
 import {RoleAbilityName} from '../../RoleAbilityName';
@@ -12,7 +12,7 @@ export class ArcanistPathMage extends ArcanistPath {
 		super();
 	}
 
-	addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch): void {
+	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
 		dispatch(new LearnSpell({
 			source: RoleAbilityName.arcanistPath,
 			spell: this.additionalSpell,

@@ -1,8 +1,8 @@
 import {PassiveEffect} from '../../Ability/PassiveEffect';
 import {TrainSkill} from '../../Action/TrainSkill';
-import type {BuildingSheetInterface} from '../../Sheet/BuildingSheetInterface';
 import type {GeneralPowerName} from '../../Power/GeneralPowerName';
 import {GeneralPowerFactory} from '../../Power/PowerFactory';
+import type {SheetBaseInterface} from '../../Sheet/SheetBaseInterface';
 import type {Dispatch} from '../../Sheet/SheetInterface';
 import {SkillName} from '../../Skill/SkillName';
 import {RaceAbilityName} from '../RaceAbilityName';
@@ -36,7 +36,7 @@ export class VersatileEffect extends PassiveEffect {
 		this.choices.push(newChoice);
 	}
 
-	addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch): void {
+	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
 		if (this.choices.length !== 2) {
 			throw new Error('MISSING_CHOICES');
 		}

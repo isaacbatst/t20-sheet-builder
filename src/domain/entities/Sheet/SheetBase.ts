@@ -36,6 +36,7 @@ export abstract class SheetBase implements SheetBaseInterface {
 		addContextualModifierToSkill: this.addContextualModifierToSkill.bind(this),
 		addFixedModifierToDefense: this.addFixedModifierToDefense.bind(this),
 		addPerLevelModifierToManaPoints: this.addPerLevelModifierToManaPoints.bind(this),
+		trainIntelligenceSkills: this.trainIntelligenceSkills.bind(this),
 	};
 
 	abstract readonly buildSteps: BuildStepInterface[];
@@ -216,5 +217,15 @@ export abstract class SheetBase implements SheetBaseInterface {
 
 	protected addPerLevelModifierToManaPoints(payload: ActionPayload<'addPerLevelModifierToManaPoints'>) {
 		this.manaPoints.addPerLevelModifier(payload.modifier);
+	}
+
+	protected trainIntelligenceSkills(payload: ActionPayload<'trainIntelligenceSkills'>) {
+		if (payload.skills.length !== this.attributes.intelligence) {
+			throw new Error('INVALID_INTELLIGENCE_SKILLS');
+		}
+
+		payload.skills.forEach(skill => {
+			this.skills[skill].train();
+		});
 	}
 }

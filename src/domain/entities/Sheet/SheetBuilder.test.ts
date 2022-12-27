@@ -134,11 +134,17 @@ describe('SheetBuilder', () => {
 			sheetBuilder
 				.setInitialAttributes(initialAttributes)
 				.choseRace(race)
-				.chooseRole(role);
+				.chooseRole(role)
+				.trainIntelligenceSkills([SkillName.cheat, SkillName.aim]);
 		});
 
 		it('should choose role', () => {
 			expect(sheet.getRole()).toBe(role);
+		});
+
+		it('should train intelligence skills', () => {
+			expect(sheet.getSkills().cheat.getIsTrained()).toBeTruthy();
+			expect(sheet.getSkills().aim.getIsTrained()).toBeTruthy();
 		});
 	});
 

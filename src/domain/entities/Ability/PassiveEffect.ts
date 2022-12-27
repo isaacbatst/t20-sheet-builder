@@ -1,4 +1,4 @@
-import type {BuildingSheetInterface} from '../Sheet/BuildingSheetInterface';
+import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
 import type {Dispatch} from '../Sheet/SheetInterface';
 import type {Translatable} from '../Translator';
 import type {AbilityName} from './Ability';
@@ -9,5 +9,5 @@ export abstract class PassiveEffect extends AbilityEffect {
 		super('passive', source);
 	}
 
-	abstract addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch, source: Translatable): void;
+	abstract addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch, source: Translatable): void;
 }

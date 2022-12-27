@@ -39,6 +39,7 @@ export abstract class ActionDescriptionGenerator {
 		addPerLevelModifierToLifePoints: (sheet, {payload: {modifier}}) => `${Translator.getTranslation(modifier.source)}: ${StringHelper.addNumberSign(modifier.value)} PV por nível${modifier.includeFirstLevel ? '' : ' após o nível 1'}.`,
 		addFixedModifierToDefense: (sheet, {payload: {modifier}}) => `${Translator.getTranslation(modifier.source)}: ${StringHelper.addNumberSign(modifier.value)} Defesa adicionado.`,
 		addPerLevelModifierToManaPoints: (sheet, {payload: {modifier}}) => `${Translator.getTranslation(modifier.source)}: ${StringHelper.addNumberSign(modifier.value)} PM ${modifier.attributeBonuses.length ? `(+ ${modifier.attributeBonuses.map(attribute => Translator.getAttributeTranslation(attribute)).join('/')}) ` : ''}por nível${modifier.includeFirstLevel ? '' : ' após o nível 1'}.`,
+		trainIntelligenceSkills: (sheet, {payload}) => `Perícias de Inteligência treinadas: ${payload.skills.map(skill => Translator.getSkillTranslation(skill)).join(', ')}.`,
 	};
 
 	private static getAttributeText(attributes: Attributes, attribute: Attribute) {

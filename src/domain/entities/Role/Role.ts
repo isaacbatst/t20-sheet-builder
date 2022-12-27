@@ -8,7 +8,7 @@ import {Level} from '../Levels';
 import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
 import {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
 import type {Proficiency} from '../Proficiency';
-import type {BuildingSheetInterface} from '../Sheet/BuildingSheetInterface';
+import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
 import type {Dispatch} from '../Sheet/SheetInterface';
 import type {SkillName} from '../Skill/SkillName';
 import type {RoleAbility} from './RoleAbility';
@@ -36,7 +36,7 @@ export abstract class Role implements RoleInterface {
 		this.validateChosenSkills();
 	}
 
-	addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch): void {
+	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
 		dispatch(new ChooseRole({role: this}));
 		this.addLifePointsModifiers(dispatch);
 		this.addManaPointsModifiers(dispatch);
@@ -45,7 +45,7 @@ export abstract class Role implements RoleInterface {
 		this.addLevelOneAbilities(sheet, dispatch);
 	}
 
-	addLevelOneAbilities(sheet: BuildingSheetInterface, dispatch: Dispatch) {
+	addLevelOneAbilities(sheet: SheetBaseInterface, dispatch: Dispatch) {
 		const abilities = this.abilities[Level.levelOne];
 
 		Object.values(abilities).forEach(ability => {

@@ -1,11 +1,10 @@
 import {SetInitialAttributes} from '../Action/SetInitialAttributes';
+import {TrainIntelligenceSkills} from '../Action/TrainIntelligenceSkills';
 import type {Attributes} from '../Attributes';
 import {OutOfGameContext} from '../OutOfGameContext';
-import {BuildStep} from '../ProgressionStep';
 import type {RaceInterface} from '../RaceInterface';
 import type {RoleInterface} from '../Role/RoleInterface';
-import type {ActionInterface, ActionType} from '../Sheet/SheetActions';
-import type {Dispatch} from '../Sheet/SheetInterface';
+import type {SkillName} from '../Skill/SkillName';
 import {BuildingSheet} from './BuildingSheet';
 import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import {Sheet} from './Sheet';
@@ -45,6 +44,16 @@ export class SheetBuilder {
 	private chooseRole(race: RaceInterface) {
 		return (role: RoleInterface) => {
 			role.addToSheet(this.sheet, this.sheet.dispatch);
+
+			return {
+				trainIntelligenceSkills: this.trainIntelligenceSkills(race, role),
+			};
+		};
+	}
+
+	private trainIntelligenceSkills(race: RaceInterface, role: RoleInterface) {
+		return (skills: SkillName[]) => {
+			this.sheet.dispatch(new TrainIntelligenceSkills({skills}));
 
 			return new Sheet({
 				attributes: this.sheet.getAttributes(),

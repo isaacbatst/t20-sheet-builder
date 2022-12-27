@@ -1,8 +1,8 @@
 import {PassiveEffect} from '../Ability/PassiveEffect';
 import {LearnCircle} from '../Action/LearnCircle';
 import type {Attribute} from '../Attributes';
-import type {BuildingSheetInterface} from '../Sheet/BuildingSheetInterface';
 import type {Level} from '../Levels';
+import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
 import type {Dispatch} from '../Sheet/SheetInterface';
 import type {LearnableSpellType, Spell} from '../Spell/Spell';
 import {SpellCircle} from '../Spell/SpellCircle';
@@ -20,12 +20,12 @@ export abstract class SpellsAbilityEffect extends PassiveEffect {
 		this.validateSpells();
 	}
 
-	addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch): void {
+	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
 		dispatch(new LearnCircle({circle: SpellCircle.first, source: this.source, type: this.spellType}));
 		this.learnSpells(sheet, dispatch);
 	}
 
-	private learnSpells(sheet: BuildingSheetInterface, dispatch: Dispatch) {
+	private learnSpells(sheet: SheetBaseInterface, dispatch: Dispatch) {
 		this.spells.forEach(spell => {
 			spell.addToSheet(sheet, dispatch, this.source);
 		});

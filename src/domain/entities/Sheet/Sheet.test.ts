@@ -41,7 +41,8 @@ describe('Sheet', () => {
 			sheet = sheetBuilder
 				.setInitialAttributes({strength: 0, dexterity: 0, charisma: 0, constitution: 0, intelligence: 0, wisdom: 0})
 				.choseRace(race)
-				.chooseRole(role);
+				.chooseRole(role)
+				.trainIntelligenceSkills([]);
 		});
 
 		it('should choose race', () => {
@@ -102,7 +103,8 @@ describe('Sheet', () => {
 			sheet = sheetBuilder
 				.setInitialAttributes({charisma: 0, constitution: 0, dexterity: 0, intelligence: 0, strength: 0, wisdom: 0})
 				.choseRace(race)
-				.chooseRole(role);
+				.chooseRole(role)
+				.trainIntelligenceSkills([]);
 		});
 
 		it('should choose race', () => {

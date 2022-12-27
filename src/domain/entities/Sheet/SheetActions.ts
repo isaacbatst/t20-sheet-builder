@@ -40,6 +40,7 @@ type ActionTypesToHandlers = {
 	addPerLevelModifierToLifePoints(payload: {modifier: PerLevelModifier}): void;
 	addPerLevelModifierToManaPoints(payload: {modifier: PerLevelModifier}): void;
 	addFixedModifierToDefense(payload: {modifier: FixedModifierInterface}): void;
+	trainIntelligenceSkills(payload: {skills: SkillName[]}): void;
 };
 
 export type ActionType = keyof ActionTypesToHandlers;
