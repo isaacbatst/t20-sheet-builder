@@ -1,4 +1,4 @@
-import {TemporaryModifier} from '../../../Modifier/TemporaryModifier';
+import {TemporaryModifier} from '../../../Modifier/TemporaryModifier/TemporaryModifier';
 import type {SheetInterface} from '../../../Sheet/SheetInterface';
 import {RoleAbilityName} from '../../RoleAbilityName';
 import type {SpecialAttackEffectExecutionRecipientType} from './SpecialAttackEffectExecutionRecipient';

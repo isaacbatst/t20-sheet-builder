@@ -1,7 +1,14 @@
-import {BuildingSheetFake} from '../Sheet/BuildingSheetFake';
+import {InGameContextFake} from '../Context/InGameContextFake';
+import {ContextualModifier} from '../Modifier/ContextualModifier/ContextualModifier';
+import {ContextualModifiersListTotalCalculator} from '../Modifier/ContextualModifier/ContextualModifiersListTotalCalculator';
+import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
+import {FixedModifiersListTotalCalculator} from '../Modifier/FixedModifier/FixedModifiersListTotalCalculator';
+import {OutOfGameContext} from '../OutOfGameContext';
 import {RaceAbilityName} from '../RaceAbility/RaceAbilityName';
+import {BuildingSheetFake} from '../Sheet/BuildingSheetFake';
 import {Skill} from './Skill';
-import {Modifier} from '../Modifier/Modifier';
+import {SkillBaseCalculator} from './SkillBaseCalculator';
+import {SkillTotalCalculatorFactory} from './SkillTotalCalculatorFactory';
 
 describe('Skill', () => {
 	it('should calculate level 1 untrained skill', () => {
@@ -10,7 +17,18 @@ describe('Skill', () => {
 			attribute: 'dexterity',
 		});
 
-		expect(skill.getTotal(sheet.attributes)).toBe(0);
+		const calculator = SkillTotalCalculatorFactory.make(sheet.getAttributes(), sheet.getLevel(), new OutOfGameContext());
+		expect(skill.getTotal(calculator)).toBe(0);
+	});
+
+	it('should update total by training', () => {
+		const sheet = new BuildingSheetFake();
+		const skill = new Skill({
+			attribute: 'dexterity',
+		});
+		skill.train();
+		const calculator = SkillTotalCalculatorFactory.make(sheet.getAttributes(), sheet.getLevel(), new OutOfGameContext());
+		expect(skill.getTotal(calculator)).toBe(2);
 	});
 
 	it('should calculate level 1 untrained skill with modifier', () => {
@@ -23,7 +41,8 @@ describe('Skill', () => {
 			attribute: 'dexterity',
 		});
 
-		expect(skill.getTotal(sheet.attributes)).toBe(2);
+		const calculator = SkillTotalCalculatorFactory.make(sheet.getAttributes(), sheet.getLevel(), new OutOfGameContext());
+		expect(skill.getTotal(calculator)).toBe(2);
 	});
 
 	it('should calculate level 1 trained skill', () => {
@@ -33,10 +52,11 @@ describe('Skill', () => {
 			isTrained: true,
 			attribute: 'dexterity',
 		});
-		expect(skill.getTotal(sheet.attributes)).toBe(2);
+		const calculator = SkillTotalCalculatorFactory.make(sheet.getAttributes(), sheet.getLevel(), new OutOfGameContext());
+		expect(skill.getTotal(calculator)).toBe(2);
 	});
 
-	it('should calculate level 1 trained skill with modifier', () => {
+	it('should calculate level 1 trained skill with attribute modifier', () => {
 		const sheet = new BuildingSheetFake();
 		sheet.attributes = {
 			...sheet.attributes,
@@ -48,10 +68,11 @@ describe('Skill', () => {
 			attribute: 'dexterity',
 		});
 
-		expect(skill.getTotal(sheet.attributes)).toBe(4);
+		const calculator = SkillTotalCalculatorFactory.make(sheet.getAttributes(), sheet.getLevel(), new OutOfGameContext());
+		expect(skill.getTotal(calculator)).toBe(4);
 	});
 
-	it('should calculate level 1 trained skill with modifier and other bonus', () => {
+	it('should calculate level 1 trained skill with attribute modifier and fixed modifier', () => {
 		const sheet = new BuildingSheetFake();
 		sheet.attributes = {
 			...sheet.attributes,
@@ -62,12 +83,13 @@ describe('Skill', () => {
 			isTrained: true,
 			attribute: 'dexterity',
 		});
-		skill.addOtherModifier(new Modifier(RaceAbilityName.versatile, 2));
+		skill.fixedModifiers.add(new FixedModifier(RaceAbilityName.versatile, 2));
 
-		expect(skill.getTotal(sheet.attributes)).toBe(6);
+		const calculator = SkillTotalCalculatorFactory.make(sheet.getAttributes(), sheet.getLevel(), new OutOfGameContext());
+		expect(skill.getTotal(calculator)).toBe(6);
 	});
 
-	it('should calculate level 10 trained skill with modifier and other bonus', () => {
+	it('should calculate level 10 trained skill with attribute modifier and fixed modifier', () => {
 		const sheet = new BuildingSheetFake();
 		sheet.attributes = {
 			...sheet.attributes,
@@ -78,18 +100,45 @@ describe('Skill', () => {
 			isTrained: true,
 			attribute: 'dexterity',
 		});
-		skill.addOtherModifier(new Modifier(RaceAbilityName.versatile, 2));
+		skill.fixedModifiers.add(new FixedModifier(RaceAbilityName.versatile, 2));
 
-		expect(skill.getTotal(sheet.attributes, 10)).toBe(13);
+		const calculator = SkillTotalCalculatorFactory.make(sheet.getAttributes(), sheet.getLevel(), new OutOfGameContext());
+		expect(skill.getTotal(calculator)).toBe(13);
 	});
 
-	it('should update total by training', () => {
+	it('should calculate level 10 trained skill with attribute modifier, fixed modifier and contextual modifier using out of game context', () => {
 		const sheet = new BuildingSheetFake();
+		sheet.attributes = {
+			...sheet.attributes,
+			dexterity: 2,
+		};
+		sheet.level = 10;
 		const skill = new Skill({
+			isTrained: true,
 			attribute: 'dexterity',
 		});
-		skill.train();
-		const total = skill.getTotal(sheet.attributes);
-		expect(total).toBe(2);
+		skill.fixedModifiers.add(new FixedModifier(RaceAbilityName.versatile, 2));
+		skill.contextualModifiers.add(new ContextualModifier(RaceAbilityName.rockKnowledge, 5, {description: 'any', verify: context => context.getCurrentLocation().isUnderground}));
+
+		const calculator = SkillTotalCalculatorFactory.make(sheet.getAttributes(), sheet.getLevel(), new OutOfGameContext());
+		expect(skill.getTotal(calculator)).toBe(13);
+	});
+
+	it('should calculate level 10 trained skill with attribute modifier, fixed modifier and contextual modifier using in game context', () => {
+		const sheet = new BuildingSheetFake();
+		sheet.attributes = {
+			...sheet.attributes,
+			dexterity: 2,
+		};
+		sheet.level = 10;
+		const skill = new Skill({
+			isTrained: true,
+			attribute: 'dexterity',
+		});
+		skill.fixedModifiers.add(new FixedModifier(RaceAbilityName.versatile, 2));
+		skill.contextualModifiers.add(new ContextualModifier(RaceAbilityName.rockKnowledge, 5, {description: 'any', verify: context => context.getCurrentLocation().isUnderground}));
+
+		const calculator = SkillTotalCalculatorFactory.make(sheet.getAttributes(), sheet.getLevel(), new InGameContextFake());
+		expect(skill.getTotal(calculator)).toBe(18);
 	});
 });

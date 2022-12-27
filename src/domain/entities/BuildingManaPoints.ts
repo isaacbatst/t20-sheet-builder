@@ -1,11 +1,13 @@
-import type {ContextInterface} from './Context';
-import {ManaPoints} from './ManaPoints';
-import {ModifiersList} from './ModifierList';
+import {BuildingPoints} from './Points/BuildingPoints';
+import {ManaPoints} from './Points/ManaPoints/ManaPoints';
+import type {PointsMaxCalculatorInterface} from './Points/PointsMaxCalculator';
 
-export class BuildingManaPoints {
-	readonly modifiers: ModifiersList = new ModifiersList();
-
-	getTotal(context: ContextInterface) {
-		return this.modifiers.getTotal(context);
+export class BuildingManaPoints extends BuildingPoints<ManaPoints> {
+	build(maxCalculator: PointsMaxCalculatorInterface): ManaPoints {
+		return new ManaPoints({
+			maxCalculator,
+			modifiers: this.modifiers,
+			perLevelModifiers: this.perLevelModifiers,
+		});
 	}
 }

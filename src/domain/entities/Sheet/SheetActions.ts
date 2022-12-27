@@ -1,8 +1,8 @@
 import type {TriggeredEffectInterface} from '../Ability/TriggeredEffect';
 import type {Attributes} from '../Attributes';
-import type {BuildingSheetInterface} from './BuildingSheetInterface';
-import type {PerLevelModifier} from '../Modifier/PerLevelModifier';
-import type {ModifierInterface} from '../ModifierList';
+import type {ContextualModifierInterface} from '../Modifier/ContextualModifier/ContextualModifierInterface';
+import type {FixedModifierInterface} from '../Modifier/FixedModifier/FixedModifier';
+import type {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
 import type {GeneralPowerInterface} from '../Power/GeneralPower';
 import type {Proficiency} from '../Proficiency';
 import type {RaceAbilityInterface} from '../RaceAbility/RaceAbility';
@@ -16,11 +16,10 @@ import type {LearnableSpellType, Spell} from '../Spell/Spell';
 import type {SpellCircle} from '../Spell/SpellCircle';
 import type {Translatable} from '../Translator';
 import type {Vision} from '../Vision';
+import type {BuildingSheetInterface} from './BuildingSheetInterface';
 
 type ActionTypesToHandlers = {
 	setInitialAttributes(payload: {attributes: Attributes}): void;
-	addOtherModifierToSkill(payload: {modifier: ModifierInterface; skill: SkillName}): void;
-	addOtherModifierToDefense(payload: {modifier: ModifierInterface}): void;
 	chooseRace(payload: {race: RaceInterface}): void;
 	trainSkill(payload: {name: SkillName; source: Translatable}): void;
 	changeVision(payload: {vision: Vision; source: Translatable}): void;
@@ -30,13 +29,17 @@ type ActionTypesToHandlers = {
 	pickGeneralPower(payload: ({power: GeneralPowerInterface;source: Translatable})): void;
 	pickRolePower(payload: ({power: RolePowerInterface;source: Translatable})): void;
 	changeDisplacement(payload: {displacement: number; source: Translatable}): void;
-	addModifierToLifePoints(payload: {modifier: ModifierInterface}): void;
 	chooseRole(payload: {role: RoleInterface}): void;
 	addProficiency(payload: {proficiency: Proficiency; source: Translatable}): void;
 	learnCircle(payload: {circle: SpellCircle; source: Translatable; type: LearnableSpellType}): void;
 	learnSpell(payload: {spell: Spell; source: Translatable}): void;
 	addTriggeredEffect(payload: {effect: TriggeredEffectInterface}): void;
+	addContextualModifierToSkill(payload: {modifier: ContextualModifierInterface; skill: SkillName}): void;
+	addFixedModifierToSkill(payload: {modifier: FixedModifierInterface; skill: SkillName}): void;
+	addFixedModifierToLifePoints(payload: {modifier: FixedModifierInterface}): void;
 	addPerLevelModifierToLifePoints(payload: {modifier: PerLevelModifier}): void;
+	addPerLevelModifierToManaPoints(payload: {modifier: PerLevelModifier}): void;
+	addFixedModifierToDefense(payload: {modifier: FixedModifierInterface}): void;
 };
 
 export type ActionType = keyof ActionTypesToHandlers;

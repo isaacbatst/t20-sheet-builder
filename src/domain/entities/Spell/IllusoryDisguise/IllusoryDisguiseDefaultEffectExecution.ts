@@ -1,4 +1,4 @@
-import {TemporaryModifier} from '../../Modifier/TemporaryModifier';
+import {TemporaryModifier} from '../../Modifier/TemporaryModifier/TemporaryModifier';
 import type {EffectExecution, SheetInterface} from '../../Sheet/SheetInterface';
 import {SkillName} from '../../Skill/SkillName';
 import {SpellName} from '../SpellName';

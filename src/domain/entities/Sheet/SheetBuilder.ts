@@ -1,6 +1,6 @@
 import {SetInitialAttributes} from '../Action/SetInitialAttributes';
 import type {Attributes} from '../Attributes';
-import {OutGameContext} from '../OutOfGameContext';
+import {OutOfGameContext} from '../OutOfGameContext';
 import {BuildStep} from '../ProgressionStep';
 import type {RaceInterface} from '../RaceInterface';
 import type {RoleInterface} from '../Role/RoleInterface';
@@ -11,7 +11,7 @@ import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import {Sheet} from './Sheet';
 
 export class SheetBuilder {
-	readonly context = new OutGameContext();
+	readonly context = new OutOfGameContext();
 	constructor(private sheet: BuildingSheetInterface = new BuildingSheet()) {
 
 	}
@@ -59,8 +59,8 @@ export class SheetBuilder {
 				proficiencies: this.sheet.getProficiencies(),
 				abilities: this.sheet.getAbilities(),
 				powers: this.sheet.getPowers(),
-				lifePoints: this.sheet.buildLifePoints(this.context, role),
-				manaPoints: this.sheet.buildManaPoints(this.context, role),
+				lifePoints: this.sheet.buildLifePoints(),
+				manaPoints: this.sheet.buildManaPoints(),
 				spells: this.sheet.getSpells(),
 				learnedCircles: this.sheet.getLearnedCircles(),
 				triggeredEffects: this.sheet.getTriggeredEffects(),

@@ -1,18 +1,20 @@
-import type {ContextInterface} from '../Context';
-import type {ModifierInterface} from '../ModifierList';
+import type {Attribute} from '../Attributes';
 import type {Translatable} from '../Translator';
+import type {ModifierInterface, ModifierType, ModifierValueGetterInterface} from './ModifierInterface';
 
-export class Modifier implements ModifierInterface {
+export abstract class Modifier implements ModifierInterface {
+	readonly attributeBonuses: Attribute[];
+
 	constructor(
 		readonly source: Translatable,
-		private readonly value: number,
-	) {}
-
-	getValue(context: ContextInterface): number {
-		return this.value;
+		readonly value: number,
+		readonly type: ModifierType,
+		attributeBonuses: Set<Attribute> = new Set(),
+	) {
+		this.attributeBonuses = [...attributeBonuses];
 	}
 
-	getMaxPossibleValue(): number {
-		return this.value;
+	getValue(getter: ModifierValueGetterInterface): number {
+		return getter.get(this.value, this.attributeBonuses);
 	}
 }

@@ -1,10 +1,10 @@
-import {AddOtherModifierToSkill} from '../../Action/AddOtherModifierToSkill';
+import {AddContextualModifierToSkill} from '../../Action/AddContextualModifierToSkill';
 import {ChangeVision} from '../../Action/ChangeVision';
-import {BuildingSheetFake} from '../../Sheet/BuildingSheetFake';
 import {InGameContext} from '../../InGameContext';
-import {ConditionalModifier} from '../../Modifier/ConditionalModifier';
-import type {ConditionVerify} from '../../ModifierList';
+import {ContextualModifier} from '../../Modifier/ContextualModifier/ContextualModifier';
+import type {ModifierConditionVerify} from '../../Modifier/ContextualModifier/ContextualModifiersListInterface';
 import {RaceName} from '../../Race/RaceName';
+import {BuildingSheetFake} from '../../Sheet/BuildingSheetFake';
 import type {ActionInterface} from '../../Sheet/SheetActions';
 import {SkillName} from '../../Skill/SkillName';
 import {Vision} from '../../Vision';
@@ -30,8 +30,12 @@ describe('RockKnowledge', () => {
 		const dispatch = jest.fn();
 		rockKnowledge.addToSheet(sheet, dispatch, RaceName.dwarf);
 
-		expect(dispatch).toHaveBeenCalledWith(expect.objectContaining(new AddOtherModifierToSkill({
-			modifier: new ConditionalModifier(RaceAbilityName.rockKnowledge, 2, {description: 'testes devem ser realizados no subterrâneo', verify: expect.any(Function) as ConditionVerify}),
+		expect(dispatch).toHaveBeenCalledWith(expect.objectContaining(new AddContextualModifierToSkill({
+			modifier: new ContextualModifier(
+				RaceAbilityName.rockKnowledge, 2, {
+					description: 'testes devem ser realizados no subterrâneo',
+					verify: expect.any(Function) as ModifierConditionVerify,
+				}),
 			skill: SkillName.perception,
 		})));
 	});
@@ -42,9 +46,13 @@ describe('RockKnowledge', () => {
 		const dispatch = jest.fn();
 		rockKnowledge.addToSheet(sheet, dispatch, RaceName.dwarf);
 
-		expect(dispatch).toHaveBeenCalledWith(expect.objectContaining(new AddOtherModifierToSkill({
+		expect(dispatch).toHaveBeenCalledWith(expect.objectContaining(new AddContextualModifierToSkill({
 			skill: SkillName.survival,
-			modifier: new ConditionalModifier(RaceAbilityName.rockKnowledge, 2, {description: 'testes devem ser realizados no subterrâneo', verify: expect.any(Function) as ConditionVerify}),
+			modifier: new ContextualModifier(
+				RaceAbilityName.rockKnowledge, 2, {
+					description: 'testes devem ser realizados no subterrâneo',
+					verify: expect.any(Function) as ModifierConditionVerify,
+				}),
 		})));
 	});
 
@@ -54,11 +62,11 @@ describe('RockKnowledge', () => {
 		const dispatch = jest.fn();
 		rockKnowledge.addToSheet(sheet, dispatch, RaceName.dwarf);
 
-		const perceptionCall = dispatch.mock.calls[2][0] as ActionInterface<'addOtherModifierToSkill'>;
-		const survivalCall = dispatch.mock.calls[3][0] as ActionInterface<'addOtherModifierToSkill'>;
+		const perceptionCall = dispatch.mock.calls[2][0] as ActionInterface<'addContextualModifierToSkill'>;
+		const survivalCall = dispatch.mock.calls[3][0] as ActionInterface<'addContextualModifierToSkill'>;
 
-		const verifyPerception = (perceptionCall.payload).modifier.condition!.verify;
-		const verifySurvival = (survivalCall.payload).modifier.condition!.verify;
+		const verifyPerception = (perceptionCall.payload).modifier.condition.verify;
+		const verifySurvival = (survivalCall.payload).modifier.condition.verify;
 
 		expect(verifySurvival(new InGameContext({isUnderground: false}))).toBe(false);
 		expect(verifyPerception(new InGameContext({isUnderground: false}))).toBe(false);
@@ -70,11 +78,11 @@ describe('RockKnowledge', () => {
 		const dispatch = jest.fn();
 		rockKnowledge.addToSheet(sheet, dispatch, RaceName.dwarf);
 
-		const perceptionCall = dispatch.mock.calls[2][0] as ActionInterface<'addOtherModifierToSkill'>;
-		const survivalCall = dispatch.mock.calls[3][0] as ActionInterface<'addOtherModifierToSkill'>;
+		const perceptionCall = dispatch.mock.calls[2][0] as ActionInterface<'addContextualModifierToSkill'>;
+		const survivalCall = dispatch.mock.calls[3][0] as ActionInterface<'addContextualModifierToSkill'>;
 
-		const verifyPerception = (perceptionCall.payload).modifier.condition!.verify;
-		const verifySurvival = (survivalCall.payload).modifier.condition!.verify;
+		const verifyPerception = (perceptionCall.payload).modifier.condition.verify;
+		const verifySurvival = (survivalCall.payload).modifier.condition.verify;
 
 		expect(verifySurvival(new InGameContext({isUnderground: true}))).toBe(true);
 		expect(verifyPerception(new InGameContext({isUnderground: true}))).toBe(true);

@@ -1,4 +1,4 @@
-import {TemporaryModifier} from '../../Modifier/TemporaryModifier';
+import {TemporaryModifier} from '../../Modifier/TemporaryModifier/TemporaryModifier';
 import {SheetFake} from '../../Sheet/SheetFake';
 import {ArcaneArmorDefaultEffect} from './ArcaneArmorDefaultEffect';
 import {ArcaneArmorDefaultEffectExecution} from './ArcaneArmorDefaultEffectExecution';

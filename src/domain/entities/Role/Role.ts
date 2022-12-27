@@ -1,9 +1,14 @@
+import {AddFixedModifierToLifePoints} from '../Action/AddFixedModifierToLifePoints';
+import {AddPerLevelModifierToLifePoints} from '../Action/AddPerLevelModifierToLifePoints';
+import {AddPerLevelModifierToManaPoints} from '../Action/AddPerLevelModifierToManaPoints';
 import {AddProficiency} from '../Action/AddProficiency';
 import {ChooseRole} from '../Action/ChooseRole';
 import {TrainSkill} from '../Action/TrainSkill';
-import type {BuildingSheetInterface} from '../Sheet/BuildingSheetInterface';
 import {Level} from '../Levels';
+import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
+import {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
 import type {Proficiency} from '../Proficiency';
+import type {BuildingSheetInterface} from '../Sheet/BuildingSheetInterface';
 import type {Dispatch} from '../Sheet/SheetInterface';
 import type {SkillName} from '../Skill/SkillName';
 import type {RoleAbility} from './RoleAbility';
@@ -33,6 +38,8 @@ export abstract class Role implements RoleInterface {
 
 	addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch): void {
 		dispatch(new ChooseRole({role: this}));
+		this.addLifePointsModifiers(dispatch);
+		this.addManaPointsModifiers(dispatch);
 		this.trainSkills(dispatch);
 		this.addProficiencies(dispatch);
 		this.addLevelOneAbilities(sheet, dispatch);
@@ -48,6 +55,22 @@ export abstract class Role implements RoleInterface {
 
 	getTotalInitialSkills(): number {
 		return this.mandatorySkills.length + this.chooseableSkills.reduce((acc, curr) => curr.amount + acc, 0);
+	}
+
+	private addLifePointsModifiers(dispatch: Dispatch) {
+		dispatch(new AddFixedModifierToLifePoints({
+			modifier: new FixedModifier(this.name, this.initialLifePoints, new Set(['constitution'])),
+		}));
+
+		dispatch(new AddPerLevelModifierToLifePoints({
+			modifier: new PerLevelModifier(this.name, this.lifePointsPerLevel, false, new Set(['constitution'])),
+		}));
+	}
+
+	private addManaPointsModifiers(dispatch: Dispatch) {
+		dispatch(new AddPerLevelModifierToManaPoints({
+			modifier: new PerLevelModifier(this.name, this.manaPerLevel, true),
+		}));
 	}
 
 	private addProficiencies(dispatch: Dispatch): void {

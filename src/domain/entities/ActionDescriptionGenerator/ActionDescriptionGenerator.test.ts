@@ -1,13 +1,13 @@
 import {TriggeredEffectFake} from '../Ability/TriggeredEffectFake';
 import {AddPerLevelModifierToLifePoints} from '../Action/AddPerLevelModifierToLifePoints';
+import {AddPerLevelModifierToManaPoints} from '../Action/AddPerLevelModifierToManaPoints';
 import {AddProficiency} from '../Action/AddProficiency';
 import {AddTriggeredEffect} from '../Action/AddTriggeredEffect';
 import {ApplyRoleAbility} from '../Action/ApplyRoleAbility';
 import {ChooseRole} from '../Action/ChooseRole';
-import {BuildingSheetFake} from '../Sheet/BuildingSheetFake';
-import {ConditionalModifier} from '../Modifier/ConditionalModifier';
-import {Modifier} from '../Modifier/Modifier';
-import {PerLevelModifier} from '../Modifier/PerLevelModifier';
+import {ContextualModifier} from '../Modifier/ContextualModifier/ContextualModifier';
+import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
+import {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
 import {GeneralPowerName} from '../Power/GeneralPowerName';
 import {GeneralPowerFake, RolePowerFake} from '../PowerFake';
 import {Proficiency} from '../Proficiency';
@@ -19,6 +19,7 @@ import {RoleAbilityFake} from '../Role/RoleAbilityFake';
 import {RoleAbilityName} from '../Role/RoleAbilityName';
 import {RoleName} from '../Role/RoleName';
 import {RoleFake} from '../RoleFake';
+import {BuildingSheetFake} from '../Sheet/BuildingSheetFake';
 import {Skill} from '../Skill/Skill';
 import {SkillName} from '../Skill/SkillName';
 import {Vision} from '../Vision';
@@ -68,98 +69,52 @@ describe('ActionDescriptionGenerator', () => {
 		expect(description).toBe('Modificadores de raça aplicados: +2 Carisma e -1 Destreza.');
 	});
 
-	it('should generate addOtherModifierToDefense description', () => {
+	it('should generate addFixedModifierToDefense description', () => {
 		const sheet = new BuildingSheetFake();
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
 			{
-				type: 'addOtherModifierToDefense',
+				type: 'addFixedModifierToDefense',
 				payload: {
-					modifier: new Modifier(GeneralPowerName.dodge, 2),
+					modifier: new FixedModifier(GeneralPowerName.dodge, 2),
 				},
 			},
 		);
 
-		expect(description).toBe('Esquiva: +2 Defesa aplicado ao modificador "outros".');
+		expect(description).toBe('Esquiva: +2 Defesa adicionado.');
 	});
 
-	it('should generate addOtherModifierToDefense description with conditional', () => {
+	it('should generate addContextualModifierToSkill description with conditional', () => {
 		const sheet = new BuildingSheetFake();
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
 			{
-				type: 'addOtherModifierToDefense',
+				type: 'addContextualModifierToSkill',
 				payload: {
-					modifier: new ConditionalModifier(GeneralPowerName.dodge, 2, {verify: jest.fn(), description: 'testes realizados no subterrâneo'}),
+					modifier: new ContextualModifier(GeneralPowerName.dodge, 2, {verify: jest.fn(), description: 'testes realizados no subterrâneo'}),
+					skill: SkillName.perception,
 				},
 			},
 		);
 
-		expect(description).toBe('Esquiva: +2 Defesa aplicado ao modificador "outros". Ativação em: testes realizados no subterrâneo.');
+		expect(description).toBe('Esquiva: +2 Percepção aplicado ao modificador "outros". Ativação em: testes realizados no subterrâneo.');
 	});
 
-	it('should generate addOtherModifierToDefense description', () => {
-		const sheet = new BuildingSheetFake();
-		const description = ActionDescriptionGenerator.generate(
-			sheet,
-			{
-				type: 'addOtherModifierToDefense',
-				payload: {
-					modifier: new Modifier(GeneralPowerName.dodge, 2),
-				},
-			},
-		);
-
-		expect(description).toBe('Esquiva: +2 Defesa aplicado ao modificador "outros".');
-	});
-
-	it('should generate addOtherModifierToDefense description with conditional', () => {
-		const sheet = new BuildingSheetFake();
-		const description = ActionDescriptionGenerator.generate(
-			sheet,
-			{
-				type: 'addOtherModifierToDefense',
-				payload: {
-					modifier: new ConditionalModifier(GeneralPowerName.dodge, 2, {verify: jest.fn(), description: 'testes realizados no subterrâneo'}),
-				},
-			},
-		);
-
-		expect(description).toBe('Esquiva: +2 Defesa aplicado ao modificador "outros". Ativação em: testes realizados no subterrâneo.');
-	});
-
-	it('should generate addOtherModifierToSkill description', () => {
+	it('should generate addFixedModifierToSkill description', () => {
 		const sheet = new BuildingSheetFake();
 
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
 			{
-				type: 'addOtherModifierToSkill',
+				type: 'addFixedModifierToSkill',
 				payload: {
 					skill: SkillName.reflexes,
-					modifier: new Modifier(GeneralPowerName.dodge, 2),
+					modifier: new FixedModifier(GeneralPowerName.dodge, 2),
 				},
 			},
 		);
 
 		expect(description).toBe('Esquiva: +2 Reflexos aplicado ao modificador "outros".');
-	});
-
-	it('should generate addOtherModifierToSkill description with conditional', () => {
-		const sheet = new BuildingSheetFake();
-
-		const description = ActionDescriptionGenerator.generate(
-			sheet,
-			{
-				type: 'addOtherModifierToSkill',
-				payload: {
-					skill: SkillName.perception,
-					modifier: new ConditionalModifier(RaceAbilityName.rockKnowledge, 2, {verify: jest.fn(), description: 'testes realizados no subterrâneo'}),
-				},
-			},
-		);
-
-		expect(description).toBe('Conhecimento das Rochas: +2 Percepção aplicado ao modificador "outros". Ativação em: testes realizados no subterrâneo.');
 	});
 
 	it('should generate changeVision description', () => {
@@ -252,14 +207,14 @@ describe('ActionDescriptionGenerator', () => {
 		expect(description).toBe('Devagar e Sempre: deslocamento alterado para 6m.');
 	});
 
-	it('should generate addModifierToLifePoints description', () => {
+	it('should generate addFixedModifierToLifePoints description', () => {
 		const sheet = new BuildingSheetFake();
 
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
 			{
-				type: 'addModifierToLifePoints',
-				payload: {modifier: new Modifier(RaceAbilityName.hardAsRock, 3)},
+				type: 'addFixedModifierToLifePoints',
+				payload: {modifier: new FixedModifier(RaceAbilityName.hardAsRock, 3)},
 			},
 		);
 
@@ -316,7 +271,7 @@ describe('ActionDescriptionGenerator', () => {
 
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
-			new AddPerLevelModifierToLifePoints({modifier: new PerLevelModifier(1, true, RaceAbilityName.hardAsRock)}),
+			new AddPerLevelModifierToLifePoints({modifier: new PerLevelModifier(RaceAbilityName.hardAsRock, 1, false)}),
 		);
 
 		expect(description).toBe('Duro como pedra: +1 PV por nível após o nível 1.');
@@ -327,9 +282,42 @@ describe('ActionDescriptionGenerator', () => {
 
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
-			new AddPerLevelModifierToLifePoints({modifier: new PerLevelModifier(1, false, RaceAbilityName.hardAsRock)}),
+			new AddPerLevelModifierToLifePoints({modifier: new PerLevelModifier(RaceAbilityName.hardAsRock, 1, true)}),
 		);
 
 		expect(description).toBe('Duro como pedra: +1 PV por nível.');
+	});
+
+	it('should generate addPerLevelModifierToManaPoints description', () => {
+		const sheet = new BuildingSheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			new AddPerLevelModifierToManaPoints({modifier: new PerLevelModifier(RoleName.warrior, 3, true)}),
+		);
+
+		expect(description).toBe('Guerreiro: +3 PM por nível.');
+	});
+
+	it('should generate addPerLevelModifierToManaPoints description', () => {
+		const sheet = new BuildingSheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			new AddPerLevelModifierToManaPoints({modifier: new PerLevelModifier(RoleName.warrior, 3, false)}),
+		);
+
+		expect(description).toBe('Guerreiro: +3 PM por nível após o nível 1.');
+	});
+
+	it('should generate addPerLevelModifierToManaPoints description', () => {
+		const sheet = new BuildingSheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			new AddPerLevelModifierToManaPoints({modifier: new PerLevelModifier(RoleName.warrior, 3, false, new Set(['wisdom', 'charisma']))}),
+		);
+
+		expect(description).toBe('Guerreiro: +3 PM (+ Sabedoria/Carisma) por nível após o nível 1.');
 	});
 });

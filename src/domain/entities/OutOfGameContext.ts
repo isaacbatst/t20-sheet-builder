@@ -1,11 +1,12 @@
 import {Context} from './Context';
+import type {ModifierConditionVerify} from './Modifier/ContextualModifier/ContextualModifiersListInterface';
 
-export class OutGameContext extends Context {
+export class OutOfGameContext extends Context {
 	constructor() {
-		super('outgame');
+		super('outgame', false);
 	}
 
-	getConditionalModifierValue() {
-		return 0;
+	shouldActivateModifier(verify: ModifierConditionVerify): boolean {
+		return false;
 	}
 }

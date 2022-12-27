@@ -1,21 +1,18 @@
 import {Context} from './Context';
-import type {ModifierCondition} from './ModifierList';
+import type {InGameContextInterface} from './Context/InGameContextInterface';
+import type {ModifierConditionVerify} from './Modifier/ContextualModifier/ContextualModifiersListInterface';
 import type {Location} from './Sheet/SheetInterface';
 
-export class InGameContext extends Context {
+export class InGameContext extends Context implements InGameContextInterface {
 	private readonly location: Location;
 
 	constructor(initialLocation: Location) {
-		super('ingame');
+		super('ingame', true);
 		this.location = initialLocation;
 	}
 
-	getConditionalModifierValue(value: number, condition: ModifierCondition): number {
-		if (condition.verify(this)) {
-			return value;
-		}
-
-		return 0;
+	shouldActivateModifier(verify: ModifierConditionVerify): boolean {
+		return verify(this);
 	}
 
 	getCurrentLocation(): Location {

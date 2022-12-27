@@ -1,8 +1,8 @@
 import type {Attributes} from '../Attributes';
-import {BuildingSheet} from './BuildingSheet';
-import {OutGameContext} from '../OutOfGameContext';
-import {Modifier} from '../Modifier/Modifier';
-import type {ConditionVerify} from '../ModifierList';
+import {DefenseTotalCalculatorFactory} from '../Defense/DefenseTotalCalculatorFactory';
+import type {ModifierConditionVerify} from '../Modifier/ContextualModifier/ContextualModifiersListInterface';
+import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
+import {OutOfGameContext} from '../OutOfGameContext';
 import {GeneralPowerName} from '../Power/GeneralPowerName';
 import {Proficiency} from '../Proficiency';
 import {Dwarf} from '../Race/Dwarf';
@@ -16,11 +16,13 @@ import {Warrior} from '../Role/Warrior/Warrior';
 import {SheetBuilder} from '../Sheet/SheetBuilder';
 import {InitialSkillsGenerator} from '../Skill/InitialSkillsGenerator';
 import {SkillName} from '../Skill/SkillName';
+import {SkillTotalCalculatorFactory} from '../Skill/SkillTotalCalculatorFactory';
 import {ArcaneArmor} from '../Spell/ArcaneArmor/ArcaneArmor';
 import {FlamesExplosion} from '../Spell/FlamesExplosion/FlamesExplosion';
 import {IllusoryDisguise} from '../Spell/IllusoryDisguise/IllusoryDisguise';
 import {MentalDagger} from '../Spell/MentalDagger/MentalDagger';
 import {Vision} from '../Vision';
+import {BuildingSheet} from './BuildingSheet';
 
 const initialAttributes = {strength: 2, dexterity: 3, constitution: 0, intelligence: 2, wisdom: 2, charisma: 1};
 
@@ -70,15 +72,18 @@ describe('SheetBuilder', () => {
 		});
 
 		it('should apply human versatile ability with one power and one skill', () => {
-			const context = new OutGameContext();
+			const context = new OutOfGameContext();
 			expect(sheet.getSkills().acrobatics.getIsTrained()).toBeTruthy();
-			expect(sheet.getSkills().acrobatics.getTotal(sheet.getAttributes(), 1, context)).toBe(5);
-			expect(sheet.getSkills().reflexes.getTotal(sheet.getAttributes(), 1, context)).toBe(5);
-			expect(sheet.getDefense().getTotal(sheet.getAttributes().dexterity, 0, 0, context)).toBe(15);
+
+			const skillCalculator = SkillTotalCalculatorFactory.make(sheet.getAttributes(), sheet.getLevel(), context);
+			const defenseCalculator = DefenseTotalCalculatorFactory.make(sheet.getAttributes(), 0, 0);
+			expect(sheet.getSkills().acrobatics.getTotal(skillCalculator)).toBe(5);
+			expect(sheet.getSkills().reflexes.getTotal(skillCalculator)).toBe(5);
+			expect(sheet.getDefense().getTotal(defenseCalculator)).toBe(15);
 		});
 
 		it('should save dodge applience step', () => {
-			expect(sheet.buildSteps).toContainEqual(expect.objectContaining({description: 'Esquiva: +2 Defesa aplicado ao modificador "outros".'}));
+			expect(sheet.buildSteps).toContainEqual(expect.objectContaining({description: 'Esquiva: +2 Defesa adicionado.'}));
 			expect(sheet.buildSteps).toContainEqual(expect.objectContaining({description: 'Esquiva: +2 Reflexos aplicado ao modificador "outros".'}));
 		});
 
@@ -211,16 +216,18 @@ describe('SheetBuilder', () => {
 		it('should have perception and survival rock knowledge modifiers', () => {
 			const skills = sheet.getSkills();
 			const modifier = {
+				attributeBonuses: [],
 				source: RaceAbilityName.rockKnowledge,
 				value: 2,
+				type: 'contextual',
 				condition: {
 					description: 'testes devem ser realizados no subterrâneo',
-					verify: expect.any(Function) as ConditionVerify,
+					verify: expect.any(Function) as ModifierConditionVerify,
 				},
 			};
 
-			expect(skills.perception.getOthersModifiers()).toContainEqual(modifier);
-			expect(skills.survival.getOthersModifiers()).toContainEqual(modifier);
+			expect(skills.perception.contextualModifiers.modifiers).toContainEqual(modifier);
+			expect(skills.survival.contextualModifiers.modifiers).toContainEqual(modifier);
 		});
 
 		it('should have 6m displacement', () => {
@@ -228,7 +235,7 @@ describe('SheetBuilder', () => {
 		});
 
 		it('should have hard as rock +3 life points modifier', () => {
-			expect(sheet.lifePoints.modifiers.modifiers).toContainEqual(new Modifier(RaceAbilityName.hardAsRock, 3));
+			expect(sheet.lifePoints.modifiers.modifiers).toContainEqual(new FixedModifier(RaceAbilityName.hardAsRock, 3));
 		});
 	});
 
@@ -254,7 +261,6 @@ describe('SheetBuilder', () => {
 		});
 
 		it('should have role skills trained', () => {
-			const context = new OutGameContext();
 			const skills = sheet
 				.getSkills();
 

@@ -1,4 +1,4 @@
-import {TemporaryModifier} from '../../Modifier/TemporaryModifier';
+import {TemporaryModifier} from '../../Modifier/TemporaryModifier/TemporaryModifier';
 import {SheetFake} from '../../Sheet/SheetFake';
 import {SkillName} from '../../Skill/SkillName';
 import {SpellName} from '../SpellName';

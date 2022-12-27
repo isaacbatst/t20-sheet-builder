@@ -1,5 +1,9 @@
-import {OutGameContext} from '../OutOfGameContext';
-import type {ContextInterface} from '../Context';
+import type {ContextInterface} from '../ContextInterface';
+import {FixedModifiersListTotalCalculator} from '../Modifier/FixedModifier/FixedModifiersListTotalCalculator';
+import {PerLevelModifiersListTotalCalculator} from '../Modifier/PerLevelModifier/PerLevelModifiersListTotalCalculator';
+import {OutOfGameContext} from '../OutOfGameContext';
+import {PointsMaxCalculator} from '../Points/PointsMaxCalculator';
+import {PointsMaxCalculatorFactory} from '../Points/PointsMaxCalculatorFactory';
 import {GeneralPowerName} from '../Power/GeneralPowerName';
 import {Proficiency} from '../Proficiency';
 import {Dwarf} from '../Race/Dwarf';
@@ -11,14 +15,14 @@ import {ArcanistPathMage} from '../Role/Arcanist/ArcanistPath/ArcanistPathMage';
 import type {Role} from '../Role/Role';
 import {RoleAbilityName} from '../Role/RoleAbilityName';
 import {Warrior} from '../Role/Warrior/Warrior';
-import type {Sheet} from './Sheet';
-import {SheetBuilder} from './SheetBuilder';
 import {SkillName} from '../Skill/SkillName';
 import {ArcaneArmor} from '../Spell/ArcaneArmor/ArcaneArmor';
 import {FlamesExplosion} from '../Spell/FlamesExplosion/FlamesExplosion';
 import {IllusoryDisguise} from '../Spell/IllusoryDisguise/IllusoryDisguise';
 import {MentalDagger} from '../Spell/MentalDagger/MentalDagger';
 import {Vision} from '../Vision';
+import type {Sheet} from './Sheet';
+import {SheetBuilder} from './SheetBuilder';
 
 describe('Sheet', () => {
 	describe('Human Warrior', () => {
@@ -31,7 +35,7 @@ describe('Sheet', () => {
 		beforeEach(() => {
 			const choices: VersatileChoice[] = [{name: SkillName.acrobatics, type: 'skill'}, {name: GeneralPowerName.dodge, type: 'power'}];
 			race = new Human(['charisma', 'constitution', 'dexterity'], choices);
-			context = new OutGameContext();
+			context = new OutOfGameContext();
 			role = new Warrior([SkillName.fight, SkillName.aim, SkillName.athletics]);
 			sheetBuilder = new SheetBuilder();
 			sheet = sheetBuilder
@@ -57,15 +61,16 @@ describe('Sheet', () => {
 		});
 
 		it('should have initial role life points + constitution', () => {
-			expect(sheet.getMaxLifePoints(context)).toBe(21);
+			const calculator = PointsMaxCalculatorFactory.make(sheet.getAttributes(), sheet.getLevel());
+			expect(sheet.getLifePoints().getMax(calculator)).toBe(21);
 		});
 
 		it('should have role skills trained', () => {
-			const trainedSkills = sheet.getTrainedSkills();
-			expect(trainedSkills).toContain(SkillName.fight);
-			expect(trainedSkills).toContain(SkillName.aim);
-			expect(trainedSkills).toContain(SkillName.fortitude);
-			expect(trainedSkills).toContain(SkillName.athletics);
+			const skills = sheet.getSkills();
+			expect(skills.fight.getIsTrained()).toBeTruthy();
+			expect(skills.aim.getIsTrained()).toBeTruthy();
+			expect(skills.fortitude.getIsTrained()).toBeTruthy();
+			expect(skills.athletics.getIsTrained()).toBeTruthy();
 		});
 
 		it('should have role abilities', () => {
@@ -87,7 +92,7 @@ describe('Sheet', () => {
 		let sheetBuilder: SheetBuilder;
 
 		beforeEach(() => {
-			context = new OutGameContext();
+			context = new OutOfGameContext();
 			role = ArcanistBuilder
 				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
 				.choosePath(new ArcanistPathMage(new FlamesExplosion()))
@@ -117,15 +122,16 @@ describe('Sheet', () => {
 		});
 
 		it('should have initial role life points + constitution', () => {
-			expect(sheet.getMaxLifePoints(context)).toBe(13);
+			const calculator = PointsMaxCalculatorFactory.make(sheet.getAttributes(), sheet.getLevel());
+			expect(sheet.getLifePoints().getMax(calculator)).toBe(13);
 		});
 
 		it('should have role skills trained', () => {
-			const trainedSkills = sheet.getTrainedSkills();
-			expect(trainedSkills).toContain(SkillName.mysticism);
-			expect(trainedSkills).toContain(SkillName.will);
-			expect(trainedSkills).toContain(SkillName.knowledge);
-			expect(trainedSkills).toContain(SkillName.diplomacy);
+			const skills = sheet.getSkills();
+			expect(skills.mysticism.getIsTrained()).toBeTruthy();
+			expect(skills.will.getIsTrained()).toBeTruthy();
+			expect(skills.knowledge.getIsTrained()).toBeTruthy();
+			expect(skills.diplomacy.getIsTrained()).toBeTruthy();
 		});
 
 		it('should have basic proficiencies', () => {

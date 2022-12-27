@@ -1,28 +1,28 @@
 import type {Attributes} from '../Attributes';
-import type {Context, ContextInterface} from '../Context';
+import type {Context} from '../Context';
+import type {ContextInterface} from '../ContextInterface';
+import type {DefenseInterface} from '../Defense/DefenseInterface';
 import type {Level} from '../Levels';
-import type {LifePoints} from '../LifePoints';
-import type {ManaPoints} from '../ManaPoints';
-import type {ModifierInterface, TemporaryModifierInterface} from '../ModifierList';
+import type {ContextualModifierInterface} from '../Modifier/ContextualModifier/ContextualModifierInterface';
+import type {ModifierInterface} from '../Modifier/ModifierInterface';
+import type {TemporaryModifierInterface} from '../Modifier/TemporaryModifier/TemporaryModifierInterface';
+import type {LifePoints} from '../Points/LifePoints/LifePoints';
+import type {ManaPoints} from '../Points/ManaPoints/ManaPoints';
+import type {PointsMaxCalculatorInterface} from '../Points/PointsMaxCalculator';
 import type {Proficiency} from '../Proficiency';
 import type {BuildStep, BuildStepInterface} from '../ProgressionStep';
 import type {RaceInterface} from '../RaceInterface';
 import type {RoleInterface} from '../Role/RoleInterface';
-import type {SheetAbilities, SheetInterface, SheetPowers} from '../Sheet/SheetInterface';
-import type {Skill} from '../Skill/Skill';
+import type {SheetInterface} from '../Sheet/SheetInterface';
 import type {SkillName} from '../Skill/SkillName';
 import type {Vision} from '../Vision';
-import type {DefenseInterface} from './BuildingSheetInterface';
-import type {SheetLearnedCircles, SheetSpells, SheetTriggeredEffects} from './SheetBase';
 import {SheetBase} from './SheetBase';
-
-export type SheetSkills = Record<SkillName, Skill>;
+import type {SheetAbilities, SheetLearnedCircles, SheetPowers, SheetSkills, SheetSpells, SheetTriggeredEffects} from './SheetBaseInterface';
 
 type SheetParams = {
 	attributes: Attributes;
 	race: RaceInterface;
 	role: RoleInterface;
-	skills: SheetSkills;
 	buildSteps: BuildStep[];
 	lifePoints: LifePoints;
 	manaPoints: ManaPoints;
@@ -36,15 +36,16 @@ type SheetParams = {
 	learnedCircles: SheetLearnedCircles;
 	triggeredEffects: SheetTriggeredEffects;
 	spells: SheetSpells;
+	skills: SheetSkills;
 };
 
 export class Sheet extends SheetBase implements SheetInterface {
 	static readonly initialAttributes: Attributes = {strength: 0, dexterity: 0, constitution: 0, intelligence: 0, wisdom: 0, charisma: 0};
+	override readonly race: RaceInterface;
+	override readonly role: RoleInterface;
 	readonly buildSteps: BuildStepInterface[];
 	readonly lifePoints: LifePoints;
 	readonly manaPoints: ManaPoints;
-	override readonly race: RaceInterface;
-	override readonly role: RoleInterface;
 	readonly learnedCircles: SheetLearnedCircles;
 	readonly triggeredEffects: SheetTriggeredEffects;
 	readonly spells: SheetSpells;
@@ -83,6 +84,14 @@ export class Sheet extends SheetBase implements SheetInterface {
 		this.spells = params.spells;
 	}
 
+	getLifePoints(): LifePoints {
+		return this.lifePoints;
+	}
+
+	getManaPoints(): ManaPoints {
+		return this.manaPoints;
+	}
+
 	addAttackTemporaryModifier(modifier: TemporaryModifierInterface): void {
 		this.attackModifiers.push(modifier);
 	}
@@ -92,11 +101,11 @@ export class Sheet extends SheetBase implements SheetInterface {
 	}
 
 	addSkillTemporaryModifier(skill: SkillName, modifier: TemporaryModifierInterface): void {
-		this.skills[skill].addOtherModifier(modifier);
+		throw new Error('Not implemented');
 	}
 
 	addDefenseTemporaryModifier(modifier: TemporaryModifierInterface): void {
-		this.defense.others.add(modifier);
+		throw new Error('Not implemented');
 	}
 
 	setAttackTemporaryModifier(modifier: TemporaryModifierInterface): void {
@@ -107,34 +116,8 @@ export class Sheet extends SheetBase implements SheetInterface {
 		this.damageModifiers.push(modifier);
 	}
 
-	addDefenseModifier(modifier: ModifierInterface): void {
-		this.defense.others.add(modifier);
-	}
-
 	useMana(value: number): void {
-		this.manaPoints.setCurrent(value);
-	}
-
-	getDefenseTotal(context: Context): number {
-		return this.defense.getTotal(this.attributes.dexterity, 0, 0, context);
-	}
-
-	getMaxLifePoints(context: ContextInterface) {
-		return this.lifePoints.getMax({constitution: this.attributes.constitution, context, level: this.level, role: this.role});
-	}
-
-	getSkillTotal(skill: SkillName, context: Context) {
-		return this.skills[skill].getTotal(this.attributes, this.level, context);
-	}
-
-	getTrainedSkills(): SkillName[] {
-		return Object.entries(this.skills)
-			.filter(([name, skill]) => skill.getIsTrained())
-			.map(([name]) => name as SkillName);
-	}
-
-	getSkillTrainingPoints(skill: SkillName): number {
-		return this.skills[skill].getSkillTrainingPoints(this.level);
+		this.manaPoints.consume(value);
 	}
 
 	getRole() {

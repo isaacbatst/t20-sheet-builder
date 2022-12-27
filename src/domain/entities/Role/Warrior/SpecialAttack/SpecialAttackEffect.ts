@@ -1,4 +1,5 @@
 import {TriggeredEffect} from '../../../Ability/TriggeredEffect';
+import type {TriggeredEffectName} from '../../../Ability/TriggeredEffectName';
 import {Level} from '../../../Levels';
 import {ManaCost} from '../../../ManaCost';
 import {RoleAbilityName} from '../../RoleAbilityName';
@@ -23,12 +24,14 @@ export abstract class SpecialAttackEffect extends TriggeredEffect {
 
 	constructor(
 		override cost: SpecialAttackManaCost,
+		name: TriggeredEffectName,
 	) {
 		super({
 			duration: 'next',
 			execution: 'reaction',
 			source: RoleAbilityName.specialAttack,
 			triggerEvent: 'attack',
+			name,
 		});
 	}
 }

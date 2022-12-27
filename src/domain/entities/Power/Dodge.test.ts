@@ -1,8 +1,8 @@
-import {AddOtherModifierToDefense} from '../Action/AddOtherModifierToDefense';
-import {AddOtherModifierToSkill} from '../Action/AddOtherModifierToSkill';
-import {BuildingSheetFake} from '../Sheet/BuildingSheetFake';
-import {Modifier} from '../Modifier/Modifier';
+import {AddFixedModifierToDefense} from '../Action/AddFixedModifierToDefense';
+import {AddFixedModifierToSkill} from '../Action/AddFixedModifierToSkill';
+import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
 import {RaceAbilityName} from '../RaceAbility/RaceAbilityName';
+import {BuildingSheetFake} from '../Sheet/BuildingSheetFake';
 import {SkillName} from '../Skill/SkillName';
 import {Dodge} from './Dodge';
 import {GeneralPowerName} from './GeneralPowerName';
@@ -15,8 +15,8 @@ describe('Dodge', () => {
 		sheet.attributes.dexterity = 1;
 		dodge.addToSheet(sheet, dispatch, RaceAbilityName.versatile);
 
-		expect(dispatch).toHaveBeenCalledWith(new AddOtherModifierToDefense({
-			modifier: new Modifier(GeneralPowerName.dodge, 2),
+		expect(dispatch).toHaveBeenCalledWith(new AddFixedModifierToDefense({
+			modifier: new FixedModifier(GeneralPowerName.dodge, 2),
 		}));
 	});
 
@@ -27,9 +27,9 @@ describe('Dodge', () => {
 		sheet.attributes.dexterity = 1;
 		dodge.addToSheet(sheet, dispatch, RaceAbilityName.versatile);
 
-		expect(dispatch).toHaveBeenCalledWith(new AddOtherModifierToSkill({
+		expect(dispatch).toHaveBeenCalledWith(new AddFixedModifierToSkill({
 			skill: SkillName.reflexes,
-			modifier: new Modifier(GeneralPowerName.dodge, 2),
+			modifier: new FixedModifier(GeneralPowerName.dodge, 2),
 		}));
 	});
 

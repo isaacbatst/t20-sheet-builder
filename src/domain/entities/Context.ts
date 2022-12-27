@@ -1,13 +1,6 @@
-import type {ModifierCondition} from './ModifierList';
-
-export type ContextType = 'outgame' | 'ingame';
-
-export type ContextInterface = {
-	type: ContextType;
-	getConditionalModifierValue(value: number, condition: ModifierCondition): number;
-};
-
+import type {ContextInterface, ContextType} from './ContextInterface';
+import type {ModifierConditionVerify} from './Modifier/ContextualModifier/ContextualModifiersListInterface';
 export abstract class Context implements ContextInterface {
-	constructor(readonly type: ContextType) {}
-	abstract getConditionalModifierValue(value: number, condition: ModifierCondition): number;
+	constructor(readonly type: ContextType, readonly activateContextualModifiers: boolean) {}
+	abstract shouldActivateModifier(verify: ModifierConditionVerify): boolean;
 }

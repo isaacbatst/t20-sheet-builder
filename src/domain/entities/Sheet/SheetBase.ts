@@ -1,41 +1,18 @@
-import type {TriggeredEffectInterface, TriggerEvent} from '../Ability/TriggeredEffect';
 import type {Attributes} from '../Attributes';
-import type {Defense} from '../Defense';
+import type {Defense} from '../Defense/Defense';
+import type {DefenseInterface} from '../Defense/DefenseInterface';
 import type {Level} from '../Levels';
-import type {LifePointsInterface} from '../LifePoints';
-import type {ManaPointsInterface} from '../ManaPoints';
+import type {PointsBase} from '../Points/PointsBase';
 import type {Proficiency} from '../Proficiency';
+import type {BuildStepInterface} from '../ProgressionStep';
 import type {RaceInterface} from '../RaceInterface';
 import type {RoleInterface} from '../Role/RoleInterface';
-import type {LearnableSpellType, Spell} from '../Spell/Spell';
-import type {SpellCircle} from '../Spell/SpellCircle';
-import type {SpellName} from '../Spell/SpellName';
+import type {Spell} from '../Spell/Spell';
 import type {Vision} from '../Vision';
-import type {DefenseInterface} from './BuildingSheetInterface';
-import type {SheetSkills} from './Sheet';
 import type {ActionPayload} from './SheetActions';
-import type {SheetAbilities, SheetPowers} from './SheetInterface';
-
-export type SheetLearnedCircles = Record<LearnableSpellType, Set<SpellCircle>>;
-export type SheetSpells = Map<SpellName, Spell>;
-export type SheetTriggeredEffects = Record<TriggerEvent, TriggeredEffectInterface[]>;
-
-export type SheetBaseInterface = {
-	getAttributes(): Attributes;
-	getDefense(): DefenseInterface;
-	getDisplacement(): number;
-	getLevel(): number;
-	getSkills(): SheetSkills;
-	getVision(): Vision;
-	getProficiencies(): Proficiency[];
-	getAbilities(): SheetAbilities;
-	getPowers(): SheetPowers;
-	getSpells(): SheetSpells;
-	getLearnedCircles(): SheetLearnedCircles;
-	getTriggeredEffects(): SheetTriggeredEffects;
-};
-
+import type {SheetAbilities, SheetBaseInterface, SheetLearnedCircles, SheetPowers, SheetSkills, SheetSpells, SheetTriggeredEffects} from './SheetBaseInterface';
 export abstract class SheetBase implements SheetBaseInterface {
+	abstract readonly buildSteps: BuildStepInterface[];
 	protected race?: RaceInterface;
 	protected role?: RoleInterface;
 	protected abstract readonly powers: SheetPowers;
@@ -50,8 +27,8 @@ export abstract class SheetBase implements SheetBaseInterface {
 	protected abstract readonly learnedCircles: SheetLearnedCircles;
 	protected abstract readonly triggeredEffects: SheetTriggeredEffects;
 	protected abstract displacement: number;
-	protected abstract lifePoints: LifePointsInterface;
-	protected abstract manaPoints: ManaPointsInterface;
+	protected abstract lifePoints: PointsBase;
+	protected abstract manaPoints: PointsBase;
 
 	getAttributes(): Attributes {
 		return this.attributes;
@@ -133,16 +110,20 @@ export abstract class SheetBase implements SheetBaseInterface {
 		this.vision = payload.vision;
 	}
 
-	protected addModifierToLifePoints(payload: ActionPayload<'addModifierToLifePoints'>) {
+	protected addFixedModifierToLifePoints(payload: ActionPayload<'addFixedModifierToLifePoints'>) {
 		this.lifePoints.addModifier(payload.modifier);
 	}
 
-	protected addOtherModifierToDefense(payload: ActionPayload<'addOtherModifierToDefense'>) {
-		this.defense.others.add(payload.modifier);
+	protected addFixedModifierToDefense(payload: ActionPayload<'addFixedModifierToDefense'>) {
+		this.defense.fixedModifiers.add(payload.modifier);
 	}
 
-	protected addOtherModifierToSkill(payload: ActionPayload<'addOtherModifierToSkill'>): void {
-		this.skills[payload.skill].addOtherModifier(payload.modifier);
+	protected addFixedModifierToSkill(payload: ActionPayload<'addFixedModifierToSkill'>): void {
+		this.skills[payload.skill].fixedModifiers.add(payload.modifier);
+	}
+
+	protected addContextualModifierToSkill(payload: ActionPayload<'addContextualModifierToSkill'>): void {
+		this.skills[payload.skill].contextualModifiers.add(payload.modifier);
 	}
 
 	protected trainSkill(payload: ActionPayload<'trainSkill'>): void {
@@ -194,10 +175,14 @@ export abstract class SheetBase implements SheetBaseInterface {
 	}
 
 	protected addTriggeredEffect(payload: ActionPayload<'addTriggeredEffect'>) {
-		this.triggeredEffects[payload.effect.triggerEvent].push(payload.effect);
+		this.triggeredEffects[payload.effect.triggerEvent].set(payload.effect.name, payload.effect);
 	}
 
 	protected addPerLevelModifierToLifePoints(payload: ActionPayload<'addPerLevelModifierToLifePoints'>) {
 		this.lifePoints.addPerLevelModifier(payload.modifier);
+	}
+
+	protected addPerLevelModifierToManaPoints(payload: ActionPayload<'addPerLevelModifierToManaPoints'>) {
+		this.manaPoints.addPerLevelModifier(payload.modifier);
 	}
 }

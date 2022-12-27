@@ -1,10 +1,10 @@
 import {PassiveEffect} from '../../Ability/PassiveEffect';
-import {AddOtherModifierToSkill} from '../../Action/AddOtherModifierToSkill';
+import {AddContextualModifierToSkill} from '../../Action/AddContextualModifierToSkill';
 import {ChangeVision} from '../../Action/ChangeVision';
+import type {InGameContextInterface} from '../../Context/InGameContextInterface';
+import {ContextualModifier} from '../../Modifier/ContextualModifier/ContextualModifier';
+import type {ModifierCondition} from '../../Modifier/ContextualModifier/ContextualModifiersListInterface';
 import type {BuildingSheetInterface} from '../../Sheet/BuildingSheetInterface';
-import type {InGameContext} from '../../InGameContext';
-import {ConditionalModifier} from '../../Modifier/ConditionalModifier';
-import type {ModifierCondition} from '../../ModifierList';
 import type {Dispatch} from '../../Sheet/SheetInterface';
 import {SkillName} from '../../Skill/SkillName';
 import {Vision} from '../../Vision';
@@ -13,7 +13,7 @@ import {RaceAbilityName} from '../RaceAbilityName';
 export class RockKnowledgeEffect extends PassiveEffect {
 	static readonly condition: ModifierCondition = {
 		description: 'testes devem ser realizados no subterrâneo',
-		verify: (context: InGameContext) => context.getCurrentLocation().isUnderground,
+		verify: (context: InGameContextInterface) => context.getCurrentLocation().isUnderground,
 	};
 
 	static get skillModifier() {
@@ -25,9 +25,9 @@ export class RockKnowledgeEffect extends PassiveEffect {
 	}
 
 	addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch): void {
-		const modifier = new ConditionalModifier(this.source, RockKnowledgeEffect.skillModifier, RockKnowledgeEffect.condition);
+		const modifier = new ContextualModifier(this.source, RockKnowledgeEffect.skillModifier, RockKnowledgeEffect.condition);
 		dispatch(new ChangeVision({source: this.source, vision: Vision.dark}));
-		dispatch(new AddOtherModifierToSkill({modifier, skill: SkillName.perception}));
-		dispatch(new AddOtherModifierToSkill({modifier, skill: SkillName.survival}));
+		dispatch(new AddContextualModifierToSkill({modifier, skill: SkillName.perception}));
+		dispatch(new AddContextualModifierToSkill({modifier, skill: SkillName.survival}));
 	}
 }

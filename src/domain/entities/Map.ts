@@ -1,3 +1,5 @@
+import type {TriggeredEffectInterface} from './Ability/TriggeredEffect';
+import type {TriggeredEffectName} from './Ability/TriggeredEffectName';
 import type {GeneralPowerInterface} from './Power/GeneralPower';
 import type {GeneralPowerName} from './Power/GeneralPowerName';
 import type {RaceAbilityInterface} from './RaceAbility/RaceAbility';
@@ -11,3 +13,4 @@ export type GeneralPowerMap = Map<GeneralPowerName, GeneralPowerInterface>;
 export type RolePowerMap = Map<RolePowerName, RolePowerInterface>;
 export type RaceAbilityMap = Map<RaceAbilityName, RaceAbilityInterface>;
 export type RoleAbilityMap = Map<RoleAbilityName, RoleAbilityInterface>;
+export type TriggeredEffectMap = Map<TriggeredEffectName, TriggeredEffectInterface>;

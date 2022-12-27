@@ -7,6 +7,11 @@ import {SkillName} from '../../Skill/SkillName';
 import {RoleName} from '../RoleName';
 import {SpecialAttack} from './SpecialAttack/SpecialAttack';
 import {Warrior} from './Warrior';
+import {AddFixedModifierToLifePoints} from '../../Action/AddFixedModifierToLifePoints';
+import {FixedModifier} from '../../Modifier/FixedModifier/FixedModifier';
+import {AddPerLevelModifierToLifePoints} from '../../Action/AddPerLevelModifierToLifePoints';
+import {PerLevelModifier} from '../../Modifier/PerLevelModifier/PerLevelModifier';
+import {AddPerLevelModifierToManaPoints} from '../../Action/AddPerLevelModifierToManaPoints';
 
 describe('Warrior', () => {
 	it('should dispatch proper train skills', () => {
@@ -76,6 +81,32 @@ describe('Warrior', () => {
 		expect(dispatch).toHaveBeenCalledWith(new ApplyRoleAbility({
 			ability: new SpecialAttack(),
 			source: RoleName.warrior,
+		}));
+	});
+
+	it('should dispatch life points modifiers add', () => {
+		const warrior = new Warrior([SkillName.fight, SkillName.animalHandling, SkillName.aim]);
+		const sheet = new BuildingSheetFake();
+		const dispatch = jest.fn();
+		warrior.addToSheet(sheet, dispatch);
+
+		expect(dispatch).toHaveBeenCalledWith(new AddFixedModifierToLifePoints({
+			modifier: new FixedModifier(RoleName.warrior, 20, new Set(['constitution'])),
+		}));
+
+		expect(dispatch).toHaveBeenCalledWith(new AddPerLevelModifierToLifePoints({
+			modifier: new PerLevelModifier(RoleName.warrior, 5, false, new Set(['constitution'])),
+		}));
+	});
+
+	it('should dispatch mana points modifiers add', () => {
+		const warrior = new Warrior([SkillName.fight, SkillName.animalHandling, SkillName.aim]);
+		const sheet = new BuildingSheetFake();
+		const dispatch = jest.fn();
+		warrior.addToSheet(sheet, dispatch);
+
+		expect(dispatch).toHaveBeenCalledWith(new AddPerLevelModifierToManaPoints({
+			modifier: new PerLevelModifier(RoleName.warrior, 3, true),
 		}));
 	});
 });

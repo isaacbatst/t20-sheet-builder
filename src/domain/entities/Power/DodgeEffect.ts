@@ -1,8 +1,8 @@
 import {PassiveEffect} from '../Ability/PassiveEffect';
-import {AddOtherModifierToDefense} from '../Action/AddOtherModifierToDefense';
-import {AddOtherModifierToSkill} from '../Action/AddOtherModifierToSkill';
+import {AddFixedModifierToDefense} from '../Action/AddFixedModifierToDefense';
+import {AddFixedModifierToSkill} from '../Action/AddFixedModifierToSkill';
+import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
 import type {BuildingSheetInterface} from '../Sheet/BuildingSheetInterface';
-import {Modifier} from '../Modifier/Modifier';
 import type {Dispatch} from '../Sheet/SheetInterface';
 import {SkillName} from '../Skill/SkillName';
 import {GeneralPowerName} from './GeneralPowerName';
@@ -13,8 +13,8 @@ export class DodgeEffect extends PassiveEffect {
 	}
 
 	addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch): void {
-		const modifier = new Modifier(this.source, 2);
-		dispatch(new AddOtherModifierToDefense({modifier}));
-		dispatch(new AddOtherModifierToSkill({modifier, skill: SkillName.reflexes}));
+		const modifier = new FixedModifier(this.source, 2);
+		dispatch(new AddFixedModifierToDefense({modifier}));
+		dispatch(new AddFixedModifierToSkill({modifier, skill: SkillName.reflexes}));
 	}
 }

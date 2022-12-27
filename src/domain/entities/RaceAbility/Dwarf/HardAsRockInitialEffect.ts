@@ -1,7 +1,7 @@
 import {PassiveEffect} from '../../Ability/PassiveEffect';
-import {AddModifierToLifePoints} from '../../Action/AddModifierToLifePoints';
+import {AddFixedModifierToLifePoints} from '../../Action/AddFixedModifierToLifePoints';
+import {FixedModifier} from '../../Modifier/FixedModifier/FixedModifier';
 import type {BuildingSheetInterface} from '../../Sheet/BuildingSheetInterface';
-import {Modifier} from '../../Modifier/Modifier';
 import type {Dispatch} from '../../Sheet/SheetInterface';
 import {RaceAbilityName} from '../RaceAbilityName';
 
@@ -11,7 +11,7 @@ export class HardAsRockInitialEffect extends PassiveEffect {
 	}
 
 	addToSheet(sheet: BuildingSheetInterface, dispatch: Dispatch): void {
-		const modifier = new Modifier(this.source, 3);
-		dispatch(new AddModifierToLifePoints({modifier}));
+		const modifier = new FixedModifier(this.source, 3);
+		dispatch(new AddFixedModifierToLifePoints({modifier}));
 	}
 }

@@ -1,11 +1,11 @@
-import {AddModifierToLifePoints} from '../../Action/AddModifierToLifePoints';
-import {Modifier} from '../../Modifier/Modifier';
+import {AddFixedModifierToLifePoints} from '../../Action/AddFixedModifierToLifePoints';
+import {AddPerLevelModifierToLifePoints} from '../../Action/AddPerLevelModifierToLifePoints';
+import {FixedModifier} from '../../Modifier/FixedModifier/FixedModifier';
+import {PerLevelModifier} from '../../Modifier/PerLevelModifier/PerLevelModifier';
+import {RaceName} from '../../Race/RaceName';
 import {BuildingSheetFake} from '../../Sheet/BuildingSheetFake';
 import {RaceAbilityName} from '../RaceAbilityName';
 import {HardAsRock} from './HardAsRock';
-import {AddPerLevelModifierToLifePoints} from '../../Action/AddPerLevelModifierToLifePoints';
-import {PerLevelModifier} from '../../Modifier/PerLevelModifier';
-import {RaceName} from '../../Race/RaceName';
 
 describe('HardAsRock', () => {
 	it('should dispatch addOtherModifierToLifePoints', () => {
@@ -14,8 +14,8 @@ describe('HardAsRock', () => {
 		const dispatch = jest.fn();
 		hardAsRock.addToSheet(sheet, dispatch, RaceName.dwarf);
 
-		expect(dispatch).toHaveBeenCalledWith(new AddModifierToLifePoints({
-			modifier: new Modifier(RaceAbilityName.hardAsRock, 3),
+		expect(dispatch).toHaveBeenCalledWith(new AddFixedModifierToLifePoints({
+			modifier: new FixedModifier(RaceAbilityName.hardAsRock, 3),
 		}));
 	});
 
@@ -26,7 +26,7 @@ describe('HardAsRock', () => {
 		hardAsRock.addToSheet(sheet, dispatch, RaceName.dwarf);
 
 		expect(dispatch).toHaveBeenCalledWith(new AddPerLevelModifierToLifePoints({
-			modifier: new PerLevelModifier(1, true, RaceAbilityName.hardAsRock),
+			modifier: new PerLevelModifier(RaceAbilityName.hardAsRock, 1, false),
 		}));
 	});
 });

@@ -1,5 +1,5 @@
+import type {Attribute, Attributes} from '../Attributes';
 import type {BuildingSheetInterface} from '../Sheet/BuildingSheetInterface';
-import type {ModifierCondition} from '../ModifierList';
 import type {ActionDescriptionGenerators, ActionInterface, ActionType} from '../Sheet/SheetActions';
 import {Skill} from '../Skill/Skill';
 import {StringHelper} from '../StringHelper';
@@ -15,18 +15,18 @@ export abstract class ActionDescriptionGenerator {
 	}
 
 	private static readonly actionToDescriptionGenerate: ActionDescriptionGenerators = {
-		setInitialAttributes: (sheet, action) => `Definição inicial de atributos: ${StringHelper.getAttributesText(action.payload.attributes)}.`,
-		addOtherModifierToDefense: (sheet, {payload: {modifier}}) => `${Translator.getTranslation(modifier.source)}: ${StringHelper.addNumberSign(modifier.getMaxPossibleValue())} Defesa aplicado ao modificador "outros".${ActionDescriptionGenerator.getModifierConditionText(modifier.condition)}`,
-		addOtherModifierToSkill: (sheet, {payload: {skill, modifier}}) => `${Translator.getTranslation(modifier.source)}: ${StringHelper.addNumberSign(modifier.getMaxPossibleValue())} ${Translator.getSkillTranslation(skill)} aplicado ao modificador "outros".${ActionDescriptionGenerator.getModifierConditionText(modifier.condition)}`,
+		setInitialAttributes: (sheet, action) => `Definição inicial de atributos: ${ActionDescriptionGenerator.getAttributeText(action.payload.attributes, 'strength')}, ${ActionDescriptionGenerator.getAttributeText(action.payload.attributes, 'dexterity')}, ${ActionDescriptionGenerator.getAttributeText(action.payload.attributes, 'constitution')}, ${ActionDescriptionGenerator.getAttributeText(action.payload.attributes, 'intelligence')}, ${ActionDescriptionGenerator.getAttributeText(action.payload.attributes, 'wisdom')} e ${ActionDescriptionGenerator.getAttributeText(action.payload.attributes, 'charisma')}.`,
+		addContextualModifierToSkill: (sheet, {payload: {skill, modifier}}) => `${Translator.getTranslation(modifier.source)}: ${StringHelper.addNumberSign(modifier.value)} ${Translator.getSkillTranslation(skill)} aplicado ao modificador "outros". Ativação em: ${modifier.condition.description}.`,
+		addFixedModifierToSkill: (sheet, {payload: {skill, modifier}}) => `${Translator.getTranslation(modifier.source)}: ${StringHelper.addNumberSign(modifier.value)} ${Translator.getSkillTranslation(skill)} aplicado ao modificador "outros".`,
 		applyRaceAbility: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: habilidade ${Translator.getAbilityTranslation(action.payload.ability.name)} aplicada.`,
 		applyRaceModifiers(sheet, {payload: {modifiers}}) {
 			const modifiersText = StringHelper.getAttributesText(modifiers);
 			return `Modificadores de raça aplicados: ${modifiersText}.`;
 		},
-		addModifierToLifePoints: (sheet, {payload: {modifier}}) => `${Translator.getTranslation(modifier.source)}: ${StringHelper.addNumberSign(modifier.getMaxPossibleValue())} PV.${ActionDescriptionGenerator.getModifierConditionText(modifier.condition)}`,
+		addFixedModifierToLifePoints: (sheet, {payload: {modifier}}) => `${Translator.getTranslation(modifier.source)}: ${StringHelper.addNumberSign(modifier.value)} PV.`,
 		changeVision: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: ${Translator.getVisionTranslation(action.payload.vision)} recebida.`,
 		chooseRace: (sheet, action) => `Raça escolhida: ${Translator.getRaceTranslation(action.payload.race.name)}.`,
-		trainSkill: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: perícia ${Translator.getSkillTranslation(action.payload.name)} treinada, bônus de treino ${StringHelper.addNumberSign(Skill.calculateTrainedSkillPoints(sheet.getLevel()))}.`,
+		trainSkill: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: perícia ${Translator.getSkillTranslation(action.payload.name)} treinada, bônus de treino ${StringHelper.addNumberSign(Skill.calculateTrainedPoints(sheet.getLevel()))}.`,
 		pickGeneralPower: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: poder ${Translator.getPowerTranslation(action.payload.power.name)} escolhido.`,
 		pickRolePower: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: ${Translator.getPowerTranslation(action.payload.power.name)}.`,
 		changeDisplacement: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: deslocamento alterado para ${action.payload.displacement}m.`,
@@ -36,11 +36,13 @@ export abstract class ActionDescriptionGenerator {
 		learnCircle: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: você pode lançar magias de ${Translator.getSpellCircleTranslation(action.payload.circle)} círculo.`,
 		learnSpell: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: você aprendeu a magia ${Translator.getSpellTranslation(action.payload.spell.name)}.`,
 		addTriggeredEffect: (sheet, action) => `${Translator.getTranslation(action.payload.effect.source)}: efeito engatilhado.`,
-		addPerLevelModifierToLifePoints: (sheet, {payload: {modifier}}) => `${Translator.getTranslation(modifier.source)}: ${StringHelper.addNumberSign(modifier.perLevelValue)} PV por nível${modifier.removeFirstLevel ? ' após o nível 1' : ''}.`,
+		addPerLevelModifierToLifePoints: (sheet, {payload: {modifier}}) => `${Translator.getTranslation(modifier.source)}: ${StringHelper.addNumberSign(modifier.value)} PV por nível${modifier.includeFirstLevel ? '' : ' após o nível 1'}.`,
+		addFixedModifierToDefense: (sheet, {payload: {modifier}}) => `${Translator.getTranslation(modifier.source)}: ${StringHelper.addNumberSign(modifier.value)} Defesa adicionado.`,
+		addPerLevelModifierToManaPoints: (sheet, {payload: {modifier}}) => `${Translator.getTranslation(modifier.source)}: ${StringHelper.addNumberSign(modifier.value)} PM ${modifier.attributeBonuses.length ? `(+ ${modifier.attributeBonuses.map(attribute => Translator.getAttributeTranslation(attribute)).join('/')}) ` : ''}por nível${modifier.includeFirstLevel ? '' : ' após o nível 1'}.`,
 	};
 
-	private static getModifierConditionText(condition?: ModifierCondition) {
-		return `${condition ? ` Ativação em: ${condition.description}.` : ''}`;
+	private static getAttributeText(attributes: Attributes, attribute: Attribute) {
+		return `${StringHelper.addNumberSign(attributes[attribute])} ${Translator.getAttributeTranslation(attribute)}`;
 	}
 }
 

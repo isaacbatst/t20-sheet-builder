@@ -1,6 +1,5 @@
 import type {AbilityInterface} from '../Ability/Ability';
 import {Ability} from '../Ability/Ability';
-import type {AbilityEffect} from '../Ability/AbilityEffect';
 import type {BuildingSheetInterface} from '../Sheet/BuildingSheetInterface';
 import type {Dispatch} from '../Sheet/SheetInterface';
 import type {Translatable} from '../Translator';

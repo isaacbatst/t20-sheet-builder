@@ -1,27 +1,23 @@
-import type {TriggeredEffectInterface, TriggerEvent} from '../Ability/TriggeredEffect';
 import type {Attributes} from '../Attributes';
-import type {ContextInterface} from '../Context';
-import {Defense} from '../Defense';
+import {Defense} from '../Defense/Defense';
 import {Level} from '../Levels';
-import type {LifePoints} from '../LifePoints';
-import {BuildingLifePoints} from '../LifePointsBuilder';
-import type {ManaPoints} from '../ManaPoints';
-import {BuildingManaPoints} from '../ManaPointsBuilder';
+import {BuildingLifePoints} from '../Points/LifePoints/BuildingLifePoints';
+import type {LifePoints} from '../Points/LifePoints/LifePoints';
+import {BuildingManaPoints} from '../Points/ManaPoints/BuildingManaPoints';
+import type {ManaPoints} from '../Points/ManaPoints/ManaPoints';
+import {PointsMaxCalculatorFactory} from '../Points/PointsMaxCalculatorFactory';
 import {Proficiency} from '../Proficiency';
 import type {BuildStep} from '../ProgressionStep';
-import type {RoleInterface} from '../Role/RoleInterface';
 import {InitialSkillsGenerator} from '../Skill/InitialSkillsGenerator';
 import type {LearnableSpellType, Spell} from '../Spell/Spell';
 import type {SpellCircle} from '../Spell/SpellCircle';
 import type {SpellName} from '../Spell/SpellName';
 import {Vision} from '../Vision';
 import type {BuildingSheetInterface} from './BuildingSheetInterface';
-import type {SheetSkills} from './Sheet';
 import {Sheet} from './Sheet';
 import type {ActionsHandler} from './SheetActions';
-import type {SheetLearnedCircles, SheetSpells, SheetTriggeredEffects} from './SheetBase';
 import {SheetBase} from './SheetBase';
-import type {SheetAbilities, SheetPowers} from './SheetInterface';
+import type {SheetAbilities, SheetPowers, SheetSkills, SheetTriggeredEffects} from './SheetBaseInterface';
 
 export class BuildingSheet extends SheetBase implements BuildingSheetInterface {
 	level: Level = Level.levelOne;
@@ -41,14 +37,8 @@ export class BuildingSheet extends SheetBase implements BuildingSheetInterface {
 		divine: new Set(),
 	};
 
-	readonly triggeredEffects: Record<TriggerEvent, TriggeredEffectInterface[]> = {
-		attack: [],
-		defense: [],
-	};
-
 	readonly actionHandlers: ActionsHandler = {
-		addOtherModifierToDefense: this.addOtherModifierToDefense.bind(this),
-		addOtherModifierToSkill: this.addOtherModifierToSkill.bind(this),
+		addFixedModifierToSkill: this.addFixedModifierToSkill.bind(this),
 		chooseRace: this.chooseRace.bind(this),
 		trainSkill: this.trainSkill.bind(this),
 		changeVision: this.changeVision.bind(this),
@@ -58,7 +48,7 @@ export class BuildingSheet extends SheetBase implements BuildingSheetInterface {
 		pickGeneralPower: this.pickGeneralPower.bind(this),
 		pickRolePower: this.pickRolePower.bind(this),
 		changeDisplacement: this.changeDisplacement.bind(this),
-		addModifierToLifePoints: this.addModifierToLifePoints.bind(this),
+		addFixedModifierToLifePoints: this.addFixedModifierToLifePoints.bind(this),
 		chooseRole: this.chooseRole.bind(this),
 		addProficiency: this.addProficiency.bind(this),
 		applyRoleAbility: this.applyRoleAbility.bind(this),
@@ -66,9 +56,13 @@ export class BuildingSheet extends SheetBase implements BuildingSheetInterface {
 		learnSpell: this.learnSpell.bind(this),
 		addTriggeredEffect: this.addTriggeredEffect.bind(this),
 		addPerLevelModifierToLifePoints: this.addPerLevelModifierToLifePoints.bind(this),
+		addContextualModifierToSkill: this.addContextualModifierToSkill.bind(this),
+		addFixedModifierToDefense: this.addFixedModifierToDefense.bind(this),
+		addPerLevelModifierToManaPoints: this.addPerLevelModifierToManaPoints.bind(this),
 	};
 
 	protected displacement = 9;
+	protected triggeredEffects: SheetTriggeredEffects = {attack: new Map(), defense: new Map()};
 
 	getManaPoints() {
 		return this.manaPoints;
@@ -82,20 +76,13 @@ export class BuildingSheet extends SheetBase implements BuildingSheetInterface {
 		return this.role;
 	}
 
-	buildLifePoints(context: ContextInterface, role: RoleInterface): LifePoints {
-		return this.lifePoints.build({
-			context,
-			role,
-			constitution: this.attributes.constitution,
-			level: this.level,
-		});
+	buildLifePoints(): LifePoints {
+		const maxCalculator = PointsMaxCalculatorFactory.make(this.attributes, this.level);
+		return this.lifePoints.build(maxCalculator);
 	}
 
-	buildManaPoints(context: ContextInterface, role: RoleInterface): ManaPoints {
-		return this.manaPoints.build({
-			context,
-			role,
-			level: this.level,
-		});
+	buildManaPoints(): ManaPoints {
+		const maxCalculator = PointsMaxCalculatorFactory.make(this.attributes, this.level);
+		return this.manaPoints.build(maxCalculator);
 	}
 }
