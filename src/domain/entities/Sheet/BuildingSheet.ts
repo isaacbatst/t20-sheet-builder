@@ -15,7 +15,6 @@ import type {SpellName} from '../Spell/SpellName';
 import {Vision} from '../Vision';
 import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import {Sheet} from './Sheet';
-import type {ActionsHandler} from './SheetActions';
 import {SheetBase} from './SheetBase';
 import type {SheetAbilities, SheetPowers, SheetSkills, SheetTriggeredEffects} from './SheetBaseInterface';
 
