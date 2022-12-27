@@ -1,6 +1,6 @@
 import {ActionDescriptionGenerator} from './ActionDescriptionGenerator/ActionDescriptionGenerator';
-import type {BuildingSheetInterface} from './Sheet/BuildingSheetInterface';
-import type {ActionType, ActionInterface} from './Sheet/SheetActions';
+import type {ActionInterface, ActionType} from './Sheet/SheetActions';
+import type {SheetBaseInterface} from './Sheet/SheetBaseInterface';
 
 export type BuildStepInterface<T extends ActionType = ActionType> = {
 	description: string;
@@ -12,7 +12,7 @@ export class BuildStep<T extends ActionType = ActionType> implements BuildStepIn
 
 	constructor(
 		readonly action: ActionInterface<T>,
-		sheet: BuildingSheetInterface,
+		sheet: SheetBaseInterface,
 	) {
 		this.description = ActionDescriptionGenerator.generate(sheet, action);
 	}

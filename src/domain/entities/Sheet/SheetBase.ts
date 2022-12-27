@@ -5,13 +5,39 @@ import type {Level} from '../Levels';
 import type {PointsBase} from '../Points/PointsBase';
 import type {Proficiency} from '../Proficiency';
 import type {BuildStepInterface} from '../ProgressionStep';
+import {BuildStep} from '../ProgressionStep';
 import type {RaceInterface} from '../RaceInterface';
 import type {RoleInterface} from '../Role/RoleInterface';
 import type {Spell} from '../Spell/Spell';
 import type {Vision} from '../Vision';
-import type {ActionPayload} from './SheetActions';
+import type {ActionInterface, ActionPayload, ActionsHandler, ActionType} from './SheetActions';
 import type {SheetAbilities, SheetBaseInterface, SheetLearnedCircles, SheetPowers, SheetSkills, SheetSpells, SheetTriggeredEffects} from './SheetBaseInterface';
+import type {Dispatch} from './SheetInterface';
 export abstract class SheetBase implements SheetBaseInterface {
+	readonly actionHandlers: ActionsHandler = {
+		addFixedModifierToSkill: this.addFixedModifierToSkill.bind(this),
+		chooseRace: this.chooseRace.bind(this),
+		trainSkill: this.trainSkill.bind(this),
+		changeVision: this.changeVision.bind(this),
+		setInitialAttributes: this.setInitialAttributes.bind(this),
+		applyRaceModifiers: this.applyRaceModifiers.bind(this),
+		applyRaceAbility: this.applyRaceAbility.bind(this),
+		pickGeneralPower: this.pickGeneralPower.bind(this),
+		pickRolePower: this.pickRolePower.bind(this),
+		changeDisplacement: this.changeDisplacement.bind(this),
+		addFixedModifierToLifePoints: this.addFixedModifierToLifePoints.bind(this),
+		chooseRole: this.chooseRole.bind(this),
+		addProficiency: this.addProficiency.bind(this),
+		applyRoleAbility: this.applyRoleAbility.bind(this),
+		learnCircle: this.learnCircle.bind(this),
+		learnSpell: this.learnSpell.bind(this),
+		addTriggeredEffect: this.addTriggeredEffect.bind(this),
+		addPerLevelModifierToLifePoints: this.addPerLevelModifierToLifePoints.bind(this),
+		addContextualModifierToSkill: this.addContextualModifierToSkill.bind(this),
+		addFixedModifierToDefense: this.addFixedModifierToDefense.bind(this),
+		addPerLevelModifierToManaPoints: this.addPerLevelModifierToManaPoints.bind(this),
+	};
+
 	abstract readonly buildSteps: BuildStepInterface[];
 	protected race?: RaceInterface;
 	protected role?: RoleInterface;
@@ -29,6 +55,12 @@ export abstract class SheetBase implements SheetBaseInterface {
 	protected abstract displacement: number;
 	protected abstract lifePoints: PointsBase;
 	protected abstract manaPoints: PointsBase;
+
+	dispatch: Dispatch = <T extends ActionType>(buildStep: ActionInterface<T>): void => {
+		this.buildSteps.push(new BuildStep(buildStep, this));
+		const handle = this.actionHandlers[buildStep.type];
+		handle(buildStep.payload, this.dispatch);
+	};
 
 	getAttributes(): Attributes {
 		return this.attributes;

@@ -16,7 +16,7 @@ import type {LearnableSpellType, Spell} from '../Spell/Spell';
 import type {SpellCircle} from '../Spell/SpellCircle';
 import type {Translatable} from '../Translator';
 import type {Vision} from '../Vision';
-import type {BuildingSheetInterface} from './BuildingSheetInterface';
+import type {SheetBaseInterface} from './SheetBaseInterface';
 
 type ActionTypesToHandlers = {
 	setInitialAttributes(payload: {attributes: Attributes}): void;
@@ -52,5 +52,5 @@ export type ActionsHandler = {
 	[Property in keyof ActionTypesToHandlers]: (payload: ActionPayload<Property>, dispatch: Dispatch) => void
 };
 export type ActionDescriptionGenerators = {
-	[Property in keyof ActionTypesToHandlers]: (sheet: BuildingSheetInterface, action: ActionInterface<Property>) => string
+	[Property in keyof ActionTypesToHandlers]: (sheet: SheetBaseInterface, action: ActionInterface<Property>) => string
 };

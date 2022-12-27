@@ -1,13 +1,13 @@
 import type {Attribute, Attributes} from '../Attributes';
-import type {BuildingSheetInterface} from '../Sheet/BuildingSheetInterface';
 import type {ActionDescriptionGenerators, ActionInterface, ActionType} from '../Sheet/SheetActions';
+import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
 import {Skill} from '../Skill/Skill';
 import {StringHelper} from '../StringHelper';
 import {Translator} from '../Translator';
 
 export abstract class ActionDescriptionGenerator {
 	static generate<T extends ActionType>(
-		sheet: BuildingSheetInterface,
+		sheet: SheetBaseInterface,
 		action: ActionInterface<T>,
 	): string {
 		const generateDescription = ActionDescriptionGenerator.actionToDescriptionGenerate[action.type];

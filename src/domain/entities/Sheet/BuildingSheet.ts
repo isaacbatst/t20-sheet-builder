@@ -37,30 +37,6 @@ export class BuildingSheet extends SheetBase implements BuildingSheetInterface {
 		divine: new Set(),
 	};
 
-	readonly actionHandlers: ActionsHandler = {
-		addFixedModifierToSkill: this.addFixedModifierToSkill.bind(this),
-		chooseRace: this.chooseRace.bind(this),
-		trainSkill: this.trainSkill.bind(this),
-		changeVision: this.changeVision.bind(this),
-		setInitialAttributes: this.setInitialAttributes.bind(this),
-		applyRaceModifiers: this.applyRaceModifiers.bind(this),
-		applyRaceAbility: this.applyRaceAbility.bind(this),
-		pickGeneralPower: this.pickGeneralPower.bind(this),
-		pickRolePower: this.pickRolePower.bind(this),
-		changeDisplacement: this.changeDisplacement.bind(this),
-		addFixedModifierToLifePoints: this.addFixedModifierToLifePoints.bind(this),
-		chooseRole: this.chooseRole.bind(this),
-		addProficiency: this.addProficiency.bind(this),
-		applyRoleAbility: this.applyRoleAbility.bind(this),
-		learnCircle: this.learnCircle.bind(this),
-		learnSpell: this.learnSpell.bind(this),
-		addTriggeredEffect: this.addTriggeredEffect.bind(this),
-		addPerLevelModifierToLifePoints: this.addPerLevelModifierToLifePoints.bind(this),
-		addContextualModifierToSkill: this.addContextualModifierToSkill.bind(this),
-		addFixedModifierToDefense: this.addFixedModifierToDefense.bind(this),
-		addPerLevelModifierToManaPoints: this.addPerLevelModifierToManaPoints.bind(this),
-	};
-
 	protected displacement = 9;
 	protected triggeredEffects: SheetTriggeredEffects = {attack: new Map(), defense: new Map()};
 

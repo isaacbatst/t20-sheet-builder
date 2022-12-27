@@ -1,4 +1,4 @@
-import type {TriggeredEffectInterface, TriggerEvent} from '../Ability/TriggeredEffect';
+import type {TriggerEvent} from '../Ability/TriggeredEffect';
 import type {Attributes} from '../Attributes';
 import type {DefenseInterface} from '../Defense/DefenseInterface';
 import type {GeneralPowerMap, RaceAbilityMap, RoleAbilityMap, RolePowerMap, TriggeredEffectMap} from '../Map';
@@ -10,6 +10,8 @@ import type {LearnableSpellType, Spell} from '../Spell/Spell';
 import type {SpellCircle} from '../Spell/SpellCircle';
 import type {SpellName} from '../Spell/SpellName';
 import type {Vision} from '../Vision';
+import type {ActionsHandler} from './SheetActions';
+import type {Dispatch} from './SheetInterface';
 
 export type SheetLearnedCircles = Record<LearnableSpellType, Set<SpellCircle>>;
 export type SheetSpells = Map<SpellName, Spell>;
@@ -19,7 +21,9 @@ export type SheetPowers = {general: GeneralPowerMap; role: RolePowerMap};
 export type SheetSkills = Record<SkillName, Skill>;
 
 export type SheetBaseInterface = {
+	actionHandlers: ActionsHandler;
 	buildSteps: BuildStepInterface[];
+	dispatch: Dispatch;
 	getAttributes(): Attributes;
 	getDefense(): DefenseInterface;
 	getDisplacement(): number;

@@ -4,12 +4,37 @@ import type {DefenseInterface} from '../Defense/DefenseInterface';
 import {Level} from '../Levels';
 import type {Proficiency} from '../Proficiency';
 import type {BuildStepInterface} from '../ProgressionStep';
-import {RaceFake} from '../RaceFake';
 import {InitialSkillsGenerator} from '../Skill/InitialSkillsGenerator';
 import {Vision} from '../Vision';
+import type {ActionsHandler} from './SheetActions';
 import type {SheetAbilities, SheetBaseInterface, SheetLearnedCircles, SheetPowers, SheetSkills, SheetSpells, SheetTriggeredEffects} from './SheetBaseInterface';
 
 export class SheetBaseFake implements SheetBaseInterface {
+	actionHandlers: ActionsHandler = {
+		setInitialAttributes: jest.fn(),
+		chooseRace: jest.fn(),
+		trainSkill: jest.fn(),
+		changeVision: jest.fn(),
+		applyRaceModifiers: jest.fn(),
+		applyRaceAbility: jest.fn(),
+		applyRoleAbility: jest.fn(),
+		pickGeneralPower: jest.fn(),
+		pickRolePower: jest.fn(),
+		changeDisplacement: jest.fn(),
+		chooseRole: jest.fn(),
+		addProficiency: jest.fn(),
+		learnCircle: jest.fn(),
+		learnSpell: jest.fn(),
+		addTriggeredEffect: jest.fn(),
+		addContextualModifierToSkill: jest.fn(),
+		addFixedModifierToSkill: jest.fn(),
+		addFixedModifierToLifePoints: jest.fn(),
+		addPerLevelModifierToLifePoints: jest.fn(),
+		addPerLevelModifierToManaPoints: jest.fn(),
+		addFixedModifierToDefense: jest.fn(),
+	};
+
+	dispatch = jest.fn();
 	buildSteps: BuildStepInterface[] = [];
 	attributes: Attributes = {charisma: 0, constitution: 0, dexterity: 0, intelligence: 0, strength: 0, wisdom: 0};
 	defense = new DefenseFake();

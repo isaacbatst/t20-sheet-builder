@@ -25,7 +25,7 @@ export class SheetBuilder {
 	}
 
 	setInitialAttributes(attributes: Attributes) {
-		this.dispatch(new SetInitialAttributes({attributes}));
+		this.sheet.dispatch(new SetInitialAttributes({attributes}));
 
 		return {
 			choseRace: this.chooseRace(),
@@ -34,7 +34,7 @@ export class SheetBuilder {
 
 	private chooseRace() {
 		return (race: RaceInterface) => {
-			race.addToSheet(this.sheet, this.dispatch);
+			race.addToSheet(this.sheet, this.sheet.dispatch);
 
 			return {
 				chooseRole: this.chooseRole(race),
@@ -44,7 +44,7 @@ export class SheetBuilder {
 
 	private chooseRole(race: RaceInterface) {
 		return (role: RoleInterface) => {
-			role.addToSheet(this.sheet, this.dispatch);
+			role.addToSheet(this.sheet, this.sheet.dispatch);
 
 			return new Sheet({
 				attributes: this.sheet.getAttributes(),
@@ -67,10 +67,4 @@ export class SheetBuilder {
 			});
 		};
 	}
-
-	private readonly dispatch: Dispatch = <T extends ActionType>(buildStep: ActionInterface<T>): void => {
-		this.sheet.buildSteps.push(new BuildStep(buildStep, this.sheet));
-		const handle = this.sheet.actionHandlers[buildStep.type];
-		handle(buildStep.payload, this.dispatch);
-	};
 }
