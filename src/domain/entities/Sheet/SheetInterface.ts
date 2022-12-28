@@ -23,7 +23,3 @@ export type Appliable = {
 export type EffectExecution = {
 	execute(sheet: SheetInterface): void;
 };
-
-export type Activateable = {
-	activate(sheet: SheetInterface, execution: EffectExecution): void;
-};

@@ -1,10 +1,10 @@
 import {DodgeEffect} from './DodgeEffect';
 import {GeneralPower} from './GeneralPower';
 import {GeneralPowerName} from './GeneralPowerName';
-import type {Requirement} from './Power';
+import type {RequirementInterface} from './Power';
 
 export class Dodge extends GeneralPower {
-	private static readonly requirement: Requirement = {
+	private static readonly requirement: RequirementInterface = {
 		description: 'Des 1',
 		verify: sheet => sheet.getAttributes().dexterity >= 1,
 	};

@@ -33,6 +33,8 @@ export class SheetBaseFake implements SheetBaseInterface {
 		addPerLevelModifierToManaPoints: jest.fn(),
 		addFixedModifierToDefense: jest.fn(),
 		trainIntelligenceSkills: jest.fn(),
+		addEquipment: jest.fn(),
+		addActivateableEffect: jest.fn(),
 	};
 
 	dispatch = jest.fn();

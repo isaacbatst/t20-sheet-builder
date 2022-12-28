@@ -29,7 +29,7 @@ export abstract class TriggeredEffect extends ActivateableAbilityEffect {
 		this.name = params.name;
 	}
 
-	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
+	override addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
 		dispatch(new AddTriggeredEffect({
 			effect: this,
 		}), sheet);

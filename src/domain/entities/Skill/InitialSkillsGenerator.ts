@@ -1,5 +1,3 @@
-import type {Attributes} from '../Attributes';
-import type {SheetInterface} from '../Sheet/SheetInterface';
 import {Skill} from './Skill';
 import type {SkillName} from './SkillName';
 
@@ -70,6 +68,12 @@ export class InitialSkillsGenerator {
 				attribute: 'intelligence',
 			}),
 			will: new Skill({
+				attribute: 'wisdom',
+			}),
+			cure: new Skill({
+				attribute: 'wisdom',
+			}),
+			religion: new Skill({
 				attribute: 'wisdom',
 			}),
 		};

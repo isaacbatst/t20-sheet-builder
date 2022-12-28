@@ -18,6 +18,7 @@ export class PerLevelModifiersListTotalCalculator implements PerLevelModifiersLi
 				this.attributes,
 				modifier.includeFirstLevel,
 				this.level,
+				modifier.frequency,
 			);
 			return modifier.getValue(getter) + acc;
 		}, 0);

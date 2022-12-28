@@ -8,6 +8,7 @@ export class PerLevelModifierValueGetter extends ModifierValueGetter implements 
 		attributes: Attributes,
 		readonly includeFirstLevel: boolean,
 		readonly level: Level,
+		readonly frequency: number,
 	) {
 		super(attributes);
 	}
@@ -17,9 +18,9 @@ export class PerLevelModifierValueGetter extends ModifierValueGetter implements 
 		const perLevelValue = value + attributeBonuses;
 
 		if (!this.includeFirstLevel) {
-			return (this.level - 1) * perLevelValue;
+			return Math.floor((this.level - 1) / this.frequency) * perLevelValue;
 		}
 
-		return this.level * perLevelValue;
+		return Math.floor(this.level / this.frequency) * perLevelValue;
 	}
 }

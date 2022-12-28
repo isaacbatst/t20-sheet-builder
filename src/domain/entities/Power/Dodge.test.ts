@@ -39,6 +39,6 @@ describe('Dodge', () => {
 		const dispatch = jest.fn();
 		expect(() => {
 			dodge.addToSheet(sheet, dispatch, RaceAbilityName.versatile);
-		}).toThrow('REQUIREMENT_NOT_ACHIEVED');
+		}).toThrow('UNFULFILLED_REQUIREMENT');
 	});
 });

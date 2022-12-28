@@ -1,5 +1,7 @@
+import type {ActivateableAbilityEffectInterface} from '../Ability/ActivateableAbilityEffect';
 import type {TriggeredEffectInterface} from '../Ability/TriggeredEffect';
 import type {Attributes} from '../Attributes';
+import type {Equipment} from '../Equipment/Equipment';
 import type {ContextualModifierInterface} from '../Modifier/ContextualModifier/ContextualModifierInterface';
 import type {FixedModifierInterface} from '../Modifier/FixedModifier/FixedModifier';
 import type {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
@@ -41,6 +43,8 @@ type ActionTypesToHandlers = {
 	addPerLevelModifierToManaPoints(payload: {modifier: PerLevelModifier}): void;
 	addFixedModifierToDefense(payload: {modifier: FixedModifierInterface}): void;
 	trainIntelligenceSkills(payload: {skills: SkillName[]}): void;
+	addEquipment(payload: {equipment: Equipment}): void;
+	addActivateableEffect(payload: {effect: ActivateableAbilityEffectInterface}): void;
 };
 
 export type ActionType = keyof ActionTypesToHandlers;

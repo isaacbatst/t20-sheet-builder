@@ -9,6 +9,7 @@ export class PerLevelModifier extends Modifier implements PerLevelModifierInterf
 		value: number,
 		readonly includeFirstLevel: boolean = true,
 		attributeBonuses: Set<Attribute> = new Set(),
+		readonly frequency = 1,
 	) {
 		super(source, value, 'perLevel', attributeBonuses);
 	}

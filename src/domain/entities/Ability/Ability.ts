@@ -30,16 +30,14 @@ export abstract class Ability implements AbilityInterface {
 
 	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch, source: Translatable): void {
 		dispatch(this.getAddAction(source), sheet);
-		this.addPassiveEffectsToSheet(sheet, dispatch, source);
+		this.addEffectsToSheet(sheet, dispatch, source);
 	}
 
 	protected abstract getAddAction(source: Translatable): ActionInterface;
 
-	private addPassiveEffectsToSheet(sheet: SheetBaseInterface, dispatch: Dispatch, source: Translatable) {
+	private addEffectsToSheet(sheet: SheetBaseInterface, dispatch: Dispatch, source: Translatable) {
 		Object.values(this.effects).forEach(effect => {
-			if (effect instanceof PassiveEffect || effect instanceof TriggeredEffect) {
-				effect.addToSheet(sheet, dispatch, source);
-			}
+			effect.addToSheet(sheet, dispatch);
 		});
 	}
 }

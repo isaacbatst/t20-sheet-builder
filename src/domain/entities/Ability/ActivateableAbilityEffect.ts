@@ -1,5 +1,8 @@
+import {AddActivateableEffect} from '../Action/AddActivateableEffect';
 import type {Affectable} from '../Affectable/Affectable';
-import type {Activateable, Appliable, EffectExecution, SheetInterface} from '../Sheet/SheetInterface';
+import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
+import type {Appliable} from '../Sheet/SheetInterface';
+import type {Dispatch} from '../Transaction';
 import type {AbilityName} from './Ability';
 import {AbilityEffect} from './AbilityEffect';
 
@@ -8,7 +11,7 @@ export type EffectDuration = 'immediate' | 'scene' | 'sustained' | 'defined' | '
 export type EffectRange = 'personal' | 'touch' | 'short' | 'medium' | 'long' | 'unilimited';
 export type EffectCost = Appliable;
 
-export type ActivateableAbilityEffectInterface = Activateable & {
+export type ActivateableAbilityEffectInterface = {
 	executionType: EffectExecutionType;
 	duration: EffectDuration;
 	source: AbilityName;
@@ -31,7 +34,7 @@ export type AffectableEffect = {
 export abstract class ActivateableAbilityEffect extends AbilityEffect implements ActivateableAbilityEffectInterface {
 	readonly executionType: EffectExecutionType;
 	readonly duration: EffectDuration;
-	abstract cost: Appliable;
+	abstract costs: Appliable[];
 
 	constructor(params: ActivateableEffectParams) {
 		super('active', params.source);
@@ -39,9 +42,9 @@ export abstract class ActivateableAbilityEffect extends AbilityEffect implements
 		this.duration = params.duration;
 	}
 
-	activate(sheet: SheetInterface, execution: EffectExecution) {
-		this.cost.apply(sheet);
-		execution.execute(sheet);
+	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
+		dispatch(new AddActivateableEffect({
+			effect: this,
+		}), sheet);
 	}
 }
-

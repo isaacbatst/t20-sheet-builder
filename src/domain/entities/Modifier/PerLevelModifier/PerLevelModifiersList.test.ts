@@ -16,4 +16,16 @@ describe('PerLevelModifiersList', () => {
 		);
 		expect(list.getTotal(calculator)).toBe(26);
 	});
+
+	it('should calculate total with custom frequency', () => {
+		const list = new PerLevelModifiersList();
+		list.add(new PerLevelModifier(RoleName.arcanist, 6, true, new Set(['intelligence'])));
+		list.add(new PerLevelModifier(RoleAbilityName.arcanistSpells, 1, false));
+		list.add(new PerLevelModifier(RoleAbilityName.arcanistPath, 5, false, new Set(), 2));
+		const calculator = new PerLevelModifiersListTotalCalculator(
+			{charisma: 0, constitution: 0, dexterity: 0, intelligence: 2, strength: 0, wisdom: 0},
+			Level.levelThree,
+		);
+		expect(list.getTotal(calculator)).toBe(31);
+	});
 });

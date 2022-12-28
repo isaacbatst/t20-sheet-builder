@@ -1,4 +1,3 @@
-import type {AbilityEffect} from '../Ability/AbilityEffect';
 import type {Action} from '../Action/Action';
 import {PickGeneralPower} from '../Action/PickGeneralPower';
 import type {Translatable} from '../Translator';
