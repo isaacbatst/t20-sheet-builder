@@ -6,6 +6,7 @@ import type {ContextualModifierInterface} from '../Modifier/ContextualModifier/C
 import type {FixedModifierInterface} from '../Modifier/FixedModifier/FixedModifier';
 import type {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
 import type {GeneralPowerInterface} from '../Power/GeneralPower';
+import type {OriginPowerInterface} from '../Power/OriginPower/OriginPower';
 import type {Proficiency} from '../Proficiency';
 import type {RaceAbilityInterface} from '../RaceAbility/RaceAbility';
 import type {RaceInterface} from '../RaceInterface';
@@ -30,6 +31,7 @@ type ActionTypesToHandlers = {
 	applyRoleAbility(payload: {ability: RoleAbilityInterface; source: Translatable}): void;
 	pickGeneralPower(payload: ({power: GeneralPowerInterface;source: Translatable})): void;
 	pickRolePower(payload: ({power: RolePowerInterface;source: Translatable})): void;
+	pickOriginPower(payload: ({power: OriginPowerInterface})): void;
 	changeDisplacement(payload: {displacement: number; source: Translatable}): void;
 	chooseRole(payload: {role: RoleInterface}): void;
 	addProficiency(payload: {proficiency: Proficiency; source: Translatable}): void;

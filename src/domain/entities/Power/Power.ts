@@ -5,7 +5,7 @@ import type {Dispatch} from '../Transaction';
 import type {Translatable} from '../Translator';
 import type {PowerName} from './PowerName';
 
-export type PowerType = 'general' | 'role';
+export type PowerType = 'general' | 'role' | 'origin';
 
 export type PowerInterface = AbilityInterface & {
 	name: PowerName;
