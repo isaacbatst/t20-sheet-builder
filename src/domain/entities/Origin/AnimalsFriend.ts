@@ -1,5 +1,6 @@
 import {Equipment} from '../Equipment/Equipment';
 import type {EquipmentName} from '../Equipment/EquipmentName';
+import {OriginPowerName} from '../Power/OriginPower/OriginPowerName';
 import {SkillName} from '../Skill/SkillName';
 import {Origin} from './Origin';
 import type {OriginBenefit} from './OriginBenefit';
@@ -15,6 +16,7 @@ export class AnimalsFriend extends Origin {
 		super(chosenBenefits, {
 			skills: [SkillName.animalHandling, SkillName.animalRide],
 			generalPowers: [],
+			originPower: OriginPowerName.specialFriend,
 		});
 		this.equipments = [new Equipment(chosenAnimal)];
 	}

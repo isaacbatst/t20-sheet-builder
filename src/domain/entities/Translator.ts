@@ -121,6 +121,8 @@ export class Translator {
 		archer: 'Arqueiro',
 		medicine: 'Medicina',
 		ironWill: 'Vontade de Ferro',
+		churchMember: 'Membro da Igreja',
+		specialFriend: 'Amigo Especial',
 	};
 
 	private static readonly visionsTranslation: Record<Vision, string> = {
@@ -170,6 +172,7 @@ export class Translator {
 
 	private static readonly originsTranslation: Record<OriginName, string> = {
 		acolyte: 'Acólito',
+		animalsFriend: 'Amigo dos Animais',
 	};
 
 	private static readonly translation: Record<Translatable, string> = {

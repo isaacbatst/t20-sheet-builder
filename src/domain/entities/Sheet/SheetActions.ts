@@ -1,4 +1,5 @@
 import type {ActivateableAbilityEffectInterface} from '../Ability/ActivateableAbilityEffect';
+import type {RolePlayEffect} from '../Ability/RolePlayEffect';
 import type {TriggeredEffectInterface} from '../Ability/TriggeredEffect';
 import type {Attributes} from '../Attributes';
 import type {Equipment} from '../Equipment/Equipment';
@@ -47,6 +48,7 @@ type ActionTypesToHandlers = {
 	trainIntelligenceSkills(payload: {skills: SkillName[]}): void;
 	addEquipment(payload: {equipment: Equipment}): void;
 	addActivateableEffect(payload: {effect: ActivateableAbilityEffectInterface}): void;
+	addRolePlayEffect(payload: {effect: RolePlayEffect}): void;
 };
 
 export type ActionType = keyof ActionTypesToHandlers;

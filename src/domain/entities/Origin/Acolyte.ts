@@ -1,6 +1,7 @@
 import {Equipment} from '../Equipment/Equipment';
 import {EquipmentName} from '../Equipment/EquipmentName';
 import {GeneralPowerName} from '../Power/GeneralPowerName';
+import {OriginPowerName} from '../Power/OriginPower/OriginPowerName';
 import {SkillName} from '../Skill/SkillName';
 import {Origin} from './Origin';
 import type {OriginBenefit} from './OriginBenefit';
@@ -18,6 +19,7 @@ export class Acolyte extends Origin {
 		super(chosenBenefits, {
 			skills: [SkillName.cure, SkillName.religion, SkillName.will],
 			generalPowers: [GeneralPowerName.medicine, GeneralPowerName.ironWill],
+			originPower: OriginPowerName.churchMember,
 		});
 	}
 }

@@ -11,7 +11,7 @@ describe('SpecialFriend', () => {
 		const specialFriend = new SpecialFriend(SkillName.acrobatics);
 		const sheet = new SheetBaseFake();
 		const dispatch = jest.fn();
-		specialFriend.addToSheet(sheet, dispatch, OriginName.animalsFriend);
+		specialFriend.addToSheet(sheet, dispatch);
 		expect(dispatch).toHaveBeenCalledWith(new AddFixedModifierToSkill({
 			modifier: new FixedModifier(OriginPowerName.specialFriend, 5),
 			skill: SkillName.animalHandling,
@@ -22,7 +22,7 @@ describe('SpecialFriend', () => {
 		const specialFriend = new SpecialFriend(SkillName.acrobatics);
 		const sheet = new SheetBaseFake();
 		const dispatch = jest.fn();
-		specialFriend.addToSheet(sheet, dispatch, OriginName.animalsFriend);
+		specialFriend.addToSheet(sheet, dispatch);
 		expect(dispatch).toHaveBeenCalledWith(new AddFixedModifierToSkill({
 			modifier: new FixedModifier(OriginPowerName.specialFriend, 2),
 			skill: SkillName.acrobatics,
