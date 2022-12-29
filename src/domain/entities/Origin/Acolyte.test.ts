@@ -71,6 +71,8 @@ describe('Acolyte', () => {
 	it('should dispatch general power benefits appliance', () => {
 		const acolyte = new Acolyte([new OriginBenefitGeneralPower(new IronWill()), new OriginBenefitGeneralPower(new Medicine())]);
 		const sheet = new SheetBaseFake();
+		sheet.attributes.wisdom = 1;
+		sheet.skills.cure.train();
 		const dispatch = jest.fn();
 		acolyte.addToSheet(sheet, dispatch);
 
@@ -88,6 +90,8 @@ describe('Acolyte', () => {
 	it('should dispatch origin power as benefit appliance', () => {
 		const acolyte = new Acolyte([new OriginBenefitOriginPower(new ChurchMember()), new OriginBenefitGeneralPower(new Medicine())]);
 		const sheet = new SheetBaseFake();
+		sheet.attributes.wisdom = 1;
+		sheet.skills.cure.train();
 		const dispatch = jest.fn();
 		acolyte.addToSheet(sheet, dispatch);
 
@@ -105,5 +109,14 @@ describe('Acolyte', () => {
 		expect(() => {
 			const acolyte = new Acolyte([new OriginBenefitOriginPower(new SpecialFriend(SkillName.cheat)), new OriginBenefitGeneralPower(new Medicine())]);
 		}).toThrow('INVALID_ORIGIN_POWER');
+	});
+
+	it('should not allow power with unfulfilled requirements', () => {
+		expect(() => {
+			const sheet = new SheetBaseFake();
+			const dispatch = jest.fn();
+			const acolyte = new Acolyte([new OriginBenefitOriginPower(new ChurchMember()), new OriginBenefitGeneralPower(new Medicine())]);
+			acolyte.addToSheet(sheet, dispatch);
+		}).toThrow('UNFULFILLED_REQUIREMENT');
 	});
 });

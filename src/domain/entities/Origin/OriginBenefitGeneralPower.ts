@@ -1,4 +1,3 @@
-import {PickGeneralPower} from '../Action/PickGeneralPower';
 import type {GeneralPowerInterface} from '../Power/GeneralPower';
 import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
 import type {Dispatch} from '../Transaction';
@@ -14,7 +13,7 @@ export class OriginBenefitGeneralPower extends OriginBenefit {
 	}
 
 	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch, source: Translatable): void {
-		dispatch(new PickGeneralPower({power: this.power, source}), sheet);
+		this.power.addToSheet(sheet, dispatch, source);
 	}
 
 	validate(originBenefits: OriginBenefits): void {
