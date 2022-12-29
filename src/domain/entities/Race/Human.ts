@@ -1,6 +1,6 @@
 import type {Attribute} from '../Attributes';
 import {Versatile} from '../RaceAbility/Human/Versatile';
-import type {VersatileChoice} from '../RaceAbility/Human/VersatileEffect';
+import type {VersatileChoice} from '../RaceAbility/Human/VersatileChoice';
 import {SelectableAttributesRace} from '../SelectableAttributesRace';
 import {RaceName} from './RaceName';
 

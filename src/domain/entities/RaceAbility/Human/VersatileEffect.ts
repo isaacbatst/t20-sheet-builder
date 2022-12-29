@@ -1,14 +1,9 @@
+import type {AbilityName} from '../../Ability/Ability';
 import {PassiveEffect} from '../../Ability/PassiveEffect';
-import {TrainSkill} from '../../Action/TrainSkill';
-import type {GeneralPowerName} from '../../Power/GeneralPowerName';
-import {GeneralPowerFactory} from '../../Power/PowerFactory';
 import type {SheetBaseInterface} from '../../Sheet/SheetBaseInterface';
-import {SkillName} from '../../Skill/SkillName';
 import type {Dispatch} from '../../Transaction';
 import {RaceAbilityName} from '../RaceAbilityName';
-export type VersatileChoice =
-	{type: 'skill'; name: SkillName} |
-	{type: 'power'; name: GeneralPowerName};
+import type {VersatileChoice} from './VersatileChoice';
 
 export class VersatileEffect extends PassiveEffect {
 	readonly choices: VersatileChoice[] = [];
@@ -42,17 +37,7 @@ export class VersatileEffect extends PassiveEffect {
 		}
 
 		this.choices.forEach(choice => {
-			if (choice.type === 'skill') {
-				dispatch(new TrainSkill({
-					source: this.source,
-					name: SkillName[choice.name],
-				}), sheet);
-			}
-
-			if (choice.type === 'power') {
-				const power = GeneralPowerFactory.make(choice.name);
-				power.addToSheet(sheet, dispatch, this.source);
-			}
+			choice.addToSheet(sheet, dispatch, this.source);
 		});
 	}
 }

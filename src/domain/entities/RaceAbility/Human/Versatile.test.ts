@@ -6,53 +6,58 @@ import {SkillName} from '../../Skill/SkillName';
 import {RaceAbilityName} from '../RaceAbilityName';
 import {Versatile} from './Versatile';
 import {RaceName} from '../../Race/RaceName';
+import {VersatileChoice} from './VersatileChoice';
+import {VersatileChoiceSkill} from './VersatileChoiceSkill';
+import {VersatileChoicePower} from './VersatileChoicePower';
+import {TwoHandsStyle} from '../../Power/TwoHandsStyle';
+import {SwordAndShieldStyle} from '../../Power/SwordAndShieldStyle';
 
 describe('Versatile', () => {
 	it('should add choice', () => {
 		const versatile = new Versatile();
-		versatile.addChoice({type: 'skill', name: SkillName.acrobatics});
+		versatile.addChoice(new VersatileChoiceSkill(SkillName.acrobatics));
 
-		expect(versatile.effects.default.choices).toEqual([{type: 'skill', name: SkillName.acrobatics}]);
+		expect(versatile.effects.default.choices).toEqual([new VersatileChoiceSkill(SkillName.acrobatics)]);
 	});
 
 	it('should not add repeated choice', () => {
 		const versatile = new Versatile();
-		versatile.addChoice({type: 'skill', name: SkillName.acrobatics});
+		versatile.addChoice(new VersatileChoiceSkill(SkillName.acrobatics));
 
 		expect(() => {
-			versatile.addChoice({type: 'skill', name: SkillName.acrobatics});
+			versatile.addChoice(new VersatileChoiceSkill(SkillName.acrobatics));
 		}).toThrowError('REPEATED_VERSATILE_CHOICE');
 	});
 
 	it('should not allow more than two choices', () => {
 		const versatile = new Versatile();
 
-		versatile.addChoice({type: 'skill', name: SkillName.acrobatics});
-		versatile.addChoice({type: 'skill', name: SkillName.animalHandling});
+		versatile.addChoice(new VersatileChoiceSkill(SkillName.acrobatics));
+		versatile.addChoice(new VersatileChoiceSkill(SkillName.animalHandling));
 
 		expect(() => {
-			versatile.addChoice({type: 'skill', name: SkillName.fight});
+			versatile.addChoice(new VersatileChoiceSkill(SkillName.fight));
 		}).toThrow('EXCEEDED_CHOICES_QUANTITY');
 	});
 
 	it('should not allow 2 powers', () => {
 		const versatile = new Versatile();
 
-		versatile.addChoice({type: 'power', name: GeneralPowerName.twoHandsStyle});
+		versatile.addChoice(new VersatileChoicePower(new TwoHandsStyle()));
 
 		expect(() => {
-			versatile.addChoice({type: 'power', name: GeneralPowerName.swordAndShieldStyle});
+			versatile.addChoice(new VersatileChoicePower(new SwordAndShieldStyle()));
 		}).toThrow('FORBIDDEN_TWO_POWERS');
 	});
 
 	it('should allow 1 power and 1 skill', () => {
 		const versatile = new Versatile();
-		versatile.addChoice({type: 'skill', name: SkillName.acrobatics});
-		versatile.addChoice({type: 'power', name: GeneralPowerName.twoHandsStyle});
+		versatile.addChoice(new VersatileChoiceSkill(SkillName.acrobatics));
+		versatile.addChoice(new VersatileChoicePower(new TwoHandsStyle()));
 
 		expect(versatile.effects.default.choices).toEqual([
-			{type: 'skill', name: SkillName.acrobatics},
-			{type: 'power', name: GeneralPowerName.twoHandsStyle},
+			new VersatileChoiceSkill(SkillName.acrobatics),
+			new VersatileChoicePower(new TwoHandsStyle()),
 		]);
 	});
 
@@ -67,8 +72,8 @@ describe('Versatile', () => {
 
 	it('should train chosen skills', () => {
 		const versatile = new Versatile();
-		versatile.addChoice({type: 'skill', name: SkillName.acrobatics});
-		versatile.addChoice({type: 'skill', name: SkillName.animalHandling});
+		versatile.addChoice(new VersatileChoiceSkill(SkillName.acrobatics));
+		versatile.addChoice(new VersatileChoiceSkill(SkillName.animalHandling));
 
 		const sheet = new BuildingSheetFake();
 		const dispatch = jest.fn();
@@ -93,8 +98,8 @@ describe('Versatile', () => {
 
 	it('should apply chosen power', () => {
 		const versatile = new Versatile();
-		versatile.addChoice({type: 'skill', name: SkillName.acrobatics});
-		versatile.addChoice({type: 'power', name: GeneralPowerName.dodge});
+		versatile.addChoice(new VersatileChoiceSkill(SkillName.acrobatics));
+		versatile.addChoice(new VersatileChoicePower(new Dodge()));
 
 		const sheet = new BuildingSheetFake();
 		sheet.attributes.dexterity = 1;

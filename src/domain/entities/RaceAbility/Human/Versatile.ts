@@ -1,6 +1,6 @@
 import {RaceAbility} from '../RaceAbility';
 import {RaceAbilityName} from '../RaceAbilityName';
-import type {VersatileChoice} from './VersatileEffect';
+import type {VersatileChoice} from './VersatileChoice';
 import {VersatileEffect} from './VersatileEffect';
 
 export class Versatile extends RaceAbility {

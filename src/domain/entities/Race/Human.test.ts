@@ -3,21 +3,18 @@ import {ApplyRaceModifiers} from '../Action/ApplyRaceModifiers';
 import {BuildingSheetFake} from '../Sheet/BuildingSheetFake';
 import {GeneralPowerName} from '../Power/GeneralPowerName';
 import {Versatile} from '../RaceAbility/Human/Versatile';
-import type {VersatileChoice} from '../RaceAbility/Human/VersatileEffect';
 import {SkillName} from '../Skill/SkillName';
 import {Human} from './Human';
 import {RaceName} from './RaceName';
+import {VersatileChoiceSkill} from '../RaceAbility/Human/VersatileChoiceSkill';
+import type {VersatileChoice} from '../RaceAbility/Human/VersatileChoice';
+import {VersatileChoicePower} from '../RaceAbility/Human/VersatileChoicePower';
+import {Dodge} from '../Power/Dodge';
 
 describe('Human', () => {
 	it('should apply +1 to strength, dexterity and constitution', () => {
-		const acrobatics: VersatileChoice = {
-			name: SkillName.acrobatics,
-			type: 'skill',
-		};
-		const animalHandling: VersatileChoice = {
-			name: SkillName.animalHandling,
-			type: 'skill',
-		};
+		const acrobatics = new VersatileChoiceSkill(SkillName.acrobatics);
+		const animalHandling = new VersatileChoiceSkill(SkillName.animalHandling);
 
 		const human = new Human([
 			'constitution',
@@ -81,27 +78,15 @@ describe('Human', () => {
 			'dexterity',
 			'strength',
 		], [
-			{
-				name: SkillName.acrobatics,
-				type: 'skill',
-			},
+			new VersatileChoiceSkill(SkillName.acrobatics),
 		]);
 
-		expect(human.versatileChoices).toContainEqual({
-			name: SkillName.acrobatics,
-			type: 'skill',
-		});
+		expect(human.versatileChoices).toContainEqual(new VersatileChoiceSkill(SkillName.acrobatics));
 	});
 
 	it('should apply versatile with chosen skills', () => {
-		const acrobatics: VersatileChoice = {
-			name: SkillName.acrobatics,
-			type: 'skill',
-		};
-		const animalHandling: VersatileChoice = {
-			name: SkillName.animalHandling,
-			type: 'skill',
-		};
+		const acrobatics: VersatileChoice = new VersatileChoiceSkill(SkillName.acrobatics);
+		const animalHandling: VersatileChoice = new VersatileChoiceSkill(SkillName.animalHandling);
 
 		const human = new Human([
 			'constitution',
@@ -127,14 +112,8 @@ describe('Human', () => {
 	});
 
 	it('should apply versatile training chosen skill and power', () => {
-		const acrobatics: VersatileChoice = {
-			name: SkillName.acrobatics,
-			type: 'skill',
-		};
-		const dodge: VersatileChoice = {
-			name: GeneralPowerName.dodge,
-			type: 'power',
-		};
+		const acrobatics: VersatileChoice = new VersatileChoiceSkill(SkillName.acrobatics);
+		const dodge = new VersatileChoicePower(new Dodge());
 
 		const human = new Human([
 			'constitution',
