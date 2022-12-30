@@ -4,22 +4,22 @@ Simulates the brazilian RPG: [Tormenta 20](https://jamboeditora.com.br/produto/t
 
 ## Steps
 
-### Define initial attributes
+### 1 - Define initial attributes
 Roll the dices.
 
-### Choose your race
+### 2 - Choose your race
 - Human
 - Dwarf
 
-### Choose your role
+### 3 - Choose your role
 - Warrior
 - Arcanist
 
-### Choose your origin
+### 4 - Choose your origin
 - Acolyte
 - Animals Friend
 
-### Train your intelligence skills
+### 5 - Train your intelligence skills
 Choose as many as you have on intelligence attributes
 
 ## Story
