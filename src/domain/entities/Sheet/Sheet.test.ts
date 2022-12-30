@@ -61,13 +61,11 @@ describe('Sheet', () => {
 				.chooseRole(role)
 				.chooseOrigin(origin)
 				.trainIntelligenceSkills([])
-				.addInitialEquipment(
-					new SheetInitialEquipmentsAdder({
-						simpleWeapon: new Dagger(),
-						armor: new LeatherArmor(),
-						martialWeapon: new LongSword(),
-					}),
-				);
+				.addInitialEquipment({
+					simpleWeapon: new Dagger(),
+					armor: new LeatherArmor(),
+					martialWeapon: new LongSword(),
+				});
 		});
 
 		it('should choose race', () => {
@@ -171,11 +169,9 @@ describe('Sheet', () => {
 				.chooseRole(role)
 				.chooseOrigin(origin)
 				.trainIntelligenceSkills([SkillName.initiative, SkillName.athletics])
-				.addInitialEquipment(
-					new SheetInitialEquipmentsAdder({
-						simpleWeapon: new Dagger(),
-					}),
-				);
+				.addInitialEquipment({
+					simpleWeapon: new Dagger(),
+				});
 		});
 
 		it('should choose race', () => {

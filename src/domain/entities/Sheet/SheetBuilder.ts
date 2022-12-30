@@ -4,6 +4,9 @@ import {ChooseRole} from '../Action/ChooseRole';
 import {SetInitialAttributes} from '../Action/SetInitialAttributes';
 import {TrainIntelligenceSkills} from '../Action/TrainIntelligenceSkills';
 import {OutOfGameContext} from '../Context/OutOfGameContext';
+import type {Armor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/Armor';
+import type {MartialWeapon} from '../Inventory/Equipment/Weapon/OfensiveWeapon/MartialWeapon';
+import type {SimpleWeapon} from '../Inventory/Equipment/Weapon/OfensiveWeapon/SimpleWeapon';
 import type {OriginInterface} from '../Origin/Origin';
 import type {RaceInterface} from '../Race/RaceInterface';
 import type {RoleInterface} from '../Role/RoleInterface';
@@ -12,7 +15,7 @@ import type {Attributes} from './Attributes';
 import {BuildingSheet} from './BuildingSheet';
 import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import {Sheet} from './Sheet';
-import type {SheetInitialEquipmentsAdder} from './SheetInitialEquipmentsAdder';
+import {SheetInitialEquipmentsAdder} from './SheetInitialEquipmentsAdder';
 
 export class SheetBuilder {
 	readonly context = new OutOfGameContext();
@@ -77,8 +80,13 @@ export class SheetBuilder {
 	}
 
 	private addInitialEquipment(race: RaceInterface, role: RoleInterface, origin: OriginInterface) {
-		return (adder: SheetInitialEquipmentsAdder) => {
-			adder.addEquipments(this.sheet, role);
+		return (params: {simpleWeapon: SimpleWeapon; martialWeapon?: MartialWeapon; armor?: Armor}) => {
+			const equipmentsAdder = new SheetInitialEquipmentsAdder({
+				simpleWeapon: params.simpleWeapon,
+				armor: params.armor,
+				martialWeapon: params.martialWeapon,
+			});
+			equipmentsAdder.addEquipments(this.sheet, role);
 
 			return this.createSheet(race, role, origin);
 		};
