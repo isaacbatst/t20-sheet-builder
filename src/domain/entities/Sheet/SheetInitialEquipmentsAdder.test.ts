@@ -37,7 +37,7 @@ describe('SheetInitialEquipmentsAdder', () => {
 		}), sheet);
 	});
 
-	it('should require armor', () => {
+	it('should require armor if role does not starts with it', () => {
 		const adder = new SheetInitialEquipmentsAdder({
 			simpleWeapon: new Dagger(),
 		});
