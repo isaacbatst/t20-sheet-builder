@@ -4,12 +4,12 @@ import {AddPerLevelModifierToManaPoints} from '../Action/AddPerLevelModifierToMa
 import {AddProficiency} from '../Action/AddProficiency';
 import {ChooseRole} from '../Action/ChooseRole';
 import {TrainSkill} from '../Action/TrainSkill';
-import {Level} from '../Levels';
+import {Level} from '../Sheet/Levels';
 import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
 import {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
-import type {Proficiency} from '../Proficiency';
+import type {Proficiency} from '../Sheet/Proficiency';
 import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../Transaction';
+import type {Dispatch} from '../Sheet/Transaction';
 import type {SkillName} from '../Skill/SkillName';
 import type {RoleAbility} from './RoleAbility';
 import type {ChooseableSkills, RoleInterface} from './RoleInterface';

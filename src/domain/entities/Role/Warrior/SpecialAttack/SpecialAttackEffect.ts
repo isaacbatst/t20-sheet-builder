@@ -1,9 +1,9 @@
 import {TriggeredEffect} from '../../../Ability/TriggeredEffect';
 import type {TriggeredEffectName} from '../../../Ability/TriggeredEffectName';
-import {Level} from '../../../Levels';
+import {Level} from '../../../Sheet/Levels';
 import {ManaCost} from '../../../ManaCost';
 import {RoleAbilityName} from '../../RoleAbilityName';
-import type {SpecialAttackManaCost} from './SpecialAttackManaCost';
+import {SpecialAttackManaCost} from './SpecialAttackManaCost';
 import {SpecialAttackEffectCosts} from './SpecialAttackManaCost';
 
 export abstract class SpecialAttackEffect extends TriggeredEffect {
@@ -22,8 +22,10 @@ export abstract class SpecialAttackEffect extends TriggeredEffect {
 		[SpecialAttackEffectCosts.twoManaPoints]: 8,
 	};
 
+	costs: SpecialAttackManaCost[];
+
 	constructor(
-		override cost: SpecialAttackManaCost,
+		cost: SpecialAttackEffectCosts,
 		name: TriggeredEffectName,
 	) {
 		super({
@@ -33,5 +35,6 @@ export abstract class SpecialAttackEffect extends TriggeredEffect {
 			triggerEvent: 'attack',
 			name,
 		});
+		this.costs = [new SpecialAttackManaCost(cost)];
 	}
 }

@@ -1,4 +1,4 @@
-import type {Attributes} from '../Attributes';
+import type {Attributes} from '../Sheet/Attributes';
 import {FixedModifiersListTotalCalculator} from '../Modifier/FixedModifier/FixedModifiersListTotalCalculator';
 import {DefenseBaseCalculator} from './DefenseBaseCalculator';
 import {DefenseTotalCalculator} from './DefenseTotalCalculator';

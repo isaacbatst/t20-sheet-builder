@@ -1,4 +1,4 @@
-import type {Attribute, Attributes} from '../Attributes';
+import type {Attribute, Attributes} from '../Sheet/Attributes';
 import type {ModifierValueGetterInterface} from './ModifierInterface';
 
 export abstract class ModifierValueGetter implements ModifierValueGetterInterface {

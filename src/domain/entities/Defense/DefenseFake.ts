@@ -1,4 +1,4 @@
-import type {Attributes} from '../Attributes';
+import type {Attributes} from '../Sheet/Attributes';
 import type {FixedModifiersList} from '../Modifier/FixedModifier/FixedModifiersList';
 import {FixedModifiersListFake} from '../Modifier/FixedModifier/FixedModifiersListFake';
 import type {DefenseInterface} from './DefenseInterface';

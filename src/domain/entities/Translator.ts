@@ -1,19 +1,21 @@
-import type {Attribute} from './Attributes';
+import type {Attribute} from './Sheet/Attributes';
+import type {OriginName} from './Origin/OriginName';
 import type {PowerName} from './Power/PowerName';
-import type {Proficiency} from './Proficiency';
+import type {Proficiency} from './Sheet/Proficiency';
 import type {RaceName} from './Race/RaceName';
-import type {RaceAbilityName} from './RaceAbility/RaceAbilityName';
+import type {RaceAbilityName} from './Race/RaceAbilityName';
 import type {RoleAbilityName} from './Role/RoleAbilityName';
 import type {RoleName} from './Role/RoleName';
 import type {SkillName} from './Skill/SkillName';
 import {SpellCircle} from './Spell/SpellCircle';
 import type {SpellName} from './Spell/SpellName';
 import {StringHelper} from './StringHelper';
-import type {Vision} from './Vision';
+import type {Vision} from './Sheet/Vision';
+import type {EquipmentName} from './Equipment/EquipmentName';
 
 export type Translatable = Attribute
 | RaceAbilityName | SkillName | PowerName | RaceName | Proficiency
-| Vision | RoleAbilityName | SpellName | SpellCircle | RoleName;
+| Vision | RoleAbilityName | SpellName | SpellCircle | RoleName | OriginName | EquipmentName;
 
 export class Translator {
 	static getAttributeTranslation(attribute: Attribute, capitalized = true) {
@@ -66,6 +68,14 @@ export class Translator {
 		return Translator.spellCirclesTranslation[circle];
 	}
 
+	static getEquipmentTranslation(equipment: EquipmentName) {
+		return Translator.equipmentsTranslation[equipment];
+	}
+
+	static getOriginTranslation(origin: OriginName) {
+		return Translator.originsTranslation[origin];
+	}
+
 	static getTranslation(string: Translatable) {
 		return Translator.translation[string];
 	}
@@ -109,6 +119,8 @@ export class Translator {
 		mysticism: 'Misticismo',
 		nobility: 'Nobreza',
 		will: 'Vontade',
+		cure: 'Cura',
+		religion: 'Religião',
 	};
 
 	private static readonly powersTranslation: Record<PowerName, string> = {
@@ -116,6 +128,10 @@ export class Translator {
 		swordAndShieldStyle: 'Esttilo Espada e Escudo',
 		twoHandsStyle: 'Estilo de Duas Mãos',
 		archer: 'Arqueiro',
+		medicine: 'Medicina',
+		ironWill: 'Vontade de Ferro',
+		churchMember: 'Membro da Igreja',
+		specialFriend: 'Amigo Especial',
 	};
 
 	private static readonly visionsTranslation: Record<Vision, string> = {
@@ -163,6 +179,20 @@ export class Translator {
 		[SpellCircle.second]: 'segundo',
 	};
 
+	private static readonly originsTranslation: Record<OriginName, string> = {
+		acolyte: 'Acólito',
+		animalsFriend: 'Amigo dos Animais',
+	};
+
+	private static readonly equipmentsTranslation: Record<EquipmentName, string> = {
+		horse: 'Cavalo',
+		hound: 'Cão de Caça',
+		pony: 'Pônei',
+		priestCostume: 'Trajes de Padre',
+		sacredSymbol: 'Símbolo Sagrado',
+		trobo: 'Trobo',
+	};
+
 	private static readonly translation: Record<Translatable, string> = {
 		...Translator.attributesTranslation,
 		...Translator.abilitiesTranslation,
@@ -175,5 +205,7 @@ export class Translator {
 		...Translator.roleAbilitiesTranslation,
 		...Translator.spellsTranslation,
 		...Translator.spellCirclesTranslation,
+		...Translator.originsTranslation,
+		...Translator.equipmentsTranslation,
 	};
 }

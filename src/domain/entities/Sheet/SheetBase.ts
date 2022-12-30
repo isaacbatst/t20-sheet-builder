@@ -1,19 +1,23 @@
-import type {Attributes} from '../Attributes';
+import type {Attributes} from './Attributes';
 import type {BuildStepInterface} from '../BuildStep';
 import {BuildStep} from '../BuildStep';
 import type {Defense} from '../Defense/Defense';
 import type {DefenseInterface} from '../Defense/DefenseInterface';
-import type {Level} from '../Levels';
-import type {PointsBase} from '../Points/PointsBase';
-import type {Proficiency} from '../Proficiency';
-import type {RaceInterface} from '../RaceInterface';
+import type {Equipment} from '../Equipment/Equipment';
+import type {Level} from './Levels';
+import type {LifePoints} from '../Points/LifePoints/LifePoints';
+import type {ManaPoints} from '../Points/ManaPoints/ManaPoints';
+import type {Points} from '../Points/Points';
+import type {Proficiency} from './Proficiency';
+import type {RaceInterface} from '../Race/RaceInterface';
 import type {RoleInterface} from '../Role/RoleInterface';
 import type {Spell} from '../Spell/Spell';
-import type {Dispatch, TransactionInterface} from '../Transaction';
-import {Transaction} from '../Transaction';
-import type {Vision} from '../Vision';
+import type {Dispatch} from './Transaction';
+import {Transaction} from './Transaction';
+import type {Vision} from './Vision';
 import type {ActionInterface, ActionPayload, ActionsHandler, ActionType} from './SheetActions';
-import type {SheetAbilities, SheetBaseInterface, SheetLearnedCircles, SheetPowers, SheetSkills, SheetSpells, SheetTriggeredEffects} from './SheetBaseInterface';
+import type {SheetAbilities, SheetBaseInterface, SheetLearnedCircles, SheetPowers, SheetSkills, SheetSpells} from './SheetBaseInterface';
+import type {OriginInterface} from '../Origin/Origin';
 export abstract class SheetBase implements SheetBaseInterface {
 	readonly actionHandlers: ActionsHandler = {
 		addFixedModifierToSkill: this.addFixedModifierToSkill.bind(this),
@@ -32,17 +36,20 @@ export abstract class SheetBase implements SheetBaseInterface {
 		applyRoleAbility: this.applyRoleAbility.bind(this),
 		learnCircle: this.learnCircle.bind(this),
 		learnSpell: this.learnSpell.bind(this),
-		addTriggeredEffect: this.addTriggeredEffect.bind(this),
 		addPerLevelModifierToLifePoints: this.addPerLevelModifierToLifePoints.bind(this),
 		addContextualModifierToSkill: this.addContextualModifierToSkill.bind(this),
 		addFixedModifierToDefense: this.addFixedModifierToDefense.bind(this),
 		addPerLevelModifierToManaPoints: this.addPerLevelModifierToManaPoints.bind(this),
 		trainIntelligenceSkills: this.trainIntelligenceSkills.bind(this),
+		addEquipment: this.addEquipment.bind(this),
+		pickOriginPower: this.pickOriginPower.bind(this),
+		chooseOrigin: this.chooseOrigin.bind(this),
 	};
 
 	abstract readonly buildSteps: BuildStepInterface[];
 	protected race?: RaceInterface;
 	protected role?: RoleInterface;
+	protected origin?: OriginInterface;
 	protected abstract readonly powers: SheetPowers;
 	protected abstract readonly abilities: SheetAbilities;
 	protected abstract attributes: Attributes;
@@ -53,10 +60,10 @@ export abstract class SheetBase implements SheetBaseInterface {
 	protected abstract readonly defense: Defense;
 	protected abstract readonly spells: SheetSpells;
 	protected abstract readonly learnedCircles: SheetLearnedCircles;
-	protected abstract readonly triggeredEffects: SheetTriggeredEffects;
 	protected abstract displacement: number;
-	protected abstract readonly lifePoints: PointsBase;
-	protected abstract readonly manaPoints: PointsBase;
+	protected abstract readonly lifePoints: Points;
+	protected abstract readonly manaPoints: Points;
+	protected abstract equipments: Equipment[];
 
 	initTransaction<T extends ActionType>(action: ActionInterface<T>): void {
 		const transaction = new Transaction();
@@ -108,8 +115,16 @@ export abstract class SheetBase implements SheetBaseInterface {
 		return this.learnedCircles;
 	}
 
-	getTriggeredEffects(): SheetTriggeredEffects {
-		return this.triggeredEffects;
+	getLifePoints(): LifePoints {
+		return this.lifePoints;
+	}
+
+	getManaPoints(): ManaPoints {
+		return this.manaPoints;
+	}
+
+	getEquipments(): Equipment[] {
+		return this.equipments;
 	}
 
 	private saveBuildSteps(transaction: Transaction) {
@@ -119,12 +134,21 @@ export abstract class SheetBase implements SheetBaseInterface {
 		}
 	}
 
+	private addEquipment(payload: ActionPayload<'addEquipment'>) {
+		this.equipments.push(payload.equipment);
+	}
+
 	private changeDisplacement(payload: ActionPayload<'changeDisplacement'>) {
 		if (payload.displacement < 0) {
 			throw new Error('INVALID_NEGATIVE_DISPLACEMENT');
 		}
 
 		this.displacement = payload.displacement;
+	}
+
+	private chooseOrigin(payload: ActionPayload<'chooseOrigin'>, dispatch: Dispatch) {
+		payload.origin.addToSheet(this, dispatch);
+		this.origin = payload.origin;
 	}
 
 	private chooseRole(payload: ActionPayload<'chooseRole'>, dispatch: Dispatch) {
@@ -143,6 +167,10 @@ export abstract class SheetBase implements SheetBaseInterface {
 
 	private pickRolePower(payload: ActionPayload<'pickRolePower'>) {
 		return this.powers.role.set(payload.power.name, payload.power);
+	}
+
+	private pickOriginPower(payload: ActionPayload<'pickOriginPower'>) {
+		return this.powers.origin.set(payload.power.name, payload.power);
 	}
 
 	private setInitialAttributes(payload: ActionPayload<'setInitialAttributes'>) {
@@ -215,10 +243,6 @@ export abstract class SheetBase implements SheetBaseInterface {
 
 	private learnCircle(payload: ActionPayload<'learnCircle'>) {
 		this.learnedCircles[payload.type].add(payload.circle);
-	}
-
-	private addTriggeredEffect(payload: ActionPayload<'addTriggeredEffect'>) {
-		this.triggeredEffects[payload.effect.triggerEvent].set(payload.effect.name, payload.effect);
 	}
 
 	private addPerLevelModifierToLifePoints(payload: ActionPayload<'addPerLevelModifierToLifePoints'>) {

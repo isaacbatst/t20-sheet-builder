@@ -1,5 +1,5 @@
-import type {Attribute, Attributes} from '../../Attributes';
-import type {ContextInterface} from '../../ContextInterface';
+import type {Attribute, Attributes} from '../../Sheet/Attributes';
+import type {ContextInterface} from '../../Context/ContextInterface';
 import type {ModifierValueGetterInterface} from '../ModifierInterface';
 import {ModifierValueGetter} from '../ModifierValueGetter';
 import type {ModifierConditionVerify} from './ContextualModifiersListInterface';

@@ -10,5 +10,9 @@ Simulates the brazilian RPG: [Tormenta 20](https://jamboeditora.com.br/produto/t
 - Warrior
 - Arcanist
 
+# Origins
+- Acolyte
+- Animals Friend
+
 ## Story
 Soon..

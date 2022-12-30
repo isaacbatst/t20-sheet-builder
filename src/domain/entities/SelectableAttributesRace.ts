@@ -1,4 +1,4 @@
-import type {Attribute, Attributes} from './Attributes';
+import type {Attribute, Attributes} from './Sheet/Attributes';
 import {Race} from './Race/Race';
 import type {RaceName} from './Race/RaceName';
 

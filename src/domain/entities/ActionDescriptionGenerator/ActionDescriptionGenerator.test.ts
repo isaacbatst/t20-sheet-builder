@@ -1,8 +1,6 @@
-import {TriggeredEffectFake} from '../Ability/TriggeredEffectFake';
 import {AddPerLevelModifierToLifePoints} from '../Action/AddPerLevelModifierToLifePoints';
 import {AddPerLevelModifierToManaPoints} from '../Action/AddPerLevelModifierToManaPoints';
 import {AddProficiency} from '../Action/AddProficiency';
-import {AddTriggeredEffect} from '../Action/AddTriggeredEffect';
 import {ApplyRoleAbility} from '../Action/ApplyRoleAbility';
 import {ChooseRole} from '../Action/ChooseRole';
 import {TrainIntelligenceSkills} from '../Action/TrainIntelligenceSkills';
@@ -10,21 +8,30 @@ import {ContextualModifier} from '../Modifier/ContextualModifier/ContextualModif
 import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
 import {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
 import {GeneralPowerName} from '../Power/GeneralPowerName';
-import {GeneralPowerFake, RolePowerFake} from '../PowerFake';
-import {Proficiency} from '../Proficiency';
+import {GeneralPowerFake, RolePowerFake} from '../Power/PowerFake';
+import {Proficiency} from '../Sheet/Proficiency';
 import {RaceName} from '../Race/RaceName';
-import {RaceAbilityName} from '../RaceAbility/RaceAbilityName';
-import {RaceAbilityFake} from '../RaceAbilityFake';
-import {RaceFake} from '../RaceFake';
+import {RaceAbilityName} from '../Race/RaceAbilityName';
+import {RaceAbilityFake} from '../Race/RaceAbilityFake';
+import {RaceFake} from '../Race/RaceFake';
 import {RoleAbilityFake} from '../Role/RoleAbilityFake';
 import {RoleAbilityName} from '../Role/RoleAbilityName';
 import {RoleName} from '../Role/RoleName';
-import {RoleFake} from '../RoleFake';
+import {RoleFake} from '../Role/RoleFake';
 import {BuildingSheetFake} from '../Sheet/BuildingSheetFake';
 import {Skill} from '../Skill/Skill';
 import {SkillName} from '../Skill/SkillName';
-import {Vision} from '../Vision';
+import {Vision} from '../Sheet/Vision';
 import {ActionDescriptionGenerator} from './ActionDescriptionGenerator';
+import {AddEquipment} from '../Action/AddEquipment';
+import {Equipment} from '../Equipment/Equipment';
+import {EquipmentName} from '../Equipment/EquipmentName';
+import {OriginName} from '../Origin/OriginName';
+import {PickOriginPower} from '../Action/PickOriginPower';
+import {ChurchMember} from '../Power/OriginPower/ChurchMember';
+import {ChooseOrigin} from '../Action/ChooseOrigin';
+import {Acolyte} from '../Origin/Acolyte';
+import {OriginFake} from '../Origin/OriginFake';
 
 describe('ActionDescriptionGenerator', () => {
 	it('should generate setInitialAttributes description', () => {
@@ -256,17 +263,6 @@ describe('ActionDescriptionGenerator', () => {
 		expect(description).toBe('Guerreiro: habilidade Ataque Especial adicionada.');
 	});
 
-	it('should generate addTriggeredEffect description', () => {
-		const sheet = new BuildingSheetFake();
-
-		const description = ActionDescriptionGenerator.generate(
-			sheet,
-			new AddTriggeredEffect({effect: new TriggeredEffectFake()}),
-		);
-
-		expect(description).toBe('Ataque Especial: efeito engatilhado.');
-	});
-
 	it('should generate addPerLevelModifierToLifePoints description removing level 1', () => {
 		const sheet = new BuildingSheetFake();
 
@@ -346,5 +342,45 @@ describe('ActionDescriptionGenerator', () => {
 		);
 
 		expect(description).toBe('Nenhuma perícia treinada pela inteligência.');
+	});
+
+	it('should generate addEquipment description', () => {
+		const sheet = new BuildingSheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			new AddEquipment({
+				equipment: new Equipment(EquipmentName.sacredSymbol),
+				source: OriginName.acolyte,
+			}),
+		);
+
+		expect(description).toBe('Acólito: Símbolo Sagrado adicionado ao inventário.');
+	});
+
+	it('should generate pickOriginPower description', () => {
+		const sheet = new BuildingSheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			new PickOriginPower({
+				power: new ChurchMember(),
+			}),
+		);
+
+		expect(description).toBe('Acólito: poder Membro da Igreja escolhido.');
+	});
+
+	it('should generate chooseOrigin description', () => {
+		const sheet = new BuildingSheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			new ChooseOrigin({
+				origin: new OriginFake(),
+			}),
+		);
+
+		expect(description).toBe('Origem escolhida: Acólito.');
 	});
 });

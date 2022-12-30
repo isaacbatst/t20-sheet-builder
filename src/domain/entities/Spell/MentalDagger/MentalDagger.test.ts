@@ -1,33 +1,19 @@
-import {AffectableTargetCreatureFake} from '../../Affectable/AffectableTargetCreatureFake';
-import {RollerFake} from '../../Roller/RollerFake';
+import {LearnSpell} from '../../Action/AddSpell';
+import {RoleAbilityName} from '../../Role/RoleAbilityName';
 import {SheetFake} from '../../Sheet/SheetFake';
 import {MentalDagger} from './MentalDagger';
-import {MentalDaggerDefaultEffectExecution} from './MentalDaggerDefaultEffectExecution';
 
 describe('MentalDagger', () => {
-	describe('MentalDaggerDefaultEffect', () => {
-		it('should damage area to area creatures', () => {
-			const roller = new RollerFake();
-			const creature = new AffectableTargetCreatureFake();
-			const execution = new MentalDaggerDefaultEffectExecution(roller, creature, 'charisma');
-			const sheet = new SheetFake();
-			const flamesExplosion = new MentalDagger();
+	it('should dispatch spell learn', () => {
+		const sheet = new SheetFake();
+		const dispatch = jest.fn();
+		const mentalDagger = new MentalDagger();
 
-			flamesExplosion.effects.default.activate(sheet, execution);
+		mentalDagger.addToSheet(sheet, dispatch, RoleAbilityName.arcanistSpells);
 
-			expect(creature.receiveDamage).toHaveBeenCalledWith(10, 'psychic');
-		});
-
-		it('should use mana', () => {
-			const roller = new RollerFake();
-			const creature = new AffectableTargetCreatureFake();
-			const execution = new MentalDaggerDefaultEffectExecution(roller, creature, 'charisma');
-			const sheet = new SheetFake();
-			const flamesExplosion = new MentalDagger();
-
-			flamesExplosion.effects.default.activate(sheet, execution);
-
-			expect(sheet.useMana).toHaveBeenCalledWith(1);
-		});
+		expect(dispatch).toHaveBeenCalledWith(
+			new LearnSpell({source: RoleAbilityName.arcanistSpells, spell: mentalDagger}),
+			sheet,
+		);
 	});
 });

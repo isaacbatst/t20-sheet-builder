@@ -1,9 +1,7 @@
-import type {Appliable, SheetInterface} from './Sheet/SheetInterface';
+import type {Cost, CostType} from './Sheet/SheetInterface';
 
-export class ManaCost implements Appliable {
+export class ManaCost implements Cost {
+	type: CostType = 'mana';
+
 	constructor(readonly value: number) {}
-
-	apply(sheet: SheetInterface): void {
-		sheet.useMana(this.value);
-	}
 }

@@ -1,33 +1,28 @@
+import type {FixedModifierInterface} from '../Modifier/FixedModifier/FixedModifier';
 import type {FixedModifiersListInterface} from '../Modifier/FixedModifier/FixedModifiersList';
-import type {PerLevelModifiersList} from '../Modifier/PerLevelModifier/PerLevelModifiersList';
-import {PointsBase} from './PointsBase';
-import type {PointsBaseInterface} from './PointsInterface';
+import {FixedModifiersList} from '../Modifier/FixedModifier/FixedModifiersList';
+import type {PerLevelModifierInterface} from '../Modifier/PerLevelModifier/PerLevelModifierInterface';
+import {PerLevelModifiersList} from '../Modifier/PerLevelModifier/PerLevelModifiersList';
+import type {PointsInterface} from './PointsInterface';
 import type {PointsMaxCalculatorInterface} from './PointsMaxCalculator';
 
-export type PointsParams = {
-	modifiers: FixedModifiersListInterface;
-	perLevelModifiers: PerLevelModifiersList;
-	maxCalculator: PointsMaxCalculatorInterface;
-};
+export abstract class Points implements PointsInterface {
+	readonly modifiers: FixedModifiersListInterface = new FixedModifiersList();
+	readonly perLevelModifiers: PerLevelModifiersList = new PerLevelModifiersList();
 
-export type PointsInterface = PointsBaseInterface & {
-	getCurrent(): number;
-};
-
-export abstract class Points extends PointsBase implements PointsBaseInterface {
-	protected modifiers: FixedModifiersListInterface;
-	protected perLevelModifiers: PerLevelModifiersList;
-	protected current: number;
 	constructor(
-		params: PointsParams,
-	) {
-		super();
-		this.modifiers = params.modifiers;
-		this.perLevelModifiers = params.perLevelModifiers;
-		this.current = params.maxCalculator.calculate(params.modifiers, params.perLevelModifiers);
+		readonly type: 'mana' | 'life',
+	) {}
+
+	addModifier(modifier: FixedModifierInterface) {
+		this.modifiers.add(modifier);
 	}
 
-	getCurrent() {
-		return this.current;
+	addPerLevelModifier(modifier: PerLevelModifierInterface) {
+		this.perLevelModifiers.add(modifier);
+	}
+
+	getMax(calculator: PointsMaxCalculatorInterface): number {
+		return calculator.calculate(this.modifiers, this.perLevelModifiers);
 	}
 }

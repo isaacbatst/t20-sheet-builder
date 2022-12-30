@@ -14,7 +14,7 @@ export class ArcaneArmorDefaultEffect extends SpellEffect {
 	}
 
 	affectable = new AffectableTarget('self');
-	cost = new ManaCost(1);
+	costs = [new ManaCost(1)];
 	range: EffectRange = 'personal';
 
 	constructor() {

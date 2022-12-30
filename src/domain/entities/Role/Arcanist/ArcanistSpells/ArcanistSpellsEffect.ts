@@ -1,5 +1,5 @@
-import type {Attribute} from '../../../Attributes';
-import {Level} from '../../../Levels';
+import type {Attribute} from '../../../Sheet/Attributes';
+import {Level} from '../../../Sheet/Levels';
 import type {LearnableSpellType, Spell} from '../../../Spell/Spell';
 import {SpellCircle} from '../../../Spell/SpellCircle';
 import {RoleAbilityName} from '../../RoleAbilityName';

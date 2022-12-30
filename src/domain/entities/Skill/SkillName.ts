@@ -21,4 +21,6 @@ export enum SkillName {
 	intuition = 'intuition',
 	investigation = 'investigation',
 	nobility = 'nobility',
+	cure = 'cure',
+	religion = 'religion',
 }

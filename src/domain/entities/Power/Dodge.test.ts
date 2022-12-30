@@ -1,7 +1,7 @@
 import {AddFixedModifierToDefense} from '../Action/AddFixedModifierToDefense';
 import {AddFixedModifierToSkill} from '../Action/AddFixedModifierToSkill';
 import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
-import {RaceAbilityName} from '../RaceAbility/RaceAbilityName';
+import {RaceAbilityName} from '../Race/RaceAbilityName';
 import {BuildingSheetFake} from '../Sheet/BuildingSheetFake';
 import {SkillName} from '../Skill/SkillName';
 import {Dodge} from './Dodge';
@@ -39,6 +39,6 @@ describe('Dodge', () => {
 		const dispatch = jest.fn();
 		expect(() => {
 			dodge.addToSheet(sheet, dispatch, RaceAbilityName.versatile);
-		}).toThrow('REQUIREMENT_NOT_ACHIEVED');
+		}).toThrow('UNFULFILLED_REQUIREMENT');
 	});
 });

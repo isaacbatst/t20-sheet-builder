@@ -1,6 +1,6 @@
-import type {Attribute} from '../../Attributes';
-import {Level} from '../../Levels';
-import type {Proficiency} from '../../Proficiency';
+import type {Attribute} from '../../Sheet/Attributes';
+import {Level} from '../../Sheet/Levels';
+import type {Proficiency} from '../../Sheet/Proficiency';
 import {SkillName} from '../../Skill/SkillName';
 import type {Spell, SpellType} from '../../Spell/Spell';
 import {Role} from '../Role';

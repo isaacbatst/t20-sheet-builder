@@ -1,6 +1,6 @@
 import type {AbilityName} from './Ability';
 
-export type EffectType = 'active' | 'passive';
+export type EffectType = 'active' | 'passive' | 'roleplay';
 
 export type AbilityEffectInterface = {
 	type: EffectType;

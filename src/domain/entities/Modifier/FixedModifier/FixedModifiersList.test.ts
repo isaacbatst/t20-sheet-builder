@@ -1,4 +1,4 @@
-import {RaceAbilityName} from '../../RaceAbility/RaceAbilityName';
+import {RaceAbilityName} from '../../Race/RaceAbilityName';
 import {RoleName} from '../../Role/RoleName';
 import {FixedModifier} from './FixedModifier';
 import {FixedModifiersList} from './FixedModifiersList';

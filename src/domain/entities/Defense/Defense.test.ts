@@ -1,4 +1,4 @@
-import type {Attributes} from '../Attributes';
+import type {Attributes} from '../Sheet/Attributes';
 import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
 import {GeneralPowerName} from '../Power/GeneralPowerName';
 import {Defense} from './Defense';

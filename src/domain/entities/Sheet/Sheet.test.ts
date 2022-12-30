@@ -1,15 +1,23 @@
-import type {ContextInterface} from '../ContextInterface';
-import {FixedModifiersListTotalCalculator} from '../Modifier/FixedModifier/FixedModifiersListTotalCalculator';
-import {PerLevelModifiersListTotalCalculator} from '../Modifier/PerLevelModifier/PerLevelModifiersListTotalCalculator';
-import {OutOfGameContext} from '../OutOfGameContext';
-import {PointsMaxCalculator} from '../Points/PointsMaxCalculator';
+import type {ContextInterface} from '../Context/ContextInterface';
+import {OutOfGameContext} from '../Context/OutOfGameContext';
+import {Equipment} from '../Equipment/Equipment';
+import {EquipmentName} from '../Equipment/EquipmentName';
+import {Acolyte} from '../Origin/Acolyte';
+import {AnimalsFriend} from '../Origin/AnimalsFriend';
+import type {Origin} from '../Origin/Origin';
+import {OriginBenefitGeneralPower} from '../Origin/OriginBenefitGeneralPower';
+import {OriginBenefitOriginPower} from '../Origin/OriginBenefitOriginPower';
+import {OriginBenefitSkill} from '../Origin/OriginBenefitSkill';
 import {PointsMaxCalculatorFactory} from '../Points/PointsMaxCalculatorFactory';
+import {Dodge} from '../Power/Dodge';
 import {GeneralPowerName} from '../Power/GeneralPowerName';
-import {Proficiency} from '../Proficiency';
-import {Dwarf} from '../Race/Dwarf';
-import {Human} from '../Race/Human';
+import {IronWill} from '../Power/IronWill';
+import {SpecialFriend} from '../Power/OriginPower/SpecialFriend';
+import {Dwarf} from '../Race/Dwarf/Dwarf';
+import {Human} from '../Race/Human/Human';
+import {VersatileChoicePower} from '../Race/Human/Versatile/VersatileChoicePower';
+import {VersatileChoiceSkill} from '../Race/Human/Versatile/VersatileChoiceSkill';
 import type {Race} from '../Race/Race';
-import type {VersatileChoice} from '../RaceAbility/Human/VersatileEffect';
 import {ArcanistBuilder} from '../Role/Arcanist/ArcanistBuider';
 import {ArcanistPathMage} from '../Role/Arcanist/ArcanistPath/ArcanistPathMage';
 import type {Role} from '../Role/Role';
@@ -20,9 +28,10 @@ import {ArcaneArmor} from '../Spell/ArcaneArmor/ArcaneArmor';
 import {FlamesExplosion} from '../Spell/FlamesExplosion/FlamesExplosion';
 import {IllusoryDisguise} from '../Spell/IllusoryDisguise/IllusoryDisguise';
 import {MentalDagger} from '../Spell/MentalDagger/MentalDagger';
-import {Vision} from '../Vision';
+import {Proficiency} from './Proficiency';
 import type {Sheet} from './Sheet';
 import {SheetBuilder} from './SheetBuilder';
+import {Vision} from './Vision';
 
 describe('Sheet', () => {
 	describe('Human Warrior', () => {
@@ -31,17 +40,22 @@ describe('Sheet', () => {
 		let race: Race;
 		let context: ContextInterface;
 		let sheetBuilder: SheetBuilder;
-
-		beforeEach(() => {
-			const choices: VersatileChoice[] = [{name: SkillName.acrobatics, type: 'skill'}, {name: GeneralPowerName.dodge, type: 'power'}];
+		let origin: Origin;
+		beforeAll(() => {
+			const choices = [
+				new VersatileChoiceSkill(SkillName.acrobatics),
+				new VersatileChoicePower(new Dodge()),
+			];
 			race = new Human(['charisma', 'constitution', 'dexterity'], choices);
 			context = new OutOfGameContext();
 			role = new Warrior([SkillName.fight, SkillName.aim, SkillName.athletics]);
 			sheetBuilder = new SheetBuilder();
+			origin = new Acolyte([new OriginBenefitGeneralPower(new IronWill()), new OriginBenefitSkill(SkillName.cure)]);
 			sheet = sheetBuilder
-				.setInitialAttributes({strength: 0, dexterity: 0, charisma: 0, constitution: 0, intelligence: 0, wisdom: 0})
+				.setInitialAttributes({strength: 0, dexterity: 0, charisma: 0, constitution: 0, intelligence: 0, wisdom: 2})
 				.choseRace(race)
 				.chooseRole(role)
+				.chooseOrigin(origin)
 				.trainIntelligenceSkills([]);
 		});
 
@@ -55,6 +69,16 @@ describe('Sheet', () => {
 
 		it('should have default vision', () => {
 			expect(sheet.getVision()).toBe(Vision.default);
+		});
+
+		it('should have versatile power', () => {
+			const powers = sheet.getPowers();
+			expect(powers.general.has(GeneralPowerName.dodge)).toBeTruthy();
+		});
+
+		it('should have versatile skill trained', () => {
+			const skills = sheet.getSkills();
+			expect(skills.acrobatics.getIsTrained()).toBeTruthy();
 		});
 
 		it('should choose role', () => {
@@ -79,9 +103,19 @@ describe('Sheet', () => {
 			expect(abilities.role.has(RoleAbilityName.specialAttack)).toBeTruthy();
 		});
 
-		it('should have powers', () => {
+		it('should have origin power', () => {
 			const powers = sheet.getPowers();
-			expect(powers.general.has(GeneralPowerName.dodge)).toBeTruthy();
+			expect(powers.general.has(GeneralPowerName.ironWill)).toBeTruthy();
+		});
+
+		it('should have origin skill trained', () => {
+			const skills = sheet.getSkills();
+			expect(skills.cure.getIsTrained()).toBeTruthy();
+		});
+
+		it('should have origin equipments', () => {
+			expect(sheet.equipments).toContainEqual(new Equipment(EquipmentName.priestCostume));
+			expect(sheet.equipments).toContainEqual(new Equipment(EquipmentName.sacredSymbol));
 		});
 	});
 
@@ -91,8 +125,9 @@ describe('Sheet', () => {
 		let context: ContextInterface;
 		let race: Race;
 		let sheetBuilder: SheetBuilder;
+		let origin: Origin;
 
-		beforeEach(() => {
+		beforeAll(() => {
 			context = new OutOfGameContext();
 			role = ArcanistBuilder
 				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
@@ -100,11 +135,13 @@ describe('Sheet', () => {
 				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 			race = new Dwarf();
 			sheetBuilder = new SheetBuilder();
+			origin = new AnimalsFriend([new OriginBenefitSkill(SkillName.animalHandling), new OriginBenefitOriginPower(new SpecialFriend(SkillName.religion))], EquipmentName.horse);
 			sheet = sheetBuilder
-				.setInitialAttributes({charisma: 0, constitution: 0, dexterity: 0, intelligence: 0, strength: 0, wisdom: 0})
+				.setInitialAttributes({charisma: 0, constitution: 0, dexterity: 0, intelligence: 2, strength: 0, wisdom: 0})
 				.choseRace(race)
 				.chooseRole(role)
-				.trainIntelligenceSkills([]);
+				.chooseOrigin(origin)
+				.trainIntelligenceSkills([SkillName.initiative, SkillName.athletics]);
 		});
 
 		it('should choose race', () => {

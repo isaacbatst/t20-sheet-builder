@@ -1,5 +1,5 @@
-import type {Attributes} from '../../Attributes';
-import type {Level} from '../../Levels';
+import type {Attributes} from '../../Sheet/Attributes';
+import type {Level} from '../../Sheet/Levels';
 import type {ModifiersListTotalCalculator} from '../ModifiersListInterface';
 import type {PerLevelModifierInterface} from './PerLevelModifierInterface';
 import {PerLevelModifierValueGetter} from './PerLevelModifierValueGetter';
@@ -18,6 +18,7 @@ export class PerLevelModifiersListTotalCalculator implements PerLevelModifiersLi
 				this.attributes,
 				modifier.includeFirstLevel,
 				this.level,
+				modifier.frequency,
 			);
 			return modifier.getValue(getter) + acc;
 		}, 0);

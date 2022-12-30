@@ -1,4 +1,4 @@
-import type {Attribute, Attributes} from './Attributes';
+import type {Attribute, Attributes} from './Sheet/Attributes';
 import {TextSeparatorGenerator} from './TextSeparatorGenerator';
 import {Translator} from './Translator';
 

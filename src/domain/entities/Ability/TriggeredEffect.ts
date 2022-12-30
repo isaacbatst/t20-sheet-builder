@@ -1,7 +1,4 @@
-import {AddTriggeredEffect} from '../Action/AddTriggeredEffect';
-import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../Transaction';
-import type {ActivateableAbilityEffectInterface, ActivateableEffectParams} from './ActivateableAbilityEffect';
+import type {ActivateableAbilityEffectInterface, ActivateableEffectParams, ActivationType} from './ActivateableAbilityEffect';
 import {ActivateableAbilityEffect} from './ActivateableAbilityEffect';
 import type {TriggeredEffectName} from './TriggeredEffectName';
 
@@ -21,17 +18,15 @@ export abstract class TriggeredEffect extends ActivateableAbilityEffect {
 	triggerEvent: TriggerEvent;
 	name: TriggeredEffectName;
 
+	override get activationType(): ActivationType {
+		return 'triggered';
+	}
+
 	constructor(
 		params: TriggeredEffectParams,
 	) {
 		super(params);
 		this.triggerEvent = params.triggerEvent;
 		this.name = params.name;
-	}
-
-	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
-		dispatch(new AddTriggeredEffect({
-			effect: this,
-		}), sheet);
 	}
 }

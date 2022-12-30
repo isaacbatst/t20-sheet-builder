@@ -1,4 +1,4 @@
-import type {Attribute, Attributes} from '../Attributes';
+import type {Attribute, Attributes} from '../Sheet/Attributes';
 import type {ActionDescriptionGenerators, ActionInterface, ActionType} from '../Sheet/SheetActions';
 import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
 import {Skill} from '../Skill/Skill';
@@ -35,11 +35,13 @@ export abstract class ActionDescriptionGenerator {
 		applyRoleAbility: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: habilidade ${Translator.getRoleAbilityTranslation(action.payload.ability.name)} adicionada.`,
 		learnCircle: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: você pode lançar magias de ${Translator.getSpellCircleTranslation(action.payload.circle)} círculo.`,
 		learnSpell: (sheet, action) => `${Translator.getTranslation(action.payload.source)}: você aprendeu a magia ${Translator.getSpellTranslation(action.payload.spell.name)}.`,
-		addTriggeredEffect: (sheet, action) => `${Translator.getTranslation(action.payload.effect.source)}: efeito engatilhado.`,
 		addPerLevelModifierToLifePoints: (sheet, {payload: {modifier}}) => `${Translator.getTranslation(modifier.source)}: ${StringHelper.addNumberSign(modifier.value)} PV por nível${modifier.includeFirstLevel ? '' : ' após o nível 1'}.`,
 		addFixedModifierToDefense: (sheet, {payload: {modifier}}) => `${Translator.getTranslation(modifier.source)}: ${StringHelper.addNumberSign(modifier.value)} Defesa adicionado.`,
 		addPerLevelModifierToManaPoints: (sheet, {payload: {modifier}}) => `${Translator.getTranslation(modifier.source)}: ${StringHelper.addNumberSign(modifier.value)} PM ${modifier.attributeBonuses.length ? `(+ ${modifier.attributeBonuses.map(attribute => Translator.getAttributeTranslation(attribute)).join('/')}) ` : ''}por nível${modifier.includeFirstLevel ? '' : ' após o nível 1'}.`,
 		trainIntelligenceSkills: (sheet, {payload}) => payload.skills.length ? `Perícias treinadas pela inteligência: ${payload.skills.map(skill => Translator.getSkillTranslation(skill)).join(', ')}.` : 'Nenhuma perícia treinada pela inteligência.',
+		addEquipment: (action, {payload: {equipment, source}}) => `${Translator.getTranslation(source)}: ${Translator.getEquipmentTranslation(equipment.name)} adicionado ao inventário.`,
+		pickOriginPower: (action, {payload: {power}}) => `${Translator.getTranslation(power.source)}: poder ${Translator.getPowerTranslation(power.name)} escolhido.`,
+		chooseOrigin: (action, {payload: {origin}}) => `Origem escolhida: ${Translator.getOriginTranslation(origin.name)}.`,
 	};
 
 	private static getAttributeText(attributes: Attributes, attribute: Attribute) {

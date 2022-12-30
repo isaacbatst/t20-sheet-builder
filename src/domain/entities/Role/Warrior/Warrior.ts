@@ -1,5 +1,5 @@
-import {Level} from '../../Levels';
-import {Proficiency} from '../../Proficiency';
+import {Level} from '../../Sheet/Levels';
+import {Proficiency} from '../../Sheet/Proficiency';
 import {SkillName} from '../../Skill/SkillName';
 import {Role} from '../Role';
 import type {RoleAbility} from '../RoleAbility';

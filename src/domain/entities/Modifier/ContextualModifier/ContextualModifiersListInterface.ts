@@ -1,6 +1,7 @@
+import type {Attributes} from '../../Sheet/Attributes';
 import type {InGameContextInterface} from '../../Context/InGameContextInterface';
-import type {ContextualModifierInterface} from './ContextualModifierInterface';
 import type {ModifiersListInterface} from '../ModifiersListInterface';
+import type {ContextualModifierInterface} from './ContextualModifierInterface';
 
 export type ModifierConditionVerify = (context: InGameContextInterface) => boolean;
 
@@ -10,5 +11,5 @@ export type ModifierCondition = {
 };
 
 export type ContextualModifiersListInterface = ModifiersListInterface<ContextualModifierInterface> & {
-	getMaxTotal(): number;
+	getMaxTotal(attributes: Attributes): number;
 };

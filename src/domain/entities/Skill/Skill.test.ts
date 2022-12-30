@@ -3,8 +3,8 @@ import {ContextualModifier} from '../Modifier/ContextualModifier/ContextualModif
 import {ContextualModifiersListTotalCalculator} from '../Modifier/ContextualModifier/ContextualModifiersListTotalCalculator';
 import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
 import {FixedModifiersListTotalCalculator} from '../Modifier/FixedModifier/FixedModifiersListTotalCalculator';
-import {OutOfGameContext} from '../OutOfGameContext';
-import {RaceAbilityName} from '../RaceAbility/RaceAbilityName';
+import {OutOfGameContext} from '../Context/OutOfGameContext';
+import {RaceAbilityName} from '../Race/RaceAbilityName';
 import {BuildingSheetFake} from '../Sheet/BuildingSheetFake';
 import {Skill} from './Skill';
 import {SkillBaseCalculator} from './SkillBaseCalculator';

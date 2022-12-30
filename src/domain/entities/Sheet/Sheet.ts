@@ -1,21 +1,15 @@
-import type {Attributes} from '../Attributes';
-import type {Context} from '../Context';
-import type {ContextInterface} from '../ContextInterface';
+import type {Attributes} from './Attributes';
+import type {BuildStep, BuildStepInterface} from '../BuildStep';
 import type {DefenseInterface} from '../Defense/DefenseInterface';
-import type {Level} from '../Levels';
-import type {ContextualModifierInterface} from '../Modifier/ContextualModifier/ContextualModifierInterface';
-import type {ModifierInterface} from '../Modifier/ModifierInterface';
-import type {TemporaryModifierInterface} from '../Modifier/TemporaryModifier/TemporaryModifierInterface';
+import type {Equipment} from '../Equipment/Equipment';
+import type {Level} from './Levels';
 import type {LifePoints} from '../Points/LifePoints/LifePoints';
 import type {ManaPoints} from '../Points/ManaPoints/ManaPoints';
-import type {PointsMaxCalculatorInterface} from '../Points/PointsMaxCalculator';
-import type {Proficiency} from '../Proficiency';
-import type {BuildStep, BuildStepInterface} from '../BuildStep';
-import type {RaceInterface} from '../RaceInterface';
+import type {Proficiency} from './Proficiency';
+import type {RaceInterface} from '../Race/RaceInterface';
 import type {RoleInterface} from '../Role/RoleInterface';
 import type {SheetInterface} from '../Sheet/SheetInterface';
-import type {SkillName} from '../Skill/SkillName';
-import type {Vision} from '../Vision';
+import type {Vision} from './Vision';
 import {SheetBase} from './SheetBase';
 import type {SheetAbilities, SheetLearnedCircles, SheetPowers, SheetSkills, SheetSpells, SheetTriggeredEffects} from './SheetBaseInterface';
 
@@ -34,9 +28,9 @@ type SheetParams = {
 	abilities: SheetAbilities;
 	powers: SheetPowers;
 	learnedCircles: SheetLearnedCircles;
-	triggeredEffects: SheetTriggeredEffects;
 	spells: SheetSpells;
 	skills: SheetSkills;
+	equipments: Equipment[];
 };
 
 export class Sheet extends SheetBase implements SheetInterface {
@@ -47,7 +41,6 @@ export class Sheet extends SheetBase implements SheetInterface {
 	readonly lifePoints: LifePoints;
 	readonly manaPoints: ManaPoints;
 	readonly learnedCircles: SheetLearnedCircles;
-	readonly triggeredEffects: SheetTriggeredEffects;
 	readonly spells: SheetSpells;
 	readonly attributes: Attributes;
 	readonly level: Level;
@@ -58,8 +51,7 @@ export class Sheet extends SheetBase implements SheetInterface {
 	readonly proficiencies: Proficiency[];
 	readonly abilities: SheetAbilities;
 	readonly powers: SheetPowers;
-	readonly attackModifiers: ModifierInterface[] = [];
-	readonly damageModifiers: ModifierInterface[] = [];
+	readonly equipments: Equipment[];
 
 	constructor(
 		params: SheetParams,
@@ -80,44 +72,8 @@ export class Sheet extends SheetBase implements SheetInterface {
 		this.abilities = params.abilities;
 		this.powers = params.powers;
 		this.learnedCircles = params.learnedCircles;
-		this.triggeredEffects = params.triggeredEffects;
 		this.spells = params.spells;
-	}
-
-	getLifePoints(): LifePoints {
-		return this.lifePoints;
-	}
-
-	getManaPoints(): ManaPoints {
-		return this.manaPoints;
-	}
-
-	addAttackTemporaryModifier(modifier: TemporaryModifierInterface): void {
-		this.attackModifiers.push(modifier);
-	}
-
-	addDamageTemporaryModifier(modifier: TemporaryModifierInterface): void {
-		this.damageModifiers.push(modifier);
-	}
-
-	addSkillTemporaryModifier(skill: SkillName, modifier: TemporaryModifierInterface): void {
-		throw new Error('Not implemented');
-	}
-
-	addDefenseTemporaryModifier(modifier: TemporaryModifierInterface): void {
-		throw new Error('Not implemented');
-	}
-
-	setAttackTemporaryModifier(modifier: TemporaryModifierInterface): void {
-		this.attackModifiers.push(modifier);
-	}
-
-	setDamageTemporaryModifier(modifier: TemporaryModifierInterface): void {
-		this.damageModifiers.push(modifier);
-	}
-
-	useMana(value: number): void {
-		this.manaPoints.consume(value);
+		this.equipments = params.equipments;
 	}
 
 	getRole() {
