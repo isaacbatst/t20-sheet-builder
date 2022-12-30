@@ -1,8 +1,6 @@
-import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../Transaction';
 import type {AbilityName} from './Ability';
 
-export type EffectType = 'active' | 'passive';
+export type EffectType = 'active' | 'passive' | 'roleplay';
 
 export type AbilityEffectInterface = {
 	type: EffectType;
@@ -14,6 +12,4 @@ export abstract class AbilityEffect implements AbilityEffectInterface {
 		readonly type: EffectType,
 		readonly source: AbilityName,
 	) {}
-
-	abstract addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void;
 }

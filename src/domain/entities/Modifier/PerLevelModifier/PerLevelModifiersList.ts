@@ -11,7 +11,7 @@ export class PerLevelModifiersList extends ModifiersList<PerLevelModifierInterfa
 	getTotalPerLevel(firstLevel: boolean): number {
 		return this.modifiers
 			.reduce((acc, modifier) =>
-				acc + (firstLevel && !modifier.includeFirstLevel ? 0 : modifier.value),
+				acc + (firstLevel && !modifier.includeFirstLevel ? 0 : modifier.getPerLevelValue()),
 			0);
 	}
 }

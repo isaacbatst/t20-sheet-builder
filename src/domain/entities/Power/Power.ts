@@ -1,7 +1,7 @@
 import type {AbilityInterface} from '../Ability/Ability';
 import {Ability} from '../Ability/Ability';
 import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../Transaction';
+import type {Dispatch} from '../Sheet/Transaction';
 import type {Translatable} from '../Translator';
 import type {PowerName} from './PowerName';
 

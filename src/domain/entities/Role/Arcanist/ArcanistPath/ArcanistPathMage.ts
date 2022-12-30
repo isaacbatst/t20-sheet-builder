@@ -1,6 +1,6 @@
 import {LearnSpell} from '../../../Action/AddSpell';
 import type {SheetBaseInterface} from '../../../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../../../Transaction';
+import type {Dispatch} from '../../../Sheet/Transaction';
 import type {Spell} from '../../../Spell/Spell';
 import {RoleAbilityName} from '../../RoleAbilityName';
 import {ArcanistPath, ArcanistPathName} from './ArcanistPath';

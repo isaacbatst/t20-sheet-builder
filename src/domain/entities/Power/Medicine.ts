@@ -1,4 +1,5 @@
 import type {AbilityEffect} from '../Ability/AbilityEffect';
+import {AbilityEffects} from '../Ability/AbilityEffects';
 import {SkillName} from '../Skill/SkillName';
 import {GeneralPower} from './GeneralPower';
 import {GeneralPowerName} from './GeneralPowerName';
@@ -14,9 +15,11 @@ export class Medicine extends GeneralPower {
 
 	private static readonly cureRequirement = new SkillRequirement(SkillName.cure);
 
-	effects: Record<string, AbilityEffect> = {
-		default: new MedicineEffect(),
-	};
+	effects = new AbilityEffects({
+		activateable: {
+			default: new MedicineEffect(),
+		},
+	});
 
 	constructor() {
 		super(GeneralPowerName.medicine);

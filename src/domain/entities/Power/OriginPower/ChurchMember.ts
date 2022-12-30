@@ -1,4 +1,4 @@
-import type {AbilityEffect} from '../../Ability/AbilityEffect';
+import {AbilityEffects} from '../../Ability/AbilityEffects';
 import {RolePlayEffect} from '../../Ability/RolePlayEffect';
 import {OriginName} from '../../Origin/OriginName';
 import {OriginPower} from './OriginPower';
@@ -9,9 +9,11 @@ export class ChurchMember extends OriginPower {
   + 'em qualquer templo de sua divindade, para você e seus aliados.';
 
 	source: OriginName = OriginName.acolyte;
-	effects: Record<string, AbilityEffect> = {
-		default: new RolePlayEffect(this.name, ChurchMember.effectDescription),
-	};
+	effects = new AbilityEffects({
+		roleplay: {
+			default: new RolePlayEffect(this.name, ChurchMember.effectDescription),
+		},
+	});
 
 	constructor() {
 		super(OriginPowerName.churchMember);

@@ -1,7 +1,7 @@
 import {Ability} from '../Ability/Ability';
 import {LearnSpell} from '../Action/AddSpell';
 import type {ActionInterface} from '../Sheet/SheetActions';
-import type {Appliable} from '../Sheet/SheetInterface';
+import type {Cost} from '../Sheet/SheetInterface';
 import type {Translatable} from '../Translator';
 import {SpellCircle} from './SpellCircle';
 import {SpellCost} from './SpellCost';
@@ -16,7 +16,7 @@ export abstract class Spell extends Ability {
 		[SpellCircle.second]: 3,
 	};
 
-	readonly cost: Appliable;
+	readonly cost: Cost;
 
 	constructor(
 		override readonly name: SpellName,

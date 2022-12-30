@@ -1,4 +1,4 @@
-import type {Attribute} from '../../Attributes';
+import type {Attribute} from '../../Sheet/Attributes';
 import type {SheetBaseInterface} from '../../Sheet/SheetBaseInterface';
 import {Translator} from '../../Translator';
 import {Requirement} from './Requirement';

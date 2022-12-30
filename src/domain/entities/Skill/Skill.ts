@@ -1,4 +1,4 @@
-import type {Attribute} from '../Attributes';
+import type {Attribute} from '../Sheet/Attributes';
 import {ContextualModifiersList} from '../Modifier/ContextualModifier/ContextualModifierList';
 import type {ContextualModifiersListTotalCalculatorInterface} from '../Modifier/ContextualModifier/ContextualModifiersListTotalCalculator';
 import {ContextualModifiersListTotalCalculator} from '../Modifier/ContextualModifier/ContextualModifiersListTotalCalculator';

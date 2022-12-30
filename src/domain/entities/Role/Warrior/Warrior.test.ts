@@ -2,7 +2,7 @@ import {AddProficiency} from '../../Action/AddProficiency';
 import {ApplyRoleAbility} from '../../Action/ApplyRoleAbility';
 import {TrainSkill} from '../../Action/TrainSkill';
 import {BuildingSheetFake} from '../../Sheet/BuildingSheetFake';
-import {Proficiency} from '../../Proficiency';
+import {Proficiency} from '../../Sheet/Proficiency';
 import {SkillName} from '../../Skill/SkillName';
 import {RoleName} from '../RoleName';
 import {SpecialAttack} from './SpecialAttack/SpecialAttack';

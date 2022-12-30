@@ -2,9 +2,9 @@ import {ChooseRace} from '../Action/ChooseRace';
 import {ChooseRole} from '../Action/ChooseRole';
 import {SetInitialAttributes} from '../Action/SetInitialAttributes';
 import {TrainIntelligenceSkills} from '../Action/TrainIntelligenceSkills';
-import type {Attributes} from '../Attributes';
-import {OutOfGameContext} from '../OutOfGameContext';
-import type {RaceInterface} from '../RaceInterface';
+import type {Attributes} from './Attributes';
+import {OutOfGameContext} from '../Context/OutOfGameContext';
+import type {RaceInterface} from '../Race/RaceInterface';
 import type {RoleInterface} from '../Role/RoleInterface';
 import type {SkillName} from '../Skill/SkillName';
 import {BuildingSheet} from './BuildingSheet';
@@ -70,11 +70,11 @@ export class SheetBuilder {
 				proficiencies: this.sheet.getProficiencies(),
 				abilities: this.sheet.getAbilities(),
 				powers: this.sheet.getPowers(),
-				lifePoints: this.sheet.buildLifePoints(),
-				manaPoints: this.sheet.buildManaPoints(),
+				lifePoints: this.sheet.getLifePoints(),
+				manaPoints: this.sheet.getManaPoints(),
 				spells: this.sheet.getSpells(),
 				learnedCircles: this.sheet.getLearnedCircles(),
-				triggeredEffects: this.sheet.getTriggeredEffects(),
+				equipments: this.sheet.getEquipments(),
 			});
 		};
 	}

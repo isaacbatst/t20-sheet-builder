@@ -1,4 +1,4 @@
-import type {Attribute} from '../Attributes';
+import type {Attribute} from '../Sheet/Attributes';
 import type {SheetInterface} from '../Sheet/SheetInterface';
 
 export class SpellResistanceDifficultyCalculator {

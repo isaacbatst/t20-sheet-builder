@@ -1,4 +1,4 @@
-import {Level} from '../../Levels';
+import {Level} from '../../Sheet/Levels';
 import {RoleAbilityName} from '../../Role/RoleAbilityName';
 import {RoleName} from '../../Role/RoleName';
 import {PerLevelModifier} from './PerLevelModifier';
@@ -27,5 +27,21 @@ describe('PerLevelModifiersList', () => {
 			Level.levelThree,
 		);
 		expect(list.getTotal(calculator)).toBe(31);
+	});
+
+	it('should calculate total per level after first level', () => {
+		const list = new PerLevelModifiersList();
+		list.add(new PerLevelModifier(RoleName.arcanist, 6, true, new Set(['intelligence'])));
+		list.add(new PerLevelModifier(RoleAbilityName.arcanistSpells, 1, false));
+
+		expect(list.getTotalPerLevel(false)).toBe(7);
+	});
+
+	it('should calculate total per level on first level', () => {
+		const list = new PerLevelModifiersList();
+		list.add(new PerLevelModifier(RoleName.arcanist, 6, true, new Set(['intelligence'])));
+		list.add(new PerLevelModifier(RoleAbilityName.arcanistSpells, 1, false));
+
+		expect(list.getTotalPerLevel(true)).toBe(6);
 	});
 });

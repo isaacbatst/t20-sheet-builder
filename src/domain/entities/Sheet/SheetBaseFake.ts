@@ -1,13 +1,16 @@
-import type {Attributes} from '../Attributes';
+import type {Attributes} from './Attributes';
 import {DefenseFake} from '../Defense/DefenseFake';
 import type {DefenseInterface} from '../Defense/DefenseInterface';
-import {Level} from '../Levels';
-import type {Proficiency} from '../Proficiency';
+import {Level} from './Levels';
+import type {Proficiency} from './Proficiency';
 import type {BuildStepInterface} from '../BuildStep';
 import {InitialSkillsGenerator} from '../Skill/InitialSkillsGenerator';
-import {Vision} from '../Vision';
+import {Vision} from './Vision';
 import type {ActionsHandler} from './SheetActions';
 import type {SheetAbilities, SheetBaseInterface, SheetLearnedCircles, SheetPowers, SheetSkills, SheetSpells, SheetTriggeredEffects} from './SheetBaseInterface';
+import type {Equipment} from '../Equipment/Equipment';
+import {LifePoints} from '../Points/LifePoints/LifePoints';
+import {ManaPoints} from '../Points/ManaPoints/ManaPoints';
 
 export class SheetBaseFake implements SheetBaseInterface {
 	actionHandlers: ActionsHandler = {
@@ -25,7 +28,6 @@ export class SheetBaseFake implements SheetBaseInterface {
 		addProficiency: jest.fn(),
 		learnCircle: jest.fn(),
 		learnSpell: jest.fn(),
-		addTriggeredEffect: jest.fn(),
 		addContextualModifierToSkill: jest.fn(),
 		addFixedModifierToSkill: jest.fn(),
 		addFixedModifierToLifePoints: jest.fn(),
@@ -34,9 +36,7 @@ export class SheetBaseFake implements SheetBaseInterface {
 		addFixedModifierToDefense: jest.fn(),
 		trainIntelligenceSkills: jest.fn(),
 		addEquipment: jest.fn(),
-		addActivateableEffect: jest.fn(),
 		pickOriginPower: jest.fn(),
-		addRolePlayEffect: jest.fn(),
 	};
 
 	dispatch = jest.fn();
@@ -50,10 +50,12 @@ export class SheetBaseFake implements SheetBaseInterface {
 	vision = Vision.default;
 	proficiencies: Proficiency[] = [];
 	abilities: SheetAbilities = {race: new Map(), role: new Map()};
-	powers: SheetPowers = {general: new Map(), role: new Map()};
-	triggeredEffects: SheetTriggeredEffects = {attack: new Map(), defense: new Map()};
+	powers: SheetPowers = {general: new Map(), role: new Map(), origin: new Map()};
 	spells: SheetSpells = new Map();
 	learnedCircles: SheetLearnedCircles = {arcane: new Set(), divine: new Set()};
+	lifePoints = new LifePoints();
+	manaPoints = new ManaPoints();
+	equipments: Equipment[] = [];
 
 	getAttributes(): Attributes {
 		return this.attributes;
@@ -99,7 +101,15 @@ export class SheetBaseFake implements SheetBaseInterface {
 		return this.learnedCircles;
 	}
 
-	getTriggeredEffects(): SheetTriggeredEffects {
-		return this.triggeredEffects;
+	getLifePoints(): LifePoints {
+		return this.lifePoints;
+	}
+
+	getManaPoints(): ManaPoints {
+		return this.manaPoints;
+	}
+
+	getEquipments(): Equipment[] {
+		return this.equipments;
 	}
 }

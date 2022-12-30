@@ -1,4 +1,5 @@
-import type {AbilityEffect} from '../../Ability/AbilityEffect';
+import type {AbilityEffectsInterface} from '../../Ability/AbilityEffects';
+import {AbilityEffects} from '../../Ability/AbilityEffects';
 import {OriginName} from '../../Origin/OriginName';
 import type {SkillName} from '../../Skill/SkillName';
 import {OriginPower} from './OriginPower';
@@ -7,12 +8,14 @@ import {SpecialFriendEffect} from './SpecialFriendEffect';
 
 export class SpecialFriend extends OriginPower {
 	source: OriginName = OriginName.animalsFriend;
-	effects: Record<string, AbilityEffect>;
+	effects: AbilityEffectsInterface;
 
 	constructor(skill: SkillName) {
 		super(OriginPowerName.specialFriend);
-		this.effects = {
-			default: new SpecialFriendEffect(this.name, skill),
-		};
+		this.effects = new AbilityEffects({
+			passive: {
+				default: new SpecialFriendEffect(this.name, skill),
+			},
+		});
 	}
 }

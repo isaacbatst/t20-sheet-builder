@@ -4,7 +4,7 @@ import {AddFixedModifierToSkill} from '../../Action/AddFixedModifierToSkill';
 import {FixedModifier} from '../../Modifier/FixedModifier/FixedModifier';
 import type {SheetBaseInterface} from '../../Sheet/SheetBaseInterface';
 import {SkillName} from '../../Skill/SkillName';
-import type {Dispatch} from '../../Transaction';
+import type {Dispatch} from '../../Sheet/Transaction';
 import {OriginPowerName} from './OriginPowerName';
 
 export class SpecialFriendEffect extends PassiveEffect {
@@ -13,7 +13,7 @@ export class SpecialFriendEffect extends PassiveEffect {
 		this.validateSkill();
 	}
 
-	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
+	applyToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
 		dispatch(new AddFixedModifierToSkill({
 			modifier: new FixedModifier(OriginPowerName.specialFriend, 5),
 			skill: SkillName.animalHandling,

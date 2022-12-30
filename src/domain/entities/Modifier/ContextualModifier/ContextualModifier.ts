@@ -1,4 +1,4 @@
-import type {Attribute} from '../../Attributes';
+import type {Attribute} from '../../Sheet/Attributes';
 import type {Translatable} from '../../Translator';
 import type {ContextualModifierInterface} from './ContextualModifierInterface';
 import type {ModifierCondition} from './ContextualModifiersListInterface';

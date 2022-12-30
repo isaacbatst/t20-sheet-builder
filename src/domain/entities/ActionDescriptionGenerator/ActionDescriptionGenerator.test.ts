@@ -1,8 +1,6 @@
-import {TriggeredEffectFake} from '../Ability/TriggeredEffectFake';
 import {AddPerLevelModifierToLifePoints} from '../Action/AddPerLevelModifierToLifePoints';
 import {AddPerLevelModifierToManaPoints} from '../Action/AddPerLevelModifierToManaPoints';
 import {AddProficiency} from '../Action/AddProficiency';
-import {AddTriggeredEffect} from '../Action/AddTriggeredEffect';
 import {ApplyRoleAbility} from '../Action/ApplyRoleAbility';
 import {ChooseRole} from '../Action/ChooseRole';
 import {TrainIntelligenceSkills} from '../Action/TrainIntelligenceSkills';
@@ -10,20 +8,20 @@ import {ContextualModifier} from '../Modifier/ContextualModifier/ContextualModif
 import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
 import {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
 import {GeneralPowerName} from '../Power/GeneralPowerName';
-import {GeneralPowerFake, RolePowerFake} from '../PowerFake';
-import {Proficiency} from '../Proficiency';
+import {GeneralPowerFake, RolePowerFake} from '../Power/PowerFake';
+import {Proficiency} from '../Sheet/Proficiency';
 import {RaceName} from '../Race/RaceName';
-import {RaceAbilityName} from '../RaceAbility/RaceAbilityName';
-import {RaceAbilityFake} from '../RaceAbilityFake';
-import {RaceFake} from '../RaceFake';
+import {RaceAbilityName} from '../Race/RaceAbilityName';
+import {RaceAbilityFake} from '../Race/RaceAbilityFake';
+import {RaceFake} from '../Race/RaceFake';
 import {RoleAbilityFake} from '../Role/RoleAbilityFake';
 import {RoleAbilityName} from '../Role/RoleAbilityName';
 import {RoleName} from '../Role/RoleName';
-import {RoleFake} from '../RoleFake';
+import {RoleFake} from '../Role/RoleFake';
 import {BuildingSheetFake} from '../Sheet/BuildingSheetFake';
 import {Skill} from '../Skill/Skill';
 import {SkillName} from '../Skill/SkillName';
-import {Vision} from '../Vision';
+import {Vision} from '../Sheet/Vision';
 import {ActionDescriptionGenerator} from './ActionDescriptionGenerator';
 
 describe('ActionDescriptionGenerator', () => {
@@ -254,17 +252,6 @@ describe('ActionDescriptionGenerator', () => {
 		);
 
 		expect(description).toBe('Guerreiro: habilidade Ataque Especial adicionada.');
-	});
-
-	it('should generate addTriggeredEffect description', () => {
-		const sheet = new BuildingSheetFake();
-
-		const description = ActionDescriptionGenerator.generate(
-			sheet,
-			new AddTriggeredEffect({effect: new TriggeredEffectFake()}),
-		);
-
-		expect(description).toBe('Ataque Especial: efeito engatilhado.');
 	});
 
 	it('should generate addPerLevelModifierToLifePoints description removing level 1', () => {

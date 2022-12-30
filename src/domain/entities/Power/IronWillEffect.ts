@@ -5,10 +5,10 @@ import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
 import {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
 import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
 import {SkillName} from '../Skill/SkillName';
-import type {Dispatch} from '../Transaction';
+import type {Dispatch} from '../Sheet/Transaction';
 
 export class IronWillEffect extends PassiveEffect {
-	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
+	applyToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
 		dispatch(new AddPerLevelModifierToManaPoints({
 			modifier: new PerLevelModifier(
 				this.source,

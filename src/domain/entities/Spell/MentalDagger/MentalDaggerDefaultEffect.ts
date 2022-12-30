@@ -5,7 +5,7 @@ import {SpellEffect} from '../SpellEffect';
 import {SpellName} from '../SpellName';
 
 export class MentalDaggerDefaultEffect extends SpellEffect {
-	cost = new ManaCost(1);
+	costs = [new ManaCost(1)];
 	range: EffectRange = 'short';
 	affectable = new EffectAffectableTarget('creature', 1);
 

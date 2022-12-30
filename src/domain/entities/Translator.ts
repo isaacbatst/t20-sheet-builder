@@ -1,16 +1,16 @@
-import type {Attribute} from './Attributes';
+import type {Attribute} from './Sheet/Attributes';
 import type {OriginName} from './Origin/OriginName';
 import type {PowerName} from './Power/PowerName';
-import type {Proficiency} from './Proficiency';
+import type {Proficiency} from './Sheet/Proficiency';
 import type {RaceName} from './Race/RaceName';
-import type {RaceAbilityName} from './RaceAbility/RaceAbilityName';
+import type {RaceAbilityName} from './Race/RaceAbilityName';
 import type {RoleAbilityName} from './Role/RoleAbilityName';
 import type {RoleName} from './Role/RoleName';
 import type {SkillName} from './Skill/SkillName';
 import {SpellCircle} from './Spell/SpellCircle';
 import type {SpellName} from './Spell/SpellName';
 import {StringHelper} from './StringHelper';
-import type {Vision} from './Vision';
+import type {Vision} from './Sheet/Vision';
 
 export type Translatable = Attribute
 | RaceAbilityName | SkillName | PowerName | RaceName | Proficiency

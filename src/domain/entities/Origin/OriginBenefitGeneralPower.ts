@@ -1,6 +1,6 @@
 import type {GeneralPowerInterface} from '../Power/GeneralPower';
 import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../Transaction';
+import type {Dispatch} from '../Sheet/Transaction';
 import type {Translatable} from '../Translator';
 import type {OriginBenefits} from './Origin';
 import {OriginBenefit} from './OriginBenefit';

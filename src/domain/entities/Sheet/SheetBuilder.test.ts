@@ -1,14 +1,17 @@
-import type {Attributes} from '../Attributes';
+import type {Attributes} from './Attributes';
 import {DefenseTotalCalculatorFactory} from '../Defense/DefenseTotalCalculatorFactory';
 import type {ModifierConditionVerify} from '../Modifier/ContextualModifier/ContextualModifiersListInterface';
 import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
-import {OutOfGameContext} from '../OutOfGameContext';
+import {OutOfGameContext} from '../Context/OutOfGameContext';
+import {Dodge} from '../Power/Dodge';
 import {GeneralPowerName} from '../Power/GeneralPowerName';
-import {Proficiency} from '../Proficiency';
-import {Dwarf} from '../Race/Dwarf';
-import {Human} from '../Race/Human';
+import {Proficiency} from './Proficiency';
+import {Dwarf} from '../Race/Dwarf/Dwarf';
+import {Human} from '../Race/Human/Human';
+import {VersatileChoicePower} from '../Race/Human/Versatile/VersatileChoicePower';
+import {VersatileChoiceSkill} from '../Race/Human/Versatile/VersatileChoiceSkill';
 import type {Race} from '../Race/Race';
-import {RaceAbilityName} from '../RaceAbility/RaceAbilityName';
+import {RaceAbilityName} from '../Race/RaceAbilityName';
 import {ArcanistBuilder} from '../Role/Arcanist/ArcanistBuider';
 import {ArcanistPathMage} from '../Role/Arcanist/ArcanistPath/ArcanistPathMage';
 import type {Role} from '../Role/Role';
@@ -21,7 +24,7 @@ import {ArcaneArmor} from '../Spell/ArcaneArmor/ArcaneArmor';
 import {FlamesExplosion} from '../Spell/FlamesExplosion/FlamesExplosion';
 import {IllusoryDisguise} from '../Spell/IllusoryDisguise/IllusoryDisguise';
 import {MentalDagger} from '../Spell/MentalDagger/MentalDagger';
-import {Vision} from '../Vision';
+import {Vision} from './Vision';
 import {BuildingSheet} from './BuildingSheet';
 
 const initialAttributes = {strength: 2, dexterity: 3, constitution: 0, intelligence: 2, wisdom: 2, charisma: 1};
@@ -55,8 +58,8 @@ describe('SheetBuilder', () => {
 			race = new Human(
 				['strength', 'charisma', 'constitution'],
 				[
-					{name: SkillName.acrobatics, type: 'skill'},
-					{name: GeneralPowerName.dodge, type: 'power'},
+					new VersatileChoiceSkill(SkillName.acrobatics),
+					new VersatileChoicePower(new Dodge()),
 				],
 			);
 
@@ -95,8 +98,8 @@ describe('SheetBuilder', () => {
 			race = new Human(
 				['strength', 'charisma', 'constitution'],
 				[
-					{name: SkillName.acrobatics, type: 'skill'},
-					{name: SkillName.fight, type: 'skill'},
+					new VersatileChoiceSkill(SkillName.acrobatics),
+					new VersatileChoiceSkill(SkillName.fight),
 				],
 			);
 
@@ -125,8 +128,8 @@ describe('SheetBuilder', () => {
 			race = new Human(
 				['strength', 'charisma', 'constitution'],
 				[
-					{name: SkillName.acrobatics, type: 'skill'},
-					{name: GeneralPowerName.dodge, type: 'power'},
+					new VersatileChoiceSkill(SkillName.acrobatics),
+					new VersatileChoicePower(new Dodge()),
 				],
 			);
 			role = new Warrior([SkillName.fight, SkillName.animalHandling, SkillName.athletics]);
@@ -161,8 +164,8 @@ describe('SheetBuilder', () => {
 			race = new Human(
 				['strength', 'charisma', 'constitution'],
 				[
-					{name: SkillName.acrobatics, type: 'skill'},
-					{name: GeneralPowerName.dodge, type: 'power'},
+					new VersatileChoiceSkill(SkillName.acrobatics),
+					new VersatileChoicePower(new Dodge()),
 				],
 			);
 			role = ArcanistBuilder

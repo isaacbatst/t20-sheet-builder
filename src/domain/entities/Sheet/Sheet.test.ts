@@ -1,15 +1,15 @@
-import type {ContextInterface} from '../ContextInterface';
-import {FixedModifiersListTotalCalculator} from '../Modifier/FixedModifier/FixedModifiersListTotalCalculator';
-import {PerLevelModifiersListTotalCalculator} from '../Modifier/PerLevelModifier/PerLevelModifiersListTotalCalculator';
-import {OutOfGameContext} from '../OutOfGameContext';
-import {PointsMaxCalculator} from '../Points/PointsMaxCalculator';
+import type {ContextInterface} from '../Context/ContextInterface';
+import {OutOfGameContext} from '../Context/OutOfGameContext';
 import {PointsMaxCalculatorFactory} from '../Points/PointsMaxCalculatorFactory';
+import {Dodge} from '../Power/Dodge';
 import {GeneralPowerName} from '../Power/GeneralPowerName';
-import {Proficiency} from '../Proficiency';
-import {Dwarf} from '../Race/Dwarf';
-import {Human} from '../Race/Human';
+import {Proficiency} from './Proficiency';
+import {Dwarf} from '../Race/Dwarf/Dwarf';
+import {Human} from '../Race/Human/Human';
+import {VersatileChoice} from '../Race/Human/Versatile/VersatileChoice';
+import {VersatileChoicePower} from '../Race/Human/Versatile/VersatileChoicePower';
+import {VersatileChoiceSkill} from '../Race/Human/Versatile/VersatileChoiceSkill';
 import type {Race} from '../Race/Race';
-import type {VersatileChoice} from '../RaceAbility/Human/VersatileEffect';
 import {ArcanistBuilder} from '../Role/Arcanist/ArcanistBuider';
 import {ArcanistPathMage} from '../Role/Arcanist/ArcanistPath/ArcanistPathMage';
 import type {Role} from '../Role/Role';
@@ -20,7 +20,7 @@ import {ArcaneArmor} from '../Spell/ArcaneArmor/ArcaneArmor';
 import {FlamesExplosion} from '../Spell/FlamesExplosion/FlamesExplosion';
 import {IllusoryDisguise} from '../Spell/IllusoryDisguise/IllusoryDisguise';
 import {MentalDagger} from '../Spell/MentalDagger/MentalDagger';
-import {Vision} from '../Vision';
+import {Vision} from './Vision';
 import type {Sheet} from './Sheet';
 import {SheetBuilder} from './SheetBuilder';
 
@@ -33,7 +33,10 @@ describe('Sheet', () => {
 		let sheetBuilder: SheetBuilder;
 
 		beforeEach(() => {
-			const choices: VersatileChoice[] = [{name: SkillName.acrobatics, type: 'skill'}, {name: GeneralPowerName.dodge, type: 'power'}];
+			const choices = [
+				new VersatileChoiceSkill(SkillName.acrobatics),
+				new VersatileChoicePower(new Dodge()),
+			];
 			race = new Human(['charisma', 'constitution', 'dexterity'], choices);
 			context = new OutOfGameContext();
 			role = new Warrior([SkillName.fight, SkillName.aim, SkillName.athletics]);

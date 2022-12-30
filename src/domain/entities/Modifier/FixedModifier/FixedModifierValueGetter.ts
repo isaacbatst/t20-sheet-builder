@@ -1,4 +1,4 @@
-import type {Attribute} from '../../Attributes';
+import type {Attribute} from '../../Sheet/Attributes';
 import type {ModifierValueGetterInterface} from '../ModifierInterface';
 import {ModifierValueGetter} from '../ModifierValueGetter';
 

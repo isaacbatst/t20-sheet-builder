@@ -1,4 +1,5 @@
-import type {Attribute} from '../../../Attributes';
+import {AbilityEffects} from '../../../Ability/AbilityEffects';
+import type {Attribute} from '../../../Sheet/Attributes';
 import {RoleAbility} from '../../RoleAbility';
 import {RoleAbilityName} from '../../RoleAbilityName';
 import type {ArcanistPath, ArcanistPathName} from './ArcanistPath';
@@ -17,23 +18,27 @@ export class ArcanistPathAbility extends RoleAbility {
 		wizard: 'all',
 	};
 
-	effects: {
-		default: ArcanistPathEffect;
-	};
+	effects: ReturnType<typeof this.getAbilityEffects>;
 
 	constructor(path: ArcanistPath) {
 		super(RoleAbilityName.arcanistPath);
 
-		this.effects = {
-			default: new ArcanistPathEffect(path),
-		};
+		this.effects = this.getAbilityEffects(path);
 	}
 
 	getSpellsAttribute() {
-		return ArcanistPathAbility.pathToAttribute[this.effects.default.path.name];
+		return ArcanistPathAbility.pathToAttribute[this.effects.passive.default.path.name];
 	}
 
 	getLearnFrequency() {
-		return ArcanistPathAbility.pathToLearnFrequency[this.effects.default.path.name];
+		return ArcanistPathAbility.pathToLearnFrequency[this.effects.passive.default.path.name];
+	}
+
+	private getAbilityEffects(path: ArcanistPath) {
+		return new AbilityEffects({
+			passive: {
+				default: new ArcanistPathEffect(path),
+			},
+		});
 	}
 }

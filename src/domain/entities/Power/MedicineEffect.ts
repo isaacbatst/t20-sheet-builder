@@ -1,9 +1,9 @@
 import {ActivateableAbilityEffect} from '../Ability/ActivateableAbilityEffect';
-import type {Appliable} from '../Sheet/SheetInterface';
+import type {Cost} from '../Sheet/SheetInterface';
 import {GeneralPowerName} from './GeneralPowerName';
 
 export class MedicineEffect extends ActivateableAbilityEffect {
-	costs: Appliable[] = [];
+	costs: Cost[] = [];
 
 	constructor() {
 		super({

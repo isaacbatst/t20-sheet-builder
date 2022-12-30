@@ -1,7 +1,7 @@
 import {TrainSkill} from '../Action/TrainSkill';
 import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
 import type {SkillName} from '../Skill/SkillName';
-import type {Dispatch} from '../Transaction';
+import type {Dispatch} from '../Sheet/Transaction';
 import type {Translatable} from '../Translator';
 import type {OriginBenefits} from './Origin';
 import {OriginBenefit} from './OriginBenefit';

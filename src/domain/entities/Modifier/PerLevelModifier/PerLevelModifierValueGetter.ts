@@ -1,5 +1,5 @@
-import type {Attribute, Attributes} from '../../Attributes';
-import type {Level} from '../../Levels';
+import type {Attribute, Attributes} from '../../Sheet/Attributes';
+import type {Level} from '../../Sheet/Levels';
 import type {ModifierValueGetterInterface} from '../ModifierInterface';
 import {ModifierValueGetter} from '../ModifierValueGetter';
 

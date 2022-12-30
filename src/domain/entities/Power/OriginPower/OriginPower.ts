@@ -2,7 +2,7 @@ import {PickOriginPower} from '../../Action/PickOriginPower';
 import type {OriginName} from '../../Origin/OriginName';
 import type {ActionInterface} from '../../Sheet/SheetActions';
 import type {SheetBaseInterface} from '../../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../../Transaction';
+import type {Dispatch} from '../../Sheet/Transaction';
 import type {PowerInterface} from '../Power';
 import {Power} from '../Power';
 import type {OriginPowerName} from './OriginPowerName';

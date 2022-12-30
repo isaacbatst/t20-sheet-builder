@@ -1,4 +1,4 @@
-import type {ContextType} from '../ContextInterface';
+import type {ContextType} from './ContextInterface';
 import type {ModifierConditionVerify} from '../Modifier/ContextualModifier/ContextualModifiersListInterface';
 import type {Location} from '../Sheet/SheetInterface';
 import type {InGameContextInterface} from './InGameContextInterface';

@@ -4,7 +4,7 @@ import type {GeneralPowerName} from '../Power/GeneralPowerName';
 import type {OriginPowerName} from '../Power/OriginPower/OriginPowerName';
 import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
 import type {SkillName} from '../Skill/SkillName';
-import type {Dispatch} from '../Transaction';
+import type {Dispatch} from '../Sheet/Transaction';
 import type {OriginBenefit} from './OriginBenefit';
 import type {OriginName} from './OriginName';
 
