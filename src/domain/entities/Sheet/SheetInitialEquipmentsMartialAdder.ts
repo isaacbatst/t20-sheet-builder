@@ -3,6 +3,7 @@ import type {MartialWeapon} from '../Inventory/Equipment/Weapon/OfensiveWeapon/M
 import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import {Proficiency} from './Proficiency';
 import type {SheetInitialEquipmentsWeaponAdder, SheetInitialEquipmentsWeaponAdderType} from './SheetInitialEquipmentsAdder';
+import type {Dispatch} from './Transaction';
 
 export class SheetInitialEquipmentsMartialAdder implements SheetInitialEquipmentsWeaponAdder {
 	type: SheetInitialEquipmentsWeaponAdderType = 'martial';
@@ -11,11 +12,11 @@ export class SheetInitialEquipmentsMartialAdder implements SheetInitialEquipment
 		readonly martialWeapon: MartialWeapon,
 	) {}
 
-	addEquipments(sheet: BuildingSheetInterface) {
+	addEquipments(sheet: BuildingSheetInterface, dispatch: Dispatch) {
 		if (!sheet.getProficiencies().includes(Proficiency.martial)) {
 			throw new Error('UNEXPECTED_MARTIAL_WEAPON');
 		}
 
-		sheet.initTransaction(new AddEquipment({equipment: this.martialWeapon, source: 'default'}));
+		dispatch(new AddEquipment({equipment: this.martialWeapon, source: 'default'}), sheet);
 	}
 }

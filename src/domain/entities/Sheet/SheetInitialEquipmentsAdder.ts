@@ -9,12 +9,13 @@ import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import {Proficiency} from './Proficiency';
 import {SheetInitialEquipmentsArmorAdder} from './SheetInitialEquipmentsArmorAdder';
 import {SheetInitialEquipmentsMartialAdder} from './SheetInitialEquipmentsMartialAdder';
+import type {Dispatch} from './Transaction';
 
 export type SheetInitialEquipmentsWeaponAdderType = 'martial' | 'armor';
 
 export type SheetInitialEquipmentsWeaponAdder = {
 	type: SheetInitialEquipmentsWeaponAdderType;
-	addEquipments(sheet: BuildingSheetInterface): void;
+	addEquipments(sheet: BuildingSheetInterface, dispatch: Dispatch): void;
 };
 
 export type SheetInitialEquipmentsAdderParams = {
@@ -36,27 +37,27 @@ export class SheetInitialEquipmentsAdder {
 		this.armor = params.armor;
 	}
 
-	addEquipments(sheet: BuildingSheetInterface, role: RoleInterface) {
-		this.validateWeapons(sheet, role);
+	addEquipments(dispatch: Dispatch, sheet: BuildingSheetInterface, role: RoleInterface) {
+		this.validateWeapons(sheet.getProficiencies(), role);
 
-		sheet.initTransaction(new AddEquipment({equipment: new Equipment(EquipmentName.backpack), source: 'default'}));
-		sheet.initTransaction(new AddEquipment({equipment: new Equipment(EquipmentName.sleepingBag), source: 'default'}));
-		sheet.initTransaction(new AddEquipment({equipment: new Equipment(EquipmentName.travelerCostume), source: 'default'}));
-		sheet.initTransaction(new AddEquipment({equipment: this.simpleWeapon, source: 'default'}));
+		dispatch(new AddEquipment({equipment: new Equipment(EquipmentName.backpack), source: 'default'}), sheet);
+		dispatch(new AddEquipment({equipment: new Equipment(EquipmentName.sleepingBag), source: 'default'}), sheet);
+		dispatch(new AddEquipment({equipment: new Equipment(EquipmentName.travelerCostume), source: 'default'}), sheet);
+		dispatch(new AddEquipment({equipment: this.simpleWeapon, source: 'default'}), sheet);
 
 		if (this.martialWeapon) {
 			const adder = new SheetInitialEquipmentsMartialAdder(this.martialWeapon);
-			adder.addEquipments(sheet);
+			adder.addEquipments(sheet, dispatch);
 		}
 
 		if (this.armor) {
 			const adder = new SheetInitialEquipmentsArmorAdder(this.armor, role);
-			adder.addEquipments(sheet);
+			adder.addEquipments(sheet, dispatch);
 		}
 	}
 
-	validateWeapons(sheet: BuildingSheetInterface, role: RoleInterface) {
-		if (sheet.getProficiencies().includes(Proficiency.martial) && !this.martialWeapon) {
+	validateWeapons(proficiencies: Proficiency[], role: RoleInterface) {
+		if (proficiencies.includes(Proficiency.martial) && !this.martialWeapon) {
 			throw new Error('MISSING_MARTIAL_WEAPON');
 		}
 

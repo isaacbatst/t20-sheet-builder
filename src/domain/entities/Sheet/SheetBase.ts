@@ -15,6 +15,7 @@ import type {Level} from './Levels';
 import type {Proficiency} from './Proficiency';
 import type {ActionInterface, ActionPayload, ActionsHandler, ActionType} from './SheetActions';
 import type {SheetAbilities, SheetBaseInterface, SheetLearnedCircles, SheetPowers, SheetSkills, SheetSpells} from './SheetBaseInterface';
+import {SheetInitialEquipmentsAdder} from './SheetInitialEquipmentsAdder';
 import type {Dispatch} from './Transaction';
 import {Transaction} from './Transaction';
 import type {Vision} from './Vision';
@@ -44,6 +45,7 @@ export abstract class SheetBase implements SheetBaseInterface {
 		addEquipment: this.addEquipment.bind(this),
 		pickOriginPower: this.pickOriginPower.bind(this),
 		chooseOrigin: this.chooseOrigin.bind(this),
+		addInitialEquipment: this.addInitialEquipment.bind(this),
 	};
 
 	abstract readonly buildSteps: BuildStepInterface[];
@@ -261,5 +263,14 @@ export abstract class SheetBase implements SheetBaseInterface {
 		payload.skills.forEach(skill => {
 			this.skills[skill].train();
 		});
+	}
+
+	private addInitialEquipment({simpleWeapon, armor, martialWeapon, role}: ActionPayload<'addInitialEquipment'>, dispatch: Dispatch) {
+		const equipmentsAdder = new SheetInitialEquipmentsAdder({
+			simpleWeapon,
+			armor,
+			martialWeapon,
+		});
+		equipmentsAdder.addEquipments(dispatch, this, role);
 	}
 }

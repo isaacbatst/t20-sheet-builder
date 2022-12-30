@@ -1,3 +1,4 @@
+import {AddInitialEquipment} from '../Action/AddInitialEquipment';
 import {ChooseOrigin} from '../Action/ChooseOrigin';
 import {ChooseRace} from '../Action/ChooseRace';
 import {ChooseRole} from '../Action/ChooseRole';
@@ -81,12 +82,10 @@ export class SheetBuilder {
 
 	private addInitialEquipment(race: RaceInterface, role: RoleInterface, origin: OriginInterface) {
 		return (params: {simpleWeapon: SimpleWeapon; martialWeapon?: MartialWeapon; armor?: Armor}) => {
-			const equipmentsAdder = new SheetInitialEquipmentsAdder({
-				simpleWeapon: params.simpleWeapon,
-				armor: params.armor,
-				martialWeapon: params.martialWeapon,
-			});
-			equipmentsAdder.addEquipments(this.sheet, role);
+			this.sheet.initTransaction(new AddInitialEquipment({
+				...params,
+				role,
+			}));
 
 			return this.createSheet(race, role, origin);
 		};

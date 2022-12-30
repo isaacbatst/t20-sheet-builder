@@ -5,6 +5,7 @@ import type {RoleInterface} from '../Role/RoleInterface';
 import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import {Proficiency} from './Proficiency';
 import type {SheetInitialEquipmentsWeaponAdder, SheetInitialEquipmentsWeaponAdderType} from './SheetInitialEquipmentsAdder';
+import type {Dispatch} from './Transaction';
 
 export type SheetInitialEquipmentsAdderParams = {
 	armor: Armor;
@@ -24,13 +25,16 @@ export class SheetInitialEquipmentsArmorAdder implements SheetInitialEquipmentsW
 		}
 	}
 
-	addEquipments(sheet: BuildingSheetInterface) {
-		if ((this.hasHeavyArmor(sheet) && !this.isArmorInHeavyAllowedList())
-				|| (!this.hasHeavyArmor(sheet) && !this.isArmorInRegularAllowedList())) {
+	addEquipments(sheet: BuildingSheetInterface, dispatch: Dispatch) {
+		if ((this.hasHeavyArmor(sheet) && !this.isArmorInHeavyAllowedList())) {
 			throw new Error('INVALID_ARMOR');
 		}
 
-		sheet.initTransaction(new AddEquipment({equipment: this.armor, source: 'default'}));
+		if (!this.hasHeavyArmor(sheet) && !this.isArmorInRegularAllowedList()) {
+			throw new Error('INVALID_ARMOR');
+		}
+
+		dispatch(new AddEquipment({equipment: this.armor, source: 'default'}), sheet);
 	}
 
 	private isArmorInHeavyAllowedList() {
@@ -38,7 +42,7 @@ export class SheetInitialEquipmentsArmorAdder implements SheetInitialEquipmentsW
 	}
 
 	private isArmorInRegularAllowedList() {
-		return !SheetInitialEquipmentsArmorAdder.regularAllowedArmors.includes(this.armor.name);
+		return SheetInitialEquipmentsArmorAdder.regularAllowedArmors.includes(this.armor.name);
 	}
 
 	private hasHeavyArmor(sheet: BuildingSheetInterface) {
