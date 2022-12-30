@@ -81,7 +81,7 @@ export class SheetBuilder {
 	}
 
 	private addInitialEquipment(race: RaceInterface, role: RoleInterface, origin: OriginInterface) {
-		return (params: {simpleWeapon: SimpleWeapon; martialWeapon?: MartialWeapon; armor?: Armor}) => {
+		return (params: {simpleWeapon: SimpleWeapon; martialWeapon?: MartialWeapon; armor?: Armor; money: number}) => {
 			this.sheet.initTransaction(new AddInitialEquipment({
 				...params,
 				role,
@@ -96,8 +96,9 @@ export class SheetBuilder {
 			race,
 			role,
 			origin,
-			attributes: this.sheet.getAttributes(),
 			buildSteps: this.sheet.buildSteps,
+			money: this.sheet.getMoney(),
+			attributes: this.sheet.getAttributes(),
 			defense: this.sheet.getDefense(),
 			displacement: this.sheet.getDisplacement(),
 			level: this.sheet.getLevel(),

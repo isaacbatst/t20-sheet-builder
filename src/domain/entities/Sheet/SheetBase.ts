@@ -1,3 +1,4 @@
+import {AddMoney} from '../Action/AddMoney';
 import type {BuildStepInterface} from '../BuildStep';
 import {BuildStep} from '../BuildStep';
 import type {Defense} from '../Defense/Defense';
@@ -46,6 +47,7 @@ export abstract class SheetBase implements SheetBaseInterface {
 		pickOriginPower: this.pickOriginPower.bind(this),
 		chooseOrigin: this.chooseOrigin.bind(this),
 		addInitialEquipment: this.addInitialEquipment.bind(this),
+		addMoney: this.addMoney.bind(this),
 	};
 
 	abstract readonly buildSteps: BuildStepInterface[];
@@ -66,6 +68,7 @@ export abstract class SheetBase implements SheetBaseInterface {
 	protected abstract readonly lifePoints: Points;
 	protected abstract readonly manaPoints: Points;
 	protected abstract inventory: Inventory;
+	protected abstract money: number;
 
 	initTransaction<T extends ActionType>(action: ActionInterface<T>): void {
 		const transaction = new Transaction();
@@ -129,11 +132,19 @@ export abstract class SheetBase implements SheetBaseInterface {
 		return this.inventory;
 	}
 
+	getMoney(): number {
+		return this.money;
+	}
+
 	private saveBuildSteps(transaction: Transaction) {
 		while (transaction.actionsQueue.getSize() > 0) {
 			const action = transaction.actionsQueue.dequeue();
 			this.buildSteps.push(new BuildStep(action, this));
 		}
+	}
+
+	private addMoney(payload: ActionPayload<'addMoney'>) {
+		this.money += payload.quantity;
 	}
 
 	private addEquipment(payload: ActionPayload<'addEquipment'>) {
@@ -265,12 +276,13 @@ export abstract class SheetBase implements SheetBaseInterface {
 		});
 	}
 
-	private addInitialEquipment({simpleWeapon, armor, martialWeapon, role}: ActionPayload<'addInitialEquipment'>, dispatch: Dispatch) {
+	private addInitialEquipment({simpleWeapon, armor, martialWeapon, role, money}: ActionPayload<'addInitialEquipment'>, dispatch: Dispatch) {
 		const equipmentsAdder = new SheetInitialEquipmentsAdder({
 			simpleWeapon,
 			armor,
 			martialWeapon,
 		});
 		equipmentsAdder.addEquipments(dispatch, this, role);
+		dispatch(new AddMoney({quantity: money}), this);
 	}
 }

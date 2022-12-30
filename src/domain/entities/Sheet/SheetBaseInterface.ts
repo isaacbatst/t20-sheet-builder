@@ -40,4 +40,5 @@ export type SheetBaseInterface = {
 	getLifePoints(): LifePoints;
 	getManaPoints(): ManaPoints;
 	getInventory(): Inventory;
+	getMoney(): number;
 };

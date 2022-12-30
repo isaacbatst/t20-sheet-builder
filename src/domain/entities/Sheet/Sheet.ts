@@ -33,6 +33,7 @@ type SheetParams = {
 	skills: SheetSkills;
 	inventory: Inventory;
 	origin: OriginInterface;
+	money: number;
 };
 
 export class Sheet extends SheetBase implements SheetInterface {
@@ -55,6 +56,7 @@ export class Sheet extends SheetBase implements SheetInterface {
 	readonly abilities: SheetAbilities;
 	readonly powers: SheetPowers;
 	readonly inventory: Inventory;
+	readonly money: number;
 
 	constructor(
 		params: SheetParams,
@@ -78,6 +80,7 @@ export class Sheet extends SheetBase implements SheetInterface {
 		this.spells = params.spells;
 		this.inventory = params.inventory;
 		this.origin = params.origin;
+		this.money = params.money;
 	}
 
 	getRole() {

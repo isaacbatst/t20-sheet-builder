@@ -48,7 +48,8 @@ type ActionTypesToHandlers = {
 	addFixedModifierToDefense(payload: {modifier: FixedModifierInterface}): void;
 	trainIntelligenceSkills(payload: {skills: SkillName[]}): void;
 	addEquipment(payload: {equipment: Equipment; source: Translatable}): void;
-	addInitialEquipment(payload: {role: RoleInterface; simpleWeapon: SimpleWeapon; martialWeapon?: MartialWeapon; armor?: Armor}): void;
+	addInitialEquipment(payload: {role: RoleInterface; simpleWeapon: SimpleWeapon; martialWeapon?: MartialWeapon; armor?: Armor; money: number}): void;
+	addMoney(payload: {quantity: number}): void;
 };
 
 export type ActionType = keyof ActionTypesToHandlers;

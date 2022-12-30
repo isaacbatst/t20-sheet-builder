@@ -65,6 +65,7 @@ describe('Sheet', () => {
 					simpleWeapon: new Dagger(),
 					armor: new LeatherArmor(),
 					martialWeapon: new LongSword(),
+					money: 24,
 				});
 		});
 
@@ -144,6 +145,10 @@ describe('Sheet', () => {
 		it('should have chosen armor', () => {
 			expect(sheet.getInventory().equipments).toContainEqual(new LeatherArmor());
 		});
+
+		it('should have initial money', () => {
+			expect(sheet.getMoney()).toBe(24);
+		});
 	});
 
 	describe('Dwarf Arcanist', () => {
@@ -171,6 +176,7 @@ describe('Sheet', () => {
 				.trainIntelligenceSkills([SkillName.initiative, SkillName.athletics])
 				.addInitialEquipment({
 					simpleWeapon: new Dagger(),
+					money: 20,
 				});
 		});
 

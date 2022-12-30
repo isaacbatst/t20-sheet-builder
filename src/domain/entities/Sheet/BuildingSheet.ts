@@ -35,6 +35,7 @@ export class BuildingSheet extends SheetBase implements BuildingSheetInterface {
 		divine: new Set(),
 	};
 
+	protected money = 0;
 	protected inventory: Inventory = new Inventory();
 	protected equipments: Equipment[] = [];
 	protected displacement = 9;

@@ -1,17 +1,16 @@
-import type {Attributes} from './Attributes';
+import type {BuildStepInterface} from '../BuildStep';
 import {DefenseFake} from '../Defense/DefenseFake';
 import type {DefenseInterface} from '../Defense/DefenseInterface';
-import {Level} from './Levels';
-import type {Proficiency} from './Proficiency';
-import type {BuildStepInterface} from '../BuildStep';
-import {InitialSkillsGenerator} from '../Skill/InitialSkillsGenerator';
-import {Vision} from './Vision';
-import type {ActionsHandler} from './SheetActions';
-import type {SheetAbilities, SheetBaseInterface, SheetLearnedCircles, SheetPowers, SheetSkills, SheetSpells, SheetTriggeredEffects} from './SheetBaseInterface';
-import type {Equipment} from '../Inventory/Equipment/Equipment';
+import {Inventory} from '../Inventory/Inventory';
 import {LifePoints} from '../Points/LifePoints/LifePoints';
 import {ManaPoints} from '../Points/ManaPoints/ManaPoints';
-import {Inventory} from '../Inventory/Inventory';
+import {InitialSkillsGenerator} from '../Skill/InitialSkillsGenerator';
+import type {Attributes} from './Attributes';
+import {Level} from './Levels';
+import type {Proficiency} from './Proficiency';
+import type {ActionsHandler} from './SheetActions';
+import type {SheetAbilities, SheetBaseInterface, SheetLearnedCircles, SheetPowers, SheetSkills, SheetSpells} from './SheetBaseInterface';
+import {Vision} from './Vision';
 
 export class SheetBaseFake implements SheetBaseInterface {
 	actionHandlers: ActionsHandler = {
@@ -39,11 +38,13 @@ export class SheetBaseFake implements SheetBaseInterface {
 		addEquipment: jest.fn(),
 		pickOriginPower: jest.fn(),
 		chooseOrigin: jest.fn(),
+		addMoney: jest.fn(),
 		addInitialEquipment: jest.fn(),
 	};
 
 	dispatch = jest.fn();
 	initTransaction = jest.fn();
+	money = 0;
 	buildSteps: BuildStepInterface[] = [];
 	attributes: Attributes = {charisma: 0, constitution: 0, dexterity: 0, intelligence: 0, strength: 0, wisdom: 0};
 	defense = new DefenseFake();
@@ -114,5 +115,9 @@ export class SheetBaseFake implements SheetBaseInterface {
 
 	getInventory(): Inventory {
 		return this.inventory;
+	}
+
+	getMoney(): number {
+		return this.money;
 	}
 }
