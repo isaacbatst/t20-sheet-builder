@@ -37,6 +37,7 @@ export class SheetBaseFake implements SheetBaseInterface {
 		trainIntelligenceSkills: jest.fn(),
 		addEquipment: jest.fn(),
 		pickOriginPower: jest.fn(),
+		chooseOrigin: jest.fn(),
 	};
 
 	dispatch = jest.fn();

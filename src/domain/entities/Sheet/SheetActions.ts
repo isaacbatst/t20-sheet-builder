@@ -21,10 +21,13 @@ import type {Dispatch} from './Transaction';
 import type {Translatable} from '../Translator';
 import type {Vision} from './Vision';
 import type {SheetBaseInterface} from './SheetBaseInterface';
+import type {OriginInterface} from '../Origin/Origin';
 
 type ActionTypesToHandlers = {
 	setInitialAttributes(payload: {attributes: Attributes}): void;
 	chooseRace(payload: {race: RaceInterface}): void;
+	chooseRole(payload: {role: RoleInterface}): void;
+	chooseOrigin(payload: {origin: OriginInterface}): void;
 	trainSkill(payload: {name: SkillName; source: Translatable}): void;
 	changeVision(payload: {vision: Vision; source: Translatable}): void;
 	applyRaceModifiers(payload: {modifiers: Partial<Attributes>; updatedAttributes: Partial<Attributes>}): void;
@@ -34,7 +37,6 @@ type ActionTypesToHandlers = {
 	pickRolePower(payload: ({power: RolePowerInterface;source: Translatable})): void;
 	pickOriginPower(payload: ({power: OriginPowerInterface})): void;
 	changeDisplacement(payload: {displacement: number; source: Translatable}): void;
-	chooseRole(payload: {role: RoleInterface}): void;
 	addProficiency(payload: {proficiency: Proficiency; source: Translatable}): void;
 	learnCircle(payload: {circle: SpellCircle; source: Translatable; type: LearnableSpellType}): void;
 	learnSpell(payload: {spell: Spell; source: Translatable}): void;

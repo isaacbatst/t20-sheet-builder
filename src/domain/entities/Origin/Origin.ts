@@ -14,7 +14,15 @@ export type OriginBenefits = {
 	originPower: OriginPowerName;
 };
 
-export abstract class Origin {
+export type OriginInterface = {
+	name: OriginName;
+	equipments: Equipment[];
+	chosenBenefits: OriginBenefit[];
+	benefits: OriginBenefits;
+	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void;
+};
+
+export abstract class Origin implements OriginInterface {
 	abstract name: OriginName;
 	abstract equipments: Equipment[];
 

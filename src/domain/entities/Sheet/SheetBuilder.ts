@@ -10,6 +10,9 @@ import type {SkillName} from '../Skill/SkillName';
 import {BuildingSheet} from './BuildingSheet';
 import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import {Sheet} from './Sheet';
+import type {OriginInterface} from '../Origin/Origin';
+import {Origin} from '../Origin/Origin';
+import {ChooseOrigin} from '../Action/ChooseOrigin';
 
 export class SheetBuilder {
 	readonly context = new OutOfGameContext();
@@ -48,12 +51,22 @@ export class SheetBuilder {
 			this.sheet.initTransaction(new ChooseRole({role}));
 
 			return {
-				trainIntelligenceSkills: this.trainIntelligenceSkills(race, role),
+				chooseOrigin: this.chooseOrigin(race, role),
 			};
 		};
 	}
 
-	private trainIntelligenceSkills(race: RaceInterface, role: RoleInterface) {
+	private chooseOrigin(race: RaceInterface, role: RoleInterface) {
+		return (origin: OriginInterface) => {
+			this.sheet.initTransaction(new ChooseOrigin({origin}));
+
+			return {
+				trainIntelligenceSkills: this.trainIntelligenceSkills(race, role, origin),
+			};
+		};
+	}
+
+	private trainIntelligenceSkills(race: RaceInterface, role: RoleInterface, origin: OriginInterface) {
 		return (skills: SkillName[]) => {
 			this.sheet.initTransaction(new TrainIntelligenceSkills({skills}));
 

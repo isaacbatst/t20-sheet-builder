@@ -17,6 +17,7 @@ import {Transaction} from './Transaction';
 import type {Vision} from './Vision';
 import type {ActionInterface, ActionPayload, ActionsHandler, ActionType} from './SheetActions';
 import type {SheetAbilities, SheetBaseInterface, SheetLearnedCircles, SheetPowers, SheetSkills, SheetSpells} from './SheetBaseInterface';
+import type {OriginInterface} from '../Origin/Origin';
 export abstract class SheetBase implements SheetBaseInterface {
 	readonly actionHandlers: ActionsHandler = {
 		addFixedModifierToSkill: this.addFixedModifierToSkill.bind(this),
@@ -42,11 +43,13 @@ export abstract class SheetBase implements SheetBaseInterface {
 		trainIntelligenceSkills: this.trainIntelligenceSkills.bind(this),
 		addEquipment: this.addEquipment.bind(this),
 		pickOriginPower: this.pickOriginPower.bind(this),
+		chooseOrigin: this.chooseOrigin.bind(this),
 	};
 
 	abstract readonly buildSteps: BuildStepInterface[];
 	protected race?: RaceInterface;
 	protected role?: RoleInterface;
+	protected origin?: OriginInterface;
 	protected abstract readonly powers: SheetPowers;
 	protected abstract readonly abilities: SheetAbilities;
 	protected abstract attributes: Attributes;
@@ -141,6 +144,11 @@ export abstract class SheetBase implements SheetBaseInterface {
 		}
 
 		this.displacement = payload.displacement;
+	}
+
+	private chooseOrigin(payload: ActionPayload<'chooseOrigin'>, dispatch: Dispatch) {
+		payload.origin.addToSheet(this, dispatch);
+		this.origin = payload.origin;
 	}
 
 	private chooseRole(payload: ActionPayload<'chooseRole'>, dispatch: Dispatch) {

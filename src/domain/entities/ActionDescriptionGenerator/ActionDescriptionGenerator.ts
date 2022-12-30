@@ -41,6 +41,7 @@ export abstract class ActionDescriptionGenerator {
 		trainIntelligenceSkills: (sheet, {payload}) => payload.skills.length ? `Perícias treinadas pela inteligência: ${payload.skills.map(skill => Translator.getSkillTranslation(skill)).join(', ')}.` : 'Nenhuma perícia treinada pela inteligência.',
 		addEquipment: () => '',
 		pickOriginPower: () => '',
+		chooseOrigin: () => '',
 	};
 
 	private static getAttributeText(attributes: Attributes, attribute: Attribute) {
