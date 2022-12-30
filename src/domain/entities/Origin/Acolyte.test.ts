@@ -26,10 +26,12 @@ describe('Acolyte', () => {
 
 		expect(dispatch).toHaveBeenCalledWith(new AddEquipment({
 			equipment: new Equipment(EquipmentName.sacredSymbol),
+			source: OriginName.acolyte,
 		}), sheet);
 
 		expect(dispatch).toHaveBeenCalledWith(new AddEquipment({
 			equipment: new Equipment(EquipmentName.priestCostume),
+			source: OriginName.acolyte,
 		}), sheet);
 	});
 

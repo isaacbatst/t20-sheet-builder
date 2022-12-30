@@ -69,7 +69,6 @@ export class SheetBuilder {
 	private trainIntelligenceSkills(race: RaceInterface, role: RoleInterface, origin: OriginInterface) {
 		return (skills: SkillName[]) => {
 			this.sheet.initTransaction(new TrainIntelligenceSkills({skills}));
-
 			return new Sheet({
 				attributes: this.sheet.getAttributes(),
 				race,
