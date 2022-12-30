@@ -1,17 +1,18 @@
-import type {Attributes} from './Attributes';
 import type {BuildStep, BuildStepInterface} from '../BuildStep';
 import type {DefenseInterface} from '../Defense/DefenseInterface';
-import type {Equipment} from '../Equipment/Equipment';
-import type {Level} from './Levels';
+import type {Inventory} from '../Inventory/Inventory';
+import type {OriginInterface} from '../Origin/Origin';
 import type {LifePoints} from '../Points/LifePoints/LifePoints';
 import type {ManaPoints} from '../Points/ManaPoints/ManaPoints';
-import type {Proficiency} from './Proficiency';
 import type {RaceInterface} from '../Race/RaceInterface';
 import type {RoleInterface} from '../Role/RoleInterface';
 import type {SheetInterface} from '../Sheet/SheetInterface';
-import type {Vision} from './Vision';
+import type {Attributes} from './Attributes';
+import type {Level} from './Levels';
+import type {Proficiency} from './Proficiency';
 import {SheetBase} from './SheetBase';
-import type {SheetAbilities, SheetLearnedCircles, SheetPowers, SheetSkills, SheetSpells, SheetTriggeredEffects} from './SheetBaseInterface';
+import type {SheetAbilities, SheetLearnedCircles, SheetPowers, SheetSkills, SheetSpells} from './SheetBaseInterface';
+import type {Vision} from './Vision';
 
 type SheetParams = {
 	attributes: Attributes;
@@ -30,13 +31,16 @@ type SheetParams = {
 	learnedCircles: SheetLearnedCircles;
 	spells: SheetSpells;
 	skills: SheetSkills;
-	equipments: Equipment[];
+	inventory: Inventory;
+	origin: OriginInterface;
+	money: number;
 };
 
 export class Sheet extends SheetBase implements SheetInterface {
 	static readonly initialAttributes: Attributes = {strength: 0, dexterity: 0, constitution: 0, intelligence: 0, wisdom: 0, charisma: 0};
 	override readonly race: RaceInterface;
 	override readonly role: RoleInterface;
+	override readonly origin: OriginInterface;
 	readonly buildSteps: BuildStepInterface[];
 	readonly lifePoints: LifePoints;
 	readonly manaPoints: ManaPoints;
@@ -51,7 +55,8 @@ export class Sheet extends SheetBase implements SheetInterface {
 	readonly proficiencies: Proficiency[];
 	readonly abilities: SheetAbilities;
 	readonly powers: SheetPowers;
-	readonly equipments: Equipment[];
+	readonly inventory: Inventory;
+	readonly money: number;
 
 	constructor(
 		params: SheetParams,
@@ -73,7 +78,9 @@ export class Sheet extends SheetBase implements SheetInterface {
 		this.powers = params.powers;
 		this.learnedCircles = params.learnedCircles;
 		this.spells = params.spells;
-		this.equipments = params.equipments;
+		this.inventory = params.inventory;
+		this.origin = params.origin;
+		this.money = params.money;
 	}
 
 	getRole() {

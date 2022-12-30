@@ -1,23 +1,25 @@
-import type {Attributes} from './Attributes';
+import {AddMoney} from '../Action/AddMoney';
 import type {BuildStepInterface} from '../BuildStep';
 import {BuildStep} from '../BuildStep';
 import type {Defense} from '../Defense/Defense';
 import type {DefenseInterface} from '../Defense/DefenseInterface';
-import type {Equipment} from '../Equipment/Equipment';
-import type {Level} from './Levels';
+import type {Inventory} from '../Inventory/Inventory';
+import type {OriginInterface} from '../Origin/Origin';
 import type {LifePoints} from '../Points/LifePoints/LifePoints';
 import type {ManaPoints} from '../Points/ManaPoints/ManaPoints';
 import type {Points} from '../Points/Points';
-import type {Proficiency} from './Proficiency';
 import type {RaceInterface} from '../Race/RaceInterface';
 import type {RoleInterface} from '../Role/RoleInterface';
 import type {Spell} from '../Spell/Spell';
+import type {Attributes} from './Attributes';
+import type {Level} from './Levels';
+import type {Proficiency} from './Proficiency';
+import type {ActionInterface, ActionPayload, ActionsHandler, ActionType} from './SheetActions';
+import type {SheetAbilities, SheetBaseInterface, SheetLearnedCircles, SheetPowers, SheetSkills, SheetSpells} from './SheetBaseInterface';
+import {SheetInitialEquipmentsAdder} from './SheetInitialEquipmentsAdder';
 import type {Dispatch} from './Transaction';
 import {Transaction} from './Transaction';
 import type {Vision} from './Vision';
-import type {ActionInterface, ActionPayload, ActionsHandler, ActionType} from './SheetActions';
-import type {SheetAbilities, SheetBaseInterface, SheetLearnedCircles, SheetPowers, SheetSkills, SheetSpells} from './SheetBaseInterface';
-import type {OriginInterface} from '../Origin/Origin';
 export abstract class SheetBase implements SheetBaseInterface {
 	readonly actionHandlers: ActionsHandler = {
 		addFixedModifierToSkill: this.addFixedModifierToSkill.bind(this),
@@ -44,6 +46,8 @@ export abstract class SheetBase implements SheetBaseInterface {
 		addEquipment: this.addEquipment.bind(this),
 		pickOriginPower: this.pickOriginPower.bind(this),
 		chooseOrigin: this.chooseOrigin.bind(this),
+		addInitialEquipment: this.addInitialEquipment.bind(this),
+		addMoney: this.addMoney.bind(this),
 	};
 
 	abstract readonly buildSteps: BuildStepInterface[];
@@ -63,7 +67,8 @@ export abstract class SheetBase implements SheetBaseInterface {
 	protected abstract displacement: number;
 	protected abstract readonly lifePoints: Points;
 	protected abstract readonly manaPoints: Points;
-	protected abstract equipments: Equipment[];
+	protected abstract inventory: Inventory;
+	protected abstract money: number;
 
 	initTransaction<T extends ActionType>(action: ActionInterface<T>): void {
 		const transaction = new Transaction();
@@ -123,8 +128,12 @@ export abstract class SheetBase implements SheetBaseInterface {
 		return this.manaPoints;
 	}
 
-	getEquipments(): Equipment[] {
-		return this.equipments;
+	getInventory(): Inventory {
+		return this.inventory;
+	}
+
+	getMoney(): number {
+		return this.money;
 	}
 
 	private saveBuildSteps(transaction: Transaction) {
@@ -134,8 +143,12 @@ export abstract class SheetBase implements SheetBaseInterface {
 		}
 	}
 
+	private addMoney(payload: ActionPayload<'addMoney'>) {
+		this.money += payload.quantity;
+	}
+
 	private addEquipment(payload: ActionPayload<'addEquipment'>) {
-		this.equipments.push(payload.equipment);
+		this.inventory.addEquipment(payload.equipment);
 	}
 
 	private changeDisplacement(payload: ActionPayload<'changeDisplacement'>) {
@@ -261,5 +274,15 @@ export abstract class SheetBase implements SheetBaseInterface {
 		payload.skills.forEach(skill => {
 			this.skills[skill].train();
 		});
+	}
+
+	private addInitialEquipment({simpleWeapon, armor, martialWeapon, role, money}: ActionPayload<'addInitialEquipment'>, dispatch: Dispatch) {
+		const equipmentsAdder = new SheetInitialEquipmentsAdder({
+			simpleWeapon,
+			armor,
+			martialWeapon,
+		});
+		equipmentsAdder.addEquipments(dispatch, this, role);
+		dispatch(new AddMoney({quantity: money}), this);
 	}
 }

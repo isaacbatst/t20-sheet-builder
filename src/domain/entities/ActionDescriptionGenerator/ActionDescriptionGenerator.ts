@@ -42,6 +42,8 @@ export abstract class ActionDescriptionGenerator {
 		addEquipment: (action, {payload: {equipment, source}}) => `${Translator.getTranslation(source)}: ${Translator.getEquipmentTranslation(equipment.name)} adicionado ao inventário.`,
 		pickOriginPower: (action, {payload: {power}}) => `${Translator.getTranslation(power.source)}: poder ${Translator.getPowerTranslation(power.name)} escolhido.`,
 		chooseOrigin: (action, {payload: {origin}}) => `Origem escolhida: ${Translator.getOriginTranslation(origin.name)}.`,
+		addInitialEquipment: () => 'Equipamento inicial adicionado.',
+		addMoney: (action, {payload: {quantity}}) => `Dinheiro adicionado: T$${quantity.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.`,
 	};
 
 	private static getAttributeText(attributes: Attributes, attribute: Attribute) {

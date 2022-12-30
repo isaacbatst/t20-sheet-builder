@@ -1,4 +1,4 @@
-import type {Equipment} from '../Equipment/Equipment';
+import type {Equipment} from '../Inventory/Equipment/Equipment';
 import {OriginPowerName} from '../Power/OriginPower/OriginPowerName';
 import type {OriginBenefits, OriginInterface} from './Origin';
 import type {OriginBenefit} from './OriginBenefit';

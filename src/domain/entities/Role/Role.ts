@@ -23,6 +23,9 @@ export abstract class Role implements RoleInterface {
 	abstract readonly proficiencies: Proficiency[];
 	abstract readonly name: RoleName;
 	abstract readonly abilities: Record<Level, Record<string, RoleAbility>>;
+	get startsWithArmor() {
+		return true;
+	}
 
 	/**
  * Returns an instance of this role.

@@ -1,4 +1,7 @@
-import type {Equipment} from '../Equipment/Equipment';
+import type {Equipment} from '../Inventory/Equipment/Equipment';
+import type {Armor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/Armor';
+import type {MartialWeapon} from '../Inventory/Equipment/Weapon/OfensiveWeapon/MartialWeapon';
+import type {SimpleWeapon} from '../Inventory/Equipment/Weapon/OfensiveWeapon/SimpleWeapon';
 import type {ContextualModifierInterface} from '../Modifier/ContextualModifier/ContextualModifierInterface';
 import type {FixedModifierInterface} from '../Modifier/FixedModifier/FixedModifier';
 import type {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
@@ -45,6 +48,8 @@ type ActionTypesToHandlers = {
 	addFixedModifierToDefense(payload: {modifier: FixedModifierInterface}): void;
 	trainIntelligenceSkills(payload: {skills: SkillName[]}): void;
 	addEquipment(payload: {equipment: Equipment; source: Translatable}): void;
+	addInitialEquipment(payload: {role: RoleInterface; simpleWeapon: SimpleWeapon; martialWeapon?: MartialWeapon; armor?: Armor; money: number}): void;
+	addMoney(payload: {quantity: number}): void;
 };
 
 export type ActionType = keyof ActionTypesToHandlers;

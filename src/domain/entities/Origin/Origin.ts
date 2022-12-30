@@ -1,5 +1,5 @@
 import {AddEquipment} from '../Action/AddEquipment';
-import type {Equipment} from '../Equipment/Equipment';
+import type {Equipment} from '../Inventory/Equipment/Equipment';
 import type {GeneralPowerName} from '../Power/GeneralPowerName';
 import type {OriginPowerName} from '../Power/OriginPower/OriginPowerName';
 import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';

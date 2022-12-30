@@ -11,6 +11,7 @@ export class RoleFake implements RoleInterface {
 	chooseableSkills: ChooseableSkills[] = [];
 	proficiencies: Proficiency[] = [];
 	name: RoleName = RoleName.warrior;
+	startsWithArmor = true;
 	getTotalInitialSkills = jest.fn(() => 5);
 	addToSheet = jest.fn();
 }

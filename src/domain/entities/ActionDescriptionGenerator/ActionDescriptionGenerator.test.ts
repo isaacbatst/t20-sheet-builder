@@ -1,37 +1,39 @@
+import {AddEquipment} from '../Action/AddEquipment';
+import {AddInitialEquipment} from '../Action/AddInitialEquipment';
+import {AddMoney} from '../Action/AddMoney';
 import {AddPerLevelModifierToLifePoints} from '../Action/AddPerLevelModifierToLifePoints';
 import {AddPerLevelModifierToManaPoints} from '../Action/AddPerLevelModifierToManaPoints';
 import {AddProficiency} from '../Action/AddProficiency';
 import {ApplyRoleAbility} from '../Action/ApplyRoleAbility';
+import {ChooseOrigin} from '../Action/ChooseOrigin';
 import {ChooseRole} from '../Action/ChooseRole';
+import {PickOriginPower} from '../Action/PickOriginPower';
 import {TrainIntelligenceSkills} from '../Action/TrainIntelligenceSkills';
+import {Equipment} from '../Inventory/Equipment/Equipment';
+import {EquipmentName} from '../Inventory/Equipment/EquipmentName';
+import {Dagger} from '../Inventory/Equipment/Weapon/OfensiveWeapon/Dagger';
 import {ContextualModifier} from '../Modifier/ContextualModifier/ContextualModifier';
 import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
 import {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
+import {OriginFake} from '../Origin/OriginFake';
+import {OriginName} from '../Origin/OriginName';
 import {GeneralPowerName} from '../Power/GeneralPowerName';
+import {ChurchMember} from '../Power/OriginPower/ChurchMember';
 import {GeneralPowerFake, RolePowerFake} from '../Power/PowerFake';
-import {Proficiency} from '../Sheet/Proficiency';
-import {RaceName} from '../Race/RaceName';
-import {RaceAbilityName} from '../Race/RaceAbilityName';
 import {RaceAbilityFake} from '../Race/RaceAbilityFake';
+import {RaceAbilityName} from '../Race/RaceAbilityName';
 import {RaceFake} from '../Race/RaceFake';
+import {RaceName} from '../Race/RaceName';
 import {RoleAbilityFake} from '../Role/RoleAbilityFake';
 import {RoleAbilityName} from '../Role/RoleAbilityName';
-import {RoleName} from '../Role/RoleName';
 import {RoleFake} from '../Role/RoleFake';
+import {RoleName} from '../Role/RoleName';
 import {BuildingSheetFake} from '../Sheet/BuildingSheetFake';
+import {Proficiency} from '../Sheet/Proficiency';
+import {Vision} from '../Sheet/Vision';
 import {Skill} from '../Skill/Skill';
 import {SkillName} from '../Skill/SkillName';
-import {Vision} from '../Sheet/Vision';
 import {ActionDescriptionGenerator} from './ActionDescriptionGenerator';
-import {AddEquipment} from '../Action/AddEquipment';
-import {Equipment} from '../Equipment/Equipment';
-import {EquipmentName} from '../Equipment/EquipmentName';
-import {OriginName} from '../Origin/OriginName';
-import {PickOriginPower} from '../Action/PickOriginPower';
-import {ChurchMember} from '../Power/OriginPower/ChurchMember';
-import {ChooseOrigin} from '../Action/ChooseOrigin';
-import {Acolyte} from '../Origin/Acolyte';
-import {OriginFake} from '../Origin/OriginFake';
 
 describe('ActionDescriptionGenerator', () => {
 	it('should generate setInitialAttributes description', () => {
@@ -382,5 +384,33 @@ describe('ActionDescriptionGenerator', () => {
 		);
 
 		expect(description).toBe('Origem escolhida: Acólito.');
+	});
+
+	it('should generate addInitialEquipment description', () => {
+		const sheet = new BuildingSheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			new AddInitialEquipment({
+				role: new RoleFake(),
+				simpleWeapon: new Dagger(),
+				money: 20,
+			}),
+		);
+
+		expect(description).toBe('Equipamento inicial adicionado.');
+	});
+
+	it('should generate addMoney description', () => {
+		const sheet = new BuildingSheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			new AddMoney({
+				quantity: 100,
+			}),
+		);
+
+		expect(description).toBe('Dinheiro adicionado: T$100,00.');
 	});
 });

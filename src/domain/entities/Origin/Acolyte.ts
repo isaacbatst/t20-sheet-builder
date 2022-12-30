@@ -1,5 +1,5 @@
-import {Equipment} from '../Equipment/Equipment';
-import {EquipmentName} from '../Equipment/EquipmentName';
+import {Equipment} from '../Inventory/Equipment/Equipment';
+import {EquipmentName} from '../Inventory/Equipment/EquipmentName';
 import {GeneralPowerName} from '../Power/GeneralPowerName';
 import {OriginPowerName} from '../Power/OriginPower/OriginPowerName';
 import {SkillName} from '../Skill/SkillName';

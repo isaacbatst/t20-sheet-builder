@@ -14,6 +14,7 @@ export type RoleInterface = {
 	chooseableSkills: ChooseableSkills[];
 	proficiencies: Proficiency[];
 	name: RoleName;
+	startsWithArmor: boolean;
 
 	getTotalInitialSkills(): number;
 	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void;
