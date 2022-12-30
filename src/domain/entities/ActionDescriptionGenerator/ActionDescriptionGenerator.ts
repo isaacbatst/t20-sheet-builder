@@ -39,9 +39,9 @@ export abstract class ActionDescriptionGenerator {
 		addFixedModifierToDefense: (sheet, {payload: {modifier}}) => `${Translator.getTranslation(modifier.source)}: ${StringHelper.addNumberSign(modifier.value)} Defesa adicionado.`,
 		addPerLevelModifierToManaPoints: (sheet, {payload: {modifier}}) => `${Translator.getTranslation(modifier.source)}: ${StringHelper.addNumberSign(modifier.value)} PM ${modifier.attributeBonuses.length ? `(+ ${modifier.attributeBonuses.map(attribute => Translator.getAttributeTranslation(attribute)).join('/')}) ` : ''}por nível${modifier.includeFirstLevel ? '' : ' após o nível 1'}.`,
 		trainIntelligenceSkills: (sheet, {payload}) => payload.skills.length ? `Perícias treinadas pela inteligência: ${payload.skills.map(skill => Translator.getSkillTranslation(skill)).join(', ')}.` : 'Nenhuma perícia treinada pela inteligência.',
-		addEquipment: () => '',
-		pickOriginPower: () => '',
-		chooseOrigin: () => '',
+		addEquipment: (action, {payload: {equipment, source}}) => `${Translator.getTranslation(source)}: ${Translator.getEquipmentTranslation(equipment.name)} adicionado ao inventário.`,
+		pickOriginPower: (action, {payload: {power}}) => `${Translator.getTranslation(power.source)}: poder ${Translator.getPowerTranslation(power.name)} escolhido.`,
+		chooseOrigin: (action, {payload: {origin}}) => `Origem escolhida: ${Translator.getOriginTranslation(origin.name)}.`,
 	};
 
 	private static getAttributeText(attributes: Attributes, attribute: Attribute) {

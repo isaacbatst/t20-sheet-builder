@@ -11,10 +11,11 @@ import {SpellCircle} from './Spell/SpellCircle';
 import type {SpellName} from './Spell/SpellName';
 import {StringHelper} from './StringHelper';
 import type {Vision} from './Sheet/Vision';
+import type {EquipmentName} from './Equipment/EquipmentName';
 
 export type Translatable = Attribute
 | RaceAbilityName | SkillName | PowerName | RaceName | Proficiency
-| Vision | RoleAbilityName | SpellName | SpellCircle | RoleName | OriginName;
+| Vision | RoleAbilityName | SpellName | SpellCircle | RoleName | OriginName | EquipmentName;
 
 export class Translator {
 	static getAttributeTranslation(attribute: Attribute, capitalized = true) {
@@ -65,6 +66,14 @@ export class Translator {
 
 	static getSpellCircleTranslation(circle: SpellCircle) {
 		return Translator.spellCirclesTranslation[circle];
+	}
+
+	static getEquipmentTranslation(equipment: EquipmentName) {
+		return Translator.equipmentsTranslation[equipment];
+	}
+
+	static getOriginTranslation(origin: OriginName) {
+		return Translator.originsTranslation[origin];
 	}
 
 	static getTranslation(string: Translatable) {
@@ -175,6 +184,15 @@ export class Translator {
 		animalsFriend: 'Amigo dos Animais',
 	};
 
+	private static readonly equipmentsTranslation: Record<EquipmentName, string> = {
+		horse: 'Cavalo',
+		hound: 'Cão de Caça',
+		pony: 'Pônei',
+		priestCostume: 'Trajes de Padre',
+		sacredSymbol: 'Símbolo Sagrado',
+		trobo: 'Trobo',
+	};
+
 	private static readonly translation: Record<Translatable, string> = {
 		...Translator.attributesTranslation,
 		...Translator.abilitiesTranslation,
@@ -188,5 +206,6 @@ export class Translator {
 		...Translator.spellsTranslation,
 		...Translator.spellCirclesTranslation,
 		...Translator.originsTranslation,
+		...Translator.equipmentsTranslation,
 	};
 }

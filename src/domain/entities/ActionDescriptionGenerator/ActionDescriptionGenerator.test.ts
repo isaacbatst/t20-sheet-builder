@@ -23,6 +23,15 @@ import {Skill} from '../Skill/Skill';
 import {SkillName} from '../Skill/SkillName';
 import {Vision} from '../Sheet/Vision';
 import {ActionDescriptionGenerator} from './ActionDescriptionGenerator';
+import {AddEquipment} from '../Action/AddEquipment';
+import {Equipment} from '../Equipment/Equipment';
+import {EquipmentName} from '../Equipment/EquipmentName';
+import {OriginName} from '../Origin/OriginName';
+import {PickOriginPower} from '../Action/PickOriginPower';
+import {ChurchMember} from '../Power/OriginPower/ChurchMember';
+import {ChooseOrigin} from '../Action/ChooseOrigin';
+import {Acolyte} from '../Origin/Acolyte';
+import {OriginFake} from '../Origin/OriginFake';
 
 describe('ActionDescriptionGenerator', () => {
 	it('should generate setInitialAttributes description', () => {
@@ -333,5 +342,45 @@ describe('ActionDescriptionGenerator', () => {
 		);
 
 		expect(description).toBe('Nenhuma perícia treinada pela inteligência.');
+	});
+
+	it('should generate addEquipment description', () => {
+		const sheet = new BuildingSheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			new AddEquipment({
+				equipment: new Equipment(EquipmentName.sacredSymbol),
+				source: OriginName.acolyte,
+			}),
+		);
+
+		expect(description).toBe('Acólito: Símbolo Sagrado adicionado ao inventário.');
+	});
+
+	it('should generate pickOriginPower description', () => {
+		const sheet = new BuildingSheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			new PickOriginPower({
+				power: new ChurchMember(),
+			}),
+		);
+
+		expect(description).toBe('Acólito: poder Membro da Igreja escolhido.');
+	});
+
+	it('should generate chooseOrigin description', () => {
+		const sheet = new BuildingSheetFake();
+
+		const description = ActionDescriptionGenerator.generate(
+			sheet,
+			new ChooseOrigin({
+				origin: new OriginFake(),
+			}),
+		);
+
+		expect(description).toBe('Origem escolhida: Acólito.');
 	});
 });

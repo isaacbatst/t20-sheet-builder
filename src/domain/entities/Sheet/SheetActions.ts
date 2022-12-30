@@ -1,14 +1,10 @@
-import type {ActivateableAbilityEffectInterface} from '../Ability/ActivateableAbilityEffect';
-import type {RolePlayEffect} from '../Ability/RolePlayEffect';
-import type {TriggeredEffectInterface} from '../Ability/TriggeredEffect';
-import type {Attributes} from './Attributes';
 import type {Equipment} from '../Equipment/Equipment';
 import type {ContextualModifierInterface} from '../Modifier/ContextualModifier/ContextualModifierInterface';
 import type {FixedModifierInterface} from '../Modifier/FixedModifier/FixedModifier';
 import type {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
+import type {OriginInterface} from '../Origin/Origin';
 import type {GeneralPowerInterface} from '../Power/GeneralPower';
 import type {OriginPowerInterface} from '../Power/OriginPower/OriginPower';
-import type {Proficiency} from './Proficiency';
 import type {RaceAbilityInterface} from '../Race/RaceAbility';
 import type {RaceInterface} from '../Race/RaceInterface';
 import type {RoleAbilityInterface} from '../Role/RoleAbility';
@@ -17,11 +13,12 @@ import type {RolePowerInterface} from '../Role/RolePower';
 import type {SkillName} from '../Skill/SkillName';
 import type {LearnableSpellType, Spell} from '../Spell/Spell';
 import type {SpellCircle} from '../Spell/SpellCircle';
-import type {Dispatch} from './Transaction';
 import type {Translatable} from '../Translator';
-import type {Vision} from './Vision';
+import type {Attributes} from './Attributes';
+import type {Proficiency} from './Proficiency';
 import type {SheetBaseInterface} from './SheetBaseInterface';
-import type {OriginInterface} from '../Origin/Origin';
+import type {Dispatch} from './Transaction';
+import type {Vision} from './Vision';
 
 type ActionTypesToHandlers = {
 	setInitialAttributes(payload: {attributes: Attributes}): void;
@@ -47,7 +44,7 @@ type ActionTypesToHandlers = {
 	addPerLevelModifierToManaPoints(payload: {modifier: PerLevelModifier}): void;
 	addFixedModifierToDefense(payload: {modifier: FixedModifierInterface}): void;
 	trainIntelligenceSkills(payload: {skills: SkillName[]}): void;
-	addEquipment(payload: {equipment: Equipment}): void;
+	addEquipment(payload: {equipment: Equipment; source: Translatable}): void;
 };
 
 export type ActionType = keyof ActionTypesToHandlers;

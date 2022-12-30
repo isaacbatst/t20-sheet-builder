@@ -3,8 +3,8 @@ import type {Equipment} from '../Equipment/Equipment';
 import type {GeneralPowerName} from '../Power/GeneralPowerName';
 import type {OriginPowerName} from '../Power/OriginPower/OriginPowerName';
 import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
-import type {SkillName} from '../Skill/SkillName';
 import type {Dispatch} from '../Sheet/Transaction';
+import type {SkillName} from '../Skill/SkillName';
 import type {OriginBenefit} from './OriginBenefit';
 import type {OriginName} from './OriginName';
 
@@ -48,6 +48,7 @@ export abstract class Origin implements OriginInterface {
 		this.equipments.forEach(equipment => {
 			dispatch(new AddEquipment({
 				equipment,
+				source: this.name,
 			}), sheet);
 		});
 	}
