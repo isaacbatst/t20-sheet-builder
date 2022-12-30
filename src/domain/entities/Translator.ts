@@ -15,7 +15,8 @@ import type {EquipmentName} from './Inventory/Equipment/EquipmentName';
 
 export type Translatable = Attribute
 | RaceAbilityName | SkillName | PowerName | RaceName | Proficiency
-| Vision | RoleAbilityName | SpellName | SpellCircle | RoleName | OriginName | EquipmentName;
+| Vision | RoleAbilityName | SpellName | SpellCircle | RoleName | OriginName | EquipmentName
+| 'default';
 
 export class Translator {
 	static getAttributeTranslation(attribute: Attribute, capitalized = true) {
@@ -191,6 +192,14 @@ export class Translator {
 		priestCostume: 'Trajes de Padre',
 		sacredSymbol: 'Símbolo Sagrado',
 		trobo: 'Trobo',
+		backpack: 'Mochila',
+		sleepingBag: 'Saco de Dormir',
+		travelerCostume: 'Traje de Viajante',
+		dagger: 'Adaga',
+		longSword: 'Espada Longa',
+		brunea: 'Brunea',
+		leatherArmor: 'Armadura de Couro',
+		studdedLeather: 'Couro Batido',
 	};
 
 	private static readonly translation: Record<Translatable, string> = {
@@ -207,5 +216,6 @@ export class Translator {
 		...Translator.spellCirclesTranslation,
 		...Translator.originsTranslation,
 		...Translator.equipmentsTranslation,
+		default: 'Padrão',
 	};
 }

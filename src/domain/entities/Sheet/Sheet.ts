@@ -1,6 +1,7 @@
 import type {BuildStep, BuildStepInterface} from '../BuildStep';
 import type {DefenseInterface} from '../Defense/DefenseInterface';
 import type {Inventory} from '../Inventory/Inventory';
+import type {OriginInterface} from '../Origin/Origin';
 import type {LifePoints} from '../Points/LifePoints/LifePoints';
 import type {ManaPoints} from '../Points/ManaPoints/ManaPoints';
 import type {RaceInterface} from '../Race/RaceInterface';
@@ -31,12 +32,14 @@ type SheetParams = {
 	spells: SheetSpells;
 	skills: SheetSkills;
 	inventory: Inventory;
+	origin: OriginInterface;
 };
 
 export class Sheet extends SheetBase implements SheetInterface {
 	static readonly initialAttributes: Attributes = {strength: 0, dexterity: 0, constitution: 0, intelligence: 0, wisdom: 0, charisma: 0};
 	override readonly race: RaceInterface;
 	override readonly role: RoleInterface;
+	override readonly origin: OriginInterface;
 	readonly buildSteps: BuildStepInterface[];
 	readonly lifePoints: LifePoints;
 	readonly manaPoints: ManaPoints;
@@ -74,6 +77,7 @@ export class Sheet extends SheetBase implements SheetInterface {
 		this.learnedCircles = params.learnedCircles;
 		this.spells = params.spells;
 		this.inventory = params.inventory;
+		this.origin = params.origin;
 	}
 
 	getRole() {

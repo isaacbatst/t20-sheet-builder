@@ -2,6 +2,9 @@ import type {ContextInterface} from '../Context/ContextInterface';
 import {OutOfGameContext} from '../Context/OutOfGameContext';
 import {Equipment} from '../Inventory/Equipment/Equipment';
 import {EquipmentName} from '../Inventory/Equipment/EquipmentName';
+import {LeatherArmor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/LeatherArmor';
+import {Dagger} from '../Inventory/Equipment/Weapon/OfensiveWeapon/Dagger';
+import {LongSword} from '../Inventory/Equipment/Weapon/OfensiveWeapon/LongSword';
 import {Acolyte} from '../Origin/Acolyte';
 import {AnimalsFriend} from '../Origin/AnimalsFriend';
 import type {Origin} from '../Origin/Origin';
@@ -31,6 +34,7 @@ import {MentalDagger} from '../Spell/MentalDagger/MentalDagger';
 import {Proficiency} from './Proficiency';
 import type {Sheet} from './Sheet';
 import {SheetBuilder} from './SheetBuilder';
+import {SheetInitialEquipmentsAdder} from './SheetInitialEquipmentsAdder';
 import {Vision} from './Vision';
 
 describe('Sheet', () => {
@@ -53,10 +57,17 @@ describe('Sheet', () => {
 			origin = new Acolyte([new OriginBenefitGeneralPower(new IronWill()), new OriginBenefitSkill(SkillName.cure)]);
 			sheet = sheetBuilder
 				.setInitialAttributes({strength: 0, dexterity: 0, charisma: 0, constitution: 0, intelligence: 0, wisdom: 2})
-				.choseRace(race)
+				.chooseRace(race)
 				.chooseRole(role)
 				.chooseOrigin(origin)
-				.trainIntelligenceSkills([]);
+				.trainIntelligenceSkills([])
+				.addInitialEquipment(
+					new SheetInitialEquipmentsAdder({
+						simpleWeapon: new Dagger(),
+						armor: new LeatherArmor(),
+						martialWeapon: new LongSword(),
+					}),
+				);
 		});
 
 		it('should choose race', () => {
@@ -117,6 +128,24 @@ describe('Sheet', () => {
 			expect(sheet.getInventory().equipments).toContainEqual(new Equipment(EquipmentName.priestCostume));
 			expect(sheet.getInventory().equipments).toContainEqual(new Equipment(EquipmentName.sacredSymbol));
 		});
+
+		it('should have default initial equipments', () => {
+			expect(sheet.getInventory().equipments).toContainEqual(new Equipment(EquipmentName.backpack));
+			expect(sheet.getInventory().equipments).toContainEqual(new Equipment(EquipmentName.sleepingBag));
+			expect(sheet.getInventory().equipments).toContainEqual(new Equipment(EquipmentName.travelerCostume));
+		});
+
+		it('should have chosen simple weapon', () => {
+			expect(sheet.getInventory().equipments).toContainEqual(new Dagger());
+		});
+
+		it('should have chosen martial weapon', () => {
+			expect(sheet.getInventory().equipments).toContainEqual(new LongSword());
+		});
+
+		it('should have chosen armor', () => {
+			expect(sheet.getInventory().equipments).toContainEqual(new LeatherArmor());
+		});
 	});
 
 	describe('Dwarf Arcanist', () => {
@@ -138,10 +167,15 @@ describe('Sheet', () => {
 			origin = new AnimalsFriend([new OriginBenefitSkill(SkillName.animalHandling), new OriginBenefitOriginPower(new SpecialFriend(SkillName.religion))], EquipmentName.horse);
 			sheet = sheetBuilder
 				.setInitialAttributes({charisma: 0, constitution: 0, dexterity: 0, intelligence: 2, strength: 0, wisdom: 0})
-				.choseRace(race)
+				.chooseRace(race)
 				.chooseRole(role)
 				.chooseOrigin(origin)
-				.trainIntelligenceSkills([SkillName.initiative, SkillName.athletics]);
+				.trainIntelligenceSkills([SkillName.initiative, SkillName.athletics])
+				.addInitialEquipment(
+					new SheetInitialEquipmentsAdder({
+						simpleWeapon: new Dagger(),
+					}),
+				);
 		});
 
 		it('should choose race', () => {

@@ -12,6 +12,7 @@ import type {Attributes} from './Attributes';
 import {BuildingSheet} from './BuildingSheet';
 import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import {Sheet} from './Sheet';
+import type {SheetInitialEquipmentsAdder} from './SheetInitialEquipmentsAdder';
 
 export class SheetBuilder {
 	readonly context = new OutOfGameContext();
@@ -31,7 +32,7 @@ export class SheetBuilder {
 		this.sheet.initTransaction(new SetInitialAttributes({attributes}));
 
 		return {
-			choseRace: this.chooseRace(),
+			chooseRace: this.chooseRace(),
 		};
 	}
 
@@ -68,25 +69,41 @@ export class SheetBuilder {
 	private trainIntelligenceSkills(race: RaceInterface, role: RoleInterface, origin: OriginInterface) {
 		return (skills: SkillName[]) => {
 			this.sheet.initTransaction(new TrainIntelligenceSkills({skills}));
-			return new Sheet({
-				attributes: this.sheet.getAttributes(),
-				race,
-				role,
-				buildSteps: this.sheet.buildSteps,
-				defense: this.sheet.getDefense(),
-				displacement: this.sheet.getDisplacement(),
-				level: this.sheet.getLevel(),
-				skills: this.sheet.getSkills(),
-				vision: this.sheet.getVision(),
-				proficiencies: this.sheet.getProficiencies(),
-				abilities: this.sheet.getAbilities(),
-				powers: this.sheet.getPowers(),
-				lifePoints: this.sheet.getLifePoints(),
-				manaPoints: this.sheet.getManaPoints(),
-				spells: this.sheet.getSpells(),
-				learnedCircles: this.sheet.getLearnedCircles(),
-				inventory: this.sheet.getInventory(),
-			});
+
+			return {
+				addInitialEquipment: this.addInitialEquipment(race, role, origin),
+			};
 		};
+	}
+
+	private addInitialEquipment(race: RaceInterface, role: RoleInterface, origin: OriginInterface) {
+		return (adder: SheetInitialEquipmentsAdder) => {
+			adder.addEquipments(this.sheet, role);
+
+			return this.createSheet(race, role, origin);
+		};
+	}
+
+	private createSheet(race: RaceInterface, role: RoleInterface, origin: OriginInterface) {
+		return new Sheet({
+			race,
+			role,
+			origin,
+			attributes: this.sheet.getAttributes(),
+			buildSteps: this.sheet.buildSteps,
+			defense: this.sheet.getDefense(),
+			displacement: this.sheet.getDisplacement(),
+			level: this.sheet.getLevel(),
+			skills: this.sheet.getSkills(),
+			vision: this.sheet.getVision(),
+			proficiencies: this.sheet.getProficiencies(),
+			abilities: this.sheet.getAbilities(),
+			powers: this.sheet.getPowers(),
+			lifePoints: this.sheet.getLifePoints(),
+			manaPoints: this.sheet.getManaPoints(),
+			spells: this.sheet.getSpells(),
+			learnedCircles: this.sheet.getLearnedCircles(),
+			inventory: this.sheet.getInventory(),
+		});
 	}
 }

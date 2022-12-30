@@ -25,6 +25,10 @@ export class Arcanist extends Role {
 		[Level.levelFive]: Record<string, RoleAbility>;
 	};
 
+	override get startsWithArmor(): boolean {
+		return false;
+	}
+
 	get initialLifePoints() {
 		return 8;
 	}
