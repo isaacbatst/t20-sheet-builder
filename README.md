@@ -1,18 +1,26 @@
-# Mini T20
+# T20 SheetBuilder
 
 Simulates the brazilian RPG: [Tormenta 20](https://jamboeditora.com.br/produto/tormenta20-edicao-jogo-do-ano-digital/).
 
-## Races
+## Steps
+
+### Define initial attributes
+Roll the dices.
+
+### Choose your race
 - Human
 - Dwarf
 
-## Roles
+### Choose your role
 - Warrior
 - Arcanist
 
-# Origins
+### Choose your origin
 - Acolyte
 - Animals Friend
+
+### Train your intelligence skills
+Choose as many as you have on intelligence attributes
 
 ## Story
 Soon..
