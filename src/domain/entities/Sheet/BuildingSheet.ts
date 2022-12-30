@@ -1,21 +1,21 @@
-import type {Attributes} from './Attributes';
 import type {BuildStep} from '../BuildStep';
 import {Defense} from '../Defense/Defense';
-import type {Equipment} from '../Equipment/Equipment';
-import {Level} from './Levels';
+import type {Equipment} from '../Inventory/Equipment/Equipment';
+import {Inventory} from '../Inventory/Inventory';
 import {LifePoints} from '../Points/LifePoints/LifePoints';
 import {ManaPoints} from '../Points/ManaPoints/ManaPoints';
-import {PointsMaxCalculatorFactory} from '../Points/PointsMaxCalculatorFactory';
-import {Proficiency} from './Proficiency';
 import {InitialSkillsGenerator} from '../Skill/InitialSkillsGenerator';
 import type {LearnableSpellType, Spell} from '../Spell/Spell';
 import type {SpellCircle} from '../Spell/SpellCircle';
 import type {SpellName} from '../Spell/SpellName';
-import {Vision} from './Vision';
+import type {Attributes} from './Attributes';
 import type {BuildingSheetInterface} from './BuildingSheetInterface';
+import {Level} from './Levels';
+import {Proficiency} from './Proficiency';
 import {Sheet} from './Sheet';
 import {SheetBase} from './SheetBase';
 import type {SheetAbilities, SheetPowers, SheetSkills, SheetTriggeredEffects} from './SheetBaseInterface';
+import {Vision} from './Vision';
 
 export class BuildingSheet extends SheetBase implements BuildingSheetInterface {
 	level: Level = Level.levelOne;
@@ -35,11 +35,8 @@ export class BuildingSheet extends SheetBase implements BuildingSheetInterface {
 		divine: new Set(),
 	};
 
+	protected inventory: Inventory = new Inventory();
 	protected equipments: Equipment[] = [];
 	protected displacement = 9;
 	protected triggeredEffects: SheetTriggeredEffects = {attack: new Map(), defense: new Map()};
-
-	getRole() {
-		return this.role;
-	}
 }

@@ -1,7 +1,7 @@
 import type {ContextInterface} from '../Context/ContextInterface';
 import {OutOfGameContext} from '../Context/OutOfGameContext';
-import {Equipment} from '../Equipment/Equipment';
-import {EquipmentName} from '../Equipment/EquipmentName';
+import {Equipment} from '../Inventory/Equipment/Equipment';
+import {EquipmentName} from '../Inventory/Equipment/EquipmentName';
 import {Acolyte} from '../Origin/Acolyte';
 import {AnimalsFriend} from '../Origin/AnimalsFriend';
 import type {Origin} from '../Origin/Origin';
@@ -114,8 +114,8 @@ describe('Sheet', () => {
 		});
 
 		it('should have origin equipments', () => {
-			expect(sheet.equipments).toContainEqual(new Equipment(EquipmentName.priestCostume));
-			expect(sheet.equipments).toContainEqual(new Equipment(EquipmentName.sacredSymbol));
+			expect(sheet.getInventory().equipments).toContainEqual(new Equipment(EquipmentName.priestCostume));
+			expect(sheet.getInventory().equipments).toContainEqual(new Equipment(EquipmentName.sacredSymbol));
 		});
 	});
 

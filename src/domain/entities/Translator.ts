@@ -11,7 +11,7 @@ import {SpellCircle} from './Spell/SpellCircle';
 import type {SpellName} from './Spell/SpellName';
 import {StringHelper} from './StringHelper';
 import type {Vision} from './Sheet/Vision';
-import type {EquipmentName} from './Equipment/EquipmentName';
+import type {EquipmentName} from './Inventory/Equipment/EquipmentName';
 
 export type Translatable = Attribute
 | RaceAbilityName | SkillName | PowerName | RaceName | Proficiency

@@ -1,18 +1,17 @@
+import {ChooseOrigin} from '../Action/ChooseOrigin';
 import {ChooseRace} from '../Action/ChooseRace';
 import {ChooseRole} from '../Action/ChooseRole';
 import {SetInitialAttributes} from '../Action/SetInitialAttributes';
 import {TrainIntelligenceSkills} from '../Action/TrainIntelligenceSkills';
-import type {Attributes} from './Attributes';
 import {OutOfGameContext} from '../Context/OutOfGameContext';
+import type {OriginInterface} from '../Origin/Origin';
 import type {RaceInterface} from '../Race/RaceInterface';
 import type {RoleInterface} from '../Role/RoleInterface';
 import type {SkillName} from '../Skill/SkillName';
+import type {Attributes} from './Attributes';
 import {BuildingSheet} from './BuildingSheet';
 import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import {Sheet} from './Sheet';
-import type {OriginInterface} from '../Origin/Origin';
-import {Origin} from '../Origin/Origin';
-import {ChooseOrigin} from '../Action/ChooseOrigin';
 
 export class SheetBuilder {
 	readonly context = new OutOfGameContext();
@@ -86,7 +85,7 @@ export class SheetBuilder {
 				manaPoints: this.sheet.getManaPoints(),
 				spells: this.sheet.getSpells(),
 				learnedCircles: this.sheet.getLearnedCircles(),
-				equipments: this.sheet.getEquipments(),
+				inventory: this.sheet.getInventory(),
 			});
 		};
 	}

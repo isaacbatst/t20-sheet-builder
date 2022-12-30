@@ -1,4 +1,4 @@
-import type {Equipment} from '../Equipment/Equipment';
+import type {Equipment} from '../Inventory/Equipment/Equipment';
 import type {ContextualModifierInterface} from '../Modifier/ContextualModifier/ContextualModifierInterface';
 import type {FixedModifierInterface} from '../Modifier/FixedModifier/FixedModifier';
 import type {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
