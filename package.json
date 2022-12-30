@@ -1,7 +1,8 @@
 {
-  "name": "mini-t20",
+  "name": "t20-sheet-builder",
   "version": "1.0.0",
   "main": "index.js",
+  "exports": "./src/index.ts",
   "license": "MIT",
   "scripts": {
     "dev": "npx ts-node src/main.ts",
