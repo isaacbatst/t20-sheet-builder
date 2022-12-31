@@ -1,5 +1,4 @@
 import {SheetBuilder} from './domain/entities/Sheet/SheetBuilder';
 
-export {
-	SheetBuilder,
-};
+export default SheetBuilder;
+
