@@ -1,4 +1,4 @@
-import {AbilityEffects} from '../Ability/AbilityEffects';
+import {AbilityEffects} from '../../Ability/AbilityEffects';
 import {GeneralPower} from './GeneralPower';
 import {GeneralPowerName} from './GeneralPowerName';
 

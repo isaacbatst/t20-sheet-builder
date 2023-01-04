@@ -1,10 +1,10 @@
-import {AddFixedModifierToSkill} from '../Action/AddFixedModifierToSkill';
-import {AddPerLevelModifierToManaPoints} from '../Action/AddPerLevelModifierToManaPoints';
-import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
-import {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
-import {OriginName} from '../Origin/OriginName';
-import {SheetBaseFake} from '../Sheet/SheetBaseFake';
-import {SkillName} from '../Skill/SkillName';
+import {AddFixedModifierToSkill} from '../../Action/AddFixedModifierToSkill';
+import {AddPerLevelModifierToManaPoints} from '../../Action/AddPerLevelModifierToManaPoints';
+import {FixedModifier} from '../../Modifier/FixedModifier/FixedModifier';
+import {PerLevelModifier} from '../../Modifier/PerLevelModifier/PerLevelModifier';
+import {OriginName} from '../../Origin/OriginName';
+import {SheetBaseFake} from '../../Sheet/SheetBaseFake';
+import {SkillName} from '../../Skill/SkillName';
 import {GeneralPowerName} from './GeneralPowerName';
 import {IronWill} from './IronWill';
 

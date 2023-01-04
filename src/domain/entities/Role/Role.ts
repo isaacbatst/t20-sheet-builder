@@ -2,11 +2,10 @@ import {AddFixedModifierToLifePoints} from '../Action/AddFixedModifierToLifePoin
 import {AddPerLevelModifierToLifePoints} from '../Action/AddPerLevelModifierToLifePoints';
 import {AddPerLevelModifierToManaPoints} from '../Action/AddPerLevelModifierToManaPoints';
 import {AddProficiency} from '../Action/AddProficiency';
-import {ChooseRole} from '../Action/ChooseRole';
 import {TrainSkill} from '../Action/TrainSkill';
-import {Level} from '../Sheet/Levels';
 import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
 import {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
+import {Level} from '../Sheet/Levels';
 import type {Proficiency} from '../Sheet/Proficiency';
 import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
 import type {Dispatch} from '../Sheet/Transaction';

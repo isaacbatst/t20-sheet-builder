@@ -1,7 +1,7 @@
 import type {TriggeredEffectInterface} from './Ability/TriggeredEffect';
 import type {TriggeredEffectName} from './Ability/TriggeredEffectName';
-import type {GeneralPowerInterface} from './Power/GeneralPower';
-import type {GeneralPowerName} from './Power/GeneralPowerName';
+import type {GeneralPowerInterface} from './Power/GeneralPower/GeneralPower';
+import type {GeneralPowerName} from './Power/GeneralPower/GeneralPowerName';
 import type {OriginPowerInterface} from './Power/OriginPower/OriginPower';
 import type {OriginPowerName} from './Power/OriginPower/OriginPowerName';
 import type {RaceAbilityInterface} from './Race/RaceAbility';

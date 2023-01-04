@@ -1,8 +1,8 @@
-import {AbilityEffects} from '../Ability/AbilityEffects';
+import {AbilityEffects} from '../../Ability/AbilityEffects';
 import {GeneralPower} from './GeneralPower';
 import {GeneralPowerName} from './GeneralPowerName';
 import {IronWillEffect} from './IronWillEffect';
-import {AttributeRequirement} from './Requirement/AttributeRequirement';
+import {AttributeRequirement} from '../Requirement/AttributeRequirement';
 
 export class IronWill extends GeneralPower {
 	effects = new AbilityEffects({

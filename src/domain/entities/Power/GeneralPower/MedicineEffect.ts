@@ -1,5 +1,5 @@
-import {ActivateableAbilityEffect} from '../Ability/ActivateableAbilityEffect';
-import type {Cost} from '../Sheet/SheetInterface';
+import {ActivateableAbilityEffect} from '../../Ability/ActivateableAbilityEffect';
+import type {Cost} from '../../Sheet/SheetInterface';
 import {GeneralPowerName} from './GeneralPowerName';
 
 export class MedicineEffect extends ActivateableAbilityEffect {

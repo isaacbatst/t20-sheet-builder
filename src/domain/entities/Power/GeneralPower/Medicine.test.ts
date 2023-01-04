@@ -1,5 +1,5 @@
-import {OriginName} from '../Origin/OriginName';
-import {SheetBaseFake} from '../Sheet/SheetBaseFake';
+import {OriginName} from '../../Origin/OriginName';
+import {SheetBaseFake} from '../../Sheet/SheetBaseFake';
 import {Medicine} from './Medicine';
 
 describe('Medicine', () => {

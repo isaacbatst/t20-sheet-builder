@@ -17,7 +17,7 @@ import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
 import {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
 import {OriginFake} from '../Origin/OriginFake';
 import {OriginName} from '../Origin/OriginName';
-import {GeneralPowerName} from '../Power/GeneralPowerName';
+import {GeneralPowerName} from '../Power/GeneralPower/GeneralPowerName';
 import {ChurchMember} from '../Power/OriginPower/ChurchMember';
 import {GeneralPowerFake, RolePowerFake} from '../Power/PowerFake';
 import {RaceAbilityFake} from '../Race/RaceAbilityFake';

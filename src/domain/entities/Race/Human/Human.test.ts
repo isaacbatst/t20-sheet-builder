@@ -1,7 +1,7 @@
 import {ApplyRaceAbility} from '../../Action/ApplyRaceAbility';
 import {ApplyRaceModifiers} from '../../Action/ApplyRaceModifiers';
 import {BuildingSheetFake} from '../../Sheet/BuildingSheetFake';
-import {GeneralPowerName} from '../../Power/GeneralPowerName';
+import {GeneralPowerName} from '../../Power/GeneralPower/GeneralPowerName';
 import {Versatile} from './Versatile/Versatile';
 import {SkillName} from '../../Skill/SkillName';
 import {Human} from './Human';
@@ -9,7 +9,7 @@ import {RaceName} from '../RaceName';
 import {VersatileChoiceSkill} from './Versatile/VersatileChoiceSkill';
 import type {VersatileChoice} from './Versatile/VersatileChoice';
 import {VersatileChoicePower} from './Versatile/VersatileChoicePower';
-import {Dodge} from '../../Power/Dodge';
+import {Dodge} from '../../Power/GeneralPower/Dodge';
 
 describe('Human', () => {
 	it('should apply +1 to strength, dexterity and constitution', () => {

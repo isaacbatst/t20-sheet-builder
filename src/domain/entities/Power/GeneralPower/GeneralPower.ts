@@ -1,9 +1,9 @@
-import type {Action} from '../Action/Action';
-import {PickGeneralPower} from '../Action/PickGeneralPower';
-import type {Translatable} from '../Translator';
+import type {Action} from '../../Action/Action';
+import {PickGeneralPower} from '../../Action/PickGeneralPower';
+import type {Translatable} from '../../Translator';
 import type {GeneralPowerName} from './GeneralPowerName';
-import type {PowerInterface} from './Power';
-import {Power} from './Power';
+import type {PowerInterface} from '../Power';
+import {Power} from '../Power';
 
 export type GeneralPowerInterface = PowerInterface & {
 	name: GeneralPowerName;

@@ -1,6 +1,6 @@
 import {AddEquipment} from '../Action/AddEquipment';
 import type {Equipment} from '../Inventory/Equipment/Equipment';
-import type {GeneralPowerName} from '../Power/GeneralPowerName';
+import type {GeneralPowerName} from '../Power/GeneralPower/GeneralPowerName';
 import type {OriginPowerName} from '../Power/OriginPower/OriginPowerName';
 import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
 import type {Dispatch} from '../Sheet/Transaction';

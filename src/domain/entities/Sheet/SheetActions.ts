@@ -6,7 +6,7 @@ import type {ContextualModifierInterface} from '../Modifier/ContextualModifier/C
 import type {FixedModifierInterface} from '../Modifier/FixedModifier/FixedModifier';
 import type {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
 import type {OriginInterface} from '../Origin/Origin';
-import type {GeneralPowerInterface} from '../Power/GeneralPower';
+import type {GeneralPowerInterface} from '../Power/GeneralPower/GeneralPower';
 import type {OriginPowerInterface} from '../Power/OriginPower/OriginPower';
 import type {RaceAbilityInterface} from '../Race/RaceAbility';
 import type {RaceInterface} from '../Race/RaceInterface';

@@ -1,9 +1,9 @@
-import {AddFixedModifierToDefense} from '../Action/AddFixedModifierToDefense';
-import {AddFixedModifierToSkill} from '../Action/AddFixedModifierToSkill';
-import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
-import {RaceAbilityName} from '../Race/RaceAbilityName';
-import {BuildingSheetFake} from '../Sheet/BuildingSheetFake';
-import {SkillName} from '../Skill/SkillName';
+import {AddFixedModifierToDefense} from '../../Action/AddFixedModifierToDefense';
+import {AddFixedModifierToSkill} from '../../Action/AddFixedModifierToSkill';
+import {FixedModifier} from '../../Modifier/FixedModifier/FixedModifier';
+import {RaceAbilityName} from '../../Race/RaceAbilityName';
+import {BuildingSheetFake} from '../../Sheet/BuildingSheetFake';
+import {SkillName} from '../../Skill/SkillName';
 import {Dodge} from './Dodge';
 import {GeneralPowerName} from './GeneralPowerName';
 

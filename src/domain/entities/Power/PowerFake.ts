@@ -1,7 +1,7 @@
 import type {AbilityType} from '../Ability/Ability';
 import {AbilityEffects} from '../Ability/AbilityEffects';
-import type {GeneralPowerInterface} from './GeneralPower';
-import {GeneralPowerName} from './GeneralPowerName';
+import type {GeneralPowerInterface} from './GeneralPower/GeneralPower';
+import {GeneralPowerName} from './GeneralPower/GeneralPowerName';
 import type {PowerInterface, PowerType} from './Power';
 import type {RolePowerInterface} from '../Role/RolePower';
 import {RolePowerName} from '../Role/RolePowerName';

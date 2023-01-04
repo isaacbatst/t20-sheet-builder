@@ -1,6 +1,6 @@
 import type {Attributes} from '../Sheet/Attributes';
 import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
-import {GeneralPowerName} from '../Power/GeneralPowerName';
+import {GeneralPowerName} from '../Power/GeneralPower/GeneralPowerName';
 import {Defense} from './Defense';
 import {DefenseTotalCalculatorFactory} from './DefenseTotalCalculatorFactory';
 

@@ -1,11 +1,11 @@
-import type {AbilityEffect} from '../Ability/AbilityEffect';
-import {AbilityEffects} from '../Ability/AbilityEffects';
-import {SkillName} from '../Skill/SkillName';
+import type {AbilityEffect} from '../../Ability/AbilityEffect';
+import {AbilityEffects} from '../../Ability/AbilityEffects';
+import {SkillName} from '../../Skill/SkillName';
 import {GeneralPower} from './GeneralPower';
 import {GeneralPowerName} from './GeneralPowerName';
 import {MedicineEffect} from './MedicineEffect';
-import {AttributeRequirement} from './Requirement/AttributeRequirement';
-import {SkillRequirement} from './Requirement/SkillRequirement';
+import {AttributeRequirement} from '../Requirement/AttributeRequirement';
+import {SkillRequirement} from '../Requirement/SkillRequirement';
 
 export class Medicine extends GeneralPower {
 	private static readonly wisdomRequirement = new AttributeRequirement(

@@ -1,5 +1,3 @@
-import type {ContextInterface} from '../Context/ContextInterface';
-import {OutOfGameContext} from '../Context/OutOfGameContext';
 import {Equipment} from '../Inventory/Equipment/Equipment';
 import {EquipmentName} from '../Inventory/Equipment/EquipmentName';
 import {LeatherArmor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/LeatherArmor';
@@ -12,9 +10,9 @@ import {OriginBenefitGeneralPower} from '../Origin/OriginBenefitGeneralPower';
 import {OriginBenefitOriginPower} from '../Origin/OriginBenefitOriginPower';
 import {OriginBenefitSkill} from '../Origin/OriginBenefitSkill';
 import {PointsMaxCalculatorFactory} from '../Points/PointsMaxCalculatorFactory';
-import {Dodge} from '../Power/Dodge';
-import {GeneralPowerName} from '../Power/GeneralPowerName';
-import {IronWill} from '../Power/IronWill';
+import {Dodge} from '../Power/GeneralPower/Dodge';
+import {GeneralPowerName} from '../Power/GeneralPower/GeneralPowerName';
+import {IronWill} from '../Power/GeneralPower/IronWill';
 import {SpecialFriend} from '../Power/OriginPower/SpecialFriend';
 import {Dwarf} from '../Race/Dwarf/Dwarf';
 import {Human} from '../Race/Human/Human';
@@ -34,7 +32,6 @@ import {MentalDagger} from '../Spell/MentalDagger/MentalDagger';
 import {Proficiency} from './Proficiency';
 import type {Sheet} from './Sheet';
 import {SheetBuilder} from './SheetBuilder';
-import {SheetInitialEquipmentsAdder} from './SheetInitialEquipmentsAdder';
 import {Vision} from './Vision';
 
 describe('Sheet', () => {
@@ -42,7 +39,6 @@ describe('Sheet', () => {
 		let sheet: Sheet;
 		let role: Role;
 		let race: Race;
-		let context: ContextInterface;
 		let sheetBuilder: SheetBuilder;
 		let origin: Origin;
 		beforeAll(() => {
@@ -51,7 +47,6 @@ describe('Sheet', () => {
 				new VersatileChoicePower(new Dodge()),
 			];
 			race = new Human(['charisma', 'constitution', 'dexterity'], choices);
-			context = new OutOfGameContext();
 			role = new Warrior([SkillName.fight, SkillName.aim, SkillName.athletics]);
 			sheetBuilder = new SheetBuilder();
 			origin = new Acolyte([new OriginBenefitGeneralPower(new IronWill()), new OriginBenefitSkill(SkillName.cure)]);
@@ -154,13 +149,11 @@ describe('Sheet', () => {
 	describe('Dwarf Arcanist', () => {
 		let sheet: Sheet;
 		let role: Role;
-		let context: ContextInterface;
 		let race: Race;
 		let sheetBuilder: SheetBuilder;
 		let origin: Origin;
 
 		beforeAll(() => {
-			context = new OutOfGameContext();
 			role = ArcanistBuilder
 				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
 				.choosePath(new ArcanistPathMage(new FlamesExplosion()))

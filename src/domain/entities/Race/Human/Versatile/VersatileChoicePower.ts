@@ -1,4 +1,4 @@
-import type {GeneralPowerInterface} from '../../../Power/GeneralPower';
+import type {GeneralPowerInterface} from '../../../Power/GeneralPower/GeneralPower';
 import type {SheetBaseInterface} from '../../../Sheet/SheetBaseInterface';
 import type {Dispatch} from '../../../Sheet/Transaction';
 import type {Translatable} from '../../../Translator';
