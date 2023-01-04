@@ -1,11 +1,12 @@
 {
   "name": "t20-sheet-builder",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "exports": "./build/index.js",
   "license": "MIT",
   "scripts": {
+    "prepare": "npx tsc",
     "dev": "npx ts-node src/main.ts",
     "test": "jest"
   },

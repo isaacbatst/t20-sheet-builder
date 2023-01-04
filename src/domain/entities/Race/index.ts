@@ -1,5 +1,5 @@
-export * from './Dwarf/Dwarf';
-export * from './Human/Human';
+export * from './Dwarf';
+export * from './Human';
 export * from './RaceInterface';
 export * from './RaceName';
 

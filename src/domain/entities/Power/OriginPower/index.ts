@@ -1,3 +1,3 @@
 export * from './ChurchMember';
-export * from './OriginPower';
+export * from './OriginPowerName';
 export * from './SpecialFriend';
