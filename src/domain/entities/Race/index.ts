@@ -1,7 +1,3 @@
-import {Dwarf} from './Dwarf/Dwarf';
-import {Human} from './Human/Human';
-
-export {
-	Dwarf,
-	Human,
-};
+export * from './Dwarf/Dwarf';
+export * from './Human/Human';
+export * from './RaceInterface';
