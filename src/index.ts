@@ -7,5 +7,6 @@ export * from './domain/entities/Skill/';
 export * from './domain/entities/Power';
 export * from './domain/entities/Inventory';
 export * from './domain/entities/Spell';
+export * from './domain/entities/Translator';
 
 export default SheetBuilder;
