@@ -16,12 +16,15 @@ import type {Attributes} from './Attributes';
 import {BuildingSheet} from './BuildingSheet';
 import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import {Sheet} from './Sheet';
-import {SheetInitialEquipmentsAdder} from './SheetInitialEquipmentsAdder';
 
 export class SheetBuilder {
 	readonly context = new OutOfGameContext();
 	constructor(private sheet: BuildingSheetInterface = new BuildingSheet()) {
 
+	}
+
+	getBuildingSheet() {
+		return this.sheet;
 	}
 
 	reset(sheet: BuildingSheetInterface = new BuildingSheet()) {
