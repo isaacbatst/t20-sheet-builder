@@ -8,7 +8,7 @@ import {RoleName} from '../RoleName';
 import {SpecialAttack} from './SpecialAttack/SpecialAttack';
 
 export class Warrior extends Role {
-	private static readonly chooseableSkills: ChooseableSkills[] = [
+	static readonly chooseableSkills: ChooseableSkills[] = [
 		{amount: 1, skills: [SkillName.fight, SkillName.aim]},
 		{amount: 2, skills: [SkillName.animalHandling, SkillName.athletics, SkillName.animalRide, SkillName.war, SkillName.initiative, SkillName.intimidation, SkillName.fight, SkillName.craft, SkillName.perception, SkillName.aim, SkillName.reflexes]},
 	];
