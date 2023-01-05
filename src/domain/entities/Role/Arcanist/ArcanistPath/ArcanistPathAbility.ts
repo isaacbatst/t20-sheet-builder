@@ -27,11 +27,11 @@ export class ArcanistPathAbility extends RoleAbility {
 	}
 
 	getSpellsAttribute() {
-		return ArcanistPathAbility.pathToAttribute[this.effects.passive.default.path.name];
+		return this.effects.passive.default.path.spellsAttribute;
 	}
 
 	getLearnFrequency() {
-		return ArcanistPathAbility.pathToLearnFrequency[this.effects.passive.default.path.name];
+		return this.effects.passive.default.path.spellLearnFrequency;
 	}
 
 	private getAbilityEffects(path: ArcanistPath) {

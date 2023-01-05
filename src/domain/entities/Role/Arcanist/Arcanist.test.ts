@@ -1,5 +1,8 @@
+import {AddEquipment} from '../../Action/AddEquipment';
 import {LearnSpell} from '../../Action/AddSpell';
 import {TrainSkill} from '../../Action/TrainSkill';
+import {EquipmentName} from '../../Inventory';
+import {Equipment} from '../../Inventory/Equipment/Equipment';
 import {BuildingSheetFake} from '../../Sheet/BuildingSheetFake';
 import {SkillName} from '../../Skill/SkillName';
 import {ArcaneArmor} from '../../Spell/ArcaneArmor/ArcaneArmor';
@@ -9,7 +12,9 @@ import {MentalDagger} from '../../Spell/MentalDagger/MentalDagger';
 import {RoleAbilityName} from '../RoleAbilityName';
 import {RoleName} from '../RoleName';
 import {ArcanistBuilder} from './ArcanistBuider';
+import {ArcanistPathName} from './ArcanistPath';
 import {ArcanistPathMage} from './ArcanistPath/ArcanistPathMage';
+import {ArcanistPathWizard} from './ArcanistPath/ArcanistPathWizard';
 
 describe('Arcanist', () => {
 	it('should dispatch proper train skills', () => {
@@ -95,10 +100,78 @@ describe('Arcanist', () => {
 			source: RoleAbilityName.arcanistSpells,
 			spell: new IllusoryDisguise(),
 		}), sheet);
+	});
 
-		expect(dispatch).toHaveBeenCalledWith(new LearnSpell({
-			source: RoleAbilityName.arcanistPath,
-			spell: new FlamesExplosion(),
-		}), sheet);
+	describe('Mage', () => {
+		it('should have intelligence as key attribute', () => {
+			const arcanist = ArcanistBuilder
+				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
+				.choosePath(new ArcanistPathMage(new FlamesExplosion()))
+				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
+
+			expect(arcanist.getSpellsAttribute()).toBe('intelligence');
+		});
+
+		it('should learn all levels', () => {
+			const arcanist = ArcanistBuilder
+				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
+				.choosePath(new ArcanistPathMage(new FlamesExplosion()))
+				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
+
+			expect(arcanist.getSpellLearnFrequency()).toBe('all');
+		});
+
+		it('should learn additional spell', () => {
+			const arcanist = ArcanistBuilder
+				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
+				.choosePath(new ArcanistPathMage(new FlamesExplosion()))
+				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
+
+			const sheet = new BuildingSheetFake();
+			const dispatch = jest.fn();
+			arcanist.addToSheet(sheet, dispatch);
+
+			expect(dispatch).toHaveBeenCalledWith(new LearnSpell({
+				source: ArcanistPathName.mage,
+				spell: new FlamesExplosion(),
+			}), sheet);
+		});
+	});
+
+	describe('Wizard', () => {
+		it('should have intelligence as key attribute', () => {
+			const arcanist = ArcanistBuilder
+				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
+				.choosePath(new ArcanistPathWizard(new Equipment(EquipmentName.wand)))
+				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
+
+			expect(arcanist.getSpellsAttribute()).toBe('intelligence');
+		});
+
+		it('should learn all levels', () => {
+			const arcanist = ArcanistBuilder
+				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
+				.choosePath(new ArcanistPathWizard(new Equipment(EquipmentName.wand)))
+				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
+
+			expect(arcanist.getSpellLearnFrequency()).toBe('all');
+		});
+
+		it('should dispatch focus add', () => {
+			const focus = new Equipment(EquipmentName.wand);
+			const arcanist = ArcanistBuilder
+				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
+				.choosePath(new ArcanistPathWizard(focus))
+				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
+
+			const sheet = new BuildingSheetFake();
+			const dispatch = jest.fn();
+			arcanist.addToSheet(sheet, dispatch);
+
+			expect(dispatch).toHaveBeenCalledWith(new AddEquipment({
+				equipment: focus,
+				source: ArcanistPathName.wizard,
+			}), sheet);
+		});
 	});
 });

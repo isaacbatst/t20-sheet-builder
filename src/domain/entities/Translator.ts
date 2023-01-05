@@ -12,11 +12,12 @@ import type {SpellName} from './Spell/SpellName';
 import {StringHelper} from './StringHelper';
 import type {Vision} from './Sheet/Vision';
 import type {EquipmentName} from './Inventory/Equipment/EquipmentName';
+import type {ArcanistPathName} from './Role';
 
 export type Translatable = Attribute
 | RaceAbilityName | SkillName | PowerName | RaceName | Proficiency
-| Vision | RoleAbilityName | SpellName | SpellCircle | RoleName | OriginName | EquipmentName
-| 'default';
+| Vision | RoleAbilityName | SpellName | SpellCircle | RoleName | OriginName
+| EquipmentName | ArcanistPathName | 'default';
 
 export class Translator {
 	static getAttributeTranslation(attribute: Attribute, capitalized = true) {
@@ -200,6 +201,13 @@ export class Translator {
 		brunea: 'Brunea',
 		leatherArmor: 'Armadura de Couro',
 		studdedLeather: 'Couro Batido',
+		wand: 'Varinha',
+	};
+
+	private static readonly arcanistPathsTranslation: Record<ArcanistPathName, string> = {
+		mage: 'Mago',
+		sorcerer: 'Feiticeiro',
+		wizard: 'Bruxo',
 	};
 
 	private static readonly translation: Record<Translatable, string> = {
@@ -216,6 +224,7 @@ export class Translator {
 		...Translator.spellCirclesTranslation,
 		...Translator.originsTranslation,
 		...Translator.equipmentsTranslation,
+		...Translator.arcanistPathsTranslation,
 		default: 'Padrão',
 	};
 }

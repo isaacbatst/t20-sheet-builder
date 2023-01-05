@@ -1,25 +1,24 @@
-import {LearnSpell} from '../../../Action/AddSpell';
+import {AddEquipment} from '../../../Action/AddEquipment';
+import type {Equipment} from '../../../Inventory/Equipment/Equipment';
 import type {Attribute} from '../../../Sheet';
 import type {SheetBaseInterface} from '../../../Sheet/SheetBaseInterface';
 import type {Dispatch} from '../../../Sheet/Transaction';
-import type {Spell} from '../../../Spell/Spell';
-import {RoleAbilityName} from '../../RoleAbilityName';
 import type {SpellLearnFrequency} from '../../SpellsAbility';
 import {ArcanistPath, ArcanistPathName} from './ArcanistPath';
 
-export class ArcanistPathMage extends ArcanistPath {
+export class ArcanistPathWizard extends ArcanistPath {
 	spellsAttribute: Attribute = 'intelligence';
 	spellLearnFrequency: SpellLearnFrequency = 'all';
-	name: ArcanistPathName = ArcanistPathName.mage;
+	name: ArcanistPathName = ArcanistPathName.wizard;
 
-	constructor(readonly additionalSpell: Spell) {
+	constructor(readonly focus: Equipment) {
 		super();
 	}
 
 	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
-		dispatch(new LearnSpell({
+		dispatch(new AddEquipment({
+			equipment: this.focus,
 			source: this.name,
-			spell: this.additionalSpell,
 		}), sheet);
 	}
 }

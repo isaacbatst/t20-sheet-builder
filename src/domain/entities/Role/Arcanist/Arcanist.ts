@@ -7,6 +7,7 @@ import {Role} from '../Role';
 import type {RoleAbility} from '../RoleAbility';
 import type {ChooseableSkills} from '../RoleInterface';
 import {RoleName} from '../RoleName';
+import type {SpellLearnFrequency} from '../SpellsAbility';
 import type {ArcanistPath} from './ArcanistPath/ArcanistPath';
 import {ArcanistPathAbility} from './ArcanistPath/ArcanistPathAbility';
 import {ArcanistSpells} from './ArcanistSpells/ArcanistSpells';
@@ -44,10 +45,8 @@ export class Arcanist extends Role {
 	readonly mandatorySkills: SkillName[] = [SkillName.mysticism, SkillName.will];
 	readonly proficiencies: Proficiency[] = [];
 	readonly name = RoleName.arcanist;
-	spellsLearnFrequency: 'all' | 'even' | 'odd';
 	initialSpells = 3;
 	spellType: SpellType = 'arcane';
-	spellsAttribute: Attribute;
 
 	constructor(chosenSkills: SkillName[], path: ArcanistPath, spells: Spell[]) {
 		super(chosenSkills, Arcanist.chooseableSkills);
@@ -63,7 +62,13 @@ export class Arcanist extends Role {
 			[Level.levelFour]: {},
 			[Level.levelFive]: {},
 		};
-		this.spellsAttribute = this.abilities[Level.levelOne].arcanistPath.getSpellsAttribute();
-		this.spellsLearnFrequency = this.abilities[Level.levelOne].arcanistPath.getLearnFrequency();
+	}
+
+	getSpellsAttribute(): Attribute {
+		return this.abilities[Level.levelOne].arcanistPath.getSpellsAttribute();
+	}
+
+	getSpellLearnFrequency(): SpellLearnFrequency {
+		return this.abilities[Level.levelOne].arcanistPath.getLearnFrequency();
 	}
 }

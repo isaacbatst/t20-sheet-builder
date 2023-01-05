@@ -13,4 +13,5 @@ export enum EquipmentName {
 	leatherArmor = 'leatherArmor',
 	studdedLeather = 'studdedLeather',
 	brunea = 'brunea',
+	wand = 'wand',
 }
