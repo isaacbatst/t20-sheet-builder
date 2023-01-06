@@ -14,25 +14,11 @@ import type {SpellName} from './SpellName';
 export type LearnableSpellType = 'arcane' | 'divine';
 export type SpellType = LearnableSpellType | 'universal';
 
-export type SpellStatic = {
-	circle: SpellCircle;
-	new(): Spell;
-};
-
 export abstract class Spell extends Ability {
 	static readonly circleManaCost: Record<SpellCircle, number> = {
 		[SpellCircle.first]: 1,
 		[SpellCircle.second]: 3,
 	};
-
-	static getAll(): SpellStatic[] {
-		return [
-			ArcaneArmor,
-			FlamesExplosion,
-			IllusoryDisguise,
-			MentalDagger,
-		];
-	}
 
 	readonly cost: Cost;
 
