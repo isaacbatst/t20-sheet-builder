@@ -6,7 +6,7 @@ import type {SpellStatic} from '../SpellStatic';
 import {IllusoryDisguiseDefaultEffect} from './IllusoryDisguiseDefaultEffect';
 
 const illusoryDisguise: SpellStatic = class extends Spell {
-	static spellName = SpellName.arcaneArmor;
+	static spellName = SpellName.illusoryDisguise;
 	static circle = SpellCircle.first;
 	effects = new AbilityEffects({
 		activateable: {

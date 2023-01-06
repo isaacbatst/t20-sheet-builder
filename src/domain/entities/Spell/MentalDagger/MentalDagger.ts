@@ -7,7 +7,7 @@ import {MentalDaggerDefaultEffect} from './MentalDaggerDefaultEffect';
 
 const mentalDagger: SpellStatic = class extends Spell {
 	static circle = SpellCircle.first;
-	static spellName = SpellName.arcaneArmor;
+	static spellName = SpellName.mentalDagger;
 	effects = new AbilityEffects({
 		activateable: {
 			default: new MentalDaggerDefaultEffect(),
