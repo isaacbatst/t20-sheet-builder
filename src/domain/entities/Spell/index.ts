@@ -3,4 +3,6 @@ export * from './FlamesExplosion/FlamesExplosion';
 export * from './IllusoryDisguise/IllusoryDisguise';
 export * from './MentalDagger/MentalDagger';
 export * from './SpellName';
+export * from './Spell';
+export * from './SpellCircle';
 
