@@ -3,8 +3,13 @@ import type {SelectSkillGroup} from './RoleInterface';
 import type {RoleName} from './RoleName';
 import {Warrior} from './Warrior';
 
+export type RoleStatic = {
+	roleName: RoleName;
+	selectSkillGroups: SelectSkillGroup[];
+};
+
 export abstract class Roles {
-	static getAll(): Array<{roleName: RoleName; selectSkillGroups: SelectSkillGroup[]}> {
+	static getAll(): RoleStatic[] {
 		return [
 			Arcanist,
 			Warrior,
