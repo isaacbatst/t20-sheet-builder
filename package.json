@@ -1,6 +1,6 @@
 {
   "name": "t20-sheet-builder",
-  "version": "1.2.10",
+  "version": "1.2.11",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "exports": "./build/index.js",
