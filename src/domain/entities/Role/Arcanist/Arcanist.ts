@@ -5,7 +5,7 @@ import {SkillName} from '../../Skill/SkillName';
 import type {Spell, SpellType} from '../../Spell/Spell';
 import {Role} from '../Role';
 import type {RoleAbility} from '../RoleAbility';
-import type {ChooseableSkills} from '../RoleInterface';
+import type {SelectSkillGroup} from '../RoleInterface';
 import {RoleName} from '../RoleName';
 import type {SpellLearnFrequency} from '../SpellsAbility';
 import type {ArcanistPath} from './ArcanistPath/ArcanistPath';
@@ -13,7 +13,8 @@ import {ArcanistPathAbility} from './ArcanistPath/ArcanistPathAbility';
 import {ArcanistSpells} from './ArcanistSpells/ArcanistSpells';
 
 export class Arcanist extends Role {
-	static readonly chooseableSkills: ChooseableSkills[] = [{amount: 2, skills: [SkillName.knowledge, SkillName.diplomacy, SkillName.cheat, SkillName.war, SkillName.initiative, SkillName.intimidation, SkillName.intuition, SkillName.investigation, SkillName.nobility, SkillName.craft, SkillName.perception]}];
+	static readonly roleName = RoleName.arcanist;
+	static readonly selectSkillGroups: SelectSkillGroup[] = [{amount: 2, skills: [SkillName.knowledge, SkillName.diplomacy, SkillName.cheat, SkillName.war, SkillName.initiative, SkillName.intimidation, SkillName.intuition, SkillName.investigation, SkillName.nobility, SkillName.craft, SkillName.perception]}];
 
 	readonly abilities: {
 		[Level.levelOne]: {
@@ -49,7 +50,7 @@ export class Arcanist extends Role {
 	spellType: SpellType = 'arcane';
 
 	constructor(chosenSkills: SkillName[], path: ArcanistPath, spells: Spell[]) {
-		super(chosenSkills, Arcanist.chooseableSkills);
+		super(chosenSkills, Arcanist.selectSkillGroups);
 		const arcanistPath = new ArcanistPathAbility(path);
 		const arcanistSpells = new ArcanistSpells(spells, arcanistPath.getLearnFrequency(), arcanistPath.getSpellsAttribute());
 		this.abilities = {

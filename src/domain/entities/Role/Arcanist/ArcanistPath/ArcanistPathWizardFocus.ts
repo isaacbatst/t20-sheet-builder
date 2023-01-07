@@ -1,5 +1,5 @@
 import type {Equipment} from '../../../Inventory/Equipment/Equipment';
 
-export class ArcanistPathWizardFocus {
+export abstract class ArcanistPathWizardFocus {
 	constructor(readonly equipment: Equipment) {}
 }

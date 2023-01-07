@@ -202,6 +202,7 @@ export class Translator {
 		leatherArmor: 'Armadura de Couro',
 		studdedLeather: 'Couro Batido',
 		wand: 'Varinha',
+		staff: 'Cajado',
 	};
 
 	private static readonly arcanistPathsTranslation: Record<ArcanistPathName, string> = {

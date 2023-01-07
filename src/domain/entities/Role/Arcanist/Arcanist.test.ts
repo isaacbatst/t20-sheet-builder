@@ -1,8 +1,6 @@
 import {AddEquipment} from '../../Action/AddEquipment';
 import {LearnSpell} from '../../Action/AddSpell';
 import {TrainSkill} from '../../Action/TrainSkill';
-import {EquipmentName} from '../../Inventory';
-import {Equipment} from '../../Inventory/Equipment/Equipment';
 import {BuildingSheetFake} from '../../Sheet/BuildingSheetFake';
 import {SkillName} from '../../Skill/SkillName';
 import {ArcaneArmor} from '../../Spell/ArcaneArmor/ArcaneArmor';
@@ -15,7 +13,7 @@ import {ArcanistBuilder} from './ArcanistBuider';
 import {ArcanistPathName} from './ArcanistPath';
 import {ArcanistPathMage} from './ArcanistPath/ArcanistPathMage';
 import {ArcanistPathWizard} from './ArcanistPath/ArcanistPathWizard';
-import {ArcanistPathWizardFocus} from './ArcanistPath/ArcanistPathWizardFocus';
+import {ArcanistPathWizardFocusWand} from './ArcanistPath/ArcanistPathWizardFocusWand';
 
 describe('Arcanist', () => {
 	it('should dispatch proper train skills', () => {
@@ -143,7 +141,7 @@ describe('Arcanist', () => {
 		it('should have intelligence as key attribute', () => {
 			const arcanist = ArcanistBuilder
 				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
-				.choosePath(new ArcanistPathWizard(new ArcanistPathWizardFocus(new Equipment(EquipmentName.wand))))
+				.choosePath(new ArcanistPathWizard(new ArcanistPathWizardFocusWand()))
 				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 
 			expect(arcanist.getSpellsAttribute()).toBe('intelligence');
@@ -152,14 +150,14 @@ describe('Arcanist', () => {
 		it('should learn all levels', () => {
 			const arcanist = ArcanistBuilder
 				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
-				.choosePath(new ArcanistPathWizard(new ArcanistPathWizardFocus(new Equipment(EquipmentName.wand))))
+				.choosePath(new ArcanistPathWizard(new ArcanistPathWizardFocusWand()))
 				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 
 			expect(arcanist.getSpellLearnFrequency()).toBe('all');
 		});
 
 		it('should dispatch focus add', () => {
-			const focus = new ArcanistPathWizardFocus(new Equipment(EquipmentName.wand));
+			const focus = new ArcanistPathWizardFocusWand();
 			const arcanist = ArcanistBuilder
 				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
 				.choosePath(new ArcanistPathWizard(focus))

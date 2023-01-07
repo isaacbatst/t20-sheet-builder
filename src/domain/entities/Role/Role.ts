@@ -11,7 +11,7 @@ import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
 import type {Dispatch} from '../Sheet/Transaction';
 import type {SkillName} from '../Skill/SkillName';
 import type {RoleAbility} from './RoleAbility';
-import type {ChooseableSkills, RoleInterface} from './RoleInterface';
+import type {SelectSkillGroup, RoleInterface} from './RoleInterface';
 import type {RoleName} from './RoleName';
 
 export abstract class Role implements RoleInterface {
@@ -33,7 +33,7 @@ export abstract class Role implements RoleInterface {
 
 	constructor(
 		readonly chosenSkills: SkillName[],
-		readonly chooseableSkills: ChooseableSkills[],
+		readonly selectSkillGroups: SelectSkillGroup[],
 	) {
 		this.validateChosenSkills();
 	}
@@ -55,7 +55,7 @@ export abstract class Role implements RoleInterface {
 	}
 
 	getTotalInitialSkills(): number {
-		return this.mandatorySkills.length + this.chooseableSkills.reduce((acc, curr) => curr.amount + acc, 0);
+		return this.mandatorySkills.length + this.selectSkillGroups.reduce((acc, curr) => curr.amount + acc, 0);
 	}
 
 	private addLifePointsModifiers(dispatch: Dispatch, sheet: SheetBaseInterface) {
@@ -109,7 +109,7 @@ export abstract class Role implements RoleInterface {
 		const chosenSkills = this.chosenSkills.slice();
 		const groupCounters: number[] = [];
 
-		this.chooseableSkills.forEach(group => {
+		this.selectSkillGroups.forEach(group => {
 			let groupCounter = group.amount;
 
 			for (let index = 0; index <= group.skills.length; index += 1) {

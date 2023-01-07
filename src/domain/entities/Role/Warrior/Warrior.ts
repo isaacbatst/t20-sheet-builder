@@ -3,12 +3,13 @@ import {Proficiency} from '../../Sheet/Proficiency';
 import {SkillName} from '../../Skill/SkillName';
 import {Role} from '../Role';
 import type {RoleAbility} from '../RoleAbility';
-import type {ChooseableSkills} from '../RoleInterface';
+import type {SelectSkillGroup} from '../RoleInterface';
 import {RoleName} from '../RoleName';
 import {SpecialAttack} from './SpecialAttack/SpecialAttack';
 
 export class Warrior extends Role {
-	static readonly chooseableSkills: ChooseableSkills[] = [
+	static readonly roleName = RoleName.warrior;
+	static readonly selectSkillGroups: SelectSkillGroup[] = [
 		{amount: 1, skills: [SkillName.fight, SkillName.aim]},
 		{amount: 2, skills: [SkillName.animalHandling, SkillName.athletics, SkillName.animalRide, SkillName.war, SkillName.initiative, SkillName.intimidation, SkillName.fight, SkillName.craft, SkillName.perception, SkillName.aim, SkillName.reflexes]},
 	];
@@ -39,6 +40,6 @@ export class Warrior extends Role {
 	};
 
 	constructor(chosenSkills: SkillName[]) {
-		super(chosenSkills, Warrior.chooseableSkills);
+		super(chosenSkills, Warrior.selectSkillGroups);
 	}
 }
