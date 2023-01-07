@@ -15,6 +15,7 @@ import {ArcanistBuilder} from './ArcanistBuider';
 import {ArcanistPathName} from './ArcanistPath';
 import {ArcanistPathMage} from './ArcanistPath/ArcanistPathMage';
 import {ArcanistPathWizard} from './ArcanistPath/ArcanistPathWizard';
+import {ArcanistPathWizardFocus} from './ArcanistPath/ArcanistPathWizardFocus';
 
 describe('Arcanist', () => {
 	it('should dispatch proper train skills', () => {
@@ -142,7 +143,7 @@ describe('Arcanist', () => {
 		it('should have intelligence as key attribute', () => {
 			const arcanist = ArcanistBuilder
 				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
-				.choosePath(new ArcanistPathWizard(new Equipment(EquipmentName.wand)))
+				.choosePath(new ArcanistPathWizard(new ArcanistPathWizardFocus(new Equipment(EquipmentName.wand))))
 				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 
 			expect(arcanist.getSpellsAttribute()).toBe('intelligence');
@@ -151,14 +152,14 @@ describe('Arcanist', () => {
 		it('should learn all levels', () => {
 			const arcanist = ArcanistBuilder
 				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
-				.choosePath(new ArcanistPathWizard(new Equipment(EquipmentName.wand)))
+				.choosePath(new ArcanistPathWizard(new ArcanistPathWizardFocus(new Equipment(EquipmentName.wand))))
 				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 
 			expect(arcanist.getSpellLearnFrequency()).toBe('all');
 		});
 
 		it('should dispatch focus add', () => {
-			const focus = new Equipment(EquipmentName.wand);
+			const focus = new ArcanistPathWizardFocus(new Equipment(EquipmentName.wand));
 			const arcanist = ArcanistBuilder
 				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
 				.choosePath(new ArcanistPathWizard(focus))
@@ -169,7 +170,7 @@ describe('Arcanist', () => {
 			arcanist.addToSheet(sheet, dispatch);
 
 			expect(dispatch).toHaveBeenCalledWith(new AddEquipment({
-				equipment: focus,
+				equipment: focus.equipment,
 				source: ArcanistPathName.wizard,
 			}), sheet);
 		});
