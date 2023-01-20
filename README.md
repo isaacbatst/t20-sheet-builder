@@ -21,6 +21,3 @@ Roll the dices.
 
 ### 5 - Train your intelligence skills
 Choose as many as you have on intelligence attributes
-
-## Story
-Soon..
