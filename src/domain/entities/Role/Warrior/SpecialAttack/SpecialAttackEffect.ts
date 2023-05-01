@@ -8,8 +8,8 @@ import {SpecialAttackEffectCosts} from './SpecialAttackManaCost';
 
 export abstract class SpecialAttackEffect extends TriggeredEffect {
 	static minLevelToCost: Record<SpecialAttackEffectCosts, Level> = {
-		[SpecialAttackEffectCosts.oneManaPoint]: Level.levelOne,
-		[SpecialAttackEffectCosts.twoManaPoints]: Level.levelFive,
+		[SpecialAttackEffectCosts.oneManaPoint]: Level.one,
+		[SpecialAttackEffectCosts.twoManaPoints]: Level.five,
 	};
 
 	static costs: Record<SpecialAttackEffectCosts, ManaCost> = {

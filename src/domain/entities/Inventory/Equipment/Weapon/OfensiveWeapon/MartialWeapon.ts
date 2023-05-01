@@ -1,9 +1,8 @@
 import {Proficiency} from '../../../../Sheet/Proficiency';
-import type {EquipmentName} from '../../EquipmentName';
-import {Weapon} from '../Weapon';
+import {OffensiveWeapon} from './OffensiveWeapon';
 
-export class MartialWeapon extends Weapon {
-	constructor(name: EquipmentName) {
-		super(name, Proficiency.martial, 'offensive');
+export abstract class MartialWeapon extends OffensiveWeapon {
+	constructor() {
+		super(Proficiency.martial);
 	}
 }

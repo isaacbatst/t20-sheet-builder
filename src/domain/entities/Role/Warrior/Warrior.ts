@@ -30,13 +30,18 @@ export class Warrior extends Role {
 	readonly proficiencies: Proficiency[] = [Proficiency.martial, Proficiency.shield, Proficiency.heavyArmor];
 	readonly name: RoleName = RoleName.warrior;
 	readonly abilities: Record<Level, Record<string, RoleAbility>> = {
-		[Level.levelOne]: {
+		[Level.one]: {
 			specialAttack: new SpecialAttack(),
 		},
-		[Level.levelTwo]: {},
-		[Level.levelThree]: {},
-		[Level.levelFour]: {},
-		[Level.levelFive]: {},
+		[Level.two]: {},
+		[Level.three]: {},
+		[Level.four]: {},
+		[Level.five]: {},
+		[Level.six]: {},
+		[Level.seven]: {},
+		[Level.eight]: {},
+		[Level.nine]: {},
+		[Level.ten]: {},
 	};
 
 	constructor(chosenSkills: SkillName[]) {

@@ -1,4 +1,6 @@
 import {AddEquipment} from '../Action/AddEquipment';
+import {EquipmentAdventure} from '../Inventory/Equipment/EquipmentAdventure/EquipmentAdventure';
+import {EquipmentClothing} from '../Inventory/Equipment/EquipmentClothing/EquipmentClothing';
 import {Equipment} from '../Inventory/Equipment/Equipment';
 import {EquipmentName} from '../Inventory/Equipment/EquipmentName';
 import type {Armor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/Armor';
@@ -40,9 +42,9 @@ export class SheetInitialEquipmentsAdder {
 	addEquipments(dispatch: Dispatch, sheet: BuildingSheetInterface, role: RoleInterface) {
 		this.validateWeapons(sheet.getProficiencies(), role);
 
-		dispatch(new AddEquipment({equipment: new Equipment(EquipmentName.backpack), source: 'default'}), sheet);
-		dispatch(new AddEquipment({equipment: new Equipment(EquipmentName.sleepingBag), source: 'default'}), sheet);
-		dispatch(new AddEquipment({equipment: new Equipment(EquipmentName.travelerCostume), source: 'default'}), sheet);
+		dispatch(new AddEquipment({equipment: new EquipmentAdventure(EquipmentName.backpack), source: 'default'}), sheet);
+		dispatch(new AddEquipment({equipment: new EquipmentAdventure(EquipmentName.sleepingBag), source: 'default'}), sheet);
+		dispatch(new AddEquipment({equipment: new EquipmentClothing(EquipmentName.travelerCostume), source: 'default'}), sheet);
 		dispatch(new AddEquipment({equipment: this.simpleWeapon, source: 'default'}), sheet);
 
 		if (this.martialWeapon) {

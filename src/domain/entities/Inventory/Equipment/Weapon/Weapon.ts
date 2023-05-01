@@ -1,15 +1,14 @@
 import type {Proficiency} from '../../../Sheet/Proficiency';
 import {Equipment} from '../Equipment';
-import type {EquipmentName} from '../EquipmentName';
 
 export type WeaponType = 'offensive' | 'defensive';
 
-export class Weapon extends Equipment {
+export abstract class Weapon extends Equipment {
+	abstract readonly type: WeaponType;
+
 	constructor(
-		name: EquipmentName,
 		readonly proficiency: Proficiency,
-		readonly type: WeaponType,
 	) {
-		super(name);
+		super();
 	}
 }

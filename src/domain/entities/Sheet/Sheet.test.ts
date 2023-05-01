@@ -1,3 +1,5 @@
+import {EquipmentAdventure} from '../Inventory/Equipment/EquipmentAdventure/EquipmentAdventure';
+import {EquipmentClothing} from '../Inventory/Equipment/EquipmentClothing/EquipmentClothing';
 import {Equipment} from '../Inventory/Equipment/Equipment';
 import {EquipmentName} from '../Inventory/Equipment/EquipmentName';
 import {LeatherArmor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/LeatherArmor';
@@ -119,14 +121,14 @@ describe('Sheet', () => {
 		});
 
 		it('should have origin equipments', () => {
-			expect(sheet.getInventory().equipments).toContainEqual(new Equipment(EquipmentName.priestCostume));
-			expect(sheet.getInventory().equipments).toContainEqual(new Equipment(EquipmentName.sacredSymbol));
+			expect(sheet.getInventory().equipments).toContainEqual(new EquipmentClothing(EquipmentName.priestCostume));
+			expect(sheet.getInventory().equipments).toContainEqual(new EquipmentAdventure(EquipmentName.sacredSymbol));
 		});
 
 		it('should have default initial equipments', () => {
-			expect(sheet.getInventory().equipments).toContainEqual(new Equipment(EquipmentName.backpack));
-			expect(sheet.getInventory().equipments).toContainEqual(new Equipment(EquipmentName.sleepingBag));
-			expect(sheet.getInventory().equipments).toContainEqual(new Equipment(EquipmentName.travelerCostume));
+			expect(sheet.getInventory().equipments).toContainEqual(new EquipmentAdventure(EquipmentName.backpack));
+			expect(sheet.getInventory().equipments).toContainEqual(new EquipmentAdventure(EquipmentName.sleepingBag));
+			expect(sheet.getInventory().equipments).toContainEqual(new EquipmentClothing(EquipmentName.travelerCostume));
 		});
 
 		it('should have chosen simple weapon', () => {

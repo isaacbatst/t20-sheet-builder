@@ -1,4 +1,6 @@
-import {Equipment} from '../Inventory/Equipment/Equipment';
+import type {Equipment} from '../Inventory/Equipment/Equipment';
+import {EquipmentAdventure} from '../Inventory/Equipment/EquipmentAdventure/EquipmentAdventure';
+import {EquipmentClothing} from '../Inventory/Equipment/EquipmentClothing/EquipmentClothing';
 import {EquipmentName} from '../Inventory/Equipment/EquipmentName';
 import {GeneralPowerName} from '../Power/GeneralPower/GeneralPowerName';
 import {OriginPowerName} from '../Power/OriginPower/OriginPowerName';
@@ -11,8 +13,8 @@ export class Acolyte extends Origin {
 	name: OriginName = OriginName.acolyte;
 
 	equipments: Equipment[] = [
-		new Equipment(EquipmentName.sacredSymbol),
-		new Equipment(EquipmentName.priestCostume),
+		new EquipmentAdventure(EquipmentName.sacredSymbol),
+		new EquipmentClothing(EquipmentName.priestCostume),
 	];
 
 	constructor(chosenBenefits: OriginBenefit[]) {

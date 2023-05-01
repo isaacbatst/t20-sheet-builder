@@ -9,6 +9,7 @@ import {ChooseOrigin} from '../Action/ChooseOrigin';
 import {ChooseRole} from '../Action/ChooseRole';
 import {PickOriginPower} from '../Action/PickOriginPower';
 import {TrainIntelligenceSkills} from '../Action/TrainIntelligenceSkills';
+import {EquipmentClothing} from '../Inventory/Equipment/EquipmentClothing/EquipmentClothing';
 import {Equipment} from '../Inventory/Equipment/Equipment';
 import {EquipmentName} from '../Inventory/Equipment/EquipmentName';
 import {Dagger} from '../Inventory/Equipment/Weapon/OfensiveWeapon/Dagger';
@@ -352,7 +353,7 @@ describe('ActionDescriptionGenerator', () => {
 		const description = ActionDescriptionGenerator.generate(
 			sheet,
 			new AddEquipment({
-				equipment: new Equipment(EquipmentName.sacredSymbol),
+				equipment: new EquipmentClothing(EquipmentName.sacredSymbol),
 				source: OriginName.acolyte,
 			}),
 		);

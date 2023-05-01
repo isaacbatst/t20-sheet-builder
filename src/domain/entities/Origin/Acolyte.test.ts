@@ -2,6 +2,7 @@ import {AddEquipment} from '../Action/AddEquipment';
 import {PickGeneralPower} from '../Action/PickGeneralPower';
 import {PickOriginPower} from '../Action/PickOriginPower';
 import {TrainSkill} from '../Action/TrainSkill';
+import {EquipmentClothing} from '../Inventory/Equipment/EquipmentClothing/EquipmentClothing';
 import {Equipment} from '../Inventory/Equipment/Equipment';
 import {EquipmentName} from '../Inventory/Equipment/EquipmentName';
 import {IronWill} from '../Power/GeneralPower/IronWill';
@@ -25,12 +26,12 @@ describe('Acolyte', () => {
 		acolyte.addToSheet(sheet, dispatch);
 
 		expect(dispatch).toHaveBeenCalledWith(new AddEquipment({
-			equipment: new Equipment(EquipmentName.sacredSymbol),
+			equipment: new EquipmentClothing(EquipmentName.sacredSymbol),
 			source: OriginName.acolyte,
 		}), sheet);
 
 		expect(dispatch).toHaveBeenCalledWith(new AddEquipment({
-			equipment: new Equipment(EquipmentName.priestCostume),
+			equipment: new EquipmentClothing(EquipmentName.priestCostume),
 			source: OriginName.acolyte,
 		}), sheet);
 	});

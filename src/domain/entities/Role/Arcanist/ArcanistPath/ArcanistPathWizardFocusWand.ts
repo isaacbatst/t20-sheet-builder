@@ -1,10 +1,11 @@
-import {Equipment, EquipmentName} from '../../../Inventory';
+import {EquipmentName} from '../../../Inventory';
+import {EquipmentWizardFocus} from '../../../Inventory/Equipment/EquipmentWizardFocus/EquipmentWizardFocus';
 import {ArcanistPathWizardFocus} from './ArcanistPathWizardFocus';
 
 export class ArcanistPathWizardFocusWand extends ArcanistPathWizardFocus {
 	static equipmentName = EquipmentName.wand;
 
 	constructor() {
-		super(new Equipment(EquipmentName.wand));
+		super(new EquipmentWizardFocus(EquipmentName.wand));
 	}
 }

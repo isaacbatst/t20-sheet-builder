@@ -47,7 +47,7 @@ export abstract class Role implements RoleInterface {
 	}
 
 	addLevelOneAbilities(dispatch: Dispatch, sheet: SheetBaseInterface) {
-		const abilities = this.abilities[Level.levelOne];
+		const abilities = this.abilities[Level.one];
 
 		Object.values(abilities).forEach(ability => {
 			ability.addToSheet(sheet, dispatch, this.name);

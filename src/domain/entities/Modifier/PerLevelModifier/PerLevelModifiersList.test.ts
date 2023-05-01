@@ -12,7 +12,7 @@ describe('PerLevelModifiersList', () => {
 		list.add(new PerLevelModifier(RoleAbilityName.arcanistSpells, 1, false));
 		const calculator = new PerLevelModifiersListTotalCalculator(
 			{charisma: 0, constitution: 0, dexterity: 0, intelligence: 2, strength: 0, wisdom: 0},
-			Level.levelThree,
+			Level.three,
 		);
 		expect(list.getTotal(calculator)).toBe(26);
 	});
@@ -24,7 +24,7 @@ describe('PerLevelModifiersList', () => {
 		list.add(new PerLevelModifier(RoleAbilityName.arcanistPath, 5, false, new Set(), 2));
 		const calculator = new PerLevelModifiersListTotalCalculator(
 			{charisma: 0, constitution: 0, dexterity: 0, intelligence: 2, strength: 0, wisdom: 0},
-			Level.levelThree,
+			Level.three,
 		);
 		expect(list.getTotal(calculator)).toBe(31);
 	});

@@ -49,7 +49,7 @@ export class SheetBaseFake implements SheetBaseInterface {
 	attributes: Attributes = {charisma: 0, constitution: 0, dexterity: 0, intelligence: 0, strength: 0, wisdom: 0};
 	defense = new DefenseFake();
 	displacement = 9;
-	level = Level.levelOne;
+	level = Level.one;
 	skills: SheetSkills = InitialSkillsGenerator.generate();
 	vision = Vision.default;
 	proficiencies: Proficiency[] = [];

@@ -18,7 +18,7 @@ import type {SheetAbilities, SheetPowers, SheetSkills, SheetTriggeredEffects} fr
 import {Vision} from './Vision';
 
 export class BuildingSheet extends SheetBase implements BuildingSheetInterface {
-	level: Level = Level.levelOne;
+	level: Level = Level.one;
 	readonly buildSteps: BuildStep[] = [];
 	readonly lifePoints = new LifePoints();
 	readonly manaPoints = new ManaPoints();

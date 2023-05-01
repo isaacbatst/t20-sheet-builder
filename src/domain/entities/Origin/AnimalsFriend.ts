@@ -1,4 +1,5 @@
-import {Equipment} from '../Inventory/Equipment/Equipment';
+import type {Equipment} from '../Inventory/Equipment/Equipment';
+import {EquipmentAnimal} from '../Inventory/Equipment/EquipmentAnimal/EquipmentAnimal';
 import type {EquipmentName} from '../Inventory/Equipment/EquipmentName';
 import {OriginPowerName} from '../Power/OriginPower/OriginPowerName';
 import {SkillName} from '../Skill/SkillName';
@@ -10,7 +11,7 @@ type AnimalsFriendEquipments = EquipmentName.hound | EquipmentName.horse | Equip
 
 export class AnimalsFriend extends Origin {
 	name: OriginName = OriginName.animalsFriend;
-	equipments: Equipment[];
+	equipments: EquipmentAnimal[];
 
 	constructor(chosenBenefits: OriginBenefit[], chosenAnimal: AnimalsFriendEquipments) {
 		super(chosenBenefits, {
@@ -18,6 +19,6 @@ export class AnimalsFriend extends Origin {
 			generalPowers: [],
 			originPower: OriginPowerName.specialFriend,
 		});
-		this.equipments = [new Equipment(chosenAnimal)];
+		this.equipments = [new EquipmentAnimal(chosenAnimal)];
 	}
 }

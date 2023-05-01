@@ -1,7 +1,5 @@
 import type {EquipmentName} from './EquipmentName';
 
-export class Equipment {
-	constructor(
-		readonly name: EquipmentName,
-	) {}
+export abstract class Equipment {
+	abstract readonly name: EquipmentName;
 }

@@ -1,5 +1,6 @@
 import {AddEquipment} from '../Action/AddEquipment';
-import {Equipment} from '../Inventory/Equipment/Equipment';
+import {EquipmentAdventure} from '../Inventory/Equipment/EquipmentAdventure/EquipmentAdventure';
+import {EquipmentClothing} from '../Inventory/Equipment/EquipmentClothing/EquipmentClothing';
 import {EquipmentName} from '../Inventory/Equipment/EquipmentName';
 import {LeatherArmor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/LeatherArmor';
 import {Dagger} from '../Inventory/Equipment/Weapon/OfensiveWeapon/Dagger';
@@ -22,17 +23,17 @@ describe('SheetInitialEquipmentsAdder', () => {
 		adder.addEquipments(dispatch, sheet, role);
 
 		expect(dispatch).toHaveBeenCalledWith(new AddEquipment({
-			equipment: new Equipment(EquipmentName.backpack),
+			equipment: new EquipmentAdventure(EquipmentName.backpack),
 			source: 'default',
 		}), sheet);
 
 		expect(dispatch).toHaveBeenCalledWith(new AddEquipment({
-			equipment: new Equipment(EquipmentName.sleepingBag),
+			equipment: new EquipmentAdventure(EquipmentName.sleepingBag),
 			source: 'default',
 		}), sheet);
 
 		expect(dispatch).toHaveBeenCalledWith(new AddEquipment({
-			equipment: new Equipment(EquipmentName.travelerCostume),
+			equipment: new EquipmentClothing(EquipmentName.travelerCostume),
 			source: 'default',
 		}), sheet);
 	});

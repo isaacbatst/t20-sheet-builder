@@ -17,14 +17,19 @@ export class Arcanist extends Role {
 	static readonly selectSkillGroups: SelectSkillGroup[] = [{amount: 2, skills: [SkillName.knowledge, SkillName.diplomacy, SkillName.cheat, SkillName.war, SkillName.initiative, SkillName.intimidation, SkillName.intuition, SkillName.investigation, SkillName.nobility, SkillName.craft, SkillName.perception]}];
 
 	readonly abilities: {
-		[Level.levelOne]: {
+		[Level.one]: {
 			arcanistPath: ArcanistPathAbility;
 			arcanistSpells: ArcanistSpells;
 		};
-		[Level.levelTwo]: Record<string, RoleAbility>;
-		[Level.levelThree]: Record<string, RoleAbility>;
-		[Level.levelFour]: Record<string, RoleAbility>;
-		[Level.levelFive]: Record<string, RoleAbility>;
+		[Level.two]: Record<string, RoleAbility>;
+		[Level.three]: Record<string, RoleAbility>;
+		[Level.four]: Record<string, RoleAbility>;
+		[Level.five]: Record<string, RoleAbility>;
+		[Level.six]: Record<string, RoleAbility>;
+		[Level.seven]: Record<string, RoleAbility>;
+		[Level.eight]: Record<string, RoleAbility>;
+		[Level.nine]: Record<string, RoleAbility>;
+		[Level.ten]: Record<string, RoleAbility>;
 	};
 
 	override get startsWithArmor(): boolean {
@@ -54,22 +59,27 @@ export class Arcanist extends Role {
 		const arcanistPath = new ArcanistPathAbility(path);
 		const arcanistSpells = new ArcanistSpells(spells, arcanistPath.getLearnFrequency(), arcanistPath.getSpellsAttribute());
 		this.abilities = {
-			[Level.levelOne]: {
+			[Level.one]: {
 				arcanistSpells,
 				arcanistPath,
 			},
-			[Level.levelTwo]: {},
-			[Level.levelThree]: {},
-			[Level.levelFour]: {},
-			[Level.levelFive]: {},
+			[Level.two]: {},
+			[Level.three]: {},
+			[Level.four]: {},
+			[Level.five]: {},
+			[Level.six]: {},
+			[Level.seven]: {},
+			[Level.eight]: {},
+			[Level.nine]: {},
+			[Level.ten]: {},
 		};
 	}
 
 	getSpellsAttribute(): Attribute {
-		return this.abilities[Level.levelOne].arcanistPath.getSpellsAttribute();
+		return this.abilities[Level.one].arcanistPath.getSpellsAttribute();
 	}
 
 	getSpellLearnFrequency(): SpellLearnFrequency {
-		return this.abilities[Level.levelOne].arcanistPath.getLearnFrequency();
+		return this.abilities[Level.one].arcanistPath.getLearnFrequency();
 	}
 }

@@ -15,7 +15,7 @@ describe('LifePoints', () => {
 		lifePoints.perLevelModifiers.add(new PerLevelModifier(RaceAbilityName.hardAsRock, 1, false));
 		lifePoints.perLevelModifiers.add(new PerLevelModifier(RoleName.arcanist, 2, false, new Set(['constitution'])));
 		const attributes: Attributes = {charisma: 0, constitution: 2, dexterity: 0, intelligence: 0, strength: 0, wisdom: 0};
-		const maxCalculator = PointsMaxCalculatorFactory.make(attributes, Level.levelThree);
+		const maxCalculator = PointsMaxCalculatorFactory.make(attributes, Level.three);
 
 		expect(lifePoints.getMax(maxCalculator)).toBe(23);
 	});

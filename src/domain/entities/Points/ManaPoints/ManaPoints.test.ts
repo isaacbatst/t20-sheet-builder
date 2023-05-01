@@ -18,7 +18,7 @@ describe('ManaPoints', () => {
 		manaPoints.perLevelModifiers.add(new PerLevelModifier(RoleName.arcanist, 2, false, new Set(['constitution'])));
 		const attributes: Attributes = {charisma: 0, constitution: 2, dexterity: 0, intelligence: 0, strength: 0, wisdom: 0};
 		const fixedCalculator = new FixedModifiersListTotalCalculator(attributes);
-		const perLevelCalculator = new PerLevelModifiersListTotalCalculator(attributes, Level.levelThree);
+		const perLevelCalculator = new PerLevelModifiersListTotalCalculator(attributes, Level.three);
 		const maxCalculator = new PointsMaxCalculator(fixedCalculator, perLevelCalculator);
 
 		expect(manaPoints.getMax(maxCalculator)).toBe(23);

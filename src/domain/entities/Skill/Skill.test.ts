@@ -9,6 +9,7 @@ import {BuildingSheetFake} from '../Sheet/BuildingSheetFake';
 import {Skill} from './Skill';
 import {SkillBaseCalculator} from './SkillBaseCalculator';
 import {SkillTotalCalculatorFactory} from './SkillTotalCalculatorFactory';
+import {Level} from '../Sheet';
 
 describe('Skill', () => {
 	it('should calculate level 1 untrained skill', () => {
@@ -130,7 +131,7 @@ describe('Skill', () => {
 			...sheet.attributes,
 			dexterity: 2,
 		};
-		sheet.level = 10;
+		sheet.level = Level.ten;
 		const skill = new Skill({
 			isTrained: true,
 			attribute: 'dexterity',
