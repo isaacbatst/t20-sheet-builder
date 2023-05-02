@@ -1,5 +1,5 @@
 import {Dodge} from '../../../Power/GeneralPower/Dodge';
-import {SwordAndShieldStyle} from '../../../Power/GeneralPower/SwordAndShieldStyle';
+import {SwordAndShieldStyle} from '../../../Power/GeneralPower/FightStyle/SwordAndShieldStyle';
 import {TwoHandsStyle} from '../../../Power/GeneralPower/TwoHandsStyle';
 import {BuildingSheetFake} from '../../../Sheet/BuildingSheetFake';
 import {SkillName} from '../../../Skill/SkillName';

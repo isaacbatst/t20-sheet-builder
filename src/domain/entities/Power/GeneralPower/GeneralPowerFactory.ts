@@ -3,7 +3,7 @@ import type {GeneralPower} from './GeneralPower';
 import type {GeneralPowerName} from './GeneralPowerName';
 import {IronWill} from './IronWill';
 import {Medicine} from './Medicine';
-import {SwordAndShieldStyle} from './SwordAndShieldStyle';
+import {SwordAndShieldStyle} from './FightStyle/SwordAndShieldStyle';
 import {TwoHandsStyle} from './TwoHandsStyle';
 
 type Params = {
