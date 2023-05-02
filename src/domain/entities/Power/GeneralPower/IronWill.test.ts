@@ -7,6 +7,7 @@ import {SheetBaseFake} from '../../Sheet/SheetBaseFake';
 import {SkillName} from '../../Skill/SkillName';
 import {GeneralPowerName} from './GeneralPowerName';
 import {IronWill} from './IronWill';
+import {vi} from 'vitest';
 
 describe('IronWill', () => {
 	it('should require wisdom 1', () => {
@@ -14,7 +15,8 @@ describe('IronWill', () => {
 		const sheet = new SheetBaseFake();
 
 		expect(() => {
-			ironWill.addToSheet(sheet, jest.fn(), OriginName.acolyte);
+			ironWill.addToSheet(sheet, vi.fn(), OriginName.acolyte);
+			ironWill.verifyRequirements(sheet);
 		}).toThrow('UNFULFILLED_REQUIREMENT');
 	});
 
@@ -22,7 +24,7 @@ describe('IronWill', () => {
 		const ironWill = new IronWill();
 		const sheet = new SheetBaseFake();
 		sheet.attributes.wisdom = 1;
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		ironWill.addToSheet(sheet, dispatch, OriginName.acolyte);
 
 		expect(dispatch).toHaveBeenCalledWith(new AddPerLevelModifierToManaPoints({
@@ -40,7 +42,7 @@ describe('IronWill', () => {
 		const ironWill = new IronWill();
 		const sheet = new SheetBaseFake();
 		sheet.attributes.wisdom = 1;
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		ironWill.addToSheet(sheet, dispatch, OriginName.acolyte);
 
 		expect(dispatch).toHaveBeenCalledWith(new AddFixedModifierToSkill({

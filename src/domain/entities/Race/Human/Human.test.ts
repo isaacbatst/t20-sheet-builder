@@ -1,15 +1,15 @@
+import {vi} from 'vitest';
 import {ApplyRaceAbility} from '../../Action/ApplyRaceAbility';
 import {ApplyRaceModifiers} from '../../Action/ApplyRaceModifiers';
+import {Dodge} from '../../Power/GeneralPower/Dodge';
 import {BuildingSheetFake} from '../../Sheet/BuildingSheetFake';
-import {GeneralPowerName} from '../../Power/GeneralPower/GeneralPowerName';
-import {Versatile} from './Versatile/Versatile';
 import {SkillName} from '../../Skill/SkillName';
-import {Human} from './Human';
 import {RaceName} from '../RaceName';
-import {VersatileChoiceSkill} from './Versatile/VersatileChoiceSkill';
+import {Human} from './Human';
+import {Versatile} from './Versatile/Versatile';
 import type {VersatileChoice} from './Versatile/VersatileChoice';
 import {VersatileChoicePower} from './Versatile/VersatileChoicePower';
-import {Dodge} from '../../Power/GeneralPower/Dodge';
+import {VersatileChoiceSkill} from './Versatile/VersatileChoiceSkill';
 
 describe('Human', () => {
 	it('should apply +1 to strength, dexterity and constitution', () => {
@@ -25,7 +25,7 @@ describe('Human', () => {
 		human.addVersatilChoice(animalHandling);
 
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		human.addToSheet(sheet, dispatch);
 
 		expect(dispatch).toHaveBeenCalledWith(new ApplyRaceModifiers({
@@ -98,7 +98,7 @@ describe('Human', () => {
 		]);
 
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		human.addToSheet(sheet, dispatch);
 
 		const versatile = new Versatile();
@@ -123,7 +123,7 @@ describe('Human', () => {
 
 		const sheet = new BuildingSheetFake();
 		sheet.attributes.dexterity = 1;
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		human.addToSheet(sheet, dispatch);
 
 		const versatile = new Versatile();

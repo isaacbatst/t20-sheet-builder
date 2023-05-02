@@ -9,6 +9,7 @@ import {RoleFake} from '../Role/RoleFake';
 import {BuildingSheetFake} from './BuildingSheetFake';
 import {Proficiency} from './Proficiency';
 import {SheetInitialEquipmentsAdder} from './SheetInitialEquipmentsAdder';
+import {vi} from 'vitest';
 
 describe('SheetInitialEquipmentsAdder', () => {
 	it('should add default initial equipments', () => {
@@ -16,7 +17,7 @@ describe('SheetInitialEquipmentsAdder', () => {
 			simpleWeapon: new Dagger(),
 		});
 
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		const sheet = new BuildingSheetFake();
 		const role = new RoleFake();
 		role.startsWithArmor = false;
@@ -43,7 +44,7 @@ describe('SheetInitialEquipmentsAdder', () => {
 			simpleWeapon: new Dagger(),
 		});
 
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		const sheet = new BuildingSheetFake();
 		const role = new RoleFake();
 
@@ -58,7 +59,7 @@ describe('SheetInitialEquipmentsAdder', () => {
 			armor: new LeatherArmor(),
 		});
 
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		const sheet = new BuildingSheetFake();
 		const role = new RoleFake();
 
@@ -76,7 +77,7 @@ describe('SheetInitialEquipmentsAdder', () => {
 			armor: new LeatherArmor(),
 		});
 
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		const sheet = new BuildingSheetFake();
 		sheet.proficiencies.push(Proficiency.martial);
 		const role = new RoleFake();
@@ -93,7 +94,7 @@ describe('SheetInitialEquipmentsAdder', () => {
 			armor: new LeatherArmor(),
 		});
 
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		const sheet = new BuildingSheetFake();
 		sheet.proficiencies.push(Proficiency.martial);
 		const role = new RoleFake();

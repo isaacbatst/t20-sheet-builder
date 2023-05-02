@@ -4,7 +4,8 @@ import type {GeneralPowerName} from './GeneralPowerName';
 import {IronWill} from './IronWill';
 import {Medicine} from './Medicine';
 import {SwordAndShieldStyle} from './FightStyle/SwordAndShieldStyle';
-import {TwoHandsStyle} from './TwoHandsStyle';
+import {TwoHandsStyle} from './FightStyle/TwoHandsStyle';
+import {OneWeaponStyle} from './FightStyle/OneWeaponStyle';
 
 type Params = {
 	name: GeneralPowerName;
@@ -17,6 +18,7 @@ export class GeneralPowerFactory {
 		medicine: Medicine,
 		swordAndShieldStyle: SwordAndShieldStyle,
 		twoHandsStyle: TwoHandsStyle,
+		oneWeaponStyle: OneWeaponStyle,
 	};
 
 	static make(params: Params) {

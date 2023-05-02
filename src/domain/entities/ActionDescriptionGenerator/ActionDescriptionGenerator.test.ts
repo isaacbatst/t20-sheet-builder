@@ -1,3 +1,4 @@
+import {vi} from 'vitest';
 import {AddEquipment} from '../Action/AddEquipment';
 import {AddInitialEquipment} from '../Action/AddInitialEquipment';
 import {AddMoney} from '../Action/AddMoney';
@@ -10,7 +11,6 @@ import {ChooseRole} from '../Action/ChooseRole';
 import {PickOriginPower} from '../Action/PickOriginPower';
 import {TrainIntelligenceSkills} from '../Action/TrainIntelligenceSkills';
 import {EquipmentClothing} from '../Inventory/Equipment/EquipmentClothing/EquipmentClothing';
-import {Equipment} from '../Inventory/Equipment/Equipment';
 import {EquipmentName} from '../Inventory/Equipment/EquipmentName';
 import {Dagger} from '../Inventory/Equipment/Weapon/OfensiveWeapon/Dagger';
 import {ContextualModifier} from '../Modifier/ContextualModifier/ContextualModifier';
@@ -102,7 +102,7 @@ describe('ActionDescriptionGenerator', () => {
 			{
 				type: 'addContextualModifierToSkill',
 				payload: {
-					modifier: new ContextualModifier(GeneralPowerName.dodge, 2, {verify: jest.fn(), description: 'testes realizados no subterrâneo'}),
+					modifier: new ContextualModifier(GeneralPowerName.dodge, 2, {verify: vi.fn(), description: 'testes realizados no subterrâneo'}),
 					skill: SkillName.perception,
 				},
 			},

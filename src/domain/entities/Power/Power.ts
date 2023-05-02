@@ -1,8 +1,6 @@
 import type {AbilityInterface} from '../Ability/Ability';
 import {Ability} from '../Ability/Ability';
 import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../Sheet/Transaction';
-import type {Translatable} from '../Translator';
 import type {PowerName} from './PowerName';
 
 export type PowerType = 'general' | 'role' | 'origin';
@@ -10,6 +8,7 @@ export type PowerType = 'general' | 'role' | 'origin';
 export type PowerInterface = AbilityInterface & {
 	name: PowerName;
 	powerType: PowerType;
+	verifyRequirements(sheet: SheetBaseInterface): void;
 };
 
 export type RequirementInterface = {
@@ -27,20 +26,15 @@ export abstract class Power extends Ability implements PowerInterface {
 		super(name, 'power');
 	}
 
-	override addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch, source: Translatable): void {
-		this.verifyRequirements(sheet);
-		super.addToSheet(sheet, dispatch, source);
-	}
-
-	protected addRequirement(requirement: RequirementInterface) {
-		this.requirements.push(requirement);
-	}
-
-	private verifyRequirements(sheet: SheetBaseInterface) {
+	verifyRequirements(sheet: SheetBaseInterface) {
 		const everyRequirementAchieved = this.requirements.every(requirement => requirement.verify(sheet));
 
 		if (!everyRequirementAchieved) {
 			throw new Error('UNFULFILLED_REQUIREMENT');
 		}
+	}
+
+	protected addRequirement(requirement: RequirementInterface) {
+		this.requirements.push(requirement);
 	}
 }

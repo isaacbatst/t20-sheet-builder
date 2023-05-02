@@ -1,12 +1,13 @@
-import {AbilityEffects} from '../../../Ability/AbilityEffects';
-import {GeneralPower} from '../GeneralPower';
+import {SkillName} from '../../../Skill';
+import {SkillRequirement} from '../../Requirement/SkillRequirement';
 import {GeneralPowerName} from '../GeneralPowerName';
+import {FightStyle} from './FightStyle';
 
-export class SwordAndShieldStyle extends GeneralPower {
-	effects = new AbilityEffects({});
+export class SwordAndShieldStyle extends FightStyle {
 	constructor() {
 		super(
 			GeneralPowerName.swordAndShieldStyle,
 		);
+		this.addRequirement(new SkillRequirement(SkillName.fight));
 	}
 }

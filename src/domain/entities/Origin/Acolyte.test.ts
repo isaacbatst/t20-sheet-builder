@@ -17,12 +17,13 @@ import {OriginBenefitGeneralPower} from './OriginBenefitGeneralPower';
 import {OriginBenefitOriginPower} from './OriginBenefitOriginPower';
 import {OriginBenefitSkill} from './OriginBenefitSkill';
 import {OriginName} from './OriginName';
+import {vi} from 'vitest';
 
 describe('Acolyte', () => {
 	it('should dispatch add items', () => {
 		const acolyte = new Acolyte([new OriginBenefitSkill(SkillName.cure), new OriginBenefitSkill(SkillName.religion)]);
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		acolyte.addToSheet(sheet, dispatch);
 
 		expect(dispatch).toHaveBeenCalledWith(new AddEquipment({
@@ -39,7 +40,7 @@ describe('Acolyte', () => {
 	it('should dispatch skill benefits training', () => {
 		const acolyte = new Acolyte([new OriginBenefitSkill(SkillName.cure), new OriginBenefitSkill(SkillName.religion)]);
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		acolyte.addToSheet(sheet, dispatch);
 
 		expect(dispatch).toHaveBeenCalledWith(new TrainSkill({
@@ -76,7 +77,7 @@ describe('Acolyte', () => {
 		const sheet = new SheetBaseFake();
 		sheet.attributes.wisdom = 1;
 		sheet.skills.cure.train();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		acolyte.addToSheet(sheet, dispatch);
 
 		expect(dispatch).toHaveBeenCalledWith(new PickGeneralPower({
@@ -95,7 +96,7 @@ describe('Acolyte', () => {
 		const sheet = new SheetBaseFake();
 		sheet.attributes.wisdom = 1;
 		sheet.skills.cure.train();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		acolyte.addToSheet(sheet, dispatch);
 
 		expect(dispatch).toHaveBeenCalledWith(new PickOriginPower({
@@ -110,16 +111,10 @@ describe('Acolyte', () => {
 
 	it('should not allow origin power from other origin', () => {
 		expect(() => {
-			const acolyte = new Acolyte([new OriginBenefitOriginPower(new SpecialFriend(SkillName.cheat)), new OriginBenefitGeneralPower(new Medicine())]);
+			const acolyte = new Acolyte([
+				new OriginBenefitOriginPower(new SpecialFriend(SkillName.cheat)),
+				new OriginBenefitGeneralPower(new Medicine()),
+			]);
 		}).toThrow('INVALID_ORIGIN_POWER');
-	});
-
-	it('should not allow power with unfulfilled requirements', () => {
-		expect(() => {
-			const sheet = new SheetBaseFake();
-			const dispatch = jest.fn();
-			const acolyte = new Acolyte([new OriginBenefitOriginPower(new ChurchMember()), new OriginBenefitGeneralPower(new Medicine())]);
-			acolyte.addToSheet(sheet, dispatch);
-		}).toThrow('UNFULFILLED_REQUIREMENT');
 	});
 });

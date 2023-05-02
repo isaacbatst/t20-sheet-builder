@@ -6,12 +6,13 @@ import {SlowAndAlways} from './SlowAndAlways/SlowAndAlways';
 import {Dwarf} from './Dwarf';
 import {HardAsRock} from './HardAsRock/HardAsRock';
 import {RaceName} from '../RaceName';
+import {vi} from 'vitest';
 
 describe('Dwarf', () => {
 	it('should dispatch dwarf attributes modifiers appliance', () => {
 		const dwarf = new Dwarf();
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		dwarf.addToSheet(sheet, dispatch);
 		expect(dispatch).toHaveBeenCalledWith(new ApplyRaceModifiers({
 			modifiers: {
@@ -30,7 +31,7 @@ describe('Dwarf', () => {
 	it('should dispatch rock knowledge appliance', () => {
 		const dwarf = new Dwarf();
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		dwarf.addToSheet(sheet, dispatch);
 		expect(dispatch).toHaveBeenCalledWith(new ApplyRaceAbility({
 			ability: new RockKnowledge(),
@@ -41,7 +42,7 @@ describe('Dwarf', () => {
 	it('should dispatch slow and always appliance', () => {
 		const dwarf = new Dwarf();
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		dwarf.addToSheet(sheet, dispatch);
 		expect(dispatch).toHaveBeenCalledWith(new ApplyRaceAbility({
 			ability: new SlowAndAlways(),
@@ -52,7 +53,7 @@ describe('Dwarf', () => {
 	it('should dispatch Hard as Rock appliance', () => {
 		const dwarf = new Dwarf();
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		dwarf.addToSheet(sheet, dispatch);
 		expect(dispatch).toHaveBeenCalledWith(new ApplyRaceAbility({
 			ability: new HardAsRock(),

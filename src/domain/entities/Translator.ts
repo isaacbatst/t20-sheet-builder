@@ -129,6 +129,7 @@ export class Translator {
 		dodge: 'Esquiva',
 		swordAndShieldStyle: 'Esttilo Espada e Escudo',
 		twoHandsStyle: 'Estilo de Duas Mãos',
+		oneWeaponStyle: 'Estilo de Uma Arma',
 		archer: 'Arqueiro',
 		medicine: 'Medicina',
 		ironWill: 'Vontade de Ferro',

@@ -1,6 +1,6 @@
 import {Dodge} from '../../../Power/GeneralPower/Dodge';
 import {SwordAndShieldStyle} from '../../../Power/GeneralPower/FightStyle/SwordAndShieldStyle';
-import {TwoHandsStyle} from '../../../Power/GeneralPower/TwoHandsStyle';
+import {TwoHandsStyle} from '../../../Power/GeneralPower/FightStyle/TwoHandsStyle';
 import {BuildingSheetFake} from '../../../Sheet/BuildingSheetFake';
 import {SkillName} from '../../../Skill/SkillName';
 import {RaceAbilityName} from '../../RaceAbilityName';
@@ -8,6 +8,7 @@ import {RaceName} from '../../RaceName';
 import {Versatile} from './Versatile';
 import {VersatileChoicePower} from './VersatileChoicePower';
 import {VersatileChoiceSkill} from './VersatileChoiceSkill';
+import {vi} from 'vitest';
 
 describe('Versatile', () => {
 	it('should add choice', () => {
@@ -61,7 +62,7 @@ describe('Versatile', () => {
 	it('should not allow apply without choices', () => {
 		const versatile = new Versatile();
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		expect(() => {
 			versatile.addToSheet(sheet, dispatch, RaceName.human);
 		}).toThrow('MISSING_CHOICES');
@@ -73,7 +74,7 @@ describe('Versatile', () => {
 		versatile.addChoice(new VersatileChoiceSkill(SkillName.animalHandling));
 
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		versatile.addToSheet(sheet, dispatch, RaceName.human);
 
 		expect(dispatch).toHaveBeenCalledWith({
@@ -100,7 +101,7 @@ describe('Versatile', () => {
 
 		const sheet = new BuildingSheetFake();
 		sheet.attributes.dexterity = 1;
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		versatile.addToSheet(sheet, dispatch, RaceName.human);
 
 		expect(dispatch).toHaveBeenCalledWith({

@@ -1,10 +1,11 @@
 import type {ModifierInterface} from '../ModifierInterface';
 import type {FixedModifiersListInterface} from './FixedModifiersList';
+import {vi} from 'vitest';
 
 export class FixedModifiersListFake implements FixedModifiersListInterface {
 	modifiers: ModifierInterface[] = [];
 	total = 0;
-	add = jest.fn();
+	add = vi.fn();
 	getTotal() {
 		return this.total;
 	}

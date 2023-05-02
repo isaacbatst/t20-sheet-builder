@@ -6,12 +6,13 @@ import {RaceName} from '../../RaceName';
 import {BuildingSheetFake} from '../../../Sheet/BuildingSheetFake';
 import {RaceAbilityName} from '../../RaceAbilityName';
 import {HardAsRock} from './HardAsRock';
+import {vi} from 'vitest';
 
 describe('HardAsRock', () => {
 	it('should dispatch addOtherModifierToLifePoints', () => {
 		const hardAsRock = new HardAsRock();
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		hardAsRock.addToSheet(sheet, dispatch, RaceName.dwarf);
 
 		expect(dispatch).toHaveBeenCalledWith(new AddFixedModifierToLifePoints({
@@ -22,7 +23,7 @@ describe('HardAsRock', () => {
 	it('should dispatch addPerLevelModifierToLifePoints', () => {
 		const hardAsRock = new HardAsRock();
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		hardAsRock.addToSheet(sheet, dispatch, RaceName.dwarf);
 
 		expect(dispatch).toHaveBeenCalledWith(new AddPerLevelModifierToLifePoints({

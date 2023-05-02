@@ -84,6 +84,16 @@ export class Sheet extends SheetBase implements SheetInterface {
 		this.inventory = params.inventory;
 		this.origin = params.origin;
 		this.money = params.money;
+
+		params.powers.general.forEach(power => {
+			power.verifyRequirements(this);
+		});
+		params.powers.origin.forEach(power => {
+			power.verifyRequirements(this);
+		});
+		params.powers.role.forEach(power => {
+			power.verifyRequirements(this);
+		});
 	}
 
 	getRole() {

@@ -1,6 +1,6 @@
+import {vi} from 'vitest';
 import {AddFixedModifierToSkill} from '../../Action/AddFixedModifierToSkill';
 import {FixedModifier} from '../../Modifier/FixedModifier/FixedModifier';
-import {OriginName} from '../../Origin/OriginName';
 import {SheetBaseFake} from '../../Sheet/SheetBaseFake';
 import {SkillName} from '../../Skill/SkillName';
 import {OriginPowerName} from './OriginPowerName';
@@ -10,7 +10,7 @@ describe('SpecialFriend', () => {
 	it('should dispatch animalHandling modifier add', () => {
 		const specialFriend = new SpecialFriend(SkillName.acrobatics);
 		const sheet = new SheetBaseFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		specialFriend.addToSheet(sheet, dispatch);
 		expect(dispatch).toHaveBeenCalledWith(new AddFixedModifierToSkill({
 			modifier: new FixedModifier(OriginPowerName.specialFriend, 5),
@@ -21,7 +21,7 @@ describe('SpecialFriend', () => {
 	it('should dispatch custom skill modifier add', () => {
 		const specialFriend = new SpecialFriend(SkillName.acrobatics);
 		const sheet = new SheetBaseFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		specialFriend.addToSheet(sheet, dispatch);
 		expect(dispatch).toHaveBeenCalledWith(new AddFixedModifierToSkill({
 			modifier: new FixedModifier(OriginPowerName.specialFriend, 2),

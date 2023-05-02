@@ -12,12 +12,13 @@ import {FixedModifier} from '../../Modifier/FixedModifier/FixedModifier';
 import {AddPerLevelModifierToLifePoints} from '../../Action/AddPerLevelModifierToLifePoints';
 import {PerLevelModifier} from '../../Modifier/PerLevelModifier/PerLevelModifier';
 import {AddPerLevelModifierToManaPoints} from '../../Action/AddPerLevelModifierToManaPoints';
+import {vi} from 'vitest';
 
 describe('Warrior', () => {
 	it('should dispatch proper train skills', () => {
 		const warrior = new Warrior([SkillName.fight, SkillName.animalHandling, SkillName.aim]);
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		warrior.addToSheet(sheet, dispatch);
 
 		expect(dispatch).toHaveBeenCalledWith(new TrainSkill({
@@ -55,7 +56,7 @@ describe('Warrior', () => {
 	it('should dispatch profiencies add', () => {
 		const warrior = new Warrior([SkillName.fight, SkillName.animalHandling, SkillName.aim]);
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		warrior.addToSheet(sheet, dispatch);
 
 		expect(dispatch).toHaveBeenCalledWith(new AddProficiency({
@@ -75,7 +76,7 @@ describe('Warrior', () => {
 	it('should dispatch abilities add', () => {
 		const warrior = new Warrior([SkillName.fight, SkillName.animalHandling, SkillName.aim]);
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		warrior.addToSheet(sheet, dispatch);
 
 		expect(dispatch).toHaveBeenCalledWith(new ApplyRoleAbility({
@@ -87,7 +88,7 @@ describe('Warrior', () => {
 	it('should dispatch life points modifiers add', () => {
 		const warrior = new Warrior([SkillName.fight, SkillName.animalHandling, SkillName.aim]);
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		warrior.addToSheet(sheet, dispatch);
 
 		expect(dispatch).toHaveBeenCalledWith(new AddFixedModifierToLifePoints({
@@ -102,7 +103,7 @@ describe('Warrior', () => {
 	it('should dispatch mana points modifiers add', () => {
 		const warrior = new Warrior([SkillName.fight, SkillName.animalHandling, SkillName.aim]);
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		warrior.addToSheet(sheet, dispatch);
 
 		expect(dispatch).toHaveBeenCalledWith(new AddPerLevelModifierToManaPoints({

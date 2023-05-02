@@ -36,6 +36,7 @@ import type {Sheet} from './Sheet';
 import {SheetBuilder} from './SheetBuilder';
 import {Vision} from './Vision';
 import {WeaponAttack} from '../Attack/WeaponAttack';
+import {OneWeaponStyle} from '../Power/GeneralPower/FightStyle/OneWeaponStyle';
 
 describe('Sheet', () => {
 	describe('Human Warrior', () => {
@@ -47,7 +48,7 @@ describe('Sheet', () => {
 		beforeAll(() => {
 			const choices = [
 				new VersatileChoiceSkill(SkillName.acrobatics),
-				new VersatileChoicePower(new Dodge()),
+				new VersatileChoicePower(new OneWeaponStyle()),
 			];
 			race = new Human(['charisma', 'constitution', 'dexterity'], choices);
 			role = new Warrior([SkillName.fight, SkillName.aim, SkillName.athletics]);
@@ -64,7 +65,8 @@ describe('Sheet', () => {
 					armor: new LeatherArmor(),
 					martialWeapon: new LongSword(),
 					money: 24,
-				});
+				})
+				.build();
 		});
 
 		it('should choose race', () => {
@@ -81,7 +83,7 @@ describe('Sheet', () => {
 
 		it('should have versatile power', () => {
 			const powers = sheet.getPowers();
-			expect(powers.general.has(GeneralPowerName.dodge)).toBeTruthy();
+			expect(powers.general.has(GeneralPowerName.oneWeaponStyle)).toBeTruthy();
 		});
 
 		it('should have versatile skill trained', () => {
@@ -179,7 +181,8 @@ describe('Sheet', () => {
 				.addInitialEquipment({
 					simpleWeapon: new Dagger(),
 					money: 20,
-				});
+				})
+				.build();
 		});
 
 		it('should choose race', () => {
@@ -214,6 +217,34 @@ describe('Sheet', () => {
 		it('should have basic proficiencies', () => {
 			expect(sheet.getProficiencies()).toContain(Proficiency.simple);
 			expect(sheet.getProficiencies()).toContain(Proficiency.lightArmor);
+		});
+	});
+
+	describe('Human Warrior - Missing fight skill for one weapon style', () => {
+		it('should throw UNFILLED_POWER_REQUIREMENTS error', () => {
+			const choices = [
+				new VersatileChoiceSkill(SkillName.acrobatics),
+				new VersatileChoicePower(new OneWeaponStyle()),
+			];
+			const race = new Human(['charisma', 'constitution', 'dexterity'], choices);
+			const role = new Warrior([SkillName.intimidation, SkillName.aim, SkillName.athletics]);
+			const sheetBuilder = new SheetBuilder();
+			const origin = new Acolyte([new OriginBenefitGeneralPower(new IronWill()), new OriginBenefitSkill(SkillName.cure)]);
+			expect(() => {
+				sheetBuilder
+					.setInitialAttributes({strength: 0, dexterity: 0, charisma: 0, constitution: 0, intelligence: 0, wisdom: 2})
+					.chooseRace(race)
+					.chooseRole(role)
+					.chooseOrigin(origin)
+					.trainIntelligenceSkills([])
+					.addInitialEquipment({
+						simpleWeapon: new Dagger(),
+						armor: new LeatherArmor(),
+						martialWeapon: new LongSword(),
+						money: 24,
+					})
+					.build();
+			}).toThrow('UNFULFILLED_REQUIREMENT');
 		});
 	});
 });

@@ -3,10 +3,10 @@ import {SkillRequirement} from '../../Requirement/SkillRequirement';
 import {GeneralPowerName} from '../GeneralPowerName';
 import {FightStyle} from './FightStyle';
 
-export class TwoHandsStyle extends FightStyle {
+export class OneWeaponStyle extends FightStyle {
 	constructor() {
 		super(
-			GeneralPowerName.twoHandsStyle,
+			GeneralPowerName.oneWeaponStyle,
 		);
 		this.addRequirement(new SkillRequirement(SkillName.fight));
 	}

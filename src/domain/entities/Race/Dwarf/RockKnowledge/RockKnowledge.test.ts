@@ -10,12 +10,13 @@ import {SkillName} from '../../../Skill/SkillName';
 import {Vision} from '../../../Sheet/Vision';
 import {RaceAbilityName} from '../../RaceAbilityName';
 import {RockKnowledge} from './RockKnowledge';
+import {vi} from 'vitest';
 
 describe('RockKnowledge', () => {
 	it('should provide dark vision', () => {
 		const rockKnowledge = new RockKnowledge();
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		rockKnowledge.addToSheet(sheet, dispatch, RaceName.dwarf);
 
 		expect(dispatch).toHaveBeenCalledWith(new ChangeVision({
@@ -27,7 +28,7 @@ describe('RockKnowledge', () => {
 	it('should dispatch +2 perception bonus', () => {
 		const rockKnowledge = new RockKnowledge();
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		rockKnowledge.addToSheet(sheet, dispatch, RaceName.dwarf);
 
 		expect(dispatch).toHaveBeenCalledWith(expect.objectContaining(new AddContextualModifierToSkill({
@@ -43,7 +44,7 @@ describe('RockKnowledge', () => {
 	it('should dispatch +2 survival bonus', () => {
 		const rockKnowledge = new RockKnowledge();
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		rockKnowledge.addToSheet(sheet, dispatch, RaceName.dwarf);
 
 		expect(dispatch).toHaveBeenCalledWith(expect.objectContaining(new AddContextualModifierToSkill({
@@ -59,7 +60,7 @@ describe('RockKnowledge', () => {
 	it('should not activate bonus in game context outside underground', () => {
 		const rockKnowledge = new RockKnowledge();
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		rockKnowledge.addToSheet(sheet, dispatch, RaceName.dwarf);
 
 		const perceptionCall = dispatch.mock.calls[2][0] as ActionInterface<'addContextualModifierToSkill'>;
@@ -75,7 +76,7 @@ describe('RockKnowledge', () => {
 	it('should activate bonus in game context inside underground', () => {
 		const rockKnowledge = new RockKnowledge();
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		rockKnowledge.addToSheet(sheet, dispatch, RaceName.dwarf);
 
 		const perceptionCall = dispatch.mock.calls[2][0] as ActionInterface<'addContextualModifierToSkill'>;

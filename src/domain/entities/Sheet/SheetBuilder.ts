@@ -23,7 +23,10 @@ export type SheetBuilderInitialEquipmentStep = {
 		martialWeapon?: MartialWeapon;
 		armor?: Armor;
 		money: number;
-	}) => Sheet;
+	}) => SheetBuilderBuildStep;
+};
+export type SheetBuilderBuildStep = {
+	build(): Sheet;
 };
 export type SheetBuilderIntelligenceSkillsStep = {trainIntelligenceSkills: (skills: SkillName[]) => SheetBuilderInitialEquipmentStep};
 export type SheetBuilderOriginStep = {chooseOrigin: (origin: OriginInterface) => SheetBuilderIntelligenceSkillsStep};
@@ -103,8 +106,15 @@ export class SheetBuilder {
 				role,
 			}));
 
-			return this.createSheet(race, role, origin);
+			return {
+				build: () => this.build(race, role, origin),
+			};
 		};
+	}
+
+	private build(race: RaceInterface, role: RoleInterface, origin: OriginInterface) {
+		const sheet = this.createSheet(race, role, origin);
+		return sheet;
 	}
 
 	private createSheet(race: RaceInterface, role: RoleInterface, origin: OriginInterface) {

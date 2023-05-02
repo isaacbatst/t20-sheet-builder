@@ -11,39 +11,40 @@ import type {Proficiency} from './Proficiency';
 import type {ActionsHandler} from './SheetActions';
 import type {SheetAbilities, SheetBaseInterface, SheetLearnedCircles, SheetPowers, SheetSkills, SheetSpells} from './SheetBaseInterface';
 import {Vision} from './Vision';
+import {vi} from 'vitest';
 
 export class SheetBaseFake implements SheetBaseInterface {
 	actionHandlers: ActionsHandler = {
-		setInitialAttributes: jest.fn(),
-		chooseRace: jest.fn(),
-		trainSkill: jest.fn(),
-		changeVision: jest.fn(),
-		applyRaceModifiers: jest.fn(),
-		applyRaceAbility: jest.fn(),
-		applyRoleAbility: jest.fn(),
-		pickGeneralPower: jest.fn(),
-		pickRolePower: jest.fn(),
-		changeDisplacement: jest.fn(),
-		chooseRole: jest.fn(),
-		addProficiency: jest.fn(),
-		learnCircle: jest.fn(),
-		learnSpell: jest.fn(),
-		addContextualModifierToSkill: jest.fn(),
-		addFixedModifierToSkill: jest.fn(),
-		addFixedModifierToLifePoints: jest.fn(),
-		addPerLevelModifierToLifePoints: jest.fn(),
-		addPerLevelModifierToManaPoints: jest.fn(),
-		addFixedModifierToDefense: jest.fn(),
-		trainIntelligenceSkills: jest.fn(),
-		addEquipment: jest.fn(),
-		pickOriginPower: jest.fn(),
-		chooseOrigin: jest.fn(),
-		addMoney: jest.fn(),
-		addInitialEquipment: jest.fn(),
+		setInitialAttributes: vi.fn(),
+		chooseRace: vi.fn(),
+		trainSkill: vi.fn(),
+		changeVision: vi.fn(),
+		applyRaceModifiers: vi.fn(),
+		applyRaceAbility: vi.fn(),
+		applyRoleAbility: vi.fn(),
+		pickGeneralPower: vi.fn(),
+		pickRolePower: vi.fn(),
+		changeDisplacement: vi.fn(),
+		chooseRole: vi.fn(),
+		addProficiency: vi.fn(),
+		learnCircle: vi.fn(),
+		learnSpell: vi.fn(),
+		addContextualModifierToSkill: vi.fn(),
+		addFixedModifierToSkill: vi.fn(),
+		addFixedModifierToLifePoints: vi.fn(),
+		addPerLevelModifierToLifePoints: vi.fn(),
+		addPerLevelModifierToManaPoints: vi.fn(),
+		addFixedModifierToDefense: vi.fn(),
+		trainIntelligenceSkills: vi.fn(),
+		addEquipment: vi.fn(),
+		pickOriginPower: vi.fn(),
+		chooseOrigin: vi.fn(),
+		addMoney: vi.fn(),
+		addInitialEquipment: vi.fn(),
 	};
 
-	dispatch = jest.fn();
-	initTransaction = jest.fn();
+	dispatch = vi.fn();
+	initTransaction = vi.fn();
 	money = 0;
 	buildSteps: BuildStepInterface[] = [];
 	attributes: Attributes = {charisma: 0, constitution: 0, dexterity: 0, intelligence: 0, strength: 0, wisdom: 0};

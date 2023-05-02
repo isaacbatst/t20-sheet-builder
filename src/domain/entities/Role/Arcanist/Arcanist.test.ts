@@ -14,6 +14,7 @@ import {ArcanistPathName} from './ArcanistPath';
 import {ArcanistPathMage} from './ArcanistPath/ArcanistPathMage';
 import {ArcanistPathWizard} from './ArcanistPath/ArcanistPathWizard';
 import {ArcanistPathWizardFocusWand} from './ArcanistPath/ArcanistPathWizardFocusWand';
+import {vi} from 'vitest';
 
 describe('Arcanist', () => {
 	it('should dispatch proper train skills', () => {
@@ -22,7 +23,7 @@ describe('Arcanist', () => {
 			.choosePath(new ArcanistPathMage(new FlamesExplosion()))
 			.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		arcanist.addToSheet(sheet, dispatch);
 
 		expect(dispatch).toHaveBeenCalledWith(new TrainSkill({
@@ -70,7 +71,7 @@ describe('Arcanist', () => {
 			.choosePath(new ArcanistPathMage(new FlamesExplosion()))
 			.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		arcanist.addToSheet(sheet, dispatch);
 		expect(dispatch).not.toHaveBeenCalledWith(expect.objectContaining({type: 'addProficiency'}), sheet);
 	});
@@ -82,7 +83,7 @@ describe('Arcanist', () => {
 			.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 
 		const sheet = new BuildingSheetFake();
-		const dispatch = jest.fn();
+		const dispatch = vi.fn();
 		arcanist.addToSheet(sheet, dispatch);
 
 		expect(dispatch).toHaveBeenCalledWith(new LearnSpell({
@@ -127,7 +128,7 @@ describe('Arcanist', () => {
 				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 
 			const sheet = new BuildingSheetFake();
-			const dispatch = jest.fn();
+			const dispatch = vi.fn();
 			arcanist.addToSheet(sheet, dispatch);
 
 			expect(dispatch).toHaveBeenCalledWith(new LearnSpell({
@@ -164,7 +165,7 @@ describe('Arcanist', () => {
 				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 
 			const sheet = new BuildingSheetFake();
-			const dispatch = jest.fn();
+			const dispatch = vi.fn();
 			arcanist.addToSheet(sheet, dispatch);
 
 			expect(dispatch).toHaveBeenCalledWith(new AddEquipment({

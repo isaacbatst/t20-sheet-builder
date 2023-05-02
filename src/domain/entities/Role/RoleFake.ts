@@ -2,6 +2,7 @@ import type {Proficiency} from '../Sheet/Proficiency';
 import type {SelectSkillGroup, RoleInterface} from './RoleInterface';
 import {RoleName} from './RoleName';
 import type {SkillName} from '../Skill/SkillName';
+import {vi} from 'vitest';
 
 export class RoleFake implements RoleInterface {
 	initialLifePoints = 10;
@@ -12,6 +13,6 @@ export class RoleFake implements RoleInterface {
 	proficiencies: Proficiency[] = [];
 	name: RoleName = RoleName.warrior;
 	startsWithArmor = true;
-	getTotalInitialSkills = jest.fn(() => 5);
-	addToSheet = jest.fn();
+	getTotalInitialSkills = vi.fn(() => 5);
+	addToSheet = vi.fn();
 }
