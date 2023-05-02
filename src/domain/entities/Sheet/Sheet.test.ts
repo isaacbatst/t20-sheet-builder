@@ -35,6 +35,7 @@ import {Proficiency} from './Proficiency';
 import type {Sheet} from './Sheet';
 import {SheetBuilder} from './SheetBuilder';
 import {Vision} from './Vision';
+import {WeaponAttack} from '../Attack/WeaponAttack';
 
 describe('Sheet', () => {
 	describe('Human Warrior', () => {
@@ -145,6 +146,12 @@ describe('Sheet', () => {
 
 		it('should have initial money', () => {
 			expect(sheet.getMoney()).toBe(24);
+		});
+
+		it('should have offensive weapons attacks', () => {
+			const attacks = sheet.getAttacks();
+			expect(attacks).toContainEqual(new WeaponAttack(new Dagger()));
+			expect(attacks).toContainEqual(new WeaponAttack(new LongSword()));
 		});
 	});
 

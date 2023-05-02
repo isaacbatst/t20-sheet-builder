@@ -1,6 +1,6 @@
 import type {DiceSides} from './DiceSides';
 
-export class DiceDamage {
+export class DiceRoll {
 	constructor(
 		readonly diceQuantity: number,
 		readonly diceSides: DiceSides,

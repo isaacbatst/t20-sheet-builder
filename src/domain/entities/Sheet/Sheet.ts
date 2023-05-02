@@ -1,5 +1,8 @@
+import type {Attack} from '../Attack/Attack';
+import {WeaponAttack} from '../Attack/WeaponAttack';
 import type {BuildStep, BuildStepInterface} from '../BuildStep';
 import type {DefenseInterface} from '../Defense/DefenseInterface';
+import {OffensiveWeapon} from '../Inventory/Equipment/Weapon/OfensiveWeapon/OffensiveWeapon';
 import type {Inventory} from '../Inventory/Inventory';
 import type {OriginInterface} from '../Origin/Origin';
 import type {LifePoints} from '../Points/LifePoints/LifePoints';
@@ -89,5 +92,18 @@ export class Sheet extends SheetBase implements SheetInterface {
 
 	getRace() {
 		return this.race;
+	}
+
+	getAttacks() {
+		const attacks: Attack[] = [];
+
+		this.inventory.equipments.forEach(equipment => {
+			if (equipment instanceof OffensiveWeapon) {
+				const attack = new WeaponAttack(equipment);
+				attacks.push(attack);
+			}
+		});
+
+		return attacks;
 	}
 }
