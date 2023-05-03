@@ -7,6 +7,7 @@ export class ContextualModifiersListFake implements ContextualModifiersListInter
 	total = 0;
 	maxTotal = 0;
 	add = vi.fn();
+	remove = vi.fn();
 	getTotal(): number {
 		return this.total;
 	}

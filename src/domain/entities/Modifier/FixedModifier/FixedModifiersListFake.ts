@@ -6,6 +6,7 @@ export class FixedModifiersListFake implements FixedModifiersListInterface {
 	modifiers: ModifierInterface[] = [];
 	total = 0;
 	add = vi.fn();
+	remove = vi.fn();
 	getTotal() {
 		return this.total;
 	}

@@ -1,14 +1,13 @@
-import type {Character} from '../Character/Character';
-import {Sheet} from '../Sheet/Sheet';
+import {CharacterFake} from '../Character/CharacterFake';
+import type {CharacterInterface} from '../Character/CharacterInterface';
 import type {Location} from '../Sheet/SheetInterface';
-import type {ContextType} from './ContextInterface';
-import type {InGameContextInterface} from './InGameContextInterface';
+import {InGameContextAbstract} from './InGameContextInterface';
 
-export class InGameContextFake implements InGameContextInterface {
-	type: ContextType = 'ingame';
+export class InGameContextFake extends InGameContextAbstract {
 	location: Location = {isUnderground: true};
-
-	constructor(public character: Character) {}
+	constructor(public character: CharacterInterface = new CharacterFake()) {
+		super();
+	}
 
 	getCurrentLocation(): Location {
 		return this.location;

@@ -4,6 +4,7 @@ import type {ModifierValueGetterInterface} from '../ModifierInterface';
 import {ModifierValueGetter} from '../ModifierValueGetter';
 import type {ModifierConditionVerify} from './ContextualModifiersListInterface';
 import {InGameContext} from '../../Context/InGameContext';
+import {InGameContextAbstract} from '../../Context/InGameContextInterface';
 
 export class ContextualModifierValueGetter extends ModifierValueGetter implements ModifierValueGetterInterface {
 	constructor(
@@ -17,7 +18,7 @@ export class ContextualModifierValueGetter extends ModifierValueGetter implement
 	get(value: number, attributes: Attribute[]): number {
 		const bonusesTotal = this.getAttributesBonusesTotal(attributes);
 
-		if (this.context instanceof InGameContext && !this.verifyCondition(this.context)) {
+		if (!(this.context instanceof InGameContextAbstract) || !this.verifyCondition(this.context)) {
 			return 0;
 		}
 

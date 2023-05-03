@@ -1,9 +1,8 @@
 import type {Character} from '../Character/Character';
 import type {Location} from '../Sheet/SheetInterface';
-import {Context} from './Context';
-import type {InGameContextInterface} from './InGameContextInterface';
+import {InGameContextAbstract} from './InGameContextInterface';
 
-export class InGameContext extends Context implements InGameContextInterface {
+export class InGameContext extends InGameContextAbstract {
 	readonly character: Character;
 	private readonly location: Location;
 
@@ -11,7 +10,7 @@ export class InGameContext extends Context implements InGameContextInterface {
 		initialLocation: Location,
 		character: Character,
 	) {
-		super('ingame', true);
+		super();
 		this.location = initialLocation;
 		this.character = character;
 	}

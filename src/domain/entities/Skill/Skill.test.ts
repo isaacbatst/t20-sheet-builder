@@ -137,9 +137,16 @@ describe('Skill', () => {
 			attribute: 'dexterity',
 		});
 		skill.fixedModifiers.add(new FixedModifier(RaceAbilityName.versatile, 2));
-		skill.contextualModifiers.add(new ContextualModifier(RaceAbilityName.rockKnowledge, 5, {description: 'any', verify: context => context.getCurrentLocation().isUnderground}));
-
-		const calculator = SkillTotalCalculatorFactory.make(sheet.getAttributes(), sheet.getLevel(), new InGameContextFake());
+		skill.contextualModifiers.add(new ContextualModifier(
+			RaceAbilityName.rockKnowledge,
+			5,
+			{
+				description: 'any', verify: context => context.getCurrentLocation().isUnderground,
+			}),
+		);
+		const calculator = SkillTotalCalculatorFactory.make(
+			sheet.getAttributes(), sheet.getLevel(), new InGameContextFake(),
+		);
 		expect(skill.getTotal(calculator)).toBe(18);
 	});
 });

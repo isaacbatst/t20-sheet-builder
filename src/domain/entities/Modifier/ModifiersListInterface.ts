@@ -8,4 +8,5 @@ export type ModifiersListInterface<T extends ModifierInterface> = {
 	modifiers: T[];
 	getTotal(totalCalculator: ModifiersListTotalCalculator<T>): number;
 	add(modifier: T): number;
+	remove(index: number): void;
 };

@@ -11,6 +11,7 @@ import {Vision} from '../../../Sheet/Vision';
 import {RaceAbilityName} from '../../RaceAbilityName';
 import {RockKnowledge} from './RockKnowledge';
 import {vi} from 'vitest';
+import {InGameContextFake} from '../../../Context/InGameContextFake';
 
 describe('RockKnowledge', () => {
 	it('should provide dark vision', () => {
@@ -68,9 +69,10 @@ describe('RockKnowledge', () => {
 
 		const verifyPerception = (perceptionCall.payload).modifier.condition.verify;
 		const verifySurvival = (survivalCall.payload).modifier.condition.verify;
-
-		expect(verifySurvival(new InGameContext({isUnderground: false}))).toBe(false);
-		expect(verifyPerception(new InGameContext({isUnderground: false}))).toBe(false);
+		const context = new InGameContextFake();
+		context.location.isUnderground = false;
+		expect(verifySurvival(context)).toBe(false);
+		expect(verifyPerception(context)).toBe(false);
 	});
 
 	it('should activate bonus in game context inside underground', () => {
@@ -84,8 +86,9 @@ describe('RockKnowledge', () => {
 
 		const verifyPerception = (perceptionCall.payload).modifier.condition.verify;
 		const verifySurvival = (survivalCall.payload).modifier.condition.verify;
+		const context = new InGameContextFake();
 
-		expect(verifySurvival(new InGameContext({isUnderground: true}))).toBe(true);
-		expect(verifyPerception(new InGameContext({isUnderground: true}))).toBe(true);
+		expect(verifySurvival(context)).toBe(true);
+		expect(verifyPerception(context)).toBe(true);
 	});
 });

@@ -8,7 +8,7 @@ export class OneWeaponStyleEffect extends FightStyleEffect {
 	}
 
 	canApply(character: Character): boolean {
-		const wieldedItems = character.sheet.inventory.getWieldedItems();
+		const wieldedItems = character.getWieldedItems();
 		return wieldedItems.length === 1;
 	}
 }

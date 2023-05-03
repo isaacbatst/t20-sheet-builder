@@ -55,6 +55,14 @@ describe('Character', () => {
 		expect(character.getFightStyle()).toBeDefined();
 	});
 
+	it('should toggle wield item', () => {
+		expect(character.getWieldedItems()).toEqual([]);
+		character.toggleWieldItem(EquipmentName.dagger);
+		expect(character.getWieldedItems()).toEqual([EquipmentName.dagger]);
+		character.toggleWieldItem(EquipmentName.dagger);
+		expect(character.getWieldedItems()).toEqual([]);
+	});
+
 	describe('Attack', () => {
 		let dagger: CharacterAttack;
 		let attributes: Attributes;
@@ -74,7 +82,13 @@ describe('Character', () => {
 			expect(dagger.attack).toEqual(new WeaponAttack(new Dagger()));
 		});
 
+		it('should get dagger attack without one weapon style modifier', () => {
+			expect(dagger.modifiers.contextual.getMaxTotal(attributes)).toBe(2);
+			expect(dagger.modifiers.contextual.getTotal(totalCalculator)).toBe(0);
+		});
+
 		it('should get dagger attack with one weapon style modifier', () => {
+			character.toggleWieldItem(EquipmentName.dagger);
 			expect(dagger.modifiers.contextual.getMaxTotal(attributes)).toBe(2);
 			expect(dagger.modifiers.contextual.getTotal(totalCalculator)).toBe(2);
 		});

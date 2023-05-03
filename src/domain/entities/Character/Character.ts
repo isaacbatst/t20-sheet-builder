@@ -6,9 +6,10 @@ import type {Attributes} from '../Sheet';
 import type {Sheet} from '../Sheet/Sheet';
 import type {CharacterAppliedFightStyle} from './CharacterAppliedFightStyle';
 import {CharacterAttack} from './CharacterAttack';
+import type {CharacterInterface} from './CharacterInterface';
 import {CharacterModifiers} from './CharacterModifiers';
 
-export class Character {
+export class Character implements CharacterInterface {
 	private get maxWieldedItems() {
 		return 2;
 	}
@@ -41,7 +42,7 @@ export class Character {
 
 		const wieldedItems = this.sheet.inventory.getWieldedItems();
 
-		if (!item.getIsEquipped() && this.maxWieldedItems >= wieldedItems.length) {
+		if (!item.getIsEquipped() && this.maxWieldedItems <= wieldedItems.length) {
 			throw new Error('MAX_WIELDED_ITEMS');
 		}
 

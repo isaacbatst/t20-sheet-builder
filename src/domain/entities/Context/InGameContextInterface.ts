@@ -1,8 +1,18 @@
-import type {ContextInterface} from './ContextInterface';
+import type {CharacterInterface} from '../Character/CharacterInterface';
 import type {Location} from '../Sheet/SheetInterface';
-import type {Character} from '../Character/Character';
+import {Context} from './Context';
+import type {ContextInterface, ContextType} from './ContextInterface';
 
 export type InGameContextInterface = ContextInterface & {
-	character: Character;
+	character: CharacterInterface;
 	getCurrentLocation(): Location;
 };
+
+export abstract class InGameContextAbstract extends Context implements InGameContextInterface {
+	abstract character: CharacterInterface;
+	constructor() {
+		super('ingame', true);
+	}
+
+	abstract getCurrentLocation(): Location;
+}
