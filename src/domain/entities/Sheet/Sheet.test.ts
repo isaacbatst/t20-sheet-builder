@@ -1,6 +1,3 @@
-import {EquipmentAdventure} from '../Inventory/Equipment/EquipmentAdventure/EquipmentAdventure';
-import {EquipmentClothing} from '../Inventory/Equipment/EquipmentClothing/EquipmentClothing';
-import {Equipment} from '../Inventory/Equipment/Equipment';
 import {EquipmentName} from '../Inventory/Equipment/EquipmentName';
 import {LeatherArmor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/LeatherArmor';
 import {Dagger} from '../Inventory/Equipment/Weapon/OfensiveWeapon/Dagger';
@@ -12,7 +9,7 @@ import {OriginBenefitGeneralPower} from '../Origin/OriginBenefitGeneralPower';
 import {OriginBenefitOriginPower} from '../Origin/OriginBenefitOriginPower';
 import {OriginBenefitSkill} from '../Origin/OriginBenefitSkill';
 import {PointsMaxCalculatorFactory} from '../Points/PointsMaxCalculatorFactory';
-import {Dodge} from '../Power/GeneralPower/Dodge';
+import {OneWeaponStyle} from '../Power/GeneralPower/FightStyle/OneWeaponStyle';
 import {GeneralPowerName} from '../Power/GeneralPower/GeneralPowerName';
 import {IronWill} from '../Power/GeneralPower/IronWill';
 import {SpecialFriend} from '../Power/OriginPower/SpecialFriend';
@@ -35,8 +32,6 @@ import {Proficiency} from './Proficiency';
 import type {Sheet} from './Sheet';
 import {SheetBuilder} from './SheetBuilder';
 import {Vision} from './Vision';
-import {WeaponAttack} from '../Attack/WeaponAttack';
-import {OneWeaponStyle} from '../Power/GeneralPower/FightStyle/OneWeaponStyle';
 
 describe('Sheet', () => {
 	describe('Human Warrior', () => {
