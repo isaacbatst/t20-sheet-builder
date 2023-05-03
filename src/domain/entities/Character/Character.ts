@@ -2,6 +2,7 @@ import {WeaponAttack} from '../Attack/WeaponAttack';
 import type {EquipmentName} from '../Inventory';
 import {OffensiveWeapon} from '../Inventory/Equipment/Weapon/OfensiveWeapon/OffensiveWeapon';
 import {FightStyle} from '../Power/GeneralPower/FightStyle/FightStyle';
+import type {Attributes} from '../Sheet';
 import type {Sheet} from '../Sheet/Sheet';
 import type {CharacterAppliedFightStyle} from './CharacterAppliedFightStyle';
 import {CharacterAttack} from './CharacterAttack';
@@ -18,12 +19,7 @@ export class Character {
 	constructor(
 		private	readonly sheet: Sheet,
 	) {
-		for (const power of sheet.powers.general.values()) {
-			if (power instanceof FightStyle) {
-				this.selectFightStyle(power);
-				break;
-			}
-		}
+		this.selectDefaultFightStyle(sheet);
 	}
 
 	selectFightStyle(fightStyle: FightStyle) {
@@ -52,6 +48,10 @@ export class Character {
 		item.toggleEquipped();
 	}
 
+	getAttributes(): Attributes {
+		return this.sheet.attributes;
+	}
+
 	getAttacks(): Map<EquipmentName, CharacterAttack> {
 		const attacks = new Map<EquipmentName, CharacterAttack>();
 
@@ -76,5 +76,14 @@ export class Character {
 
 	getFightStyle(): CharacterAppliedFightStyle | undefined {
 		return this.fightStyle;
+	}
+
+	private selectDefaultFightStyle(sheet: Sheet) {
+		for (const power of sheet.powers.general.values()) {
+			if (power instanceof FightStyle) {
+				this.selectFightStyle(power);
+				break;
+			}
+		}
 	}
 }

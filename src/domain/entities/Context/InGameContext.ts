@@ -1,8 +1,7 @@
+import type {Character} from '../Character/Character';
+import type {Location} from '../Sheet/SheetInterface';
 import {Context} from './Context';
 import type {InGameContextInterface} from './InGameContextInterface';
-import type {ModifierConditionVerify} from '../Modifier/ContextualModifier/ContextualModifiersListInterface';
-import type {Location} from '../Sheet/SheetInterface';
-import type {Character} from '../Character/Character';
 
 export class InGameContext extends Context implements InGameContextInterface {
 	readonly character: Character;

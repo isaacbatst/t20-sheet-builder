@@ -1,5 +1,9 @@
 import {WeaponAttack} from '../Attack/WeaponAttack';
+import type {ContextInterface} from '../Context/ContextInterface';
+import {InGameContext} from '../Context/InGameContext';
+import {InGameContextFake} from '../Context/InGameContextFake';
 import {Dagger, EquipmentName, LeatherArmor, LongSword} from '../Inventory';
+import {ContextualModifiersListTotalCalculator} from '../Modifier/ContextualModifier/ContextualModifiersListTotalCalculator';
 import {Acolyte, OriginBenefitGeneralPower, OriginBenefitSkill} from '../Origin';
 import type {Origin} from '../Origin/Origin';
 import {IronWill} from '../Power';
@@ -8,10 +12,12 @@ import {Human, VersatileChoicePower, VersatileChoiceSkill} from '../Race';
 import type {Race} from '../Race/Race';
 import {Warrior} from '../Role';
 import type {Role} from '../Role/Role';
+import type {Attributes} from '../Sheet';
 import type {Sheet} from '../Sheet/Sheet';
 import {SheetBuilder} from '../Sheet/SheetBuilder';
 import {SkillName} from '../Skill';
 import {Character} from './Character';
+import type {CharacterAttack} from './CharacterAttack';
 
 describe('Character', () => {
 	let sheet: Sheet;
@@ -49,10 +55,35 @@ describe('Character', () => {
 		expect(character.getFightStyle()).toBeDefined();
 	});
 
-	it('should get dagger attack', () => {
-		const attacks = character.getAttacks();
-		expect(attacks.has(EquipmentName.dagger)).toBeTruthy();
-		const dagger = attacks.get(EquipmentName.dagger);
-		expect(dagger!.attack).toEqual(new WeaponAttack(new Dagger()));
+	describe('Attack', () => {
+		let dagger: CharacterAttack;
+		let attributes: Attributes;
+		let context: ContextInterface;
+		let totalCalculator: ContextualModifiersListTotalCalculator;
+
+		beforeAll(() => {
+			const attacks = character.getAttacks();
+			dagger = attacks.get(EquipmentName.dagger)!;
+			attributes = character.getAttributes();
+			context = new InGameContextFake(character);
+			totalCalculator = new ContextualModifiersListTotalCalculator(context, character.getAttributes());
+		});
+
+		it('should find dagger attack', () => {
+			expect(dagger).toBeDefined();
+			expect(dagger.attack).toEqual(new WeaponAttack(new Dagger()));
+		});
+
+		it('should get dagger attack with one weapon style modifier', () => {
+			expect(dagger.modifiers.contextual.getMaxTotal(attributes)).toBe(2);
+			expect(dagger.modifiers.contextual.getTotal(totalCalculator)).toBe(2);
+		});
+
+		it('should unselect fight style and remove modifiers', () => {
+			character.unselectFightStyle();
+			expect(character.getFightStyle()).toBeUndefined();
+			expect(dagger.modifiers.contextual.getMaxTotal(attributes)).toBe(0);
+			expect(dagger.modifiers.contextual.getTotal(totalCalculator)).toBe(0);
+		});
 	});
 });
