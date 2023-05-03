@@ -34,10 +34,7 @@ export type SheetBuilderRoleStep = {chooseRole: (role: RoleInterface) => SheetBu
 export type SheetBuilderRaceStep = {chooseRace: (race: RaceInterface) => SheetBuilderRoleStep};
 
 export class SheetBuilder {
-	readonly context = new OutOfGameContext();
-	constructor(private sheet: BuildingSheetInterface = new BuildingSheet()) {
-
-	}
+	constructor(private sheet: BuildingSheetInterface = new BuildingSheet()) {}
 
 	getBuildingSheet() {
 		return this.sheet;

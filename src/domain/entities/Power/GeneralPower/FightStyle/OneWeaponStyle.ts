@@ -1,7 +1,6 @@
 import type {Character} from '../../../Character/Character';
 import {CharacterAppliedFightStyle} from '../../../Character/CharacterAppliedFightStyle';
 import type {CharacterModifiers} from '../../../Character/CharacterModifiers';
-import type {InGameContext} from '../../../Context/InGameContext';
 import type {InGameContextInterface} from '../../../Context/InGameContextInterface';
 import {ContextualModifier} from '../../../Modifier/ContextualModifier/ContextualModifier';
 import type {ModifierCondition} from '../../../Modifier/ContextualModifier/ContextualModifiersListInterface';
