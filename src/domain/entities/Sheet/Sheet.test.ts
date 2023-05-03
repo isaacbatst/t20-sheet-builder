@@ -124,36 +124,30 @@ describe('Sheet', () => {
 		});
 
 		it('should have origin equipments', () => {
-			expect(sheet.getInventory().equipments).toContainEqual(new EquipmentClothing(EquipmentName.priestCostume));
-			expect(sheet.getInventory().equipments).toContainEqual(new EquipmentAdventure(EquipmentName.sacredSymbol));
+			expect(sheet.getInventory().equipments.has(EquipmentName.priestCostume)).toBeTruthy();
+			expect(sheet.getInventory().equipments.has(EquipmentName.sacredSymbol)).toBeTruthy();
 		});
 
-		it('should have default initial equipments', () => {
-			expect(sheet.getInventory().equipments).toContainEqual(new EquipmentAdventure(EquipmentName.backpack));
-			expect(sheet.getInventory().equipments).toContainEqual(new EquipmentAdventure(EquipmentName.sleepingBag));
-			expect(sheet.getInventory().equipments).toContainEqual(new EquipmentClothing(EquipmentName.travelerCostume));
+		it('should have default initial equipments.has(', () => {
+			expect(sheet.getInventory().equipments.has(EquipmentName.backpack)).toBeTruthy();
+			expect(sheet.getInventory().equipments.has(EquipmentName.sleepingBag)).toBeTruthy();
+			expect(sheet.getInventory().equipments.has(EquipmentName.travelerCostume)).toBeTruthy();
 		});
 
-		it('should have chosen simple weapon', () => {
-			expect(sheet.getInventory().equipments).toContainEqual(new Dagger());
+		it('should have chosen weapo', () => {
+			expect(sheet.getInventory().equipments.has(EquipmentName.dagger)).toBeTruthy();
 		});
 
 		it('should have chosen martial weapon', () => {
-			expect(sheet.getInventory().equipments).toContainEqual(new LongSword());
+			expect(sheet.getInventory().equipments.has(EquipmentName.longSword)).toBeTruthy();
 		});
 
 		it('should have chosen armor', () => {
-			expect(sheet.getInventory().equipments).toContainEqual(new LeatherArmor());
+			expect(sheet.getInventory().equipments.has(EquipmentName.leatherArmor)).toBeTruthy();
 		});
 
 		it('should have initial money', () => {
 			expect(sheet.getMoney()).toBe(24);
-		});
-
-		it('should have offensive weapons attacks', () => {
-			const attacks = sheet.getAttacks();
-			expect(attacks).toContainEqual(new WeaponAttack(new Dagger()));
-			expect(attacks).toContainEqual(new WeaponAttack(new LongSword()));
 		});
 	});
 

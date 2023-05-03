@@ -103,17 +103,4 @@ export class Sheet extends SheetBase implements SheetInterface {
 	getRace() {
 		return this.race;
 	}
-
-	getAttacks() {
-		const attacks: Attack[] = [];
-
-		this.inventory.equipments.forEach(equipment => {
-			if (equipment instanceof OffensiveWeapon) {
-				const attack = new WeaponAttack(equipment);
-				attacks.push(attack);
-			}
-		});
-
-		return attacks;
-	}
 }
