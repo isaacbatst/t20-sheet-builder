@@ -3,4 +3,5 @@ export * from './AnimalsFriend';
 export * from './OriginBenefitGeneralPower';
 export * from './OriginBenefitOriginPower';
 export * from './OriginBenefitSkill';
+export * from './OriginName';
 
