@@ -76,6 +76,14 @@ export abstract class SheetBase implements SheetBaseInterface {
 		this.saveBuildSteps(transaction);
 	}
 
+	getRole() {
+		return this.role;
+	}
+
+	getRace() {
+		return this.race;
+	}
+
 	getAttributes(): Attributes {
 		return this.attributes;
 	}

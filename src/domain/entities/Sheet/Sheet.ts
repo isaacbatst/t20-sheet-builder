@@ -1,8 +1,5 @@
-import type {Attack} from '../Attack/Attack';
-import {WeaponAttack} from '../Attack/WeaponAttack';
 import type {BuildStep, BuildStepInterface} from '../BuildStep';
 import type {DefenseInterface} from '../Defense/DefenseInterface';
-import {OffensiveWeapon} from '../Inventory/Equipment/Weapon/OfensiveWeapon/OffensiveWeapon';
 import type {Inventory} from '../Inventory/Inventory';
 import type {OriginInterface} from '../Origin/Origin';
 import type {LifePoints} from '../Points/LifePoints/LifePoints';
@@ -13,7 +10,6 @@ import type {SheetInterface} from '../Sheet/SheetInterface';
 import type {Attributes} from './Attributes';
 import type {Level} from './Levels';
 import type {Proficiency} from './Proficiency';
-import {SheetBase} from './SheetBase';
 import type {SheetAbilities, SheetLearnedCircles, SheetPowers, SheetSkills, SheetSpells} from './SheetBaseInterface';
 import type {Vision} from './Vision';
 
@@ -39,11 +35,11 @@ type SheetParams = {
 	money: number;
 };
 
-export class Sheet extends SheetBase implements SheetInterface {
+export class Sheet implements SheetInterface {
 	static readonly initialAttributes: Attributes = {strength: 0, dexterity: 0, constitution: 0, intelligence: 0, wisdom: 0, charisma: 0};
-	override readonly race: RaceInterface;
-	override readonly role: RoleInterface;
-	override readonly origin: OriginInterface;
+	readonly race: RaceInterface;
+	readonly role: RoleInterface;
+	readonly origin: OriginInterface;
 	readonly buildSteps: BuildStepInterface[];
 	readonly lifePoints: LifePoints;
 	readonly manaPoints: ManaPoints;
@@ -64,7 +60,6 @@ export class Sheet extends SheetBase implements SheetInterface {
 	constructor(
 		params: SheetParams,
 	) {
-		super();
 		this.skills = params.skills;
 		this.race = params.race;
 		this.role = params.role;
@@ -84,16 +79,6 @@ export class Sheet extends SheetBase implements SheetInterface {
 		this.inventory = params.inventory;
 		this.origin = params.origin;
 		this.money = params.money;
-
-		params.powers.general.forEach(power => {
-			power.verifyRequirements(this);
-		});
-		params.powers.origin.forEach(power => {
-			power.verifyRequirements(this);
-		});
-		params.powers.role.forEach(power => {
-			power.verifyRequirements(this);
-		});
 	}
 
 	getRole() {
@@ -102,5 +87,65 @@ export class Sheet extends SheetBase implements SheetInterface {
 
 	getRace() {
 		return this.race;
+	}
+
+	getAttributes(): Attributes {
+		return this.attributes;
+	}
+
+	getDefense(): DefenseInterface {
+		return this.defense;
+	}
+
+	getDisplacement(): number {
+		return this.displacement;
+	}
+
+	getLevel(): number {
+		return this.level;
+	}
+
+	getSkills(): SheetSkills {
+		return this.skills;
+	}
+
+	getVision(): Vision {
+		return this.vision;
+	}
+
+	getProficiencies(): Proficiency[] {
+		return this.proficiencies;
+	}
+
+	getAbilities(): SheetAbilities {
+		return this.abilities;
+	}
+
+	getPowers(): SheetPowers {
+		return this.powers;
+	}
+
+	getSpells(): SheetSpells {
+		return this.spells;
+	}
+
+	getLearnedCircles(): SheetLearnedCircles {
+		return this.learnedCircles;
+	}
+
+	getLifePoints(): LifePoints {
+		return this.lifePoints;
+	}
+
+	getManaPoints(): ManaPoints {
+		return this.manaPoints;
+	}
+
+	getInventory(): Inventory {
+		return this.inventory;
+	}
+
+	getMoney(): number {
+		return this.money;
 	}
 }

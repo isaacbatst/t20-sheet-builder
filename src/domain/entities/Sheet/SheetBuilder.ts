@@ -4,7 +4,6 @@ import {ChooseRace} from '../Action/ChooseRace';
 import {ChooseRole} from '../Action/ChooseRole';
 import {SetInitialAttributes} from '../Action/SetInitialAttributes';
 import {TrainIntelligenceSkills} from '../Action/TrainIntelligenceSkills';
-import {OutOfGameContext} from '../Context/OutOfGameContext';
 import type {Armor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/Armor';
 import type {MartialWeapon} from '../Inventory/Equipment/Weapon/OfensiveWeapon/MartialWeapon';
 import type {SimpleWeapon} from '../Inventory/Equipment/Weapon/OfensiveWeapon/SimpleWeapon';
@@ -14,7 +13,6 @@ import type {RoleInterface} from '../Role/RoleInterface';
 import type {SkillName} from '../Skill/SkillName';
 import type {Attributes} from './Attributes';
 import {BuildingSheet} from './BuildingSheet';
-import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import {Sheet} from './Sheet';
 
 export type SheetBuilderInitialEquipmentStep = {
@@ -34,13 +32,13 @@ export type SheetBuilderRoleStep = {chooseRole: (role: RoleInterface) => SheetBu
 export type SheetBuilderRaceStep = {chooseRace: (race: RaceInterface) => SheetBuilderRoleStep};
 
 export class SheetBuilder {
-	constructor(private sheet: BuildingSheetInterface = new BuildingSheet()) {}
+	constructor(private sheet: BuildingSheet = new BuildingSheet()) {}
 
-	getBuildingSheet() {
+	getBuildingSheet(): BuildingSheet {
 		return this.sheet;
 	}
 
-	reset(sheet: BuildingSheetInterface = new BuildingSheet()) {
+	reset(sheet: BuildingSheet = new BuildingSheet()) {
 		this.sheet = sheet;
 
 		return {
@@ -110,6 +108,16 @@ export class SheetBuilder {
 	}
 
 	private build(race: RaceInterface, role: RoleInterface, origin: OriginInterface) {
+		this.sheet.powers.general.forEach(power => {
+			power.verifyRequirements(this.sheet);
+		});
+		this.sheet.powers.origin.forEach(power => {
+			power.verifyRequirements(this.sheet);
+		});
+		this.sheet.powers.role.forEach(power => {
+			power.verifyRequirements(this.sheet);
+		});
+
 		const sheet = this.createSheet(race, role, origin);
 		return sheet;
 	}
