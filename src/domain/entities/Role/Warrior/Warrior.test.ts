@@ -33,6 +33,10 @@ describe('Warrior', () => {
 			name: SkillName.aim,
 			source: RoleName.warrior,
 		}), sheet);
+		expect(dispatch).toHaveBeenCalledWith(new TrainSkill({
+			name: SkillName.fortitude,
+			source: RoleName.warrior,
+		}), sheet);
 	});
 
 	it('should not train skills choosing more than allowed from the same group', () => {
