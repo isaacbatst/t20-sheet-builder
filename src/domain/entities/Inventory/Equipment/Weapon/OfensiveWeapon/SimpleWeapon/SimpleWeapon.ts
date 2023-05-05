@@ -1,10 +1,15 @@
 import {Proficiency} from '../../../../../Sheet/Proficiency';
-import {EquipmentName} from '../../../EquipmentName';
 import {OffensiveWeapon} from '../OffensiveWeapon';
+import type {OffensiveWeaponStatic} from '../OffensiveWeaponStatic';
+import {Club} from './Club';
+import {Dagger} from './Dagger';
 
 export abstract class SimpleWeapon extends OffensiveWeapon {
-	static getAll(): EquipmentName[] {
-		return [EquipmentName.dagger, EquipmentName.club];
+	static getAll(): OffensiveWeaponStatic[] {
+		return [
+			Dagger,
+			Club,
+		];
 	}
 
 	constructor() {

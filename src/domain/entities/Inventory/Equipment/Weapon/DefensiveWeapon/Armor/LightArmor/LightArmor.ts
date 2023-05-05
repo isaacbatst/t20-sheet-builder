@@ -1,12 +1,14 @@
 import {Proficiency} from '../../../../../../Sheet/Proficiency';
-import {EquipmentName} from '../../../../EquipmentName';
 import {Armor} from '../Armor';
+import type {ArmorStatic} from '../ArmorStatic';
+import {LeatherArmor} from './LeatherArmor';
+import {StuddedLeatherArmor} from './StuddedLeatherArmor';
 
 export abstract class LightArmor extends Armor {
-	static getAll(): EquipmentName[] {
+	static getAll(): ArmorStatic[] {
 		return [
-			EquipmentName.studdedLeather,
-			EquipmentName.leatherArmor,
+			StuddedLeatherArmor,
+			LeatherArmor,
 		];
 	}
 

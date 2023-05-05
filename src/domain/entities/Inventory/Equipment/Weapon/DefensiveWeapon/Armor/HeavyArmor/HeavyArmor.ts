@@ -1,12 +1,14 @@
 import {Proficiency} from '../../../../../../Sheet/Proficiency';
-import {EquipmentName} from '../../../../EquipmentName';
 import {Armor} from '../Armor';
+import type {ArmorStatic} from '../ArmorStatic';
+import {ChainMail} from './ChainMail';
+import {FullPlate} from './FullPlate';
 
 export abstract class HeavyArmor extends Armor {
-	static getAll(): EquipmentName[] {
+	static getAll(): ArmorStatic[] {
 		return [
-			EquipmentName.chainMail,
-			EquipmentName.fullPlate,
+			FullPlate,
+			ChainMail,
 		];
 	}
 
