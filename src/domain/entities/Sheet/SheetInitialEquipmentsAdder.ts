@@ -4,8 +4,8 @@ import {EquipmentClothing} from '../Inventory/Equipment/EquipmentClothing/Equipm
 import {Equipment} from '../Inventory/Equipment/Equipment';
 import {EquipmentName} from '../Inventory/Equipment/EquipmentName';
 import type {Armor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/Armor/Armor';
-import type {MartialWeapon} from '../Inventory/Equipment/Weapon/OfensiveWeapon/MartialWeapon/MartialWeapon';
-import type {SimpleWeapon} from '../Inventory/Equipment/Weapon/OfensiveWeapon/SimpleWeapon/SimpleWeapon';
+import type {MartialWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/MartialWeapon/MartialWeapon';
+import type {SimpleWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/SimpleWeapon/SimpleWeapon';
 import type {RoleInterface} from '../Role/RoleInterface';
 import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import {Proficiency} from './Proficiency';

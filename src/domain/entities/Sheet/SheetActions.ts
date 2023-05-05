@@ -1,7 +1,7 @@
 import type {Equipment} from '../Inventory/Equipment/Equipment';
 import type {Armor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/Armor/Armor';
-import type {MartialWeapon} from '../Inventory/Equipment/Weapon/OfensiveWeapon/MartialWeapon/MartialWeapon';
-import type {SimpleWeapon} from '../Inventory/Equipment/Weapon/OfensiveWeapon/SimpleWeapon/SimpleWeapon';
+import type {MartialWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/MartialWeapon/MartialWeapon';
+import type {SimpleWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/SimpleWeapon/SimpleWeapon';
 import type {ContextualModifierInterface} from '../Modifier/ContextualModifier/ContextualModifierInterface';
 import type {FixedModifierInterface} from '../Modifier/FixedModifier/FixedModifier';
 import type {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';

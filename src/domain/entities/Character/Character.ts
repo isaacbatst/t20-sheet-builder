@@ -1,6 +1,6 @@
 import {WeaponAttack} from '../Attack/WeaponAttack';
 import type {EquipmentName} from '../Inventory';
-import {OffensiveWeapon} from '../Inventory/Equipment/Weapon/OfensiveWeapon/OffensiveWeapon';
+import {OffensiveWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/OffensiveWeapon';
 import {FightStyle} from '../Power/GeneralPower/FightStyle/FightStyle';
 import type {Attributes} from '../Sheet';
 import type {Sheet} from '../Sheet/Sheet';

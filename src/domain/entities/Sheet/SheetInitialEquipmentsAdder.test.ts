@@ -3,8 +3,8 @@ import {EquipmentAdventure} from '../Inventory/Equipment/EquipmentAdventure/Equi
 import {EquipmentClothing} from '../Inventory/Equipment/EquipmentClothing/EquipmentClothing';
 import {EquipmentName} from '../Inventory/Equipment/EquipmentName';
 import {LeatherArmor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/Armor/LightArmor/LeatherArmor';
-import {Dagger} from '../Inventory/Equipment/Weapon/OfensiveWeapon/SimpleWeapon/Dagger';
-import {LongSword} from '../Inventory/Equipment/Weapon/OfensiveWeapon/MartialWeapon/LongSword';
+import {Dagger} from '../Inventory/Equipment/Weapon/OffensiveWeapon/SimpleWeapon/Dagger';
+import {LongSword} from '../Inventory/Equipment/Weapon/OffensiveWeapon/MartialWeapon/LongSword';
 import {RoleFake} from '../Role/RoleFake';
 import {BuildingSheetFake} from './BuildingSheetFake';
 import {Proficiency} from './Proficiency';
