@@ -8,20 +8,31 @@ import {SkillName} from '../Skill/SkillName';
 import {Origin} from './Origin';
 import type {OriginBenefit} from './OriginBenefit';
 import {OriginName} from './OriginName';
+import type {OriginStatic} from './OriginStatic';
 
-export class Acolyte extends Origin {
-	name: OriginName = OriginName.acolyte;
-
-	equipments: Equipment[] = [
+const acolyte: OriginStatic = class Acolyte extends Origin {
+	static equipments: Equipment[] = [
 		new EquipmentAdventure(EquipmentName.sacredSymbol),
 		new EquipmentClothing(EquipmentName.priestCostume),
 	];
 
+	static originName: OriginName = OriginName.acolyte;
+	static skills: SkillName[] = [SkillName.cure, SkillName.religion, SkillName.will];
+	static generalPowers: GeneralPowerName[] = [GeneralPowerName.medicine, GeneralPowerName.ironWill];
+	static originPower = OriginPowerName.churchMember;
+
+	name = Acolyte.originName;
+	equipments = Acolyte.equipments;
+
 	constructor(chosenBenefits: OriginBenefit[]) {
 		super(chosenBenefits, {
-			skills: [SkillName.cure, SkillName.religion, SkillName.will],
-			generalPowers: [GeneralPowerName.medicine, GeneralPowerName.ironWill],
-			originPower: OriginPowerName.churchMember,
+			skills: Acolyte.skills,
+			generalPowers: Acolyte.generalPowers,
+			originPower: Acolyte.originPower,
 		});
 	}
-}
+};
+
+export {
+	acolyte as Acolyte,
+};
