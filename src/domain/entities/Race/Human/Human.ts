@@ -5,6 +5,7 @@ import {Versatile} from './Versatile/Versatile';
 import type {VersatileChoice} from './Versatile/VersatileChoice';
 
 export class Human extends SelectableAttributesRace {
+	static raceName = RaceName.human;
 	static attributeModifiers: Partial<Attributes> = {};
 
 	readonly abilities = {

@@ -1,13 +1,14 @@
 import type {Attributes} from '../../Sheet/Attributes';
+import {Race} from '../Race';
+import type {RaceAbility} from '../RaceAbility';
+import {RaceName} from '../RaceName';
 import {HardAsRock} from './HardAsRock/HardAsRock';
 import {RockKnowledge} from './RockKnowledge/RockKnowledge';
 import {SlowAndAlways} from './SlowAndAlways/SlowAndAlways';
-import type {RaceAbility} from '../RaceAbility';
-import {Race} from '../Race';
-import {RaceName} from '../RaceName';
-import type {RaceStatic} from '../RaceStatic';
 
 export class Dwarf extends Race {
+	static raceName = RaceName.dwarf;
+
 	static attributeModifiers: Partial<Attributes> = {
 		dexterity: -1,
 		constitution: 2,
