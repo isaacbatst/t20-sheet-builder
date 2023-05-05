@@ -1,13 +1,12 @@
 import type {EquipmentName} from '../../../Inventory';
+import type {Static} from '../../../Static';
 import type {ArcanistPathWizardFocus} from './ArcanistPathWizardFocus';
 import {ArcanistPathWizardFocusStaff} from './ArcanistPathWizardFocusStaff';
 import {ArcanistPathWizardFocusWand} from './ArcanistPathWizardFocusWand';
 
-export type ArcanistPathWizardFocusStatic = {
+export type ArcanistPathWizardFocusStatic = Static<ArcanistPathWizardFocus, {
 	equipmentName: EquipmentName;
-	new(): ArcanistPathWizardFocus;
-};
-
+}>;
 export abstract class ArcanistPathWizardFocuses {
 	static getAll(): ArcanistPathWizardFocusStatic[] {
 		return [

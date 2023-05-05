@@ -10,9 +10,8 @@ import {OriginName} from './OriginName';
 import type {OriginStatic} from './OriginStatic';
 
 type AnimalsFriendEquipments = EquipmentName.hound | EquipmentName.horse | EquipmentName.pony | EquipmentName.trobo;
-type AnimalsFriendArgs = [OriginBenefit[], AnimalsFriendEquipments];
 
-const animalsFriend: OriginStatic<AnimalsFriendArgs> = class AnimalsFriend extends Origin {
+const animalsFriend: OriginStatic = class AnimalsFriend extends Origin {
 	static equipments: Equipment[] = [];
 	static originName: OriginName = OriginName.animalsFriend;
 	static skills: SkillName[] = [SkillName.animalHandling, SkillName.animalRide];
