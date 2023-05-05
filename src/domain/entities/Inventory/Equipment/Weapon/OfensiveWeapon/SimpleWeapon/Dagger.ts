@@ -1,6 +1,6 @@
-import {DiceRoll} from '../../../../Dice/DiceRoll';
-import {EquipmentName} from '../../EquipmentName';
-import {Critical} from '../../../../Attack/Critical';
+import {DiceRoll} from '../../../../../Dice/DiceRoll';
+import {EquipmentName} from '../../../EquipmentName';
+import {Critical} from '../../../../../Attack/Critical';
 import {SimpleWeapon} from './SimpleWeapon';
 
 export class Dagger extends SimpleWeapon {

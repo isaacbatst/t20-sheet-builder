@@ -12,7 +12,7 @@ import {PickOriginPower} from '../Action/PickOriginPower';
 import {TrainIntelligenceSkills} from '../Action/TrainIntelligenceSkills';
 import {EquipmentClothing} from '../Inventory/Equipment/EquipmentClothing/EquipmentClothing';
 import {EquipmentName} from '../Inventory/Equipment/EquipmentName';
-import {Dagger} from '../Inventory/Equipment/Weapon/OfensiveWeapon/Dagger';
+import {Dagger} from '../Inventory/Equipment/Weapon/OfensiveWeapon/SimpleWeapon/Dagger';
 import {ContextualModifier} from '../Modifier/ContextualModifier/ContextualModifier';
 import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
 import {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';

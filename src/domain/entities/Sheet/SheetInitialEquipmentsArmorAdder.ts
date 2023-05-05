@@ -1,6 +1,6 @@
 import {AddEquipment} from '../Action/AddEquipment';
 import {EquipmentName} from '../Inventory/Equipment/EquipmentName';
-import type {Armor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/Armor';
+import type {Armor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/Armor/Armor';
 import type {RoleInterface} from '../Role/RoleInterface';
 import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import {Proficiency} from './Proficiency';

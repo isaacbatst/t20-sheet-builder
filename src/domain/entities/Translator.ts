@@ -198,12 +198,16 @@ export class Translator {
 		sleepingBag: 'Saco de Dormir',
 		travelerCostume: 'Traje de Viajante',
 		dagger: 'Adaga',
+		club: 'Clava',
 		longSword: 'Espada Longa',
+		scythe: 'Gadanho',
 		brunea: 'Brunea',
 		leatherArmor: 'Armadura de Couro',
 		studdedLeather: 'Couro Batido',
-		wand: 'Varinha',
+		chainMail: 'Cota de Malha',
+		fullPlate: 'Armadura Completa',
 		staff: 'Cajado',
+		wand: 'Varinha',
 	};
 
 	private static readonly arcanistPathsTranslation: Record<ArcanistPathName, string> = {

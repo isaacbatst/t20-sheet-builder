@@ -1,7 +1,7 @@
 import {EquipmentName} from '../Inventory/Equipment/EquipmentName';
-import {LeatherArmor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/LeatherArmor';
-import {Dagger} from '../Inventory/Equipment/Weapon/OfensiveWeapon/Dagger';
-import {LongSword} from '../Inventory/Equipment/Weapon/OfensiveWeapon/LongSword';
+import {LeatherArmor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/Armor/LightArmor/LeatherArmor';
+import {Dagger} from '../Inventory/Equipment/Weapon/OfensiveWeapon/SimpleWeapon/Dagger';
+import {LongSword} from '../Inventory/Equipment/Weapon/OfensiveWeapon/MartialWeapon/LongSword';
 import {Acolyte} from '../Origin/Acolyte';
 import {AnimalsFriend} from '../Origin/AnimalsFriend';
 import type {Origin} from '../Origin/Origin';

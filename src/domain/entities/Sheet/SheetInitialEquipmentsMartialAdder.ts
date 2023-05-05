@@ -1,5 +1,5 @@
 import {AddEquipment} from '../Action/AddEquipment';
-import type {MartialWeapon} from '../Inventory/Equipment/Weapon/OfensiveWeapon/MartialWeapon';
+import type {MartialWeapon} from '../Inventory/Equipment/Weapon/OfensiveWeapon/MartialWeapon/MartialWeapon';
 import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import {Proficiency} from './Proficiency';
 import type {SheetInitialEquipmentsWeaponAdder, SheetInitialEquipmentsWeaponAdderType} from './SheetInitialEquipmentsAdder';
