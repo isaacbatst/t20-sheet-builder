@@ -13,7 +13,7 @@ export class VersatileChoiceFactory {
 		return VersatileChoiceFactory.makeVersatileChoicePower(choice);
 	}
 
-	static makeVersatileChoiceSkill(choice: string): VersatileChoice {
+	private static makeVersatileChoiceSkill(choice: string): VersatileChoice {
 		if (!VersatileChoiceFactory.isSkill(choice)) {
 			throw new Error('INVALID_SKILL_CHOICE');
 		}
@@ -21,7 +21,7 @@ export class VersatileChoiceFactory {
 		return new VersatileChoiceSkill(choice);
 	}
 
-	static makeVersatileChoicePower(choice: SkillName | GeneralPowerName): VersatileChoice {
+	private static makeVersatileChoicePower(choice: SkillName | GeneralPowerName): VersatileChoice {
 		if (!VersatileChoiceFactory.isPower(choice)) {
 			throw new Error('INVALID_POWER_CHOICE');
 		}
@@ -30,11 +30,11 @@ export class VersatileChoiceFactory {
 		return new VersatileChoicePower(power);
 	}
 
-	static isPower(choice: string): choice is GeneralPowerName {
+	private static isPower(choice: string): choice is GeneralPowerName {
 		return choice in GeneralPowerName;
 	}
 
-	static isSkill(choice: string): choice is SkillName {
+	private static isSkill(choice: string): choice is SkillName {
 		return choice in SkillName;
 	}
 }
