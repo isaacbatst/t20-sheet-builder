@@ -5,11 +5,11 @@ import {Dodge} from '../../Power/GeneralPower/Dodge';
 import {BuildingSheetFake} from '../../Sheet/BuildingSheetFake';
 import {SkillName} from '../../Skill/SkillName';
 import {RaceName} from '../RaceName';
-import {Human} from './Human';
 import {Versatile} from './Versatile/Versatile';
 import type {VersatileChoice} from './Versatile/VersatileChoice';
 import {VersatileChoicePower} from './Versatile/VersatileChoicePower';
 import {VersatileChoiceSkill} from './Versatile/VersatileChoiceSkill';
+import {Human} from './Human';
 
 describe('Human', () => {
 	it('should apply +1 to strength, dexterity and constitution', () => {

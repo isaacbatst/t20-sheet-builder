@@ -1,8 +1,7 @@
 import {EquipmentName} from '../../../../EquipmentName';
-import type {ArmorStatic} from '../ArmorStatic';
 import {HeavyArmor} from './HeavyArmor';
 
-const fullPlate: ArmorStatic = class FullPlate extends HeavyArmor {
+export class FullPlate extends HeavyArmor {
 	static defenseBonus = 10;
 	static armorPenalty = 5;
 	static slots = 5;
@@ -12,8 +11,5 @@ const fullPlate: ArmorStatic = class FullPlate extends HeavyArmor {
 	armorPenalty = FullPlate.armorPenalty;
 	slots = FullPlate.slots;
 	name = FullPlate.equipmentName;
-};
+}
 
-export {
-	fullPlate as FullPlate,
-};

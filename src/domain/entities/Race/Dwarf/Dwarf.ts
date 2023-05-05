@@ -7,7 +7,7 @@ import {Race} from '../Race';
 import {RaceName} from '../RaceName';
 import type {RaceStatic} from '../RaceStatic';
 
-const dwarf: RaceStatic = class Dwarf extends Race {
+export class Dwarf extends Race {
 	static attributeModifiers: Partial<Attributes> = {
 		dexterity: -1,
 		constitution: 2,
@@ -25,6 +25,4 @@ const dwarf: RaceStatic = class Dwarf extends Race {
 	constructor() {
 		super(RaceName.dwarf);
 	}
-};
-
-export {dwarf as Dwarf};
+}

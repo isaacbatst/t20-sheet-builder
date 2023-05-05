@@ -11,7 +11,7 @@ import type {OriginStatic} from './OriginStatic';
 
 type AnimalsFriendEquipments = EquipmentName.hound | EquipmentName.horse | EquipmentName.pony | EquipmentName.trobo;
 
-const animalsFriend: OriginStatic = class AnimalsFriend extends Origin {
+export class AnimalsFriend extends Origin {
 	static equipments: Equipment[] = [];
 	static originName: OriginName = OriginName.animalsFriend;
 	static skills: SkillName[] = [SkillName.animalHandling, SkillName.animalRide];
@@ -29,8 +29,5 @@ const animalsFriend: OriginStatic = class AnimalsFriend extends Origin {
 		});
 		this.equipments = [new EquipmentAnimal(chosenAnimal)];
 	}
-};
+}
 
-export {
-	animalsFriend as AnimalsFriend,
-};

@@ -8,9 +8,8 @@ import {SkillName} from '../Skill/SkillName';
 import {Origin} from './Origin';
 import type {OriginBenefit} from './OriginBenefit';
 import {OriginName} from './OriginName';
-import type {OriginStatic} from './OriginStatic';
 
-const acolyte: OriginStatic = class Acolyte extends Origin {
+export class Acolyte extends Origin {
 	static equipments: Equipment[] = [
 		new EquipmentAdventure(EquipmentName.sacredSymbol),
 		new EquipmentClothing(EquipmentName.priestCostume),
@@ -31,8 +30,5 @@ const acolyte: OriginStatic = class Acolyte extends Origin {
 			originPower: Acolyte.originPower,
 		});
 	}
-};
+}
 
-export {
-	acolyte as Acolyte,
-};

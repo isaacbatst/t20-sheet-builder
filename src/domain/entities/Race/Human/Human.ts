@@ -1,11 +1,10 @@
 import {SelectableAttributesRace} from '../../SelectableAttributesRace';
 import type {Attribute, Attributes} from '../../Sheet/Attributes';
 import {RaceName} from '../RaceName';
-import type {RaceStatic} from '../RaceStatic';
 import {Versatile} from './Versatile/Versatile';
 import type {VersatileChoice} from './Versatile/VersatileChoice';
 
-const human: RaceStatic = class Human extends SelectableAttributesRace {
+export class Human extends SelectableAttributesRace {
 	static attributeModifiers: Partial<Attributes> = {};
 
 	readonly abilities = {
@@ -45,8 +44,4 @@ const human: RaceStatic = class Human extends SelectableAttributesRace {
 	get versatileChoices() {
 		return this.abilities.versatile.effects.passive.default.choices;
 	}
-};
-
-export {
-	human as Human,
-};
+}
