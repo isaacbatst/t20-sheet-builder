@@ -1,3 +1,4 @@
+import {SheetBuilderError} from '../Error/SheetBuilderError';
 import {AddEquipment} from '../Action/AddEquipment';
 import type {Equipment} from '../Inventory/Equipment/Equipment';
 import type {GeneralPowerName} from '../Power/GeneralPower/GeneralPowerName';
@@ -55,7 +56,7 @@ export abstract class Origin implements OriginInterface {
 
 	private validateChosenBenefits() {
 		if (this.chosenBenefits.length !== 2) {
-			throw new Error('INVALID_ORIGIN_BENEFITS');
+			throw new SheetBuilderError('INVALID_ORIGIN_BENEFITS');
 		}
 
 		this.chosenBenefits.forEach(benefit => {

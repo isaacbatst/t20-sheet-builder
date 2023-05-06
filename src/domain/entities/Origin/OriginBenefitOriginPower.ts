@@ -1,3 +1,4 @@
+import {SheetBuilderError} from '../Error/SheetBuilderError';
 import type {OriginPowerInterface} from '../Power/OriginPower/OriginPower';
 import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
 import type {Dispatch} from '../Sheet/Transaction';
@@ -17,7 +18,7 @@ export class OriginBenefitOriginPower extends OriginBenefit {
 
 	validate(originBenefits: OriginBenefits): void {
 		if (originBenefits.originPower !== this.power.name) {
-			throw new Error('INVALID_ORIGIN_POWER');
+			throw new SheetBuilderError('INVALID_ORIGIN_POWER');
 		}
 	}
 }

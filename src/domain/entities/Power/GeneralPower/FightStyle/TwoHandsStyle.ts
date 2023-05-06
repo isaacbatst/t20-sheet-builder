@@ -1,3 +1,4 @@
+import {SheetBuilderError} from '../../../Error/SheetBuilderError';
 import type {CharacterAppliedFightStyle} from '../../../Character/CharacterAppliedFightStyle';
 import type {CharacterModifiers} from '../../../Character/CharacterModifiers';
 import {SkillName} from '../../../Skill';
@@ -14,6 +15,6 @@ export class TwoHandsStyle extends FightStyle {
 	}
 
 	applyModifiers(modifiers: CharacterModifiers): CharacterAppliedFightStyle {
-		throw new Error('Method not implemented.');
+		throw new SheetBuilderError('Method not implemented.');
 	}
 }

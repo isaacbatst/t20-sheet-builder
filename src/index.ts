@@ -9,5 +9,6 @@ export * from './domain/entities/Inventory';
 export * from './domain/entities/Spell';
 export * from './domain/entities/Translator';
 export * from './domain/entities/Character';
+export * from './domain/entities/Error';
 
 export default SheetBuilder;

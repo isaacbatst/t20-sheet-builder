@@ -1,3 +1,4 @@
+import {SheetBuilderError} from '../Error/SheetBuilderError';
 import {AddFixedModifierToLifePoints} from '../Action/AddFixedModifierToLifePoints';
 import {AddPerLevelModifierToLifePoints} from '../Action/AddPerLevelModifierToLifePoints';
 import {AddPerLevelModifierToManaPoints} from '../Action/AddPerLevelModifierToManaPoints';
@@ -103,7 +104,7 @@ export abstract class Role implements RoleInterface {
 		const isSomeRepeated = this.chosenSkills.some((skill, index) => this.chosenSkills.indexOf(skill) !== index);
 
 		if (isSomeRepeated) {
-			throw new Error('REPEATED_ROLE_SKILLS');
+			throw new SheetBuilderError('REPEATED_ROLE_SKILLS');
 		}
 
 		const chosenSkills = this.chosenSkills.slice();
@@ -130,11 +131,11 @@ export abstract class Role implements RoleInterface {
 		});
 
 		if (chosenSkills.length) {
-			throw new Error('INVALID_CHOSEN_SKILLS');
+			throw new SheetBuilderError('INVALID_CHOSEN_SKILLS');
 		}
 
 		if (groupCounters.some(counter => counter !== 0)) {
-			throw new Error('MISSING_ROLE_SKILLS');
+			throw new SheetBuilderError('MISSING_ROLE_SKILLS');
 		}
 	}
 }

@@ -1,3 +1,4 @@
+import {SheetBuilderError} from '../Error/SheetBuilderError';
 import {AddMoney} from '../Action/AddMoney';
 import type {BuildStepInterface} from '../BuildStep';
 import {BuildStep} from '../BuildStep';
@@ -161,7 +162,7 @@ export abstract class SheetBase implements SheetBaseInterface {
 
 	private changeDisplacement(payload: ActionPayload<'changeDisplacement'>) {
 		if (payload.displacement < 0) {
-			throw new Error('INVALID_NEGATIVE_DISPLACEMENT');
+			throw new SheetBuilderError('INVALID_NEGATIVE_DISPLACEMENT');
 		}
 
 		this.displacement = payload.displacement;
@@ -225,7 +226,7 @@ export abstract class SheetBase implements SheetBaseInterface {
 
 	private addProficiency(payload: ActionPayload<'addProficiency'>) {
 		if (this.proficiencies.includes(payload.proficiency)) {
-			throw new Error('REPEATED_PROFICIENCY');
+			throw new SheetBuilderError('REPEATED_PROFICIENCY');
 		}
 
 		this.proficiencies.push(payload.proficiency);
@@ -248,7 +249,7 @@ export abstract class SheetBase implements SheetBaseInterface {
 
 	private learnSpell(payload: ActionPayload<'learnSpell'>) {
 		if (!this.isSpellCircleLearned(payload.spell)) {
-			throw new Error('CIRCLE_NOT_LEARNED');
+			throw new SheetBuilderError('CIRCLE_NOT_LEARNED');
 		}
 
 		this.spells.set(payload.spell.name, payload.spell);
@@ -276,7 +277,7 @@ export abstract class SheetBase implements SheetBaseInterface {
 
 	private trainIntelligenceSkills(payload: ActionPayload<'trainIntelligenceSkills'>) {
 		if (payload.skills.length !== this.attributes.intelligence) {
-			throw new Error('INVALID_INTELLIGENCE_SKILLS');
+			throw new SheetBuilderError('INVALID_INTELLIGENCE_SKILLS');
 		}
 
 		payload.skills.forEach(skill => {

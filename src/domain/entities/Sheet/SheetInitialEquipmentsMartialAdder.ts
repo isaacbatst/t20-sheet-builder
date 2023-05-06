@@ -1,3 +1,4 @@
+import {SheetBuilderError} from '../Error/SheetBuilderError';
 import {AddEquipment} from '../Action/AddEquipment';
 import type {MartialWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/MartialWeapon/MartialWeapon';
 import type {BuildingSheetInterface} from './BuildingSheetInterface';
@@ -14,7 +15,7 @@ export class SheetInitialEquipmentsMartialAdder implements SheetInitialEquipment
 
 	addEquipments(sheet: BuildingSheetInterface, dispatch: Dispatch) {
 		if (!sheet.getProficiencies().includes(Proficiency.martial)) {
-			throw new Error('UNEXPECTED_MARTIAL_WEAPON');
+			throw new SheetBuilderError('UNEXPECTED_MARTIAL_WEAPON');
 		}
 
 		dispatch(new AddEquipment({equipment: this.martialWeapon, source: 'default'}), sheet);

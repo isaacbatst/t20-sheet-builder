@@ -1,3 +1,4 @@
+import {SheetBuilderError} from '../../../Error/SheetBuilderError';
 import {GeneralPowerFactory, GeneralPowerName} from '../../../Power';
 import {SkillName} from '../../../Skill';
 import {type VersatileChoice, type VersatileChoiceType} from './VersatileChoice';
@@ -15,7 +16,7 @@ export class VersatileChoiceFactory {
 
 	private static makeVersatileChoiceSkill(choice: string): VersatileChoice {
 		if (!VersatileChoiceFactory.isSkill(choice)) {
-			throw new Error('INVALID_SKILL_CHOICE');
+			throw new SheetBuilderError('INVALID_SKILL_CHOICE');
 		}
 
 		return new VersatileChoiceSkill(choice);
@@ -23,7 +24,7 @@ export class VersatileChoiceFactory {
 
 	private static makeVersatileChoicePower(choice: SkillName | GeneralPowerName): VersatileChoice {
 		if (!VersatileChoiceFactory.isPower(choice)) {
-			throw new Error('INVALID_POWER_CHOICE');
+			throw new SheetBuilderError('INVALID_POWER_CHOICE');
 		}
 
 		const power = GeneralPowerFactory.make({name: choice});

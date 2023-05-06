@@ -1,3 +1,4 @@
+import {SheetBuilderError} from '../Error/SheetBuilderError';
 import type {DiceSides} from './DiceSides';
 
 export class DiceRoll {
@@ -10,7 +11,7 @@ export class DiceRoll {
 
 	private validateDiceQuantity(diceQuantity: number) {
 		if (diceQuantity < 1) {
-			throw new Error('INVALID_DICE_QUANTITY');
+			throw new SheetBuilderError('INVALID_DICE_QUANTITY');
 		}
 	}
 }

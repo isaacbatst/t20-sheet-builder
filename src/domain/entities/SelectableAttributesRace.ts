@@ -16,21 +16,21 @@ export abstract class SelectableAttributesRace extends Race {
 
 	private validateSelectedAttributes(attributes: Attribute[]) {
 		if (attributes.length !== this.selectableQuantity) {
-			throw new Error('INVALID_ATTRIBUTES_SELECTION');
+			throw new SheetBuilderError('INVALID_ATTRIBUTES_SELECTION');
 		}
 
 		const isSomeAttributeRepeated = attributes
 			.some((selectedAttribute, index) => attributes.indexOf(selectedAttribute) !== index);
 
 		if (isSomeAttributeRepeated) {
-			throw new Error('INVALID_ATTRIBUTES_SELECTION');
+			throw new SheetBuilderError('INVALID_ATTRIBUTES_SELECTION');
 		}
 
 		const isSomeSelectedAttributeRestricted = attributes
 			.some(selectedAttribute => this.restrictedAttributes.includes(selectedAttribute));
 
 		if (isSomeSelectedAttributeRestricted) {
-			throw new Error('RESTRICTED_ATTRIBUTE');
+			throw new SheetBuilderError('RESTRICTED_ATTRIBUTE');
 		}
 	}
 

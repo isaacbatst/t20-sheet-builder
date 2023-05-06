@@ -5,6 +5,7 @@ import type {Dispatch} from '../Sheet/Transaction';
 import type {Translatable} from '../Translator';
 import type {OriginBenefits} from './Origin';
 import {OriginBenefit} from './OriginBenefit';
+import {SheetBuilderError} from '../Error/SheetBuilderError';
 
 export class OriginBenefitSkill extends OriginBenefit {
 	constructor(readonly name: SkillName) {
@@ -20,7 +21,7 @@ export class OriginBenefitSkill extends OriginBenefit {
 
 	validate(originBenefits: OriginBenefits): void {
 		if (!originBenefits.skills.includes(this.name)) {
-			throw new Error('INVALID_ORIGIN_SKILL');
+			throw new SheetBuilderError('INVALID_ORIGIN_SKILL');
 		}
 	}
 }

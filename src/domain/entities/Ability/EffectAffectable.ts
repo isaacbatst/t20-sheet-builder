@@ -1,3 +1,4 @@
+import {SheetBuilderError} from '../Error/SheetBuilderError';
 import type {Affectable, AffectableType} from '../Affectable/Affectable';
 import type {AreaFormat} from '../Affectable/AffectableArea';
 import type {TargetType} from '../Affectable/AffectableTarget';
@@ -24,7 +25,7 @@ export class EffectAffectableTarget extends EffectAffectable {
 		super('target');
 
 		if (quantity <= 0) {
-			throw new Error('INVALID_TARGET_QUANTITY');
+			throw new SheetBuilderError('INVALID_TARGET_QUANTITY');
 		}
 	}
 }

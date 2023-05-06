@@ -1,3 +1,4 @@
+import {SheetBuilderError} from '../../../Error/SheetBuilderError';
 import {PassiveEffect} from '../../../Ability/PassiveEffect';
 import type {SheetBaseInterface} from '../../../Sheet/SheetBaseInterface';
 import type {Dispatch} from '../../../Sheet/Transaction';
@@ -12,19 +13,19 @@ export class VersatileEffect extends PassiveEffect {
 
 	addChoice(newChoice: VersatileChoice) {
 		if (this.choices.length >= 2) {
-			throw new Error('EXCEEDED_CHOICES_QUANTITY');
+			throw new SheetBuilderError('EXCEEDED_CHOICES_QUANTITY');
 		}
 
 		const found = this.choices.find(choice => choice.name === newChoice.name);
 
 		if (found) {
-			throw new Error('REPEATED_VERSATILE_CHOICE');
+			throw new SheetBuilderError('REPEATED_VERSATILE_CHOICE');
 		}
 
 		const isPreviousChoicePower = this.choices.some(choice => choice.type === 'power');
 
 		if (newChoice.type === 'power' && isPreviousChoicePower) {
-			throw new Error('FORBIDDEN_TWO_POWERS');
+			throw new SheetBuilderError('FORBIDDEN_TWO_POWERS');
 		}
 
 		this.choices.push(newChoice);
@@ -32,7 +33,7 @@ export class VersatileEffect extends PassiveEffect {
 
 	applyToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
 		if (this.choices.length !== 2) {
-			throw new Error('MISSING_CHOICES');
+			throw new SheetBuilderError('MISSING_CHOICES');
 		}
 
 		this.choices.forEach(choice => {

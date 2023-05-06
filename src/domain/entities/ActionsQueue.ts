@@ -1,3 +1,4 @@
+import {SheetBuilderError} from './Error/SheetBuilderError';
 import type {Queue} from './Queue';
 import type {ActionInterface} from './Sheet/SheetActions';
 
@@ -12,7 +13,7 @@ export class ActionsQueue implements Queue<ActionInterface> {
 		const item = this.items.shift();
 
 		if (!item) {
-			throw new Error('EMPTY_QUEUE');
+			throw new SheetBuilderError('EMPTY_QUEUE');
 		}
 
 		return item;

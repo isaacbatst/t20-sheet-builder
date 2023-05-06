@@ -1,3 +1,4 @@
+import {SheetBuilderError} from '../Error/SheetBuilderError';
 import {PassiveEffect} from '../Ability/PassiveEffect';
 import {LearnCircle} from '../Action/LearnCircle';
 import type {Attribute} from '../Sheet/Attributes';
@@ -35,7 +36,7 @@ export abstract class SpellsAbilityEffect extends PassiveEffect {
 
 	private validateSpells() {
 		if (this.spells.length !== this.initialSpells) {
-			throw new Error('INVALID_SPELLS_QUANTITY');
+			throw new SheetBuilderError('INVALID_SPELLS_QUANTITY');
 		}
 	}
 }

@@ -1,3 +1,4 @@
+import {SheetBuilderError} from '../Error/SheetBuilderError';
 import {AddEquipment} from '../Action/AddEquipment';
 import {EquipmentName} from '../Inventory/Equipment/EquipmentName';
 import type {Armor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/Armor/Armor';
@@ -21,17 +22,17 @@ export class SheetInitialEquipmentsArmorAdder implements SheetInitialEquipmentsW
 		readonly armor: Armor, readonly role: RoleInterface,
 	) {
 		if (!this.role.startsWithArmor) {
-			throw new Error('UNEXPECTED_ARMOR');
+			throw new SheetBuilderError('UNEXPECTED_ARMOR');
 		}
 	}
 
 	addEquipments(sheet: BuildingSheetInterface, dispatch: Dispatch) {
 		if ((this.hasHeavyArmor(sheet) && !this.isArmorInHeavyAllowedList())) {
-			throw new Error('INVALID_ARMOR');
+			throw new SheetBuilderError('INVALID_ARMOR');
 		}
 
 		if (!this.hasHeavyArmor(sheet) && !this.isArmorInRegularAllowedList()) {
-			throw new Error('INVALID_ARMOR');
+			throw new SheetBuilderError('INVALID_ARMOR');
 		}
 
 		dispatch(new AddEquipment({equipment: this.armor, source: 'default'}), sheet);

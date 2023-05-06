@@ -1,7 +1,7 @@
+import {SheetBuilderError} from '../Error/SheetBuilderError';
 import {AddEquipment} from '../Action/AddEquipment';
 import {EquipmentAdventure} from '../Inventory/Equipment/EquipmentAdventure/EquipmentAdventure';
 import {EquipmentClothing} from '../Inventory/Equipment/EquipmentClothing/EquipmentClothing';
-import {Equipment} from '../Inventory/Equipment/Equipment';
 import {EquipmentName} from '../Inventory/Equipment/EquipmentName';
 import type {Armor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/Armor/Armor';
 import type {MartialWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/MartialWeapon/MartialWeapon';
@@ -60,11 +60,11 @@ export class SheetInitialEquipmentsAdder {
 
 	validateWeapons(proficiencies: Proficiency[], role: RoleInterface) {
 		if (proficiencies.includes(Proficiency.martial) && !this.martialWeapon) {
-			throw new Error('MISSING_MARTIAL_WEAPON');
+			throw new SheetBuilderError('MISSING_MARTIAL_WEAPON');
 		}
 
 		if (role.startsWithArmor && !this.armor) {
-			throw new Error('MISSING_ARMOR');
+			throw new SheetBuilderError('MISSING_ARMOR');
 		}
 	}
 }

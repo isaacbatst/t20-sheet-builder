@@ -1,3 +1,4 @@
+import {SheetBuilderError} from '../Error/SheetBuilderError';
 import {ContextualModifiersList} from '../Modifier/ContextualModifier/ContextualModifierList';
 import {FixedModifiersList} from '../Modifier/FixedModifier/FixedModifiersList';
 import type {Attribute} from '../Sheet/Attributes';
@@ -49,7 +50,7 @@ export class Skill {
 
 	train() {
 		if (this.isTrained) {
-			throw new Error('TRAINING_TRAINED_SKILL');
+			throw new SheetBuilderError('TRAINING_TRAINED_SKILL');
 		}
 
 		this.isTrained = true;

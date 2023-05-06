@@ -1,10 +1,11 @@
+import {SheetBuilderError} from '../../Error/SheetBuilderError';
 import type {AbilityName} from '../../Ability/Ability';
 import {PassiveEffect} from '../../Ability/PassiveEffect';
 import {AddFixedModifierToSkill} from '../../Action/AddFixedModifierToSkill';
 import {FixedModifier} from '../../Modifier/FixedModifier/FixedModifier';
 import type {SheetBaseInterface} from '../../Sheet/SheetBaseInterface';
-import {SkillName} from '../../Skill/SkillName';
 import type {Dispatch} from '../../Sheet/Transaction';
+import {SkillName} from '../../Skill/SkillName';
 import {OriginPowerName} from './OriginPowerName';
 
 export class SpecialFriendEffect extends PassiveEffect {
@@ -27,7 +28,7 @@ export class SpecialFriendEffect extends PassiveEffect {
 
 	private validateSkill() {
 		if (this.skill === SkillName.fight || this.skill === SkillName.aim) {
-			throw new Error('INVALID_SKILL');
+			throw new SheetBuilderError('INVALID_SKILL');
 		}
 	}
 }

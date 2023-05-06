@@ -1,3 +1,4 @@
+import {SheetBuilderError} from '../Error/SheetBuilderError';
 import {WeaponAttack} from '../Attack/WeaponAttack';
 import type {EquipmentName} from '../Inventory';
 import {OffensiveWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/OffensiveWeapon';
@@ -37,13 +38,13 @@ export class Character implements CharacterInterface {
 		const item = this.sheet.inventory.getItem(name);
 
 		if (!item) {
-			throw new Error('ITEM_NOT_FOUND');
+			throw new SheetBuilderError('ITEM_NOT_FOUND');
 		}
 
 		const wieldedItems = this.sheet.inventory.getWieldedItems();
 
 		if (!item.getIsEquipped() && this.maxWieldedItems <= wieldedItems.length) {
-			throw new Error('MAX_WIELDED_ITEMS');
+			throw new SheetBuilderError('MAX_WIELDED_ITEMS');
 		}
 
 		item.toggleEquipped();
