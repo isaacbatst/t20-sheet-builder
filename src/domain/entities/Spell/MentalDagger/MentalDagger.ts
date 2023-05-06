@@ -2,10 +2,9 @@ import {AbilityEffects} from '../../Ability/AbilityEffects';
 import {Spell} from '../Spell';
 import {SpellCircle} from '../SpellCircle';
 import {SpellName} from '../SpellName';
-import type {SpellStatic} from '../SpellStatic';
 import {MentalDaggerDefaultEffect} from './MentalDaggerDefaultEffect';
 
-const mentalDagger: SpellStatic = class extends Spell {
+export class MentalDagger extends Spell {
 	static circle = SpellCircle.first;
 	static spellName = SpellName.mentalDagger;
 	effects = new AbilityEffects({
@@ -17,8 +16,4 @@ const mentalDagger: SpellStatic = class extends Spell {
 	constructor() {
 		super(SpellName.mentalDagger, SpellCircle.first, 'arcane');
 	}
-};
-
-export {
-	mentalDagger as MentalDagger,
-};
+}
