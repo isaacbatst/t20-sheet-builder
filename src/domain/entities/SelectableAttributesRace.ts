@@ -1,6 +1,7 @@
-import type {Attribute, Attributes} from './Sheet/Attributes';
+import {SheetBuilderError} from './Error';
 import {Race} from './Race/Race';
 import type {RaceName} from './Race/RaceName';
+import type {Attribute, Attributes} from './Sheet/Attributes';
 
 export abstract class SelectableAttributesRace extends Race {
 	readonly attributeModifiers: Partial<Attributes> = {};
