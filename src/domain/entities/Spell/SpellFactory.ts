@@ -7,16 +7,16 @@ import {type SpellName} from './SpellName';
 import {type SpellStatic} from './SpellStatic';
 
 export class SpellFactory {
-	static map: Record<SpellName, SpellStatic> = {
+	static make(name: SpellName): Spell {
+		// eslint-disable-next-line @typescript-eslint/naming-convention
+		const SpellClass = SpellFactory.map[name];
+		return new SpellClass();
+	}
+
+	private static readonly map: Record<SpellName, SpellStatic> = {
 		arcaneArmor: ArcaneArmor,
 		flamesExplosion: FlamesExplosion,
 		illusoryDisguise: IllusoryDisguise,
 		mentalDagger: MentalDagger,
 	};
-
-	make(name: SpellName): Spell {
-		// eslint-disable-next-line @typescript-eslint/naming-convention
-		const SpellClass = SpellFactory.map[name];
-		return new SpellClass();
-	}
 }
