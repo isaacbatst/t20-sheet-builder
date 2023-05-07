@@ -13,6 +13,7 @@ import {StringHelper} from './StringHelper';
 import type {Vision} from './Sheet/Vision';
 import type {EquipmentName} from './Inventory/Equipment/EquipmentName';
 import type {ArcanistPathName} from './Role';
+import {type DamageType} from './Damage/DamageType';
 
 export type Translatable = Attribute
 | RaceAbilityName | SkillName | PowerName | RaceName | Proficiency
@@ -76,6 +77,10 @@ export class Translator {
 
 	static getOriginTranslation(origin: OriginName) {
 		return Translator.originsTranslation[origin];
+	}
+
+	static getDamageTypeTranslation(damageType: DamageType) {
+		return Translator.damageTypesTranslation[damageType];
 	}
 
 	static getTranslation(string: Translatable) {
@@ -218,6 +223,20 @@ export class Translator {
 		wizard: 'Bruxo',
 	};
 
+	private static readonly damageTypesTranslation: Record<DamageType, string> = {
+		acid: 'Ácido',
+		cold: 'Frio',
+		cutting: 'Cortante',
+		darkness: 'Trevas',
+		eletricity: 'Eletricidade',
+		essence: 'Essência',
+		fire: 'Fogo',
+		impact: 'Impacto',
+		light: 'Luz',
+		piercing: 'Perfurante',
+		psychic: 'Mental',
+	};
+
 	private static readonly translation: Record<Translatable, string> = {
 		...Translator.attributesTranslation,
 		...Translator.abilitiesTranslation,
@@ -233,6 +252,7 @@ export class Translator {
 		...Translator.originsTranslation,
 		...Translator.equipmentsTranslation,
 		...Translator.arcanistPathsTranslation,
+		...Translator.damageTypesTranslation,
 		default: 'Padrão',
 	};
 }
