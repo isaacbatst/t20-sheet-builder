@@ -4,7 +4,6 @@ import {type Dispatch} from '../../../Sheet/Transaction';
 import {type Translatable} from '../../../Translator';
 import {GeneralPower} from '../GeneralPower';
 import {GeneralPowerGroup} from '../GeneralPowerGroup';
-import {type GeneralPowerName} from '../GeneralPowerName';
 
 export abstract class TormentaPower extends GeneralPower {
 	override group: GeneralPowerGroup = GeneralPowerGroup.tormenta;

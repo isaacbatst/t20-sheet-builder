@@ -4,6 +4,7 @@ import {TormentaPower} from '../TormentaPower';
 import {ShellEffect} from './ShellEffect';
 
 export class Shell extends TormentaPower {
+	static powerName = GeneralPowerName.shell;
 	effects = new AbilityEffects({
 		passive: {
 			default: new ShellEffect(),
@@ -11,6 +12,6 @@ export class Shell extends TormentaPower {
 	});
 
 	constructor() {
-		super(GeneralPowerName.shell);
+		super(Shell.powerName);
 	}
 }
