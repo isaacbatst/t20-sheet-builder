@@ -11,7 +11,7 @@ export class ArcanistLineageRed extends ArcanistLineage {
 	override type: ArcanistLineageType = ArcanistLineageType.red;
 	override effects: Record<AbilityLevel, AbilityEffectsInterface>;
 
-	constructor(power: TormentaPower, readonly attributeToLose: Attribute) {
+	constructor(power: TormentaPower, readonly attributeToLose: Attribute = 'charisma') {
 		super();
 		this.effects = {
 			basic: new AbilityEffects({
