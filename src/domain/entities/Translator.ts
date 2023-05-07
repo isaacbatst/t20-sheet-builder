@@ -18,7 +18,7 @@ import {type DamageType} from './Damage/DamageType';
 export type Translatable = Attribute
 | RaceAbilityName | SkillName | PowerName | RaceName | Proficiency
 | Vision | RoleAbilityName | SpellName | SpellCircle | RoleName | OriginName
-| EquipmentName | ArcanistPathName | 'default';
+| EquipmentName | ArcanistPathName | DamageType | 'default';
 
 export class Translator {
 	static getAttributeTranslation(attribute: Attribute, capitalized = true) {

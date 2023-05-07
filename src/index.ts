@@ -10,5 +10,6 @@ export * from './domain/entities/Spell';
 export * from './domain/entities/Translator';
 export * from './domain/entities/Character';
 export * from './domain/entities/Error';
+export * from './domain/entities/Damage/DamageType';
 
 export default SheetBuilder;
