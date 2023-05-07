@@ -1,7 +1,7 @@
-import {AbilityEffects, type AbilityEffectsInterface} from '../../../../../Ability/AbilityEffects';
-import {type AbilityLevel} from '../../../../../Ability/AbilityLevel';
-import {type TormentaPower} from '../../../../../Power/GeneralPower/TormentaPower/TormentaPower';
-import {type Attribute} from '../../../../../Sheet';
+import {AbilityEffects, type AbilityEffectsInterface} from '../../../../../../Ability/AbilityEffects';
+import {type AbilityLevel} from '../../../../../../Ability/AbilityLevel';
+import {type TormentaPower} from '../../../../../../Power/GeneralPower/TormentaPower/TormentaPower';
+import {type Attribute} from '../../../../../../Sheet';
 import {ArcanistLineage} from '../ArcanistLineage';
 import {ArcanistLineageType} from '../ArcanistLineageType';
 import {ArcanistLineageRedCustomTormentaPowersAttributeEffect} from './ArcanistLineageRedCustomTormentaPowersAttributeEffect';

@@ -1,10 +1,10 @@
-import {PassiveEffect} from '../../../../../Ability/PassiveEffect';
-import {LearnSpell} from '../../../../../Action/AddSpell';
-import {SheetBuilderError} from '../../../../../Error';
-import {type SheetBaseInterface} from '../../../../../Sheet/SheetBaseInterface';
-import {type Dispatch} from '../../../../../Sheet/Transaction';
-import {SpellSchool, type Spell} from '../../../../../Spell';
-import {RoleAbilityName} from '../../../../RoleAbilityName';
+import {PassiveEffect} from '../../../../../../Ability/PassiveEffect';
+import {LearnSpell} from '../../../../../../Action/AddSpell';
+import {SheetBuilderError} from '../../../../../../Error';
+import {type SheetBaseInterface} from '../../../../../../Sheet/SheetBaseInterface';
+import {type Dispatch} from '../../../../../../Sheet/Transaction';
+import {SpellSchool, type Spell} from '../../../../../../Spell';
+import {RoleAbilityName} from '../../../../../RoleAbilityName';
 
 export class ArcanistLineageFaerieExtraSpellEffect extends PassiveEffect {
 	constructor(

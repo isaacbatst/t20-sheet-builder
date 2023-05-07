@@ -1,5 +1,5 @@
-import {AbilityEffects, type AbilityEffectsInterface} from '../../../../../Ability/AbilityEffects';
-import {type AbilityLevel} from '../../../../../Ability/AbilityLevel';
+import {AbilityEffects, type AbilityEffectsInterface} from '../../../../../../Ability/AbilityEffects';
+import {type AbilityLevel} from '../../../../../../Ability/AbilityLevel';
 import {ArcanistLineage} from '../ArcanistLineage';
 import {ArcanistLineageType} from '../ArcanistLineageType';
 import {ArcanistLineageDraconicCharismaBonusEffect} from './ArcanistLineageDraconicCharismaBonusEffect';

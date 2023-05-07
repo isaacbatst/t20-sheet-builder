@@ -1,6 +1,6 @@
-import {type TormentaPower} from '../../../../Power';
-import {type Attribute} from '../../../../Sheet';
-import {type Spell} from '../../../../Spell';
+import {type TormentaPower} from '../../../../../Power';
+import {type Attribute} from '../../../../../Sheet';
+import {type Spell} from '../../../../../Spell';
 import {type ArcanistLineage} from './ArcanistLineage';
 import {ArcanistLineageDraconic, type ArcanistLineageDraconicDamageType} from './ArcanistLineageDraconic';
 import {ArcanistLineageFaerie} from './ArcanistLineageFaerie';

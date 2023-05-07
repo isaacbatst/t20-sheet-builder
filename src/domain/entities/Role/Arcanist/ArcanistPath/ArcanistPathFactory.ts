@@ -1,9 +1,9 @@
 import {type Spell} from '../../../Spell';
 import {ArcanistPathWizard, type ArcanistPathWizardFocus} from './ArcanisPathWizard';
-import {ArcanistPathWizardFocusFactory} from './ArcanisPathWizard/ArcanistPathWizarFocusFactory';
 import {ArcanistPathName, type ArcanistPath} from './ArcanistPath';
 import {ArcanistPathMage} from './ArcanistPathMage';
-import {ArcanistPathSorcerer, type ArcanistLineage} from './ArcanistPathSorcerer';
+import {ArcanistPathSorcerer} from './ArcanistPathSorcerer';
+import {type ArcanistLineage} from './ArcanistPathSorcerer/ArcanistLineage';
 
 type ArcanistPathFactoryParams = {
 	path: ArcanistPathName.mage;

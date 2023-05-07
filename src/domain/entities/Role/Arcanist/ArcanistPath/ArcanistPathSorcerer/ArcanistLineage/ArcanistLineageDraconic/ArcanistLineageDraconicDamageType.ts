@@ -1,4 +1,4 @@
-import {type DamageType} from '../../../../../Damage/DamageType';
+import {type DamageType} from '../../../../../../Damage/DamageType';
 
 export type ArcanistLineageDraconicDamageType =
   | DamageType.acid

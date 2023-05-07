@@ -1,5 +1,5 @@
-import {type AbilityEffectsInterface} from '../../../../Ability/AbilityEffects';
-import {type AbilityLevel} from '../../../../Ability/AbilityLevel';
+import {type AbilityEffectsInterface} from '../../../../../Ability/AbilityEffects';
+import {type AbilityLevel} from '../../../../../Ability/AbilityLevel';
 import {type ArcanistLineageType} from './ArcanistLineageType';
 
 export abstract class ArcanistLineage {

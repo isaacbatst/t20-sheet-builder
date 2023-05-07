@@ -10,13 +10,14 @@ import {MentalDagger} from '../../Spell/MentalDagger/MentalDagger';
 import {RoleAbilityName} from '../RoleAbilityName';
 import {RoleName} from '../RoleName';
 import {ArcanistBuilder} from './ArcanistBuider';
-import {ArcanistLineageDraconic, ArcanistPathName, ArcanistPathSorcerer} from './ArcanistPath';
 import {ArcanistPathMage} from './ArcanistPath/ArcanistPathMage/ArcanistPathMage';
 import {ArcanistPathWizard} from './ArcanistPath/ArcanisPathWizard/ArcanistPathWizard';
 import {ArcanistPathWizardFocusWand} from './ArcanistPath/ArcanisPathWizard/ArcanistPathWizardFocusWand';
 import {vi} from 'vitest';
 import {DamageType} from '../../Damage/DamageType';
 import {SheetBaseFake} from '../../Sheet/SheetBaseFake';
+import {ArcanistPathName, ArcanistPathSorcerer} from './ArcanistPath';
+import {ArcanistLineageDraconic} from './ArcanistPath/ArcanistPathSorcerer/ArcanistLineage';
 
 describe('Arcanist', () => {
 	it('should dispatch proper train skills', () => {

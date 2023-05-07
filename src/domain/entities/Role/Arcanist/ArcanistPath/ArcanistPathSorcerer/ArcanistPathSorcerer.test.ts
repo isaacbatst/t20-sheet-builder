@@ -11,9 +11,9 @@ import {SheetBaseFake} from '../../../../Sheet/SheetBaseFake';
 import {SkillName} from '../../../../Skill';
 import {IllusoryDisguise} from '../../../../Spell';
 import {RoleAbilityName} from '../../../RoleAbilityName';
-import {ArcanistLineageDraconic} from './ArcanistLineageDraconic/ArcanistLineageDraconic';
-import {ArcanistLineageFaerie} from './ArcanistLineageFaerie/ArcanistLineageFaerie';
-import {ArcanistLineageRed} from './ArcanistLineageRed/ArcanistLineageRed';
+import {ArcanistLineageDraconic} from './ArcanistLineage/ArcanistLineageDraconic/ArcanistLineageDraconic';
+import {ArcanistLineageFaerie} from './ArcanistLineage/ArcanistLineageFaerie/ArcanistLineageFaerie';
+import {ArcanistLineageRed} from './ArcanistLineage/ArcanistLineageRed/ArcanistLineageRed';
 import {ArcanistPathSorcerer} from './ArcanistPathSorcerer';
 
 describe('ArcanistPathSorcerer', () => {

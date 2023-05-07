@@ -1,7 +1,7 @@
-import {type AbilityEffectInterface} from '../../../../../Ability/AbilityEffect';
-import {AbilityEffects, type AbilityEffectsInterface} from '../../../../../Ability/AbilityEffects';
-import {type AbilityLevel} from '../../../../../Ability/AbilityLevel';
-import {type Spell} from '../../../../../Spell';
+import {type AbilityEffectInterface} from '../../../../../../Ability/AbilityEffect';
+import {AbilityEffects, type AbilityEffectsInterface} from '../../../../../../Ability/AbilityEffects';
+import {type AbilityLevel} from '../../../../../../Ability/AbilityLevel';
+import {type Spell} from '../../../../../../Spell';
 import {ArcanistLineage} from '../ArcanistLineage';
 import {ArcanistLineageType} from '../ArcanistLineageType';
 import {ArcanistLineageFaerieCheatTrainingEffect} from './ArcanistLineageFaerieCheatTrainingEffect';

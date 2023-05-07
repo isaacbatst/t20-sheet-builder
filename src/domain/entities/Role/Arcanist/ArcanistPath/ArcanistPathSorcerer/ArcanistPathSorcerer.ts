@@ -2,7 +2,7 @@ import {AbilityEffects, type AbilityEffectsInterface} from '../../../../Ability/
 import {type Attributes} from '../../../../Sheet';
 import {type SpellLearnFrequency} from '../../../SpellsAbility';
 import {ArcanistPath, ArcanistPathName} from '../ArcanistPath';
-import {type ArcanistLineage} from './ArcanistLineage';
+import {type ArcanistLineage} from './ArcanistLineage/ArcanistLineage';
 
 export class ArcanistPathSorcerer extends ArcanistPath {
 	pathName: ArcanistPathName = ArcanistPathName.sorcerer;
