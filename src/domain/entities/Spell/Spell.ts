@@ -6,6 +6,7 @@ import type {Translatable} from '../Translator';
 import {SpellCircle} from './SpellCircle';
 import {SpellCost} from './SpellCost';
 import type {SpellName} from './SpellName';
+import {type SpellSchool} from './SpellSchool';
 
 export type LearnableSpellType = 'arcane' | 'divine';
 export type SpellType = LearnableSpellType | 'universal';
@@ -17,6 +18,7 @@ export abstract class Spell extends Ability {
 	};
 
 	readonly cost: Cost;
+	abstract school: SpellSchool;
 
 	constructor(
 		override readonly name: SpellName,

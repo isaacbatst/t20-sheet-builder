@@ -1,6 +1,8 @@
+import {type AbilityEffectsInterface} from '../../../Ability/AbilityEffects';
+import {type AbilityLevel} from '../../../Ability/AbilityLevel';
 import type {Attribute} from '../../../Sheet';
-import type {SheetBaseInterface} from '../../../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../../../Sheet/Transaction';
+import {RoleAbility} from '../../RoleAbility';
+import {RoleAbilityName} from '../../RoleAbilityName';
 import type {SpellLearnFrequency} from '../../SpellsAbility';
 
 export enum ArcanistPathName {
@@ -9,9 +11,11 @@ export enum ArcanistPathName {
 	mage = 'mage',
 }
 
-export abstract class ArcanistPath {
-	abstract name: ArcanistPathName;
+export abstract class ArcanistPath extends RoleAbility {
+	abstract pathName: ArcanistPathName;
 	abstract spellsAttribute: Attribute;
 	abstract spellLearnFrequency: SpellLearnFrequency;
-	abstract addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void;
+	constructor() {
+		super(RoleAbilityName.arcanistPath);
+	}
 }

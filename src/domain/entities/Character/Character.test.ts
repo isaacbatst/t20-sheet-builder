@@ -1,13 +1,11 @@
 import {WeaponAttack} from '../Attack/WeaponAttack';
 import type {ContextInterface} from '../Context/ContextInterface';
-import {InGameContext} from '../Context/InGameContext';
 import {InGameContextFake} from '../Context/InGameContextFake';
 import {Dagger, EquipmentName, LeatherArmor, LongSword} from '../Inventory';
 import {ContextualModifiersListTotalCalculator} from '../Modifier/ContextualModifier/ContextualModifiersListTotalCalculator';
 import {Acolyte, OriginBenefitGeneralPower, OriginBenefitSkill} from '../Origin';
 import type {Origin} from '../Origin/Origin';
-import {IronWill} from '../Power';
-import {OneWeaponStyle} from '../Power/GeneralPower/FightStyle/OneWeaponStyle';
+import {IronWill, OneWeaponStyle} from '../Power';
 import {Human, VersatileChoicePower, VersatileChoiceSkill} from '../Race';
 import type {Race} from '../Race/Race';
 import {Warrior} from '../Role';

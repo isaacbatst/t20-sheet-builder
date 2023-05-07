@@ -10,7 +10,7 @@ import type {SkillName} from '../Skill/SkillName';
 import type {LearnableSpellType, Spell} from '../Spell/Spell';
 import type {SpellCircle} from '../Spell/SpellCircle';
 import type {SpellName} from '../Spell/SpellName';
-import type {Attributes} from './Attributes';
+import type {Attribute, Attributes} from './Attributes';
 import type {Proficiency} from './Proficiency';
 import type {ActionInterface, ActionsHandler, ActionType} from './SheetActions';
 import type {Vision} from './Vision';
@@ -41,4 +41,5 @@ export type SheetBaseInterface = {
 	getManaPoints(): ManaPoints;
 	getInventory(): Inventory;
 	getMoney(): number;
+	getTormentaPowersAttribute(): Attribute;
 };

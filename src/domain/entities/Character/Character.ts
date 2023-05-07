@@ -2,13 +2,13 @@ import {SheetBuilderError} from '../Error/SheetBuilderError';
 import {WeaponAttack} from '../Attack/WeaponAttack';
 import type {EquipmentName} from '../Inventory';
 import {OffensiveWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/OffensiveWeapon';
-import {FightStyle} from '../Power/GeneralPower/FightStyle/FightStyle';
 import type {Attributes} from '../Sheet';
 import type {Sheet} from '../Sheet/Sheet';
 import type {CharacterAppliedFightStyle} from './CharacterAppliedFightStyle';
 import {CharacterAttack} from './CharacterAttack';
 import type {CharacterInterface} from './CharacterInterface';
 import {CharacterModifiers} from './CharacterModifiers';
+import {FightStyle} from '../Power/GeneralPower/CombatPower/FightStyle/FightStyle';
 
 export class Character implements CharacterInterface {
 	private get maxWieldedItems() {

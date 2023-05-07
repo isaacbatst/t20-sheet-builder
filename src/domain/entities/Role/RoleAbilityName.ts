@@ -3,4 +3,5 @@ export enum RoleAbilityName {
 	warriorPower = 'warriorPower',
 	arcanistPath = 'arcanistPath',
 	arcanistSpells = 'arcanistSpells',
+	arcanistSupernaturalLineage = 'arcanistSupernaturalLineage',
 }

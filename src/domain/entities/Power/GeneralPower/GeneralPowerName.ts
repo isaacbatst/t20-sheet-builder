@@ -5,4 +5,5 @@ export enum GeneralPowerName {
 	oneWeaponStyle = 'oneWeaponStyle',
 	medicine = 'medicine',
 	ironWill = 'ironWill',
+	shell = 'shell',
 }

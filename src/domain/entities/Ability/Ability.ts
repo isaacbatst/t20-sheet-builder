@@ -27,7 +27,8 @@ export abstract class Ability implements AbilityInterface {
 	) {}
 
 	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch, source: Translatable): void {
-		dispatch(this.getAddAction(source), sheet);
+		const addAction = this.getAddAction(source);
+		dispatch(addAction, sheet);
 		this.applyPassiveEffects(sheet, dispatch, source);
 	}
 

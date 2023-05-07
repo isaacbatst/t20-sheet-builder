@@ -41,6 +41,8 @@ export class SheetBaseFake implements SheetBaseInterface {
 		chooseOrigin: vi.fn(),
 		addMoney: vi.fn(),
 		addInitialEquipment: vi.fn(),
+		changeTormentaPowersAttribute: vi.fn(),
+		decreaseAttribute: vi.fn(),
 	};
 
 	dispatch = vi.fn();
@@ -61,6 +63,11 @@ export class SheetBaseFake implements SheetBaseInterface {
 	lifePoints = new LifePoints();
 	manaPoints = new ManaPoints();
 	inventory = new Inventory();
+	tormentaPowersAttribute: keyof Attributes = 'charisma';
+
+	getTormentaPowersAttribute(): keyof Attributes {
+		return this.tormentaPowersAttribute;
+	}
 
 	getAttributes(): Attributes {
 		return this.attributes;

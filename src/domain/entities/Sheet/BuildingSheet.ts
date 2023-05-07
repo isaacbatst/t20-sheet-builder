@@ -8,7 +8,7 @@ import {InitialSkillsGenerator} from '../Skill/InitialSkillsGenerator';
 import type {LearnableSpellType, Spell} from '../Spell/Spell';
 import type {SpellCircle} from '../Spell/SpellCircle';
 import type {SpellName} from '../Spell/SpellName';
-import type {Attributes} from './Attributes';
+import type {Attribute, Attributes} from './Attributes';
 import type {BuildingSheetInterface} from './BuildingSheetInterface';
 import {Level} from './Levels';
 import {Proficiency} from './Proficiency';

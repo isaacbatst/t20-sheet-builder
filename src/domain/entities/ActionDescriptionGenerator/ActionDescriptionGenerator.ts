@@ -39,11 +39,13 @@ export abstract class ActionDescriptionGenerator {
 		addFixedModifierToDefense: (sheet, {payload: {modifier}}) => `${Translator.getTranslation(modifier.source)}: ${StringHelper.addNumberSign(modifier.value)} Defesa adicionado.`,
 		addPerLevelModifierToManaPoints: (sheet, {payload: {modifier}}) => `${Translator.getTranslation(modifier.source)}: ${StringHelper.addNumberSign(modifier.value)} PM ${modifier.attributeBonuses.length ? `(+ ${modifier.attributeBonuses.map(attribute => Translator.getAttributeTranslation(attribute)).join('/')}) ` : ''}por nível${modifier.includeFirstLevel ? '' : ' após o nível 1'}.`,
 		trainIntelligenceSkills: (sheet, {payload}) => payload.skills.length ? `Perícias treinadas pela inteligência: ${payload.skills.map(skill => Translator.getSkillTranslation(skill)).join(', ')}.` : 'Nenhuma perícia treinada pela inteligência.',
-		addEquipment: (action, {payload: {equipment, source}}) => `${Translator.getTranslation(source)}: ${Translator.getEquipmentTranslation(equipment.name)} adicionado ao inventário.`,
-		pickOriginPower: (action, {payload: {power}}) => `${Translator.getTranslation(power.source)}: poder ${Translator.getPowerTranslation(power.name)} escolhido.`,
-		chooseOrigin: (action, {payload: {origin}}) => `Origem escolhida: ${Translator.getOriginTranslation(origin.name)}.`,
+		addEquipment: (sheet, {payload: {equipment, source}}) => `${Translator.getTranslation(source)}: ${Translator.getEquipmentTranslation(equipment.name)} adicionado ao inventário.`,
+		pickOriginPower: (sheet, {payload: {power}}) => `${Translator.getTranslation(power.source)}: poder ${Translator.getPowerTranslation(power.name)} escolhido.`,
+		chooseOrigin: (sheet, {payload: {origin}}) => `Origem escolhida: ${Translator.getOriginTranslation(origin.name)}.`,
 		addInitialEquipment: () => 'Equipamento inicial adicionado.',
-		addMoney: (action, {payload: {quantity}}) => `Dinheiro adicionado: T$${quantity.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.`,
+		addMoney: (sheet, {payload: {quantity}}) => `Dinheiro adicionado: T$${quantity.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.`,
+		changeTormentaPowersAttribute: (sheet, {payload: {attribute, source}}) => `${Translator.getTranslation(source)}: você perde ${Translator.getAttributeTranslation(attribute)} por poderes de tormenta.`,
+		decreaseAttribute: (sheet, {payload: {attribute, source, quantity}}) => `${Translator.getTranslation(source)}: -${quantity} em ${Translator.getAttributeTranslation(attribute)}.`,
 	};
 
 	private static getAttributeText(attributes: Attributes, attribute: Attribute) {

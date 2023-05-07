@@ -135,6 +135,7 @@ export class Translator {
 		ironWill: 'Vontade de Ferro',
 		churchMember: 'Membro da Igreja',
 		specialFriend: 'Amigo Especial',
+		shell: 'Carapaça',
 	};
 
 	private static readonly visionsTranslation: Record<Vision, string> = {
@@ -168,6 +169,7 @@ export class Translator {
 		warriorPower: 'Poder de Guerreiro',
 		arcanistPath: 'Caminho do Arcanista',
 		arcanistSpells: 'Magias do Arcanista',
+		arcanistSupernaturalLineage: 'Linhagem Sobrenatural',
 	};
 
 	private static readonly spellsTranslation: Record<SpellName, string> = {

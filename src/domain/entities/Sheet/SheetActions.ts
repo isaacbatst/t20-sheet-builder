@@ -17,7 +17,7 @@ import type {SkillName} from '../Skill/SkillName';
 import type {LearnableSpellType, Spell} from '../Spell/Spell';
 import type {SpellCircle} from '../Spell/SpellCircle';
 import type {Translatable} from '../Translator';
-import type {Attributes} from './Attributes';
+import type {Attribute, Attributes} from './Attributes';
 import type {Proficiency} from './Proficiency';
 import type {SheetBaseInterface} from './SheetBaseInterface';
 import type {Dispatch} from './Transaction';
@@ -50,6 +50,8 @@ type ActionTypesToHandlers = {
 	addEquipment(payload: {equipment: Equipment; source: Translatable}): void;
 	addInitialEquipment(payload: {role: RoleInterface; simpleWeapon: SimpleWeapon; martialWeapon?: MartialWeapon; armor?: Armor; money: number}): void;
 	addMoney(payload: {quantity: number}): void;
+	changeTormentaPowersAttribute(payload: {attribute: Attribute; source: Translatable}): void;
+	decreaseAttribute(payload: {attribute: Attribute; quantity: number; source: Translatable}): void;
 };
 
 export type ActionType = keyof ActionTypesToHandlers;

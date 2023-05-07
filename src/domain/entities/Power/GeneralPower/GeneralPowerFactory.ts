@@ -1,11 +1,12 @@
-import {Dodge} from './Dodge';
+import {Dodge} from './CombatPower/Dodge/Dodge';
+import {OneWeaponStyle} from './CombatPower/FightStyle';
+import {SwordAndShieldStyle} from './CombatPower/FightStyle/SwordAndShieldStyle';
+import {TwoHandsStyle} from './CombatPower/FightStyle/TwoHandsStyle';
 import type {GeneralPower} from './GeneralPower';
 import type {GeneralPowerName} from './GeneralPowerName';
-import {IronWill} from './IronWill';
-import {Medicine} from './Medicine';
-import {SwordAndShieldStyle} from './FightStyle/SwordAndShieldStyle';
-import {TwoHandsStyle} from './FightStyle/TwoHandsStyle';
-import {OneWeaponStyle} from './FightStyle/OneWeaponStyle';
+import {IronWill} from './DestinyPower/IronWill/IronWill';
+import {Medicine} from './DestinyPower/Medicine/Medicine';
+import {Shell} from './TormentaPower';
 
 type Params = {
 	name: GeneralPowerName;
@@ -19,6 +20,7 @@ export class GeneralPowerFactory {
 		swordAndShieldStyle: SwordAndShieldStyle,
 		twoHandsStyle: TwoHandsStyle,
 		oneWeaponStyle: OneWeaponStyle,
+		shell: Shell,
 	};
 
 	static make(params: Params) {

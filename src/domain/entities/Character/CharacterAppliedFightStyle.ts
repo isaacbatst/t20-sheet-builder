@@ -1,4 +1,4 @@
-import type {FightStyle} from '../Power/GeneralPower/FightStyle/FightStyle';
+import {type FightStyle} from '../Power/GeneralPower/CombatPower/FightStyle/FightStyle';
 import type {CharacterModifiers} from './CharacterModifiers';
 
 export class CharacterAppliedFightStyle {

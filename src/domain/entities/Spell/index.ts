@@ -7,5 +7,6 @@ export * from './Spell';
 export * from './SpellCircle';
 export * from './SpellStatic';
 export * from './Spells';
+export * from './SpellSchool';
 export * from './SpellFactory';
 

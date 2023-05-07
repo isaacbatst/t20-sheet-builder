@@ -12,7 +12,7 @@ import type {Points} from '../Points/Points';
 import type {RaceInterface} from '../Race/RaceInterface';
 import type {RoleInterface} from '../Role/RoleInterface';
 import type {Spell} from '../Spell/Spell';
-import type {Attributes} from './Attributes';
+import type {Attribute, Attributes} from './Attributes';
 import type {Level} from './Levels';
 import type {Proficiency} from './Proficiency';
 import type {ActionInterface, ActionPayload, ActionsHandler, ActionType} from './SheetActions';
@@ -49,9 +49,12 @@ export abstract class SheetBase implements SheetBaseInterface {
 		chooseOrigin: this.chooseOrigin.bind(this),
 		addInitialEquipment: this.addInitialEquipment.bind(this),
 		addMoney: this.addMoney.bind(this),
+		changeTormentaPowersAttribute: this.changeTormentaPowersAttribute.bind(this),
+		decreaseAttribute: this.decreaseAttribute.bind(this),
 	};
 
 	abstract readonly buildSteps: BuildStepInterface[];
+	protected tormentaPowersAttribute: Attribute = 'charisma';
 	protected race?: RaceInterface;
 	protected role?: RoleInterface;
 	protected origin?: OriginInterface;
@@ -143,6 +146,10 @@ export abstract class SheetBase implements SheetBaseInterface {
 
 	getMoney(): number {
 		return this.money;
+	}
+
+	getTormentaPowersAttribute(): Attribute {
+		return this.tormentaPowersAttribute;
 	}
 
 	private saveBuildSteps(transaction: Transaction) {
@@ -293,5 +300,13 @@ export abstract class SheetBase implements SheetBaseInterface {
 		});
 		equipmentsAdder.addEquipments(dispatch, this, role);
 		dispatch(new AddMoney({quantity: money}), this);
+	}
+
+	private changeTormentaPowersAttribute({attribute}: ActionPayload<'changeTormentaPowersAttribute'>): void {
+		this.tormentaPowersAttribute = attribute;
+	}
+
+	private decreaseAttribute(payload: ActionPayload<'decreaseAttribute'>): void {
+		this.attributes[payload.attribute] -= payload.quantity;
 	}
 }

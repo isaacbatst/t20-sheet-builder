@@ -1,5 +1,5 @@
 import type {EquipmentName} from '../Inventory';
-import type {FightStyle} from '../Power/GeneralPower/FightStyle/FightStyle';
+import {type FightStyle} from '../Power/GeneralPower/CombatPower/FightStyle/FightStyle';
 import type {Attributes} from '../Sheet';
 import type {CharacterAppliedFightStyle} from './CharacterAppliedFightStyle';
 import type {CharacterAttack} from './CharacterAttack';

@@ -9,9 +9,8 @@ import {OriginBenefitGeneralPower} from '../Origin/OriginBenefitGeneralPower';
 import {OriginBenefitOriginPower} from '../Origin/OriginBenefitOriginPower';
 import {OriginBenefitSkill} from '../Origin/OriginBenefitSkill';
 import {PointsMaxCalculatorFactory} from '../Points/PointsMaxCalculatorFactory';
-import {OneWeaponStyle} from '../Power/GeneralPower/FightStyle/OneWeaponStyle';
 import {GeneralPowerName} from '../Power/GeneralPower/GeneralPowerName';
-import {IronWill} from '../Power/GeneralPower/IronWill';
+import {IronWill} from '../Power/GeneralPower/DestinyPower/IronWill/IronWill';
 import {SpecialFriend} from '../Power/OriginPower/SpecialFriend';
 import {Dwarf} from '../Race/Dwarf/Dwarf';
 import {Human} from '../Race/Human/Human';
@@ -19,7 +18,7 @@ import {VersatileChoicePower} from '../Race/Human/Versatile/VersatileChoicePower
 import {VersatileChoiceSkill} from '../Race/Human/Versatile/VersatileChoiceSkill';
 import type {Race} from '../Race/Race';
 import {ArcanistBuilder} from '../Role/Arcanist/ArcanistBuider';
-import {ArcanistPathMage} from '../Role/Arcanist/ArcanistPath/ArcanistPathMage';
+import {ArcanistPathMage} from '../Role/Arcanist/ArcanistPath/ArcanistPathMage/ArcanistPathMage';
 import type {Role} from '../Role/Role';
 import {RoleAbilityName} from '../Role/RoleAbilityName';
 import {Warrior} from '../Role/Warrior/Warrior';
@@ -32,6 +31,7 @@ import {Proficiency} from './Proficiency';
 import type {Sheet} from './Sheet';
 import {SheetBuilder} from './SheetBuilder';
 import {Vision} from './Vision';
+import {OneWeaponStyle} from '../Power';
 
 describe('Sheet', () => {
 	describe('Human Warrior', () => {

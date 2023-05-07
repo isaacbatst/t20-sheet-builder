@@ -16,10 +16,10 @@ export class AbilityEffects<T extends Partial<AbilityEffectsInterface>> implemen
 	activateable: NonNullable<T['activateable']>;
 	roleplay: NonNullable<T['roleplay']>;
 
-	constructor(params: T) {
-		this.passive = params.passive ?? {};
-		this.triggered = params.triggered ?? {};
-		this.activateable = params.activateable ?? {};
-		this.roleplay = params.roleplay ?? {};
+	constructor(params?: T) {
+		this.passive = params?.passive ?? {};
+		this.triggered = params?.triggered ?? {};
+		this.activateable = params?.activateable ?? {};
+		this.roleplay = params?.roleplay ?? {};
 	}
 }

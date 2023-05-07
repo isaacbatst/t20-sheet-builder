@@ -10,11 +10,13 @@ import {MentalDagger} from '../../Spell/MentalDagger/MentalDagger';
 import {RoleAbilityName} from '../RoleAbilityName';
 import {RoleName} from '../RoleName';
 import {ArcanistBuilder} from './ArcanistBuider';
-import {ArcanistPathName} from './ArcanistPath';
-import {ArcanistPathMage} from './ArcanistPath/ArcanistPathMage';
-import {ArcanistPathWizard} from './ArcanistPath/ArcanistPathWizard';
-import {ArcanistPathWizardFocusWand} from './ArcanistPath/ArcanistPathWizardFocusWand';
+import {ArcanistLineageDraconic, ArcanistPathName, ArcanistPathSorcerer} from './ArcanistPath';
+import {ArcanistPathMage} from './ArcanistPath/ArcanistPathMage/ArcanistPathMage';
+import {ArcanistPathWizard} from './ArcanistPath/ArcanisPathWizard/ArcanistPathWizard';
+import {ArcanistPathWizardFocusWand} from './ArcanistPath/ArcanisPathWizard/ArcanistPathWizardFocusWand';
 import {vi} from 'vitest';
+import {DamageType} from '../../Damage/DamageType';
+import {SheetBaseFake} from '../../Sheet/SheetBaseFake';
 
 describe('Arcanist', () => {
 	it('should dispatch proper train skills', () => {
@@ -122,18 +124,17 @@ describe('Arcanist', () => {
 		});
 
 		it('should learn additional spell', () => {
+			const mageExtraSpell = new FlamesExplosion();
 			const arcanist = ArcanistBuilder
 				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
-				.choosePath(new ArcanistPathMage(new FlamesExplosion()))
+				.choosePath(new ArcanistPathMage(mageExtraSpell))
 				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 
-			const sheet = new BuildingSheetFake();
+			const sheet = new SheetBaseFake();
 			const dispatch = vi.fn();
 			arcanist.addToSheet(sheet, dispatch);
-
 			expect(dispatch).toHaveBeenCalledWith(new LearnSpell({
-				source: ArcanistPathName.mage,
-				spell: new FlamesExplosion(),
+				spell: mageExtraSpell, source: ArcanistPathName.mage,
 			}), sheet);
 		});
 	});
@@ -172,6 +173,18 @@ describe('Arcanist', () => {
 				equipment: focus.equipment,
 				source: ArcanistPathName.wizard,
 			}), sheet);
+		});
+	});
+
+	describe('Sorcerer', () => {
+		it('should have charisma as key attribute', () => {
+			const lineage = new ArcanistLineageDraconic(DamageType.fire);
+			const arcanist = ArcanistBuilder
+				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
+				.choosePath(new ArcanistPathSorcerer(lineage))
+				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
+
+			expect(arcanist.getSpellsAttribute()).toBe('charisma');
 		});
 	});
 });
