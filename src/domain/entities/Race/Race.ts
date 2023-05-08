@@ -1,10 +1,9 @@
 import {ApplyRaceModifiers} from '../Action/ApplyRaceModifiers';
-import {ChooseRace} from '../Action/ChooseRace';
 import type {Attribute, Attributes} from '../Sheet/Attributes';
-import type {RaceAbility} from './RaceAbility';
-import type {RaceInterface} from './RaceInterface';
 import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
 import type {Dispatch} from '../Sheet/Transaction';
+import type {RaceAbility} from './RaceAbility';
+import type {RaceInterface} from './RaceInterface';
 import type {RaceName} from './RaceName';
 
 export abstract class Race implements RaceInterface {
