@@ -1,6 +1,6 @@
 import type {ActivateableAbilityEffectInterface, ActivateableEffectParams, ActivationType} from './ActivateableAbilityEffect';
 import {ActivateableAbilityEffect} from './ActivateableAbilityEffect';
-import type {TriggeredEffectName} from './TriggeredEffectName';
+import {type TriggeredEffectName} from './TriggeredEffectName';
 
 export type TriggerEvent = 'attack' | 'defense';
 

@@ -5,6 +5,10 @@ import {type TransactionInterface} from '../../../../../../Sheet/TransactionInte
 import {RoleAbilityName} from '../../../../../RoleAbilityName';
 
 export class ArcanistLineageRedCustomTormentaPowersAttributeEffect extends PassiveEffect {
+	get description() {
+		return 'Você pode perder outro atributo em vez de Carisma por poderes da Tormenta';
+	}
+
 	constructor(private readonly attribute: Attribute) {
 		super(RoleAbilityName.arcanistSupernaturalLineage);
 	}

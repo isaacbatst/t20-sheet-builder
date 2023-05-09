@@ -5,6 +5,10 @@ import {RaceAbilityName} from '../../RaceAbilityName';
 import type {VersatileChoice} from './VersatileChoice';
 
 export class VersatileEffect extends PassiveEffect {
+	get description() {
+		return 'Você se torna treinado em duas perícias a sua escolha (não precisam ser da sua classe). Você pode trocar uma dessas perícias por um poder geral a sua escolha.';
+	}
+
 	readonly choices: VersatileChoice[] = [];
 	constructor() {
 		super(RaceAbilityName.versatile);

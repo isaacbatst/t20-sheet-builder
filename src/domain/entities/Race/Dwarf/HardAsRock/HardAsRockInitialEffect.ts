@@ -5,6 +5,10 @@ import {type TransactionInterface} from '../../../Sheet/TransactionInterface';
 import {RaceAbilityName} from '../../RaceAbilityName';
 
 export class HardAsRockInitialEffect extends PassiveEffect {
+	get description() {
+		return 'Você recebe +3 pontos de vida no 1º nível';
+	}
+
 	constructor() {
 		super(RaceAbilityName.hardAsRock);
 	}

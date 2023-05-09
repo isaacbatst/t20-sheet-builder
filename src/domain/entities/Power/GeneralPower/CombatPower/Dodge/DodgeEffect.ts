@@ -7,6 +7,10 @@ import {SkillName} from '../../../../Skill/SkillName';
 import {GeneralPowerName} from '../../GeneralPowerName';
 
 export class DodgeEffect extends PassiveEffect {
+	get description() {
+		return 'Você recebe +2 na Defesa e Reflexos.';
+	}
+
 	constructor() {
 		super(GeneralPowerName.dodge);
 	}

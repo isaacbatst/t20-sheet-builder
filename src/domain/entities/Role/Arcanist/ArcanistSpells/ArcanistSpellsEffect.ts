@@ -7,6 +7,10 @@ import type {SpellLearnFrequency} from '../../SpellsAbility';
 import {SpellsAbilityEffect} from '../../SpellsAbilityEffect';
 
 export class ArcanistSpellsEffect extends SpellsAbilityEffect {
+	get description() {
+		return 'Você pode lançar magias arcanas de 1º	círculo e começa com três magias de 1º círculo.';
+	}
+
 	spellsLearnFrequency: SpellLearnFrequency;
 	spellsAttribute: Attribute;
 

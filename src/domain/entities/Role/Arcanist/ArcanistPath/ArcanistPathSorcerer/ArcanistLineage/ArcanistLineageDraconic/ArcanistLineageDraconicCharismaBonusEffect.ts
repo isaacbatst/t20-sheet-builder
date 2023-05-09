@@ -5,6 +5,10 @@ import {type TransactionInterface} from '../../../../../../Sheet/TransactionInte
 import {RoleAbilityName} from '../../../../../RoleAbilityName';
 
 export class ArcanistLineageDraconicCharismaBonusEffect extends PassiveEffect {
+	get description() {
+		return 'Você soma seu Carisma em seus pontos de vida iniciais';
+	}
+
 	constructor() {
 		super(RoleAbilityName.arcanistSupernaturalLineage);
 	}

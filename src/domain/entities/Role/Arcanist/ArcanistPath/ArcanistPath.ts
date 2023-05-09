@@ -1,5 +1,3 @@
-import {type AbilityEffectsInterface} from '../../../Ability/AbilityEffects';
-import {type AbilityLevel} from '../../../Ability/AbilityLevel';
 import type {Attribute} from '../../../Sheet';
 import {RoleAbility} from '../../RoleAbility';
 import {RoleAbilityName} from '../../RoleAbilityName';

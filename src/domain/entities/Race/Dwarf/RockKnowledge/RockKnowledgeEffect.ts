@@ -10,6 +10,10 @@ import {SkillName} from '../../../Skill/SkillName';
 import {RaceAbilityName} from '../../RaceAbilityName';
 
 export class RockKnowledgeEffect extends PassiveEffect {
+	get description() {
+		return 'Você recebe visão no escuro e +2 em testes de Percepção e Sobrevivência realizados no subterrâneo.';
+	}
+
 	static readonly condition: ModifierCondition = {
 		description: 'testes devem ser realizados no subterrâneo',
 		verify: (context: InGameContextInterface) => context.getCurrentLocation().isUnderground,

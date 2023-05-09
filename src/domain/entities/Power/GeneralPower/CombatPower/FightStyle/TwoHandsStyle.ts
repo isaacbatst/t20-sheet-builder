@@ -1,3 +1,4 @@
+import {AbilityEffects} from '../../../../Ability/AbilityEffects';
 import {type CharacterAppliedFightStyle} from '../../../../Character/CharacterAppliedFightStyle';
 import {type CharacterModifiers} from '../../../../Character/CharacterModifiers';
 import {SheetBuilderError} from '../../../../Error';
@@ -7,6 +8,7 @@ import {GeneralPowerName} from '../../GeneralPowerName';
 import {FightStyle} from './FightStyle';
 
 export class TwoHandsStyle extends FightStyle {
+	override effects = new AbilityEffects();
 	constructor() {
 		super(
 			GeneralPowerName.twoHandsStyle,

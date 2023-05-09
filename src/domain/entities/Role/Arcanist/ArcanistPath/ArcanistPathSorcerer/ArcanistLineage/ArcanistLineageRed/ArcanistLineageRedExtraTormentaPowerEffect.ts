@@ -5,6 +5,10 @@ import {type TransactionInterface} from '../../../../../../Sheet/TransactionInte
 import {RoleAbilityName} from '../../../../../RoleAbilityName';
 
 export class ArcanistLineageRedExtraTormentaPowerEffect extends PassiveEffect {
+	get description() {
+		return 'Você recebe um poder da Tormenta';
+	}
+
 	constructor(
 		private readonly power: TormentaPower,
 	) {

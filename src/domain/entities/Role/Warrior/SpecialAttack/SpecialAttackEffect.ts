@@ -1,12 +1,16 @@
 import {TriggeredEffect} from '../../../Ability/TriggeredEffect';
-import type {TriggeredEffectName} from '../../../Ability/TriggeredEffectName';
-import {Level} from '../../../Sheet/Level';
+import {TriggeredEffectName} from '../../../Ability/TriggeredEffectName';
 import {ManaCost} from '../../../ManaCost';
+import {Level} from '../../../Sheet/Level';
 import {RoleAbilityName} from '../../RoleAbilityName';
-import {SpecialAttackManaCost} from './SpecialAttackManaCost';
 import {SpecialAttackEffectCosts} from './SpecialAttackManaCost';
 
-export abstract class SpecialAttackEffect extends TriggeredEffect {
+export class SpecialAttackEffect extends TriggeredEffect {
+	get description() {
+		return 'Quando faz um ataque, você pode gastar 1 PM para receber +4 no teste de ataque ou na rolagem de dano. '
+		+ 'A cada quatro níveis, pode gastar +1 PM para aumentar o bônus em +4. Você pode dividir os bônus igualmente.';
+	}
+
 	static minLevelToCost: Record<SpecialAttackEffectCosts, Level> = {
 		[SpecialAttackEffectCosts.oneManaPoint]: Level.one,
 		[SpecialAttackEffectCosts.twoManaPoints]: Level.five,
@@ -22,19 +26,16 @@ export abstract class SpecialAttackEffect extends TriggeredEffect {
 		[SpecialAttackEffectCosts.twoManaPoints]: 8,
 	};
 
-	costs: SpecialAttackManaCost[];
+	baseCosts: ManaCost[];
 
-	constructor(
-		cost: SpecialAttackEffectCosts,
-		name: TriggeredEffectName,
-	) {
+	constructor() {
 		super({
 			duration: 'next',
 			execution: 'reaction',
 			source: RoleAbilityName.specialAttack,
 			triggerEvent: 'attack',
-			name,
+			name: TriggeredEffectName.specialAttack,
 		});
-		this.costs = [new SpecialAttackManaCost(cost)];
+		this.baseCosts = [new ManaCost(1)];
 	}
 }

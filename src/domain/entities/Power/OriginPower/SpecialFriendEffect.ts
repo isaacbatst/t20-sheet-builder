@@ -8,6 +8,16 @@ import {SkillName} from '../../Skill/SkillName';
 import {OriginPowerName} from './OriginPowerName';
 
 export class SpecialFriendEffect extends PassiveEffect {
+	get description() {
+		return 'Você recebe +5 em testes de Adestramento com animais.'
+		+ ' Além disso, possui um animal de estimação'
+		+ ' que o auxilia e o acompanha em suas aventuras. Em'
+		+ ' termos de jogo, é um parceiro que fornece +2 em'
+		+ ' uma perícia a sua escolha (exceto Luta ou Pontaria'
+		+ ' e aprovada pelo mestre) e não conta em seu limite'
+		+ ' de parceiros.';
+	}
+
 	constructor(source: AbilityName, readonly skill: SkillName) {
 		super(source);
 		this.validateSkill();

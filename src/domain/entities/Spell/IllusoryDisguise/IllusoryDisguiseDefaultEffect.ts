@@ -7,7 +7,15 @@ import {SpellEffect} from '../SpellEffect';
 import {SpellName} from '../SpellName';
 
 export class IllusoryDisguiseDefaultEffect extends SpellEffect {
-	costs: Cost[] = [new ManaCost(1)];
+	baseCosts: Cost[] = [new ManaCost(1)];
+
+	override description: string = 'Você muda a aparência do alvo, incluindo'
+	+ ' seu equipamento. Isso inclui altura, peso, tom de pele, cor de cabelo,'
+	+ ' timbre de voz etc. O alvo recebe +10 em testes de Enganação para'
+	+ ' disfarce. O alvo não recebe novas habilidades (você pode ficar parecido com'
+	+ ' outra raça, mas não ganhará as habilidades dela), nem modifica o equipamento'
+	+ ' (uma espada longa disfarçada de bordão continua funcionando e causando dano como uma espada).';
+
 	static get duration(): EffectDuration {
 		return 'scene';
 	}

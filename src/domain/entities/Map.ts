@@ -1,5 +1,5 @@
 import type {TriggeredEffectInterface} from './Ability/TriggeredEffect';
-import type {TriggeredEffectName} from './Ability/TriggeredEffectName';
+import {type TriggeredEffectName} from './Ability/TriggeredEffectName';
 import type {GeneralPowerInterface} from './Power/GeneralPower/GeneralPower';
 import type {GeneralPowerName} from './Power/GeneralPower/GeneralPowerName';
 import type {OriginPowerInterface} from './Power/OriginPower/OriginPower';

@@ -5,6 +5,10 @@ import {type TransactionInterface} from '../../../Sheet/TransactionInterface';
 import {RaceAbilityName} from '../../RaceAbilityName';
 
 export class HardAsRockPerLevelEffect extends PassiveEffect {
+	get description() {
+		return 'Você recebe +1 de vida por nível após o primeiro';
+	}
+
 	constructor() {
 		super(RaceAbilityName.hardAsRock);
 	}

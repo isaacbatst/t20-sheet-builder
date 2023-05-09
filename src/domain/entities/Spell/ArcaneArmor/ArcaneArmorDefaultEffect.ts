@@ -5,6 +5,12 @@ import {SpellEffect} from '../SpellEffect';
 import {SpellName} from '../SpellName';
 
 export class ArcaneArmorDefaultEffect extends SpellEffect {
+	override description: string = 'Esta magia cria uma película protetora'
+	+ ' invisível, mas tangível, fornecendo'
+	+ ' +5 na Defesa. Esse bônus é cumulativo'
+	+ ' com outras magias, mas não com'
+	+ ' bônus fornecido por armaduras.';
+
 	static get defenseBonus() {
 		return 5;
 	}
@@ -14,7 +20,7 @@ export class ArcaneArmorDefaultEffect extends SpellEffect {
 	}
 
 	affectable = new AffectableTarget('self');
-	costs = [new ManaCost(1)];
+	baseCosts = [new ManaCost(1)];
 	range: EffectRange = 'personal';
 
 	constructor() {

@@ -4,6 +4,10 @@ import {type TransactionInterface} from '../../../Sheet/TransactionInterface';
 import {RaceAbilityName} from '../../RaceAbilityName';
 
 export class SlowAndAlwaysEffect extends PassiveEffect {
+	get description() {
+		return 'Seu deslocamento é 6m (em vez de 9m).';
+	}
+
 	constructor() {
 		super(RaceAbilityName.slowAndAlways);
 	}

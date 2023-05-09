@@ -6,6 +6,10 @@ import {ArcanistPathName} from '../ArcanistPath';
 import {type ArcanistPathWizardFocus} from './ArcanistPathWizardFocus';
 
 export class ArcanistPathWizardFocusEffect extends PassiveEffect {
+	get description() {
+		return 'Você lança magias através de um foco — uma varinha, cajado, chapéu...';
+	}
+
 	constructor(
 		readonly focus: ArcanistPathWizardFocus,
 	) {

@@ -1,3 +1,4 @@
+import {AbilityEffects} from '../../../../Ability/AbilityEffects';
 import {type Character} from '../../../../Character';
 import {CharacterAppliedFightStyle} from '../../../../Character/CharacterAppliedFightStyle';
 import {type CharacterModifiers} from '../../../../Character/CharacterModifiers';
@@ -8,8 +9,15 @@ import {SkillName} from '../../../../Skill';
 import {SkillRequirement} from '../../../Requirement/SkillRequirement';
 import {GeneralPowerName} from '../../GeneralPowerName';
 import {FightStyle} from './FightStyle';
+import {OneWeaponStyleEffect} from './OneWeaponStyleEffect';
 
 export class OneWeaponStyle extends FightStyle {
+	effects = new AbilityEffects({
+		activateable: {
+			default: new OneWeaponStyleEffect(),
+		},
+	});
+
 	private readonly condition: ModifierCondition = {
 		description: 'Se estiver usando uma arma corpo a corpo em uma das mãos e nada na outra,',
 		verify(context: InGameContextInterface) {

@@ -36,7 +36,7 @@ export abstract class ActivateableAbilityEffect extends AbilityEffect implements
 		return 'free';
 	}
 
-	abstract costs: Cost[];
+	abstract baseCosts: Cost[];
 
 	constructor(params: ActivateableEffectParams) {
 		super('active', params.source);

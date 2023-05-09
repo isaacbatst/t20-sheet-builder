@@ -4,7 +4,7 @@ import {type Cost} from '../../../../Sheet/CharacterSheetInterface';
 import {type GeneralPowerName} from '../../GeneralPowerName';
 
 export abstract class FightStyleEffect extends ActivateableAbilityEffect {
-	costs: Cost[] = [];
+	baseCosts: Cost[] = [];
 
 	constructor(source: GeneralPowerName) {
 		super({

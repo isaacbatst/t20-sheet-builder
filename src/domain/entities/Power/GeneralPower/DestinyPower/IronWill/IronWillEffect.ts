@@ -7,6 +7,10 @@ import {type TransactionInterface} from '../../../../Sheet/TransactionInterface'
 import {SkillName} from '../../../../Skill/SkillName';
 
 export class IronWillEffect extends PassiveEffect {
+	get description() {
+		return 'Você recebe +1 PM para cada dois níveis de personagem e +2 em Vontade.';
+	}
+
 	apply(transaction: TransactionInterface): void {
 		transaction.run(new AddPerLevelModifierToManaPoints({
 			payload: {
