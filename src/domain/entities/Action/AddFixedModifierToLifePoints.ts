@@ -14,7 +14,7 @@ export class AddFixedModifierToLifePoints extends Action<'addFixedModifierToLife
 
 	execute(): void {
 		const sheetLifePoints = this.transaction.sheet.getSheetLifePoints();
-		sheetLifePoints.addModifier(this.payload.modifier);
+		sheetLifePoints.addFixedModifier(this.payload.modifier);
 	}
 
 	getDescription(): string {

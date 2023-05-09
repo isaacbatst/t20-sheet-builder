@@ -9,7 +9,7 @@ export class HardAsRockPerLevelEffect extends PassiveEffect {
 		super(RaceAbilityName.hardAsRock);
 	}
 
-	applyToSheet(transaction: TransactionInterface): void {
+	apply(transaction: TransactionInterface): void {
 		transaction.run(new AddPerLevelModifierToLifePoints({
 			payload: {
 				modifier: new PerLevelModifier(this.source, 1, false),

@@ -10,7 +10,7 @@ export class ArcanistPathMageExtraSpellEffect extends PassiveEffect {
 		super(RoleAbilityName.arcanistPath);
 	}
 
-	override applyToSheet(transaction: TransactionInterface): void {
+	override apply(transaction: TransactionInterface): void {
 		transaction.run(new LearnSpell({
 			payload: {
 				source: ArcanistPathName.mage,

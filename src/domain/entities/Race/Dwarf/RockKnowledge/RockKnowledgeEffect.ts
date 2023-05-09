@@ -23,7 +23,7 @@ export class RockKnowledgeEffect extends PassiveEffect {
 		super(RaceAbilityName.rockKnowledge);
 	}
 
-	applyToSheet(transaction: TransactionInterface): void {
+	apply(transaction: TransactionInterface): void {
 		const modifier = new ContextualModifier(this.source, RockKnowledgeEffect.skillModifier, RockKnowledgeEffect.condition);
 		transaction.run(new ChangeVision({payload: {source: this.source, vision: Vision.dark}, transaction}));
 		transaction.run(new AddContextualModifierToSkill({payload: {modifier, skill: SkillName.perception}, transaction}));

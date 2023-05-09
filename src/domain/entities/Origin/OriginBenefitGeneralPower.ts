@@ -1,3 +1,4 @@
+import {PickGeneralPower} from '../Action/PickGeneralPower';
 import {SheetBuilderError} from '../Error/SheetBuilderError';
 import type {GeneralPowerInterface} from '../Power/GeneralPower/GeneralPower';
 import {type TransactionInterface} from '../Sheet/TransactionInterface';
@@ -12,8 +13,14 @@ export class OriginBenefitGeneralPower extends OriginBenefit {
 		super();
 	}
 
-	addToSheet(transaction: TransactionInterface, source: TranslatableName): void {
-		this.power.addToSheet(transaction, source);
+	apply(transaction: TransactionInterface, source: TranslatableName): void {
+		transaction.run(new PickGeneralPower({
+			payload: {
+				power: this.power,
+				source,
+			},
+			transaction,
+		}));
 	}
 
 	validate(originBenefits: OriginBenefits): void {

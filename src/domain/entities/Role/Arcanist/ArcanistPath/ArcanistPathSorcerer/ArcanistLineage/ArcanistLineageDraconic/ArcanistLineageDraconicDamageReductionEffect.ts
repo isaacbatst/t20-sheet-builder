@@ -8,7 +8,7 @@ export class ArcanistLineageDraconicDamageReductionEffect extends PassiveEffect 
 		super(RoleAbilityName.arcanistSupernaturalLineage);
 	}
 
-	override applyToSheet(transaction: TransactionInterface): void {
+	override apply(transaction: TransactionInterface): void {
 		throw new Error('Method not implemented.');
 	}
 }

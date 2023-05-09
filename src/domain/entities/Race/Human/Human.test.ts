@@ -1,15 +1,14 @@
-import {vi} from 'vitest';
 import {ApplyRaceAbility} from '../../Action/ApplyRaceAbility';
 import {ApplyRaceModifiers} from '../../Action/ApplyRaceModifiers';
 import {Dodge} from '../../Power/GeneralPower/CombatPower/Dodge/Dodge';
-import {BuildingSheetFake} from '../../Sheet/BuildingSheetFake';
+import {TransactionFake} from '../../Sheet/TransactionFake';
 import {SkillName} from '../../Skill/SkillName';
 import {RaceName} from '../RaceName';
+import {Human} from './Human';
 import {Versatile} from './Versatile/Versatile';
 import type {VersatileChoice} from './Versatile/VersatileChoice';
 import {VersatileChoicePower} from './Versatile/VersatileChoicePower';
 import {VersatileChoiceSkill} from './Versatile/VersatileChoiceSkill';
-import {Human} from './Human';
 
 describe('Human', () => {
 	it('should apply +1 to strength, dexterity and constitution', () => {
@@ -24,22 +23,19 @@ describe('Human', () => {
 		human.addVersatilChoice(acrobatics);
 		human.addVersatilChoice(animalHandling);
 
-		const sheet = new BuildingSheetFake();
-		const dispatch = vi.fn();
-		human.addToSheet(sheet, dispatch);
+		const transaction = new TransactionFake();
+		human.addToSheet(transaction);
 
-		expect(dispatch).toHaveBeenCalledWith(new ApplyRaceModifiers({
-			modifiers: {
-				constitution: 1,
-				dexterity: 1,
-				strength: 1,
+		expect(transaction.run).toHaveBeenCalledWith(new ApplyRaceModifiers({
+			payload: {
+				modifiers: {
+					constitution: 1,
+					dexterity: 1,
+					strength: 1,
+				},
 			},
-			updatedAttributes: {
-				constitution: 1,
-				dexterity: 1,
-				strength: 1,
-			},
-		}), sheet);
+			transaction,
+		}));
 	});
 
 	it('should throw error with more than 3 selections', () => {
@@ -97,18 +93,20 @@ describe('Human', () => {
 			animalHandling,
 		]);
 
-		const sheet = new BuildingSheetFake();
-		const dispatch = vi.fn();
-		human.addToSheet(sheet, dispatch);
+		const transaction = new TransactionFake();
+		human.addToSheet(transaction);
 
 		const versatile = new Versatile();
 		versatile.addChoice(acrobatics);
 		versatile.addChoice(animalHandling);
 
-		expect(dispatch).toHaveBeenCalledWith(new ApplyRaceAbility({
-			ability: versatile,
-			source: RaceName.human,
-		}), sheet);
+		expect(transaction.run).toHaveBeenCalledWith(new ApplyRaceAbility({
+			payload: {
+				ability: versatile,
+				source: RaceName.human,
+			},
+			transaction,
+		}));
 	});
 
 	it('should apply versatile training chosen skill and power', () => {
@@ -121,17 +119,19 @@ describe('Human', () => {
 			'strength',
 		], [acrobatics, dodge]);
 
-		const sheet = new BuildingSheetFake();
-		sheet.attributes.dexterity = 1;
-		const dispatch = vi.fn();
-		human.addToSheet(sheet, dispatch);
+		const transaction = new TransactionFake();
+		transaction.sheet.getSheetAttributes().getValues().dexterity = 1;
+		human.addToSheet(transaction);
 
 		const versatile = new Versatile();
 		versatile.addChoice(acrobatics);
 		versatile.addChoice(dodge);
 
-		expect(dispatch).toHaveBeenCalledWith(new ApplyRaceAbility({
-			source: RaceName.human, ability: versatile,
-		}), sheet);
+		expect(transaction.run).toHaveBeenCalledWith(new ApplyRaceAbility({
+			payload: {
+				source: RaceName.human, ability: versatile,
+			},
+			transaction,
+		}));
 	});
 });

@@ -12,7 +12,7 @@ export class AddPerLevelModifierToLifePoints extends Action<'addPerLevelModifier
 
 	execute(): void {
 		const sheetLifePoints = this.transaction.sheet.getSheetLifePoints();
-		sheetLifePoints.addModifier(this.payload.modifier);
+		sheetLifePoints.addPerLevelModifier(this.payload.modifier);
 	}
 
 	getDescription(): string {

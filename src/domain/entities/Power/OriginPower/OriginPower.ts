@@ -19,14 +19,4 @@ export abstract class OriginPower extends Power implements OriginPowerInterface 
 	) {
 		super(name, 'origin');
 	}
-
-	protected makeAction(transaction: TransactionInterface): Action {
-		return new PickOriginPower({
-			payload: {
-				power: this,
-				source: this.source,
-			},
-			transaction,
-		});
-	}
 }

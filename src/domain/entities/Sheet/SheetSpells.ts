@@ -24,11 +24,11 @@ export class SheetSpells implements SheetSpellsInterface {
 	}
 
 	getLearnedCircles(): SheetLearnedCircles {
-		throw new Error('Method not implemented.');
+		return this.learnedCircles;
 	}
 
 	getSpells(): SpellMap {
-		throw new Error('Method not implemented.');
+		return this.spells;
 	}
 
 	private isSpellCircleLearned(spell: Spell) {

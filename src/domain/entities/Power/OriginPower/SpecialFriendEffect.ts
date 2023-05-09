@@ -13,7 +13,7 @@ export class SpecialFriendEffect extends PassiveEffect {
 		this.validateSkill();
 	}
 
-	applyToSheet(transaction: TransactionInterface): void {
+	apply(transaction: TransactionInterface): void {
 		transaction.run(new AddFixedModifierToSkill({
 			payload: {
 				modifier: new FixedModifier(OriginPowerName.specialFriend, 5),

@@ -1,7 +1,7 @@
-import {vi} from 'vitest';
 import {AddFixedModifierToSkill} from '../../Action/AddFixedModifierToSkill';
 import {FixedModifier} from '../../Modifier/FixedModifier/FixedModifier';
-import {SheetBaseFake} from '../../Sheet/SheetBaseFake';
+import {OriginName} from '../../Origin';
+import {TransactionFake} from '../../Sheet/TransactionFake';
 import {SkillName} from '../../Skill/SkillName';
 import {OriginPowerName} from './OriginPowerName';
 import {SpecialFriend} from './SpecialFriend';
@@ -9,24 +9,28 @@ import {SpecialFriend} from './SpecialFriend';
 describe('SpecialFriend', () => {
 	it('should dispatch animalHandling modifier add', () => {
 		const specialFriend = new SpecialFriend(SkillName.acrobatics);
-		const sheet = new SheetBaseFake();
-		const dispatch = vi.fn();
-		specialFriend.addToSheet(sheet, dispatch);
-		expect(dispatch).toHaveBeenCalledWith(new AddFixedModifierToSkill({
-			modifier: new FixedModifier(OriginPowerName.specialFriend, 5),
-			skill: SkillName.animalHandling,
-		}), sheet);
+		const transaction = new TransactionFake();
+		specialFriend.addToSheet(transaction, OriginName.animalsFriend);
+		expect(transaction.run).toHaveBeenCalledWith(new AddFixedModifierToSkill({
+			payload: {
+				modifier: new FixedModifier(OriginPowerName.specialFriend, 5),
+				skill: SkillName.animalHandling,
+			},
+			transaction,
+		}));
 	});
 
 	it('should dispatch custom skill modifier add', () => {
 		const specialFriend = new SpecialFriend(SkillName.acrobatics);
-		const sheet = new SheetBaseFake();
-		const dispatch = vi.fn();
-		specialFriend.addToSheet(sheet, dispatch);
-		expect(dispatch).toHaveBeenCalledWith(new AddFixedModifierToSkill({
-			modifier: new FixedModifier(OriginPowerName.specialFriend, 2),
-			skill: SkillName.acrobatics,
-		}), sheet);
+		const transaction = new TransactionFake();
+		specialFriend.addToSheet(transaction, OriginName.animalsFriend);
+		expect(transaction.run).toHaveBeenCalledWith(new AddFixedModifierToSkill({
+			payload: {
+				modifier: new FixedModifier(OriginPowerName.specialFriend, 2),
+				skill: SkillName.acrobatics,
+			},
+			transaction,
+		}));
 	});
 
 	it('should not allow custom skill to be fight', () => {

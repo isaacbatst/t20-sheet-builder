@@ -1,3 +1,4 @@
+import {PickGeneralPower} from '../../../Action/PickGeneralPower';
 import type {GeneralPowerInterface} from '../../../Power/GeneralPower/GeneralPower';
 import {type TransactionInterface} from '../../../Sheet/TransactionInterface';
 import type {TranslatableName} from '../../../Translator';
@@ -9,6 +10,12 @@ export class VersatileChoicePower extends VersatileChoice {
 	}
 
 	addToSheet(transaction: TransactionInterface, source: TranslatableName): void {
-		this.power.addToSheet(transaction, source);
+		transaction.run(new PickGeneralPower({
+			payload: {
+				power: this.power,
+				source,
+			},
+			transaction,
+		}));
 	}
 }

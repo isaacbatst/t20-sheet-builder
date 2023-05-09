@@ -7,7 +7,7 @@ import type {PointsInterface} from './PointsInterface';
 import type {PointsMaxCalculatorInterface} from './PointsMaxCalculator';
 
 export abstract class Points implements PointsInterface {
-	readonly modifiers: FixedModifiersListInterface = new FixedModifiersList();
+	readonly fixedModifiers: FixedModifiersListInterface = new FixedModifiersList();
 	readonly perLevelModifiers: PerLevelModifiersList = new PerLevelModifiersList();
 
 	constructor(
@@ -15,7 +15,7 @@ export abstract class Points implements PointsInterface {
 	) {}
 
 	addModifier(modifier: FixedModifierInterface) {
-		this.modifiers.add(modifier);
+		this.fixedModifiers.add(modifier);
 	}
 
 	addPerLevelModifier(modifier: PerLevelModifierInterface) {
@@ -23,6 +23,6 @@ export abstract class Points implements PointsInterface {
 	}
 
 	getMax(calculator: PointsMaxCalculatorInterface): number {
-		return calculator.calculate(this.modifiers, this.perLevelModifiers);
+		return calculator.calculate(this.fixedModifiers, this.perLevelModifiers);
 	}
 }

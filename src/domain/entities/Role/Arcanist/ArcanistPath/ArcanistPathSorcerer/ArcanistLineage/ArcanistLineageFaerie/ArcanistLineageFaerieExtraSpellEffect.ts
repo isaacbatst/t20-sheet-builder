@@ -16,7 +16,7 @@ export class ArcanistLineageFaerieExtraSpellEffect extends PassiveEffect {
 		}
 	}
 
-	override applyToSheet(transaction: TransactionInterface): void {
+	override apply(transaction: TransactionInterface): void {
 		transaction.run(new LearnSpell({
 			payload: {
 				spell: this.spell,

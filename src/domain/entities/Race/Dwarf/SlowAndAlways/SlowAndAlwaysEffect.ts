@@ -8,7 +8,7 @@ export class SlowAndAlwaysEffect extends PassiveEffect {
 		super(RaceAbilityName.slowAndAlways);
 	}
 
-	applyToSheet(transaction: TransactionInterface): void {
+	apply(transaction: TransactionInterface): void {
 		transaction.run(new ChangeDisplacement({
 			payload: {
 				displacement: 6,

@@ -9,7 +9,7 @@ export class ShellEffect extends PassiveEffect {
 		super(GeneralPowerName.shell);
 	}
 
-	override applyToSheet(transaction: TransactionInterface): void {
+	override apply(transaction: TransactionInterface): void {
 		transaction.run(new AddFixedModifierToDefense({
 			payload: {
 				modifier: new FixedModifier(GeneralPowerName.shell, 1),

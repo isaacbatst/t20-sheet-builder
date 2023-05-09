@@ -11,7 +11,7 @@ export class OriginBenefitSkill extends OriginBenefit {
 		super();
 	}
 
-	addToSheet(transaction: TransactionInterface, source: TranslatableName): void {
+	apply(transaction: TransactionInterface, source: TranslatableName): void {
 		transaction.run(new TrainSkill({
 			payload: {
 				skill: this.skill,

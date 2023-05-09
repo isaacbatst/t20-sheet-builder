@@ -2,6 +2,7 @@ import {AddFixedModifierToLifePoints} from '../Action/AddFixedModifierToLifePoin
 import {AddPerLevelModifierToLifePoints} from '../Action/AddPerLevelModifierToLifePoints';
 import {AddPerLevelModifierToManaPoints} from '../Action/AddPerLevelModifierToManaPoints';
 import {AddProficiency} from '../Action/AddProficiency';
+import {ApplyRoleAbility} from '../Action/ApplyRoleAbility';
 import {TrainSkill} from '../Action/TrainSkill';
 import {SheetBuilderError} from '../Error/SheetBuilderError';
 import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
@@ -50,7 +51,13 @@ export abstract class Role implements RoleInterface {
 		const abilities = this.abilities[Level.one];
 
 		Object.values(abilities).forEach(ability => {
-			ability.addToSheet(transaction, this.name);
+			transaction.run(new ApplyRoleAbility({
+				payload: {
+					ability,
+					source: this.name,
+				},
+				transaction,
+			}));
 		});
 	}
 
@@ -99,7 +106,7 @@ export abstract class Role implements RoleInterface {
 		this.mandatorySkills.forEach(skill => {
 			transaction.run(new TrainSkill({
 				payload: {
-					skill: skill,
+					skill,
 					source: this.name,
 				},
 				transaction,
@@ -109,7 +116,7 @@ export abstract class Role implements RoleInterface {
 		this.chosenSkills.forEach(skill => {
 			transaction.run(new TrainSkill({
 				payload: {
-					skill: skill,
+					skill,
 					source: this.name,
 				},
 				transaction,

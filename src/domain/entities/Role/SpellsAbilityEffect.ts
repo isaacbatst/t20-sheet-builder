@@ -1,4 +1,5 @@
 import {PassiveEffect} from '../Ability/PassiveEffect';
+import {LearnSpell} from '../Action/AddSpell';
 import {LearnCircle} from '../Action/LearnCircle';
 import {SheetBuilderError} from '../Error/SheetBuilderError';
 import type {Attribute} from '../Sheet/Attributes';
@@ -20,7 +21,7 @@ export abstract class SpellsAbilityEffect extends PassiveEffect {
 		this.validateSpells();
 	}
 
-	applyToSheet(transaction: TransactionInterface): void {
+	apply(transaction: TransactionInterface): void {
 		transaction.run(new LearnCircle(
 			{payload: {circle: SpellCircle.first, source: this.source, type: this.spellType}, transaction},
 		));
@@ -29,7 +30,13 @@ export abstract class SpellsAbilityEffect extends PassiveEffect {
 
 	private learnSpells(transaction: TransactionInterface) {
 		this.spells.forEach(spell => {
-			spell.addToSheet(transaction, this.source);
+			transaction.run(new LearnSpell({
+				payload: {
+					source: this.source,
+					spell,
+				},
+				transaction,
+			}));
 		});
 	}
 

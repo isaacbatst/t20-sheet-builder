@@ -26,16 +26,12 @@ export abstract class Ability implements AbilityInterface {
 	) {}
 
 	addToSheet(transaction: TransactionInterface, source: TranslatableName): void {
-		const action = this.makeAction(transaction, source);
-		transaction.run(action);
 		this.applyPassiveEffects(transaction);
 	}
 
-	protected abstract makeAction(transaction: TransactionInterface, source: TranslatableName): Action;
-
 	private applyPassiveEffects(transaction: TransactionInterface) {
 		Object.values(this.effects.passive).forEach(effect => {
-			effect.applyToSheet(transaction);
+			effect.apply(transaction);
 		});
 	}
 }

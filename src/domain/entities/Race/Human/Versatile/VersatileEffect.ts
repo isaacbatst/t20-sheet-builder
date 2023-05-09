@@ -30,7 +30,7 @@ export class VersatileEffect extends PassiveEffect {
 		this.choices.push(newChoice);
 	}
 
-	applyToSheet(transaction: TransactionInterface): void {
+	apply(transaction: TransactionInterface): void {
 		if (this.choices.length !== 2) {
 			throw new SheetBuilderError('MISSING_CHOICES');
 		}

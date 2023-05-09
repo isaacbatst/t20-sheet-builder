@@ -1,46 +1,49 @@
+import {vi} from 'vitest';
 import {AddFixedModifierToDefense} from '../../../../Action/AddFixedModifierToDefense';
 import {AddFixedModifierToSkill} from '../../../../Action/AddFixedModifierToSkill';
 import {FixedModifier} from '../../../../Modifier/FixedModifier/FixedModifier';
 import {RaceAbilityName} from '../../../../Race/RaceAbilityName';
-import {BuildingSheetFake} from '../../../../Sheet/BuildingSheetFake';
+import {TransactionFake} from '../../../../Sheet/TransactionFake';
 import {SkillName} from '../../../../Skill/SkillName';
-import {Dodge} from './Dodge';
 import {GeneralPowerName} from '../../GeneralPowerName';
-import {vi} from 'vitest';
+import {Dodge} from './Dodge';
 
 describe('Dodge', () => {
 	it('should dispatch defense bonus', () => {
 		const dodge = new Dodge();
-		const sheet = new BuildingSheetFake();
-		const dispatch = vi.fn();
-		sheet.attributes.dexterity = 1;
-		dodge.addToSheet(sheet, dispatch, RaceAbilityName.versatile);
+		const transaction = new TransactionFake();
+		transaction.sheet.getSheetAttributes().getValues().dexterity = 1;
+		dodge.addToSheet(transaction, RaceAbilityName.versatile);
 
-		expect(dispatch).toHaveBeenCalledWith(new AddFixedModifierToDefense({
-			modifier: new FixedModifier(GeneralPowerName.dodge, 2),
-		}), sheet);
+		expect(transaction.run).toHaveBeenCalledWith(new AddFixedModifierToDefense({
+			payload: {
+				modifier: new FixedModifier(GeneralPowerName.dodge, 2),
+			},
+			transaction,
+		}));
 	});
 
 	it('should dispatch reflexes bonus', () => {
 		const dodge = new Dodge();
-		const sheet = new BuildingSheetFake();
-		const dispatch = vi.fn();
-		sheet.attributes.dexterity = 1;
-		dodge.addToSheet(sheet, dispatch, RaceAbilityName.versatile);
+		const transaction = new TransactionFake();
+		transaction.sheet.getSheetAttributes().getValues().dexterity = 1;
+		dodge.addToSheet(transaction, RaceAbilityName.versatile);
 
-		expect(dispatch).toHaveBeenCalledWith(new AddFixedModifierToSkill({
-			skill: SkillName.reflexes,
-			modifier: new FixedModifier(GeneralPowerName.dodge, 2),
-		}), sheet);
+		expect(transaction.run).toHaveBeenCalledWith(new AddFixedModifierToSkill({
+			payload: {
+				skill: SkillName.reflexes,
+				modifier: new FixedModifier(GeneralPowerName.dodge, 2),
+			},
+			transaction,
+		}));
 	});
 
 	it('should require dexterity +1', () => {
 		const dodge = new Dodge();
-		const sheet = new BuildingSheetFake();
-		const dispatch = vi.fn();
+		const transaction = new TransactionFake();
 		expect(() => {
-			dodge.addToSheet(sheet, dispatch, RaceAbilityName.versatile);
-			dodge.verifyRequirements(sheet);
+			dodge.addToSheet(transaction, RaceAbilityName.versatile);
+			dodge.verifyRequirements(transaction.sheet);
 		}).toThrow('UNFULFILLED_REQUIREMENT');
 	});
 });

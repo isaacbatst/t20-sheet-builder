@@ -9,7 +9,7 @@ export class ArcanistLineageRedCustomTormentaPowersAttributeEffect extends Passi
 		super(RoleAbilityName.arcanistSupernaturalLineage);
 	}
 
-	override applyToSheet(transaction: TransactionInterface): void {
+	override apply(transaction: TransactionInterface): void {
 		transaction.run(new ChangeTormentaPowersAttribute({
 			payload: {
 				attribute: this.attribute,

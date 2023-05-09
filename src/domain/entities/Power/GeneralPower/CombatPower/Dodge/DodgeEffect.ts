@@ -11,7 +11,7 @@ export class DodgeEffect extends PassiveEffect {
 		super(GeneralPowerName.dodge);
 	}
 
-	applyToSheet(transaction: TransactionInterface): void {
+	apply(transaction: TransactionInterface): void {
 		const modifier = new FixedModifier(this.source, 2);
 		transaction.run(new AddFixedModifierToDefense({payload: {modifier}, transaction}));
 		transaction.run(new AddFixedModifierToSkill({payload: {modifier, skill: SkillName.reflexes}, transaction}));

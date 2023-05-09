@@ -9,7 +9,7 @@ export class ArcanistLineageDraconicCharismaBonusEffect extends PassiveEffect {
 		super(RoleAbilityName.arcanistSupernaturalLineage);
 	}
 
-	override applyToSheet(transaction: TransactionInterface): void {
+	override apply(transaction: TransactionInterface): void {
 		transaction.run(new AddFixedModifierToLifePoints({
 			payload: {
 				modifier: new FixedModifier(this.source, 0, new Set(['charisma'])),

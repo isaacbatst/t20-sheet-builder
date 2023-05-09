@@ -9,7 +9,7 @@ export class HardAsRockInitialEffect extends PassiveEffect {
 		super(RaceAbilityName.hardAsRock);
 	}
 
-	applyToSheet(transaction: TransactionInterface): void {
+	apply(transaction: TransactionInterface): void {
 		const modifier = new FixedModifier(this.source, 3);
 		transaction.run(new AddFixedModifierToLifePoints({
 			payload: {

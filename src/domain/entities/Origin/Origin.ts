@@ -1,12 +1,12 @@
-import {AddEquipment} from '../Action/AddEquipment';
-import {SheetBuilderError} from '../Error/SheetBuilderError';
-import type {Equipment} from '../Inventory/Equipment/Equipment';
-import type {GeneralPowerName} from '../Power/GeneralPower/GeneralPowerName';
-import type {OriginPowerName} from '../Power/OriginPower/OriginPowerName';
-import {type TransactionInterface} from '../Sheet/TransactionInterface';
-import type {SkillName} from '../Skill/SkillName';
-import type {OriginBenefit} from './OriginBenefit';
-import type {OriginName} from './OriginName';
+import { AddEquipment } from '../Action/AddEquipment';
+import { SheetBuilderError } from '../Error/SheetBuilderError';
+import type { Equipment } from '../Inventory/Equipment/Equipment';
+import type { GeneralPowerName } from '../Power/GeneralPower/GeneralPowerName';
+import type { OriginPowerName } from '../Power/OriginPower/OriginPowerName';
+import { type TransactionInterface } from '../Sheet/TransactionInterface';
+import type { SkillName } from '../Skill/SkillName';
+import type { OriginBenefit } from './OriginBenefit';
+import type { OriginName } from './OriginName';
 
 export type OriginBenefits = {
 	skills: SkillName[];
@@ -35,12 +35,12 @@ export abstract class Origin implements OriginInterface {
 
 	addToSheet(transaction: TransactionInterface) {
 		this.addEquipments(transaction);
-		this.addBenefits(transaction);
+		this.applyBenefits(transaction);
 	}
 
-	private addBenefits(transaction: TransactionInterface) {
+	private applyBenefits(transaction: TransactionInterface) {
 		this.chosenBenefits.forEach(benefit => {
-			benefit.addToSheet(transaction, this.name);
+			benefit.apply(transaction, this.name);
 		});
 	}
 

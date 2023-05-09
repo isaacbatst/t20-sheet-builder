@@ -11,7 +11,7 @@ export class ArcanistLineageRedExtraTormentaPowerEffect extends PassiveEffect {
 		super(RoleAbilityName.arcanistSupernaturalLineage);
 	}
 
-	applyToSheet(transaction: TransactionInterface): void {
+	apply(transaction: TransactionInterface): void {
 		transaction.run(new PickGeneralPower({
 			payload: {
 				power: this.power,

@@ -9,7 +9,7 @@ export class ArcanistLineageFaerieCheatTrainingEffect extends PassiveEffect {
 		super(RoleAbilityName.arcanistSupernaturalLineage);
 	}
 
-	override applyToSheet(transaction: TransactionInterface): void {
+	override apply(transaction: TransactionInterface): void {
 		transaction.run(new TrainSkill({
 			payload: {
 				skill: SkillName.cheat,

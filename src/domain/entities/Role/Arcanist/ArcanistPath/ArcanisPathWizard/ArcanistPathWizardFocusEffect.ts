@@ -12,7 +12,7 @@ export class ArcanistPathWizardFocusEffect extends PassiveEffect {
 		super(RoleAbilityName.arcanistPath);
 	}
 
-	override applyToSheet(transaction: TransactionInterface): void {
+	override apply(transaction: TransactionInterface): void {
 		transaction.run(new AddEquipment({
 			payload: {
 				equipment: this.focus.equipment,

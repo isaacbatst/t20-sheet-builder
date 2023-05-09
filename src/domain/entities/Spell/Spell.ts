@@ -29,14 +29,4 @@ export abstract class Spell extends Ability {
 		super(name, 'spell');
 		this.cost = new SpellCost(this.circle);
 	}
-
-	protected makeAction(transaction: TransactionInterface, source: TranslatableName): Action {
-		return new LearnSpell({
-			payload: {
-				source,
-				spell: this,
-			},
-			transaction,
-		});
-	}
 }

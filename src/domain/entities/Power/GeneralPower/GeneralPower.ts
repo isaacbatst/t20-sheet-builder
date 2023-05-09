@@ -19,14 +19,4 @@ export abstract class GeneralPower extends Power implements GeneralPowerInterfac
 	) {
 		super(name, 'general');
 	}
-
-	protected makeAction(transaction: TransactionInterface, source: TranslatableName): Action {
-		return new PickGeneralPower({
-			payload: {
-				power: this,
-				source,
-			},
-			transaction,
-		});
-	}
 }

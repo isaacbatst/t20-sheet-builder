@@ -1,3 +1,4 @@
+import {ApplyRaceAbility} from '../Action/ApplyRaceAbility';
 import {ApplyRaceModifiers} from '../Action/ApplyRaceModifiers';
 import type {Attributes} from '../Sheet/Attributes';
 import {type TransactionInterface} from '../Sheet/TransactionInterface';
@@ -27,7 +28,13 @@ export abstract class Race implements RaceInterface {
 
 	private applyAbilities(transaction: TransactionInterface): void {
 		Object.values(this.abilities).forEach(ability => {
-			ability.addToSheet(transaction, this.name);
+			transaction.run(new ApplyRaceAbility({
+				payload: {
+					ability,
+					source: this.name,
+				},
+				transaction,
+			}));
 		});
 	}
 }

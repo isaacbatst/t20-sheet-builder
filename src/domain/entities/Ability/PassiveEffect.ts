@@ -7,5 +7,5 @@ export abstract class PassiveEffect extends AbilityEffect {
 		super('passive', source);
 	}
 
-	abstract applyToSheet(transaction: TransactionInterface): void;
+	abstract apply(transaction: TransactionInterface): void;
 }

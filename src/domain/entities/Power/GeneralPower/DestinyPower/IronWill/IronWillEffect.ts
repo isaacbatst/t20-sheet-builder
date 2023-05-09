@@ -7,7 +7,7 @@ import {type TransactionInterface} from '../../../../Sheet/TransactionInterface'
 import {SkillName} from '../../../../Skill/SkillName';
 
 export class IronWillEffect extends PassiveEffect {
-	applyToSheet(transaction: TransactionInterface): void {
+	apply(transaction: TransactionInterface): void {
 		transaction.run(new AddPerLevelModifierToManaPoints({
 			payload: {
 				modifier: new PerLevelModifier(

@@ -8,8 +8,14 @@ import {type SheetPointsInterface} from './SheetPointsInterface';
 
 export class SheetPoints implements SheetPointsInterface {
 	constructor(private readonly points: Points) {}
+	getModifiers(): ModifierInterface[] {
+		return [
+			...this.points.fixedModifiers.modifiers,
+			...this.points.perLevelModifiers.modifiers,
+		];
+	}
 
-	addModifier(modifier: ModifierInterface): void {
+	addFixedModifier(modifier: ModifierInterface): void {
 		this.points.addModifier(modifier);
 	}
 
