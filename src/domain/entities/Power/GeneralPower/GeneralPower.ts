@@ -1,7 +1,3 @@
-import type {Action} from '../../Action/Action';
-import {PickGeneralPower} from '../../Action/PickGeneralPower';
-import {type TransactionInterface} from '../../Sheet/TransactionInterface';
-import type {TranslatableName} from '../../Translator';
 import type {PowerInterface} from '../Power';
 import {Power} from '../Power';
 import {type GeneralPowerGroup} from './GeneralPowerGroup';

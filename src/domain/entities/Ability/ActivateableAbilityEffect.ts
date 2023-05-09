@@ -1,5 +1,5 @@
 import type {Affectable} from '../Affectable/Affectable';
-import type {Cost} from '../Sheet/CharacterSheetInterface';
+import type {Cost} from '../Sheet/CharacterSheet/CharacterSheetInterface';
 import type {AbilityName} from './Ability';
 import {AbilityEffect} from './AbilityEffect';
 

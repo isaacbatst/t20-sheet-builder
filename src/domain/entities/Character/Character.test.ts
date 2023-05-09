@@ -11,7 +11,7 @@ import type {Race} from '../Race/Race';
 import {Warrior} from '../Role';
 import type {Role} from '../Role/Role';
 import type {Attributes} from '../Sheet';
-import type {CharacterSheet} from '../Sheet/CharacterSheet';
+import type {CharacterSheet} from '../Sheet/CharacterSheet/CharacterSheet';
 import {SheetBuilder} from '../Sheet/SheetBuilder';
 import {SkillName} from '../Skill';
 import {Character} from './Character';

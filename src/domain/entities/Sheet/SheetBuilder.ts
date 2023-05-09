@@ -12,8 +12,8 @@ import type {RaceInterface} from '../Race/RaceInterface';
 import type {RoleInterface} from '../Role/RoleInterface';
 import type {SkillName} from '../Skill/SkillName';
 import type {Attributes} from './Attributes';
-import {BuildingSheet} from './BuildingSheet';
-import {CharacterSheet} from './CharacterSheet';
+import {BuildingSheet} from './BuildingSheet/BuildingSheet';
+import {CharacterSheet} from './CharacterSheet/CharacterSheet';
 import {type SheetInterface} from './SheetInterface';
 import {Transaction} from './Transaction';
 

@@ -1,7 +1,7 @@
 import {Ability} from '../Ability/Ability';
 import {type Action} from '../Action/Action';
 import {LearnSpell} from '../Action/AddSpell';
-import type {Cost} from '../Sheet/CharacterSheetInterface';
+import type {Cost} from '../Sheet/CharacterSheet/CharacterSheetInterface';
 import {type TransactionInterface} from '../Sheet/TransactionInterface';
 import {type TranslatableName} from '../Translator';
 import {SpellCircle} from './SpellCircle';

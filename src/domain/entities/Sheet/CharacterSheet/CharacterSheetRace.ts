@@ -1,5 +1,5 @@
-import {type RaceInterface} from '../Race';
-import {type SheetRaceInterface} from './SheetRaceInterface';
+import {type RaceInterface} from '../../Race';
+import {type SheetRaceInterface} from '../SheetRaceInterface';
 
 export class CharacterSheetRace implements SheetRaceInterface {
 	constructor(

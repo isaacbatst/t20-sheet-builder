@@ -1,7 +1,4 @@
-import {type Action} from '../../Action/Action';
-import {PickOriginPower} from '../../Action/PickOriginPower';
 import type {OriginName} from '../../Origin/OriginName';
-import {type TransactionInterface} from '../../Sheet/TransactionInterface';
 import type {PowerInterface} from '../Power';
 import {Power} from '../Power';
 import type {OriginPowerName} from './OriginPowerName';

@@ -1,4 +1,3 @@
-import {type Action} from '../Action/Action';
 import type {PowerName} from '../Power/PowerName';
 import type {RaceAbilityName} from '../Race/RaceAbilityName';
 import type {RoleAbilityName} from '../Role/RoleAbilityName';

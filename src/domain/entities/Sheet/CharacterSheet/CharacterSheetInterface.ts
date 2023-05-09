@@ -1,15 +1,15 @@
-import type {DefenseInterface} from '../Defense/DefenseInterface';
-import type {Inventory} from '../Inventory/Inventory';
-import type {LifePoints} from '../Points/LifePoints/LifePoints';
-import type {ManaPoints} from '../Points/ManaPoints/ManaPoints';
-import type {Attributes} from './Attributes';
-import type {Proficiency} from './Proficiency';
-import {type SheetAbilities} from './SheetAbilities';
-import {type SheetPowers} from './SheetPowers';
-import {type SheetSkills} from './SheetSkills';
-import {type SheetSpells} from './SheetSpells';
-import {type SheetLearnedCircles} from './SheetSpellsInterface';
-import type {Vision} from './Vision';
+import type {DefenseInterface} from '../../Defense/DefenseInterface';
+import type {Inventory} from '../../Inventory/Inventory';
+import type {LifePoints} from '../../Points/LifePoints/LifePoints';
+import type {ManaPoints} from '../../Points/ManaPoints/ManaPoints';
+import type {Attributes} from '../Attributes';
+import type {Proficiency} from '../Proficiency';
+import {type SheetAbilities} from '../SheetAbilities';
+import {type SheetPowers} from '../SheetPowers';
+import {type SheetSkills} from '../SheetSkills';
+import {type SheetSpells} from '../SheetSpells';
+import {type SheetLearnedCircles} from '../SheetSpellsInterface';
+import type {Vision} from '../Vision';
 
 export type Location = {isUnderground: boolean};
 

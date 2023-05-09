@@ -1,6 +1,6 @@
-import {type OriginInterface} from '../Origin/Origin';
-import {type SheetOriginInterface} from './SheetOriginInterface';
-import {type TransactionInterface} from './TransactionInterface';
+import {type OriginInterface} from '../../Origin/Origin';
+import {type SheetOriginInterface} from '../SheetOriginInterface';
+import {type TransactionInterface} from '../TransactionInterface';
 
 export class BuildingSheetOrigin implements SheetOriginInterface {
 	constructor(

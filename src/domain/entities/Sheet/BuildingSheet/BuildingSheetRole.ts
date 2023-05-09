@@ -1,6 +1,6 @@
-import {type RoleInterface} from '../Role';
-import {type SheetRoleInterface} from './SheetRoleInterface';
-import {type TransactionInterface} from './TransactionInterface';
+import {type RoleInterface} from '../../Role';
+import {type SheetRoleInterface} from '../SheetRoleInterface';
+import {type TransactionInterface} from '../TransactionInterface';
 
 export class BuildingSheetRole implements SheetRoleInterface {
 	constructor(

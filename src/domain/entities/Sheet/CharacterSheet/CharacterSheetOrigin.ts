@@ -1,5 +1,5 @@
-import {type OriginInterface} from '../Origin/Origin';
-import {type SheetOriginInterface} from './SheetOriginInterface';
+import {type OriginInterface} from '../../Origin/Origin';
+import {type SheetOriginInterface} from '../SheetOriginInterface';
 
 export class CharacterSheetOrigin implements SheetOriginInterface {
 	constructor(

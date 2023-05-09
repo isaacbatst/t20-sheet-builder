@@ -5,7 +5,7 @@ import {OffensiveWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/Off
 import {type GeneralPowerMap} from '../Map';
 import {FightStyle} from '../Power/GeneralPower/CombatPower/FightStyle/FightStyle';
 import type {Attributes} from '../Sheet';
-import type {CharacterSheet} from '../Sheet/CharacterSheet';
+import type {CharacterSheet} from '../Sheet/CharacterSheet/CharacterSheet';
 import type {CharacterAppliedFightStyle} from './CharacterAppliedFightStyle';
 import {CharacterAttack} from './CharacterAttack';
 import type {CharacterInterface} from './CharacterInterface';

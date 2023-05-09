@@ -1,5 +1,5 @@
 import type {Attribute} from '../Sheet/Attributes';
-import type {CharacterSheetInterface} from '../Sheet/CharacterSheetInterface';
+import type {CharacterSheetInterface} from '../Sheet/CharacterSheet/CharacterSheetInterface';
 
 export class SpellResistanceDifficultyCalculator {
 	static get baseResistanceDifficulty() {
