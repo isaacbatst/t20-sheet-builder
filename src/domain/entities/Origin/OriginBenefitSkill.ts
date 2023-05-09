@@ -7,8 +7,10 @@ import type {OriginBenefits} from './Origin';
 import {OriginBenefit} from './OriginBenefit';
 
 export class OriginBenefitSkill extends OriginBenefit {
+	override name: SkillName;
 	constructor(readonly skill: SkillName) {
 		super();
+		this.name = skill;
 	}
 
 	apply(transaction: TransactionInterface, source: TranslatableName): void {
