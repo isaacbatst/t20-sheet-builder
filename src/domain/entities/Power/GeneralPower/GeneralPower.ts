@@ -1,6 +1,7 @@
 import type {Action} from '../../Action/Action';
 import {PickGeneralPower} from '../../Action/PickGeneralPower';
-import type {Translatable} from '../../Translator';
+import {type TransactionInterface} from '../../Sheet/TransactionInterface';
+import type {TranslatableName} from '../../Translator';
 import type {PowerInterface} from '../Power';
 import {Power} from '../Power';
 import {type GeneralPowerGroup} from './GeneralPowerGroup';
@@ -19,10 +20,13 @@ export abstract class GeneralPower extends Power implements GeneralPowerInterfac
 		super(name, 'general');
 	}
 
-	protected getAddAction(source: Translatable): Action {
+	protected makeAction(transaction: TransactionInterface, source: TranslatableName): Action {
 		return new PickGeneralPower({
-			power: this,
-			source,
+			payload: {
+				power: this,
+				source,
+			},
+			transaction,
 		});
 	}
 }

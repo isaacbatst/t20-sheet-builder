@@ -14,8 +14,9 @@ import type {Vision} from './Sheet/Vision';
 import type {EquipmentName} from './Inventory/Equipment/EquipmentName';
 import type {ArcanistPathName} from './Role';
 import {type DamageType} from './Damage/DamageType';
+import {type SpellType} from './Spell';
 
-export type Translatable = Attribute
+export type TranslatableName = Attribute
 | RaceAbilityName | SkillName | PowerName | RaceName | Proficiency
 | Vision | RoleAbilityName | SpellName | SpellCircle | RoleName | OriginName
 | EquipmentName | ArcanistPathName | DamageType | 'default';
@@ -31,8 +32,8 @@ export class Translator {
 		return translatedAttribute;
 	}
 
-	static getAbilityTranslation(ability: RaceAbilityName) {
-		return Translator.abilitiesTranslation[ability];
+	static getRaceAbilityTranslation(ability: RaceAbilityName) {
+		return Translator.raceAbilitiesTranslation[ability];
 	}
 
 	static getSkillTranslation(skill: SkillName) {
@@ -83,7 +84,11 @@ export class Translator {
 		return Translator.damageTypesTranslation[damageType];
 	}
 
-	static getTranslation(string: Translatable) {
+	static getSpellTypeTranslation(spellType: SpellType) {
+		return Translator.spellTypesTranslation[spellType];
+	}
+
+	static getTranslation(string: TranslatableName) {
 		return Translator.translation[string];
 	}
 
@@ -96,7 +101,7 @@ export class Translator {
 		wisdom: 'sabedoria',
 	};
 
-	private static readonly abilitiesTranslation: Record<RaceAbilityName, string> = {
+	private static readonly raceAbilitiesTranslation: Record<RaceAbilityName, string> = {
 		rockKnownledge: 'Conhecimento das Rochas',
 		versatile: 'Versátil',
 		slowAndAlways: 'Devagar e Sempre',
@@ -177,6 +182,12 @@ export class Translator {
 		arcanistSupernaturalLineage: 'Linhagem Sobrenatural',
 	};
 
+	private static readonly spellTypesTranslation: Record<SpellType, string> = {
+		arcane: 'Arcana',
+		divine: 'Divina',
+		universal: 'Universal',
+	};
+
 	private static readonly spellsTranslation: Record<SpellName, string> = {
 		arcaneArmor: 'Armadura Arcana',
 		illusoryDisguise: 'Disfarce Ilusório',
@@ -237,9 +248,9 @@ export class Translator {
 		psychic: 'Mental',
 	};
 
-	private static readonly translation: Record<Translatable, string> = {
+	private static readonly translation: Record<TranslatableName, string> = {
 		...Translator.attributesTranslation,
-		...Translator.abilitiesTranslation,
+		...Translator.raceAbilitiesTranslation,
 		...Translator.skillsTranslation,
 		...Translator.powersTranslation,
 		...Translator.visionsTranslation,
@@ -253,6 +264,7 @@ export class Translator {
 		...Translator.equipmentsTranslation,
 		...Translator.arcanistPathsTranslation,
 		...Translator.damageTypesTranslation,
+		...Translator.spellTypesTranslation,
 		default: 'Padrão',
 	};
 }

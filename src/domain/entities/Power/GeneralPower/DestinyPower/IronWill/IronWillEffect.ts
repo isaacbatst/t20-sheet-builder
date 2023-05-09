@@ -3,25 +3,30 @@ import {AddFixedModifierToSkill} from '../../../../Action/AddFixedModifierToSkil
 import {AddPerLevelModifierToManaPoints} from '../../../../Action/AddPerLevelModifierToManaPoints';
 import {FixedModifier} from '../../../../Modifier/FixedModifier/FixedModifier';
 import {PerLevelModifier} from '../../../../Modifier/PerLevelModifier/PerLevelModifier';
-import type {SheetBaseInterface} from '../../../../Sheet/SheetBaseInterface';
+import {type TransactionInterface} from '../../../../Sheet/TransactionInterface';
 import {SkillName} from '../../../../Skill/SkillName';
-import type {Dispatch} from '../../../../Sheet/Transaction';
 
 export class IronWillEffect extends PassiveEffect {
-	applyToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
-		dispatch(new AddPerLevelModifierToManaPoints({
-			modifier: new PerLevelModifier(
-				this.source,
-				1,
-				true,
-				new Set(),
-				2,
-			),
-		}), sheet);
+	applyToSheet(transaction: TransactionInterface): void {
+		transaction.run(new AddPerLevelModifierToManaPoints({
+			payload: {
+				modifier: new PerLevelModifier(
+					this.source,
+					1,
+					true,
+					new Set(),
+					2,
+				),
+			},
+			transaction,
+		}));
 
-		dispatch(new AddFixedModifierToSkill({
-			modifier: new FixedModifier(this.source, 2),
-			skill: SkillName.will,
-		}), sheet);
+		transaction.run(new AddFixedModifierToSkill({
+			payload: {
+				modifier: new FixedModifier(this.source, 2),
+				skill: SkillName.will,
+			},
+			transaction,
+		}));
 	}
 }

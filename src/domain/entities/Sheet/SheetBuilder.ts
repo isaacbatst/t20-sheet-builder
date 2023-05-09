@@ -13,7 +13,9 @@ import type {RoleInterface} from '../Role/RoleInterface';
 import type {SkillName} from '../Skill/SkillName';
 import type {Attributes} from './Attributes';
 import {BuildingSheet} from './BuildingSheet';
-import {Sheet} from './Sheet';
+import {CharacterSheet} from './CharacterSheet';
+import {type SheetInterface} from './SheetInterface';
+import {Transaction} from './Transaction';
 
 export type SheetBuilderInitialEquipmentStep = {
 	addInitialEquipment: (params: {
@@ -24,7 +26,7 @@ export type SheetBuilderInitialEquipmentStep = {
 	}) => SheetBuilderBuildStep;
 };
 export type SheetBuilderBuildStep = {
-	build(): Sheet;
+	build(): CharacterSheet;
 };
 export type SheetBuilderIntelligenceSkillsStep = {trainIntelligenceSkills: (skills: SkillName[]) => SheetBuilderInitialEquipmentStep};
 export type SheetBuilderOriginStep = {chooseOrigin: (origin: OriginInterface) => SheetBuilderIntelligenceSkillsStep};
@@ -32,7 +34,7 @@ export type SheetBuilderRoleStep = {chooseRole: (role: RoleInterface) => SheetBu
 export type SheetBuilderRaceStep = {chooseRace: (race: RaceInterface) => SheetBuilderRoleStep};
 
 export class SheetBuilder {
-	constructor(private sheet: BuildingSheet = new BuildingSheet()) {}
+	constructor(private sheet = new BuildingSheet()) {}
 
 	getBuildingSheet(): BuildingSheet {
 		return this.sheet;
@@ -47,7 +49,9 @@ export class SheetBuilder {
 	}
 
 	setInitialAttributes = (attributes: Attributes): SheetBuilderRaceStep => {
-		this.sheet.initTransaction(new SetInitialAttributes({attributes}));
+		const transaction = new Transaction(this.sheet);
+		transaction.run(new SetInitialAttributes({transaction, payload: {attributes}}));
+		transaction.commit();
 
 		return {
 			chooseRace: this.chooseRace(),
@@ -56,7 +60,9 @@ export class SheetBuilder {
 
 	private chooseRace(): SheetBuilderRaceStep['chooseRace'] {
 		return (race: RaceInterface) => {
-			this.sheet.initTransaction(new ChooseRace({race}));
+			const transaction = new Transaction(this.sheet);
+			transaction.run(new ChooseRace({payload: {race}, transaction}));
+			transaction.commit();
 
 			return {
 				chooseRole: this.chooseRole(race),
@@ -66,7 +72,9 @@ export class SheetBuilder {
 
 	private chooseRole(race: RaceInterface): SheetBuilderRoleStep['chooseRole'] {
 		return (role: RoleInterface) => {
-			this.sheet.initTransaction(new ChooseRole({role}));
+			const transaction = new Transaction(this.sheet);
+			transaction.run(new ChooseRole({transaction, payload: {role}}));
+			transaction.commit();
 
 			return {
 				chooseOrigin: this.chooseOrigin(race, role),
@@ -76,7 +84,9 @@ export class SheetBuilder {
 
 	private chooseOrigin(race: RaceInterface, role: RoleInterface): SheetBuilderOriginStep['chooseOrigin'] {
 		return (origin: OriginInterface) => {
-			this.sheet.initTransaction(new ChooseOrigin({origin}));
+			const transaction = new Transaction(this.sheet);
+			transaction.run(new ChooseOrigin({payload: {origin}, transaction}));
+			transaction.commit();
 
 			return {
 				trainIntelligenceSkills: this.trainIntelligenceSkills(race, role, origin),
@@ -86,7 +96,9 @@ export class SheetBuilder {
 
 	private trainIntelligenceSkills(race: RaceInterface, role: RoleInterface, origin: OriginInterface): SheetBuilderIntelligenceSkillsStep['trainIntelligenceSkills'] {
 		return (skills: SkillName[]) => {
-			this.sheet.initTransaction(new TrainIntelligenceSkills({skills}));
+			const transaction = new Transaction(this.sheet);
+			transaction.run(new TrainIntelligenceSkills({payload: {skills}, transaction}));
+			transaction.commit();
 
 			return {
 				addInitialEquipment: this.addInitialEquipment(race, role, origin),
@@ -96,10 +108,15 @@ export class SheetBuilder {
 
 	private addInitialEquipment(race: RaceInterface, role: RoleInterface, origin: OriginInterface): SheetBuilderInitialEquipmentStep['addInitialEquipment'] {
 		return (params: {simpleWeapon: SimpleWeapon; martialWeapon?: MartialWeapon; armor?: Armor; money: number}) => {
-			this.sheet.initTransaction(new AddInitialEquipment({
-				...params,
-				role,
+			const transaction = new Transaction(this.sheet);
+			transaction.run(new AddInitialEquipment({
+				payload: {
+					...params,
+					role,
+				},
+				transaction,
 			}));
+			transaction.commit();
 
 			return {
 				build: () => this.build(race, role, origin),
@@ -108,41 +125,39 @@ export class SheetBuilder {
 	}
 
 	private build(race: RaceInterface, role: RoleInterface, origin: OriginInterface) {
-		this.sheet.powers.general.forEach(power => {
+		const powers = this.sheet.getSheetPowers();
+		powers.getGeneralPowers().forEach(power => {
 			power.verifyRequirements(this.sheet);
 		});
-		this.sheet.powers.origin.forEach(power => {
+		powers.getOriginPowers().forEach(power => {
 			power.verifyRequirements(this.sheet);
 		});
-		this.sheet.powers.role.forEach(power => {
+		powers.getRolePowers().forEach(power => {
 			power.verifyRequirements(this.sheet);
 		});
 
-		const sheet = this.createSheet(race, role, origin);
-		return sheet;
+		return this.createSheet(race, role, origin);
 	}
 
 	private createSheet(race: RaceInterface, role: RoleInterface, origin: OriginInterface) {
-		return new Sheet({
+		return new CharacterSheet({
 			race,
 			role,
 			origin,
-			buildSteps: this.sheet.buildSteps,
-			money: this.sheet.getMoney(),
-			attributes: this.sheet.getAttributes(),
-			defense: this.sheet.getDefense(),
-			displacement: this.sheet.getDisplacement(),
+			abilities: this.sheet.getSheetAbilities(),
+			attributes: this.sheet.getSheetAttributes(),
+			buildSteps: this.sheet.getBuildSteps(),
+			defense: this.sheet.getSheetDefense(),
+			displacement: this.sheet.getSheetDisplacement(),
+			inventory: this.sheet.getSheetInventory(),
 			level: this.sheet.getLevel(),
-			skills: this.sheet.getSkills(),
-			vision: this.sheet.getVision(),
-			proficiencies: this.sheet.getProficiencies(),
-			abilities: this.sheet.getAbilities(),
-			powers: this.sheet.getPowers(),
-			lifePoints: this.sheet.getLifePoints(),
-			manaPoints: this.sheet.getManaPoints(),
-			spells: this.sheet.getSpells(),
-			learnedCircles: this.sheet.getLearnedCircles(),
-			inventory: this.sheet.getInventory(),
+			lifePoints:	this.sheet.getSheetLifePoints(),
+			manaPoints: this.sheet.getSheetManaPoints(),
+			powers: this.sheet.getSheetPowers(),
+			proficiencies: this.sheet.getSheetProficiencies(),
+			skills: this.sheet.getSheetSkills(),
+			spells: this.sheet.getSheetSpells(),
+			vision: this.sheet.getSheetVision(),
 		});
 	}
 }

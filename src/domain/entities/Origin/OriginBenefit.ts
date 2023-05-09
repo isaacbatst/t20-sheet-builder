@@ -1,9 +1,8 @@
-import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../Sheet/Transaction';
-import type {Translatable} from '../Translator';
+import {type TransactionInterface} from '../Sheet/TransactionInterface';
+import {type TranslatableName} from '../Translator';
 import type {OriginBenefits} from './Origin';
 
 export abstract class OriginBenefit {
-	abstract addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch, source: Translatable): void;
+	abstract addToSheet(transaction: TransactionInterface, source: TranslatableName): void;
 	abstract validate(originBenefits: OriginBenefits): void;
 }

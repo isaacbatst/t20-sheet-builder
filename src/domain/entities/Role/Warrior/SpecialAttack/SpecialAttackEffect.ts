@@ -1,6 +1,6 @@
 import {TriggeredEffect} from '../../../Ability/TriggeredEffect';
 import type {TriggeredEffectName} from '../../../Ability/TriggeredEffectName';
-import {Level} from '../../../Sheet/Levels';
+import {Level} from '../../../Sheet/Level';
 import {ManaCost} from '../../../ManaCost';
 import {RoleAbilityName} from '../../RoleAbilityName';
 import {SpecialAttackManaCost} from './SpecialAttackManaCost';

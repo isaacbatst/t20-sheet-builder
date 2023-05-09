@@ -1,8 +1,7 @@
 import {SheetBuilderError} from '../Error/SheetBuilderError';
 import type {GeneralPowerInterface} from '../Power/GeneralPower/GeneralPower';
-import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../Sheet/Transaction';
-import type {Translatable} from '../Translator';
+import {type TransactionInterface} from '../Sheet/TransactionInterface';
+import {type TranslatableName} from '../Translator';
 import type {OriginBenefits} from './Origin';
 import {OriginBenefit} from './OriginBenefit';
 
@@ -13,8 +12,8 @@ export class OriginBenefitGeneralPower extends OriginBenefit {
 		super();
 	}
 
-	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch, source: Translatable): void {
-		this.power.addToSheet(sheet, dispatch, source);
+	addToSheet(transaction: TransactionInterface, source: TranslatableName): void {
+		this.power.addToSheet(transaction, source);
 	}
 
 	validate(originBenefits: OriginBenefits): void {

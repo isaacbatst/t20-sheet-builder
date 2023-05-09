@@ -1,8 +1,25 @@
-import type {ActionPayload} from '../Sheet/SheetActions';
-import {Action} from './Action';
+import {Translatable} from '../Translatable';
+import {Translator} from '../Translator';
+import {Action, type ActionSubClassParams} from './Action';
 
 export class LearnSpell extends Action<'learnSpell'> {
-	constructor(payload: ActionPayload<'learnSpell'>) {
-		super('learnSpell', payload);
+	constructor(
+		params: ActionSubClassParams<'learnSpell'>,
+	) {
+		super({
+			...params,
+			type: 'learnSpell',
+		});
+	}
+
+	execute(): void {
+		const sheetSpells = this.transaction.sheet.getSheetSpells();
+		sheetSpells.learnSpell(this.payload.spell);
+	}
+
+	getDescription(): string {
+		const source = new Translatable(this.payload.source).getTranslation();
+		const spell = new Translatable(this.payload.spell.name).getTranslation();
+		return `${source}: você aprendeu a magia ${spell}.`;
 	}
 }

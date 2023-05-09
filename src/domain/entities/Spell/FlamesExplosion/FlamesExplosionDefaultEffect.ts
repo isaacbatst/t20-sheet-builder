@@ -2,7 +2,7 @@ import type {EffectRange} from '../../Ability/ActivateableAbilityEffect';
 import {EffectAffectableArea} from '../../Ability/EffectAffectable';
 import type {Affectable} from '../../Affectable/Affectable';
 import {ManaCost} from '../../ManaCost';
-import type {Cost} from '../../Sheet/SheetInterface';
+import type {Cost} from '../../Sheet/CharacterSheetInterface';
 import {SpellEffect} from '../SpellEffect';
 import {SpellName} from '../SpellName';
 

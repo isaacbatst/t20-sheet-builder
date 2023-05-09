@@ -1,14 +1,15 @@
-import {SheetBuilderError} from '../Error/SheetBuilderError';
 import {WeaponAttack} from '../Attack/WeaponAttack';
+import {SheetBuilderError} from '../Error/SheetBuilderError';
 import type {EquipmentName} from '../Inventory';
 import {OffensiveWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/OffensiveWeapon';
+import {type GeneralPowerMap} from '../Map';
+import {FightStyle} from '../Power/GeneralPower/CombatPower/FightStyle/FightStyle';
 import type {Attributes} from '../Sheet';
-import type {Sheet} from '../Sheet/Sheet';
+import type {CharacterSheet} from '../Sheet/CharacterSheet';
 import type {CharacterAppliedFightStyle} from './CharacterAppliedFightStyle';
 import {CharacterAttack} from './CharacterAttack';
 import type {CharacterInterface} from './CharacterInterface';
 import {CharacterModifiers} from './CharacterModifiers';
-import {FightStyle} from '../Power/GeneralPower/CombatPower/FightStyle/FightStyle';
 
 export class Character implements CharacterInterface {
 	private get maxWieldedItems() {
@@ -19,9 +20,9 @@ export class Character implements CharacterInterface {
 	private readonly modifiers = new CharacterModifiers();
 
 	constructor(
-		private	readonly sheet: Sheet,
+		private	readonly sheet: CharacterSheet,
 	) {
-		this.selectDefaultFightStyle(sheet);
+		this.selectDefaultFightStyle(sheet.getSheetPowers().getGeneralPowers());
 	}
 
 	selectFightStyle(fightStyle: FightStyle) {
@@ -35,13 +36,14 @@ export class Character implements CharacterInterface {
 	}
 
 	toggleWieldItem(name: EquipmentName) {
-		const item = this.sheet.inventory.getItem(name);
+		const inventory = this.sheet.getSheetInventory();
+		const item = inventory.getItem(name);
 
 		if (!item) {
 			throw new SheetBuilderError('ITEM_NOT_FOUND');
 		}
 
-		const wieldedItems = this.sheet.inventory.getWieldedItems();
+		const wieldedItems = inventory.getWieldedItems();
 
 		if (!item.getIsEquipped() && this.maxWieldedItems <= wieldedItems.length) {
 			throw new SheetBuilderError('MAX_WIELDED_ITEMS');
@@ -51,13 +53,15 @@ export class Character implements CharacterInterface {
 	}
 
 	getAttributes(): Attributes {
-		return this.sheet.attributes;
+		const attributes = this.sheet.getSheetAttributes();
+		return attributes.getValues();
 	}
 
 	getAttacks(): Map<EquipmentName, CharacterAttack> {
 		const attacks = new Map<EquipmentName, CharacterAttack>();
-
-		this.sheet.inventory.equipments.forEach(({equipment}) => {
+		const inventory = this.sheet.getSheetInventory();
+		const equipments = inventory.getEquipments();
+		equipments.forEach(({equipment}) => {
 			if (equipment instanceof OffensiveWeapon) {
 				const attack = new CharacterAttack(
 					new WeaponAttack(equipment),
@@ -73,15 +77,16 @@ export class Character implements CharacterInterface {
 	}
 
 	getWieldedItems(): EquipmentName[] {
-		return this.sheet.inventory.getWieldedItems();
+		const inventory = this.sheet.getSheetInventory();
+		return inventory.getWieldedItems();
 	}
 
 	getFightStyle(): CharacterAppliedFightStyle | undefined {
 		return this.fightStyle;
 	}
 
-	private selectDefaultFightStyle(sheet: Sheet) {
-		for (const power of sheet.powers.general.values()) {
+	private selectDefaultFightStyle(powers: GeneralPowerMap) {
+		for (const power of powers.values()) {
 			if (power instanceof FightStyle) {
 				this.selectFightStyle(power);
 				break;

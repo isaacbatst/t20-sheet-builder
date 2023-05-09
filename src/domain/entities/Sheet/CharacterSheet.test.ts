@@ -28,14 +28,14 @@ import {FlamesExplosion} from '../Spell/FlamesExplosion/FlamesExplosion';
 import {IllusoryDisguise} from '../Spell/IllusoryDisguise/IllusoryDisguise';
 import {MentalDagger} from '../Spell/MentalDagger/MentalDagger';
 import {Proficiency} from './Proficiency';
-import type {Sheet} from './Sheet';
+import type {CharacterSheet} from './CharacterSheet';
 import {SheetBuilder} from './SheetBuilder';
 import {Vision} from './Vision';
 import {OneWeaponStyle} from '../Power';
 
 describe('Sheet', () => {
 	describe('Human Warrior', () => {
-		let sheet: Sheet;
+		let sheet: CharacterSheet;
 		let role: Role;
 		let race: Race;
 		let sheetBuilder: SheetBuilder;
@@ -147,7 +147,7 @@ describe('Sheet', () => {
 	});
 
 	describe('Dwarf Arcanist', () => {
-		let sheet: Sheet;
+		let sheet: CharacterSheet;
 		let role: Role;
 		let race: Race;
 		let sheetBuilder: SheetBuilder;

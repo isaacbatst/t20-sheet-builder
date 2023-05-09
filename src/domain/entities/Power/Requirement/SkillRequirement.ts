@@ -1,4 +1,4 @@
-import type {SheetBaseInterface} from '../../Sheet/SheetBaseInterface';
+import type {SheetInterface} from '../../Sheet/SheetInterface';
 import type {SkillName} from '../../Skill/SkillName';
 import {Translator} from '../../Translator';
 import {Requirement} from './Requirement';
@@ -11,8 +11,9 @@ export class SkillRequirement extends Requirement {
 		this.description = this.getDescription();
 	}
 
-	verify(sheet: SheetBaseInterface): boolean {
-		return sheet.getSkills()[this.skill].getIsTrained();
+	verify(sheet: SheetInterface): boolean {
+		const skills = sheet.getSheetSkills().getSkills();
+		return skills[this.skill].getIsTrained();
 	}
 
 	protected getDescription(): string {

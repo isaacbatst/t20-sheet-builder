@@ -1,8 +1,9 @@
+import {type Action} from '../Action/Action';
 import {PickRolePower} from '../Action/PickRolePower';
 import type {PowerInterface} from '../Power/Power';
 import {Power} from '../Power/Power';
-import type {ActionInterface} from '../Sheet/SheetActions';
-import type {Translatable} from '../Translator';
+import {type TransactionInterface} from '../Sheet/TransactionInterface';
+import {type TranslatableName} from '../Translator';
 import type {RolePowerName} from './RolePowerName';
 
 export type RolePowerInterface = PowerInterface & {
@@ -16,10 +17,13 @@ export abstract class RolePower extends Power implements RolePowerInterface {
 		super(name, 'role');
 	}
 
-	protected getAddAction(source: Translatable): ActionInterface	{
+	protected makeAction(transaction: TransactionInterface, source: TranslatableName): Action	{
 		return new PickRolePower({
-			power: this,
-			source,
+			payload: {
+				power: this,
+				source,
+			},
+			transaction,
 		});
 	}
 }

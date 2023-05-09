@@ -1,4 +1,4 @@
-import type {Cost, CostType} from './Sheet/SheetInterface';
+import type {Cost, CostType} from './Sheet/CharacterSheetInterface';
 
 export class ManaCost implements Cost {
 	type: CostType = 'mana';

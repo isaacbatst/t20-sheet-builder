@@ -1,5 +1,5 @@
 import type {Attribute, Attributes} from '../Sheet/Attributes';
-import type {Level} from '../Sheet/Levels';
+import type {Level} from '../Sheet/Level';
 import {Skill} from './Skill';
 
 export type SkillBaseCalculatorInterface = {

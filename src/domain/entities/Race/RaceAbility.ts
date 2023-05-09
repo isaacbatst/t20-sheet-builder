@@ -1,8 +1,9 @@
 import type {AbilityInterface} from '../Ability/Ability';
 import {Ability} from '../Ability/Ability';
+import {type Action} from '../Action/Action';
 import {ApplyRaceAbility} from '../Action/ApplyRaceAbility';
-import type {ActionInterface} from '../Sheet/SheetActions';
-import type {Translatable} from '../Translator';
+import {type TransactionInterface} from '../Sheet/TransactionInterface';
+import {type TranslatableName} from '../Translator';
 import type {RaceAbilityName} from './RaceAbilityName';
 
 export type RaceAbilityInterface = AbilityInterface & {
@@ -16,10 +17,13 @@ export abstract class RaceAbility extends Ability implements RaceAbilityInterfac
 		super(name, 'race');
 	}
 
-	protected getAddAction(source: Translatable): ActionInterface {
+	protected makeAction(transaction: TransactionInterface, source: TranslatableName): Action {
 		return new ApplyRaceAbility({
-			ability: this,
-			source,
+			payload: {
+				ability: this,
+				source,
+			},
+			transaction,
 		});
 	}
 }

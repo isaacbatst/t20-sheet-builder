@@ -1,5 +1,5 @@
 import type {Attribute} from '../../Sheet/Attributes';
-import {Level} from '../../Sheet/Levels';
+import {Level} from '../../Sheet/Level';
 import type {Proficiency} from '../../Sheet/Proficiency';
 import {SkillName} from '../../Skill/SkillName';
 import type {Spell, SpellType} from '../../Spell/Spell';

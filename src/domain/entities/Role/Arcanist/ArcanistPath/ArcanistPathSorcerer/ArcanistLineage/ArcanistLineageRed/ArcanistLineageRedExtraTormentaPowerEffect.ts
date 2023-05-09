@@ -1,8 +1,7 @@
 import {PassiveEffect} from '../../../../../../Ability/PassiveEffect';
 import {PickGeneralPower} from '../../../../../../Action/PickGeneralPower';
 import {type TormentaPower} from '../../../../../../Power/GeneralPower/TormentaPower/TormentaPower';
-import {type SheetBaseInterface} from '../../../../../../Sheet/SheetBaseInterface';
-import {type Dispatch} from '../../../../../../Sheet/Transaction';
+import {type TransactionInterface} from '../../../../../../Sheet/TransactionInterface';
 import {RoleAbilityName} from '../../../../../RoleAbilityName';
 
 export class ArcanistLineageRedExtraTormentaPowerEffect extends PassiveEffect {
@@ -12,10 +11,13 @@ export class ArcanistLineageRedExtraTormentaPowerEffect extends PassiveEffect {
 		super(RoleAbilityName.arcanistSupernaturalLineage);
 	}
 
-	applyToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
-		dispatch(new PickGeneralPower({
-			power: this.power,
-			source: this.source,
-		}), sheet);
+	applyToSheet(transaction: TransactionInterface): void {
+		transaction.run(new PickGeneralPower({
+			payload: {
+				power: this.power,
+				source: this.source,
+			},
+			transaction,
+		}));
 	}
 }

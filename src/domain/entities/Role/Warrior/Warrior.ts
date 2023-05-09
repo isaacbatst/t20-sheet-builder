@@ -1,4 +1,4 @@
-import {Level} from '../../Sheet/Levels';
+import {Level} from '../../Sheet/Level';
 import {Proficiency} from '../../Sheet/Proficiency';
 import {SkillName} from '../../Skill/SkillName';
 import {Role} from '../Role';

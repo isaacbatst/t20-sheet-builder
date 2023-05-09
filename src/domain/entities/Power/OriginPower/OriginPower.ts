@@ -1,8 +1,7 @@
+import {type Action} from '../../Action/Action';
 import {PickOriginPower} from '../../Action/PickOriginPower';
 import type {OriginName} from '../../Origin/OriginName';
-import type {ActionInterface} from '../../Sheet/SheetActions';
-import type {SheetBaseInterface} from '../../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../../Sheet/Transaction';
+import {type TransactionInterface} from '../../Sheet/TransactionInterface';
 import type {PowerInterface} from '../Power';
 import {Power} from '../Power';
 import type {OriginPowerName} from './OriginPowerName';
@@ -10,7 +9,6 @@ import type {OriginPowerName} from './OriginPowerName';
 export type OriginPowerInterface = PowerInterface & {
 	source: OriginName;
 	name: OriginPowerName;
-	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void;
 };
 
 export abstract class OriginPower extends Power implements OriginPowerInterface {
@@ -22,13 +20,13 @@ export abstract class OriginPower extends Power implements OriginPowerInterface 
 		super(name, 'origin');
 	}
 
-	override addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
-		super.addToSheet(sheet, dispatch, this.source);
-	}
-
-	protected getAddAction(): ActionInterface {
+	protected makeAction(transaction: TransactionInterface): Action {
 		return new PickOriginPower({
-			power: this,
+			payload: {
+				power: this,
+				source: this.source,
+			},
+			transaction,
 		});
 	}
 }

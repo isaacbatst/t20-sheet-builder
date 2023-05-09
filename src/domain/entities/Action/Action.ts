@@ -1,8 +1,35 @@
-import type {ActionInterface, ActionType, ActionPayload} from '../Sheet/SheetActions';
+import type {ActionInterface, ActionPayload, ActionType} from '../Sheet/SheetActions';
+import {type SheetInterface} from '../Sheet/SheetInterface';
+import {type TransactionInterface} from '../Sheet/TransactionInterface';
 
-export abstract class Action<T extends ActionType = ActionType> implements ActionInterface<T> {
-	constructor(
-		readonly type: T,
-		readonly payload: ActionPayload<T>,
-	) {}
+export type ActionParams<
+	A extends ActionType,
+	S extends SheetInterface = SheetInterface,
+> = {
+	type: A;
+	payload: ActionPayload<A>;
+	transaction: TransactionInterface<S>;
+};
+
+export type ActionSubClassParams<
+	T extends ActionType,
+	S extends SheetInterface = SheetInterface,
+> = Omit<ActionParams<T, S>, 'type'>;
+
+export abstract class Action<
+	A extends ActionType = ActionType,
+	S extends SheetInterface = SheetInterface,
+> implements ActionInterface<A> {
+	readonly type: A;
+	readonly payload: ActionPayload<A>;
+	readonly transaction: TransactionInterface<S>;
+
+	constructor(params: ActionParams<A, S>) {
+		this.type = params.type;
+		this.payload = params.payload;
+		this.transaction = params.transaction;
+	}
+
+	abstract execute(): void;
+	abstract getDescription(): string;
 }

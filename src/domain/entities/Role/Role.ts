@@ -1,18 +1,17 @@
-import {SheetBuilderError} from '../Error/SheetBuilderError';
 import {AddFixedModifierToLifePoints} from '../Action/AddFixedModifierToLifePoints';
 import {AddPerLevelModifierToLifePoints} from '../Action/AddPerLevelModifierToLifePoints';
 import {AddPerLevelModifierToManaPoints} from '../Action/AddPerLevelModifierToManaPoints';
 import {AddProficiency} from '../Action/AddProficiency';
 import {TrainSkill} from '../Action/TrainSkill';
+import {SheetBuilderError} from '../Error/SheetBuilderError';
 import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
 import {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
-import {Level} from '../Sheet/Levels';
+import {Level} from '../Sheet/Level';
 import type {Proficiency} from '../Sheet/Proficiency';
-import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../Sheet/Transaction';
+import {type TransactionInterface} from '../Sheet/TransactionInterface';
 import type {SkillName} from '../Skill/SkillName';
 import type {RoleAbility} from './RoleAbility';
-import type {SelectSkillGroup, RoleInterface} from './RoleInterface';
+import type {RoleInterface, SelectSkillGroup} from './RoleInterface';
 import type {RoleName} from './RoleName';
 
 export abstract class Role implements RoleInterface {
@@ -39,19 +38,19 @@ export abstract class Role implements RoleInterface {
 		this.validateChosenSkills();
 	}
 
-	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
-		this.addLifePointsModifiers(dispatch, sheet);
-		this.addManaPointsModifiers(dispatch, sheet);
-		this.trainSkills(dispatch, sheet);
-		this.addProficiencies(dispatch, sheet);
-		this.addLevelOneAbilities(dispatch, sheet);
+	addToSheet(transaction: TransactionInterface): void {
+		this.addLifePointsModifiers(transaction);
+		this.addManaPointsModifiers(transaction);
+		this.trainSkills(transaction);
+		this.addProficiencies(transaction);
+		this.addLevelOneAbilities(transaction);
 	}
 
-	addLevelOneAbilities(dispatch: Dispatch, sheet: SheetBaseInterface) {
+	addLevelOneAbilities(transaction: TransactionInterface) {
 		const abilities = this.abilities[Level.one];
 
 		Object.values(abilities).forEach(ability => {
-			ability.addToSheet(sheet, dispatch, this.name);
+			ability.addToSheet(transaction, this.name);
 		});
 	}
 
@@ -59,44 +58,62 @@ export abstract class Role implements RoleInterface {
 		return this.mandatorySkills.length + this.selectSkillGroups.reduce((acc, curr) => curr.amount + acc, 0);
 	}
 
-	private addLifePointsModifiers(dispatch: Dispatch, sheet: SheetBaseInterface) {
-		dispatch(new AddFixedModifierToLifePoints({
-			modifier: new FixedModifier(this.name, this.initialLifePoints, new Set(['constitution'])),
-		}), sheet);
+	private addLifePointsModifiers(transaction: TransactionInterface) {
+		transaction.run(new AddFixedModifierToLifePoints({
+			payload: {
+				modifier: new FixedModifier(this.name, this.initialLifePoints, new Set(['constitution'])),
+			},
+			transaction,
+		}));
 
-		dispatch(new AddPerLevelModifierToLifePoints({
-			modifier: new PerLevelModifier(this.name, this.lifePointsPerLevel, false, new Set(['constitution'])),
-		}), sheet);
+		transaction.run(new AddPerLevelModifierToLifePoints({
+			payload: {
+				modifier: new PerLevelModifier(this.name, this.lifePointsPerLevel, false, new Set(['constitution'])),
+			},
+			transaction,
+		}));
 	}
 
-	private addManaPointsModifiers(dispatch: Dispatch, sheet: SheetBaseInterface) {
-		dispatch(new AddPerLevelModifierToManaPoints({
-			modifier: new PerLevelModifier(this.name, this.manaPerLevel, true),
-		}), sheet);
+	private addManaPointsModifiers(transaction: TransactionInterface) {
+		transaction.run(new AddPerLevelModifierToManaPoints({
+			payload: {
+				modifier: new PerLevelModifier(this.name, this.manaPerLevel, true),
+			},
+			transaction,
+		}));
 	}
 
-	private addProficiencies(dispatch: Dispatch, sheet: SheetBaseInterface): void {
+	private addProficiencies(transaction: TransactionInterface): void {
 		this.proficiencies.forEach(proficiency => {
-			dispatch(new AddProficiency({
-				proficiency,
-				source: this.name,
-			}), sheet);
+			transaction.run(new AddProficiency({
+				payload: {
+					proficiency,
+					source: this.name,
+				},
+				transaction,
+			}));
 		});
 	}
 
-	private trainSkills(dispatch: Dispatch, sheet: SheetBaseInterface): void {
+	private trainSkills(transaction: TransactionInterface): void {
 		this.mandatorySkills.forEach(skill => {
-			dispatch(new TrainSkill({
-				name: skill,
-				source: this.name,
-			}), sheet);
+			transaction.run(new TrainSkill({
+				payload: {
+					skill: skill,
+					source: this.name,
+				},
+				transaction,
+			}));
 		});
 
 		this.chosenSkills.forEach(skill => {
-			dispatch(new TrainSkill({
-				name: skill,
-				source: this.name,
-			}), sheet);
+			transaction.run(new TrainSkill({
+				payload: {
+					skill: skill,
+					source: this.name,
+				},
+				transaction,
+			}));
 		});
 	}
 

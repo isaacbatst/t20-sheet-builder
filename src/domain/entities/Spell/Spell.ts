@@ -1,8 +1,9 @@
 import {Ability} from '../Ability/Ability';
+import {type Action} from '../Action/Action';
 import {LearnSpell} from '../Action/AddSpell';
-import type {ActionInterface} from '../Sheet/SheetActions';
-import type {Cost} from '../Sheet/SheetInterface';
-import type {Translatable} from '../Translator';
+import type {Cost} from '../Sheet/CharacterSheetInterface';
+import {type TransactionInterface} from '../Sheet/TransactionInterface';
+import {type TranslatableName} from '../Translator';
 import {SpellCircle} from './SpellCircle';
 import {SpellCost} from './SpellCost';
 import type {SpellName} from './SpellName';
@@ -29,10 +30,13 @@ export abstract class Spell extends Ability {
 		this.cost = new SpellCost(this.circle);
 	}
 
-	protected getAddAction(source: Translatable): ActionInterface {
+	protected makeAction(transaction: TransactionInterface, source: TranslatableName): Action {
 		return new LearnSpell({
-			spell: this,
-			source,
+			payload: {
+				source,
+				spell: this,
+			},
+			transaction,
 		});
 	}
 }

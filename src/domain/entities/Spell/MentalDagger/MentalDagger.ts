@@ -1,4 +1,5 @@
 import {AbilityEffects} from '../../Ability/AbilityEffects';
+import {type Translatable} from '../../Translatable';
 import {Spell} from '../Spell';
 import {SpellCircle} from '../SpellCircle';
 import {SpellName} from '../SpellName';

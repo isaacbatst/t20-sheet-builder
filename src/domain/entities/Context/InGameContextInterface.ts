@@ -1,5 +1,5 @@
 import type {CharacterInterface} from '../Character/CharacterInterface';
-import type {Location} from '../Sheet/SheetInterface';
+import type {Location} from '../Sheet/CharacterSheetInterface';
 import {Context} from './Context';
 import type {ContextInterface, ContextType} from './ContextInterface';
 

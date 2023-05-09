@@ -1,8 +1,23 @@
-import type {ActionPayload} from '../Sheet/SheetActions';
-import {Action} from './Action';
+import {StringHelper} from '../StringHelper';
+import {Action, type ActionSubClassParams} from './Action';
 
 export class ApplyRaceModifiers extends Action<'applyRaceModifiers'> {
-	constructor(payload: ActionPayload<'applyRaceModifiers'>) {
-		super('applyRaceModifiers', payload);
+	constructor(
+		params: ActionSubClassParams<'applyRaceModifiers'>,
+	) {
+		super({
+			...params,
+			type: 'applyRaceModifiers',
+		});
+	}
+
+	execute(): void {
+		const sheetAttributes = this.transaction.sheet.getSheetAttributes();
+		sheetAttributes.applyRaceModifiers(this.payload.modifiers);
+	}
+
+	getDescription(): string {
+		const modifiersText = StringHelper.getAttributesText(this.payload.modifiers);
+		return `Modificadores de raça aplicados: ${modifiersText}.`;
 	}
 }

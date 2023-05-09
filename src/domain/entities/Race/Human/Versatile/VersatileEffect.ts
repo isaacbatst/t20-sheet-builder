@@ -1,7 +1,6 @@
-import {SheetBuilderError} from '../../../Error/SheetBuilderError';
 import {PassiveEffect} from '../../../Ability/PassiveEffect';
-import type {SheetBaseInterface} from '../../../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../../../Sheet/Transaction';
+import {SheetBuilderError} from '../../../Error/SheetBuilderError';
+import {type TransactionInterface} from '../../../Sheet/TransactionInterface';
 import {RaceAbilityName} from '../../RaceAbilityName';
 import type {VersatileChoice} from './VersatileChoice';
 
@@ -31,13 +30,13 @@ export class VersatileEffect extends PassiveEffect {
 		this.choices.push(newChoice);
 	}
 
-	applyToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
+	applyToSheet(transaction: TransactionInterface): void {
 		if (this.choices.length !== 2) {
 			throw new SheetBuilderError('MISSING_CHOICES');
 		}
 
 		this.choices.forEach(choice => {
-			choice.addToSheet(sheet, dispatch, this.source);
+			choice.addToSheet(transaction, this.source);
 		});
 	}
 }

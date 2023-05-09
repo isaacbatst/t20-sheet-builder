@@ -1,6 +1,6 @@
 import type {Attributes} from '../Sheet/Attributes';
 import type {ContextInterface} from '../Context/ContextInterface';
-import type {Level} from '../Sheet/Levels';
+import type {Level} from '../Sheet/Level';
 import {ContextualModifiersListTotalCalculator} from '../Modifier/ContextualModifier/ContextualModifiersListTotalCalculator';
 import {FixedModifiersListTotalCalculator} from '../Modifier/FixedModifier/FixedModifiersListTotalCalculator';
 import {SkillBaseCalculator} from './SkillBaseCalculator';

@@ -1,4 +1,4 @@
-import {Level} from '../../Sheet/Levels';
+import {Level} from '../../Sheet/Level';
 import {RoleAbilityName} from '../../Role/RoleAbilityName';
 import {RoleName} from '../../Role/RoleName';
 import {PerLevelModifier} from './PerLevelModifier';

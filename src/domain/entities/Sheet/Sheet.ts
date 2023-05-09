@@ -1,151 +1,117 @@
-import type {BuildStep, BuildStepInterface} from '../BuildStep';
-import type {DefenseInterface} from '../Defense/DefenseInterface';
-import type {Inventory} from '../Inventory/Inventory';
-import type {OriginInterface} from '../Origin/Origin';
-import type {LifePoints} from '../Points/LifePoints/LifePoints';
-import type {ManaPoints} from '../Points/ManaPoints/ManaPoints';
-import type {RaceInterface} from '../Race/RaceInterface';
-import type {RoleInterface} from '../Role/RoleInterface';
-import type {SheetInterface} from '../Sheet/SheetInterface';
-import type {Attributes} from './Attributes';
-import type {Level} from './Levels';
-import type {Proficiency} from './Proficiency';
-import type {SheetAbilities, SheetLearnedCircles, SheetPowers, SheetSkills, SheetSpells} from './SheetBaseInterface';
-import type {Vision} from './Vision';
+import type {BuildStepInterface} from '../BuildStep';
+import {type SheetInventoryInterface} from './SheetInventoryInterface';
+import {type SheetAbilitiesInterface} from './SheetAbilitiesInterface';
+import {type SheetAttributesInterface} from './SheetAttributesInterface';
+import {type SheetDefenseInterface} from './SheetDefenseInterface';
+import {type SheetDisplacementInterface} from './SheetDisplacementInterface';
+import type {SheetInterface} from './SheetInterface';
+import {type SheetOriginInterface} from './SheetOriginInterface';
+import {type SheetPointsInterface} from './SheetPointsInterface';
+import {type SheetPowersInterface} from './SheetPowersInterface';
+import {type SheetProficienciesInterface} from './SheetProficienciesInterface';
+import {type SheetRaceInterface} from './SheetRaceInterface';
+import {type SheetRoleInterface} from './SheetRoleInterface';
+import {type SheetSkillsInterface} from './SheetSkillsInterface';
+import {type SheetSpellsInterface} from './SheetSpellsInterface';
+import {type SheetVisionInterface} from './SheetVisionInterface';
+export abstract class Sheet implements SheetInterface {
+	protected abstract buildSteps: BuildStepInterface[];
+	protected abstract level: number;
+	protected abstract sheetAbilities: SheetAbilitiesInterface;
+	protected abstract sheetOrigin: SheetOriginInterface;
+	protected abstract sheetLifePoints: SheetPointsInterface;
+	protected abstract sheetManaPoints: SheetPointsInterface;
+	protected abstract sheetSkills: SheetSkillsInterface;
+	protected abstract sheetAttributes: SheetAttributesInterface;
+	protected abstract sheetSpells: SheetSpellsInterface;
+	protected abstract sheetInventory: SheetInventoryInterface;
+	protected abstract sheetPowers: SheetPowersInterface;
+	protected abstract sheetDefense: SheetDefenseInterface;
+	protected abstract sheetVision: SheetVisionInterface;
+	protected abstract sheetRace: SheetRaceInterface;
+	protected abstract sheetRole: SheetRoleInterface;
+	protected abstract sheetProficiencies: SheetProficienciesInterface;
+	protected abstract sheetDisplacement: SheetDisplacementInterface;
 
-type SheetParams = {
-	attributes: Attributes;
-	race: RaceInterface;
-	role: RoleInterface;
-	buildSteps: BuildStep[];
-	lifePoints: LifePoints;
-	manaPoints: ManaPoints;
-	level: number;
-	vision: Vision;
-	displacement: number;
-	defense: DefenseInterface;
-	proficiencies: Proficiency[];
-	abilities: SheetAbilities;
-	powers: SheetPowers;
-	learnedCircles: SheetLearnedCircles;
-	spells: SheetSpells;
-	skills: SheetSkills;
-	inventory: Inventory;
-	origin: OriginInterface;
-	money: number;
-};
-
-export class Sheet implements SheetInterface {
-	static readonly initialAttributes: Attributes = {strength: 0, dexterity: 0, constitution: 0, intelligence: 0, wisdom: 0, charisma: 0};
-	readonly race: RaceInterface;
-	readonly role: RoleInterface;
-	readonly origin: OriginInterface;
-	readonly buildSteps: BuildStepInterface[];
-	readonly lifePoints: LifePoints;
-	readonly manaPoints: ManaPoints;
-	readonly learnedCircles: SheetLearnedCircles;
-	readonly spells: SheetSpells;
-	readonly attributes: Attributes;
-	readonly level: Level;
-	readonly vision: Vision;
-	readonly displacement;
-	readonly skills: SheetSkills;
-	readonly defense: DefenseInterface;
-	readonly proficiencies: Proficiency[];
-	readonly abilities: SheetAbilities;
-	readonly powers: SheetPowers;
-	readonly inventory: Inventory;
-	readonly money: number;
-
-	constructor(
-		params: SheetParams,
-	) {
-		this.skills = params.skills;
-		this.race = params.race;
-		this.role = params.role;
-		this.attributes = params.attributes;
-		this.lifePoints = params.lifePoints;
-		this.manaPoints = params.manaPoints;
-		this.level = params.level;
-		this.vision = params.vision;
-		this.displacement = params.displacement;
-		this.defense = params.defense;
-		this.buildSteps = params.buildSteps;
-		this.proficiencies = params.proficiencies;
-		this.abilities = params.abilities;
-		this.powers = params.powers;
-		this.learnedCircles = params.learnedCircles;
-		this.spells = params.spells;
-		this.inventory = params.inventory;
-		this.origin = params.origin;
-		this.money = params.money;
+	pushBuildSteps(...buildSteps: BuildStepInterface[]): void {
+		this.buildSteps.push(...buildSteps);
 	}
 
-	getRole() {
-		return this.role;
-	}
-
-	getRace() {
-		return this.race;
-	}
-
-	getAttributes(): Attributes {
-		return this.attributes;
-	}
-
-	getDefense(): DefenseInterface {
-		return this.defense;
-	}
-
-	getDisplacement(): number {
-		return this.displacement;
+	getBuildSteps(): BuildStepInterface[] {
+		return this.buildSteps;
 	}
 
 	getLevel(): number {
 		return this.level;
 	}
 
-	getSkills(): SheetSkills {
-		return this.skills;
+	getSheetAbilities(): SheetAbilitiesInterface {
+		return this.sheetAbilities;
 	}
 
-	getVision(): Vision {
-		return this.vision;
+	getSheetOrigin(): SheetOriginInterface {
+		return this.sheetOrigin;
 	}
 
-	getProficiencies(): Proficiency[] {
-		return this.proficiencies;
+	getSheetLifePoints(): SheetPointsInterface {
+		return this.sheetLifePoints;
 	}
 
-	getAbilities(): SheetAbilities {
-		return this.abilities;
+	getMaxLifePoints(): number {
+		const attributes = this.sheetAttributes.getValues();
+		return this.sheetLifePoints.getMax(attributes, this.level);
 	}
 
-	getPowers(): SheetPowers {
-		return this.powers;
+	getSheetManaPoints(): SheetPointsInterface {
+		return this.sheetManaPoints;
 	}
 
-	getSpells(): SheetSpells {
-		return this.spells;
+	getMaxManaPoints(): number {
+		const attributes = this.sheetAttributes.getValues();
+		return this.sheetManaPoints.getMax(attributes, this.level);
 	}
 
-	getLearnedCircles(): SheetLearnedCircles {
-		return this.learnedCircles;
+	getSheetSkills(): SheetSkillsInterface {
+		return this.sheetSkills;
 	}
 
-	getLifePoints(): LifePoints {
-		return this.lifePoints;
+	getSheetAttributes(): SheetAttributesInterface {
+		return this.sheetAttributes;
 	}
 
-	getManaPoints(): ManaPoints {
-		return this.manaPoints;
+	getSheetSpells(): SheetSpellsInterface {
+		return this.sheetSpells;
 	}
 
-	getInventory(): Inventory {
-		return this.inventory;
+	getSheetInventory(): SheetInventoryInterface {
+		return this.sheetInventory;
 	}
 
-	getMoney(): number {
-		return this.money;
+	getSheetPowers(): SheetPowersInterface {
+		return this.sheetPowers;
+	}
+
+	getSheetDefense(): SheetDefenseInterface {
+		return this.sheetDefense;
+	}
+
+	getSheetVision(): SheetVisionInterface {
+		return this.sheetVision;
+	}
+
+	getSheetRace(): SheetRaceInterface {
+		return this.sheetRace;
+	}
+
+	getSheetRole(): SheetRoleInterface {
+		return this.sheetRole;
+	}
+
+	getSheetProficiencies(): SheetProficienciesInterface {
+		return this.sheetProficiencies;
+	}
+
+	getSheetDisplacement(): SheetDisplacementInterface {
+		return this.sheetDisplacement;
 	}
 }
