@@ -1,6 +1,5 @@
 import type {Proficiency} from '../Sheet/Proficiency';
-import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../Sheet/Transaction';
+import {type TransactionInterface} from '../Sheet/TransactionInterface';
 import type {SkillName} from '../Skill/SkillName';
 import type {RoleName} from './RoleName';
 
@@ -17,5 +16,5 @@ export type RoleInterface = {
 	startsWithArmor: boolean;
 
 	getTotalInitialSkills(): number;
-	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void;
+	addToSheet(transaction: TransactionInterface): void;
 };

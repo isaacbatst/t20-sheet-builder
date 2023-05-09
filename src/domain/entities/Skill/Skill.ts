@@ -1,5 +1,7 @@
 import {SheetBuilderError} from '../Error/SheetBuilderError';
+import {type ContextualModifierInterface} from '../Modifier/ContextualModifier/ContextualModifierInterface';
 import {ContextualModifiersList} from '../Modifier/ContextualModifier/ContextualModifierList';
+import {type FixedModifierInterface} from '../Modifier/FixedModifier/FixedModifier';
 import {FixedModifiersList} from '../Modifier/FixedModifier/FixedModifiersList';
 import type {Attribute} from '../Sheet/Attributes';
 import type {SkillTotalCalculator} from './SkillTotalCalculator';
@@ -46,6 +48,14 @@ export class Skill {
 	constructor(params: SkillParams) {
 		this.isTrained = Boolean(params.isTrained);
 		this.attribute = params.attribute;
+	}
+
+	addContextualModifier(modifier: ContextualModifierInterface) {
+		this.contextualModifiers.add(modifier);
+	}
+
+	addFixedModifier(modifier: FixedModifierInterface) {
+		this.fixedModifiers.add(modifier);
 	}
 
 	train() {

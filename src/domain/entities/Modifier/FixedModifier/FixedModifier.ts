@@ -1,5 +1,5 @@
 import type {Attribute} from '../../Sheet/Attributes';
-import type {Translatable} from '../../Translator';
+import type {TranslatableName} from '../../Translator';
 import {Modifier} from '../Modifier';
 import type {ModifierInterface} from '../ModifierInterface';
 
@@ -7,7 +7,7 @@ export type FixedModifierInterface = ModifierInterface;
 
 export class FixedModifier extends Modifier implements ModifierInterface {
 	constructor(
-		source: Translatable,
+		source: TranslatableName,
 		value: number,
 		attributeBonuses?: Set<Attribute>,
 	) {

@@ -1,6 +1,5 @@
 import {PassiveEffect} from '../../../../../../Ability/PassiveEffect';
-import {type SheetBaseInterface} from '../../../../../../Sheet/SheetBaseInterface';
-import {type Dispatch} from '../../../../../../Sheet/Transaction';
+import {type TransactionInterface} from '../../../../../../Sheet/TransactionInterface';
 import {RoleAbilityName} from '../../../../../RoleAbilityName';
 import {type ArcanistLineageDraconicDamageType} from './ArcanistLineageDraconicDamageType';
 
@@ -9,7 +8,7 @@ export class ArcanistLineageDraconicDamageReductionEffect extends PassiveEffect 
 		super(RoleAbilityName.arcanistSupernaturalLineage);
 	}
 
-	override applyToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
+	override apply(transaction: TransactionInterface): void {
 		throw new Error('Method not implemented.');
 	}
 }

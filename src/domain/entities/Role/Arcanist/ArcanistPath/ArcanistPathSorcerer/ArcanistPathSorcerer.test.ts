@@ -1,13 +1,12 @@
 import {AddFixedModifierToLifePoints} from '../../../../Action/AddFixedModifierToLifePoints';
 import {LearnSpell} from '../../../../Action/AddSpell';
 import {ChangeTormentaPowersAttribute} from '../../../../Action/ChangeTormentaPowersAttribute';
-import {DecreaseAttribute} from '../../../../Action/DecreaseAttribute';
 import {PickGeneralPower} from '../../../../Action/PickGeneralPower';
 import {TrainSkill} from '../../../../Action/TrainSkill';
 import {DamageType} from '../../../../Damage/DamageType';
 import {FixedModifier} from '../../../../Modifier/FixedModifier/FixedModifier';
 import {Shell} from '../../../../Power';
-import {SheetBaseFake} from '../../../../Sheet/SheetBaseFake';
+import {TransactionFake} from '../../../../Sheet/TransactionFake';
 import {SkillName} from '../../../../Skill';
 import {IllusoryDisguise} from '../../../../Spell';
 import {RoleAbilityName} from '../../../RoleAbilityName';
@@ -20,43 +19,46 @@ describe('ArcanistPathSorcerer', () => {
 	it('should create sorcerer with draconic lineage', () => {
 		const lineage = new ArcanistLineageDraconic(DamageType.fire);
 		const arcanistPath = new ArcanistPathSorcerer(lineage);
-		const sheet = new SheetBaseFake();
-		const dispatch = vi.fn();
-		arcanistPath.addToSheet(sheet, dispatch, RoleAbilityName.arcanistSupernaturalLineage);
-		expect(dispatch).toHaveBeenCalledWith(
+		const transaction = new TransactionFake();
+		arcanistPath.addToSheet(transaction, RoleAbilityName.arcanistSupernaturalLineage);
+		expect(transaction.run).toHaveBeenCalledWith(
 			new AddFixedModifierToLifePoints({
-				modifier: new FixedModifier(
-					RoleAbilityName.arcanistSupernaturalLineage,
-					0,
-					new Set(['charisma']),
-				),
-			}),
-			sheet,
-		);
+				payload: {
+					modifier: new FixedModifier(
+						RoleAbilityName.arcanistSupernaturalLineage,
+						0,
+						new Set(['charisma']),
+					),
+				},
+				transaction,
+			}));
 	});
 
 	it('should create sorcerer with faerie lineage', () => {
 		const spell = new IllusoryDisguise();
 		const lineage = new ArcanistLineageFaerie(spell);
 		const arcanistPath = new ArcanistPathSorcerer(lineage);
-		const sheet = new SheetBaseFake();
-		const dispatch = vi.fn();
-		arcanistPath.addToSheet(sheet, dispatch, RoleAbilityName.arcanistSupernaturalLineage);
+		const transaction = new TransactionFake();
+		arcanistPath.addToSheet(transaction, RoleAbilityName.arcanistSupernaturalLineage);
 
-		expect(dispatch).toHaveBeenCalledWith(
+		expect(transaction.run).toHaveBeenCalledWith(
 			new LearnSpell({
-				source: RoleAbilityName.arcanistSupernaturalLineage,
-				spell,
+				payload: {
+					source: RoleAbilityName.arcanistSupernaturalLineage,
+					spell,
+				},
+				transaction,
 			}),
-			sheet,
 		);
 
-		expect(dispatch).toHaveBeenCalledWith(
+		expect(transaction.run).toHaveBeenCalledWith(
 			new TrainSkill({
-				source: RoleAbilityName.arcanistSupernaturalLineage,
-				name: SkillName.cheat,
+				payload: {
+					source: RoleAbilityName.arcanistSupernaturalLineage,
+					skill: SkillName.cheat,
+				},
+				transaction,
 			}),
-			sheet,
 		);
 	});
 
@@ -64,24 +66,27 @@ describe('ArcanistPathSorcerer', () => {
 		const power = new Shell();
 		const lineage = new ArcanistLineageRed(power, 'wisdom');
 		const arcanistPath = new ArcanistPathSorcerer(lineage);
-		const sheet = new SheetBaseFake();
-		const dispatch = vi.fn();
-		arcanistPath.addToSheet(sheet, dispatch, RoleAbilityName.arcanistSupernaturalLineage);
+		const transaction = new TransactionFake();
+		arcanistPath.addToSheet(transaction, RoleAbilityName.arcanistSupernaturalLineage);
 
-		expect(dispatch).toHaveBeenCalledWith(
+		expect(transaction.run).toHaveBeenCalledWith(
 			new PickGeneralPower({
-				power,
-				source: RoleAbilityName.arcanistSupernaturalLineage,
+				payload: {
+					power,
+					source: RoleAbilityName.arcanistSupernaturalLineage,
+				},
+				transaction,
 			}),
-			sheet,
 		);
 
-		expect(dispatch).toHaveBeenCalledWith(
+		expect(transaction.run).toHaveBeenCalledWith(
 			new ChangeTormentaPowersAttribute({
-				attribute: 'wisdom',
-				source: RoleAbilityName.arcanistSupernaturalLineage,
+				payload: {
+					attribute: 'wisdom',
+					source: RoleAbilityName.arcanistSupernaturalLineage,
+				},
+				transaction,
 			}),
-			sheet,
 		);
 	});
 });

@@ -1,5 +1,5 @@
 import type {Attributes} from '../Sheet/Attributes';
-import type {Level} from '../Sheet/Levels';
+import type {Level} from '../Sheet/Level';
 import {FixedModifiersListTotalCalculator} from '../Modifier/FixedModifier/FixedModifiersListTotalCalculator';
 import {PerLevelModifiersListTotalCalculator} from '../Modifier/PerLevelModifier/PerLevelModifiersListTotalCalculator';
 import {PointsMaxCalculator} from './PointsMaxCalculator';

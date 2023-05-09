@@ -1,7 +1,7 @@
-import {SheetBuilderError} from '../Error/SheetBuilderError';
 import type {AbilityInterface} from '../Ability/Ability';
 import {Ability} from '../Ability/Ability';
-import type {BuildingSheetInterface} from '../Sheet/BuildingSheetInterface';
+import {SheetBuilderError} from '../Error/SheetBuilderError';
+import {type SheetInterface} from '../Sheet/SheetInterface';
 import type {PowerName} from './PowerName';
 
 export type PowerType = 'general' | 'role' | 'origin';
@@ -9,12 +9,12 @@ export type PowerType = 'general' | 'role' | 'origin';
 export type PowerInterface = AbilityInterface & {
 	name: PowerName;
 	powerType: PowerType;
-	verifyRequirements(sheet: BuildingSheetInterface): void;
+	verifyRequirements(sheet: SheetInterface): void;
 };
 
 export type RequirementInterface = {
 	description: string;
-	verify: (sheet: BuildingSheetInterface) => boolean;
+	verify: (sheet: SheetInterface) => boolean;
 };
 
 export abstract class Power extends Ability implements PowerInterface {
@@ -27,7 +27,7 @@ export abstract class Power extends Ability implements PowerInterface {
 		super(name, 'power');
 	}
 
-	verifyRequirements(sheet: BuildingSheetInterface) {
+	verifyRequirements(sheet: SheetInterface) {
 		const everyRequirementAchieved = this.requirements.every(requirement => requirement.verify(sheet));
 
 		if (!everyRequirementAchieved) {

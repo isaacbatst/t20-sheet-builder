@@ -1,10 +1,9 @@
-import {SheetBuilderError} from '../../Error/SheetBuilderError';
 import type {AbilityName} from '../../Ability/Ability';
 import {PassiveEffect} from '../../Ability/PassiveEffect';
 import {AddFixedModifierToSkill} from '../../Action/AddFixedModifierToSkill';
+import {SheetBuilderError} from '../../Error/SheetBuilderError';
 import {FixedModifier} from '../../Modifier/FixedModifier/FixedModifier';
-import type {SheetBaseInterface} from '../../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../../Sheet/Transaction';
+import {type TransactionInterface} from '../../Sheet/TransactionInterface';
 import {SkillName} from '../../Skill/SkillName';
 import {OriginPowerName} from './OriginPowerName';
 
@@ -14,16 +13,22 @@ export class SpecialFriendEffect extends PassiveEffect {
 		this.validateSkill();
 	}
 
-	applyToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
-		dispatch(new AddFixedModifierToSkill({
-			modifier: new FixedModifier(OriginPowerName.specialFriend, 5),
-			skill: SkillName.animalHandling,
-		}), sheet);
+	apply(transaction: TransactionInterface): void {
+		transaction.run(new AddFixedModifierToSkill({
+			payload: {
+				modifier: new FixedModifier(OriginPowerName.specialFriend, 5),
+				skill: SkillName.animalHandling,
+			},
+			transaction,
+		}));
 
-		dispatch(new AddFixedModifierToSkill({
-			modifier: new FixedModifier(OriginPowerName.specialFriend, 2),
-			skill: this.skill,
-		}), sheet);
+		transaction.run(new AddFixedModifierToSkill({
+			payload: {
+				modifier: new FixedModifier(OriginPowerName.specialFriend, 2),
+				skill: this.skill,
+			},
+			transaction,
+		}));
 	}
 
 	private validateSkill() {

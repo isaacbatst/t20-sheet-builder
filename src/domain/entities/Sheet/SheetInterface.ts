@@ -1,38 +1,43 @@
-import type {DefenseInterface} from '../Defense/DefenseInterface';
-import type {Inventory} from '../Inventory/Inventory';
-import type {LifePoints} from '../Points/LifePoints/LifePoints';
-import type {ManaPoints} from '../Points/ManaPoints/ManaPoints';
-import type {Attributes} from './Attributes';
-import type {Proficiency} from './Proficiency';
-import type {SheetSkills, SheetAbilities, SheetPowers, SheetSpells, SheetLearnedCircles} from './SheetBaseInterface';
-import type {Vision} from './Vision';
+import type {TriggerEvent} from '../Ability/TriggeredEffect';
+import type {BuildStepInterface} from '../BuildStep';
+import {type SheetInventoryInterface} from './SheetInventoryInterface';
+import type {TriggeredEffectMap} from '../Map';
+import {type SheetAbilitiesInterface} from './SheetAbilitiesInterface';
+import {type SheetAttributesInterface} from './SheetAttributesInterface';
+import {type SheetDefenseInterface} from './SheetDefenseInterface';
+import {type SheetDisplacementInterface} from './SheetDisplacementInterface';
+import {type SheetOriginInterface} from './SheetOriginInterface';
+import {type SheetPointsInterface} from './SheetPointsInterface';
+import {type SheetPowersInterface} from './SheetPowersInterface';
+import {type SheetProficienciesInterface} from './SheetProficienciesInterface';
+import {type SheetRaceInterface} from './SheetRaceInterface';
+import {type SheetRoleInterface} from './SheetRoleInterface';
+import {type SheetSkillsInterface} from './SheetSkillsInterface';
+import {type SheetSpellsInterface} from './SheetSpellsInterface';
+import {type SheetVisionInterface} from './SheetVisionInterface';
 
-export type Location = {isUnderground: boolean};
+export type SheetTriggeredEffects = Record<TriggerEvent, TriggeredEffectMap>;
 
 export type SheetInterface = {
-	getAttributes(): Attributes;
-	getDefense(): DefenseInterface;
-	getDisplacement(): number;
+	pushBuildSteps(...buildSteps: BuildStepInterface[]): void;
+	getBuildSteps(): BuildStepInterface[];
 	getLevel(): number;
-	getSkills(): SheetSkills;
-	getVision(): Vision;
-	getProficiencies(): Proficiency[];
-	getAbilities(): SheetAbilities;
-	getPowers(): SheetPowers;
-	getSpells(): SheetSpells;
-	getLearnedCircles(): SheetLearnedCircles;
-	getLifePoints(): LifePoints;
-	getManaPoints(): ManaPoints;
-	getInventory(): Inventory;
-	getMoney(): number;
+	getSheetAbilities(): SheetAbilitiesInterface;
+	getSheetOrigin(): SheetOriginInterface;
+	getSheetLifePoints(): SheetPointsInterface;
+	getMaxLifePoints(): number;
+	getSheetManaPoints(): SheetPointsInterface;
+	getMaxManaPoints(): number;
+	getSheetSkills(): SheetSkillsInterface;
+	getSheetAttributes(): SheetAttributesInterface;
+	getSheetSpells(): SheetSpellsInterface;
+	getSheetInventory(): SheetInventoryInterface;
+	getSheetPowers(): SheetPowersInterface;
+	getSheetDefense(): SheetDefenseInterface;
+	getSheetVision(): SheetVisionInterface;
+	getSheetRace(): SheetRaceInterface;
+	getSheetRole(): SheetRoleInterface;
+	getSheetProficiencies(): SheetProficienciesInterface;
+	getSheetDisplacement(): SheetDisplacementInterface;
 };
 
-export type CostType = 'mana' | 'item';
-
-export type Cost = {
-	type: CostType;
-};
-
-export type EffectExecution = {
-	execute(sheet: SheetInterface): void;
-};

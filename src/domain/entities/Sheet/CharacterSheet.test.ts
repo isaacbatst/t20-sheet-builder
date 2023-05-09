@@ -1,16 +1,16 @@
 import {EquipmentName} from '../Inventory/Equipment/EquipmentName';
 import {LeatherArmor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/Armor/LightArmor/LeatherArmor';
-import {Dagger} from '../Inventory/Equipment/Weapon/OffensiveWeapon/SimpleWeapon/Dagger';
 import {LongSword} from '../Inventory/Equipment/Weapon/OffensiveWeapon/MartialWeapon/LongSword';
+import {Dagger} from '../Inventory/Equipment/Weapon/OffensiveWeapon/SimpleWeapon/Dagger';
 import {Acolyte} from '../Origin/Acolyte';
 import {AnimalsFriend} from '../Origin/AnimalsFriend';
 import type {Origin} from '../Origin/Origin';
 import {OriginBenefitGeneralPower} from '../Origin/OriginBenefitGeneralPower';
 import {OriginBenefitOriginPower} from '../Origin/OriginBenefitOriginPower';
 import {OriginBenefitSkill} from '../Origin/OriginBenefitSkill';
-import {PointsMaxCalculatorFactory} from '../Points/PointsMaxCalculatorFactory';
-import {GeneralPowerName} from '../Power/GeneralPower/GeneralPowerName';
+import {OneWeaponStyle} from '../Power';
 import {IronWill} from '../Power/GeneralPower/DestinyPower/IronWill/IronWill';
+import {GeneralPowerName} from '../Power/GeneralPower/GeneralPowerName';
 import {SpecialFriend} from '../Power/OriginPower/SpecialFriend';
 import {Dwarf} from '../Race/Dwarf/Dwarf';
 import {Human} from '../Race/Human/Human';
@@ -27,15 +27,14 @@ import {ArcaneArmor} from '../Spell/ArcaneArmor/ArcaneArmor';
 import {FlamesExplosion} from '../Spell/FlamesExplosion/FlamesExplosion';
 import {IllusoryDisguise} from '../Spell/IllusoryDisguise/IllusoryDisguise';
 import {MentalDagger} from '../Spell/MentalDagger/MentalDagger';
+import type {CharacterSheet} from './CharacterSheet';
 import {Proficiency} from './Proficiency';
-import type {Sheet} from './Sheet';
 import {SheetBuilder} from './SheetBuilder';
 import {Vision} from './Vision';
-import {OneWeaponStyle} from '../Power';
 
 describe('Sheet', () => {
 	describe('Human Warrior', () => {
-		let sheet: Sheet;
+		let sheet: CharacterSheet;
 		let role: Role;
 		let race: Race;
 		let sheetBuilder: SheetBuilder;
@@ -65,38 +64,37 @@ describe('Sheet', () => {
 		});
 
 		it('should choose race', () => {
-			expect(sheet.getRace()).toBe(race);
+			expect(sheet.getSheetRace().getRace()).toBe(race);
 		});
 
 		it('should have displacement 9', () => {
-			expect(sheet.getDisplacement()).toBe(9);
+			expect(sheet.getSheetDisplacement().getDisplacement()).toBe(9);
 		});
 
 		it('should have default vision', () => {
-			expect(sheet.getVision()).toBe(Vision.default);
+			expect(sheet.getSheetVision().getVision()).toBe(Vision.default);
 		});
 
 		it('should have versatile power', () => {
-			const powers = sheet.getPowers();
-			expect(powers.general.has(GeneralPowerName.oneWeaponStyle)).toBeTruthy();
+			const powers = sheet.getSheetPowers();
+			expect(powers.getGeneralPowers().has(GeneralPowerName.oneWeaponStyle)).toBeTruthy();
 		});
 
 		it('should have versatile skill trained', () => {
-			const skills = sheet.getSkills();
+			const skills = sheet.getSheetSkills().getSkills();
 			expect(skills.acrobatics.getIsTrained()).toBeTruthy();
 		});
 
 		it('should choose role', () => {
-			expect(sheet.getRole()).toBe(role);
+			expect(sheet.getSheetRole().getRole()).toBe(role);
 		});
 
 		it('should have initial role life points + constitution', () => {
-			const calculator = PointsMaxCalculatorFactory.make(sheet.getAttributes(), sheet.getLevel());
-			expect(sheet.getLifePoints().getMax(calculator)).toBe(21);
+			expect(sheet.getMaxLifePoints()).toBe(21);
 		});
 
 		it('should have role skills trained', () => {
-			const skills = sheet.getSkills();
+			const skills = sheet.getSheetSkills().getSkills();
 			expect(skills.fight.getIsTrained()).toBeTruthy();
 			expect(skills.aim.getIsTrained()).toBeTruthy();
 			expect(skills.fortitude.getIsTrained()).toBeTruthy();
@@ -104,50 +102,50 @@ describe('Sheet', () => {
 		});
 
 		it('should have role abilities', () => {
-			const abilities = sheet.getAbilities();
-			expect(abilities.role.has(RoleAbilityName.specialAttack)).toBeTruthy();
+			const abilities = sheet.getSheetAbilities();
+			expect(abilities.getRoleAbilities().has(RoleAbilityName.specialAttack)).toBeTruthy();
 		});
 
 		it('should have origin power', () => {
-			const powers = sheet.getPowers();
-			expect(powers.general.has(GeneralPowerName.ironWill)).toBeTruthy();
+			const powers = sheet.getSheetPowers();
+			expect(powers.getGeneralPowers().has(GeneralPowerName.ironWill)).toBeTruthy();
 		});
 
 		it('should have origin skill trained', () => {
-			const skills = sheet.getSkills();
+			const skills = sheet.getSheetSkills().getSkills();
 			expect(skills.cure.getIsTrained()).toBeTruthy();
 		});
 
 		it('should have origin equipments', () => {
-			expect(sheet.getInventory().equipments.has(EquipmentName.priestCostume)).toBeTruthy();
-			expect(sheet.getInventory().equipments.has(EquipmentName.sacredSymbol)).toBeTruthy();
+			expect(sheet.getSheetInventory().getEquipments().has(EquipmentName.priestCostume)).toBeTruthy();
+			expect(sheet.getSheetInventory().getEquipments().has(EquipmentName.sacredSymbol)).toBeTruthy();
 		});
 
 		it('should have default initial equipments.has(', () => {
-			expect(sheet.getInventory().equipments.has(EquipmentName.backpack)).toBeTruthy();
-			expect(sheet.getInventory().equipments.has(EquipmentName.sleepingBag)).toBeTruthy();
-			expect(sheet.getInventory().equipments.has(EquipmentName.travelerCostume)).toBeTruthy();
+			expect(sheet.getSheetInventory().getEquipments().has(EquipmentName.backpack)).toBeTruthy();
+			expect(sheet.getSheetInventory().getEquipments().has(EquipmentName.sleepingBag)).toBeTruthy();
+			expect(sheet.getSheetInventory().getEquipments().has(EquipmentName.travelerCostume)).toBeTruthy();
 		});
 
 		it('should have chosen weapo', () => {
-			expect(sheet.getInventory().equipments.has(EquipmentName.dagger)).toBeTruthy();
+			expect(sheet.getSheetInventory().getEquipments().has(EquipmentName.dagger)).toBeTruthy();
 		});
 
 		it('should have chosen martial weapon', () => {
-			expect(sheet.getInventory().equipments.has(EquipmentName.longSword)).toBeTruthy();
+			expect(sheet.getSheetInventory().getEquipments().has(EquipmentName.longSword)).toBeTruthy();
 		});
 
 		it('should have chosen armor', () => {
-			expect(sheet.getInventory().equipments.has(EquipmentName.leatherArmor)).toBeTruthy();
+			expect(sheet.getSheetInventory().getEquipments().has(EquipmentName.leatherArmor)).toBeTruthy();
 		});
 
 		it('should have initial money', () => {
-			expect(sheet.getMoney()).toBe(24);
+			expect(sheet.getSheetInventory().getMoney()).toBe(24);
 		});
 	});
 
 	describe('Dwarf Arcanist', () => {
-		let sheet: Sheet;
+		let sheet: CharacterSheet;
 		let role: Role;
 		let race: Race;
 		let sheetBuilder: SheetBuilder;
@@ -175,28 +173,27 @@ describe('Sheet', () => {
 		});
 
 		it('should choose race', () => {
-			expect(sheet.getRace()).toBe(race);
+			expect(sheet.getSheetRace().getRace()).toBe(race);
 		});
 
 		it('should have displacement 9', () => {
-			expect(sheet.getDisplacement()).toBe(6);
+			expect(sheet.getSheetDisplacement().getDisplacement()).toBe(6);
 		});
 
 		it('should have dark vision', () => {
-			expect(sheet.getVision()).toBe(Vision.dark);
+			expect(sheet.getSheetVision().getVision()).toBe(Vision.dark);
 		});
 
 		it('should choose class', () => {
-			expect(sheet.getRole()).toBe(role);
+			expect(sheet.getSheetRole().getRole()).toBe(role);
 		});
 
 		it('should have initial role life points + constitution', () => {
-			const calculator = PointsMaxCalculatorFactory.make(sheet.getAttributes(), sheet.getLevel());
-			expect(sheet.getLifePoints().getMax(calculator)).toBe(13);
+			expect(sheet.getMaxLifePoints()).toBe(13);
 		});
 
 		it('should have role skills trained', () => {
-			const skills = sheet.getSkills();
+			const skills = sheet.getSheetSkills().getSkills();
 			expect(skills.mysticism.getIsTrained()).toBeTruthy();
 			expect(skills.will.getIsTrained()).toBeTruthy();
 			expect(skills.knowledge.getIsTrained()).toBeTruthy();
@@ -204,8 +201,8 @@ describe('Sheet', () => {
 		});
 
 		it('should have basic proficiencies', () => {
-			expect(sheet.getProficiencies()).toContain(Proficiency.simple);
-			expect(sheet.getProficiencies()).toContain(Proficiency.lightArmor);
+			expect(sheet.getSheetProficiencies().getProficiencies()).toContain(Proficiency.simple);
+			expect(sheet.getSheetProficiencies().getProficiencies()).toContain(Proficiency.lightArmor);
 		});
 	});
 

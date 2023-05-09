@@ -3,55 +3,62 @@ import {PickGeneralPower} from '../Action/PickGeneralPower';
 import {PickOriginPower} from '../Action/PickOriginPower';
 import {TrainSkill} from '../Action/TrainSkill';
 import {EquipmentClothing} from '../Inventory/Equipment/EquipmentClothing/EquipmentClothing';
-import {Equipment} from '../Inventory/Equipment/Equipment';
 import {EquipmentName} from '../Inventory/Equipment/EquipmentName';
 import {IronWill} from '../Power/GeneralPower/DestinyPower/IronWill/IronWill';
 import {Medicine} from '../Power/GeneralPower/DestinyPower/Medicine/Medicine';
 import {ChurchMember} from '../Power/OriginPower/ChurchMember';
 import {SpecialFriend} from '../Power/OriginPower/SpecialFriend';
-import {BuildingSheetFake} from '../Sheet/BuildingSheetFake';
-import {SheetBaseFake} from '../Sheet/SheetBaseFake';
+import {TransactionFake} from '../Sheet/TransactionFake';
 import {SkillName} from '../Skill/SkillName';
 import {Acolyte} from './Acolyte';
 import {OriginBenefitGeneralPower} from './OriginBenefitGeneralPower';
 import {OriginBenefitOriginPower} from './OriginBenefitOriginPower';
 import {OriginBenefitSkill} from './OriginBenefitSkill';
 import {OriginName} from './OriginName';
-import {vi} from 'vitest';
 
 describe('Acolyte', () => {
 	it('should dispatch add items', () => {
 		const acolyte = new Acolyte([new OriginBenefitSkill(SkillName.cure), new OriginBenefitSkill(SkillName.religion)]);
-		const sheet = new BuildingSheetFake();
-		const dispatch = vi.fn();
-		acolyte.addToSheet(sheet, dispatch);
+		const transaction = new TransactionFake();
+		acolyte.addToSheet(transaction);
 
-		expect(dispatch).toHaveBeenCalledWith(new AddEquipment({
-			equipment: new EquipmentClothing(EquipmentName.sacredSymbol),
-			source: OriginName.acolyte,
-		}), sheet);
+		expect(transaction.run).toHaveBeenCalledWith(new AddEquipment({
+			payload: {
+				equipment: new EquipmentClothing(EquipmentName.sacredSymbol),
+				source: OriginName.acolyte,
+			},
+			transaction,
+		}));
 
-		expect(dispatch).toHaveBeenCalledWith(new AddEquipment({
-			equipment: new EquipmentClothing(EquipmentName.priestCostume),
-			source: OriginName.acolyte,
-		}), sheet);
+		expect(transaction.run).toHaveBeenCalledWith(new AddEquipment({
+			payload: {
+				equipment: new EquipmentClothing(EquipmentName.priestCostume),
+				source: OriginName.acolyte,
+			},
+			transaction,
+		}));
 	});
 
 	it('should dispatch skill benefits training', () => {
 		const acolyte = new Acolyte([new OriginBenefitSkill(SkillName.cure), new OriginBenefitSkill(SkillName.religion)]);
-		const sheet = new BuildingSheetFake();
-		const dispatch = vi.fn();
-		acolyte.addToSheet(sheet, dispatch);
+		const transaction = new TransactionFake();
+		acolyte.addToSheet(transaction);
 
-		expect(dispatch).toHaveBeenCalledWith(new TrainSkill({
-			name: SkillName.cure,
-			source: OriginName.acolyte,
-		}), sheet);
+		expect(transaction.run).toHaveBeenCalledWith(new TrainSkill({
+			payload: {
+				skill: SkillName.cure,
+				source: OriginName.acolyte,
+			},
+			transaction,
+		}));
 
-		expect(dispatch).toHaveBeenCalledWith(new TrainSkill({
-			name: SkillName.religion,
-			source: OriginName.acolyte,
-		}), sheet);
+		expect(transaction.run).toHaveBeenCalledWith(new TrainSkill({
+			payload: {
+				skill: SkillName.religion,
+				source: OriginName.acolyte,
+			},
+			transaction,
+		}));
 	});
 
 	it('should not allow not listed skills', () => {
@@ -74,39 +81,45 @@ describe('Acolyte', () => {
 
 	it('should dispatch general power benefits appliance', () => {
 		const acolyte = new Acolyte([new OriginBenefitGeneralPower(new IronWill()), new OriginBenefitGeneralPower(new Medicine())]);
-		const sheet = new SheetBaseFake();
-		sheet.attributes.wisdom = 1;
-		sheet.skills.cure.train();
-		const dispatch = vi.fn();
-		acolyte.addToSheet(sheet, dispatch);
+		const transaction = new TransactionFake();
+		acolyte.addToSheet(transaction);
+		expect(transaction.actions).toContainEqual(new PickGeneralPower({
+			payload: {
+				power: new IronWill(),
+				source: OriginName.acolyte,
+			},
+			transaction,
+		}));
 
-		expect(dispatch).toHaveBeenCalledWith(new PickGeneralPower({
-			power: new IronWill(),
-			source: OriginName.acolyte,
-		}), sheet);
-
-		expect(dispatch).toHaveBeenCalledWith(new PickGeneralPower({
-			power: new Medicine(),
-			source: OriginName.acolyte,
-		}), sheet);
+		expect(transaction.actions).toContainEqual(new PickGeneralPower({
+			payload: {
+				power: new Medicine(),
+				source: OriginName.acolyte,
+			},
+			transaction,
+		}));
 	});
 
 	it('should dispatch origin power as benefit appliance', () => {
 		const acolyte = new Acolyte([new OriginBenefitOriginPower(new ChurchMember()), new OriginBenefitGeneralPower(new Medicine())]);
-		const sheet = new SheetBaseFake();
-		sheet.attributes.wisdom = 1;
-		sheet.skills.cure.train();
-		const dispatch = vi.fn();
-		acolyte.addToSheet(sheet, dispatch);
+		const transaction = new TransactionFake();
+		acolyte.addToSheet(transaction);
 
-		expect(dispatch).toHaveBeenCalledWith(new PickOriginPower({
-			power: new ChurchMember(),
-		}), sheet);
+		expect(transaction.actions).toContainEqual(new PickOriginPower({
+			payload: {
+				power: new ChurchMember(),
+				source: OriginName.acolyte,
+			},
+			transaction,
+		}));
 
-		expect(dispatch).toHaveBeenCalledWith(new PickGeneralPower({
-			power: new Medicine(),
-			source: OriginName.acolyte,
-		}), sheet);
+		expect(transaction.actions).toContainEqual(new PickGeneralPower({
+			payload: {
+				power: new Medicine(),
+				source: OriginName.acolyte,
+			},
+			transaction,
+		}));
 	});
 
 	it('should not allow origin power from other origin', () => {

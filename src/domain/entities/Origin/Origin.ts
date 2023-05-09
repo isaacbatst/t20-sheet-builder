@@ -1,13 +1,12 @@
-import {SheetBuilderError} from '../Error/SheetBuilderError';
-import {AddEquipment} from '../Action/AddEquipment';
-import type {Equipment} from '../Inventory/Equipment/Equipment';
-import type {GeneralPowerName} from '../Power/GeneralPower/GeneralPowerName';
-import type {OriginPowerName} from '../Power/OriginPower/OriginPowerName';
-import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../Sheet/Transaction';
-import type {SkillName} from '../Skill/SkillName';
-import type {OriginBenefit} from './OriginBenefit';
-import type {OriginName} from './OriginName';
+import { AddEquipment } from '../Action/AddEquipment';
+import { SheetBuilderError } from '../Error/SheetBuilderError';
+import type { Equipment } from '../Inventory/Equipment/Equipment';
+import type { GeneralPowerName } from '../Power/GeneralPower/GeneralPowerName';
+import type { OriginPowerName } from '../Power/OriginPower/OriginPowerName';
+import { type TransactionInterface } from '../Sheet/TransactionInterface';
+import type { SkillName } from '../Skill/SkillName';
+import type { OriginBenefit } from './OriginBenefit';
+import type { OriginName } from './OriginName';
 
 export type OriginBenefits = {
 	skills: SkillName[];
@@ -20,7 +19,7 @@ export type OriginInterface = {
 	equipments: Equipment[];
 	chosenBenefits: OriginBenefit[];
 	benefits: OriginBenefits;
-	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void;
+	addToSheet(transaction: TransactionInterface): void;
 };
 
 export abstract class Origin implements OriginInterface {
@@ -34,23 +33,26 @@ export abstract class Origin implements OriginInterface {
 		this.validateChosenBenefits();
 	}
 
-	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch) {
-		this.addEquipments(sheet, dispatch);
-		this.addBenefits(sheet, dispatch);
+	addToSheet(transaction: TransactionInterface) {
+		this.addEquipments(transaction);
+		this.applyBenefits(transaction);
 	}
 
-	private addBenefits(sheet: SheetBaseInterface, dispatch: Dispatch) {
+	private applyBenefits(transaction: TransactionInterface) {
 		this.chosenBenefits.forEach(benefit => {
-			benefit.addToSheet(sheet, dispatch, this.name);
+			benefit.apply(transaction, this.name);
 		});
 	}
 
-	private addEquipments(sheet: SheetBaseInterface, dispatch: Dispatch) {
+	private addEquipments(transaction: TransactionInterface) {
 		this.equipments.forEach(equipment => {
-			dispatch(new AddEquipment({
-				equipment,
-				source: this.name,
-			}), sheet);
+			transaction.run(new AddEquipment({
+				payload: {
+					equipment,
+					source: this.name,
+				},
+				transaction,
+			}));
 		});
 	}
 

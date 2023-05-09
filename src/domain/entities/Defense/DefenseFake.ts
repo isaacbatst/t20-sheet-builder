@@ -2,6 +2,7 @@ import type {Attributes} from '../Sheet/Attributes';
 import type {FixedModifiersList} from '../Modifier/FixedModifier/FixedModifiersList';
 import {FixedModifiersListFake} from '../Modifier/FixedModifier/FixedModifiersListFake';
 import type {DefenseInterface} from './DefenseInterface';
+import {type ModifierInterface} from '../Modifier/ModifierInterface';
 
 export class DefenseFake implements DefenseInterface {
 	attribute: keyof Attributes = 'dexterity';
@@ -9,5 +10,9 @@ export class DefenseFake implements DefenseInterface {
 	fixedModifiers: FixedModifiersList = new FixedModifiersListFake();
 	getTotal() {
 		return this.total;
+	}
+
+	addFixedModifier(modifier: ModifierInterface): void {
+		this.fixedModifiers.add(modifier);
 	}
 }

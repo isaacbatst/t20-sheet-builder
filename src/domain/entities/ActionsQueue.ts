@@ -1,15 +1,15 @@
+import {type Action} from './Action/Action';
 import {SheetBuilderError} from './Error/SheetBuilderError';
 import type {Queue} from './Queue';
-import type {ActionInterface} from './Sheet/SheetActions';
 
-export class ActionsQueue implements Queue<ActionInterface> {
-	items: ActionInterface[] = [];
+export class ActionsQueue implements Queue<Action> {
+	items: Action[] = [];
 
-	enqueue(item: ActionInterface): void {
+	enqueue(item: Action): void {
 		this.items.push(item);
 	}
 
-	dequeue(): ActionInterface {
+	dequeue(): Action {
 		const item = this.items.shift();
 
 		if (!item) {

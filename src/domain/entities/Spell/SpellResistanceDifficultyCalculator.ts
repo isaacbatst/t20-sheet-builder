@@ -1,12 +1,12 @@
 import type {Attribute} from '../Sheet/Attributes';
-import type {SheetInterface} from '../Sheet/SheetInterface';
+import type {CharacterSheetInterface} from '../Sheet/CharacterSheetInterface';
 
 export class SpellResistanceDifficultyCalculator {
 	static get baseResistanceDifficulty() {
 		return 10;
 	}
 
-	static calculate(sheet: SheetInterface, spellsAttribute: Attribute): number {
+	static calculate(sheet: CharacterSheetInterface, spellsAttribute: Attribute): number {
 		const attributes = sheet.getAttributes();
 		const spellsAttributeValue = attributes[spellsAttribute];
 		return 10 + Math.floor(sheet.getLevel() / 2) + spellsAttributeValue;

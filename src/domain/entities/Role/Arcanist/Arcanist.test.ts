@@ -1,7 +1,10 @@
 import {AddEquipment} from '../../Action/AddEquipment';
 import {LearnSpell} from '../../Action/AddSpell';
 import {TrainSkill} from '../../Action/TrainSkill';
-import {BuildingSheetFake} from '../../Sheet/BuildingSheetFake';
+import {DamageType} from '../../Damage/DamageType';
+import {SheetFake} from '../../Sheet/SheetFake';
+import {Transaction} from '../../Sheet/Transaction';
+import {TransactionFake} from '../../Sheet/TransactionFake';
 import {SkillName} from '../../Skill/SkillName';
 import {ArcaneArmor} from '../../Spell/ArcaneArmor/ArcaneArmor';
 import {FlamesExplosion} from '../../Spell/FlamesExplosion/FlamesExplosion';
@@ -10,13 +13,10 @@ import {MentalDagger} from '../../Spell/MentalDagger/MentalDagger';
 import {RoleAbilityName} from '../RoleAbilityName';
 import {RoleName} from '../RoleName';
 import {ArcanistBuilder} from './ArcanistBuider';
-import {ArcanistPathMage} from './ArcanistPath/ArcanistPathMage/ArcanistPathMage';
+import {ArcanistPathName, ArcanistPathSorcerer} from './ArcanistPath';
 import {ArcanistPathWizard} from './ArcanistPath/ArcanisPathWizard/ArcanistPathWizard';
 import {ArcanistPathWizardFocusWand} from './ArcanistPath/ArcanisPathWizard/ArcanistPathWizardFocusWand';
-import {vi} from 'vitest';
-import {DamageType} from '../../Damage/DamageType';
-import {SheetBaseFake} from '../../Sheet/SheetBaseFake';
-import {ArcanistPathName, ArcanistPathSorcerer} from './ArcanistPath';
+import {ArcanistPathMage} from './ArcanistPath/ArcanistPathMage/ArcanistPathMage';
 import {ArcanistLineageDraconic} from './ArcanistPath/ArcanistPathSorcerer/ArcanistLineage';
 
 describe('Arcanist', () => {
@@ -25,29 +25,40 @@ describe('Arcanist', () => {
 			.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
 			.choosePath(new ArcanistPathMage(new FlamesExplosion()))
 			.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
-		const sheet = new BuildingSheetFake();
-		const dispatch = vi.fn();
-		arcanist.addToSheet(sheet, dispatch);
+		const transaction = new TransactionFake();
+		arcanist.addToSheet(transaction);
 
-		expect(dispatch).toHaveBeenCalledWith(new TrainSkill({
-			name: SkillName.mysticism,
-			source: RoleName.arcanist,
-		}), sheet);
+		expect(transaction.run).toHaveBeenCalledWith(new TrainSkill({
+			payload: {
+				skill: SkillName.mysticism,
+				source: RoleName.arcanist,
+			},
+			transaction,
+		}));
 
-		expect(dispatch).toHaveBeenCalledWith(new TrainSkill({
-			name: SkillName.will,
-			source: RoleName.arcanist,
-		}), sheet);
+		expect(transaction.run).toHaveBeenCalledWith(new TrainSkill({
+			payload: {
+				skill: SkillName.will,
+				source: RoleName.arcanist,
+			},
+			transaction,
+		}));
 
-		expect(dispatch).toHaveBeenCalledWith(new TrainSkill({
-			name: SkillName.knowledge,
-			source: RoleName.arcanist,
-		}), sheet);
+		expect(transaction.run).toHaveBeenCalledWith(new TrainSkill({
+			payload: {
+				skill: SkillName.knowledge,
+				source: RoleName.arcanist,
+			},
+			transaction,
+		}));
 
-		expect(dispatch).toHaveBeenCalledWith(new TrainSkill({
-			name: SkillName.diplomacy,
-			source: RoleName.arcanist,
-		}), sheet);
+		expect(transaction.run).toHaveBeenCalledWith(new TrainSkill({
+			payload: {
+				skill: SkillName.diplomacy,
+				source: RoleName.arcanist,
+			},
+			transaction,
+		}));
 	});
 
 	it('should not train with missing chooses', () => {
@@ -73,10 +84,9 @@ describe('Arcanist', () => {
 			.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
 			.choosePath(new ArcanistPathMage(new FlamesExplosion()))
 			.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
-		const sheet = new BuildingSheetFake();
-		const dispatch = vi.fn();
-		arcanist.addToSheet(sheet, dispatch);
-		expect(dispatch).not.toHaveBeenCalledWith(expect.objectContaining({type: 'addProficiency'}), sheet);
+		const transaction = new TransactionFake();
+		arcanist.addToSheet(transaction);
+		expect(transaction.run).not.toHaveBeenCalledWith(expect.objectContaining({type: 'addProficiency'}));
 	});
 
 	it('should learn spells', () => {
@@ -85,24 +95,12 @@ describe('Arcanist', () => {
 			.choosePath(new ArcanistPathMage(new FlamesExplosion()))
 			.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 
-		const sheet = new BuildingSheetFake();
-		const dispatch = vi.fn();
-		arcanist.addToSheet(sheet, dispatch);
-
-		expect(dispatch).toHaveBeenCalledWith(new LearnSpell({
-			source: RoleAbilityName.arcanistSpells,
-			spell: new ArcaneArmor(),
-		}), sheet);
-
-		expect(dispatch).toHaveBeenCalledWith(new LearnSpell({
-			source: RoleAbilityName.arcanistSpells,
-			spell: new MentalDagger(),
-		}), sheet);
-
-		expect(dispatch).toHaveBeenCalledWith(new LearnSpell({
-			source: RoleAbilityName.arcanistSpells,
-			spell: new IllusoryDisguise(),
-		}), sheet);
+		const transaction = new Transaction(new SheetFake());
+		arcanist.addToSheet(transaction);
+		const spells = transaction.sheet.getSheetSpells().getSpells();
+		expect(spells.has(ArcaneArmor.spellName)).toBeTruthy();
+		expect(spells.has(MentalDagger.spellName)).toBeTruthy();
+		expect(spells.has(IllusoryDisguise.spellName)).toBeTruthy();
 	});
 
 	describe('Mage', () => {
@@ -131,12 +129,10 @@ describe('Arcanist', () => {
 				.choosePath(new ArcanistPathMage(mageExtraSpell))
 				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 
-			const sheet = new SheetBaseFake();
-			const dispatch = vi.fn();
-			arcanist.addToSheet(sheet, dispatch);
-			expect(dispatch).toHaveBeenCalledWith(new LearnSpell({
-				spell: mageExtraSpell, source: ArcanistPathName.mage,
-			}), sheet);
+			const transaction = new Transaction(new SheetFake());
+			const spells = transaction.sheet.getSheetSpells().getSpells();
+			arcanist.addToSheet(transaction);
+			expect(spells.has(mageExtraSpell.name)).toBeTruthy();
 		});
 	});
 
@@ -159,21 +155,18 @@ describe('Arcanist', () => {
 			expect(arcanist.getSpellLearnFrequency()).toBe('all');
 		});
 
-		it('should dispatch focus add', () => {
+		it('should dispatch add focus', () => {
 			const focus = new ArcanistPathWizardFocusWand();
 			const arcanist = ArcanistBuilder
 				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
 				.choosePath(new ArcanistPathWizard(focus))
 				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 
-			const sheet = new BuildingSheetFake();
-			const dispatch = vi.fn();
-			arcanist.addToSheet(sheet, dispatch);
+			const transaction = new Transaction(new SheetFake());
+			arcanist.addToSheet(transaction);
 
-			expect(dispatch).toHaveBeenCalledWith(new AddEquipment({
-				equipment: focus.equipment,
-				source: ArcanistPathName.wizard,
-			}), sheet);
+			const equipments = transaction.sheet.getSheetInventory().getEquipments();
+			expect(equipments.has(focus.equipment.name)).toBeTruthy();
 		});
 	});
 

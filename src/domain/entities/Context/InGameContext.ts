@@ -1,5 +1,5 @@
 import type {Character} from '../Character/Character';
-import type {Location} from '../Sheet/SheetInterface';
+import type {Location} from '../Sheet/CharacterSheetInterface';
 import {InGameContextAbstract} from './InGameContextInterface';
 
 export class InGameContext extends InGameContextAbstract {

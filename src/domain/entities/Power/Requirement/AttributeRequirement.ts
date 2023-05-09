@@ -1,5 +1,5 @@
 import type {Attribute} from '../../Sheet/Attributes';
-import type {SheetBaseInterface} from '../../Sheet/SheetBaseInterface';
+import type {SheetInterface} from '../../Sheet/SheetInterface';
 import {Translator} from '../../Translator';
 import {Requirement} from './Requirement';
 
@@ -14,8 +14,9 @@ export class AttributeRequirement extends Requirement {
 		this.description = this.getDescription();
 	}
 
-	verify(sheet: SheetBaseInterface): boolean {
-		return sheet.getAttributes()[this.attribute] >= this.value;
+	verify(sheet: SheetInterface): boolean {
+		const attributes = sheet.getSheetAttributes().getValues();
+		return attributes[this.attribute] >= this.value;
 	}
 
 	protected getDescription(): string {

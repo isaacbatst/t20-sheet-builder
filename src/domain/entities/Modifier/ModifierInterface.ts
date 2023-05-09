@@ -1,5 +1,5 @@
 import type {Attribute, Attributes} from '../Sheet/Attributes';
-import type {Translatable} from '../Translator';
+import type {TranslatableName} from '../Translator';
 
 export type ModifierType = 'fixed' | 'perLevel' | 'contextual' | 'temporary';
 
@@ -8,7 +8,7 @@ export type ModifierValueGetterInterface = {
 };
 
 export type ModifierInterface = {
-	source: Translatable;
+	source: TranslatableName;
 	type: ModifierType;
 	value: number;
 	attributeBonuses: Attribute[];

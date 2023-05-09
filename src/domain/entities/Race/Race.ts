@@ -1,7 +1,7 @@
+import {ApplyRaceAbility} from '../Action/ApplyRaceAbility';
 import {ApplyRaceModifiers} from '../Action/ApplyRaceModifiers';
-import type {Attribute, Attributes} from '../Sheet/Attributes';
-import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../Sheet/Transaction';
+import type {Attributes} from '../Sheet/Attributes';
+import {type TransactionInterface} from '../Sheet/TransactionInterface';
 import type {RaceAbility} from './RaceAbility';
 import type {RaceInterface} from './RaceInterface';
 import type {RaceName} from './RaceName';
@@ -12,25 +12,29 @@ export abstract class Race implements RaceInterface {
 
 	constructor(readonly name: RaceName) {}
 
-	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
-		this.applyAttributesModifiers(sheet, dispatch);
-		this.applyAbilities(sheet, dispatch);
+	addToSheet(transaction: TransactionInterface): void {
+		this.applyAttributesModifiers(transaction);
+		this.applyAbilities(transaction);
 	}
 
-	private applyAttributesModifiers(sheet: SheetBaseInterface, dispatch: Dispatch): void {
-		const modifiedAttributes: Partial<Attributes> = {};
-
-		Object.entries(this.attributeModifiers).forEach(([attribute, value]) => {
-			const attributeCasted = attribute as Attribute;
-			modifiedAttributes[attributeCasted] = sheet.getAttributes()[attributeCasted] + value;
-		});
-
-		dispatch(new ApplyRaceModifiers({modifiers: this.attributeModifiers, updatedAttributes: modifiedAttributes}), sheet);
+	private applyAttributesModifiers(transaction: TransactionInterface): void {
+		transaction.run(new ApplyRaceModifiers({
+			payload: {
+				modifiers: this.attributeModifiers,
+			},
+			transaction,
+		}));
 	}
 
-	private applyAbilities(sheet: SheetBaseInterface, dispatch: Dispatch): void {
+	private applyAbilities(transaction: TransactionInterface): void {
 		Object.values(this.abilities).forEach(ability => {
-			ability.addToSheet(sheet, dispatch, this.name);
+			transaction.run(new ApplyRaceAbility({
+				payload: {
+					ability,
+					source: this.name,
+				},
+				transaction,
+			}));
 		});
 	}
 }

@@ -1,10 +1,26 @@
-import type {ActionPayload} from '../Sheet/SheetActions';
-import {Action} from './Action';
+import {ModifierValue} from '../Modifier/ModifierValue';
+import {Translatable} from '../Translatable';
+import {Action, type ActionSubClassParams} from './Action';
 
 export class AddPerLevelModifierToManaPoints extends Action<'addPerLevelModifierToManaPoints'> {
 	constructor(
-		payload: ActionPayload<'addPerLevelModifierToManaPoints'>,
+		params: ActionSubClassParams<'addPerLevelModifierToManaPoints'>,
 	) {
-		super('addPerLevelModifierToManaPoints', payload);
+		super({
+			...params,
+			type: 'addPerLevelModifierToManaPoints',
+		});
+	}
+
+	execute(): void {
+		const manaPoints = this.transaction.sheet.getSheetManaPoints();
+		manaPoints.addFixedModifier(this.payload.modifier);
+	}
+
+	getDescription(): string {
+		const source = new Translatable(this.payload.modifier.source).getTranslation();
+		const value = new ModifierValue(this.payload.modifier.value).getValueWithSign();
+		const includeFirstLevel = this.payload.modifier.includeFirstLevel ? '' : ' após o nivel 1';
+		return `${source}: ${value} PM por nível${includeFirstLevel}.`;
 	}
 }

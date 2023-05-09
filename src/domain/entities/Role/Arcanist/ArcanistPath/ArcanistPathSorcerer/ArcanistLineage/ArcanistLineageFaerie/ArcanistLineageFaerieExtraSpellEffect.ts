@@ -1,8 +1,7 @@
 import {PassiveEffect} from '../../../../../../Ability/PassiveEffect';
 import {LearnSpell} from '../../../../../../Action/AddSpell';
 import {SheetBuilderError} from '../../../../../../Error';
-import {type SheetBaseInterface} from '../../../../../../Sheet/SheetBaseInterface';
-import {type Dispatch} from '../../../../../../Sheet/Transaction';
+import {type TransactionInterface} from '../../../../../../Sheet/TransactionInterface';
 import {SpellSchool, type Spell} from '../../../../../../Spell';
 import {RoleAbilityName} from '../../../../../RoleAbilityName';
 
@@ -17,10 +16,13 @@ export class ArcanistLineageFaerieExtraSpellEffect extends PassiveEffect {
 		}
 	}
 
-	override applyToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
-		dispatch(new LearnSpell({
-			spell: this.spell,
-			source: this.source,
-		}), sheet);
+	override apply(transaction: TransactionInterface): void {
+		transaction.run(new LearnSpell({
+			payload: {
+				spell: this.spell,
+				source: this.source,
+			},
+			transaction,
+		}));
 	}
 }

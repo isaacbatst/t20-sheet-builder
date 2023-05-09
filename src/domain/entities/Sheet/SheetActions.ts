@@ -4,7 +4,7 @@ import type {MartialWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/
 import type {SimpleWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/SimpleWeapon/SimpleWeapon';
 import type {ContextualModifierInterface} from '../Modifier/ContextualModifier/ContextualModifierInterface';
 import type {FixedModifierInterface} from '../Modifier/FixedModifier/FixedModifier';
-import type {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
+import {type PerLevelModifierInterface} from '../Modifier/PerLevelModifier/PerLevelModifierInterface';
 import type {OriginInterface} from '../Origin/Origin';
 import type {GeneralPowerInterface} from '../Power/GeneralPower/GeneralPower';
 import type {OriginPowerInterface} from '../Power/OriginPower/OriginPower';
@@ -16,53 +16,50 @@ import type {RolePowerInterface} from '../Role/RolePower';
 import type {SkillName} from '../Skill/SkillName';
 import type {LearnableSpellType, Spell} from '../Spell/Spell';
 import type {SpellCircle} from '../Spell/SpellCircle';
-import type {Translatable} from '../Translator';
+import {type TranslatableName} from '../Translator';
 import type {Attribute, Attributes} from './Attributes';
 import type {Proficiency} from './Proficiency';
-import type {SheetBaseInterface} from './SheetBaseInterface';
-import type {Dispatch} from './Transaction';
+import type {SheetInterface} from './SheetInterface';
 import type {Vision} from './Vision';
 
-type ActionTypesToHandlers = {
-	setInitialAttributes(payload: {attributes: Attributes}): void;
-	chooseRace(payload: {race: RaceInterface}): void;
-	chooseRole(payload: {role: RoleInterface}): void;
-	chooseOrigin(payload: {origin: OriginInterface}): void;
-	trainSkill(payload: {name: SkillName; source: Translatable}): void;
-	changeVision(payload: {vision: Vision; source: Translatable}): void;
-	applyRaceModifiers(payload: {modifiers: Partial<Attributes>; updatedAttributes: Partial<Attributes>}): void;
-	applyRaceAbility(payload: {ability: RaceAbilityInterface; source: Translatable}): void;
-	applyRoleAbility(payload: {ability: RoleAbilityInterface; source: Translatable}): void;
-	pickGeneralPower(payload: ({power: GeneralPowerInterface;source: Translatable})): void;
-	pickRolePower(payload: ({power: RolePowerInterface;source: Translatable})): void;
-	pickOriginPower(payload: ({power: OriginPowerInterface})): void;
-	changeDisplacement(payload: {displacement: number; source: Translatable}): void;
-	addProficiency(payload: {proficiency: Proficiency; source: Translatable}): void;
-	learnCircle(payload: {circle: SpellCircle; source: Translatable; type: LearnableSpellType}): void;
-	learnSpell(payload: {spell: Spell; source: Translatable}): void;
-	addContextualModifierToSkill(payload: {modifier: ContextualModifierInterface; skill: SkillName}): void;
-	addFixedModifierToSkill(payload: {modifier: FixedModifierInterface; skill: SkillName}): void;
-	addFixedModifierToLifePoints(payload: {modifier: FixedModifierInterface}): void;
-	addPerLevelModifierToLifePoints(payload: {modifier: PerLevelModifier}): void;
-	addPerLevelModifierToManaPoints(payload: {modifier: PerLevelModifier}): void;
-	addFixedModifierToDefense(payload: {modifier: FixedModifierInterface}): void;
-	trainIntelligenceSkills(payload: {skills: SkillName[]}): void;
-	addEquipment(payload: {equipment: Equipment; source: Translatable}): void;
-	addInitialEquipment(payload: {role: RoleInterface; simpleWeapon: SimpleWeapon; martialWeapon?: MartialWeapon; armor?: Armor; money: number}): void;
-	addMoney(payload: {quantity: number}): void;
-	changeTormentaPowersAttribute(payload: {attribute: Attribute; source: Translatable}): void;
-	decreaseAttribute(payload: {attribute: Attribute; quantity: number; source: Translatable}): void;
+type ActionHandlersPayloads = {
+	setInitialAttributes: {attributes: Attributes};
+	chooseRace: {race: RaceInterface};
+	chooseRole: {role: RoleInterface};
+	chooseOrigin: {origin: OriginInterface};
+	trainSkill: {skill: SkillName; source: TranslatableName};
+	changeVision: {vision: Vision; source: TranslatableName};
+	applyRaceModifiers: {modifiers: Partial<Attributes>};
+	applyRaceAbility: {ability: RaceAbilityInterface; source: TranslatableName};
+	applyRoleAbility: {ability: RoleAbilityInterface; source: TranslatableName};
+	pickGeneralPower: ({power: GeneralPowerInterface; source: TranslatableName});
+	pickRolePower: ({power: RolePowerInterface; source: TranslatableName});
+	pickOriginPower: ({power: OriginPowerInterface; source: TranslatableName});
+	changeDisplacement: {displacement: number; source: TranslatableName};
+	addProficiency: {proficiency: Proficiency; source: TranslatableName};
+	learnCircle: {circle: SpellCircle; type: LearnableSpellType; source: TranslatableName};
+	learnSpell: {spell: Spell; source: TranslatableName};
+	addContextualModifierToSkill: {modifier: ContextualModifierInterface; skill: SkillName};
+	addFixedModifierToSkill: {modifier: FixedModifierInterface; skill: SkillName};
+	addFixedModifierToLifePoints: {modifier: FixedModifierInterface};
+	addPerLevelModifierToLifePoints: {modifier: PerLevelModifierInterface};
+	addPerLevelModifierToManaPoints: {modifier: PerLevelModifierInterface};
+	addFixedModifierToDefense: {modifier: FixedModifierInterface};
+	trainIntelligenceSkills: {skills: SkillName[]};
+	addEquipment: {equipment: Equipment; source: TranslatableName};
+	addInitialEquipment: {role: RoleInterface; simpleWeapon: SimpleWeapon; martialWeapon?: MartialWeapon; armor?: Armor; money: number};
+	addMoney: {quantity: number; source: TranslatableName};
+	changeTormentaPowersAttribute: {attribute: Attribute; source: TranslatableName};
+	decreaseAttribute: {attribute: Attribute; quantity: number; source: TranslatableName};
 };
 
-export type ActionType = keyof ActionTypesToHandlers;
-export type ActionPayload<T extends ActionType> = Parameters<ActionTypesToHandlers[T]>[0];
+export type ActionType = keyof ActionHandlersPayloads;
+export type ActionPayload<T extends ActionType> = ActionHandlersPayloads[T];
 export type ActionInterface<T extends ActionType = ActionType> = {
 	type: T;
 	payload: ActionPayload<T>;
 };
-export type ActionsHandler = {
-	[Property in keyof ActionTypesToHandlers]: (payload: ActionPayload<Property>, dispatch: Dispatch) => void
-};
+
 export type ActionDescriptionGenerators = {
-	[Property in keyof ActionTypesToHandlers]: (sheet: SheetBaseInterface, action: ActionInterface<Property>) => string
+	[Property in keyof ActionHandlersPayloads]: (sheet: SheetInterface, action: ActionInterface<Property>) => string
 };

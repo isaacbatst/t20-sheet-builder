@@ -1,7 +1,8 @@
+import {PickOriginPower} from '../Action/PickOriginPower';
 import {SheetBuilderError} from '../Error/SheetBuilderError';
 import type {OriginPowerInterface} from '../Power/OriginPower/OriginPower';
-import type {SheetBaseInterface} from '../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../Sheet/Transaction';
+import type {Transaction} from '../Sheet/Transaction';
+import {type TranslatableName} from '../Translator';
 import type {OriginBenefits} from './Origin';
 import {OriginBenefit} from './OriginBenefit';
 
@@ -12,8 +13,14 @@ export class OriginBenefitOriginPower extends OriginBenefit {
 		super();
 	}
 
-	addToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
-		this.power.addToSheet(sheet, dispatch);
+	apply(transaction: Transaction, source: TranslatableName): void {
+		transaction.run(new PickOriginPower({
+			payload: {
+				power: this.power,
+				source,
+			},
+			transaction,
+		}));
 	}
 
 	validate(originBenefits: OriginBenefits): void {

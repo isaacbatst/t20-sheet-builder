@@ -2,32 +2,36 @@ import {AddFixedModifierToLifePoints} from '../../../Action/AddFixedModifierToLi
 import {AddPerLevelModifierToLifePoints} from '../../../Action/AddPerLevelModifierToLifePoints';
 import {FixedModifier} from '../../../Modifier/FixedModifier/FixedModifier';
 import {PerLevelModifier} from '../../../Modifier/PerLevelModifier/PerLevelModifier';
-import {RaceName} from '../../RaceName';
-import {BuildingSheetFake} from '../../../Sheet/BuildingSheetFake';
+import {TransactionFake} from '../../../Sheet/TransactionFake';
 import {RaceAbilityName} from '../../RaceAbilityName';
+import {RaceName} from '../../RaceName';
 import {HardAsRock} from './HardAsRock';
-import {vi} from 'vitest';
 
 describe('HardAsRock', () => {
 	it('should dispatch addOtherModifierToLifePoints', () => {
 		const hardAsRock = new HardAsRock();
-		const sheet = new BuildingSheetFake();
-		const dispatch = vi.fn();
-		hardAsRock.addToSheet(sheet, dispatch, RaceName.dwarf);
+		const transaction = new TransactionFake();
+		hardAsRock.addToSheet(transaction, RaceName.dwarf);
 
-		expect(dispatch).toHaveBeenCalledWith(new AddFixedModifierToLifePoints({
-			modifier: new FixedModifier(RaceAbilityName.hardAsRock, 3),
-		}), sheet);
+		expect(transaction.run).toHaveBeenCalledWith(new AddFixedModifierToLifePoints({
+			payload: {
+				modifier: new FixedModifier(RaceAbilityName.hardAsRock, 3),
+			},
+			transaction,
+		}));
 	});
 
 	it('should dispatch addPerLevelModifierToLifePoints', () => {
 		const hardAsRock = new HardAsRock();
-		const sheet = new BuildingSheetFake();
-		const dispatch = vi.fn();
-		hardAsRock.addToSheet(sheet, dispatch, RaceName.dwarf);
+		const transaction = new TransactionFake();
 
-		expect(dispatch).toHaveBeenCalledWith(new AddPerLevelModifierToLifePoints({
-			modifier: new PerLevelModifier(RaceAbilityName.hardAsRock, 1, false),
-		}), sheet);
+		hardAsRock.addToSheet(transaction, RaceName.dwarf);
+
+		expect(transaction.run).toHaveBeenCalledWith(new AddPerLevelModifierToLifePoints({
+			payload: {
+				modifier: new PerLevelModifier(RaceAbilityName.hardAsRock, 1, false),
+			},
+			transaction,
+		}));
 	});
 });

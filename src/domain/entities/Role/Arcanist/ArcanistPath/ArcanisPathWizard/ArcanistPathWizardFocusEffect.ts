@@ -1,7 +1,6 @@
 import {PassiveEffect} from '../../../../Ability/PassiveEffect';
 import {AddEquipment} from '../../../../Action/AddEquipment';
-import {type SheetBaseInterface} from '../../../../Sheet/SheetBaseInterface';
-import {type Dispatch} from '../../../../Sheet/Transaction';
+import {type TransactionInterface} from '../../../../Sheet/TransactionInterface';
 import {RoleAbilityName} from '../../../RoleAbilityName';
 import {ArcanistPathName} from '../ArcanistPath';
 import {type ArcanistPathWizardFocus} from './ArcanistPathWizardFocus';
@@ -13,10 +12,13 @@ export class ArcanistPathWizardFocusEffect extends PassiveEffect {
 		super(RoleAbilityName.arcanistPath);
 	}
 
-	override applyToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
-		dispatch(new AddEquipment({
-			equipment: this.focus.equipment,
-			source: ArcanistPathName.wizard,
-		}), sheet);
+	override apply(transaction: TransactionInterface): void {
+		transaction.run(new AddEquipment({
+			payload: {
+				equipment: this.focus.equipment,
+				source: ArcanistPathName.wizard,
+			},
+			transaction,
+		}));
 	}
 }

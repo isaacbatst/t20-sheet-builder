@@ -4,13 +4,10 @@ import {InventoryEquipment} from './InventoryEquipment';
 
 export class Inventory {
 	equipments = new Map<EquipmentName, InventoryEquipment>();
+	money = 0;
 
 	addEquipment(equipment: Equipment) {
 		this.equipments.set(equipment.name, new InventoryEquipment(equipment));
-	}
-
-	getItem(name: EquipmentName) {
-		return this.equipments.get(name);
 	}
 
 	toggleEquippedItem(name: EquipmentName) {
@@ -21,9 +18,29 @@ export class Inventory {
 		}
 	}
 
+	addMoney(amount: number) {
+		this.money += amount;
+	}
+
+	removeMoney(amount: number) {
+		this.money -= amount;
+	}
+
+	getItem(name: EquipmentName) {
+		return this.equipments.get(name);
+	}
+
+	getEquipments() {
+		return this.equipments;
+	}
+
 	getWieldedItems(): EquipmentName[] {
 		return Array.from(this.equipments.values())
 			.filter(item => item.getIsEquipped())
 			.map(item => item.equipment.name);
+	}
+
+	getMoney(): number {
+		return this.money;
 	}
 }

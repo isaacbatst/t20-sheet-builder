@@ -1,31 +1,27 @@
+import {type Action} from '../Action/Action';
 import {ActionsQueue} from '../ActionsQueue';
 import {BuildStep} from '../BuildStep';
-import type {ActionInterface, ActionType} from './SheetActions';
-import type {SheetBaseInterface} from './SheetBaseInterface';
+import type {SheetInterface} from './SheetInterface';
 
-export type Dispatch = <T extends ActionType>(action: ActionInterface<T>, sheet: SheetBaseInterface) => void;
+export class Transaction<S extends SheetInterface = SheetInterface> {
+	private readonly actionsQueue = new ActionsQueue();
 
-export type TransactionInterface = {
-	dispatch: Dispatch;
-};
+	constructor(
+		readonly sheet: S,
+	) {}
 
-export class Transaction {
-	readonly actionsQueue = new ActionsQueue();
-
-	dispatch: Dispatch = (action, sheet) => {
-		this.enqueueAction(action);
-		const handle = sheet.actionHandlers[action.type];
-		handle(action.payload, this.dispatch);
-	};
-
-	saveBuildSteps(buildSteps: BuildStep[], sheet: SheetBaseInterface) {
-		while (this.actionsQueue.getSize() > 0) {
-			const action = this.actionsQueue.dequeue();
-			buildSteps.push(new BuildStep(action, sheet));
-		}
+	run(action: Action) {
+		this.actionsQueue.enqueue(action);
+		action.execute();
 	}
 
-	private enqueueAction(action: ActionInterface): void {
-		this.actionsQueue.enqueue(action);
+	commit(): void {
+		const buildSteps: BuildStep[] = [];
+		while (this.actionsQueue.getSize() > 0) {
+			const action = this.actionsQueue.dequeue();
+			buildSteps.push(new BuildStep(action));
+		}
+
+		this.sheet.pushBuildSteps(...buildSteps);
 	}
 }

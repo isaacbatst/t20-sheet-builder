@@ -1,8 +1,7 @@
 import {PassiveEffect} from '../../../../../../Ability/PassiveEffect';
 import {ChangeTormentaPowersAttribute} from '../../../../../../Action/ChangeTormentaPowersAttribute';
 import {type Attribute} from '../../../../../../Sheet';
-import {type SheetBaseInterface} from '../../../../../../Sheet/SheetBaseInterface';
-import {type Dispatch} from '../../../../../../Sheet/Transaction';
+import {type TransactionInterface} from '../../../../../../Sheet/TransactionInterface';
 import {RoleAbilityName} from '../../../../../RoleAbilityName';
 
 export class ArcanistLineageRedCustomTormentaPowersAttributeEffect extends PassiveEffect {
@@ -10,10 +9,13 @@ export class ArcanistLineageRedCustomTormentaPowersAttributeEffect extends Passi
 		super(RoleAbilityName.arcanistSupernaturalLineage);
 	}
 
-	override applyToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
-		dispatch(new ChangeTormentaPowersAttribute({
-			attribute: this.attribute,
-			source: this.source,
-		}), sheet);
+	override apply(transaction: TransactionInterface): void {
+		transaction.run(new ChangeTormentaPowersAttribute({
+			payload: {
+				attribute: this.attribute,
+				source: this.source,
+			},
+			transaction,
+		}));
 	}
 }

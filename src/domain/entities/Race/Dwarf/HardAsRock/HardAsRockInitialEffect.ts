@@ -1,8 +1,7 @@
 import {PassiveEffect} from '../../../Ability/PassiveEffect';
 import {AddFixedModifierToLifePoints} from '../../../Action/AddFixedModifierToLifePoints';
 import {FixedModifier} from '../../../Modifier/FixedModifier/FixedModifier';
-import type {SheetBaseInterface} from '../../../Sheet/SheetBaseInterface';
-import type {Dispatch} from '../../../Sheet/Transaction';
+import {type TransactionInterface} from '../../../Sheet/TransactionInterface';
 import {RaceAbilityName} from '../../RaceAbilityName';
 
 export class HardAsRockInitialEffect extends PassiveEffect {
@@ -10,8 +9,13 @@ export class HardAsRockInitialEffect extends PassiveEffect {
 		super(RaceAbilityName.hardAsRock);
 	}
 
-	applyToSheet(sheet: SheetBaseInterface, dispatch: Dispatch): void {
+	apply(transaction: TransactionInterface): void {
 		const modifier = new FixedModifier(this.source, 3);
-		dispatch(new AddFixedModifierToLifePoints({modifier}), sheet);
+		transaction.run(new AddFixedModifierToLifePoints({
+			payload: {
+				modifier,
+			},
+			transaction,
+		}));
 	}
 }

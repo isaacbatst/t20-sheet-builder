@@ -6,26 +6,26 @@ import {ContextualModifiersListTotalCalculator} from '../Modifier/ContextualModi
 import {Acolyte, OriginBenefitGeneralPower, OriginBenefitSkill} from '../Origin';
 import type {Origin} from '../Origin/Origin';
 import {IronWill, OneWeaponStyle} from '../Power';
-import {Human, VersatileChoicePower, VersatileChoiceSkill} from '../Race';
+import {Human, type VersatileChoice, VersatileChoicePower, VersatileChoiceSkill} from '../Race';
 import type {Race} from '../Race/Race';
 import {Warrior} from '../Role';
 import type {Role} from '../Role/Role';
 import type {Attributes} from '../Sheet';
-import type {Sheet} from '../Sheet/Sheet';
+import type {CharacterSheet} from '../Sheet/CharacterSheet';
 import {SheetBuilder} from '../Sheet/SheetBuilder';
 import {SkillName} from '../Skill';
 import {Character} from './Character';
 import type {CharacterAttack} from './CharacterAttack';
 
 describe('Character', () => {
-	let sheet: Sheet;
+	let sheet: CharacterSheet;
 	let role: Role;
 	let race: Race;
 	let sheetBuilder: SheetBuilder;
 	let origin: Origin;
 	let character: Character;
 	beforeAll(() => {
-		const choices = [
+		const choices: VersatileChoice[] = [
 			new VersatileChoiceSkill(SkillName.acrobatics),
 			new VersatileChoicePower(new OneWeaponStyle()),
 		];

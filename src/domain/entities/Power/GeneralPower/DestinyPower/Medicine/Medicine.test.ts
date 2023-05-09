@@ -1,26 +1,26 @@
 import {OriginName} from '../../../../Origin/OriginName';
-import {SheetBaseFake} from '../../../../Sheet/SheetBaseFake';
+import {TransactionFake} from '../../../../Sheet/TransactionFake';
+import {SkillName} from '../../../../Skill';
 import {Medicine} from './Medicine';
-import {vi} from 'vitest';
 
 describe('Medicine', () => {
 	it('should require wisdom 1', () => {
 		const medicine = new Medicine();
-		const sheet = new SheetBaseFake();
-		sheet.skills.cure.train();
+		const transaction = new TransactionFake();
+		transaction.sheet.getSheetSkills().trainSkill(SkillName.cure);
 		expect(() => {
-			medicine.addToSheet(sheet, vi.fn(), OriginName.acolyte);
-			medicine.verifyRequirements(sheet);
+			medicine.addToSheet(transaction, OriginName.acolyte);
+			medicine.verifyRequirements(transaction.sheet);
 		}).toThrow('UNFULFILLED_REQUIREMENT');
 	});
 
 	it('should require cure training', () => {
 		const medicine = new Medicine();
-		const sheet = new SheetBaseFake();
-		sheet.attributes.wisdom = 1;
+		const transaction = new TransactionFake();
+		transaction.sheet.getSheetAttributes().getValues().wisdom = 1;
 		expect(() => {
-			medicine.addToSheet(sheet, vi.fn(), OriginName.acolyte);
-			medicine.verifyRequirements(sheet);
+			medicine.addToSheet(transaction, OriginName.acolyte);
+			medicine.verifyRequirements(transaction.sheet);
 		}).toThrow('UNFULFILLED_REQUIREMENT');
 	});
 });

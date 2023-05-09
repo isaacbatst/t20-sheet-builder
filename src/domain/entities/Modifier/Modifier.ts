@@ -1,21 +1,21 @@
 import type {Attribute, Attributes} from '../Sheet/Attributes';
-import type {Translatable} from '../Translator';
+import type {TranslatableName} from '../Translator';
 import type {ModifierInterface, ModifierType, ModifierValueGetterInterface} from './ModifierInterface';
 
 export abstract class Modifier implements ModifierInterface {
 	readonly attributeBonuses: Attribute[];
 
 	constructor(
-		readonly source: Translatable,
+		readonly source: TranslatableName,
 		readonly value: number,
 		readonly type: ModifierType,
-		attributeBonuses: Set<Attribute> = new Set(),
+		attributeBonuses = new Set<Attribute>(),
 	) {
 		this.attributeBonuses = [...attributeBonuses];
 	}
 
-	getValue(getter: ModifierValueGetterInterface): number {
-		return getter.get(this.value, this.attributeBonuses);
+	getValue(valueGetter: ModifierValueGetterInterface): number {
+		return valueGetter.get(this.value, this.attributeBonuses);
 	}
 
 	getTotalAttributeBonuses(attributes: Attributes): number {
