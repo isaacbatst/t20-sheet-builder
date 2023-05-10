@@ -137,9 +137,16 @@ export type SerializedSheetPoints = {
 
 export type SerializedSheetLearnedCircles = Record<LearnableSpellType, SpellCircle[]>;
 
+export type SerializedSheetBuildStep = {
+	action: {
+		type: string;
+		description: string;
+	};
+};
+
 export type SerializedSheetInterface = {
 	attributes: Attributes;
-	buildSteps: BuildStepInterface[];
+	buildSteps: SerializedSheetBuildStep[];
 	level: number;
 	lifePoints: SerializedSheetPoints;
 	manaPoints: SerializedSheetPoints;

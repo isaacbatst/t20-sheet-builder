@@ -23,11 +23,13 @@ export abstract class Action<
 	readonly type: A;
 	readonly payload: ActionPayload<A>;
 	readonly transaction: TransactionInterface<S>;
+	readonly description: string;
 
 	constructor(params: ActionParams<A, S>) {
 		this.type = params.type;
 		this.payload = params.payload;
 		this.transaction = params.transaction;
+		this.description = this.getDescription();
 	}
 
 	abstract execute(): void;
