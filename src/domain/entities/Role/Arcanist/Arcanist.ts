@@ -80,4 +80,12 @@ export class Arcanist extends Role {
 	getSpellLearnFrequency(): SpellLearnFrequency {
 		return this.abilitiesPerLevel[Level.one].arcanistPath.spellLearnFrequency;
 	}
+
+	getPath(): ArcanistPath {
+		return this.abilitiesPerLevel[Level.one].arcanistPath;
+	}
+
+	getInitialSpells(): Spell[] {
+		return this.abilitiesPerLevel[Level.one].arcanistSpells.effects.passive.default.spells;
+	}
 }

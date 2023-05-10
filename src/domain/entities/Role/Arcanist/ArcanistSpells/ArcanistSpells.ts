@@ -8,7 +8,11 @@ import {SpellsAbility} from '../../SpellsAbility';
 import {ArcanistSpellsEffect} from './ArcanistSpellsEffect';
 
 export class ArcanistSpells extends SpellsAbility {
-	effects: AbilityEffectsInterface;
+	effects: AbilityEffectsInterface & {
+		passive: {
+			default: ArcanistSpellsEffect;
+		};
+	};
 
 	constructor(spells: Spell[], learnFrequency: SpellLearnFrequency, attribute: Attribute) {
 		super(RoleAbilityName.arcanistSpells);
