@@ -19,7 +19,7 @@ export class AddPerLevelModifierToManaPoints extends Action<'addPerLevelModifier
 
 	getDescription(): string {
 		const source = new Translatable(this.payload.modifier.source).getTranslation();
-		const value = new ModifierValue(this.payload.modifier.value).getValueWithSign();
+		const value = new ModifierValue(this.payload.modifier.baseValue).getValueWithSign();
 		const includeFirstLevel = this.payload.modifier.includeFirstLevel ? '' : ' após o nivel 1';
 		return `${source}: ${value} PM por nível${includeFirstLevel}.`;
 	}

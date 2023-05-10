@@ -2,7 +2,7 @@ import type {Attributes} from '../../Sheet/Attributes';
 import type {ContextInterface} from '../../Context/ContextInterface';
 import type {ModifiersListTotalCalculator} from '../ModifiersListInterface';
 import type {ContextualModifierInterface} from './ContextualModifierInterface';
-import {ContextualModifierValueGetter} from './ContextualModifierValueGetter';
+import {ContextualModifierAppliableValueCalculator} from './ContextualModifierAppliableValueCalculator';
 
 export type ContextualModifiersListTotalCalculatorInterface = ModifiersListTotalCalculator<ContextualModifierInterface>;
 
@@ -15,8 +15,8 @@ implements ContextualModifiersListTotalCalculatorInterface {
 
 	calculate(modifiers: ContextualModifierInterface[]): number {
 		return modifiers.reduce((acc, modifier) => {
-			const getter = new ContextualModifierValueGetter(this.attributes, this.context, modifier.condition.verify);
-			return modifier.getValue(getter) + acc;
+			const getter = new ContextualModifierAppliableValueCalculator(this.attributes, this.context, modifier);
+			return modifier.getAppliableValue(getter) + acc;
 		}, 0);
 	}
 }

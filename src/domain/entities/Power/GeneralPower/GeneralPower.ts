@@ -5,6 +5,7 @@ import type {GeneralPowerName} from './GeneralPowerName';
 
 export type GeneralPowerInterface = PowerInterface & {
 	name: GeneralPowerName;
+	group: GeneralPowerGroup;
 };
 
 export abstract class GeneralPower extends Power implements GeneralPowerInterface {

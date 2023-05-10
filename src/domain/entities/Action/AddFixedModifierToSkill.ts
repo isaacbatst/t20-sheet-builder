@@ -21,7 +21,7 @@ export class AddFixedModifierToSkill extends Action<'addFixedModifierToSkill'> {
 	getDescription(): string {
 		const skill = new Translatable(this.payload.skill).getTranslation();
 		const source = new Translatable(this.payload.modifier.source).getTranslation();
-		const value = new ModifierValue(this.payload.modifier.value).getValueWithSign();
+		const value = new ModifierValue(this.payload.modifier.baseValue).getValueWithSign();
 		return `${source}: ${value} ${skill} aplicado ao modificador "outros".`;
 	}
 }

@@ -103,7 +103,11 @@ describe('Skill', () => {
 			attribute: 'dexterity',
 		});
 		skill.fixedModifiers.add(new FixedModifier(RaceAbilityName.versatile, 2));
-		skill.contextualModifiers.add(new ContextualModifier(RaceAbilityName.rockKnowledge, 5, {description: 'any', verify: context => context.getCurrentLocation().isUnderground}));
+		skill.contextualModifiers.add(new ContextualModifier({
+			source: RaceAbilityName.rockKnowledge,
+			value: 5,
+			condition: {description: 'any', verify: context => context.getCurrentLocation().isUnderground},
+		}));
 
 		const calculator = SkillTotalCalculatorFactory.make(sheet.getSheetAttributes().getValues(), sheet.getLevel(), new OutOfGameContext());
 		expect(skill.getTotal(calculator)).toBe(13);
@@ -119,13 +123,13 @@ describe('Skill', () => {
 			attribute: 'dexterity',
 		});
 		skill.fixedModifiers.add(new FixedModifier(RaceAbilityName.versatile, 2));
-		skill.contextualModifiers.add(new ContextualModifier(
-			RaceAbilityName.rockKnowledge,
-			5,
-			{
+		skill.contextualModifiers.add(new ContextualModifier({
+			source: RaceAbilityName.rockKnowledge,
+			value: 5,
+			condition: {
 				description: 'any', verify: context => context.getCurrentLocation().isUnderground,
-			}),
-		);
+			},
+		}));
 		const calculator = SkillTotalCalculatorFactory.make(
 			sheet.getSheetAttributes().getValues(), sheet.getLevel(), new InGameContextFake(),
 		);

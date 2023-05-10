@@ -33,16 +33,18 @@ export class OneWeaponStyle extends FightStyle {
 	}
 
 	applyModifiers(modifiers: CharacterModifiers): CharacterAppliedFightStyle {
-		const attackIndex = modifiers.attack.contextual.add(new ContextualModifier(
-			GeneralPowerName.oneWeaponStyle,
-			2,
-			this.condition,
+		const attackIndex = modifiers.attack.contextual.add(new ContextualModifier({
+			source: GeneralPowerName.oneWeaponStyle,
+			value: 2,
+			condition: this.condition,
+		},
 		));
 
-		const defenseIndex = modifiers.defense.contextual.add(new ContextualModifier(
-			GeneralPowerName.oneWeaponStyle,
-			2,
-			this.condition,
+		const defenseIndex = modifiers.defense.contextual.add(new ContextualModifier({
+			source: GeneralPowerName.oneWeaponStyle,
+			value: 2,
+			condition: this.condition,
+		},
 		));
 
 		return new CharacterAppliedFightStyle(

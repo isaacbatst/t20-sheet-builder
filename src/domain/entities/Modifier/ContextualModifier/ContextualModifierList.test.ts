@@ -8,9 +8,22 @@ import {ContextualModifiersListTotalCalculator} from './ContextualModifiersListT
 describe('ContextualModifierList', () => {
 	it('should calculate total', () => {
 		const list = new ContextualModifiersList();
-		list.add(new ContextualModifier(RaceAbilityName.rockKnowledge, 2, {description: 'any', verify: context => context.getCurrentLocation().isUnderground}));
-		list.add(new ContextualModifier(RaceAbilityName.rockKnowledge, 2, {description: 'any', verify: context => context.getCurrentLocation().isUnderground}, new Set(['constitution'])));
-		list.add(new ContextualModifier(RaceAbilityName.hardAsRock, 2, {description: 'any', verify: context => !context.getCurrentLocation().isUnderground}));
+		list.add(new ContextualModifier({
+			source: RaceAbilityName.rockKnowledge,
+			value: 2,
+			condition: {description: 'any', verify: context => context.getCurrentLocation().isUnderground},
+		}));
+		list.add(new ContextualModifier({
+			source: RaceAbilityName.rockKnowledge,
+			value: 2,
+			condition: {description: 'any', verify: context => context.getCurrentLocation().isUnderground},
+			incrementerAttributes: new Set(['constitution']),
+		}));
+		list.add(new ContextualModifier({
+			source: RaceAbilityName.hardAsRock,
+			value: 2,
+			condition: {description: 'any', verify: context => !context.getCurrentLocation().isUnderground},
+		}));
 
 		const totalCalculator = new ContextualModifiersListTotalCalculator(
 			new InGameContextFake(),
@@ -21,9 +34,22 @@ describe('ContextualModifierList', () => {
 
 	it('should calculate max total', () => {
 		const list = new ContextualModifiersList();
-		list.add(new ContextualModifier(RaceAbilityName.rockKnowledge, 2, {description: 'any', verify: context => context.getCurrentLocation().isUnderground}));
-		list.add(new ContextualModifier(RaceAbilityName.rockKnowledge, 2, {description: 'any', verify: context => context.getCurrentLocation().isUnderground}, new Set(['constitution'])));
-		list.add(new ContextualModifier(RaceAbilityName.hardAsRock, 2, {description: 'any', verify: context => !context.getCurrentLocation().isUnderground}));
+		list.add(new ContextualModifier({
+			source: RaceAbilityName.rockKnowledge,
+			value: 2,
+			condition: {description: 'any', verify: context => context.getCurrentLocation().isUnderground},
+		}));
+		list.add(new ContextualModifier({
+			source: RaceAbilityName.rockKnowledge,
+			value: 2,
+			condition: {description: 'any', verify: context => context.getCurrentLocation().isUnderground},
+			incrementerAttributes: new Set(['constitution']),
+		}));
+		list.add(new ContextualModifier({
+			source: RaceAbilityName.hardAsRock,
+			value: 2,
+			condition: {description: 'any', verify: context => !context.getCurrentLocation().isUnderground},
+		}));
 		const attributes: Attributes = {
 			charisma: 0,
 			constitution: 2,

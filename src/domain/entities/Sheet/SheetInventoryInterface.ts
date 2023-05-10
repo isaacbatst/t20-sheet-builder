@@ -23,5 +23,7 @@ export type SheetInventoryInterface = {
 	getEquipments(): Map<EquipmentName, InventoryEquipment>;
 
 	getWieldedItems(): EquipmentName[];
+	getArmorBonus(): number;
+	getShieldBonus(): number;
 
 };

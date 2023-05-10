@@ -1,21 +1,29 @@
 import type {Attribute, Attributes} from '../Sheet/Attributes';
 import type {TranslatableName} from '../Translator';
-import type {ModifierInterface, ModifierType, ModifierValueGetterInterface} from './ModifierInterface';
+import type {ModifierInterface, ModifierType, ModifierAppliableValueCalculatorInterface} from './ModifierInterface';
+
+export type ModifierParams = {
+	source: TranslatableName;
+	value: number;
+	type: ModifierType;
+	attributeBonuses?: Set<Attribute>;
+};
 
 export abstract class Modifier implements ModifierInterface {
 	readonly attributeBonuses: Attribute[];
+	readonly source: TranslatableName;
+	readonly baseValue: number;
+	readonly type: ModifierType;
 
-	constructor(
-		readonly source: TranslatableName,
-		readonly value: number,
-		readonly type: ModifierType,
-		attributeBonuses = new Set<Attribute>(),
-	) {
-		this.attributeBonuses = [...attributeBonuses];
+	constructor(params: ModifierParams) {
+		this.source = params.source;
+		this.baseValue = params.value;
+		this.type = params.type;
+		this.attributeBonuses = params.attributeBonuses ? [...params.attributeBonuses] : [];
 	}
 
-	getValue(valueGetter: ModifierValueGetterInterface): number {
-		return valueGetter.get(this.value, this.attributeBonuses);
+	getAppliableValue(calculator: ModifierAppliableValueCalculatorInterface): number {
+		return calculator.calculate(this.baseValue, this.attributeBonuses);
 	}
 
 	getTotalAttributeBonuses(attributes: Attributes): number {

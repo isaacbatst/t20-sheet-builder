@@ -3,15 +3,15 @@ import type {TranslatableName} from '../Translator';
 
 export type ModifierType = 'fixed' | 'perLevel' | 'contextual' | 'temporary';
 
-export type ModifierValueGetterInterface = {
-	get(value: number, attributeBonuses: Attribute[]): number;
+export type ModifierAppliableValueCalculatorInterface = {
+	calculate(value: number, attributeBonuses: Attribute[]): number;
 };
 
 export type ModifierInterface = {
 	source: TranslatableName;
 	type: ModifierType;
-	value: number;
+	baseValue: number;
 	attributeBonuses: Attribute[];
-	getValue(valueGetter: ModifierValueGetterInterface): number;
+	getAppliableValue(calculator: ModifierAppliableValueCalculatorInterface): number;
 	getTotalAttributeBonuses(attributes: Attributes): number;
 };

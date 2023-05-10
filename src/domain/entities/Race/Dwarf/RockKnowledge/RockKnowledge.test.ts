@@ -33,11 +33,14 @@ describe('RockKnowledge', () => {
 
 		expect(transaction.run).toHaveBeenCalledWith(expect.objectContaining(new AddContextualModifierToSkill({
 			payload: {
-				modifier: new ContextualModifier(
-					RaceAbilityName.rockKnowledge, 2, {
+				modifier: new ContextualModifier({
+					source: RaceAbilityName.rockKnowledge,
+					value: 2,
+					condition: {
 						description: 'testes devem ser realizados no subterrâneo',
 						verify: expect.any(Function) as ModifierConditionVerify,
-					}),
+					},
+				}),
 				skill: SkillName.perception,
 			},
 			transaction,
@@ -52,11 +55,13 @@ describe('RockKnowledge', () => {
 		expect(transaction.run).toHaveBeenCalledWith(expect.objectContaining(new AddContextualModifierToSkill({
 			payload: {
 				skill: SkillName.survival,
-				modifier: new ContextualModifier(
-					RaceAbilityName.rockKnowledge, 2, {
+				modifier: new ContextualModifier({
+					source: RaceAbilityName.rockKnowledge,
+					value: 2,
+					condition: {
 						description: 'testes devem ser realizados no subterrâneo',
 						verify: expect.any(Function) as ModifierConditionVerify,
-					}),
+					}}),
 			},
 			transaction,
 		})));

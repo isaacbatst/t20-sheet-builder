@@ -14,8 +14,17 @@ describe('ManaPoints', () => {
 		const manaPoints = new ManaPoints();
 		manaPoints.fixedModifiers.add(new FixedModifier(RoleName.arcanist, 8, new Set(['constitution'])));
 		manaPoints.fixedModifiers.add(new FixedModifier(RaceAbilityName.hardAsRock, 3));
-		manaPoints.perLevelModifiers.add(new PerLevelModifier(RaceAbilityName.hardAsRock, 1, false));
-		manaPoints.perLevelModifiers.add(new PerLevelModifier(RoleName.arcanist, 2, false, new Set(['constitution'])));
+		manaPoints.perLevelModifiers.add(new PerLevelModifier({
+			source: RaceAbilityName.hardAsRock,
+			value: 1,
+			includeFirstLevel: false,
+		}));
+		manaPoints.perLevelModifiers.add(new PerLevelModifier({
+			source: RoleName.arcanist,
+			value: 2,
+			includeFirstLevel: false,
+			attributeBonuses: new Set(['constitution']),
+		}));
 		const attributes: Attributes = {charisma: 0, constitution: 2, dexterity: 0, intelligence: 0, strength: 0, wisdom: 0};
 		const fixedCalculator = new FixedModifiersListTotalCalculator(attributes);
 		const perLevelCalculator = new PerLevelModifiersListTotalCalculator(attributes, Level.three);

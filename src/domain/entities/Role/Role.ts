@@ -22,7 +22,7 @@ export abstract class Role implements RoleInterface {
 	abstract readonly mandatorySkills: SkillName[];
 	abstract readonly proficiencies: Proficiency[];
 	abstract readonly name: RoleName;
-	abstract readonly abilities: Record<Level, Record<string, RoleAbility>>;
+	abstract readonly abilitiesPerLevel: Record<Level, Record<string, RoleAbility>>;
 	get startsWithArmor() {
 		return true;
 	}
@@ -48,7 +48,7 @@ export abstract class Role implements RoleInterface {
 	}
 
 	addLevelOneAbilities(transaction: TransactionInterface) {
-		const abilities = this.abilities[Level.one];
+		const abilities = this.abilitiesPerLevel[Level.one];
 
 		Object.values(abilities).forEach(ability => {
 			transaction.run(new ApplyRoleAbility({
@@ -75,7 +75,12 @@ export abstract class Role implements RoleInterface {
 
 		transaction.run(new AddPerLevelModifierToLifePoints({
 			payload: {
-				modifier: new PerLevelModifier(this.name, this.lifePointsPerLevel, false, new Set(['constitution'])),
+				modifier: new PerLevelModifier({
+					source: this.name,
+					value: this.lifePointsPerLevel,
+					includeFirstLevel: false,
+					attributeBonuses: new Set(['constitution']),
+				}),
 			},
 			transaction,
 		}));
@@ -84,7 +89,11 @@ export abstract class Role implements RoleInterface {
 	private addManaPointsModifiers(transaction: TransactionInterface) {
 		transaction.run(new AddPerLevelModifierToManaPoints({
 			payload: {
-				modifier: new PerLevelModifier(this.name, this.manaPerLevel, true),
+				modifier: new PerLevelModifier({
+					source: this.name,
+					value: this.manaPerLevel,
+					includeFirstLevel: true,
+				}),
 			},
 			transaction,
 		}));

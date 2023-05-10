@@ -29,7 +29,11 @@ describe('HardAsRock', () => {
 
 		expect(transaction.run).toHaveBeenCalledWith(new AddPerLevelModifierToLifePoints({
 			payload: {
-				modifier: new PerLevelModifier(RaceAbilityName.hardAsRock, 1, false),
+				modifier: new PerLevelModifier({
+					source: RaceAbilityName.hardAsRock,
+					value: 1,
+					includeFirstLevel: false,
+				}),
 			},
 			transaction,
 		}));

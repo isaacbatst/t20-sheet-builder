@@ -1,6 +1,6 @@
 import type {Attributes} from '../../Sheet/Attributes';
 import type {FixedModifierInterface} from './FixedModifier';
-import {FixedModifierValueGetter} from './FixedModifierValueGetter';
+import {FixedModifierAppliableValueCalculator} from './FixedModifierAppliableValueCalculator';
 import type {ModifiersListTotalCalculator} from '../ModifiersListInterface';
 
 export type FixedModifiersListTotalCalculatorInterface = ModifiersListTotalCalculator<FixedModifierInterface>;
@@ -12,7 +12,7 @@ implements FixedModifiersListTotalCalculatorInterface {
 	) {}
 
 	calculate(modifiers: FixedModifierInterface[]): number {
-		const getter = new FixedModifierValueGetter(this.attributes);
-		return modifiers.reduce((acc, modifier) => acc + modifier.getValue(getter), 0);
+		const getter = new FixedModifierAppliableValueCalculator(this.attributes);
+		return modifiers.reduce((acc, modifier) => acc + modifier.getAppliableValue(getter), 0);
 	}
 }

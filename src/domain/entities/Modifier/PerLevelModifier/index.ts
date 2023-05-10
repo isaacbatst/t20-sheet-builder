@@ -1,5 +1,5 @@
 export * from './PerLevelModifier';
-export * from './PerLevelModifierValueGetter';
+export * from './PerLevelModifierAppliableValueCalculator';
 export * from './PerLevelModifiersList';
 export * from './PerLevelModifierInterface';
 export * from './PerLevelModifiersListTotalCalculator';

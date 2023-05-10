@@ -3,18 +3,27 @@ import type {TranslatableName} from '../../Translator';
 import {Modifier} from '../Modifier';
 import type {PerLevelModifierInterface} from './PerLevelModifierInterface';
 
+export type PerLevelModifierParams = {
+	source: TranslatableName;
+	value: number;
+	includeFirstLevel?: boolean;
+	attributeBonuses?: Set<Attribute>;
+	frequency?: number;
+};
+
 export class PerLevelModifier extends Modifier implements PerLevelModifierInterface {
-	constructor(
-		source: TranslatableName,
-		value: number,
-		readonly includeFirstLevel: boolean = true,
-		attributeBonuses = new Set<Attribute>(),
-		readonly frequency = 1,
-	) {
-		super(source, value, 'perLevel', attributeBonuses);
+	readonly includeFirstLevel: boolean;
+	readonly frequency: number;
+	constructor(params: PerLevelModifierParams) {
+		super({
+			...params,
+			type: 'perLevel',
+		});
+		this.includeFirstLevel = params.includeFirstLevel ?? true;
+		this.frequency = params.frequency ?? 1;
 	}
 
 	getPerLevelValue(): number {
-		return this.value;
+		return this.baseValue;
 	}
 }

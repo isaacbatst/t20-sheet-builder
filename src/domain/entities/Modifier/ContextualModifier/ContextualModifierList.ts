@@ -7,6 +7,6 @@ export class ContextualModifiersList
 	extends ModifiersList <ContextualModifierInterface>
 	implements ContextualModifiersListInterface {
 	getMaxTotal(attributes: Attributes): number {
-		return this.modifiers.reduce((acc, modifier) => modifier.value + modifier.getTotalAttributeBonuses(attributes) + acc, 0);
+		return this.modifiers.reduce((acc, modifier) => modifier.baseValue + modifier.getTotalAttributeBonuses(attributes) + acc, 0);
 	}
 }

@@ -15,7 +15,7 @@ export class Arcanist extends Role {
 	static readonly roleName = RoleName.arcanist;
 	static readonly selectSkillGroups: SelectSkillGroup[] = [{amount: 2, skills: [SkillName.knowledge, SkillName.diplomacy, SkillName.cheat, SkillName.war, SkillName.initiative, SkillName.intimidation, SkillName.intuition, SkillName.investigation, SkillName.nobility, SkillName.craft, SkillName.perception]}];
 
-	readonly abilities: {
+	readonly abilitiesPerLevel: {
 		[Level.one]: {
 			arcanistPath: ArcanistPath;
 			arcanistSpells: ArcanistSpells;
@@ -56,7 +56,7 @@ export class Arcanist extends Role {
 	constructor(chosenSkills: SkillName[], path: ArcanistPath, spells: Spell[]) {
 		super(chosenSkills, Arcanist.selectSkillGroups);
 		const arcanistSpells = new ArcanistSpells(spells, path.spellLearnFrequency, path.spellsAttribute);
-		this.abilities = {
+		this.abilitiesPerLevel = {
 			[Level.one]: {
 				arcanistSpells,
 				arcanistPath: path,
@@ -74,10 +74,10 @@ export class Arcanist extends Role {
 	}
 
 	getSpellsAttribute(): Attribute {
-		return this.abilities[Level.one].arcanistPath.spellsAttribute;
+		return this.abilitiesPerLevel[Level.one].arcanistPath.spellsAttribute;
 	}
 
 	getSpellLearnFrequency(): SpellLearnFrequency {
-		return this.abilities[Level.one].arcanistPath.spellLearnFrequency;
+		return this.abilitiesPerLevel[Level.one].arcanistPath.spellLearnFrequency;
 	}
 }

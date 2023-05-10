@@ -1,4 +1,4 @@
 export * from './FixedModifier';
-export * from './FixedModifierValueGetter';
+export * from './FixedModifierAppliableValueCalculator';
 export * from './FixedModifiersList';
 export * from './FixedModifiersListTotalCalculator';

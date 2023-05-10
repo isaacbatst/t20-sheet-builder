@@ -19,7 +19,7 @@ export class AddFixedModifierToLifePoints extends Action<'addFixedModifierToLife
 
 	getDescription(): string {
 		const source = new Translatable(this.payload.modifier.source).getTranslation();
-		const value = new ModifierValue(this.payload.modifier.value).getValueWithSign();
+		const value = new ModifierValue(this.payload.modifier.baseValue).getValueWithSign();
 		return `${source}: ${value} PV.`;
 	}
 }

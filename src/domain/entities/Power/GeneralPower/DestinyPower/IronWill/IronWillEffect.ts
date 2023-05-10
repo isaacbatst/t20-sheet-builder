@@ -14,13 +14,12 @@ export class IronWillEffect extends PassiveEffect {
 	apply(transaction: TransactionInterface): void {
 		transaction.run(new AddPerLevelModifierToManaPoints({
 			payload: {
-				modifier: new PerLevelModifier(
-					this.source,
-					1,
-					true,
-					new Set(),
-					2,
-				),
+				modifier: new PerLevelModifier({
+					source: this.source,
+					value: 1,
+					includeFirstLevel: true,
+					frequency: 2,
+				}),
 			},
 			transaction,
 		}));

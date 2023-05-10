@@ -19,6 +19,14 @@ export class SheetInventory implements SheetInventoryInterface {
 		private readonly inventory: Inventory = new Inventory(),
 	) {}
 
+	getArmorBonus(): number {
+		return 0;
+	}
+
+	getShieldBonus(): number {
+		return 0;
+	}
+
 	toggleEquippedItem(name: EquipmentName): void {
 		this.inventory.toggleEquippedItem(name);
 	}

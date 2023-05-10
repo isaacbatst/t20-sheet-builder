@@ -4,3 +4,4 @@ export * from './Level';
 export * from './Proficiency';
 export * from './BuildingSheet';
 export * from './CharacterSheet';
+export * from './SerializedSheet';

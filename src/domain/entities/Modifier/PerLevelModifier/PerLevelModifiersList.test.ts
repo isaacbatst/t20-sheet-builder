@@ -8,8 +8,17 @@ import {PerLevelModifiersListTotalCalculator} from './PerLevelModifiersListTotal
 describe('PerLevelModifiersList', () => {
 	it('should calculate total', () => {
 		const list = new PerLevelModifiersList();
-		list.add(new PerLevelModifier(RoleName.arcanist, 6, true, new Set(['intelligence'])));
-		list.add(new PerLevelModifier(RoleAbilityName.arcanistSpells, 1, false));
+		list.add(new PerLevelModifier({
+			source: RoleName.arcanist,
+			value: 6,
+			includeFirstLevel: true,
+			attributeBonuses: new Set(['intelligence']),
+		}));
+		list.add(new PerLevelModifier({
+			source: RoleAbilityName.arcanistSpells,
+			value: 1,
+			includeFirstLevel: false,
+		}));
 		const calculator = new PerLevelModifiersListTotalCalculator(
 			{charisma: 0, constitution: 0, dexterity: 0, intelligence: 2, strength: 0, wisdom: 0},
 			Level.three,
@@ -19,9 +28,23 @@ describe('PerLevelModifiersList', () => {
 
 	it('should calculate total with custom frequency', () => {
 		const list = new PerLevelModifiersList();
-		list.add(new PerLevelModifier(RoleName.arcanist, 6, true, new Set(['intelligence'])));
-		list.add(new PerLevelModifier(RoleAbilityName.arcanistSpells, 1, false));
-		list.add(new PerLevelModifier(RoleAbilityName.arcanistPath, 5, false, new Set(), 2));
+		list.add(new PerLevelModifier({
+			source: RoleName.arcanist,
+			value: 6,
+			includeFirstLevel: true,
+			attributeBonuses: new Set(['intelligence']),
+		}));
+		list.add(new PerLevelModifier({
+			source: RoleAbilityName.arcanistSpells,
+			value: 1,
+			includeFirstLevel: false,
+		}));
+		list.add(new PerLevelModifier({
+			source: RoleAbilityName.arcanistPath,
+			value: 5,
+			includeFirstLevel: false,
+			frequency: 2,
+		}));
 		const calculator = new PerLevelModifiersListTotalCalculator(
 			{charisma: 0, constitution: 0, dexterity: 0, intelligence: 2, strength: 0, wisdom: 0},
 			Level.three,
@@ -31,17 +54,35 @@ describe('PerLevelModifiersList', () => {
 
 	it('should calculate total per level after first level', () => {
 		const list = new PerLevelModifiersList();
-		list.add(new PerLevelModifier(RoleName.arcanist, 6, true, new Set(['intelligence'])));
-		list.add(new PerLevelModifier(RoleAbilityName.arcanistSpells, 1, false));
+		list.add(new PerLevelModifier({
+			source: RoleName.arcanist,
+			value: 6,
+			includeFirstLevel: true,
+			attributeBonuses: new Set(['intelligence']),
+		}));
+		list.add(new PerLevelModifier({
+			source: RoleAbilityName.arcanistSpells,
+			value: 1,
+			includeFirstLevel: false,
+		}));
 
-		expect(list.getTotalPerLevel(false)).toBe(7);
+		expect(list.getTotalPerLevel(Level.two)).toBe(7);
 	});
 
 	it('should calculate total per level on first level', () => {
 		const list = new PerLevelModifiersList();
-		list.add(new PerLevelModifier(RoleName.arcanist, 6, true, new Set(['intelligence'])));
-		list.add(new PerLevelModifier(RoleAbilityName.arcanistSpells, 1, false));
+		list.add(new PerLevelModifier({
+			source: RoleName.arcanist,
+			value: 6,
+			includeFirstLevel: true,
+			attributeBonuses: new Set(['intelligence']),
+		}));
+		list.add(new PerLevelModifier({
+			source: RoleAbilityName.arcanistSpells,
+			value: 1,
+			includeFirstLevel: false,
+		}));
 
-		expect(list.getTotalPerLevel(true)).toBe(6);
+		expect(list.getTotalPerLevel(Level.one)).toBe(6);
 	});
 });

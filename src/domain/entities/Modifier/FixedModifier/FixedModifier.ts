@@ -11,6 +11,11 @@ export class FixedModifier extends Modifier implements ModifierInterface {
 		value: number,
 		attributeBonuses?: Set<Attribute>,
 	) {
-		super(source, value, 'fixed', attributeBonuses);
+		super({
+			source,
+			value,
+			attributeBonuses,
+			type: 'fixed',
+		});
 	}
 }

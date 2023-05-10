@@ -26,13 +26,12 @@ describe('IronWill', () => {
 
 		expect(transaction.run).toHaveBeenCalledWith(new AddPerLevelModifierToManaPoints({
 			payload: {
-				modifier: new PerLevelModifier(
-					GeneralPowerName.ironWill,
-					1,
-					true,
-					new Set(),
-					2,
-				),
+				modifier: new PerLevelModifier({
+					source: GeneralPowerName.ironWill,
+					value: 1,
+					includeFirstLevel: true,
+					frequency: 2,
+				}),
 			},
 			transaction,
 		}));

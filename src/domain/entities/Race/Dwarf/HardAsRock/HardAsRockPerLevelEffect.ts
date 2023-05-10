@@ -16,7 +16,11 @@ export class HardAsRockPerLevelEffect extends PassiveEffect {
 	apply(transaction: TransactionInterface): void {
 		transaction.run(new AddPerLevelModifierToLifePoints({
 			payload: {
-				modifier: new PerLevelModifier(this.source, 1, false),
+				modifier: new PerLevelModifier({
+					source: this.source,
+					value: 1,
+					includeFirstLevel: false,
+				}),
 			},
 			transaction,
 		}));

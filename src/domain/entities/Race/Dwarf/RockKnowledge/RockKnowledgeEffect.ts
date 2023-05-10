@@ -28,7 +28,11 @@ export class RockKnowledgeEffect extends PassiveEffect {
 	}
 
 	apply(transaction: TransactionInterface): void {
-		const modifier = new ContextualModifier(this.source, RockKnowledgeEffect.skillModifier, RockKnowledgeEffect.condition);
+		const modifier = new ContextualModifier({
+			source: this.source,
+			value: RockKnowledgeEffect.skillModifier,
+			condition: RockKnowledgeEffect.condition,
+		});
 		transaction.run(new ChangeVision({payload: {source: this.source, vision: Vision.dark}, transaction}));
 		transaction.run(new AddContextualModifierToSkill({payload: {modifier, skill: SkillName.perception}, transaction}));
 		transaction.run(new AddContextualModifierToSkill({payload: {modifier, skill: SkillName.survival}, transaction}));

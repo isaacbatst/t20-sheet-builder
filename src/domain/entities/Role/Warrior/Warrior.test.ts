@@ -123,7 +123,12 @@ describe('Warrior', () => {
 
 		expect(transaction.run).toHaveBeenCalledWith(new AddPerLevelModifierToLifePoints({
 			payload: {
-				modifier: new PerLevelModifier(RoleName.warrior, 5, false, new Set(['constitution'])),
+				modifier: new PerLevelModifier({
+					source: RoleName.warrior,
+					value: 5,
+					includeFirstLevel: false,
+					attributeBonuses: new Set(['constitution']),
+				}),
 			},
 			transaction,
 		}));
@@ -136,7 +141,10 @@ describe('Warrior', () => {
 
 		expect(transaction.run).toHaveBeenCalledWith(new AddPerLevelModifierToManaPoints({
 			payload: {
-				modifier: new PerLevelModifier(RoleName.warrior, 3, true),
+				modifier: new PerLevelModifier({
+					source: RoleName.warrior,
+					value: 3,
+				}),
 			},
 			transaction,
 		}));
