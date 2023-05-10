@@ -19,41 +19,40 @@ import {type SheetPointsInterface} from '../SheetPointsInterface';
 import {type SheetPowersInterface} from '../SheetPowersInterface';
 import {type SheetSkillsInterface} from '../SheetSkillsInterface';
 import {type SheetSpellsInterface} from '../SheetSpellsInterface';
-import {type SerializedSheetLearnedCircles, type SerializedSheetAbilityEffect, type SerializedSheetContextualModifiersList, type SerializedSheetDefense, type SerializedSheetGeneralPower, type SerializedSheetInterface, type SerializedSheetInventoryEquipment, type SerializedSheetModifier, type SerializedSheetModifiersList, type SerializedSheetOrigin, type SerializedSheetOriginPower, type SerializedSheetPerLevelModifiersList, type SerializedSheetPoints, type SerializedSheetRace, type SerializedSheetRaceAbility, type SerializedSheetRole, type SerializedSheetRoleAbility, type SerializedSheetRolePower, type SerializedSheetSkill, type SerializedSheetSkills, type SerializedSheetSpell} from './SerializedSheetInterface';
+import {type SerializedSheetAbilityEffect, type SerializedSheetContextualModifiersList, type SerializedSheetDefense, type SerializedSheetGeneralPower, type SerializedSheetInterface, type SerializedSheetInventoryEquipment, type SerializedSheetLearnedCircles, type SerializedSheetModifier, type SerializedSheetModifiersList, type SerializedSheetOrigin, type SerializedSheetOriginPower, type SerializedSheetPerLevelModifiersList, type SerializedSheetPoints, type SerializedSheetRace, type SerializedSheetRaceAbility, type SerializedSheetRole, type SerializedSheetRoleAbility, type SerializedSheetRolePower, type SerializedSheetSkill, type SerializedSheetSkills, type SerializedSheetSpell} from './SerializedSheetInterface';
 
 export class SheetSerializer {
 	constructor(
-		private readonly sheet: SheetInterface,
 		private readonly context: ContextInterface,
 	) {}
 
-	serialize(): SerializedSheetInterface {
-		const race = this.sheet.getSheetRace().getRace();
-		const role = this.sheet.getSheetRole().getRole();
-		const origin = this.sheet.getSheetOrigin().getOrigin();
-		const powers = this.sheet.getSheetPowers();
+	serialize(sheet: SheetInterface): SerializedSheetInterface {
+		const race = sheet.getSheetRace().getRace();
+		const role = sheet.getSheetRole().getRole();
+		const origin = sheet.getSheetOrigin().getOrigin();
+		const powers = sheet.getSheetPowers();
 		return {
-			buildSteps: this.sheet.getBuildSteps(),
-			level: this.sheet.getLevel(),
-			displacement: this.sheet.getSheetDisplacement().getDisplacement(),
-			attributes: this.sheet.getSheetAttributes().getValues(),
-			defense: this.serializeDefense(this.sheet.getSheetDefense()),
-			money: this.sheet.getSheetInventory().getMoney(),
+			buildSteps: sheet.getBuildSteps(),
+			level: sheet.getLevel(),
+			displacement: sheet.getSheetDisplacement().getDisplacement(),
+			attributes: sheet.getSheetAttributes().getValues(),
+			defense: this.serializeDefense(sheet.getSheetDefense(), sheet),
+			money: sheet.getSheetInventory().getMoney(),
 			race: race ? this.serializeRace(race) : undefined,
 			role: role ? this.serializeRole(role) : undefined,
 			origin: origin ? this.serializeOrigin(origin) : undefined,
-			lifePoints: this.serializePoints(this.sheet.getSheetLifePoints()),
-			manaPoints: this.serializePoints(this.sheet.getSheetManaPoints()),
-			equipments: this.serializeEquipments(this.sheet.getSheetInventory()),
+			lifePoints: this.serializePoints(sheet.getSheetLifePoints(), sheet),
+			manaPoints: this.serializePoints(sheet.getSheetManaPoints(), sheet),
+			equipments: this.serializeEquipments(sheet.getSheetInventory()),
 			generalPowers: this.serializeGeneralPowers(powers),
 			rolePowers: this.serializeRolePowers(powers),
 			originPowers: this.serializeOriginPowers(powers),
-			learnedCircles: this.serializeLearnedCircles(this.sheet.getSheetSpells()),
-			proficiencies: this.sheet.getSheetProficiencies().getProficiencies(),
-			skills: this.serializeSkills(this.sheet.getSheetSkills()),
-			spells: this.serializeSpells(this.sheet.getSheetSpells()),
-			tormentaPowersAttribute: this.sheet.getSheetAttributes().getTormentaPowersAttribute(),
-			vision: this.sheet.getSheetVision().getVision(),
+			learnedCircles: this.serializeLearnedCircles(sheet.getSheetSpells()),
+			proficiencies: sheet.getSheetProficiencies().getProficiencies(),
+			skills: this.serializeSkills(sheet.getSheetSkills(), sheet),
+			spells: this.serializeSpells(sheet.getSheetSpells()),
+			tormentaPowersAttribute: sheet.getSheetAttributes().getTormentaPowersAttribute(),
+			vision: sheet.getSheetVision().getVision(),
 		};
 	}
 
@@ -90,14 +89,14 @@ export class SheetSerializer {
 		};
 	}
 
-	private serializeSkills(sheetSkills: SheetSkillsInterface): SerializedSheetSkills {
-		const attributes = this.sheet.getSheetAttributes().getValues();
-		const level = this.sheet.getLevel();
+	private serializeSkills(sheetSkills: SheetSkillsInterface, sheet: SheetInterface): SerializedSheetSkills {
+		const attributes = sheet.getSheetAttributes().getValues();
+		const level = sheet.getLevel();
 		const calculator = SkillTotalCalculatorFactory.make(attributes, level, this.context);
 		const skills = sheetSkills.getSkills();
 		const entries = Object.entries(skills);
 		const serialized = entries.reduce<SerializedSheetSkills>((acc, [skillName, skill]) => {
-			acc[skillName as SkillName] = this.serializeSkill(skill, calculator);
+			acc[skillName as SkillName] = this.serializeSkill(skill, calculator, sheet);
 			return acc;
 		// eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
 		}, {} as SerializedSheetSkills);
@@ -105,11 +104,11 @@ export class SheetSerializer {
 		return serialized;
 	}
 
-	private serializeSkill(skill: Skill, totalCalculator: SkillTotalCalculator): SerializedSheetSkill {
+	private serializeSkill(skill: Skill, totalCalculator: SkillTotalCalculator, sheet: SheetInterface): SerializedSheetSkill {
 		return {
 			attribute: skill.attribute,
-			contextualModifiers: this.serializeContextualModifiersList(skill.contextualModifiers),
-			fixedModifiers: this.serializeFixedModifiersList(skill.fixedModifiers),
+			contextualModifiers: this.serializeContextualModifiersList(skill.contextualModifiers, sheet),
+			fixedModifiers: this.serializeFixedModifiersList(skill.fixedModifiers, sheet),
 			isTrained: skill.getIsTrained(),
 			total: skill.getTotal(totalCalculator),
 			trainingPoints: skill.getTrainingPoints(),
@@ -165,12 +164,12 @@ export class SheetSerializer {
 		return equipments;
 	}
 
-	private serializePoints(points: SheetPointsInterface): SerializedSheetPoints {
-		const attributes = this.sheet.getSheetAttributes().getValues();
+	private serializePoints(points: SheetPointsInterface, sheet: SheetInterface): SerializedSheetPoints {
+		const attributes = sheet.getSheetAttributes().getValues();
 		return {
-			max: points.getMax(attributes, this.sheet.getLevel()),
-			fixedModifiers: this.serializeFixedModifiersList(points.getFixedModifiers()),
-			perLevelModifiers: this.serializePerLevelModifiersList(points.getPerLevelModifiers()),
+			max: points.getMax(attributes, sheet.getLevel()),
+			fixedModifiers: this.serializeFixedModifiersList(points.getFixedModifiers(), sheet),
+			perLevelModifiers: this.serializePerLevelModifiersList(points.getPerLevelModifiers(), sheet),
 		};
 	}
 
@@ -233,23 +232,23 @@ export class SheetSerializer {
 				})));
 	}
 
-	private serializeDefense(sheetDefense: SheetDefenseInterface): SerializedSheetDefense {
+	private serializeDefense(sheetDefense: SheetDefenseInterface, sheet: SheetInterface): SerializedSheetDefense {
 		const defense = sheetDefense.getDefense();
-		const attributes = this.sheet.getSheetAttributes().getValues();
-		const inventory = this.sheet.getSheetInventory();
+		const attributes = sheet.getSheetAttributes().getValues();
+		const inventory = sheet.getSheetInventory();
 		const armorBonus = inventory.getArmorBonus();
 		const shieldBonus = inventory.getShieldBonus();
 		const totalCalculator = DefenseTotalCalculatorFactory.make(attributes, armorBonus, shieldBonus);
 
 		return {
 			attribute: defense.attribute,
-			fixedModifiers: this.serializeFixedModifiersList(defense.fixedModifiers),
+			fixedModifiers: this.serializeFixedModifiersList(defense.fixedModifiers, sheet),
 			total: defense.getTotal(totalCalculator),
 		};
 	}
 
-	private serializeFixedModifiersList(list: FixedModifiersListInterface): SerializedSheetModifiersList {
-		const attributes = this.sheet.getSheetAttributes().getValues();
+	private serializeFixedModifiersList(list: FixedModifiersListInterface, sheet: SheetInterface): SerializedSheetModifiersList {
+		const attributes = sheet.getSheetAttributes().getValues();
 		const appliableValueCalculator = new FixedModifierAppliableValueCalculator(attributes);
 		const totalCalculator = new FixedModifiersListTotalCalculator(attributes);
 		return {
@@ -258,9 +257,9 @@ export class SheetSerializer {
 		};
 	}
 
-	private serializePerLevelModifiersList(list: PerLevelModifiersListInterface): SerializedSheetPerLevelModifiersList {
-		const attributes = this.sheet.getSheetAttributes().getValues();
-		const level = this.sheet.getLevel();
+	private serializePerLevelModifiersList(list: PerLevelModifiersListInterface, sheet: SheetInterface): SerializedSheetPerLevelModifiersList {
+		const attributes = sheet.getSheetAttributes().getValues();
+		const level = sheet.getLevel();
 		const totalCalculator = new PerLevelModifiersListTotalCalculator(attributes, level);
 		return {
 			modifiers: list.modifiers.map(modifier => {
@@ -272,8 +271,8 @@ export class SheetSerializer {
 		};
 	}
 
-	private serializeContextualModifiersList(list: ContextualModifiersListInterface): SerializedSheetContextualModifiersList {
-		const attributes = this.sheet.getSheetAttributes().getValues();
+	private serializeContextualModifiersList(list: ContextualModifiersListInterface, sheet: SheetInterface): SerializedSheetContextualModifiersList {
+		const attributes = sheet.getSheetAttributes().getValues();
 		const totalCalculator = new ContextualModifiersListTotalCalculator(this.context, attributes);
 		return {
 			modifiers: list.modifiers.map(modifier => {
