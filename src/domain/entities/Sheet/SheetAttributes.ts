@@ -21,10 +21,16 @@ export class SheetAttributes implements SheetAttributesInterface {
 	}
 
 	applyRaceModifiers(modifiers: Partial<Attributes>): void {
+		const updatedAttributes: Partial<Attributes> = {};
 		Object.entries(modifiers).forEach(([key, modifier]) => {
 			const attribute = key as Attribute;
-			this.attributes[attribute] += modifier;
+			updatedAttributes[attribute] = this.attributes[attribute] + modifier;
 		});
+
+		this.attributes = {
+			...this.attributes,
+			...updatedAttributes,
+		};
 	}
 
 	changeTormentaPowersAttribute(attribute: keyof Attributes): void {
