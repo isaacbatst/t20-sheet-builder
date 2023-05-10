@@ -1,4 +1,3 @@
-import {type AbilityEffectInterface} from '../../../../../../Ability/AbilityEffect';
 import {AbilityEffects, type AbilityEffectsInterface} from '../../../../../../Ability/AbilityEffects';
 import {type AbilityLevel} from '../../../../../../Ability/AbilityLevel';
 import {type Spell} from '../../../../../../Spell';
@@ -8,7 +7,15 @@ import {ArcanistLineageFaerieCheatTrainingEffect} from './ArcanistLineageFaerieC
 import {ArcanistLineageFaerieExtraSpellEffect} from './ArcanistLineageFaerieExtraSpellEffect';
 
 export class ArcanistLineageFaerie extends ArcanistLineage {
-	override effects: Record<AbilityLevel, AbilityEffectsInterface>;
+	override effects: Record<AbilityLevel, AbilityEffectsInterface> & {
+		basic: {
+			passive: {
+				cheatTraining: ArcanistLineageFaerieCheatTrainingEffect;
+				extraSpell: ArcanistLineageFaerieExtraSpellEffect;
+			};
+		};
+	};
+
 	override type: ArcanistLineageType = ArcanistLineageType.faerie;
 
 	constructor(extraSpell: Spell) {

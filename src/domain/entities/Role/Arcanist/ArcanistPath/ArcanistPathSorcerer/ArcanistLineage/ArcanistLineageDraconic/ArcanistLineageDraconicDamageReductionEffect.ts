@@ -8,11 +8,11 @@ export class ArcanistLineageDraconicDamageReductionEffect extends PassiveEffect 
 		return 'Você recebe redução de dano 5 ao tipo escolhido';
 	}
 
-	constructor(private readonly damageType: ArcanistLineageDraconicDamageType) {
+	constructor(readonly damageType: ArcanistLineageDraconicDamageType) {
 		super(RoleAbilityName.arcanistSupernaturalLineage);
 	}
 
 	override apply(transaction: TransactionInterface): void {
-		throw new Error('Method not implemented.');
+		// Throw new Error('Method not implemented.');
 	}
 }

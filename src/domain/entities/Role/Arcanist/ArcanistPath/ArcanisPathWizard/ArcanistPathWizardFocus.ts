@@ -1,5 +1,5 @@
-import type {Equipment} from '../../../../Inventory/Equipment/Equipment';
+import {type EquipmentWizardFocus} from '../../../../Inventory/Equipment/EquipmentWizardFocus/EquipmentWizardFocus';
 
 export abstract class ArcanistPathWizardFocus {
-	constructor(readonly equipment: Equipment) {}
+	constructor(readonly equipment: EquipmentWizardFocus) {}
 }

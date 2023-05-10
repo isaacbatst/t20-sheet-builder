@@ -7,7 +7,15 @@ import {ArcanistLineageDraconicDamageReductionEffect} from './ArcanistLineageDra
 import {type ArcanistLineageDraconicDamageType} from './ArcanistLineageDraconicDamageType';
 
 export class ArcanistLineageDraconic extends ArcanistLineage {
-	override effects: Record<AbilityLevel, AbilityEffectsInterface>;
+	override effects: Record<AbilityLevel, AbilityEffectsInterface> & {
+		basic: {
+			passive: {
+				charismaBonus: ArcanistLineageDraconicCharismaBonusEffect;
+				damageReduction: ArcanistLineageDraconicDamageReductionEffect;
+			};
+		};
+	};
+
 	override type: ArcanistLineageType = ArcanistLineageType.draconic;
 
 	constructor(
@@ -21,7 +29,7 @@ export class ArcanistLineageDraconic extends ArcanistLineage {
 			basic: new AbilityEffects({
 				passive: {
 					charismaBonus: charismaBonusEffect,
-					// DamageReduction: damageReductionEffect,
+					damageReduction: damageReductionEffect,
 				},
 			}),
 			enhanced: new AbilityEffects(),

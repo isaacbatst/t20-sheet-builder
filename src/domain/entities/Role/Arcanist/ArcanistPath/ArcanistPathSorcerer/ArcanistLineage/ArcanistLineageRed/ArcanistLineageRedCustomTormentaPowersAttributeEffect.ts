@@ -9,7 +9,7 @@ export class ArcanistLineageRedCustomTormentaPowersAttributeEffect extends Passi
 		return 'Você pode perder outro atributo em vez de Carisma por poderes da Tormenta';
 	}
 
-	constructor(private readonly attribute: Attribute) {
+	constructor(readonly attribute: Attribute) {
 		super(RoleAbilityName.arcanistSupernaturalLineage);
 	}
 

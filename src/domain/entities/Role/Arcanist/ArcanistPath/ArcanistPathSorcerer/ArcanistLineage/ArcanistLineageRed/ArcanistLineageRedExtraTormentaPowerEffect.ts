@@ -10,7 +10,7 @@ export class ArcanistLineageRedExtraTormentaPowerEffect extends PassiveEffect {
 	}
 
 	constructor(
-		private readonly power: TormentaPower,
+		readonly power: TormentaPower,
 	) {
 		super(RoleAbilityName.arcanistSupernaturalLineage);
 	}

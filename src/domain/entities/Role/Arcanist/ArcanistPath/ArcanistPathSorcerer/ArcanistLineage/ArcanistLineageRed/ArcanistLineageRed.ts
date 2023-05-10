@@ -9,7 +9,14 @@ import {ArcanistLineageRedExtraTormentaPowerEffect} from './ArcanistLineageRedEx
 
 export class ArcanistLineageRed extends ArcanistLineage {
 	override type: ArcanistLineageType = ArcanistLineageType.red;
-	override effects: Record<AbilityLevel, AbilityEffectsInterface>;
+	override effects: Record<AbilityLevel, AbilityEffectsInterface> & {
+		basic: {
+			passive: {
+				customTormentaPowersAttribute: ArcanistLineageRedCustomTormentaPowersAttributeEffect;
+				extraTormentaPower: ArcanistLineageRedExtraTormentaPowerEffect;
+			};
+		};
+	};
 
 	constructor(power: TormentaPower, readonly attributeToLose: Attribute = 'charisma') {
 		super();
