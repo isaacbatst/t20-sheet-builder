@@ -135,6 +135,8 @@ export type SerializedSheetPoints = {
 	perLevelModifiers: SerializedSheetPerLevelModifiersList;
 };
 
+export type SerializedSheetLearnedCircles = Record<LearnableSpellType, SpellCircle[]>;
+
 export type SerializedSheetInterface = {
 	attributes: Attributes;
 	buildSteps: BuildStepInterface[];
@@ -144,7 +146,7 @@ export type SerializedSheetInterface = {
 	origin: SerializedSheetOrigin | undefined;
 	skills: SerializedSheetSkills;
 	tormentaPowersAttribute: Attribute;
-	learnedCircles: Record<LearnableSpellType, Set<SpellCircle>>;
+	learnedCircles:	SerializedSheetLearnedCircles;
 	spells: SerializedSheetSpell[];
 	money: number;
 	equipments: SerializedSheetInventoryEquipment[];

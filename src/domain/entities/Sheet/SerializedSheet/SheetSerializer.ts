@@ -11,7 +11,7 @@ import {type SkillName} from '../../Skill';
 import {type Skill} from '../../Skill/Skill';
 import {type SkillTotalCalculator} from '../../Skill/SkillTotalCalculator';
 import {SkillTotalCalculatorFactory} from '../../Skill/SkillTotalCalculatorFactory';
-import {type Spell} from '../../Spell';
+import {type LearnableSpellType, type Spell} from '../../Spell';
 import {type SheetDefenseInterface} from '../SheetDefenseInterface';
 import {type SheetInterface} from '../SheetInterface';
 import {type SheetInventoryInterface} from '../SheetInventoryInterface';
@@ -19,7 +19,7 @@ import {type SheetPointsInterface} from '../SheetPointsInterface';
 import {type SheetPowersInterface} from '../SheetPowersInterface';
 import {type SheetSkillsInterface} from '../SheetSkillsInterface';
 import {type SheetSpellsInterface} from '../SheetSpellsInterface';
-import {type SerializedSheetAbilityEffect, type SerializedSheetContextualModifiersList, type SerializedSheetDefense, type SerializedSheetGeneralPower, type SerializedSheetInterface, type SerializedSheetInventoryEquipment, type SerializedSheetModifier, type SerializedSheetModifiersList, type SerializedSheetOrigin, type SerializedSheetOriginPower, type SerializedSheetPerLevelModifiersList, type SerializedSheetPoints, type SerializedSheetRace, type SerializedSheetRaceAbility, type SerializedSheetRole, type SerializedSheetRoleAbility, type SerializedSheetRolePower, type SerializedSheetSkill, type SerializedSheetSkills, type SerializedSheetSpell} from './SerializedSheetInterface';
+import {type SerializedSheetLearnedCircles, type SerializedSheetAbilityEffect, type SerializedSheetContextualModifiersList, type SerializedSheetDefense, type SerializedSheetGeneralPower, type SerializedSheetInterface, type SerializedSheetInventoryEquipment, type SerializedSheetModifier, type SerializedSheetModifiersList, type SerializedSheetOrigin, type SerializedSheetOriginPower, type SerializedSheetPerLevelModifiersList, type SerializedSheetPoints, type SerializedSheetRace, type SerializedSheetRaceAbility, type SerializedSheetRole, type SerializedSheetRoleAbility, type SerializedSheetRolePower, type SerializedSheetSkill, type SerializedSheetSkills, type SerializedSheetSpell} from './SerializedSheetInterface';
 
 export class SheetSerializer {
 	constructor(
@@ -48,13 +48,27 @@ export class SheetSerializer {
 			generalPowers: this.serializeGeneralPowers(powers),
 			rolePowers: this.serializeRolePowers(powers),
 			originPowers: this.serializeOriginPowers(powers),
-			learnedCircles: this.sheet.getSheetSpells().getLearnedCircles(),
+			learnedCircles: this.serializeLearnedCircles(this.sheet.getSheetSpells()),
 			proficiencies: this.sheet.getSheetProficiencies().getProficiencies(),
 			skills: this.serializeSkills(this.sheet.getSheetSkills()),
 			spells: this.serializeSpells(this.sheet.getSheetSpells()),
 			tormentaPowersAttribute: this.sheet.getSheetAttributes().getTormentaPowersAttribute(),
 			vision: this.sheet.getSheetVision().getVision(),
 		};
+	}
+
+	private serializeLearnedCircles(spells: SheetSpellsInterface): SerializedSheetLearnedCircles {
+		const circlesPerType = spells.getLearnedCircles();
+		const serialized: SerializedSheetLearnedCircles = {
+			arcane: [],
+			divine: [],
+		};
+
+		Object.entries(circlesPerType).forEach(([type, circles]) => {
+			serialized[type as LearnableSpellType] = [...circles];
+		});
+
+		return serialized;
 	}
 
 	private serializeSpells(spells: SheetSpellsInterface): SerializedSheetSpell[] {
