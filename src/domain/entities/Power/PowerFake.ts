@@ -6,6 +6,7 @@ import {RolePowerName} from '../Role/RolePowerName';
 import type {GeneralPowerInterface} from './GeneralPower/GeneralPower';
 import {GeneralPowerName} from './GeneralPower/GeneralPowerName';
 import type {PowerInterface, PowerType} from './Power';
+import {GeneralPowerGroup} from './GeneralPower';
 
 export class PowerFake implements PowerInterface {
 	powerType: PowerType = 'general';
@@ -17,6 +18,7 @@ export class PowerFake implements PowerInterface {
 }
 
 export class GeneralPowerFake implements GeneralPowerInterface {
+	group: GeneralPowerGroup = GeneralPowerGroup.combat;
 	powerType: PowerType = 'general';
 	name: GeneralPowerName = GeneralPowerName.dodge;
 	abilityType: AbilityType = 'power';

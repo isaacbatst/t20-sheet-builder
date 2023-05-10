@@ -1,3 +1,4 @@
+import {type FixedModifiersListInterface, type PerLevelModifiersListInterface} from '../Modifier';
 import {type ModifierInterface} from '../Modifier/ModifierInterface';
 import {type PerLevelModifierInterface} from '../Modifier/PerLevelModifier/PerLevelModifierInterface';
 import {type Points} from '../Points/Points';
@@ -8,6 +9,14 @@ import {type SheetPointsInterface} from './SheetPointsInterface';
 
 export class SheetPoints implements SheetPointsInterface {
 	constructor(private readonly points: Points) {}
+	getFixedModifiers(): FixedModifiersListInterface {
+		return this.points.fixedModifiers;
+	}
+
+	getPerLevelModifiers(): PerLevelModifiersListInterface {
+		return this.points.perLevelModifiers;
+	}
+
 	getModifiers(): ModifierInterface[] {
 		return [
 			...this.points.fixedModifiers.modifiers,
