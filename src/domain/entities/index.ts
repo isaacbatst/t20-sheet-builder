@@ -13,3 +13,4 @@ export * from './Error';
 export * from './Damage/DamageType';
 export * from './Modifier';
 export * from './Ability';
+export * from './Context';
