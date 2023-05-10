@@ -5,7 +5,7 @@ import {type SkillName} from '../../Skill';
 import {type SpellName, SpellFactory} from '../../Spell';
 import {type Arcanist} from './Arcanist';
 import {ArcanistBuilder} from './ArcanistBuider';
-import {type ArcanistPathName, ArcanistLineageType, type ArcanistLineageDraconicDamageType, type ArcanistPath, ArcanistPathMage, ArcanistPathWizardFocusFactory, type ArcanisPathWizardFocusName, ArcanistPathWizard, type ArcanistLineage, ArcanistLineageDraconic, ArcanistLineageFaerie, ArcanistLineageRed, ArcanistPathSorcerer} from './ArcanistPath';
+import {type ArcanistPathName, type ArcanistLineageType, type ArcanistLineageDraconicDamageType, type ArcanistPath, ArcanistPathMage, ArcanistPathWizardFocusFactory, type ArcanisPathWizardFocusName, ArcanistPathWizard, type ArcanistLineage, ArcanistLineageDraconic, ArcanistLineageFaerie, ArcanistLineageRed, ArcanistPathSorcerer} from './ArcanistPath';
 
 export type ArcanistFactoryParams = {
 	selectedSkillsByGroup: SkillName[][];
@@ -20,90 +20,43 @@ export type ArcanistFactoryParams = {
 	sorcererLineageRedAttribute?: Attribute;
 };
 
-export class ArcanistFactory {
-	static make(params: ArcanistFactoryParams): Arcanist {
-		const {
-			initialSpells,
-			selectedSkillsByGroup,
-			mageSpell,
-			pathName,
-			sorcererLineage,
-			sorcererLineageDraconicDamageType,
-			sorcererLineageFaerieExtraSpell,
-			sorcererLineageRedAttribute,
-			sorcererLineageRedExtraPower,
-			wizardFocus,
-		} = params;
+export abstract class ArcanistFactory {
+	protected pathName?: ArcanistPathName;
+	protected mageSpell?: SpellName;
+	protected wizardFocus?: EquipmentName;
+	protected sorcererLineage?: ArcanistLineageType;
+	protected sorcererLineageDraconicDamageType?: ArcanistLineageDraconicDamageType;
+	protected sorcererLineageFaerieExtraSpell?: SpellName;
+	protected sorcererLineageRedExtraPower?: GeneralPowerName;
+	protected sorcererLineageRedAttribute?: Attribute;
+	private readonly selectedSkillsByGroup: SkillName[][];
+	private readonly initialSpells: SpellName[];
 
-		if (!pathName) {
+	constructor(params: ArcanistFactoryParams) {
+		this.selectedSkillsByGroup = params.selectedSkillsByGroup;
+		this.initialSpells = params.initialSpells;
+		this.pathName = params.pathName;
+		this.mageSpell = params.mageSpell;
+		this.wizardFocus = params.wizardFocus;
+		this.sorcererLineage = params.sorcererLineage;
+		this.sorcererLineageDraconicDamageType = params.sorcererLineageDraconicDamageType;
+		this.sorcererLineageFaerieExtraSpell = params.sorcererLineageFaerieExtraSpell;
+		this.sorcererLineageRedExtraPower = params.sorcererLineageRedExtraPower;
+		this.sorcererLineageRedAttribute = params.sorcererLineageRedAttribute;
+	}
+
+	make(): Arcanist {
+		if (!this.pathName) {
 			throw new Error('MISSING_ARCANIST_PATH');
 		}
 
-		let path: ArcanistPath | undefined;
-		if (pathName === 'mage') {
-			if (!mageSpell) {
-				throw new Error('MISSING_MAGE_SPELL');
-			}
-
-			const spell = SpellFactory.make(mageSpell);
-			path = new ArcanistPathMage(spell);
-		}
-
-		if (pathName === 'wizard') {
-			if (!wizardFocus) {
-				throw new Error('MISSING_WIZARD_FOCUS');
-			}
-
-			const focus = ArcanistPathWizardFocusFactory.make(wizardFocus as ArcanisPathWizardFocusName);
-			path = new ArcanistPathWizard(focus);
-		}
-
-		if (pathName === 'sorcerer') {
-			let lineage: ArcanistLineage | undefined;
-			if (!sorcererLineage) {
-				throw new Error('MISSING_SORCERER_LINEAGE');
-			}
-
-			if (sorcererLineage === ArcanistLineageType.draconic) {
-				if (!sorcererLineageDraconicDamageType) {
-					throw new Error('MISSING_DRACONIC_DAMAGE_TYPE');
-				}
-
-				lineage = new ArcanistLineageDraconic(sorcererLineageDraconicDamageType);
-			}
-
-			if (sorcererLineage === ArcanistLineageType.faerie) {
-				if (!sorcererLineageFaerieExtraSpell) {
-					throw new Error('MISSING_FAERIE_EXTRA_SPELL');
-				}
-
-				const spell = SpellFactory.make(sorcererLineageFaerieExtraSpell);
-				lineage = new ArcanistLineageFaerie(spell);
-			}
-
-			if (sorcererLineage === ArcanistLineageType.red) {
-				if (!sorcererLineageRedExtraPower) {
-					throw new Error('MISSING_RED_EXTRA_POWER');
-				}
-
-				const power = GeneralPowerFactory.make({name: sorcererLineageRedExtraPower});
-				lineage = new ArcanistLineageRed(power, sorcererLineageRedAttribute);
-			}
-
-			if (!lineage) {
-				throw new Error('UNKNOWN_LINEAGE_ERROR');
-			}
-
-			path = new ArcanistPathSorcerer(lineage);
-		}
-
-		if (!path) {
-			throw new Error('UNKNOWN_PATH_ERROR');
-		}
+		const path = this.makePath();
 
 		return ArcanistBuilder
-			.chooseSkills(selectedSkillsByGroup.flat())
+			.chooseSkills(this.selectedSkillsByGroup.flat())
 			.choosePath(path)
-			.chooseSpells(initialSpells.map(spellName => SpellFactory.make(spellName)));
+			.chooseSpells(this.initialSpells.map(spellName => SpellFactory.make(spellName)));
 	}
+
+	abstract makePath(): ArcanistPath;
 }

@@ -1,38 +1,30 @@
-import {type TormentaPower} from '../../../../../Power';
+import {type GeneralPowerName} from '../../../../../Power';
 import {type Attribute} from '../../../../../Sheet';
-import {type Spell} from '../../../../../Spell';
+import {type SpellName} from '../../../../../Spell';
 import {type ArcanistLineage} from './ArcanistLineage';
-import {ArcanistLineageDraconic, type ArcanistLineageDraconicDamageType} from './ArcanistLineageDraconic';
-import {ArcanistLineageFaerie} from './ArcanistLineageFaerie';
-import {ArcanistLineageRed} from './ArcanistLineageRed';
-import {ArcanistLineageType} from './ArcanistLineageType';
+import {type ArcanistLineageDraconicDamageType} from './ArcanistLineageDraconic';
 
 type ArcanistLineageParams = {
-	lineage: ArcanistLineageType.draconic;
-	damageType: ArcanistLineageDraconicDamageType;
-} | {
-	lineage: ArcanistLineageType.faerie;
-	extraSpell: Spell;
-} | {
-	lineage: ArcanistLineageType.red;
-	extraPower: TormentaPower;
-	attributeToLose?: Attribute;
+	sorcererLineageDraconicDamageType?: ArcanistLineageDraconicDamageType;
+	sorcererLineageFaerieExtraSpell?: SpellName;
+	sorcererLineageRedExtraPower?: GeneralPowerName;
+	sorcererLineageRedAttribute?: Attribute;
 };
 
-export class ArcanistLineageFactory {
-	static make(params: ArcanistLineageParams): ArcanistLineage {
-		if (params.lineage === ArcanistLineageType.draconic) {
-			return new ArcanistLineageDraconic(params.damageType);
-		}
+export abstract class ArcanistLineageFactory {
+	sorcererLineageDraconicDamageType?: ArcanistLineageDraconicDamageType;
+	sorcererLineageFaerieExtraSpell?: SpellName;
+	sorcererLineageRedExtraPower?: GeneralPowerName;
+	sorcererLineageRedAttribute?: Attribute;
 
-		if (params.lineage === ArcanistLineageType.faerie) {
-			return new ArcanistLineageFaerie(params.extraSpell);
-		}
-
-		if (params.lineage === ArcanistLineageType.red) {
-			return new ArcanistLineageRed(params.extraPower, params.attributeToLose);
-		}
-
-		throw new Error('INVALID_ARCANIST_LINEAGE');
+	constructor(
+		params: ArcanistLineageParams,
+	) {
+		this.sorcererLineageDraconicDamageType = params.sorcererLineageDraconicDamageType;
+		this.sorcererLineageFaerieExtraSpell = params.sorcererLineageFaerieExtraSpell;
+		this.sorcererLineageRedExtraPower = params.sorcererLineageRedExtraPower;
+		this.sorcererLineageRedAttribute = params.sorcererLineageRedAttribute;
 	}
+
+	abstract make(): ArcanistLineage;
 }
