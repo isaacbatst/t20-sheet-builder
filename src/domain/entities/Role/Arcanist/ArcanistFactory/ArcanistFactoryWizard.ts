@@ -1,5 +1,5 @@
 import {ArcanistFactory} from './ArcanistFactory';
-import {type ArcanisPathWizardFocusName, ArcanistPathWizard, ArcanistPathWizardFocusFactory, type ArcanistPath} from './ArcanistPath';
+import {type ArcanisPathWizardFocusName, ArcanistPathWizard, ArcanistPathWizardFocusFactory, type ArcanistPath} from '../ArcanistPath';
 
 export class ArcanistFactoryWizard extends ArcanistFactory {
 	override makePath(): ArcanistPath {

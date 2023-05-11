@@ -1,9 +1,9 @@
-import {SpellFactory} from '../../Spell';
+import {SpellFactory} from '../../../Spell';
 import {ArcanistFactory} from './ArcanistFactory';
-import {ArcanistPathMage, type ArcanistPath} from './ArcanistPath';
+import {ArcanistPathMage, type ArcanistPath} from '../ArcanistPath';
 
 export class ArcanistFactoryMage extends ArcanistFactory {
-	override makePath(): ArcanistPath {
+	protected makePath(): ArcanistPath {
 		if (!this.mageSpell) {
 			throw new Error('MISSING_MAGE_SPELL');
 		}

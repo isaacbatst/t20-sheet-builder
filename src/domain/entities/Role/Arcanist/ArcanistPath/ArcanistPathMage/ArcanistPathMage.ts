@@ -6,17 +6,21 @@ import {ArcanistPath, ArcanistPathName} from '../ArcanistPath';
 import {ArcanistPathMageExtraSpellEffect} from './ArcanistPathMageExtraSpellEffect';
 
 export class ArcanistPathMage extends ArcanistPath {
-	override effects: AbilityEffectsInterface;
+	effects: AbilityEffectsInterface & {passive: {extraSpell: ArcanistPathMageExtraSpellEffect}};
 	spellsAttribute: Attribute = 'intelligence';
 	spellLearnFrequency: SpellLearnFrequency = 'all';
-	override pathName: ArcanistPathName = ArcanistPathName.mage;
+	readonly pathName = ArcanistPathName.mage;
 
-	constructor(readonly additionalSpell: Spell) {
+	constructor(additionalSpell: Spell) {
 		super();
 		this.effects = new AbilityEffects({
 			passive: {
 				extraSpell: new ArcanistPathMageExtraSpellEffect(additionalSpell),
 			},
 		});
+	}
+
+	getAdditionalSpell(): Spell {
+		return this.effects.passive.extraSpell.spell;
 	}
 }

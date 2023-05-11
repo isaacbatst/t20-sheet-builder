@@ -8,8 +8,12 @@ import {ArcanistPathWizardFocusEffect} from './ArcanistPathWizardFocusEffect';
 export class ArcanistPathWizard extends ArcanistPath {
 	spellsAttribute: Attribute = 'intelligence';
 	spellLearnFrequency: SpellLearnFrequency = 'all';
-	pathName: ArcanistPathName = ArcanistPathName.wizard;
-	override effects: AbilityEffectsInterface;
+	readonly pathName = ArcanistPathName.wizard;
+	override effects: AbilityEffectsInterface & {
+		passive: {
+			focus: ArcanistPathWizardFocusEffect;
+		};
+	};
 
 	constructor(readonly focus: ArcanistPathWizardFocus) {
 		super();
@@ -18,5 +22,9 @@ export class ArcanistPathWizard extends ArcanistPath {
 				focus: new ArcanistPathWizardFocusEffect(focus),
 			},
 		});
+	}
+
+	getFocus() {
+		return this.effects.passive.focus.focus;
 	}
 }

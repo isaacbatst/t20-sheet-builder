@@ -1,11 +1,11 @@
-import {type EquipmentName} from '../../Inventory';
-import {type GeneralPowerName, GeneralPowerFactory} from '../../Power';
-import {type Attribute} from '../../Sheet';
-import {type SkillName} from '../../Skill';
-import {type SpellName, SpellFactory} from '../../Spell';
-import {type Arcanist} from './Arcanist';
-import {ArcanistBuilder} from './ArcanistBuider';
-import {type ArcanistPathName, type ArcanistLineageType, type ArcanistLineageDraconicDamageType, type ArcanistPath, ArcanistPathMage, ArcanistPathWizardFocusFactory, type ArcanisPathWizardFocusName, ArcanistPathWizard, type ArcanistLineage, ArcanistLineageDraconic, ArcanistLineageFaerie, ArcanistLineageRed, ArcanistPathSorcerer} from './ArcanistPath';
+import {type EquipmentName} from '../../../Inventory';
+import {type GeneralPowerName} from '../../../Power';
+import {type Attribute} from '../../../Sheet';
+import {type SkillName} from '../../../Skill';
+import {SpellFactory, type SpellName} from '../../../Spell';
+import {type Arcanist} from '../Arcanist';
+import {ArcanistBuilder} from '../ArcanistBuider';
+import {type ArcanistLineageDraconicDamageType, type ArcanistLineageType, type ArcanistPath, type ArcanistPathName} from '../ArcanistPath';
 
 export type ArcanistFactoryParams = {
 	selectedSkillsByGroup: SkillName[][];
@@ -58,5 +58,5 @@ export abstract class ArcanistFactory {
 			.chooseSpells(this.initialSpells.map(spellName => SpellFactory.make(spellName)));
 	}
 
-	abstract makePath(): ArcanistPath;
+	protected abstract makePath(): ArcanistPath;
 }

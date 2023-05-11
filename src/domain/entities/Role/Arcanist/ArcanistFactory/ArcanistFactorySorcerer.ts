@@ -1,8 +1,8 @@
 import {ArcanistFactory, type ArcanistFactoryParams} from './ArcanistFactory';
-import {ArcanistLineageType, ArcanistPathSorcerer, type ArcanistLineageFactory, type ArcanistPath} from './ArcanistPath';
-import {ArcanistLineageFactoryDraconic} from './ArcanistPath/ArcanistPathSorcerer/ArcanistLineage/ArcanistLineageFactoryDraconic';
-import {ArcanistLineageFactoryFaerie} from './ArcanistPath/ArcanistPathSorcerer/ArcanistLineage/ArcanistLineageFactoryFaerie';
-import {ArcanistLineageFactoryRed} from './ArcanistPath/ArcanistPathSorcerer/ArcanistLineage/ArcanistLineageFactoryRed';
+import {ArcanistLineageType, ArcanistPathSorcerer, type ArcanistLineageFactory, type ArcanistPath} from '../ArcanistPath';
+import {ArcanistLineageFactoryDraconic} from '../ArcanistPath/ArcanistPathSorcerer/ArcanistLineage/ArcanistLineageFactoryDraconic';
+import {ArcanistLineageFactoryFaerie} from '../ArcanistPath/ArcanistPathSorcerer/ArcanistLineage/ArcanistLineageFactoryFaerie';
+import {ArcanistLineageFactoryRed} from '../ArcanistPath/ArcanistPathSorcerer/ArcanistLineage/ArcanistLineageFactoryRed';
 
 export class ArcanistFactorySorcerer extends ArcanistFactory {
 	private readonly lineageFactory: ArcanistLineageFactory;
@@ -29,7 +29,7 @@ export class ArcanistFactorySorcerer extends ArcanistFactory {
 		}
 	}
 
-	override makePath(): ArcanistPath {
+	makePath(): ArcanistPath {
 		const lineage = this.lineageFactory.make();
 		return new ArcanistPathSorcerer(lineage);
 	}

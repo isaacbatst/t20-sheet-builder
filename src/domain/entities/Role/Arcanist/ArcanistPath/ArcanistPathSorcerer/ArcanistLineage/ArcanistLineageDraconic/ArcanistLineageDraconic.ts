@@ -16,7 +16,7 @@ export class ArcanistLineageDraconic extends ArcanistLineage {
 		};
 	};
 
-	override type: ArcanistLineageType = ArcanistLineageType.draconic;
+	readonly type = ArcanistLineageType.draconic;
 
 	constructor(
 		damageType: ArcanistLineageDraconicDamageType,
@@ -35,5 +35,9 @@ export class ArcanistLineageDraconic extends ArcanistLineage {
 			enhanced: new AbilityEffects(),
 			higher: new AbilityEffects(),
 		};
+	}
+
+	getDamageType(): ArcanistLineageDraconicDamageType {
+		return this.effects.basic.passive.damageReduction.damageType;
 	}
 }

@@ -8,7 +8,7 @@ import {ArcanistLineageRedCustomTormentaPowersAttributeEffect} from './ArcanistL
 import {ArcanistLineageRedExtraTormentaPowerEffect} from './ArcanistLineageRedExtraTormentaPowerEffect';
 
 export class ArcanistLineageRed extends ArcanistLineage {
-	override type: ArcanistLineageType = ArcanistLineageType.red;
+	readonly type = ArcanistLineageType.red;
 	override effects: Record<AbilityLevel, AbilityEffectsInterface> & {
 		basic: {
 			passive: {
@@ -30,5 +30,13 @@ export class ArcanistLineageRed extends ArcanistLineage {
 			enhanced: new AbilityEffects(),
 			higher: new AbilityEffects(),
 		};
+	}
+
+	getExtraPower(): TormentaPower {
+		return this.effects.basic.passive.extraTormentaPower.power;
+	}
+
+	getCustomTormentaPowersAttribute(): Attribute {
+		return this.effects.basic.passive.customTormentaPowersAttribute.attribute;
 	}
 }

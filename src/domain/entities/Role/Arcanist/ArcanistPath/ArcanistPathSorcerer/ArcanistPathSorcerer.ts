@@ -5,7 +5,7 @@ import {ArcanistPath, ArcanistPathName} from '../ArcanistPath';
 import {type ArcanistLineage} from './ArcanistLineage/ArcanistLineage';
 
 export class ArcanistPathSorcerer extends ArcanistPath {
-	pathName: ArcanistPathName = ArcanistPathName.sorcerer;
+	readonly pathName = ArcanistPathName.sorcerer;
 	spellsAttribute: keyof Attributes = 'charisma';
 	spellLearnFrequency: SpellLearnFrequency = 'odd';
 	effects: AbilityEffectsInterface;

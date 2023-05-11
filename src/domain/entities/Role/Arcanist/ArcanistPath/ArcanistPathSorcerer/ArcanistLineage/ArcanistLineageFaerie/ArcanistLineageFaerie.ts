@@ -16,7 +16,7 @@ export class ArcanistLineageFaerie extends ArcanistLineage {
 		};
 	};
 
-	override type: ArcanistLineageType = ArcanistLineageType.faerie;
+	readonly type = ArcanistLineageType.faerie;
 
 	constructor(extraSpell: Spell) {
 		super();
@@ -30,5 +30,9 @@ export class ArcanistLineageFaerie extends ArcanistLineage {
 			enhanced: new AbilityEffects(),
 			higher: new AbilityEffects(),
 		};
+	}
+
+	getExtraSpell(): Spell {
+		return this.effects.basic.passive.extraSpell.spell;
 	}
 }

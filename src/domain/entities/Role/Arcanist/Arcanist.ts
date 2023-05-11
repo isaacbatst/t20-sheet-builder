@@ -11,13 +11,13 @@ import type {SpellLearnFrequency} from '../SpellsAbility';
 import type {ArcanistPath} from './ArcanistPath/ArcanistPath';
 import {ArcanistSpells} from './ArcanistSpells/ArcanistSpells';
 
-export class Arcanist extends Role {
+export class Arcanist<T extends ArcanistPath = ArcanistPath> extends Role {
 	static readonly roleName = RoleName.arcanist;
 	static readonly selectSkillGroups: SelectSkillGroup[] = [{amount: 2, skills: [SkillName.knowledge, SkillName.diplomacy, SkillName.cheat, SkillName.war, SkillName.initiative, SkillName.intimidation, SkillName.intuition, SkillName.investigation, SkillName.nobility, SkillName.craft, SkillName.perception]}];
 
 	readonly abilitiesPerLevel: {
 		[Level.one]: {
-			arcanistPath: ArcanistPath;
+			arcanistPath: T;
 			arcanistSpells: ArcanistSpells;
 		};
 		[Level.two]: Record<string, RoleAbility>;
@@ -53,7 +53,7 @@ export class Arcanist extends Role {
 	initialSpells = 3;
 	spellType: SpellType = 'arcane';
 
-	constructor(chosenSkills: SkillName[], path: ArcanistPath, spells: Spell[]) {
+	constructor(chosenSkills: SkillName[], path: T, spells: Spell[]) {
 		super(chosenSkills, Arcanist.selectSkillGroups);
 		const arcanistSpells = new ArcanistSpells(spells, path.spellLearnFrequency, path.spellsAttribute);
 		this.abilitiesPerLevel = {
@@ -81,7 +81,7 @@ export class Arcanist extends Role {
 		return this.abilitiesPerLevel[Level.one].arcanistPath.spellLearnFrequency;
 	}
 
-	getPath(): ArcanistPath {
+	getPath(): T {
 		return this.abilitiesPerLevel[Level.one].arcanistPath;
 	}
 
