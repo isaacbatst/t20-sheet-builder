@@ -6,6 +6,7 @@ import type {RoleInterface, SelectSkillGroup} from './RoleInterface';
 import {RoleName} from './RoleName';
 
 export class RoleFake implements RoleInterface {
+	chosenSkills: SkillName[] = [];
 	abilitiesPerLevel = {
 		[Level.one]: {},
 		[Level.two]: {},
