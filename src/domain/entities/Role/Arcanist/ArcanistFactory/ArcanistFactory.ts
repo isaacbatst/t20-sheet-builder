@@ -8,7 +8,7 @@ import {ArcanistBuilder} from '../ArcanistBuider';
 import {type ArcanistLineageDraconicDamageType, type ArcanistLineageType, type ArcanistPath, type ArcanistPathName} from '../ArcanistPath';
 
 export type ArcanistFactoryParams = {
-	selectedSkillsByGroup: SkillName[][];
+	chosenSkills: SkillName[];
 	initialSpells: SpellName[];
 	pathName?: ArcanistPathName;
 	mageSpell?: SpellName;
@@ -29,11 +29,11 @@ export abstract class ArcanistFactory {
 	protected sorcererLineageFaerieExtraSpell?: SpellName;
 	protected sorcererLineageRedExtraPower?: GeneralPowerName;
 	protected sorcererLineageRedAttribute?: Attribute;
-	private readonly selectedSkillsByGroup: SkillName[][];
+	private readonly chosenSkills: SkillName[];
 	private readonly initialSpells: SpellName[];
 
 	constructor(params: ArcanistFactoryParams) {
-		this.selectedSkillsByGroup = params.selectedSkillsByGroup;
+		this.chosenSkills = params.chosenSkills;
 		this.initialSpells = params.initialSpells;
 		this.pathName = params.pathName;
 		this.mageSpell = params.mageSpell;
@@ -53,7 +53,7 @@ export abstract class ArcanistFactory {
 		const path = this.makePath();
 
 		return ArcanistBuilder
-			.chooseSkills(this.selectedSkillsByGroup.flat())
+			.chooseSkills(this.chosenSkills.flat())
 			.choosePath(path)
 			.chooseSpells(this.initialSpells.map(spellName => SpellFactory.make(spellName)));
 	}
