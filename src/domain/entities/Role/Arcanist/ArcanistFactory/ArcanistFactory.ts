@@ -24,7 +24,7 @@ export type ArcanistFactoryParams = {
 	sorcererLineageRedAttribute?: Attribute;
 };
 
-export abstract class ArcanistFactory {
+export class ArcanistFactory {
 	protected pathName: ArcanistPathName;
 	private readonly chosenSkills: SkillName[];
 	private readonly initialSpells: SpellName[];
