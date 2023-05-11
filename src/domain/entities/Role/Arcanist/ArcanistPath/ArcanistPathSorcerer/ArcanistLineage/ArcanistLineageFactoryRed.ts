@@ -18,10 +18,6 @@ export class ArcanistLineageFactoryRed extends ArcanistLineageFactory {
 	}
 
 	override make(): ArcanistLineage {
-		if (!this.sorcererLineageRedExtraPower) {
-			throw new Error('MISSING_RED_EXTRA_POWER');
-		}
-
 		const power = GeneralPowerFactory.make({name: this.sorcererLineageRedExtraPower});
 		return new ArcanistLineageRed(power, this.sorcererLineageRedAttribute);
 	}
