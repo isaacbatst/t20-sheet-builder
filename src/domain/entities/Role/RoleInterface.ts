@@ -17,6 +17,7 @@ export type RoleInterface = {
 	name: RoleName;
 	startsWithArmor: boolean;
 	abilitiesPerLevel: Record<Level, Record<string, RoleAbility>>;
+	chosenSkills: SkillName[];
 	getTotalInitialSkills(): number;
 	addToSheet(transaction: TransactionInterface): void;
 };

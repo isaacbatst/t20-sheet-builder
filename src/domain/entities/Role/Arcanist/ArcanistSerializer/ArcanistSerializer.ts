@@ -1,17 +1,19 @@
+import {RoleSerializer} from '../../RoleSerializer';
 import {type Arcanist} from '../Arcanist';
 import {ArcanistPathMage, ArcanistPathSerializerMage, ArcanistPathSerializerSorcerer, ArcanistPathSerializerWizard, ArcanistPathSorcerer, ArcanistPathWizard, type ArcanistPath, type ArcanistPathSerializer} from '../ArcanistPath';
 import {type SerializedArcanist} from '../SerializedArcanist';
 
-export class ArcanistSerializer {
+export class ArcanistSerializer extends RoleSerializer<SerializedArcanist> {
 	private readonly pathSerializer: ArcanistPathSerializer;
 
 	constructor(
 		private readonly arcanist: Arcanist,
 	) {
+		super(arcanist);
 		this.pathSerializer = this.getPathSerializer(arcanist.getPath());
 	}
 
-	serialize(): SerializedArcanist {
+	protected serializeRole(): SerializedArcanist {
 		const path = this.pathSerializer.serialize();
 
 		return {
