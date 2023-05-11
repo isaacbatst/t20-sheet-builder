@@ -18,7 +18,7 @@ export class ApplyRoleAbility extends Action<'applyRoleAbility'> {
 	}
 
 	getDescription(): string {
-		const source = new Translatable(this.payload.ability.name).getTranslation();
+		const source = new Translatable(this.payload.source).getTranslation();
 		const ability = Translator.getRoleAbilityTranslation(this.payload.ability.name);
 		return `${source}: habilidade ${ability} adicionada.`;
 	}

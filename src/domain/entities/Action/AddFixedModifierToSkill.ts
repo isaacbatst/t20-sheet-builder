@@ -1,6 +1,6 @@
+import {FixedModifierAppliableValueCalculator} from '../Modifier';
 import {ModifierValue} from '../Modifier/ModifierValue';
 import {Translatable} from '../Translatable';
-import {Translator} from '../Translator';
 import {Action, type ActionSubClassParams} from './Action';
 
 export class AddFixedModifierToSkill extends Action<'addFixedModifierToSkill'> {
@@ -21,7 +21,10 @@ export class AddFixedModifierToSkill extends Action<'addFixedModifierToSkill'> {
 	getDescription(): string {
 		const skill = new Translatable(this.payload.skill).getTranslation();
 		const source = new Translatable(this.payload.modifier.source).getTranslation();
-		const value = new ModifierValue(this.payload.modifier.baseValue).getValueWithSign();
-		return `${source}: ${value} ${skill} aplicado ao modificador "outros".`;
+		const attributes = this.transaction.sheet.getSheetAttributes().getValues();
+		const calculator = new FixedModifierAppliableValueCalculator(attributes);
+		const value = this.payload.modifier.getAppliableValue(calculator);
+		const valueWithSign = new ModifierValue(value).getValueWithSign();
+		return `${source}: ${valueWithSign} ${skill} aplicado.`;
 	}
 }
