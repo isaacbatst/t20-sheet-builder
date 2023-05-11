@@ -1,12 +1,14 @@
 import {type Arcanist} from '../Arcanist';
-import {type ArcanistPath} from '../ArcanistPath';
+import {type ArcanistPathSerializer} from '../ArcanistPath';
 import {type SerializedArcanist, type SerializedArcanistPath} from '../SerializedArcanist';
 
-export abstract class ArcanistSerializer<P extends ArcanistPath, S extends SerializedArcanistPath> {
-	constructor(protected arcanist: Arcanist<P>) {}
+export class ArcanistSerializer {
+	constructor(
+		private readonly arcanist: Arcanist,
+	) {}
 
-	serialize(): SerializedArcanist<S> {
-		const path = this.serializePath();
+	serialize<S extends SerializedArcanistPath>(pathSerializer: ArcanistPathSerializer<S>): SerializedArcanist<S> {
+		const path = pathSerializer.serialize();
 
 		return {
 			name: this.arcanist.name,
@@ -14,6 +16,4 @@ export abstract class ArcanistSerializer<P extends ArcanistPath, S extends Seria
 			path,
 		};
 	}
-
-	protected abstract serializePath(): S;
 }

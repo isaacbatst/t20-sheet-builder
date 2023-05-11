@@ -20,7 +20,7 @@ export class ArcanistPathMage extends ArcanistPath {
 		});
 	}
 
-	getAdditionalSpell(): Spell {
+	getExtraSpell(): Spell {
 		return this.effects.passive.extraSpell.spell;
 	}
 }
