@@ -1,7 +1,7 @@
 import {type SerializedArcanistPath} from '../../SerializedArcanist';
 
 export abstract class ArcanistPathSerializer<
-	S extends SerializedArcanistPath,
+	S extends SerializedArcanistPath = SerializedArcanistPath,
 > {
 	abstract serialize(): S;
 }
