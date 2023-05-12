@@ -2,7 +2,7 @@ import {type SkillName} from '../Skill';
 import {type SerializedArcanist} from './Arcanist';
 import {type RoleName} from './RoleName';
 
-type SerializedWarrior = {
+export type SerializedWarrior = {
 	name: RoleName.warrior;
 };
 
