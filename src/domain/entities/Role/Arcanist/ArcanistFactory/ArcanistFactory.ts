@@ -1,32 +1,40 @@
+import {type GeneralPowerName} from '../../../Power';
+import {type Attribute} from '../../../Sheet';
 import {type SkillName} from '../../../Skill';
 import {SpellFactory, type SpellName} from '../../../Spell';
 import {type Arcanist} from '../Arcanist';
 import {ArcanistBuilder} from '../ArcanistBuider';
-import {type ArcanistPathFactory} from '../ArcanistPath/ArcanistPathFactory/ArcanistPathFactory';
+import {ArcanistPathHandlerSorcerer, type ArcanisPathWizardFocusName, type ArcanistLineageDraconicDamageType, type ArcanistLineageType, type ArcanistPathHandler, type ArcanistPathName, ArcanistPathHandlerMage, ArcanistPathHandlerWizard} from '../ArcanistPath';
 
 export type ArcanistFactoryParams = {
 	chosenSkills: SkillName[];
 	initialSpells: SpellName[];
+	path: ArcanistPathName;
+	mageSpell?: SpellName;
+	wizardFocus?: ArcanisPathWizardFocusName;
+	sorcererLineage?: ArcanistLineageType;
+	sorcererLineageDraconicDamageType?: ArcanistLineageDraconicDamageType;
+	sorcererLineageFaerieExtraSpell?: SpellName;
+	sorcererLineageRedExtraPower?: GeneralPowerName;
+	sorcererLineageRedAttribute?: Attribute;
 };
 
 export class ArcanistFactory {
-	private readonly chosenSkills: SkillName[];
-	private readonly initialSpells: SpellName[];
-
 	constructor(
-		private readonly pathFactory: ArcanistPathFactory,
-		params: ArcanistFactoryParams,
-	) {
-		this.chosenSkills = params.chosenSkills;
-		this.initialSpells = params.initialSpells;
-	}
+		private readonly params: ArcanistFactoryParams,
+	) {}
 
 	make(): Arcanist {
-		const path = this.pathFactory.make();
+		const sorcerer = new ArcanistPathHandlerSorcerer();
+		const mage = new ArcanistPathHandlerMage();
+		const wizard = new ArcanistPathHandlerWizard();
+		sorcerer
+			.setNext(mage)
+			.setNext(wizard);
 
 		return ArcanistBuilder
-			.chooseSkills(this.chosenSkills)
-			.choosePath(path)
-			.chooseSpells(this.initialSpells.map(spellName => SpellFactory.make(spellName)));
+			.chooseSkills(this.params.chosenSkills)
+			.choosePath(sorcerer.execute(this.params))
+			.chooseSpells(this.params.initialSpells.map(spellName => SpellFactory.make(spellName)));
 	}
 }

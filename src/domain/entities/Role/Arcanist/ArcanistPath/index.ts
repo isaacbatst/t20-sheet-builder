@@ -3,4 +3,4 @@ export * from './ArcanisPathWizard';
 export * from './ArcanistPathMage';
 export * from './ArcanistPathSorcerer';
 export * from './ArcanistPathSerializer';
-export * from './ArcanistPathFactory';
+export * from './ArcanistPathHandler';

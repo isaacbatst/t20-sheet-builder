@@ -1,5 +1,5 @@
-import {type SerializedArcanistLineageDraconic} from '../../../SerializedArcanist';
-import {type ArcanistLineageDraconic} from './ArcanistLineageDraconic';
+import {type SerializedArcanistLineageDraconic} from '../../../../SerializedArcanist';
+import {type ArcanistLineageDraconic} from '../ArcanistLineageDraconic';
 import {ArcanistLineageSerializer} from './ArcanistLineageSerializer';
 
 export class ArcanistLineageSerializerDraconic extends ArcanistLineageSerializer<

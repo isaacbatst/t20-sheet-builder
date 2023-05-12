@@ -1,5 +1,5 @@
-import {type SerializedArcanistLineageRed} from '../../../SerializedArcanist';
-import {type ArcanistLineageRed} from './ArcanistLineageRed';
+import {type SerializedArcanistLineageRed} from '../../../../SerializedArcanist';
+import {type ArcanistLineageRed} from '../ArcanistLineageRed';
 import {ArcanistLineageSerializer} from './ArcanistLineageSerializer';
 
 export class ArcanistLineageSerializerRed extends ArcanistLineageSerializer<

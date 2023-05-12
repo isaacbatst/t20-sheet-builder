@@ -1,5 +1,5 @@
-import {type SerializedArcanistLineage} from '../../../SerializedArcanist';
-import {type ArcanistLineage} from './ArcanistLineage';
+import {type SerializedArcanistLineage} from '../../../../SerializedArcanist';
+import {type ArcanistLineage} from '../ArcanistLineage';
 
 export abstract class ArcanistLineageSerializer<
 	L extends ArcanistLineage = ArcanistLineage,

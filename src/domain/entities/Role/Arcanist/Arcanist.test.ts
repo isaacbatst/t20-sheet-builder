@@ -1,5 +1,3 @@
-import {AddEquipment} from '../../Action/AddEquipment';
-import {LearnSpell} from '../../Action/AddSpell';
 import {TrainSkill} from '../../Action/TrainSkill';
 import {DamageType} from '../../Damage/DamageType';
 import {SheetFake} from '../../Sheet/SheetFake';
@@ -10,10 +8,9 @@ import {ArcaneArmor} from '../../Spell/ArcaneArmor/ArcaneArmor';
 import {FlamesExplosion} from '../../Spell/FlamesExplosion/FlamesExplosion';
 import {IllusoryDisguise} from '../../Spell/IllusoryDisguise/IllusoryDisguise';
 import {MentalDagger} from '../../Spell/MentalDagger/MentalDagger';
-import {RoleAbilityName} from '../RoleAbilityName';
 import {RoleName} from '../RoleName';
 import {ArcanistBuilder} from './ArcanistBuider';
-import {ArcanistPathName, ArcanistPathSorcerer} from './ArcanistPath';
+import {ArcanistPathHandlerMage, ArcanistPathHandlerSorcerer, ArcanistPathHandlerWizard, ArcanistPathSorcerer} from './ArcanistPath';
 import {ArcanistPathWizard} from './ArcanistPath/ArcanisPathWizard/ArcanistPathWizard';
 import {ArcanistPathWizardFocusWand} from './ArcanistPath/ArcanisPathWizard/ArcanistPathWizardFocusWand';
 import {ArcanistPathMage} from './ArcanistPath/ArcanistPathMage/ArcanistPathMage';
