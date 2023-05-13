@@ -10,11 +10,15 @@ export class ArcanistPathSerializedHandlerSorcerer extends ArcanistPathSerialize
 			throw new Error('MISSING_SORCERER_LINEAGE');
 		}
 
-		const lineageHandlers = new ArcanistLineageSerializedHandlerDraconic()
-			.setNext(new ArcanistLineageSerializedHandlerFaerie())
-			.setNext(new ArcanistLineageSerializedHandlerRed());
+		const draconic = new ArcanistLineageSerializedHandlerDraconic();
+		const faerie = new ArcanistLineageSerializedHandlerFaerie();
+		const red = new ArcanistLineageSerializedHandlerRed();
 
-		const lineage = lineageHandlers.execute(request.lineage);
+		draconic
+			.setNext(faerie)
+			.setNext(red);
+
+		const lineage = draconic.execute(request.lineage);
 		return new ArcanistPathSorcerer(lineage);
 	}
 

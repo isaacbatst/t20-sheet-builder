@@ -21,26 +21,34 @@ export type ArcanistFactoryParams = {
 
 export class ArcanistFactory {
 	static makeFromParams(params: ArcanistFactoryParams): Arcanist {
+		const sorcerer = new ArcanistPathHandlerSorcerer();
+		const mage = new ArcanistPathHandlerMage();
+		const wizard = new ArcanistPathHandlerWizard();
+
+		sorcerer
+			.setNext(mage)
+			.setNext(wizard);
+
 		return ArcanistBuilder
 			.chooseSkills(params.chosenSkills)
-			.choosePath(ArcanistFactory.pathHandlers.execute(params))
+			.choosePath(sorcerer.execute(params))
 			.chooseSpells(params.initialSpells.map(spellName => SpellFactory.make(spellName)));
 	}
 
 	static makeFromSerialized<
 		P extends SerializedArcanistPath,
 	>(serialized: SerializedRole<SerializedArcanist<P>>): Arcanist {
+		const sorcerer = new ArcanistPathSerializedHandlerSorcerer();
+		const mage = new ArcanistPathSerializedHandlerMage();
+		const wizard = new ArcanistPathSerializedHandlerWizard();
+
+		sorcerer
+			.setNext(mage)
+			.setNext(wizard);
+
 		return ArcanistBuilder
 			.chooseSkills(serialized.chosenSkills)
-			.choosePath(ArcanistFactory.serializedHandlers.execute(serialized.path))
+			.choosePath(sorcerer.execute(serialized.path))
 			.chooseSpells(serialized.spells.map(spellName => SpellFactory.make(spellName)));
 	}
-
-	private static readonly pathHandlers = new ArcanistPathHandlerSorcerer()
-		.setNext(new ArcanistPathHandlerMage())
-		.setNext(new ArcanistPathHandlerWizard());
-
-	private static readonly serializedHandlers = new ArcanistPathSerializedHandlerSorcerer()
-		.setNext(new ArcanistPathSerializedHandlerMage())
-		.setNext(new ArcanistPathSerializedHandlerWizard());
 }
