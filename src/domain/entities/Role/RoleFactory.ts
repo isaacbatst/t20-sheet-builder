@@ -4,9 +4,12 @@ import {RoleSerializedHandlerWarrior} from './RoleHandler/RoleSerializedHandlerW
 
 export class RoleFactory {
 	static makeFromSerialized(serialized: SerializedRole): RoleInterface {
-		return RoleFactory.roleHandlers.execute(serialized);
-	}
+		const warrior = new RoleSerializedHandlerWarrior();
+		const arcanist = new RoleSerializedHandlerArcanist();
 
-	private static readonly roleHandlers = new RoleSerializedHandlerArcanist()
-		.setNext(new RoleSerializedHandlerWarrior());
+		warrior
+			.setNext(arcanist);
+
+		return warrior.execute(serialized);
+	}
 }
