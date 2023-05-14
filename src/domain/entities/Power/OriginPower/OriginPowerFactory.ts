@@ -1,5 +1,6 @@
 import {type SkillName} from '../../Skill';
 import {ChurchMember} from './ChurchMember';
+import {type OriginPower} from './OriginPower';
 import {OriginPowerName} from './OriginPowerName';
 import {type OriginPowerStatic} from './OriginPowerStatic';
 import {SpecialFriend} from './SpecialFriend';
@@ -10,7 +11,7 @@ type OriginPowerFactoryParams = {
 };
 
 export class OriginPowerFactory {
-	public static make(params: OriginPowerFactoryParams) {
+	public static make(params: OriginPowerFactoryParams): OriginPower {
 		if (params.power === OriginPowerName.churchMember) {
 			return new ChurchMember();
 		}
@@ -22,6 +23,8 @@ export class OriginPowerFactory {
 
 			return new SpecialFriend(params.specialFriendSkill);
 		}
+
+		throw new Error('UNKNOWN_ORIGIN_POWER');
 	}
 
 	private static readonly map: Record<OriginPowerName, OriginPowerStatic> = {
