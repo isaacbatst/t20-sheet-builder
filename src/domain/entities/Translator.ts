@@ -14,12 +14,12 @@ import type {Vision} from './Sheet/Vision';
 import type {EquipmentName} from './Inventory/Equipment/EquipmentName';
 import type {ArcanistPathName} from './Role';
 import {type DamageType} from './Damage/DamageType';
-import {type SpellType} from './Spell';
+import {type SpellSchool, type SpellType} from './Spell';
 
 export type TranslatableName = Attribute
 | RaceAbilityName | SkillName | PowerName | RaceName | Proficiency
 | Vision | RoleAbilityName | SpellName | SpellCircle | RoleName | OriginName
-| EquipmentName | ArcanistPathName | DamageType | 'default';
+| EquipmentName | ArcanistPathName | DamageType | SpellSchool | 'default';
 
 export class Translator {
 	static getAttributeTranslation(attribute: Attribute, capitalized = true) {
@@ -86,6 +86,10 @@ export class Translator {
 
 	static getSpellTypeTranslation(spellType: SpellType) {
 		return Translator.spellTypesTranslation[spellType];
+	}
+
+	static getSpellSchoolTranslation(school: SpellSchool) {
+		return Translator.spellSchoolsTranslation[school];
 	}
 
 	static getTranslation(string: TranslatableName) {
@@ -248,6 +252,17 @@ export class Translator {
 		psychic: 'Mental',
 	};
 
+	private static readonly spellSchoolsTranslation: Record<SpellSchool, string> = {
+		abjuration: 'Abjuração',
+		divination: 'Divinação',
+		enchantment: 'Encantamento',
+		evocation: 'Evocação',
+		illusion: 'Ilusão',
+		necromancy: 'Necromancia',
+		summoning: 'Convocação',
+		transmutation: 'Transmutação',
+	};
+
 	private static readonly translation: Record<TranslatableName, string> = {
 		...Translator.attributesTranslation,
 		...Translator.raceAbilitiesTranslation,
@@ -265,6 +280,7 @@ export class Translator {
 		...Translator.arcanistPathsTranslation,
 		...Translator.damageTypesTranslation,
 		...Translator.spellTypesTranslation,
+		...Translator.spellSchoolsTranslation,
 		default: 'Padrão',
 	};
 }
