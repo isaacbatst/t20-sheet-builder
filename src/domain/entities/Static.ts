@@ -1,8 +1,7 @@
-import {type EmptyObject} from '../../common/types/EmptyObject';
-import {type UnknownObject} from '../../common/types/UnknownObject';
 
 export type Static<
 	Class,
-	StaticMembers extends UnknownObject = EmptyObject,
+	// eslint-disable-next-line @typescript-eslint/ban-types
+	StaticMembers extends object = object,
 	ConstructorArgs extends any[] = any[],
 > = (new(...args: ConstructorArgs) => Class) & StaticMembers;
