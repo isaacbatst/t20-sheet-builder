@@ -94,8 +94,11 @@ export class SheetSerializer {
 		return {
 			name: spell.name,
 			circle: spell.circle,
-			school: spell.school,
+			abilityType: spell.abilityType,
 			type: spell.type,
+			effects: this.serializeAbilityEffects(spell.effects),
+			school: spell.school,
+			shortDescription: spell.shortDescription,
 		};
 	}
 
@@ -131,7 +134,7 @@ export class SheetSerializer {
 			originPowers.push({
 				name: originPower.name,
 				effects: this.serializeAbilityEffects(originPower.effects),
-				type: 'power',
+				abilityType: 'power',
 			});
 		});
 		return originPowers;
@@ -143,7 +146,7 @@ export class SheetSerializer {
 			rolePowers.push({
 				name: rolePower.name,
 				effects: this.serializeAbilityEffects(rolePower.effects),
-				type: 'power',
+				abilityType: 'power',
 			});
 		});
 		return rolePowers;
@@ -156,7 +159,7 @@ export class SheetSerializer {
 				name: generalPower.name,
 				effects: this.serializeAbilityEffects(generalPower.effects),
 				group: generalPower.group,
-				type: 'power',
+				abilityType: 'power',
 			});
 		});
 		return generalPowers;
@@ -213,7 +216,7 @@ export class SheetSerializer {
 		return {
 			effects: this.serializeAbilityEffects(roleAbility.effects),
 			name: roleAbility.name,
-			type: 'role',
+			abilityType: 'role',
 		};
 	}
 
@@ -229,7 +232,7 @@ export class SheetSerializer {
 		return {
 			effects: this.serializeAbilityEffects(raceAbility.effects),
 			name: raceAbility.name,
-			type: 'race',
+			abilityType: 'race',
 		};
 	}
 

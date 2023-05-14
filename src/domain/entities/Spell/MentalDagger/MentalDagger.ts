@@ -1,5 +1,4 @@
 import {AbilityEffects} from '../../Ability/AbilityEffects';
-import {type Translatable} from '../../Translatable';
 import {Spell} from '../Spell';
 import {SpellCircle} from '../SpellCircle';
 import {SpellName} from '../SpellName';
@@ -10,7 +9,10 @@ export class MentalDagger extends Spell {
 	static circle = SpellCircle.first;
 	static spellName = SpellName.mentalDagger;
 	static school = SpellSchool.enchantment;
+	static shortDescription = 'Alvo sofre dano psíquico e pode ficar atordoado.';
 	override school: SpellSchool = MentalDagger.school;
+	override shortDescription: string = MentalDagger.shortDescription;
+
 	effects = new AbilityEffects({
 		activateable: {
 			default: new MentalDaggerDefaultEffect(),

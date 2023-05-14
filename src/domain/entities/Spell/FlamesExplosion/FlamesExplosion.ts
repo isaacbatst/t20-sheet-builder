@@ -9,6 +9,9 @@ export class FlamesExplosion extends Spell {
 	static circle = SpellCircle.first;
 	static school = SpellSchool.evocation;
 	static spellName = SpellName.flamesExplosion;
+	static shortDescription = 'Cone causa dano de fogo.';
+	override shortDescription: string = FlamesExplosion.shortDescription;
+
 	effects = new AbilityEffects({
 		activateable: {
 			default: new FlamesExplosionDefaultEffect(),

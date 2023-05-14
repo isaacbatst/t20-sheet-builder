@@ -1,9 +1,5 @@
 import {Ability} from '../Ability/Ability';
-import {type Action} from '../Action/Action';
-import {LearnSpell} from '../Action/AddSpell';
 import type {Cost} from '../Sheet/CharacterSheet/CharacterSheetInterface';
-import {type TransactionInterface} from '../Sheet/TransactionInterface';
-import {type TranslatableName} from '../Translator';
 import {SpellCircle} from './SpellCircle';
 import {SpellCost} from './SpellCost';
 import type {SpellName} from './SpellName';
@@ -20,6 +16,7 @@ export abstract class Spell extends Ability {
 
 	readonly cost: Cost;
 	abstract school: SpellSchool;
+	abstract shortDescription: string;
 
 	constructor(
 		override readonly name: SpellName,

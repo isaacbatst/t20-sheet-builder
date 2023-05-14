@@ -1,5 +1,4 @@
 import {type AbilityName, type AbilityType} from '../../Ability';
-import {type BuildStepInterface} from '../../BuildStep';
 import {type EquipmentName} from '../../Inventory';
 import {type ModifierType} from '../../Modifier';
 import {type OriginBenefits, type OriginName} from '../../Origin';
@@ -10,7 +9,6 @@ import {type SkillName} from '../../Skill';
 import {type LearnableSpellType, type SpellCircle, type SpellName, type SpellSchool, type SpellType} from '../../Spell';
 import {type TranslatableName} from '../../Translator';
 import {type Attribute, type Attributes} from '../Attributes';
-import {type Cost} from '../CharacterSheet';
 import {type Proficiency} from '../Proficiency';
 import {type Vision} from '../Vision';
 
@@ -67,7 +65,7 @@ export type SerializedSheetAbilityEffect = {
 
 export type SerializedSheetAbility = {
 	name: AbilityName;
-	type: AbilityType;
+	abilityType: AbilityType;
 	effects: SerializedSheetAbilityEffect[];
 };
 
@@ -79,11 +77,12 @@ export type SerializedSheetRaceAbility = {
 	name: RaceAbilityName;
 } & SerializedSheetAbility;
 
-export type SerializedSheetSpell = {
+export type SerializedSheetSpell = SerializedSheetAbility & {
 	name: SpellName;
 	circle: SpellCircle;
 	type: SpellType;
 	school: SpellSchool;
+	shortDescription: string;
 };
 
 export type SerializedSheetInventoryEquipment = {

@@ -9,6 +9,8 @@ export class ArcaneArmor extends Spell {
 	static circle = SpellCircle.first;
 	static school = SpellSchool.abjuration;
 	static spellName = SpellName.arcaneArmor;
+	static shortDescription = 'Aumenta sua Defesa.';
+	override shortDescription: string = ArcaneArmor.shortDescription;
 	effects = new AbilityEffects({
 		activateable: {
 			default: new ArcaneArmorDefaultEffect(),

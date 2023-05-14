@@ -8,4 +8,5 @@ export type SpellStatic = Static<Spell, {
 	circle: SpellCircle;
 	school: SpellSchool;
 	spellName: SpellName;
+	shortDescription: string;
 }>;
