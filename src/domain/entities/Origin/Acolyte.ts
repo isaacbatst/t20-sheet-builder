@@ -1,4 +1,3 @@
-import type {Equipment} from '../Inventory/Equipment/Equipment';
 import {EquipmentAdventure} from '../Inventory/Equipment/EquipmentAdventure/EquipmentAdventure';
 import {EquipmentClothing} from '../Inventory/Equipment/EquipmentClothing/EquipmentClothing';
 import {EquipmentName} from '../Inventory/Equipment/EquipmentName';
@@ -10,18 +9,17 @@ import type {OriginBenefit} from './OriginBenefit';
 import {OriginName} from './OriginName';
 
 export class Acolyte extends Origin {
-	static equipments: Equipment[] = [
-		new EquipmentAdventure(EquipmentName.sacredSymbol),
-		new EquipmentClothing(EquipmentName.priestCostume),
-	];
-
+	static equipments = 'Símbolo sagrado, traje de sacerdote.';
 	static originName: OriginName = OriginName.acolyte;
 	static skills: SkillName[] = [SkillName.cure, SkillName.religion, SkillName.will];
 	static generalPowers: GeneralPowerName[] = [GeneralPowerName.medicine, GeneralPowerName.ironWill];
 	static originPower = OriginPowerName.churchMember;
 
 	name = Acolyte.originName;
-	equipments = Acolyte.equipments;
+	equipments = [
+		new EquipmentAdventure(EquipmentName.sacredSymbol),
+		new EquipmentClothing(EquipmentName.priestCostume),
+	];
 
 	constructor(chosenBenefits: OriginBenefit[]) {
 		super(chosenBenefits, {

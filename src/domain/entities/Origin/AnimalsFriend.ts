@@ -7,12 +7,11 @@ import {SkillName} from '../Skill/SkillName';
 import {Origin} from './Origin';
 import type {OriginBenefit} from './OriginBenefit';
 import {OriginName} from './OriginName';
-import type {OriginStatic} from './OriginStatic';
 
 type AnimalsFriendEquipments = EquipmentName.hound | EquipmentName.horse | EquipmentName.pony | EquipmentName.trobo;
 
 export class AnimalsFriend extends Origin {
-	static equipments: Equipment[] = [];
+	static equipments = 'Cão de caça, cavalo, pônei ou trobo (escolha um).';
 	static originName: OriginName = OriginName.animalsFriend;
 	static skills: SkillName[] = [SkillName.animalHandling, SkillName.animalRide];
 	static generalPowers: GeneralPowerName[] = [];

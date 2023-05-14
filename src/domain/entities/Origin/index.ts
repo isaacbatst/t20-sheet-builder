@@ -7,3 +7,4 @@ export * from './OriginBenefitSkill';
 export * from './OriginName';
 export * from './OriginStatic';
 export * from './Origin';
+export * from './Origins';
