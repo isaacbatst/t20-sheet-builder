@@ -14,7 +14,7 @@ export class ArcanistPathHandlerSorcerer extends ArcanistPathHandler {
 			.setNext(faerie)
 			.setNext(red);
 
-		const lineage = draconic.handle({
+		const lineage = draconic.execute({
 			mageSpell: request.mageSpell,
 			wizardFocus: request.wizardFocus,
 			sorcererLineageDraconicDamageType: request.sorcererLineageDraconicDamageType,

@@ -4,7 +4,7 @@ import {ArcanistLineageType} from '../ArcanistLineageType';
 import {ArcanistLineageHandler, type ArcanistLineageHandlerRequest} from './ArcanistLineageHandler';
 
 export class ArcanistLineageFactoryHandlerDraconic extends ArcanistLineageHandler {
-	public override handle(request: ArcanistLineageHandlerRequest): ArcanistLineage {
+	protected override handle(request: ArcanistLineageHandlerRequest): ArcanistLineage {
 		if (!request.sorcererLineageDraconicDamageType) {
 			throw new Error('MISSING_SORCERER_LINEAGE_DRACONIC_DAMAGE_TYPE');
 		}

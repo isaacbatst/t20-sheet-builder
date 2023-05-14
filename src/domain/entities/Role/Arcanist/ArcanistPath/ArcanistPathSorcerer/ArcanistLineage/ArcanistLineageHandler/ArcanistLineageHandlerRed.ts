@@ -4,7 +4,7 @@ import {ArcanistLineageType} from '../ArcanistLineageType';
 import {ArcanistLineageHandler, type ArcanistLineageHandlerRequest} from './ArcanistLineageHandler';
 
 export class ArcanistLineageFactoryHandlerRed extends ArcanistLineageHandler {
-	public override handle(request: ArcanistLineageHandlerRequest): ArcanistLineageRed {
+	protected override handle(request: ArcanistLineageHandlerRequest): ArcanistLineageRed {
 		if (!request.sorcererLineageRedAttribute) {
 			throw new Error('MISSING_SORCERER_LINEAGE_RED_ATTRIBUTE');
 		}

@@ -5,7 +5,7 @@ import {ArcanistLineageType} from '../ArcanistLineageType';
 import {ArcanistLineageHandler, type ArcanistLineageHandlerRequest} from './ArcanistLineageHandler';
 
 export class ArcanistLineageFactoryHandlerFaerie extends ArcanistLineageHandler {
-	public override handle(request: ArcanistLineageHandlerRequest): ArcanistLineage {
+	protected override handle(request: ArcanistLineageHandlerRequest): ArcanistLineage {
 		if (!request.sorcererLineageFaerieExtraSpell) {
 			throw new Error('MISSING_SORCERER_LINEAGE_FAERIE_DAMAGE_TYPE');
 		}
