@@ -1,18 +1,10 @@
 import {AddEquipment} from '../Action/AddEquipment';
 import {SheetBuilderError} from '../Error/SheetBuilderError';
 import type {Equipment} from '../Inventory/Equipment/Equipment';
-import type {GeneralPowerName} from '../Power/GeneralPower/GeneralPowerName';
-import type {OriginPowerName} from '../Power/OriginPower/OriginPowerName';
 import {type TransactionInterface} from '../Sheet/TransactionInterface';
-import type {SkillName} from '../Skill/SkillName';
 import type {OriginBenefit} from './OriginBenefit/OriginBenefit';
+import {type OriginBenefits} from './OriginBenefit/OriginBenefits';
 import type {OriginName} from './OriginName';
-
-export type OriginBenefits = {
-	skills: SkillName[];
-	generalPowers: GeneralPowerName[];
-	originPower: OriginPowerName;
-};
 
 export type OriginInterface = {
 	name: OriginName;

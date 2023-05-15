@@ -4,8 +4,8 @@ import {type GeneralPowerName} from '../../Power';
 import type {GeneralPowerInterface} from '../../Power/GeneralPower/GeneralPower';
 import {type TransactionInterface} from '../../Sheet/TransactionInterface';
 import {type TranslatableName} from '../../Translator';
-import type {OriginBenefits} from '../Origin';
 import {OriginBenefit} from './OriginBenefit';
+import {type OriginBenefits} from './OriginBenefits';
 
 export class OriginBenefitGeneralPower extends OriginBenefit {
 	override name: GeneralPowerName;

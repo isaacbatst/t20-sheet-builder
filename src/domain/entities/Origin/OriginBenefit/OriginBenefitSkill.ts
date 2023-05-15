@@ -3,8 +3,8 @@ import {SheetBuilderError} from '../../Error/SheetBuilderError';
 import {type TransactionInterface} from '../../Sheet/TransactionInterface';
 import type {SkillName} from '../../Skill/SkillName';
 import {type TranslatableName} from '../../Translator';
-import type {OriginBenefits} from '../Origin';
 import {OriginBenefit} from './OriginBenefit';
+import {type OriginBenefits} from './OriginBenefits';
 
 export class OriginBenefitSkill extends OriginBenefit {
 	override name: SkillName;
