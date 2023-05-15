@@ -5,7 +5,7 @@ import type {GeneralPowerName} from '../Power/GeneralPower/GeneralPowerName';
 import type {OriginPowerName} from '../Power/OriginPower/OriginPowerName';
 import {type TransactionInterface} from '../Sheet/TransactionInterface';
 import type {SkillName} from '../Skill/SkillName';
-import type {OriginBenefit} from './OriginBenefit';
+import type {OriginBenefit} from './OriginBenefit/OriginBenefit';
 import type {OriginName} from './OriginName';
 
 export type OriginBenefits = {

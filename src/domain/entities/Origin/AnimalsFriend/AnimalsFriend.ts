@@ -1,12 +1,12 @@
-import type {Equipment} from '../Inventory/Equipment/Equipment';
-import {EquipmentAnimal} from '../Inventory/Equipment/EquipmentAnimal/EquipmentAnimal';
-import type {EquipmentName} from '../Inventory/Equipment/EquipmentName';
-import type {GeneralPowerName} from '../Power';
-import {OriginPowerName} from '../Power/OriginPower/OriginPowerName';
-import {SkillName} from '../Skill/SkillName';
-import {Origin} from './Origin';
-import type {OriginBenefit} from './OriginBenefit';
-import {OriginName} from './OriginName';
+import type {Equipment} from '../../Inventory/Equipment/Equipment';
+import {EquipmentAnimal} from '../../Inventory/Equipment/EquipmentAnimal/EquipmentAnimal';
+import type {EquipmentName} from '../../Inventory/Equipment/EquipmentName';
+import type {GeneralPowerName} from '../../Power';
+import {OriginPowerName} from '../../Power/OriginPower/OriginPowerName';
+import {SkillName} from '../../Skill/SkillName';
+import {Origin} from '../Origin';
+import type {OriginBenefit} from '../OriginBenefit/OriginBenefit';
+import {OriginName} from '../OriginName';
 
 type AnimalsFriendEquipments = EquipmentName.hound | EquipmentName.horse | EquipmentName.pony | EquipmentName.trobo;
 

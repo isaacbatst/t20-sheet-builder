@@ -1,10 +1,10 @@
-import {PickGeneralPower} from '../Action/PickGeneralPower';
-import {SheetBuilderError} from '../Error/SheetBuilderError';
-import {type GeneralPowerName} from '../Power';
-import type {GeneralPowerInterface} from '../Power/GeneralPower/GeneralPower';
-import {type TransactionInterface} from '../Sheet/TransactionInterface';
-import {type TranslatableName} from '../Translator';
-import type {OriginBenefits} from './Origin';
+import {PickGeneralPower} from '../../Action/PickGeneralPower';
+import {SheetBuilderError} from '../../Error/SheetBuilderError';
+import {type GeneralPowerName} from '../../Power';
+import type {GeneralPowerInterface} from '../../Power/GeneralPower/GeneralPower';
+import {type TransactionInterface} from '../../Sheet/TransactionInterface';
+import {type TranslatableName} from '../../Translator';
+import type {OriginBenefits} from '../Origin';
 import {OriginBenefit} from './OriginBenefit';
 
 export class OriginBenefitGeneralPower extends OriginBenefit {

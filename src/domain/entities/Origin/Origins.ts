@@ -1,5 +1,5 @@
-import {Acolyte} from './Acolyte';
-import {AnimalsFriend} from './AnimalsFriend';
+import {Acolyte} from './Acolyte/Acolyte';
+import {AnimalsFriend} from './AnimalsFriend/AnimalsFriend';
 import {OriginName} from './OriginName';
 import {type OriginStatic} from './OriginStatic';
 

@@ -1,7 +1,7 @@
 import type {Equipment} from '../Inventory/Equipment/Equipment';
 import {OriginPowerName} from '../Power/OriginPower/OriginPowerName';
 import type {OriginBenefits, OriginInterface} from './Origin';
-import type {OriginBenefit} from './OriginBenefit';
+import type {OriginBenefit} from './OriginBenefit/OriginBenefit';
 import {OriginName} from './OriginName';
 import {vi} from 'vitest';
 

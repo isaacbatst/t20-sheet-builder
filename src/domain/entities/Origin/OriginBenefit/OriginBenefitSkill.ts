@@ -1,9 +1,9 @@
-import {TrainSkill} from '../Action/TrainSkill';
-import {SheetBuilderError} from '../Error/SheetBuilderError';
-import {type TransactionInterface} from '../Sheet/TransactionInterface';
-import type {SkillName} from '../Skill/SkillName';
-import {type TranslatableName} from '../Translator';
-import type {OriginBenefits} from './Origin';
+import {TrainSkill} from '../../Action/TrainSkill';
+import {SheetBuilderError} from '../../Error/SheetBuilderError';
+import {type TransactionInterface} from '../../Sheet/TransactionInterface';
+import type {SkillName} from '../../Skill/SkillName';
+import {type TranslatableName} from '../../Translator';
+import type {OriginBenefits} from '../Origin';
 import {OriginBenefit} from './OriginBenefit';
 
 export class OriginBenefitSkill extends OriginBenefit {
