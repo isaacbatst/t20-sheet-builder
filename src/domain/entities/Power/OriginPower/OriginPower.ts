@@ -3,12 +3,13 @@ import type {PowerInterface} from '../Power';
 import {Power} from '../Power';
 import type {OriginPowerName} from './OriginPowerName';
 
-export type OriginPowerInterface = PowerInterface & {
+export type OriginPowerInterface<S> = PowerInterface & {
 	source: OriginName;
 	name: OriginPowerName;
+	serialize(): S;
 };
 
-export abstract class OriginPower extends Power implements OriginPowerInterface {
+export abstract class OriginPower<S> extends Power implements OriginPowerInterface<S> {
 	abstract source: OriginName;
 
 	constructor(
@@ -16,4 +17,6 @@ export abstract class OriginPower extends Power implements OriginPowerInterface 
 	) {
 		super(name, 'origin');
 	}
+
+	abstract serialize(): S;
 }

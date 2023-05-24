@@ -5,6 +5,7 @@ import type {SkillName} from '../../Skill/SkillName';
 import {type TranslatableName} from '../../Translator';
 import {OriginBenefit} from './OriginBenefit';
 import {type OriginBenefits} from './OriginBenefits';
+import {type SerializedOriginBenefits} from './SerializedOriginBenefit';
 
 export class OriginBenefitSkill extends OriginBenefit {
 	override name: SkillName;
@@ -27,5 +28,12 @@ export class OriginBenefitSkill extends OriginBenefit {
 		if (!originBenefits.skills.includes(this.skill)) {
 			throw new SheetBuilderError('INVALID_ORIGIN_SKILL');
 		}
+	}
+
+	override serialize(): SerializedOriginBenefits {
+		return {
+			type: 'skills',
+			name: this.skill,
+		};
 	}
 }

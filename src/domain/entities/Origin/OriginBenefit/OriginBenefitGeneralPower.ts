@@ -7,13 +7,26 @@ import {type TranslatableName} from '../../Translator';
 import {OriginBenefit} from './OriginBenefit';
 import {type OriginBenefits} from './OriginBenefits';
 
-export class OriginBenefitGeneralPower extends OriginBenefit {
+export type SerializedOriginBenefitGeneralPower = {
+	type: 'generalPowers';
+	name: GeneralPowerName;
+};
+
+export class OriginBenefitGeneralPower extends OriginBenefit<SerializedOriginBenefitGeneralPower> {
 	override name: GeneralPowerName;
+
 	constructor(
 		readonly power: GeneralPowerInterface,
 	) {
 		super();
 		this.name = power.name;
+	}
+
+	override serialize(): SerializedOriginBenefitGeneralPower {
+		return {
+			name: this.power.name,
+			type: 'generalPowers',
+		};
 	}
 
 	apply(transaction: TransactionInterface, source: TranslatableName): void {

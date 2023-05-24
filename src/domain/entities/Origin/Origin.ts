@@ -4,22 +4,25 @@ import type {Equipment} from '../Inventory/Equipment/Equipment';
 import {type TransactionInterface} from '../Sheet/TransactionInterface';
 import type {OriginBenefit} from './OriginBenefit/OriginBenefit';
 import {type OriginBenefits} from './OriginBenefit/OriginBenefits';
+import {type SerializedOriginBenefit} from './OriginBenefit/SerializedOriginBenefit';
 import type {OriginName} from './OriginName';
+import {type SerializedOrigin} from './SerializedOrigin';
 
-export type OriginInterface = {
+export type OriginInterface<Sb extends SerializedOriginBenefit> = {
 	name: OriginName;
 	equipments: Equipment[];
-	chosenBenefits: OriginBenefit[];
+	chosenBenefits: Array<OriginBenefit<Sb>>;
 	benefits: OriginBenefits;
 	addToSheet(transaction: TransactionInterface): void;
+	serialize(): SerializedOrigin<Sb>;
 };
 
-export abstract class Origin implements OriginInterface {
+export abstract class Origin<Sb extends SerializedOriginBenefit> implements OriginInterface<Sb> {
 	abstract name: OriginName;
 	abstract equipments: Equipment[];
 
 	constructor(
-		readonly chosenBenefits: OriginBenefit[],
+		readonly chosenBenefits: Array<OriginBenefit<Sb>>,
 		readonly benefits: OriginBenefits,
 	) {
 		this.validateChosenBenefits();
@@ -28,6 +31,13 @@ export abstract class Origin implements OriginInterface {
 	addToSheet(transaction: TransactionInterface) {
 		this.addEquipments(transaction);
 		this.applyBenefits(transaction);
+	}
+
+	serialize(): SerializedOrigin<Sb> {
+		return {
+			choosenBenefits: this.chosenBenefits.map(benefit => benefit.serialize()),
+			name: this.name,
+		};
 	}
 
 	private applyBenefits(transaction: TransactionInterface) {
