@@ -17,7 +17,7 @@ describe('ContextualModifierList', () => {
 			source: RaceAbilityName.rockKnowledge,
 			value: 2,
 			condition: {description: 'any', verify: context => context.getCurrentLocation().isUnderground},
-			incrementerAttributes: new Set(['constitution']),
+			attributeBonuses: new Set(['constitution']),
 		}));
 		list.add(new ContextualModifier({
 			source: RaceAbilityName.hardAsRock,
@@ -29,7 +29,8 @@ describe('ContextualModifierList', () => {
 			new InGameContextFake(),
 			{charisma: 0, constitution: 2, dexterity: 0, intelligence: 0, strength: 0, wisdom: 0},
 		);
-		expect(list.getTotal(totalCalculator)).toBe(6);
+		const total = list.getTotal(totalCalculator);
+		expect(total).toBe(6);
 	});
 
 	it('should calculate max total', () => {
@@ -43,7 +44,7 @@ describe('ContextualModifierList', () => {
 			source: RaceAbilityName.rockKnowledge,
 			value: 2,
 			condition: {description: 'any', verify: context => context.getCurrentLocation().isUnderground},
-			incrementerAttributes: new Set(['constitution']),
+			attributeBonuses: new Set(['constitution']),
 		}));
 		list.add(new ContextualModifier({
 			source: RaceAbilityName.hardAsRock,

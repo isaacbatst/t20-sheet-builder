@@ -1,7 +1,8 @@
 import {type AbilityName, type AbilityType} from '../../Ability';
 import {type EquipmentName} from '../../Inventory';
 import {type ModifierType} from '../../Modifier';
-import {type OriginBenefits, type OriginName} from '../../Origin';
+import {type OriginName} from '../../Origin';
+import {type OriginBenefits} from '../../Origin/OriginBenefit/OriginBenefits';
 import {type GeneralPowerGroup, type GeneralPowerName, type OriginPowerName} from '../../Power';
 import {type RaceAbilityName, type RaceName} from '../../Race';
 import {type RoleAbilityName, type RoleName, type RolePowerName} from '../../Role';

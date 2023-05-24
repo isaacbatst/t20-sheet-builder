@@ -5,7 +5,7 @@ import type {SkillName} from '../../Skill/SkillName';
 import {type TranslatableName} from '../../Translator';
 import {OriginBenefit} from './OriginBenefit';
 import {type OriginBenefits} from './OriginBenefits';
-import {type SerializedOriginBenefits} from './SerializedOriginBenefit';
+import {type SerializedOriginBenefitSkill, type SerializedOriginBenefits} from './SerializedOriginBenefit';
 
 export class OriginBenefitSkill extends OriginBenefit {
 	override name: SkillName;
@@ -30,7 +30,7 @@ export class OriginBenefitSkill extends OriginBenefit {
 		}
 	}
 
-	override serialize(): SerializedOriginBenefits {
+	override serialize(): SerializedOriginBenefitSkill {
 		return {
 			type: 'skills',
 			name: this.skill,

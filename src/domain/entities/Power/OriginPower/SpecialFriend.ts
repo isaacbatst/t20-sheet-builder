@@ -1,7 +1,7 @@
 import type {AbilityEffectsInterface} from '../../Ability/AbilityEffects';
 import {AbilityEffects} from '../../Ability/AbilityEffects';
+import {type SerializedSpecialFriend} from '../../Origin/OriginBenefit/SerializedOriginBenefit';
 import {OriginName} from '../../Origin/OriginName';
-import {type SerializedSpecialFriend} from '../../Origin/SerializedOriginBenefit';
 import {type SkillName} from '../../Skill/SkillName';
 import {OriginPower} from './OriginPower';
 import {OriginPowerName} from './OriginPowerName';

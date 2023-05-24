@@ -4,7 +4,7 @@ import {InGameContextFake} from '../Context/InGameContextFake';
 import {Dagger, EquipmentName, LeatherArmor, LongSword} from '../Inventory';
 import {ContextualModifiersListTotalCalculator} from '../Modifier/ContextualModifier/ContextualModifiersListTotalCalculator';
 import {Acolyte, OriginBenefitGeneralPower, OriginBenefitSkill} from '../Origin';
-import type {Origin} from '../Origin/Origin';
+import type {Origin, OriginInterface} from '../Origin/Origin';
 import {IronWill, OneWeaponStyle} from '../Power';
 import {Human, type VersatileChoice, VersatileChoicePower, VersatileChoiceSkill} from '../Race';
 import type {Race} from '../Race/Race';
@@ -22,7 +22,7 @@ describe('Character', () => {
 	let role: Role;
 	let race: Race;
 	let sheetBuilder: SheetBuilder;
-	let origin: Origin;
+	let origin: OriginInterface;
 	let character: Character;
 	beforeAll(() => {
 		const choices: VersatileChoice[] = [

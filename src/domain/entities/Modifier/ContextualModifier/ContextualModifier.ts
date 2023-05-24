@@ -8,7 +8,7 @@ type ContextualModifierParams = {
 	source: TranslatableName;
 	value: number;
 	condition: ModifierCondition;
-	incrementerAttributes?: Set<Attribute>;
+	attributeBonuses?: Set<Attribute>;
 };
 
 export class ContextualModifier extends Modifier implements ContextualModifierInterface {

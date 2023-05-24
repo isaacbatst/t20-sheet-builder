@@ -10,7 +10,7 @@ import {IllusoryDisguise} from '../../Spell/IllusoryDisguise/IllusoryDisguise';
 import {MentalDagger} from '../../Spell/MentalDagger/MentalDagger';
 import {RoleName} from '../RoleName';
 import {ArcanistBuilder} from './ArcanistBuider';
-import {ArcanistPathHandlerMage, ArcanistPathHandlerSorcerer, ArcanistPathHandlerWizard, ArcanistPathSorcerer} from './ArcanistPath';
+import {ArcanistPathSorcerer} from './ArcanistPath';
 import {ArcanistPathWizard} from './ArcanistPath/ArcanisPathWizard/ArcanistPathWizard';
 import {ArcanistPathWizardFocusWand} from './ArcanistPath/ArcanisPathWizard/ArcanistPathWizardFocusWand';
 import {ArcanistPathMage} from './ArcanistPath/ArcanistPathMage/ArcanistPathMage';

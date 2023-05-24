@@ -6,13 +6,18 @@ export type OriginBenefitChosenOriginPower = {
 	name: OriginPowerName;
 };
 
-export type SerializedOriginBenefit<OriginPower extends OriginBenefitChosenOriginPower = OriginBenefitChosenOriginPower> = {
+export type SerializedOriginBenefitSkill = {
 	type: 'skills';
 	name: SkillName;
-} | {
+};
+
+export type SerializedOriginBenefitGeneralPower = {
 	type: 'generalPowers';
 	name: GeneralPowerName;
-} | OriginPower;
+};
+
+export type SerializedOriginBenefit<OriginPower extends OriginBenefitChosenOriginPower = OriginBenefitChosenOriginPower> =
+	SerializedOriginBenefitSkill | SerializedOriginBenefitGeneralPower | OriginPower;
 
 export type SerializedChurchMember = {
 	type: 'originPower';

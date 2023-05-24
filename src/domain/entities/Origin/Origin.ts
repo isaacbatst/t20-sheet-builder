@@ -4,11 +4,11 @@ import type {Equipment} from '../Inventory/Equipment/Equipment';
 import {type TransactionInterface} from '../Sheet/TransactionInterface';
 import type {OriginBenefit} from './OriginBenefit/OriginBenefit';
 import {type OriginBenefits} from './OriginBenefit/OriginBenefits';
-import {type SerializedOriginBenefit} from './OriginBenefit/SerializedOriginBenefit';
+import {type SerializedOriginBenefits, type SerializedOriginBenefit} from './OriginBenefit/SerializedOriginBenefit';
 import type {OriginName} from './OriginName';
 import {type SerializedOrigin} from './SerializedOrigin';
 
-export type OriginInterface<Sb extends SerializedOriginBenefit> = {
+export type OriginInterface<Sb extends SerializedOriginBenefit = SerializedOriginBenefits> = {
 	name: OriginName;
 	equipments: Equipment[];
 	chosenBenefits: Array<OriginBenefit<Sb>>;
@@ -17,7 +17,7 @@ export type OriginInterface<Sb extends SerializedOriginBenefit> = {
 	serialize(): SerializedOrigin<Sb>;
 };
 
-export abstract class Origin<Sb extends SerializedOriginBenefit> implements OriginInterface<Sb> {
+export abstract class Origin<Sb extends SerializedOriginBenefit = SerializedOriginBenefit> implements OriginInterface<Sb> {
 	abstract name: OriginName;
 	abstract equipments: Equipment[];
 

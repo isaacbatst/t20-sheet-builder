@@ -4,7 +4,7 @@ import {LongSword} from '../../Inventory/Equipment/Weapon/OffensiveWeapon/Martia
 import {Dagger} from '../../Inventory/Equipment/Weapon/OffensiveWeapon/SimpleWeapon/Dagger';
 import {Acolyte} from '../../Origin/Acolyte/Acolyte';
 import {AnimalsFriend} from '../../Origin/AnimalsFriend/AnimalsFriend';
-import type {Origin} from '../../Origin/Origin';
+import type {Origin, OriginInterface} from '../../Origin/Origin';
 import {OriginBenefitGeneralPower} from '../../Origin/OriginBenefit/OriginBenefitGeneralPower';
 import {OriginBenefitOriginPower} from '../../Origin/OriginBenefit/OriginBenefitOriginPower';
 import {OriginBenefitSkill} from '../../Origin/OriginBenefit/OriginBenefitSkill';
@@ -38,7 +38,7 @@ describe('Sheet', () => {
 		let role: Role;
 		let race: Race;
 		let sheetBuilder: SheetBuilder;
-		let origin: Origin;
+		let origin: OriginInterface;
 		beforeAll(() => {
 			const choices = [
 				new VersatileChoiceSkill(SkillName.acrobatics),
@@ -149,7 +149,7 @@ describe('Sheet', () => {
 		let role: Role;
 		let race: Race;
 		let sheetBuilder: SheetBuilder;
-		let origin: Origin;
+		let origin: OriginInterface;
 
 		beforeAll(() => {
 			role = ArcanistBuilder

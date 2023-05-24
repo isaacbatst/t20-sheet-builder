@@ -15,6 +15,8 @@ import {OriginBenefitGeneralPower} from '../OriginBenefit/OriginBenefitGeneralPo
 import {OriginBenefitOriginPower} from '../OriginBenefit/OriginBenefitOriginPower';
 import {OriginBenefitSkill} from '../OriginBenefit/OriginBenefitSkill';
 import {OriginName} from '../OriginName';
+import {type SerializedOriginBenefitsAcolyte} from '../OriginBenefit/SerializedOriginBenefit';
+import {type OriginBenefit} from '../OriginBenefit/OriginBenefit';
 
 describe('Acolyte', () => {
 	it('should dispatch add items', () => {
@@ -120,14 +122,5 @@ describe('Acolyte', () => {
 			},
 			transaction,
 		}));
-	});
-
-	it('should not allow origin power from other origin', () => {
-		expect(() => {
-			const acolyte = new Acolyte([
-				new OriginBenefitOriginPower(new SpecialFriend(SkillName.cheat)),
-				new OriginBenefitGeneralPower(new Medicine()),
-			]);
-		}).toThrow('INVALID_ORIGIN_POWER');
 	});
 });

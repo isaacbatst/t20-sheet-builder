@@ -1,9 +1,10 @@
+import {vi} from 'vitest';
 import type {Equipment} from '../Inventory/Equipment/Equipment';
 import {OriginPowerName} from '../Power/OriginPower/OriginPowerName';
-import type {OriginBenefits, OriginInterface} from './Origin';
+import {type OriginInterface} from './Origin';
 import type {OriginBenefit} from './OriginBenefit/OriginBenefit';
+import {type OriginBenefits} from './OriginBenefit/OriginBenefits';
 import {OriginName} from './OriginName';
-import {vi} from 'vitest';
 
 export class OriginFake implements OriginInterface {
 	name: OriginName = OriginName.acolyte;
@@ -11,4 +12,5 @@ export class OriginFake implements OriginInterface {
 	chosenBenefits: OriginBenefit[] = [];
 	benefits: OriginBenefits = {generalPowers: [], originPower: OriginPowerName.churchMember, skills: []};
 	addToSheet = vi.fn();
+	serialize = vi.fn();
 }
