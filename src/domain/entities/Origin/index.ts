@@ -4,6 +4,7 @@ export * from './OriginBenefit/OriginBenefit';
 export * from './OriginBenefit/OriginBenefitGeneralPower';
 export * from './OriginBenefit/OriginBenefitOriginPower';
 export * from './OriginBenefit/OriginBenefitSkill';
+export * from './OriginBenefit/SerializedOriginBenefit';
 export * from './OriginName';
 export * from './OriginStatic';
 export * from './Origin';

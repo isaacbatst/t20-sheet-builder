@@ -1,5 +1,6 @@
-import {type GeneralPowerName, type OriginPowerName} from '../../Power';
+import {type OriginPowerName} from '../../Power';
 import {type SkillName} from '../../Skill';
+import {type SerializedOriginBenefitGeneralPower} from './OriginBenefitGeneralPower';
 
 export type OriginBenefitChosenOriginPower = {
 	type: 'originPower';
@@ -9,11 +10,6 @@ export type OriginBenefitChosenOriginPower = {
 export type SerializedOriginBenefitSkill = {
 	type: 'skills';
 	name: SkillName;
-};
-
-export type SerializedOriginBenefitGeneralPower = {
-	type: 'generalPowers';
-	name: GeneralPowerName;
 };
 
 export type SerializedOriginBenefit<OriginPower extends OriginBenefitChosenOriginPower = OriginBenefitChosenOriginPower> =
