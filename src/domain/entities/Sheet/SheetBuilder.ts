@@ -4,6 +4,7 @@ import {ChooseRace} from '../Action/ChooseRace';
 import {ChooseRole} from '../Action/ChooseRole';
 import {SetInitialAttributes} from '../Action/SetInitialAttributes';
 import {TrainIntelligenceSkills} from '../Action/TrainIntelligenceSkills';
+import {SheetBuilderError} from '../Error';
 import type {Armor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/Armor/Armor';
 import type {MartialWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/MartialWeapon/MartialWeapon';
 import type {SimpleWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/SimpleWeapon/SimpleWeapon';
@@ -16,23 +17,24 @@ import {BuildingSheet} from './BuildingSheet/BuildingSheet';
 import {CharacterSheet} from './CharacterSheet/CharacterSheet';
 import {Transaction} from './Transaction';
 
-export type SheetBuilderInitialEquipmentStep = {
-	addInitialEquipment: (params: {
-		simpleWeapon: SimpleWeapon;
-		martialWeapon?: MartialWeapon;
-		armor?: Armor;
-		money: number;
-	}) => SheetBuilderBuildStep;
+export type SheetBuilderInitialEquipmentParams = {
+	simpleWeapon: SimpleWeapon;
+	martialWeapon?: MartialWeapon;
+	armor?: Armor;
+	money: number;
 };
-export type SheetBuilderBuildStep = {
-	build(): CharacterSheet;
-};
-export type SheetBuilderIntelligenceSkillsStep = {trainIntelligenceSkills: (skills: SkillName[]) => SheetBuilderInitialEquipmentStep};
-export type SheetBuilderOriginStep = {chooseOrigin: (origin: OriginInterface) => SheetBuilderIntelligenceSkillsStep};
-export type SheetBuilderRoleStep = {chooseRole: (role: RoleInterface) => SheetBuilderOriginStep};
-export type SheetBuilderRaceStep = {chooseRace: (race: RaceInterface) => SheetBuilderRoleStep};
 
-export class SheetBuilder {
+export type SheetBuilderInterface = {
+	build(): CharacterSheet;
+	reset(): SheetBuilder;
+	addInitialEquipment(params: SheetBuilderInitialEquipmentParams): SheetBuilder;
+	trainIntelligenceSkills(skills: SkillName[]): SheetBuilder;
+	chooseOrigin(origin: OriginInterface): SheetBuilder;
+	chooseRole(role: RoleInterface): SheetBuilder;
+	chooseRace(race: RaceInterface): SheetBuilder;
+};
+
+export class SheetBuilder implements SheetBuilderInterface {
 	constructor(private sheet = new BuildingSheet()) {}
 
 	getBuildingSheet(): BuildingSheet {
@@ -42,88 +44,69 @@ export class SheetBuilder {
 	reset(sheet: BuildingSheet = new BuildingSheet()) {
 		this.sheet = sheet;
 
-		return {
-			setInitialAttributes: this.setInitialAttributes.bind(this),
-		};
+		return this;
 	}
 
-	setInitialAttributes = (attributes: Attributes): SheetBuilderRaceStep => {
+	setInitialAttributes = (attributes: Attributes): this => {
 		const transaction = new Transaction(this.sheet);
 		transaction.run(new SetInitialAttributes({transaction, payload: {attributes}}));
 		transaction.commit();
 
-		return {
-			chooseRace: this.chooseRace(),
-		};
+		return this;
 	};
 
-	private chooseRace(): SheetBuilderRaceStep['chooseRace'] {
-		return (race: RaceInterface) => {
-			const transaction = new Transaction(this.sheet);
-			transaction.run(new ChooseRace({payload: {race}, transaction}));
-			transaction.commit();
+	public chooseRace(race: RaceInterface): this {
+		const transaction = new Transaction(this.sheet);
+		transaction.run(new ChooseRace({payload: {race}, transaction}));
+		transaction.commit();
 
-			return {
-				chooseRole: this.chooseRole(race),
-			};
-		};
+		return this;
 	}
 
-	private chooseRole(race: RaceInterface): SheetBuilderRoleStep['chooseRole'] {
-		return (role: RoleInterface) => {
-			const transaction = new Transaction(this.sheet);
-			transaction.run(new ChooseRole({transaction, payload: {role}}));
-			transaction.commit();
+	public chooseRole(role: RoleInterface): this {
+		const transaction = new Transaction(this.sheet);
+		transaction.run(new ChooseRole({transaction, payload: {role}}));
+		transaction.commit();
 
-			return {
-				chooseOrigin: this.chooseOrigin(race, role),
-			};
-		};
+		return this;
 	}
 
-	private chooseOrigin(race: RaceInterface, role: RoleInterface): SheetBuilderOriginStep['chooseOrigin'] {
-		return (origin: OriginInterface) => {
-			const transaction = new Transaction(this.sheet);
-			transaction.run(new ChooseOrigin({payload: {origin}, transaction}));
-			transaction.commit();
-
-			return {
-				trainIntelligenceSkills: this.trainIntelligenceSkills(race, role, origin),
-			};
-		};
+	public chooseOrigin(origin: OriginInterface) {
+		const transaction = new Transaction(this.sheet);
+		transaction.run(new ChooseOrigin({payload: {origin}, transaction}));
+		transaction.commit();
+		return this;
 	}
 
-	private trainIntelligenceSkills(race: RaceInterface, role: RoleInterface, origin: OriginInterface): SheetBuilderIntelligenceSkillsStep['trainIntelligenceSkills'] {
-		return (skills: SkillName[]) => {
-			const transaction = new Transaction(this.sheet);
-			transaction.run(new TrainIntelligenceSkills({payload: {skills}, transaction}));
-			transaction.commit();
+	public trainIntelligenceSkills(skills: SkillName[]) {
+		const transaction = new Transaction(this.sheet);
+		transaction.run(new TrainIntelligenceSkills({payload: {skills}, transaction}));
+		transaction.commit();
 
-			return {
-				addInitialEquipment: this.addInitialEquipment(race, role, origin),
-			};
-		};
+		return this;
 	}
 
-	private addInitialEquipment(race: RaceInterface, role: RoleInterface, origin: OriginInterface): SheetBuilderInitialEquipmentStep['addInitialEquipment'] {
-		return (params: {simpleWeapon: SimpleWeapon; martialWeapon?: MartialWeapon; armor?: Armor; money: number}) => {
-			const transaction = new Transaction(this.sheet);
-			transaction.run(new AddInitialEquipment({
-				payload: {
-					...params,
-					role,
-				},
-				transaction,
-			}));
-			transaction.commit();
+	public addInitialEquipment(params: {simpleWeapon: SimpleWeapon; martialWeapon?: MartialWeapon; armor?: Armor; money: number}) {
+		const transaction = new Transaction(this.sheet);
+		const sheetRole = this.sheet.getSheetRole();
+		const role = sheetRole.getRole();
 
-			return {
-				build: () => this.build(race, role, origin),
-			};
-		};
+		if (!role) {
+			throw new SheetBuilderError('REQUIRED_ROLE_FOR_INITIAL_EQUIPMENT');
+		}
+
+		transaction.run(new AddInitialEquipment({
+			payload: {
+				...params,
+				role,
+			},
+			transaction,
+		}));
+		transaction.commit();
+		return this;
 	}
 
-	private build(race: RaceInterface, role: RoleInterface, origin: OriginInterface) {
+	public build() {
 		const powers = this.sheet.getSheetPowers();
 		powers.getGeneralPowers().forEach(power => {
 			power.verifyRequirements(this.sheet);
@@ -135,10 +118,26 @@ export class SheetBuilder {
 			power.verifyRequirements(this.sheet);
 		});
 
-		return this.createSheet(race, role, origin);
+		return this.createSheet();
 	}
 
-	private createSheet(race: RaceInterface, role: RoleInterface, origin: OriginInterface) {
+	private createSheet() {
+		const race = this.sheet.getSheetRace().getRace();
+		const role = this.sheet.getSheetRole().getRole();
+		const origin = this.sheet.getSheetOrigin().getOrigin();
+
+		if (!race) {
+			throw new SheetBuilderError('REQUIRED_RACE');
+		}
+
+		if (!role) {
+			throw new SheetBuilderError('REQUIRED_ROLE');
+		}
+
+		if (!origin) {
+			throw new SheetBuilderError('REQUIRED_ORIGIN');
+		}
+
 		return new CharacterSheet({
 			race,
 			role,
