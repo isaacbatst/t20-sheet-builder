@@ -4,20 +4,20 @@ import type {Equipment} from '../Inventory/Equipment/Equipment';
 import {type TransactionInterface} from '../Sheet/TransactionInterface';
 import type {OriginBenefit} from './OriginBenefit/OriginBenefit';
 import {type OriginBenefits} from './OriginBenefit/OriginBenefits';
-import {type SerializedOriginBenefits, type SerializedOriginBenefit} from './OriginBenefit/SerializedOriginBenefit';
+import {type SerializedOriginBenefit, type SerializedOriginBenefits} from './OriginBenefit/SerializedOriginBenefit';
 import type {OriginName} from './OriginName';
-import {type SerializedOrigin} from './SerializedOrigin';
+import {type SerializedOrigins} from './SerializedOrigin';
 
-export type OriginInterface<Sb extends SerializedOriginBenefit = SerializedOriginBenefits, So extends SerializedOrigin<Sb> = SerializedOrigin<Sb>> = {
+export type OriginInterface<Sb extends SerializedOriginBenefit = SerializedOriginBenefits, So extends SerializedOrigins = SerializedOrigins> = {
 	name: OriginName;
 	equipments: Equipment[];
 	chosenBenefits: Array<OriginBenefit<Sb>>;
 	benefits: OriginBenefits;
 	addToSheet(transaction: TransactionInterface): void;
-	serialize(): SerializedOrigin<Sb>;
+	serialize(): So;
 };
 
-export abstract class Origin<Sb extends SerializedOriginBenefit = SerializedOriginBenefit> implements OriginInterface<Sb> {
+export abstract class Origin<Sb extends SerializedOriginBenefit = SerializedOriginBenefit, So extends SerializedOrigins = SerializedOrigins> implements OriginInterface<Sb, So> {
 	abstract name: OriginName;
 	abstract equipments: Equipment[];
 
@@ -33,11 +33,10 @@ export abstract class Origin<Sb extends SerializedOriginBenefit = SerializedOrig
 		this.applyBenefits(transaction);
 	}
 
-	serialize(): SerializedOrigin<Sb> {
-		return {
-			choosenBenefits: this.chosenBenefits.map(benefit => benefit.serialize()),
-			name: this.name,
-		};
+	abstract serialize(): So;
+
+	protected serializeBenefits(): Sb[] {
+		return this.chosenBenefits.map(benefit => benefit.serialize());
 	}
 
 	private applyBenefits(transaction: TransactionInterface) {

@@ -25,7 +25,6 @@ export type SerializedSheetOrigin = {
 	name: OriginName;
 	equipments: SerializedSheetEquipment[];
 	chosenBenefits: SerializedSheetOriginBenefit[];
-	benefits: OriginBenefits;
 };
 
 export type SerializedSheetModifier = {

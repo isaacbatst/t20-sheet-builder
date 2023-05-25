@@ -14,13 +14,13 @@ export class OriginFactory {
 	static makeFromSerialized(serialized: SerializedOrigins) {
 		if (serialized.name === OriginName.acolyte) {
 			const benefitFactory = new OriginBenefitFactoryAcolyte();
-			const benefits = serialized.choosenBenefits.map(benefitFactory.makeFromSerialized);
+			const benefits = serialized.chosenBenefits.map(benefitFactory.makeFromSerialized);
 			return new Acolyte(benefits);
 		}
 
 		if (serialized.name === OriginName.animalsFriend) {
 			const benefitFactory = new OriginBenefitFactoryAnimalsFriend();
-			const benefits = serialized.choosenBenefits.map(benefitFactory.makeFromSerialized);
+			const benefits = serialized.chosenBenefits.map(benefitFactory.makeFromSerialized);
 			return new AnimalsFriend(benefits, serialized.chosenAnimal);
 		}
 

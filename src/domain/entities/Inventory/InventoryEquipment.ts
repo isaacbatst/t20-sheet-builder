@@ -1,3 +1,4 @@
+import {type SerializedSheetInventoryEquipment} from '../Sheet';
 import type {Equipment} from './Equipment';
 
 export class InventoryEquipment {
@@ -12,5 +13,12 @@ export class InventoryEquipment {
 
 	getIsEquipped(): boolean {
 		return this.isEquipped;
+	}
+
+	serialize(): SerializedSheetInventoryEquipment {
+		return {
+			name: this.equipment.name,
+			isEquipped: this.getIsEquipped(),
+		};
 	}
 }

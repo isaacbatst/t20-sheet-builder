@@ -41,7 +41,7 @@ export class SheetSerializer {
 			money: sheet.getSheetInventory().getMoney(),
 			race: race ? this.serializeRace(race) : undefined,
 			role: role ? this.serializeRole(role) : undefined,
-			origin: origin ? this.serializeOrigin(origin) : undefined,
+			origin: origin ? origin.serialize() : undefined,
 			lifePoints: this.serializePoints(sheet.getSheetLifePoints(), sheet),
 			manaPoints: this.serializePoints(sheet.getSheetManaPoints(), sheet),
 			equipments: this.serializeEquipments(sheet.getSheetInventory()),
@@ -167,12 +167,7 @@ export class SheetSerializer {
 
 	private serializeEquipments(sheetInventory: SheetInventoryInterface): SerializedSheetInventoryEquipment[] {
 		const equipments: SerializedSheetInventoryEquipment[] = [];
-		sheetInventory.getEquipments().forEach(inventoryEquipment => {
-			equipments.push({
-				name: inventoryEquipment.equipment.name,
-				isEquipped: inventoryEquipment.getIsEquipped(),
-			});
-		});
+		sheetInventory.getEquipments().forEach(inventoryEquipment => inventoryEquipment.serialize());
 
 		return equipments;
 	}
@@ -183,15 +178,6 @@ export class SheetSerializer {
 			max: points.getMax(attributes, sheet.getLevel()),
 			fixedModifiers: this.serializeFixedModifiersList(points.getFixedModifiers(), sheet),
 			perLevelModifiers: this.serializePerLevelModifiersList(points.getPerLevelModifiers(), sheet),
-		};
-	}
-
-	private serializeOrigin(origin: OriginInterface): SerializedSheetOrigin {
-		return {
-			name: origin.name,
-			benefits: origin.benefits,
-			chosenBenefits: origin.chosenBenefits,
-			equipments: origin.equipments,
 		};
 	}
 

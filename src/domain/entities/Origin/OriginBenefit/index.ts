@@ -4,3 +4,4 @@ export * from './OriginBenefitFactory';
 export * from './OriginBenefitGeneralPower';
 export * from './OriginBenefitOriginPower';
 export * from './OriginBenefitSkill';
+export * from './SerializedOriginBenefit';

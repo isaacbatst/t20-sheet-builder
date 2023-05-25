@@ -1,23 +1,20 @@
 import {EquipmentAdventure} from '../../Inventory/Equipment/EquipmentAdventure/EquipmentAdventure';
 import {EquipmentClothing} from '../../Inventory/Equipment/EquipmentClothing/EquipmentClothing';
 import {EquipmentName} from '../../Inventory/Equipment/EquipmentName';
-import {GeneralPowerFactory, SpecialFriend, OriginPowerFactory, ChurchMember} from '../../Power';
 import {GeneralPowerName} from '../../Power/GeneralPower/GeneralPowerName';
 import {OriginPowerName} from '../../Power/OriginPower/OriginPowerName';
 import {SkillName} from '../../Skill/SkillName';
 import {Origin} from '../Origin';
 import type {OriginBenefit} from '../OriginBenefit/OriginBenefit';
-import {OriginBenefitGeneralPower} from '../OriginBenefit/OriginBenefitGeneralPower';
-import {OriginBenefitOriginPower} from '../OriginBenefit/OriginBenefitOriginPower';
-import {OriginBenefitSkill} from '../OriginBenefit/OriginBenefitSkill';
 import {type SerializedOriginBenefitsAcolyte} from '../OriginBenefit/SerializedOriginBenefit';
 import {OriginName} from '../OriginName';
+import {type SerializedAcolyte, type SerializedOrigins} from '../SerializedOrigin';
 
 export type SerializedChosenChurchMember = {
 	name: OriginPowerName.churchMember;
 };
 
-export class Acolyte extends Origin<SerializedOriginBenefitsAcolyte> {
+export class Acolyte extends Origin<SerializedOriginBenefitsAcolyte, SerializedAcolyte> {
 	static readonly originName = OriginName.acolyte;
 	static equipments = 'Símbolo sagrado, traje de sacerdote.';
 	static skills: SkillName[] = [SkillName.cure, SkillName.religion, SkillName.will];
@@ -37,6 +34,14 @@ export class Acolyte extends Origin<SerializedOriginBenefitsAcolyte> {
 			generalPowers: Acolyte.generalPowers,
 			originPower: Acolyte.originPower,
 		});
+	}
+
+	override serialize(): SerializedAcolyte {
+		return {
+			name: this.name,
+			chosenBenefits: this.serializeBenefits(),
+			equipments: this.equipments,
+		};
 	}
 }
 
