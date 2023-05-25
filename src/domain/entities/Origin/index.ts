@@ -6,3 +6,4 @@ export * from './Origin';
 export * from './Origins';
 export * from './OriginBenefit';
 export * from './OriginFactory';
+export * from './SerializedOrigin';
