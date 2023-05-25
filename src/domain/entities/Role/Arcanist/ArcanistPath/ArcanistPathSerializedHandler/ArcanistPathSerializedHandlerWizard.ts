@@ -3,7 +3,7 @@ import {type SerializedArcanistWizard} from '../../SerializedArcanist';
 import {ArcanistPathSerializedHandler} from './ArcanistPathSerializedHandler';
 
 export class ArcanistPathSerializedHandlerWizard extends ArcanistPathSerializedHandler<SerializedArcanistWizard> {
-	public override handle(request: SerializedArcanistWizard): ArcanistPath {
+	protected override handle(request: SerializedArcanistWizard): ArcanistPath {
 		if (!request.focus) {
 			throw new Error('MISSING_WIZARD_FOCUS');
 		}

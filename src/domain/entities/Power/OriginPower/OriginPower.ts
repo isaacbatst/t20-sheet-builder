@@ -2,7 +2,7 @@ import {type SerializedOriginPowers} from '../../Origin/OriginBenefit/Serialized
 import type {OriginName} from '../../Origin/OriginName';
 import type {PowerInterface} from '../Power';
 import {Power} from '../Power';
-import type {OriginPowerName} from './OriginPowerName';
+import {type OriginPowerName} from './OriginPowerName';
 
 export type OriginPowerInterface<S extends SerializedOriginPowers = SerializedOriginPowers> = PowerInterface & {
 	source: OriginName;

@@ -8,7 +8,7 @@ import {type SerializedOriginBenefits, type SerializedOriginBenefit} from './Ori
 import type {OriginName} from './OriginName';
 import {type SerializedOrigin} from './SerializedOrigin';
 
-export type OriginInterface<Sb extends SerializedOriginBenefit = SerializedOriginBenefits> = {
+export type OriginInterface<Sb extends SerializedOriginBenefit = SerializedOriginBenefits, So extends SerializedOrigin<Sb> = SerializedOrigin<Sb>> = {
 	name: OriginName;
 	equipments: Equipment[];
 	chosenBenefits: Array<OriginBenefit<Sb>>;

@@ -1,20 +1,21 @@
 import {EquipmentAdventure} from '../../Inventory/Equipment/EquipmentAdventure/EquipmentAdventure';
 import {EquipmentClothing} from '../../Inventory/Equipment/EquipmentClothing/EquipmentClothing';
 import {EquipmentName} from '../../Inventory/Equipment/EquipmentName';
+import {GeneralPowerFactory, SpecialFriend, OriginPowerFactory, ChurchMember} from '../../Power';
 import {GeneralPowerName} from '../../Power/GeneralPower/GeneralPowerName';
 import {OriginPowerName} from '../../Power/OriginPower/OriginPowerName';
 import {SkillName} from '../../Skill/SkillName';
 import {Origin} from '../Origin';
 import type {OriginBenefit} from '../OriginBenefit/OriginBenefit';
+import {OriginBenefitGeneralPower} from '../OriginBenefit/OriginBenefitGeneralPower';
+import {OriginBenefitOriginPower} from '../OriginBenefit/OriginBenefitOriginPower';
+import {OriginBenefitSkill} from '../OriginBenefit/OriginBenefitSkill';
 import {type SerializedOriginBenefitsAcolyte} from '../OriginBenefit/SerializedOriginBenefit';
 import {OriginName} from '../OriginName';
-import {type SerializedOrigin} from '../SerializedOrigin';
 
 export type SerializedChosenChurchMember = {
 	name: OriginPowerName.churchMember;
 };
-
-export type SerializedAcolyte = SerializedOrigin<SerializedOriginBenefitsAcolyte>;
 
 export class Acolyte extends Origin<SerializedOriginBenefitsAcolyte> {
 	static readonly originName = OriginName.acolyte;
@@ -30,19 +31,12 @@ export class Acolyte extends Origin<SerializedOriginBenefitsAcolyte> {
 		new EquipmentClothing(EquipmentName.priestCostume),
 	];
 
-	constructor(override chosenBenefits: Array<OriginBenefit<SerializedOriginBenefitsAcolyte>>) {
+	constructor(chosenBenefits: Array<OriginBenefit<SerializedOriginBenefitsAcolyte>>) {
 		super(chosenBenefits, {
 			skills: Acolyte.skills,
 			generalPowers: Acolyte.generalPowers,
 			originPower: Acolyte.originPower,
 		});
-	}
-
-	override serialize(): SerializedAcolyte {
-		return {
-			name: this.name,
-			choosenBenefits: this.chosenBenefits.map(originBenefit => originBenefit.serialize()),
-		};
 	}
 }
 

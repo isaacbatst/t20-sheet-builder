@@ -4,11 +4,7 @@ import {type SerializedArcanistPath, type SerializedArcanistMage} from '../../Se
 import {ArcanistPathSerializedHandler} from './ArcanistPathSerializedHandler';
 
 export class ArcanistPathSerializedHandlerMage extends ArcanistPathSerializedHandler<SerializedArcanistMage> {
-	public override handle(request: SerializedArcanistMage): ArcanistPath {
-		if (!request.extraSpell) {
-			throw new Error('MISSING_MAGE_SPELL');
-		}
-
+	protected override handle(request: SerializedArcanistMage): ArcanistPath {
 		const spell = SpellFactory.make(request.extraSpell);
 		return new ArcanistPathMage(spell);
 	}

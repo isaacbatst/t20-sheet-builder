@@ -10,9 +10,7 @@ import {type SerializedOriginBenefitsAnimalsFriend} from '../OriginBenefit/Seria
 import {OriginName} from '../OriginName';
 import {type SerializedOrigin} from '../SerializedOrigin';
 
-type AnimalsFriendEquipments = EquipmentName.hound | EquipmentName.horse | EquipmentName.pony | EquipmentName.trobo;
-
-export type SerializedAnimalsFriend = SerializedOrigin<SerializedOriginBenefitsAnimalsFriend>;
+export type AnimalsFriendEquipments = EquipmentName.hound | EquipmentName.horse | EquipmentName.pony | EquipmentName.trobo;
 
 export class AnimalsFriend extends Origin<SerializedOriginBenefitsAnimalsFriend> {
 	static readonly originName = OriginName.animalsFriend;
@@ -34,6 +32,13 @@ export class AnimalsFriend extends Origin<SerializedOriginBenefitsAnimalsFriend>
 			originPower: AnimalsFriend.originPower,
 		});
 		this.equipments = [new EquipmentAnimal(chosenAnimal)];
+	}
+
+	override serialize(): SerializedOrigin<SerializedOriginBenefitsAnimalsFriend> {
+		return {
+			choosenBenefits: this.chosenBenefits.map(benefit => benefit.serialize()),
+			name: AnimalsFriend.originName,
+		};
 	}
 }
 

@@ -5,11 +5,7 @@ import {ArcanistLineageSerializedHandlerDraconic, ArcanistLineageSerializedHandl
 import {ArcanistPathSerializedHandler} from './ArcanistPathSerializedHandler';
 
 export class ArcanistPathSerializedHandlerSorcerer extends ArcanistPathSerializedHandler<SerializedArcanistSorcerer> {
-	public override handle(request: SerializedArcanistSorcerer): ArcanistPath {
-		if (!request.lineage) {
-			throw new Error('MISSING_SORCERER_LINEAGE');
-		}
-
+	protected override handle(request: SerializedArcanistSorcerer): ArcanistPath {
 		const draconic = new ArcanistLineageSerializedHandlerDraconic();
 		const faerie = new ArcanistLineageSerializedHandlerFaerie();
 		const red = new ArcanistLineageSerializedHandlerRed();

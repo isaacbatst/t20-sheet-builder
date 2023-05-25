@@ -1,6 +1,6 @@
 import {PickGeneralPower} from '../../Action/PickGeneralPower';
 import {SheetBuilderError} from '../../Error/SheetBuilderError';
-import {type GeneralPowerName} from '../../Power';
+import {GeneralPowerFactory, type GeneralPowerName} from '../../Power';
 import type {GeneralPowerInterface} from '../../Power/GeneralPower/GeneralPower';
 import {type TransactionInterface} from '../../Sheet/TransactionInterface';
 import {type TranslatableName} from '../../Translator';
