@@ -40,7 +40,7 @@ export class Acolyte extends Origin<SerializedOriginBenefitsAcolyte, SerializedA
 		return {
 			name: this.name,
 			chosenBenefits: this.serializeBenefits(),
-			equipments: this.equipments,
+			equipments: this.serializeEquipments(),
 		};
 	}
 }

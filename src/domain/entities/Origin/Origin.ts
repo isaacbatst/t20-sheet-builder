@@ -39,6 +39,10 @@ export abstract class Origin<Sb extends SerializedOriginBenefit = SerializedOrig
 		return this.chosenBenefits.map(benefit => benefit.serialize());
 	}
 
+	protected serializeEquipments() {
+		return this.equipments.map(equipment => equipment.serialize());
+	}
+
 	private applyBenefits(transaction: TransactionInterface) {
 		this.chosenBenefits.forEach(benefit => {
 			benefit.apply(transaction, this.name);

@@ -38,7 +38,7 @@ export class AnimalsFriend extends Origin<SerializedOriginBenefitsAnimalsFriend,
 		return {
 			name: this.name,
 			chosenBenefits: this.serializeBenefits(),
-			equipments: this.equipments,
+			equipments: this.serializeEquipments(),
 			chosenAnimal: this.chosenAnimal,
 		};
 	}
