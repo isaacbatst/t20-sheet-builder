@@ -167,7 +167,9 @@ export class SheetSerializer {
 
 	private serializeEquipments(sheetInventory: SheetInventoryInterface): SerializedSheetInventoryEquipment[] {
 		const equipments: SerializedSheetInventoryEquipment[] = [];
-		sheetInventory.getEquipments().forEach(inventoryEquipment => inventoryEquipment.serialize());
+		sheetInventory.getEquipments().forEach(inventoryEquipment => {
+			equipments.push(inventoryEquipment.serialize());
+		});
 
 		return equipments;
 	}

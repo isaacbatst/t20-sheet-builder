@@ -5,7 +5,6 @@ import {EquipmentName, type Equipment} from '../Inventory';
 import {EquipmentAdventure} from '../Inventory/Equipment/EquipmentAdventure/EquipmentAdventure';
 import {Inventory} from '../Inventory/Inventory';
 import {type InventoryEquipment} from '../Inventory/InventoryEquipment';
-import {Translatable} from '../Translatable';
 import {Proficiency} from './Proficiency';
 import {type AddInitialEquipmentParams, type SheetInventoryInterface} from './SheetInventoryInterface';
 import {type SheetProficienciesInterface} from './SheetProficienciesInterface';
