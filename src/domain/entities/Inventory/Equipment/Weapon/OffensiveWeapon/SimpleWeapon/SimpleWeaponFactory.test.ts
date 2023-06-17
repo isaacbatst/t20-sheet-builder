@@ -1,11 +1,11 @@
-import {describe} from 'vitest';
-import {EquipmentFactory} from './EquipmentFactory';
-import {EquipmentName} from './EquipmentName';
-import {Club, Dagger} from './Weapon';
+import {EquipmentName} from '../../../EquipmentName';
+import {Club} from './Club';
+import {Dagger} from './Dagger';
+import {SimpleWeaponFactory} from './SimpleWeaponFactory';
 
 describe('EquipmentFactory', () => {
 	it('should make a dagger from serialized', () => {
-		const dagger = EquipmentFactory.makeFromSerialized({
+		const dagger = SimpleWeaponFactory.makeFromSerialized({
 			name: EquipmentName.dagger,
 		});
 
@@ -13,7 +13,7 @@ describe('EquipmentFactory', () => {
 	});
 
 	it('should make a club from serialized', () => {
-		const club = EquipmentFactory.makeFromSerialized({
+		const club = SimpleWeaponFactory.makeFromSerialized({
 			name: EquipmentName.club,
 		});
 

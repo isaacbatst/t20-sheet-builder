@@ -1,5 +1,6 @@
 import {type AbilityName, type AbilityType} from '../../Ability';
-import {type EquipmentName} from '../../Inventory';
+import {SimpleWeapon, type EquipmentName} from '../../Inventory';
+import {type SimpleWeaponName} from '../../Inventory/Equipment/Weapon/OffensiveWeapon/SimpleWeapon/SimpleWeaponName';
 import {type ModifierType} from '../../Modifier';
 import {type OriginName} from '../../Origin';
 import {type OriginBenefits} from '../../Origin/OriginBenefit/OriginBenefits';
@@ -13,8 +14,8 @@ import {type Attribute, type Attributes} from '../Attributes';
 import {type Proficiency} from '../Proficiency';
 import {type Vision} from '../Vision';
 
-export type SerializedSheetEquipment = {
-	name: EquipmentName;
+export type SerializedSheetEquipment<T extends EquipmentName = EquipmentName> = {
+	name: T;
 };
 
 export type SerializedSheetOriginBenefit = {
