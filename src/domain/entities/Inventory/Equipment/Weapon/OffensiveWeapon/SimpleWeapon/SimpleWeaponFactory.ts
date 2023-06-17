@@ -1,4 +1,4 @@
-import {type Equipment} from '../../..';
+import {type SimpleWeapon, type Equipment} from '../../..';
 import {SheetBuilderError} from '../../../../../Error';
 import {type SerializedSheetEquipment} from '../../../../../Sheet';
 import {EquipmentName} from '../../../EquipmentName';
@@ -7,7 +7,7 @@ import {Dagger} from './Dagger';
 import {type SimpleWeaponName} from './SimpleWeaponName';
 
 export class SimpleWeaponFactory {
-	static	makeFromSerialized(serialized: SerializedSheetEquipment<SimpleWeaponName>): Equipment {
+	static	makeFromSerialized(serialized: SerializedSheetEquipment<SimpleWeaponName>): SimpleWeapon {
 		if (serialized.name === EquipmentName.dagger) {
 			return new Dagger();
 		}
