@@ -1,9 +1,9 @@
-import type {OffensiveWeaponStatic} from '../OffensiveWeaponStatic';
 import {LongSword} from './LongSword';
+import {type MartialWeaponStatic} from './MartialWeaponStatic';
 import {Scythe} from './Scythe';
 
 export class MartialWeapons {
-	static getAll(): OffensiveWeaponStatic[] {
+	static getAll(): MartialWeaponStatic[] {
 		return [
 			LongSword,
 			Scythe,
