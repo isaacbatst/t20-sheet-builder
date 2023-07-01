@@ -5,3 +5,5 @@ export * from './RaceName';
 export * from './Races';
 export * from './RaceAbilityName';
 export * from './Race';
+export * from './RaceFactory';
+export * from './SerializedRace';
