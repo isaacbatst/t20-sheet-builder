@@ -3,4 +3,5 @@ export enum RaceAbilityName {
 	rockKnowledge = 'rockKnownledge',
 	slowAndAlways = 'slowAndAlways',
 	hardAsRock = 'hardAsRock',
+	heredrimmTradition = 'heredrimmTradition',
 }

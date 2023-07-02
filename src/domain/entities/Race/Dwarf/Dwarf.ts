@@ -3,6 +3,7 @@ import {Race} from '../Race';
 import type {RaceAbility} from '../RaceAbility';
 import {RaceName} from '../RaceName';
 import {HardAsRock} from './HardAsRock/HardAsRock';
+import {HeredrimmTradition} from './HeredrimmTradition/HeredrimmTradition';
 import {RockKnowledge} from './RockKnowledge/RockKnowledge';
 import {SlowAndAlways} from './SlowAndAlways/SlowAndAlways';
 
@@ -19,6 +20,7 @@ export class Dwarf extends Race {
 		rockKnowledge: new RockKnowledge(),
 		slowAndAlways: new SlowAndAlways(),
 		hardAsRock: new HardAsRock(),
+		heredrimmTradition: new HeredrimmTradition(),
 	};
 
 	readonly attributeModifiers = Dwarf.attributeModifiers;
