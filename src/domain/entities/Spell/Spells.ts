@@ -1,3 +1,4 @@
+import {ControlPlants} from '.';
 import {ArcaneArmor} from './ArcaneArmor/ArcaneArmor';
 import {FlamesExplosion} from './FlamesExplosion/FlamesExplosion';
 import {IllusoryDisguise} from './IllusoryDisguise/IllusoryDisguise';
@@ -11,6 +12,7 @@ export class Spells {
 			FlamesExplosion,
 			IllusoryDisguise,
 			MentalDagger,
+			ControlPlants,
 		];
 	}
 }

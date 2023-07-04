@@ -7,3 +7,4 @@ export * from './ActivateableAbilityEffect';
 export * from './TriggeredEffect';
 export * from './TriggeredEffectName';
 export * from './RolePlayEffect';
+export * from './common';
