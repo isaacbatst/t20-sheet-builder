@@ -2,7 +2,7 @@ import {type EffectRange} from '../../Ability';
 import {EffectAffectableArea} from '../../Ability/EffectAffectable';
 import {type Affectable} from '../../Affectable/Affectable';
 import {ManaCost} from '../../ManaCost';
-import {type Cost} from '../../Sheet';
+import type {Cost} from '../../Sheet/CharacterSheet/CharacterSheetInterface';
 import {SpellEffect} from '../SpellEffect';
 
 export class ControlPlantsDefaultEffect extends SpellEffect {

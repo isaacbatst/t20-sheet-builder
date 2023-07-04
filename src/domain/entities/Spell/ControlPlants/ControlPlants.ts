@@ -1,5 +1,8 @@
-import {Spell, SpellCircle, SpellName, SpellSchool} from '..';
-import {AbilityEffects, type AbilityEffectsInterface} from '../../Ability';
+import {Spell} from '../Spell';
+import {SpellCircle} from '../SpellCircle';
+import {SpellName} from '../SpellName';
+import {SpellSchool} from '../SpellSchool';
+import {AbilityEffects} from '../../Ability';
 
 export class ControlPlants extends Spell {
 	static readonly circle = SpellCircle.first;
