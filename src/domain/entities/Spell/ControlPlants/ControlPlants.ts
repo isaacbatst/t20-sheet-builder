@@ -3,6 +3,7 @@ import {SpellCircle} from '../SpellCircle';
 import {SpellName} from '../SpellName';
 import {SpellSchool} from '../SpellSchool';
 import {AbilityEffects} from '../../Ability';
+import {ControlPlantsDefaultEffect} from './ControlPlantsDefaultEffect';
 
 export class ControlPlants extends Spell {
 	static readonly circle = SpellCircle.first;
@@ -14,7 +15,11 @@ export class ControlPlants extends Spell {
 
 	override school: SpellSchool = ControlPlants.school;
 	override shortDescription: string = ControlPlants.shortDescription;
-	override effects = new AbilityEffects();
+	override effects = new AbilityEffects({
+		activateable: {
+			default: new ControlPlantsDefaultEffect(),
+		},
+	});
 
 	constructor() {
 		super(ControlPlants.spellName, ControlPlants.circle, 'arcane');
