@@ -12,13 +12,13 @@ export class SheetAbilities implements SheetAbilitiesInterface {
 	) {}
 
 	applyRoleAbility(ability: RoleAbilityInterface, transaction: TransactionInterface, source: TranslatableName): void {
-		this.roleAbility.set(ability.name, ability);
 		ability.addToSheet(transaction, source);
+		this.roleAbility.set(ability.name, ability);
 	}
 
 	applyRaceAbility(ability: RaceAbilityInterface, transaction: TransactionInterface, source: TranslatableName): void {
-		this.raceAbility.set(ability.name, ability);
 		ability.addToSheet(transaction, source);
+		this.raceAbility.set(ability.name, ability);
 	}
 
 	getRoleAbilities(): RoleAbilityMap {

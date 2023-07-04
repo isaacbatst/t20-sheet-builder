@@ -3,4 +3,5 @@ export enum SpellName {
 	mentalDagger = 'mentalDagger',
 	illusoryDisguise = 'illusoryDisguise',
 	flamesExplosion = 'flamesExplosion',
+	controlPlants = 'controlPlants',
 }

@@ -4,7 +4,7 @@ import {LongSword} from '../../Inventory/Equipment/Weapon/OffensiveWeapon/Martia
 import {Dagger} from '../../Inventory/Equipment/Weapon/OffensiveWeapon/SimpleWeapon/Dagger';
 import {Acolyte} from '../../Origin/Acolyte/Acolyte';
 import {AnimalsFriend} from '../../Origin/AnimalsFriend/AnimalsFriend';
-import type {Origin, OriginInterface} from '../../Origin/Origin';
+import type {OriginInterface} from '../../Origin/Origin';
 import {OriginBenefitGeneralPower} from '../../Origin/OriginBenefit/OriginBenefitGeneralPower';
 import {OriginBenefitOriginPower} from '../../Origin/OriginBenefit/OriginBenefitOriginPower';
 import {OriginBenefitSkill} from '../../Origin/OriginBenefit/OriginBenefitSkill';
@@ -27,10 +27,10 @@ import {ArcaneArmor} from '../../Spell/ArcaneArmor/ArcaneArmor';
 import {FlamesExplosion} from '../../Spell/FlamesExplosion/FlamesExplosion';
 import {IllusoryDisguise} from '../../Spell/IllusoryDisguise/IllusoryDisguise';
 import {MentalDagger} from '../../Spell/MentalDagger/MentalDagger';
-import type {CharacterSheet} from './CharacterSheet';
 import {Proficiency} from '../Proficiency';
 import {SheetBuilder} from '../SheetBuilder';
 import {Vision} from '../Vision';
+import type {CharacterSheet} from './CharacterSheet';
 
 describe('Sheet', () => {
 	describe('Human Warrior', () => {

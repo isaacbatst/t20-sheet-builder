@@ -1,5 +1,5 @@
 import {AddFixedModifierToLifePoints} from '../../../../Action/AddFixedModifierToLifePoints';
-import {LearnSpell} from '../../../../Action/AddSpell';
+import {LearnSpell} from '../../../../Action/LearnSpell';
 import {ChangeTormentaPowersAttribute} from '../../../../Action/ChangeTormentaPowersAttribute';
 import {PickGeneralPower} from '../../../../Action/PickGeneralPower';
 import {TrainSkill} from '../../../../Action/TrainSkill';
@@ -8,7 +8,7 @@ import {FixedModifier} from '../../../../Modifier/FixedModifier/FixedModifier';
 import {Shell} from '../../../../Power';
 import {TransactionFake} from '../../../../Sheet/TransactionFake';
 import {SkillName} from '../../../../Skill';
-import {IllusoryDisguise} from '../../../../Spell';
+import {IllusoryDisguise, SpellCircle} from '../../../../Spell';
 import {RoleAbilityName} from '../../../RoleAbilityName';
 import {ArcanistLineageDraconic} from './ArcanistLineage/ArcanistLineageDraconic/ArcanistLineageDraconic';
 import {ArcanistLineageFaerie} from './ArcanistLineage/ArcanistLineageFaerie/ArcanistLineageFaerie';
@@ -39,6 +39,7 @@ describe('ArcanistPathSorcerer', () => {
 		const lineage = new ArcanistLineageFaerie(spell);
 		const arcanistPath = new ArcanistPathSorcerer(lineage);
 		const transaction = new TransactionFake();
+		transaction.sheet.getSheetSpells().learnCircle(SpellCircle.first, 'arcane');
 		arcanistPath.addToSheet(transaction, RoleAbilityName.arcanistSupernaturalLineage);
 
 		expect(transaction.run).toHaveBeenCalledWith(

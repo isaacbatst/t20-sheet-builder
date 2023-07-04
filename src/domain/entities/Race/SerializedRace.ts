@@ -25,4 +25,8 @@ export type SerializedDwarf = {
 	name: RaceName.dwarf;
 };
 
-export type SerializedRace = SerializedHuman | SerializedDwarf;
+export type SerializedDahllan = {
+	name: RaceName.dahllan;
+};
+
+export type SerializedRace = SerializedHuman | SerializedDwarf | SerializedDahllan;

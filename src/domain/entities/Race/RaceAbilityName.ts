@@ -4,4 +4,7 @@ export enum RaceAbilityName {
 	slowAndAlways = 'slowAndAlways',
 	hardAsRock = 'hardAsRock',
 	heredrimmTradition = 'heredrimmTradition',
+	plantsFriend = 'plantsFriend',
+	allihannaArmor = 'allihannaArmor',
+	wildEmpathy = 'wildEmpathy',
 }

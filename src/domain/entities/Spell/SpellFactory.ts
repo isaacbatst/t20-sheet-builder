@@ -1,4 +1,5 @@
 import {ArcaneArmor} from './ArcaneArmor/ArcaneArmor';
+import {ControlPlants} from './ControlPlants/ControlPlants';
 import {FlamesExplosion} from './FlamesExplosion/FlamesExplosion';
 import {IllusoryDisguise} from './IllusoryDisguise/IllusoryDisguise';
 import {MentalDagger} from './MentalDagger/MentalDagger';
@@ -18,5 +19,6 @@ export class SpellFactory {
 		flamesExplosion: FlamesExplosion,
 		illusoryDisguise: IllusoryDisguise,
 		mentalDagger: MentalDagger,
+		controlPlants: ControlPlants,
 	};
 }

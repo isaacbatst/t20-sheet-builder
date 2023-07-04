@@ -5,7 +5,7 @@ export type SheetLearnedCircles = Record<LearnableSpellType, Set<SpellCircle>>;
 
 export type SheetSpellsInterface = {
 	learnCircle(circle: SpellCircle, type: LearnableSpellType): void;
-	learnSpell(spell: Spell): void;
+	learnSpell(spell: Spell, needsCircle?: boolean): void;
 	getLearnedCircles(): SheetLearnedCircles;
 
 	getSpells(): SpellMap;

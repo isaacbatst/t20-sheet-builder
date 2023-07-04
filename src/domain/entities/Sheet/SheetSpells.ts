@@ -15,8 +15,8 @@ export class SheetSpells implements SheetSpellsInterface {
 		this.learnedCircles[type].add(circle);
 	}
 
-	learnSpell(spell: Spell): void {
-		if (!this.isSpellCircleLearned(spell)) {
+	learnSpell(spell: Spell, needsCircle = true): void {
+		if (needsCircle && !this.isSpellCircleLearned(spell)) {
 			throw new SheetBuilderError('CIRCLE_NOT_LEARNED');
 		}
 

@@ -14,7 +14,7 @@ export class LearnSpell extends Action<'learnSpell'> {
 
 	execute(): void {
 		const sheetSpells = this.transaction.sheet.getSheetSpells();
-		sheetSpells.learnSpell(this.payload.spell);
+		sheetSpells.learnSpell(this.payload.spell, this.payload.needsCircle);
 	}
 
 	getDescription(): string {

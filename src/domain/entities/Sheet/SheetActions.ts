@@ -19,7 +19,6 @@ import type {SpellCircle} from '../Spell/SpellCircle';
 import {type TranslatableName} from '../Translator';
 import type {Attribute, Attributes} from './Attributes';
 import type {Proficiency} from './Proficiency';
-import type {SheetInterface} from './SheetInterface';
 import type {Vision} from './Vision';
 
 type ActionHandlersPayloads = {
@@ -38,7 +37,7 @@ type ActionHandlersPayloads = {
 	changeDisplacement: {displacement: number; source: TranslatableName};
 	addProficiency: {proficiency: Proficiency; source: TranslatableName};
 	learnCircle: {circle: SpellCircle; type: LearnableSpellType; source: TranslatableName};
-	learnSpell: {spell: Spell; source: TranslatableName};
+	learnSpell: {spell: Spell; source: TranslatableName; needsCircle?: boolean};
 	addContextualModifierToSkill: {modifier: ContextualModifierInterface; skill: SkillName};
 	addFixedModifierToSkill: {modifier: FixedModifierInterface; skill: SkillName};
 	addFixedModifierToLifePoints: {modifier: FixedModifierInterface};

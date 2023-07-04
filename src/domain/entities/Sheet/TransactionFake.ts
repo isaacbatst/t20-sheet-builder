@@ -5,6 +5,10 @@ import {type TransactionInterface} from './TransactionInterface';
 export class TransactionFake implements TransactionInterface {
 	actions: Action[] = [];
 	sheet = new SheetFake();
-	run = vi.fn((action: Action) => this.actions.push(action));
+	run = vi.fn((action: Action) => {
+		action.execute();
+		this.actions.push(action);
+	});
+
 	commit = vi.fn();
 }

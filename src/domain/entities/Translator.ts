@@ -110,6 +110,10 @@ export class Translator {
 		versatile: 'Versátil',
 		slowAndAlways: 'Devagar e Sempre',
 		hardAsRock: 'Duro como pedra',
+		heredrimmTradition: 'Tradição Heredrimm',
+		allihannaArmor: 'Armadura de Allihanna',
+		plantsFriend: 'Amiga das Plantas',
+		wildEmpathy: 'Empatia Selvagem',
 	};
 
 	private static readonly skillsTranslation: Record<SkillName, string> = {
@@ -161,6 +165,7 @@ export class Translator {
 	private static readonly racesTranslation: Record<RaceName, string> = {
 		dwarf: 'Anão',
 		human: 'Humano',
+		dahllan: 'Dahllan',
 	};
 
 	private static readonly rolesTranslation: Record<RoleName, string> = {
@@ -197,6 +202,7 @@ export class Translator {
 		illusoryDisguise: 'Disfarce Ilusório',
 		mentalDagger: 'Adaga Mental',
 		flamesExplosion: 'Explosão de Chamas',
+		controlPlants: 'Controlar Plantas',
 	};
 
 	private static readonly spellCirclesTranslation: Record<SpellCircle, string> = {

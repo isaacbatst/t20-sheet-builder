@@ -1,5 +1,5 @@
 import {PassiveEffect} from '../Ability/PassiveEffect';
-import {LearnSpell} from '../Action/AddSpell';
+import {LearnSpell} from '../Action/LearnSpell';
 import {LearnCircle} from '../Action/LearnCircle';
 import {SheetBuilderError} from '../Error/SheetBuilderError';
 import type {Attribute} from '../Sheet/Attributes';

@@ -1,5 +1,5 @@
 import {PassiveEffect} from '../../../../Ability/PassiveEffect';
-import {LearnSpell} from '../../../../Action/AddSpell';
+import {LearnSpell} from '../../../../Action/LearnSpell';
 import {type TransactionInterface} from '../../../../Sheet/TransactionInterface';
 import {type Spell} from '../../../../Spell';
 import {RoleAbilityName} from '../../../RoleAbilityName';

@@ -1,9 +1,10 @@
+import {Dahllan} from './Dahllan/Dahllan';
 import {Dwarf} from './Dwarf';
 import {Human, VersatileChoiceFactory} from './Human';
 import {type Race} from './Race';
 import {type RaceInterface} from './RaceInterface';
 import {RaceName} from './RaceName';
-import {type SerializedDwarf, type SerializedHuman, type SerializedRace} from './SerializedRace';
+import {type SerializedDahllan, type SerializedDwarf, type SerializedHuman, type SerializedRace} from './SerializedRace';
 
 export class RaceFactory {
 	static makeFromSerialized(serializedRace: SerializedRace): RaceInterface {
@@ -12,6 +13,8 @@ export class RaceFactory {
 				return RaceFactory.makeHuman(serializedRace);
 			case RaceName.dwarf:
 				return RaceFactory.makeDwarf(serializedRace);
+			case RaceName.dahllan:
+				return RaceFactory.makeDahllan(serializedRace);
 			default:
 				throw new Error('UNKNOWN_RACE');
 		}
@@ -26,5 +29,9 @@ export class RaceFactory {
 
 	private static makeDwarf(_serializedRace: SerializedDwarf) {
 		return new Dwarf();
+	}
+
+	private static makeDahllan(_serializedRace: SerializedDahllan) {
+		return new Dahllan();
 	}
 }
