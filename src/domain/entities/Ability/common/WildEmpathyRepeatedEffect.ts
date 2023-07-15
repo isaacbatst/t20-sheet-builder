@@ -1,6 +1,6 @@
 import {AddFixedModifierToSkill} from '../../Action/AddFixedModifierToSkill';
 import {FixedModifier} from '../../Modifier';
-import {RaceAbilityName} from '../../Race';
+import {RaceAbilityName} from '../../Race/RaceAbilityName';
 import {type TransactionInterface} from '../../Sheet/TransactionInterface';
 import {SkillName} from '../../Skill';
 import {PassiveEffect} from '../PassiveEffect';

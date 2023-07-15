@@ -3,7 +3,8 @@
         "es2021": true,
         "node": true
     },
-    "extends": "xo",
+    "extends": ["xo"],
+    "plugins": ["import"],
     "overrides": [
         {
             "extends": [
@@ -23,5 +24,6 @@
         "sourceType": "module"
     },
     "rules": {
+        "import/no-cycle": "error"
     }
 }

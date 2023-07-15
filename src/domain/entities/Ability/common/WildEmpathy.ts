@@ -1,4 +1,5 @@
-import {AbilityEffects, RolePlayEffect} from '..';
+import {AbilityEffects} from '../AbilityEffects';
+import {RolePlayEffect} from '../RolePlayEffect';
 import {RaceAbility} from '../../Race/RaceAbility';
 import {RaceAbilityName} from '../../Race/RaceAbilityName';
 import {WildEmpathyRepeatedEffect} from './WildEmpathyRepeatedEffect';
