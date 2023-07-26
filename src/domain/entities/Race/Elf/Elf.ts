@@ -7,11 +7,14 @@ import {GloriennGrace} from './GloriennGrace';
 import {MagicBlood} from './MagicBlood';
 
 export class Elf extends Race {
-	override attributeModifiers: Partial<Attributes> = {
+	static attributeModifiers: Partial<Attributes> = {
 		intelligence: 2,
 		dexterity: 1,
 		constitution: -1,
 	};
+
+	static raceName = RaceName.elf;
+	override attributeModifiers = Elf.attributeModifiers;
 
 	override abilities: Record<string, RaceAbility> = {
 		gloriennGrace: new GloriennGrace(),
