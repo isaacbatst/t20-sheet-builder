@@ -1,20 +1,20 @@
-import type {Attribute} from './Sheet/Attributes';
+import {Capitalizer} from './Capitalizer';
+import {type DamageType} from './Damage/DamageType';
+import type {EquipmentName} from './Inventory/Equipment/EquipmentName';
 import type {OriginName} from './Origin/OriginName';
 import type {PowerName} from './Power/PowerName';
-import type {Proficiency} from './Sheet/Proficiency';
-import type {RaceName} from './Race/RaceName';
 import type {RaceAbilityName} from './Race/RaceAbilityName';
+import type {RaceName} from './Race/RaceName';
+import type {ArcanistPathName} from './Role';
 import type {RoleAbilityName} from './Role/RoleAbilityName';
 import type {RoleName} from './Role/RoleName';
+import type {Attribute} from './Sheet/Attributes';
+import type {Proficiency} from './Sheet/Proficiency';
+import type {Vision} from './Sheet/Vision';
 import type {SkillName} from './Skill/SkillName';
+import {type SpellSchool, type SpellType} from './Spell';
 import {SpellCircle} from './Spell/SpellCircle';
 import type {SpellName} from './Spell/SpellName';
-import {StringHelper} from './StringHelper';
-import type {Vision} from './Sheet/Vision';
-import type {EquipmentName} from './Inventory/Equipment/EquipmentName';
-import type {ArcanistPathName} from './Role';
-import {type DamageType} from './Damage/DamageType';
-import {type SpellSchool, type SpellType} from './Spell';
 
 export type TranslatableName = Attribute
 | RaceAbilityName | SkillName | PowerName | RaceName | Proficiency
@@ -26,7 +26,7 @@ export class Translator {
 		const translatedAttribute = Translator.attributesTranslation[attribute];
 
 		if (capitalized) {
-			return StringHelper.capitalize(translatedAttribute);
+			return Capitalizer.capitalize(translatedAttribute);
 		}
 
 		return translatedAttribute;
@@ -114,6 +114,9 @@ export class Translator {
 		allihannaArmor: 'Armadura de Allihanna',
 		plantsFriend: 'Amiga das Plantas',
 		wildEmpathy: 'Empatia Selvagem',
+		elvenSenses: 'Sentidos Élficos',
+		gloriennGrace: 'Graça de Glórienn',
+		magicBlood: 'Sangue Mágico',
 	};
 
 	private static readonly skillsTranslation: Record<SkillName, string> = {
@@ -166,6 +169,7 @@ export class Translator {
 		dwarf: 'Anão',
 		human: 'Humano',
 		dahllan: 'Dahllan',
+		elf: 'Elfo',
 	};
 
 	private static readonly rolesTranslation: Record<RoleName, string> = {

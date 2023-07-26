@@ -1,13 +1,11 @@
+import {Capitalizer} from './Capitalizer';
 import type {Attribute, Attributes} from './Sheet/Attributes';
 import {TextSeparatorGenerator} from './TextSeparatorGenerator';
 import {Translator} from './Translator';
 
 export class StringHelper {
 	static capitalize(string: string): string {
-		const firstChar = string.charAt(0);
-		const firstCharCapitalized = firstChar.toUpperCase();
-
-		return `${firstCharCapitalized}${string.slice(1)}`;
+		return Capitalizer.capitalize(string);
 	}
 
 	static addNumberSign(number: number): string {
