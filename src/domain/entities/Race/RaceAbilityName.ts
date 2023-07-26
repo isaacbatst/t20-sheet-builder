@@ -7,4 +7,7 @@ export enum RaceAbilityName {
 	plantsFriend = 'plantsFriend',
 	allihannaArmor = 'allihannaArmor',
 	wildEmpathy = 'wildEmpathy',
+	gloriennGrace = 'gloriennGrace',
+	magicBlood = 'magicBlood',
+	elvenSenses = 'elvenSenses',
 }

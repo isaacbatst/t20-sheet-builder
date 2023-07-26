@@ -14,7 +14,7 @@ export class AddPerLevelModifierToManaPoints extends Action<'addPerLevelModifier
 
 	execute(): void {
 		const manaPoints = this.transaction.sheet.getSheetManaPoints();
-		manaPoints.addFixedModifier(this.payload.modifier);
+		manaPoints.addPerLevelModifier(this.payload.modifier);
 	}
 
 	getDescription(): string {
