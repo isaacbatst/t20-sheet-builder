@@ -1,5 +1,5 @@
 import {type SimpleWeapon, type Equipment} from '../../..';
-import {SheetBuilderError} from '../../../../../Error';
+import {SheetBuilderError} from '../../../../../../errors';
 import {type SerializedSheetEquipment} from '../../../../../Sheet';
 import {EquipmentName} from '../../../EquipmentName';
 import {Club} from './Club';

@@ -1,5 +1,5 @@
 import {AddEquipment} from '../Action/AddEquipment';
-import {SheetBuilderError} from '../Error/SheetBuilderError';
+import {SheetBuilderError} from '../../errors/SheetBuilderError';
 import type {Equipment} from '../Inventory/Equipment/Equipment';
 import {type TransactionInterface} from '../Sheet/TransactionInterface';
 import type {OriginBenefit} from './OriginBenefit/OriginBenefit';

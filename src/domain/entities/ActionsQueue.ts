@@ -1,5 +1,5 @@
 import {type Action} from './Action/Action';
-import {SheetBuilderError} from './Error/SheetBuilderError';
+import {SheetBuilderError} from '../errors/SheetBuilderError';
 import type {Queue} from './Queue';
 
 export class ActionsQueue implements Queue<Action> {

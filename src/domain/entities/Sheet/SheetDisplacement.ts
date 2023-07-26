@@ -1,4 +1,4 @@
-import {SheetBuilderError} from '../Error';
+import {SheetBuilderError} from '../../errors';
 import {type SheetDisplacementInterface} from './SheetDisplacementInterface';
 
 export class SheetDisplacement implements SheetDisplacementInterface {

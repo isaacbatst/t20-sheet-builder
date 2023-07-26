@@ -1,4 +1,4 @@
-import {SheetBuilderError} from '../../../Error/SheetBuilderError';
+import {SheetBuilderError} from '../../../../errors/SheetBuilderError';
 import {GeneralPowerFactory, GeneralPowerName} from '../../../Power';
 import {SkillName} from '../../../Skill';
 import {type VersatileChoice, type VersatileChoiceType} from './VersatileChoice';

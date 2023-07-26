@@ -1,4 +1,4 @@
-import {SheetBuilderError} from './Error';
+import {SheetBuilderError} from '../errors';
 import {Race} from './Race/Race';
 import type {RaceName} from './Race/RaceName';
 import type {Attribute, Attributes} from './Sheet/Attributes';

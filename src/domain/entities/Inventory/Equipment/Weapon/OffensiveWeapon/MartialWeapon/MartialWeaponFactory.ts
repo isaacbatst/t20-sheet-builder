@@ -1,4 +1,4 @@
-import {SheetBuilderError} from '../../../../../Error';
+import {SheetBuilderError} from '../../../../../../errors';
 import {type SerializedSheetEquipment} from '../../../../../Sheet';
 import {EquipmentName} from '../../../EquipmentName';
 import {LongSword} from './LongSword';

@@ -1,4 +1,4 @@
-import {SheetBuilderError} from '../Error/SheetBuilderError';
+import {SheetBuilderError} from '../../errors/SheetBuilderError';
 import type {DiceSides} from './DiceSides';
 
 export class DiceRoll {

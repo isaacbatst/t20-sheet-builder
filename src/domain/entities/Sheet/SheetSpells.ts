@@ -1,4 +1,4 @@
-import {SheetBuilderError} from '../Error';
+import {SheetBuilderError} from '../../errors';
 import {type SpellCircle, type LearnableSpellType, type Spell} from '../Spell';
 import {type SheetLearnedCircles, type SheetSpellsInterface, type SpellMap} from './SheetSpellsInterface';
 

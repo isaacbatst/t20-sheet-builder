@@ -1,7 +1,7 @@
 import type {AbilityName} from '../../Ability/Ability';
 import {PassiveEffect} from '../../Ability/PassiveEffect';
 import {AddFixedModifierToSkill} from '../../Action/AddFixedModifierToSkill';
-import {SheetBuilderError} from '../../Error/SheetBuilderError';
+import {SheetBuilderError} from '../../../errors/SheetBuilderError';
 import {FixedModifier} from '../../Modifier/FixedModifier/FixedModifier';
 import {type TransactionInterface} from '../../Sheet/TransactionInterface';
 import {SkillName} from '../../Skill/SkillName';

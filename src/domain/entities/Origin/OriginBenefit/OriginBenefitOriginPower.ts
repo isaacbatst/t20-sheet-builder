@@ -1,5 +1,5 @@
 import {PickOriginPower} from '../../Action/PickOriginPower';
-import {SheetBuilderError} from '../../Error/SheetBuilderError';
+import {SheetBuilderError} from '../../../errors/SheetBuilderError';
 import {type OriginPowerName} from '../../Power';
 import type {OriginPowerInterface} from '../../Power/OriginPower/OriginPower';
 import type {Transaction} from '../../Sheet/Transaction';

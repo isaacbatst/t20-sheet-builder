@@ -1,4 +1,4 @@
-import {SheetBuilderError} from '../../domain/entities/Error/SheetBuilderError';
+import {SheetBuilderError} from '../../domain/errors/SheetBuilderError';
 
 export abstract class Handler<Request, Return> {
 	protected nextHandler: Handler<Request, Return> | undefined;

@@ -9,7 +9,7 @@ export * from './Inventory';
 export * from './Spell';
 export * from './Translator';
 export * from './Character';
-export * from './Error';
+export * from '../errors';
 export * from './Damage/DamageType';
 export * from './Modifier';
 export * from './Ability';

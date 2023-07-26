@@ -1,7 +1,7 @@
 import {AbilityEffects} from '../../../../Ability/AbilityEffects';
 import {type CharacterAppliedFightStyle} from '../../../../Character/CharacterAppliedFightStyle';
 import {type CharacterModifiers} from '../../../../Character/CharacterModifiers';
-import {SheetBuilderError} from '../../../../Error';
+import {SheetBuilderError} from '../../../../../errors';
 import {SkillName} from '../../../../Skill';
 import {SkillRequirement} from '../../../Requirement/SkillRequirement';
 import {GeneralPowerName} from '../../GeneralPowerName';

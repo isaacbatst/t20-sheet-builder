@@ -1,5 +1,5 @@
 import {PassiveEffect} from '../../../Ability/PassiveEffect';
-import {SheetBuilderError} from '../../../Error/SheetBuilderError';
+import {SheetBuilderError} from '../../../../errors/SheetBuilderError';
 import {type TransactionInterface} from '../../../Sheet/TransactionInterface';
 import {RaceAbilityName} from '../../RaceAbilityName';
 import type {VersatileChoice} from './VersatileChoice';

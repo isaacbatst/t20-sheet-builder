@@ -1,4 +1,4 @@
-import {SheetBuilderError} from '../Error/SheetBuilderError';
+import {SheetBuilderError} from '../../errors/SheetBuilderError';
 import {type ContextualModifierInterface} from '../Modifier/ContextualModifier/ContextualModifierInterface';
 import {ContextualModifiersList} from '../Modifier/ContextualModifier/ContextualModifierList';
 import {type FixedModifierInterface} from '../Modifier/FixedModifier/FixedModifier';

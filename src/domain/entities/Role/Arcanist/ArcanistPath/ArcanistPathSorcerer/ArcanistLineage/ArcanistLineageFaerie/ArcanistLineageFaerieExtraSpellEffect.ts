@@ -1,6 +1,6 @@
 import {PassiveEffect} from '../../../../../../Ability/PassiveEffect';
 import {LearnSpell} from '../../../../../../Action/LearnSpell';
-import {SheetBuilderError} from '../../../../../../Error';
+import {SheetBuilderError} from '../../../../../../../errors';
 import {type TransactionInterface} from '../../../../../../Sheet/TransactionInterface';
 import {SpellSchool, type Spell} from '../../../../../../Spell';
 import {RoleAbilityName} from '../../../../../RoleAbilityName';

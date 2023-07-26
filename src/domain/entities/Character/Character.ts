@@ -1,5 +1,5 @@
 import {WeaponAttack} from '../Attack/WeaponAttack';
-import {SheetBuilderError} from '../Error/SheetBuilderError';
+import {SheetBuilderError} from '../../errors/SheetBuilderError';
 import type {EquipmentName} from '../Inventory';
 import {OffensiveWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/OffensiveWeapon';
 import {type GeneralPowerMap} from '../Map';

@@ -1,6 +1,6 @@
 import {AddEquipment} from '../Action/AddEquipment';
 import {AddMoney} from '../Action/AddMoney';
-import {SheetBuilderError} from '../Error';
+import {SheetBuilderError} from '../../errors';
 import {EquipmentName, type Equipment} from '../Inventory';
 import {EquipmentAdventure} from '../Inventory/Equipment/EquipmentAdventure/EquipmentAdventure';
 import {Inventory} from '../Inventory/Inventory';

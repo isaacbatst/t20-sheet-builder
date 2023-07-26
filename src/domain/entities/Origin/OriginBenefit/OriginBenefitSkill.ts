@@ -1,5 +1,5 @@
 import {TrainSkill} from '../../Action/TrainSkill';
-import {SheetBuilderError} from '../../Error/SheetBuilderError';
+import {SheetBuilderError} from '../../../errors/SheetBuilderError';
 import {type TransactionInterface} from '../../Sheet/TransactionInterface';
 import type {SkillName} from '../../Skill/SkillName';
 import {type TranslatableName} from '../../Translator';

@@ -1,6 +1,6 @@
 import type {AbilityInterface} from '../Ability/Ability';
 import {Ability} from '../Ability/Ability';
-import {SheetBuilderError} from '../Error/SheetBuilderError';
+import {SheetBuilderError} from '../../errors/SheetBuilderError';
 import {type SheetInterface} from '../Sheet/SheetInterface';
 import type {PowerName} from './PowerName';
 

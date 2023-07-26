@@ -1,7 +1,7 @@
 import {PassiveEffect} from '../Ability/PassiveEffect';
 import {LearnSpell} from '../Action/LearnSpell';
 import {LearnCircle} from '../Action/LearnCircle';
-import {SheetBuilderError} from '../Error/SheetBuilderError';
+import {SheetBuilderError} from '../../errors/SheetBuilderError';
 import type {Attribute} from '../Sheet/Attributes';
 import type {Level} from '../Sheet/Level';
 import {type TransactionInterface} from '../Sheet/TransactionInterface';

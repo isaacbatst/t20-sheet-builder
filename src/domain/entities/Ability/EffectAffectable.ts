@@ -1,4 +1,4 @@
-import {SheetBuilderError} from '../Error/SheetBuilderError';
+import {SheetBuilderError} from '../../errors/SheetBuilderError';
 import type {Affectable, AffectableType} from '../Affectable/Affectable';
 import type {AreaFormat} from '../Affectable/AffectableArea';
 import type {TargetType} from '../Affectable/AffectableTarget';

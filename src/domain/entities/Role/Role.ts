@@ -4,7 +4,7 @@ import {AddPerLevelModifierToManaPoints} from '../Action/AddPerLevelModifierToMa
 import {AddProficiency} from '../Action/AddProficiency';
 import {ApplyRoleAbility} from '../Action/ApplyRoleAbility';
 import {TrainSkill} from '../Action/TrainSkill';
-import {SheetBuilderError} from '../Error/SheetBuilderError';
+import {SheetBuilderError} from '../../errors/SheetBuilderError';
 import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
 import {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
 import {Level} from '../Sheet/Level';
