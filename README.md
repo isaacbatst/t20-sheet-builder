@@ -10,6 +10,8 @@ Roll the dices.
 ### 2 - Choose your race
 - Human
 - Dwarf
+- Dahllan
+- Elf
 
 ### 3 - Choose your role
 - Warrior
