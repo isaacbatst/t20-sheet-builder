@@ -1,4 +1,5 @@
-import {ArcanistLineageFactoryHandlerDraconic, ArcanistLineageFactoryHandlerFaerie, ArcanistLineageFactoryHandlerRed, ArcanistPathName, ArcanistPathSorcerer, type ArcanistPath} from '..';
+import {type ArcanistPath, ArcanistPathName} from '../ArcanistPath';
+import {ArcanistLineageFactoryHandlerDraconic, ArcanistLineageFactoryHandlerFaerie, ArcanistLineageFactoryHandlerRed, ArcanistPathSorcerer} from '../ArcanistPathSorcerer';
 import {ArcanistPathHandler, type ArcanistPathHandlerRequest} from './ArcanistPathHandler';
 
 export class ArcanistPathHandlerSorcerer extends ArcanistPathHandler {

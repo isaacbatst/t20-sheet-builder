@@ -1,4 +1,5 @@
-import {ArcanistPathWizard, ArcanistPathWizardFocusFactory, type ArcanisPathWizardFocusName, type ArcanistPath, ArcanistPathName} from '..';
+import {ArcanistPathWizardFocusFactory, ArcanistPathWizard} from '../ArcanisPathWizard';
+import {type ArcanistPath, ArcanistPathName} from '../ArcanistPath';
 import {ArcanistPathHandler, type ArcanistPathHandlerRequest} from './ArcanistPathHandler';
 
 export class ArcanistPathHandlerWizard extends ArcanistPathHandler {

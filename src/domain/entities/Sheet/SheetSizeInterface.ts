@@ -1,3 +1,4 @@
+import {type Size} from '../Size';
 import {type SizeName} from '../Size/SizeName';
 
 export type SheetSizeInterface = {
@@ -5,4 +6,5 @@ export type SheetSizeInterface = {
 	getOccupiedSpaceInMeters(): number;
 	getManeuversModifier(): number;
 	getFurtivityModifier(): number;
+	changeSize(size: Size): void;
 };

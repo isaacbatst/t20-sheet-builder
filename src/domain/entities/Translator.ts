@@ -11,6 +11,7 @@ import type {RoleName} from './Role/RoleName';
 import type {Attribute} from './Sheet/Attributes';
 import type {Proficiency} from './Sheet/Proficiency';
 import type {Vision} from './Sheet/Vision';
+import {type SizeName} from './Size';
 import type {SkillName} from './Skill/SkillName';
 import {type SpellSchool, type SpellType} from './Spell';
 import {SpellCircle} from './Spell/SpellCircle';
@@ -19,7 +20,7 @@ import type {SpellName} from './Spell/SpellName';
 export type TranslatableName = Attribute
 | RaceAbilityName | SkillName | PowerName | RaceName | Proficiency
 | Vision | RoleAbilityName | SpellName | SpellCircle | RoleName | OriginName
-| EquipmentName | ArcanistPathName | DamageType | SpellSchool | 'default';
+| EquipmentName | ArcanistPathName | DamageType | SpellSchool | SizeName | 'default';
 
 export class Translator {
 	static getAttributeTranslation(attribute: Attribute, capitalized = true) {
@@ -92,6 +93,10 @@ export class Translator {
 		return Translator.spellSchoolsTranslation[school];
 	}
 
+	static getSizeTranslation(size: SizeName) {
+		return Translator.sizesTranslation[size];
+	}
+
 	static getTranslation(string: TranslatableName) {
 		return Translator.translation[string];
 	}
@@ -117,6 +122,10 @@ export class Translator {
 		elvenSenses: 'Sentidos Élficos',
 		gloriennGrace: 'Graça de Glórienn',
 		magicBlood: 'Sangue Mágico',
+		ingenious: 'Engenhoso',
+		jointer: 'Espelunqueiro',
+		slenderPlage: 'Peste Esguia',
+		streetRat: 'Rato das Ruas	',
 	};
 
 	private static readonly skillsTranslation: Record<SkillName, string> = {
@@ -170,6 +179,7 @@ export class Translator {
 		human: 'Humano',
 		dahllan: 'Dahllan',
 		elf: 'Elfo',
+		goblin: 'Goblin',
 	};
 
 	private static readonly rolesTranslation: Record<RoleName, string> = {
@@ -273,6 +283,15 @@ export class Translator {
 		transmutation: 'Transmutação',
 	};
 
+	private static readonly sizesTranslation: Record<SizeName, string> = {
+		colossal: 'Colossal',
+		huge: 'Enorme',
+		large: 'Grande',
+		medium: 'Médio',
+		small: 'Pequeno',
+		tiny: 'Minúsculo',
+	};
+
 	private static readonly translation: Record<TranslatableName, string> = {
 		...Translator.attributesTranslation,
 		...Translator.raceAbilitiesTranslation,
@@ -291,6 +310,7 @@ export class Translator {
 		...Translator.damageTypesTranslation,
 		...Translator.spellTypesTranslation,
 		...Translator.spellSchoolsTranslation,
+		...Translator.sizesTranslation,
 		default: 'Padrão',
 	};
 }

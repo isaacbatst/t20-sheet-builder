@@ -2,6 +2,7 @@ export * from './Dwarf';
 export * from './Human';
 export * from './Dahllan';
 export * from './Elf';
+export * from './Goblin';
 export * from './RaceInterface';
 export * from './RaceName';
 export * from './Races';

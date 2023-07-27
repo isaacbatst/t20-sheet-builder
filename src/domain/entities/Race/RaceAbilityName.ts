@@ -10,4 +10,8 @@ export enum RaceAbilityName {
 	gloriennGrace = 'gloriennGrace',
 	magicBlood = 'magicBlood',
 	elvenSenses = 'elvenSenses',
+	ingenious = 'ingenious',
+	jointer = 'jointer',
+	slenderPlage = 'slenderPlage',
+	streetRat = 'streetRat',
 }

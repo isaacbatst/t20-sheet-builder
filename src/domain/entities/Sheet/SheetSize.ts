@@ -4,8 +4,12 @@ import {type SheetSizeInterface} from './SheetSizeInterface';
 
 export class SheetSize implements SheetSizeInterface {
 	constructor(
-		private readonly size: Size = sizes[SizeName.medium],
+		private size: Size = sizes[SizeName.medium],
 	) {}
+
+	changeSize(size: Size): void {
+		this.size = size;
+	}
 
 	getSize(): SizeName {
 		return this.size.name;

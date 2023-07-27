@@ -1,4 +1,4 @@
-import {ControlPlants} from '.';
+import {ControlPlants} from './ControlPlants/ControlPlants';
 import {ArcaneArmor} from './ArcaneArmor/ArcaneArmor';
 import {FlamesExplosion} from './FlamesExplosion/FlamesExplosion';
 import {IllusoryDisguise} from './IllusoryDisguise/IllusoryDisguise';

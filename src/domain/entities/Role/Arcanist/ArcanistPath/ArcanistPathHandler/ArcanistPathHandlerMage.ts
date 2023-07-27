@@ -1,5 +1,6 @@
-import {ArcanistPathMage, ArcanistPathName, type ArcanistPath} from '..';
 import {SpellFactory} from '../../../../Spell';
+import {ArcanistPathName, type ArcanistPath} from '../ArcanistPath';
+import {ArcanistPathMage} from '../ArcanistPathMage';
 import {ArcanistPathHandler, type ArcanistPathHandlerRequest} from './ArcanistPathHandler';
 
 export class ArcanistPathHandlerMage extends ArcanistPathHandler {

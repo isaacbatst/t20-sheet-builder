@@ -13,6 +13,7 @@ import type {RaceInterface} from '../Race/RaceInterface';
 import type {RoleAbilityInterface} from '../Role/RoleAbility';
 import type {RoleInterface} from '../Role/RoleInterface';
 import type {RolePowerInterface} from '../Role/RolePower';
+import {type Size} from '../Size';
 import type {SkillName} from '../Skill/SkillName';
 import type {LearnableSpellType, Spell} from '../Spell/Spell';
 import type {SpellCircle} from '../Spell/SpellCircle';
@@ -50,6 +51,8 @@ type ActionHandlersPayloads = {
 	addMoney: {quantity: number; source: TranslatableName};
 	changeTormentaPowersAttribute: {attribute: Attribute; source: TranslatableName};
 	decreaseAttribute: {attribute: Attribute; quantity: number; source: TranslatableName};
+	changeClimbingDisplacement: {climbingDisplacement: number; source: TranslatableName};
+	changeSize: {size: Size; source: TranslatableName};
 };
 
 export type ActionType = keyof ActionHandlersPayloads;
