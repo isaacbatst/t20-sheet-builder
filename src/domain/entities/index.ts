@@ -2,6 +2,7 @@ export * from './BuildStep';
 export * from './Sheet';
 export * from './Race/';
 export * from './Role/';
+export * from './Size';
 export * from './Origin/';
 export * from './Skill/';
 export * from './Power';
