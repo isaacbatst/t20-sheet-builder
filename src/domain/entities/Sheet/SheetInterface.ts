@@ -15,6 +15,7 @@ import {type SheetRoleInterface} from './SheetRoleInterface';
 import {type SheetSkillsInterface} from './SheetSkillsInterface';
 import {type SheetSpellsInterface} from './SheetSpellsInterface';
 import {type SheetVisionInterface} from './SheetVisionInterface';
+import {type SheetSizeInterface} from './SheetSizeInterface';
 
 export type SheetTriggeredEffects = Record<TriggerEvent, TriggeredEffectMap>;
 
@@ -39,5 +40,6 @@ export type SheetInterface = {
 	getSheetRole(): SheetRoleInterface;
 	getSheetProficiencies(): SheetProficienciesInterface;
 	getSheetDisplacement(): SheetDisplacementInterface;
+	getSheetSize(): SheetSizeInterface;
 };
 

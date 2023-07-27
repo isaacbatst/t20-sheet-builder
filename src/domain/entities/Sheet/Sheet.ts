@@ -14,6 +14,7 @@ import {type SheetRoleInterface} from './SheetRoleInterface';
 import {type SheetSkillsInterface} from './SheetSkillsInterface';
 import {type SheetSpellsInterface} from './SheetSpellsInterface';
 import {type SheetVisionInterface} from './SheetVisionInterface';
+import {type SheetSizeInterface} from './SheetSizeInterface';
 export abstract class Sheet implements SheetInterface {
 	protected abstract buildSteps: BuildStepInterface[];
 	protected abstract level: number;
@@ -32,6 +33,7 @@ export abstract class Sheet implements SheetInterface {
 	protected abstract sheetRole: SheetRoleInterface;
 	protected abstract sheetProficiencies: SheetProficienciesInterface;
 	protected abstract sheetDisplacement: SheetDisplacementInterface;
+	protected abstract sheetSize: SheetSizeInterface;
 
 	pushBuildSteps(...buildSteps: BuildStepInterface[]): void {
 		this.buildSteps.push(...buildSteps);
@@ -43,6 +45,10 @@ export abstract class Sheet implements SheetInterface {
 
 	getLevel(): number {
 		return this.level;
+	}
+
+	getSheetSize(): SheetSizeInterface {
+		return this.sheetSize;
 	}
 
 	getSheetAbilities(): SheetAbilitiesInterface {

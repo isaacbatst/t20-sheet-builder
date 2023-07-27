@@ -142,6 +142,13 @@ describe('Sheet', () => {
 		it('should have initial money', () => {
 			expect(sheet.getSheetInventory().getMoney()).toBe(24);
 		});
+
+		it('should have medium size', () => {
+			expect(sheet.getSheetSize().getSize()).toBe('medium');
+			expect(sheet.getSheetSize().getOccupiedSpaceInMeters()).toBe(1.5);
+			expect(sheet.getSheetSize().getManeuversModifier()).toBe(0);
+			expect(sheet.getSheetSize().getFurtivityModifier()).toBe(0);
+		});
 	});
 
 	describe('Dwarf Arcanist', () => {

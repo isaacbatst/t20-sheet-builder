@@ -1,8 +1,5 @@
 import {LifePoints} from '../../Points/LifePoints/LifePoints';
 import {ManaPoints} from '../../Points/ManaPoints/ManaPoints';
-import {BuildingSheetOrigin} from './BuildingSheetOrigin';
-import {BuildingSheetRace} from './BuildingSheetRace';
-import {BuildingSheetRole} from './BuildingSheetRole';
 import {Level} from '../Level';
 import {Sheet} from '../Sheet';
 import {SheetAbilities} from '../SheetAbilities';
@@ -13,9 +10,13 @@ import {SheetInventory} from '../SheetInventory';
 import {SheetPoints} from '../SheetPoints';
 import {SheetPowers} from '../SheetPowers';
 import {SheetProficiencies} from '../SheetProficiencies';
+import {SheetSize} from '../SheetSize';
 import {SheetSkills} from '../SheetSkills';
 import {SheetSpells} from '../SheetSpells';
 import {SheetVision} from '../SheetVision';
+import {BuildingSheetOrigin} from './BuildingSheetOrigin';
+import {BuildingSheetRace} from './BuildingSheetRace';
+import {BuildingSheetRole} from './BuildingSheetRole';
 
 export class BuildingSheet extends Sheet {
 	protected sheetRace = new BuildingSheetRace();
@@ -33,6 +34,7 @@ export class BuildingSheet extends Sheet {
 	protected sheetVision = new SheetVision();
 	protected sheetProficiencies = new SheetProficiencies();
 	protected sheetDisplacement = new SheetDisplacement();
+	protected sheetSize = new SheetSize();
 	protected buildSteps = [];
 	protected level = Level.one;
 

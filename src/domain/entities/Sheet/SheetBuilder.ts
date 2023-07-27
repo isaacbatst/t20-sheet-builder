@@ -156,6 +156,7 @@ export class SheetBuilder implements SheetBuilderInterface {
 			skills: this.sheet.getSheetSkills(),
 			spells: this.sheet.getSheetSpells(),
 			vision: this.sheet.getSheetVision(),
+			size: this.sheet.getSheetSize(),
 		});
 	}
 }

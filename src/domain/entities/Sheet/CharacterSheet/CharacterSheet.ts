@@ -19,6 +19,7 @@ import {type SheetRoleInterface} from '../SheetRoleInterface';
 import {type SheetSkillsInterface} from '../SheetSkillsInterface';
 import {type SheetSpellsInterface} from '../SheetSpellsInterface';
 import {type SheetVisionInterface} from '../SheetVisionInterface';
+import {type SheetSizeInterface} from '../SheetSizeInterface';
 
 type SheetParams = {
 	race: RaceInterface;
@@ -38,6 +39,7 @@ type SheetParams = {
 	spells: SheetSpellsInterface;
 	skills: SheetSkillsInterface;
 	inventory: SheetInventoryInterface;
+	size: SheetSizeInterface;
 };
 
 export class CharacterSheet extends Sheet {
@@ -46,6 +48,7 @@ export class CharacterSheet extends Sheet {
 	protected sheetOrigin: SheetOriginInterface;
 	protected buildSteps: BuildStepInterface[];
 	protected level: number;
+	protected sheetSize: SheetSizeInterface;
 	protected sheetAbilities: SheetAbilitiesInterface;
 	protected sheetLifePoints: SheetPointsInterface;
 	protected sheetManaPoints: SheetPointsInterface;
@@ -80,5 +83,6 @@ export class CharacterSheet extends Sheet {
 		this.sheetPowers = params.powers;
 		this.sheetSpells = params.spells;
 		this.sheetInventory = params.inventory;
+		this.sheetSize = params.size;
 	}
 }
