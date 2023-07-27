@@ -25,6 +25,8 @@ import {SheetRaceFake} from './SheetRaceFake';
 import {type SheetRaceInterface} from './SheetRaceInterface';
 import {SheetRoleFake} from './SheetRoleFake';
 import {type SheetRoleInterface} from './SheetRoleInterface';
+import {SheetSize} from './SheetSize';
+import {type SheetSizeInterface} from './SheetSizeInterface';
 import {SheetSkills} from './SheetSkills';
 import {type SheetSkillsInterface} from './SheetSkillsInterface';
 import {SheetSpells} from './SheetSpells';
@@ -50,6 +52,7 @@ export class SheetFake implements SheetInterface {
 	sheetVision = new SheetVision();
 	sheetProficiencies = new SheetProficiencies();
 	sheetDisplacement = new SheetDisplacement();
+	sheetSize = new SheetSize();
 
 	pushBuildSteps(...buildSteps: BuildStepInterface[]): void {
 		this.buildSteps.push(...buildSteps);
@@ -61,6 +64,10 @@ export class SheetFake implements SheetInterface {
 
 	getLevel(): number {
 		return this.level;
+	}
+
+	getSheetSize(): SheetSizeInterface {
+		return this.sheetSize;
 	}
 
 	getSheetAbilities(): SheetAbilitiesInterface {
