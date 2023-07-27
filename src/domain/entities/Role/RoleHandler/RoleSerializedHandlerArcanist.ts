@@ -1,6 +1,7 @@
-import {ArcanistFactory, RoleName, type SerializedRole} from '../..';
-import {type SerializedArcanist} from '../Arcanist';
+import {ArcanistFactory, type SerializedArcanist} from '../Arcanist';
 import {type RoleInterface} from '../RoleInterface';
+import {RoleName} from '../RoleName';
+import {type SerializedRole} from '../SerializedRole';
 import {RoleSerializedHandler} from './RoleSerializedHandler';
 
 export class RoleSerializedHandlerArcanist extends RoleSerializedHandler<SerializedRole<SerializedArcanist>> {
