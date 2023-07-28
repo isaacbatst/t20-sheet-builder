@@ -13,11 +13,47 @@ import {ArcanistSpells} from './ArcanistSpells/ArcanistSpells';
 
 export class Arcanist<T extends ArcanistPath = ArcanistPath> extends Role {
 	static readonly roleName = RoleName.arcanist;
-	static readonly selectSkillGroups: SelectSkillGroup[] = [{amount: 2, skills: [SkillName.knowledge, SkillName.diplomacy, SkillName.cheat, SkillName.war, SkillName.initiative, SkillName.intimidation, SkillName.intuition, SkillName.investigation, SkillName.nobility, SkillName.craft, SkillName.perception]}];
+	static readonly selectSkillGroups: SelectSkillGroup[] = [
+		{
+			amount: 2,
+			skills: [
+				SkillName.knowledge,
+				SkillName.diplomacy,
+				SkillName.cheat,
+				SkillName.war,
+				SkillName.initiative,
+				SkillName.intimidation,
+				SkillName.intuition,
+				SkillName.investigation,
+				SkillName.nobility,
+				SkillName.craft,
+				SkillName.perception,
+			],
+		},
+	];
+
+	static get startsWithArmor(): boolean {
+		return false;
+	}
+
+	static get initialLifePoints() {
+		return 8;
+	}
+
+	static get lifePointsPerLevel() {
+		return 2;
+	}
+
+	static get manaPerLevel() {
+		return 6;
+	}
+
+	static readonly mandatorySkills: SkillName[] = [SkillName.mysticism, SkillName.will];
+	static readonly proficiencies: Proficiency[] = [];
 
 	readonly abilitiesPerLevel: {
 		[Level.one]: {
-			arcanistPath: T;
+			arcanistPath: ArcanistPath;
 			arcanistSpells: ArcanistSpells;
 		};
 		[Level.two]: Record<string, RoleAbility>;
@@ -31,24 +67,11 @@ export class Arcanist<T extends ArcanistPath = ArcanistPath> extends Role {
 		[Level.ten]: Record<string, RoleAbility>;
 	};
 
-	override get startsWithArmor(): boolean {
-		return false;
-	}
-
-	get initialLifePoints() {
-		return 8;
-	}
-
-	get lifePointsPerLevel() {
-		return 2;
-	}
-
-	get manaPerLevel() {
-		return 6;
-	}
-
-	readonly mandatorySkills: SkillName[] = [SkillName.mysticism, SkillName.will];
-	readonly proficiencies: Proficiency[] = [];
+	override initialLifePoints: number = Arcanist.initialLifePoints;
+	override lifePointsPerLevel: number = Arcanist.lifePointsPerLevel;
+	override manaPerLevel: number = Arcanist.manaPerLevel;
+	override mandatorySkills: SkillName[] = Arcanist.mandatorySkills;
+	override proficiencies: Proficiency[] = Arcanist.proficiencies;
 	readonly name = RoleName.arcanist;
 	initialSpells = 3;
 	spellType: SpellType = 'arcane';
@@ -82,7 +105,7 @@ export class Arcanist<T extends ArcanistPath = ArcanistPath> extends Role {
 	}
 
 	getPath(): T {
-		return this.abilitiesPerLevel[Level.one].arcanistPath;
+		return this.abilitiesPerLevel[Level.one].arcanistPath as T;
 	}
 
 	getInitialSpells(): Spell[] {
