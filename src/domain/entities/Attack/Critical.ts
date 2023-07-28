@@ -1,5 +1,10 @@
 import {SheetBuilderError} from '../../errors/SheetBuilderError';
 
+export type SerializedCritical = {
+	threat: number;
+	multiplier: number;
+};
+
 export class Critical {
 	constructor(
 		readonly threat: number = 20,
@@ -7,6 +12,13 @@ export class Critical {
 	) {
 		this.validateThreat(threat);
 		this.validateMultiplier(multiplier);
+	}
+
+	serialize(): SerializedCritical {
+		return {
+			threat: this.threat,
+			multiplier: this.multiplier,
+		};
 	}
 
 	private validateThreat(threat: number) {

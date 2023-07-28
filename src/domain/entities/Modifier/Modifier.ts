@@ -1,6 +1,6 @@
 import type {Attribute, Attributes} from '../Sheet/Attributes';
 import type {TranslatableName} from '../Translator';
-import type {ModifierInterface, ModifierType, ModifierAppliableValueCalculatorInterface} from './ModifierInterface';
+import type {ModifierInterface, ModifierType, ModifierAppliableValueCalculatorInterface, SerializedModifier} from './ModifierInterface';
 
 export type ModifierParams = {
 	source: TranslatableName;
@@ -28,5 +28,16 @@ export abstract class Modifier implements ModifierInterface {
 
 	getTotalAttributeBonuses(attributes: Attributes): number {
 		return this.attributeBonuses.reduce((acc, attribute) => attributes[attribute] + acc, 0);
+	}
+
+	serialize(appliableValueCalculator: ModifierAppliableValueCalculatorInterface, attributeBonuses: Attributes): SerializedModifier {
+		return {
+			source: this.source,
+			type: this.type,
+			attributeBonuses: this.attributeBonuses,
+			baseValue: this.baseValue,
+			appliableValue: this.getAppliableValue(appliableValueCalculator),
+			totalAttributeBonuses: this.getTotalAttributeBonuses(attributeBonuses),
+		};
 	}
 }

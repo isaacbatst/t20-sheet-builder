@@ -1,4 +1,6 @@
-import type {ModifierInterface} from './ModifierInterface';
+import {type ContextInterface} from '../Context';
+import {type SheetInterface} from '../Sheet/SheetInterface';
+import type {ModifierInterface, SerializedModifier} from './ModifierInterface';
 import type {ModifiersListInterface, ModifiersListTotalCalculator} from './ModifiersListInterface';
 
 export abstract class ModifiersList<T extends ModifierInterface> implements ModifiersListInterface<T> {
@@ -15,4 +17,6 @@ export abstract class ModifiersList<T extends ModifierInterface> implements Modi
 	remove(index: number): void {
 		this.modifiers.splice(index, 1);
 	}
+
+	abstract serialize(sheet: SheetInterface, context: ContextInterface): SerializedModifier[];
 }

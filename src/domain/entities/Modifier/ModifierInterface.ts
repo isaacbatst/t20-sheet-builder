@@ -7,6 +7,15 @@ export type ModifierAppliableValueCalculatorInterface = {
 	calculate(value: number, attributeBonuses: Attribute[]): number;
 };
 
+export type SerializedModifier = {
+	source: TranslatableName;
+	type: ModifierType;
+	baseValue: number;
+	attributeBonuses: Attribute[];
+	appliableValue: number;
+	totalAttributeBonuses: number;
+};
+
 export type ModifierInterface = {
 	source: TranslatableName;
 	type: ModifierType;
@@ -14,4 +23,5 @@ export type ModifierInterface = {
 	attributeBonuses: Attribute[];
 	getAppliableValue(calculator: ModifierAppliableValueCalculatorInterface): number;
 	getTotalAttributeBonuses(attributes: Attributes): number;
+	serialize(appliableValueCalculator: ModifierAppliableValueCalculatorInterface, attributeBonuses: Attributes): SerializedModifier;
 };

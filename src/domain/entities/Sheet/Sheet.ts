@@ -15,6 +15,9 @@ import {type SheetSkillsInterface} from './SheetSkillsInterface';
 import {type SheetSpellsInterface} from './SheetSpellsInterface';
 import {type SheetVisionInterface} from './SheetVisionInterface';
 import {type SheetSizeInterface} from './SheetSizeInterface';
+import {WeaponAttack} from '../Attack/WeaponAttack';
+import {CharacterAttack} from '../Character/CharacterAttack';
+import {type EquipmentName, OffensiveWeapon} from '../Inventory';
 export abstract class Sheet implements SheetInterface {
 	protected abstract buildSteps: BuildStepInterface[];
 	protected abstract level: number;
