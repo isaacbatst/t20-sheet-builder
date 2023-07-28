@@ -7,6 +7,7 @@ export class FixedModifiersListFake implements FixedModifiersListInterface {
 	total = 0;
 	add = vi.fn();
 	remove = vi.fn();
+	serialize = vi.fn();
 	getTotal() {
 		return this.total;
 	}
