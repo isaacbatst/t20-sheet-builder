@@ -4,7 +4,7 @@ import {SheetBuilderError} from '../../errors/SheetBuilderError';
 import {type SheetInterface} from '../Sheet/SheetInterface';
 import type {PowerName} from './PowerName';
 
-export type PowerType = 'general' | 'role' | 'origin';
+export type PowerType = 'general' | 'role' | 'origin' | 'granted';
 
 export type PowerInterface = AbilityInterface & {
 	name: PowerName;

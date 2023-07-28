@@ -20,6 +20,7 @@ import {type SheetSkillsInterface} from '../SheetSkillsInterface';
 import {type SheetSpellsInterface} from '../SheetSpellsInterface';
 import {type SheetVisionInterface} from '../SheetVisionInterface';
 import {type SheetSizeInterface} from '../SheetSizeInterface';
+import {type SheetDevotion} from '../SheetDevotion';
 
 type SheetParams = {
 	race: RaceInterface;
@@ -40,6 +41,7 @@ type SheetParams = {
 	skills: SheetSkillsInterface;
 	inventory: SheetInventoryInterface;
 	size: SheetSizeInterface;
+	devotion: SheetDevotion;
 };
 
 export class CharacterSheet extends Sheet {
@@ -61,6 +63,7 @@ export class CharacterSheet extends Sheet {
 	protected sheetVision: SheetVisionInterface;
 	protected sheetProficiencies: SheetProficienciesInterface;
 	protected sheetDisplacement: SheetDisplacementInterface;
+	protected sheetDevotion: SheetDevotion;
 
 	constructor(
 		params: SheetParams,
@@ -84,5 +87,6 @@ export class CharacterSheet extends Sheet {
 		this.sheetSpells = params.spells;
 		this.sheetInventory = params.inventory;
 		this.sheetSize = params.size;
+		this.sheetDevotion = params.devotion;
 	}
 }

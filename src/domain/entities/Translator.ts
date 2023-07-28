@@ -1,5 +1,6 @@
 import {Capitalizer} from './Capitalizer';
 import {type DamageType} from './Damage/DamageType';
+import {type DeityName} from './Deity/DeityName';
 import type {EquipmentName} from './Inventory/Equipment/EquipmentName';
 import type {OriginName} from './Origin/OriginName';
 import type {PowerName} from './Power/PowerName';
@@ -20,7 +21,7 @@ import type {SpellName} from './Spell/SpellName';
 export type TranslatableName = Attribute
 | RaceAbilityName | SkillName | PowerName | RaceName | Proficiency
 | Vision | RoleAbilityName | SpellName | SpellCircle | RoleName | OriginName
-| EquipmentName | ArcanistPathName | DamageType | SpellSchool | SizeName | 'default';
+| EquipmentName | ArcanistPathName | DamageType | SpellSchool | SizeName | DeityName | 'default';
 
 export class Translator {
 	static getAttributeTranslation(attribute: Attribute, capitalized = true) {

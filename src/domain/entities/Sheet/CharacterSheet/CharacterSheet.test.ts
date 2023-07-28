@@ -1,3 +1,4 @@
+import {LinWuh} from '../../Deity/LinWuh';
 import {EquipmentName} from '../../Inventory/Equipment/EquipmentName';
 import {LeatherArmor} from '../../Inventory/Equipment/Weapon/DefensiveWeapon/Armor/LightArmor/LeatherArmor';
 import {LongSword} from '../../Inventory/Equipment/Weapon/OffensiveWeapon/MartialWeapon/LongSword';
@@ -11,6 +12,8 @@ import {OriginBenefitSkill} from '../../Origin/OriginBenefit/OriginBenefitSkill'
 import {OneWeaponStyle} from '../../Power';
 import {IronWill} from '../../Power/GeneralPower/DestinyPower/IronWill/IronWill';
 import {GeneralPowerName} from '../../Power/GeneralPower/GeneralPowerName';
+import {EmptyMind} from '../../Power/GrantedPower/EmptyMind/EmptyMind';
+import {GrantedPowerName} from '../../Power/GrantedPower/GrantedPowerName';
 import {SpecialFriend} from '../../Power/OriginPower/SpecialFriend';
 import {Dwarf} from '../../Race/Dwarf/Dwarf';
 import {Human} from '../../Race/Human/Human';
@@ -149,6 +152,31 @@ describe('Sheet', () => {
 			expect(sheet.getSheetSize().getManeuversModifier()).toBe(0);
 			expect(sheet.getSheetSize().getFurtivityModifier()).toBe(0);
 		});
+
+		it('should not be devout', () => {
+			expect(sheet.getSheetDevotion().isDevout()).toBeFalsy();
+		});
+
+		describe('Devout', () => {
+			let devoutSheet: CharacterSheet;
+
+			beforeAll(() => {
+				sheetBuilder.addDevotion(new LinWuh([
+					new EmptyMind(),
+				]));
+				devoutSheet = sheetBuilder.build();
+			});
+
+			it('should be devout', () => {
+				const devotion = devoutSheet.getSheetDevotion();
+				expect(devotion.isDevout()).toBeTruthy();
+			});
+
+			it('should have granted power', () => {
+				const powers = devoutSheet.getSheetPowers();
+				expect(powers.getGrantedPowers().has(GrantedPowerName.emptyMind)).toBeTruthy();
+			});
+		});
 	});
 
 	describe('Dwarf Arcanist', () => {
@@ -175,6 +203,7 @@ describe('Sheet', () => {
 				.addInitialEquipment({
 					simpleWeapon: new Dagger(),
 					money: 20,
+					armor: new LeatherArmor(),
 				})
 				.build();
 		});

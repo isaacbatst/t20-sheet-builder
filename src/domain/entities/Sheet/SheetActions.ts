@@ -1,3 +1,4 @@
+import {type Deity} from '../Deity/Deity';
 import type {Equipment} from '../Inventory/Equipment/Equipment';
 import type {Armor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/Armor/Armor';
 import type {MartialWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/MartialWeapon/MartialWeapon';
@@ -7,6 +8,7 @@ import type {FixedModifierInterface} from '../Modifier/FixedModifier/FixedModifi
 import {type PerLevelModifierInterface} from '../Modifier/PerLevelModifier/PerLevelModifierInterface';
 import type {OriginInterface} from '../Origin/Origin';
 import type {GeneralPowerInterface} from '../Power/GeneralPower/GeneralPower';
+import {type GrantedPower} from '../Power/GrantedPower/GrantedPower';
 import type {OriginPowerInterface} from '../Power/OriginPower/OriginPower';
 import type {RaceAbilityInterface} from '../Race/RaceAbility';
 import type {RaceInterface} from '../Race/RaceInterface';
@@ -53,6 +55,8 @@ type ActionHandlersPayloads = {
 	decreaseAttribute: {attribute: Attribute; quantity: number; source: TranslatableName};
 	changeClimbingDisplacement: {climbingDisplacement: number; source: TranslatableName};
 	changeSize: {size: Size; source: TranslatableName};
+	becomeDevout: {deity: Deity};
+	pickGrantedPower: {power: GrantedPower; source: TranslatableName};
 };
 
 export type ActionType = keyof ActionHandlersPayloads;

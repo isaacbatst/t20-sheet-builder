@@ -18,6 +18,7 @@ import {type SheetSizeInterface} from './SheetSizeInterface';
 import {WeaponAttack} from '../Attack/WeaponAttack';
 import {CharacterAttack} from '../Character/CharacterAttack';
 import {type EquipmentName, OffensiveWeapon} from '../Inventory';
+import {type SheetDevotion} from './SheetDevotion';
 export abstract class Sheet implements SheetInterface {
 	protected abstract buildSteps: BuildStepInterface[];
 	protected abstract level: number;
@@ -37,6 +38,7 @@ export abstract class Sheet implements SheetInterface {
 	protected abstract sheetProficiencies: SheetProficienciesInterface;
 	protected abstract sheetDisplacement: SheetDisplacementInterface;
 	protected abstract sheetSize: SheetSizeInterface;
+	protected abstract sheetDevotion: SheetDevotion;
 
 	getAttacks(): Map<EquipmentName, CharacterAttack> {
 		const attacks = new Map<EquipmentName, CharacterAttack>();
@@ -61,6 +63,10 @@ export abstract class Sheet implements SheetInterface {
 
 	getLevel(): number {
 		return this.level;
+	}
+
+	getSheetDevotion() {
+		return this.sheetDevotion;
 	}
 
 	getSheetSize(): SheetSizeInterface {

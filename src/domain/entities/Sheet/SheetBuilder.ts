@@ -1,10 +1,12 @@
+import {SheetBuilderError} from '../../errors';
 import {AddInitialEquipment} from '../Action/AddInitialEquipment';
+import {BecomeDevout} from '../Action/BecomeDevout';
 import {ChooseOrigin} from '../Action/ChooseOrigin';
 import {ChooseRace} from '../Action/ChooseRace';
 import {ChooseRole} from '../Action/ChooseRole';
 import {SetInitialAttributes} from '../Action/SetInitialAttributes';
 import {TrainIntelligenceSkills} from '../Action/TrainIntelligenceSkills';
-import {SheetBuilderError} from '../../errors';
+import {type Deity} from '../Deity/Deity';
 import type {Armor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/Armor/Armor';
 import type {MartialWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/MartialWeapon/MartialWeapon';
 import type {SimpleWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/SimpleWeapon/SimpleWeapon';
@@ -106,6 +108,18 @@ export class SheetBuilder implements SheetBuilderInterface {
 		return this;
 	}
 
+	public addDevotion(deity: Deity) {
+		const transaction = new Transaction(this.sheet);
+		transaction.run(new BecomeDevout({
+			payload: {
+				deity,
+			},
+			transaction,
+		}));
+		transaction.commit();
+		return this;
+	}
+
 	public build() {
 		const powers = this.sheet.getSheetPowers();
 		powers.getGeneralPowers().forEach(power => {
@@ -157,6 +171,7 @@ export class SheetBuilder implements SheetBuilderInterface {
 			spells: this.sheet.getSheetSpells(),
 			vision: this.sheet.getSheetVision(),
 			size: this.sheet.getSheetSize(),
+			devotion: this.sheet.getSheetDevotion(),
 		});
 	}
 }

@@ -1,6 +1,4 @@
-import type {ActionPayload} from '../Sheet/SheetActions';
 import {Translatable} from '../Translatable';
-import {Translator} from '../Translator';
 import {Action, type ActionSubClassParams} from './Action';
 
 export class AddProficiency extends Action<'addProficiency'> {

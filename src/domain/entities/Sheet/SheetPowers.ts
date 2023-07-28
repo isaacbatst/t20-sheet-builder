@@ -1,5 +1,6 @@
-import {type GeneralPowerMap, type OriginPowerMap, type RolePowerMap} from '../Map';
+import {type GrantedPowerMap, type GeneralPowerMap, type OriginPowerMap, type RolePowerMap} from '../Map';
 import {type GeneralPowerInterface} from '../Power/GeneralPower/GeneralPower';
+import {type GrantedPower} from '../Power/GrantedPower/GrantedPower';
 import {type OriginPowerInterface} from '../Power/OriginPower/OriginPower';
 import {type RolePowerInterface} from '../Role/RolePower';
 import {type TranslatableName} from '../Translator';
@@ -12,6 +13,7 @@ export class SheetPowers implements SheetPowersInterface {
 			general: new Map(),
 			origin: new Map(),
 			role: new Map(),
+			granted: new Map(),
 		},
 	) {}
 
@@ -30,6 +32,11 @@ export class SheetPowers implements SheetPowersInterface {
 		this.powers.origin.set(power.name, power);
 	}
 
+	pickGrantedPower(power: GrantedPower, transaction: TransactionInterface, source: TranslatableName): void {
+		power.addToSheet(transaction, source);
+		this.powers.granted.set(power.name, power);
+	}
+
 	getGeneralPowers(): GeneralPowerMap {
 		return this.powers.general;
 	}
@@ -40,5 +47,9 @@ export class SheetPowers implements SheetPowersInterface {
 
 	getRolePowers(): RolePowerMap {
 		return this.powers.role;
+	}
+
+	getGrantedPowers(): GrantedPowerMap {
+		return this.powers.granted;
 	}
 }

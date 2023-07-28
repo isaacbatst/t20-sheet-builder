@@ -18,6 +18,7 @@ import {type SheetVisionInterface} from './SheetVisionInterface';
 import {type SheetSizeInterface} from './SheetSizeInterface';
 import {type EquipmentName} from '../Inventory/Equipment/EquipmentName';
 import {type CharacterAttack} from '../Character/CharacterAttack';
+import {type SheetDevotion} from './SheetDevotion';
 
 export type SheetTriggeredEffects = Record<TriggerEvent, TriggeredEffectMap>;
 
@@ -44,5 +45,6 @@ export type SheetInterface = {
 	getSheetProficiencies(): SheetProficienciesInterface;
 	getSheetDisplacement(): SheetDisplacementInterface;
 	getSheetSize(): SheetSizeInterface;
+	getSheetDevotion(): SheetDevotion;
 };
 
