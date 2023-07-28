@@ -38,6 +38,19 @@ export abstract class Sheet implements SheetInterface {
 	protected abstract sheetDisplacement: SheetDisplacementInterface;
 	protected abstract sheetSize: SheetSizeInterface;
 
+	getAttacks(): Map<EquipmentName, CharacterAttack> {
+		const attacks = new Map<EquipmentName, CharacterAttack>();
+		const equipments = this.sheetInventory.getEquipments();
+		equipments.forEach(({equipment}) => {
+			if (equipment instanceof OffensiveWeapon) {
+				const attack = new CharacterAttack(new WeaponAttack(equipment));
+				attacks.set(equipment.name, attack);
+			}
+		});
+
+		return attacks;
+	}
+
 	pushBuildSteps(...buildSteps: BuildStepInterface[]): void {
 		this.buildSteps.push(...buildSteps);
 	}

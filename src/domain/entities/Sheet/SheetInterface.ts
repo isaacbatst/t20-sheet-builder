@@ -16,11 +16,14 @@ import {type SheetSkillsInterface} from './SheetSkillsInterface';
 import {type SheetSpellsInterface} from './SheetSpellsInterface';
 import {type SheetVisionInterface} from './SheetVisionInterface';
 import {type SheetSizeInterface} from './SheetSizeInterface';
+import {type EquipmentName} from '../Inventory/Equipment/EquipmentName';
+import {type CharacterAttack} from '../Character/CharacterAttack';
 
 export type SheetTriggeredEffects = Record<TriggerEvent, TriggeredEffectMap>;
 
 export type SheetInterface = {
 	pushBuildSteps(...buildSteps: BuildStepInterface[]): void;
+	getAttacks(): Map<EquipmentName, CharacterAttack>;
 	getBuildSteps(): BuildStepInterface[];
 	getLevel(): number;
 	getSheetAbilities(): SheetAbilitiesInterface;

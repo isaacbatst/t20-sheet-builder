@@ -1,4 +1,6 @@
 import {type BuildStepInterface} from '../BuildStep';
+import {type CharacterAttack} from '../Character/CharacterAttack';
+import {type EquipmentName} from '../Inventory';
 import {LifePoints} from '../Points/LifePoints/LifePoints';
 import {ManaPoints} from '../Points/ManaPoints/ManaPoints';
 import {Level} from './Level';
@@ -53,6 +55,10 @@ export class SheetFake implements SheetInterface {
 	sheetProficiencies = new SheetProficiencies();
 	sheetDisplacement = new SheetDisplacement();
 	sheetSize = new SheetSize();
+
+	getAttacks(): Map<EquipmentName, CharacterAttack> {
+		return new Map();
+	}
 
 	pushBuildSteps(...buildSteps: BuildStepInterface[]): void {
 		this.buildSteps.push(...buildSteps);
