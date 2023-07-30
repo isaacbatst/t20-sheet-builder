@@ -12,10 +12,10 @@ export class BecomeDevout extends Action<'becomeDevout'> {
 
 	override execute(): void {
 		const sheetDevotion = this.transaction.sheet.getSheetDevotion();
-		sheetDevotion.becomeDevout(this.payload.deity, this.transaction);
+		sheetDevotion.becomeDevout(this.payload.devotion, this.transaction);
 	}
 
 	override getDescription(): string {
-		return `Tornou-se devoto de ${this.payload.deity.name}`;
+		return `Tornou-se devoto de ${this.payload.devotion.deity.name}`;
 	}
 }

@@ -1,16 +1,16 @@
 import {AbilityEffects} from '../../../Ability';
 import {GrantedPower} from '../GrantedPower';
 import {GrantedPowerName} from '../GrantedPowerName';
-import {EmptyMindEffect} from './EmptyMindEffect';
+import {AnalyticMindEffect} from './AnalyticMindEffect';
 
-export class EmptyMind extends GrantedPower {
+export class AnalyticMind extends GrantedPower {
 	override effects = new AbilityEffects({
 		passive: {
-			default: new EmptyMindEffect(),
+			default: new AnalyticMindEffect(),
 		},
 	});
 
 	constructor() {
-		super(GrantedPowerName.emptyMind);
+		super(GrantedPowerName.analyticMind);
 	}
 }

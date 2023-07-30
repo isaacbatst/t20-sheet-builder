@@ -6,7 +6,7 @@ import {ChooseRace} from '../Action/ChooseRace';
 import {ChooseRole} from '../Action/ChooseRole';
 import {SetInitialAttributes} from '../Action/SetInitialAttributes';
 import {TrainIntelligenceSkills} from '../Action/TrainIntelligenceSkills';
-import {type Deity} from '../Deity/Deity';
+import {type Devotion} from '../Devotion/Devotion';
 import type {Armor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/Armor/Armor';
 import type {MartialWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/MartialWeapon/MartialWeapon';
 import type {SimpleWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/SimpleWeapon/SimpleWeapon';
@@ -108,11 +108,11 @@ export class SheetBuilder implements SheetBuilderInterface {
 		return this;
 	}
 
-	public addDevotion(deity: Deity) {
+	public addDevotion(devotion: Devotion) {
 		const transaction = new Transaction(this.sheet);
 		transaction.run(new BecomeDevout({
 			payload: {
-				deity,
+				devotion,
 			},
 			transaction,
 		}));

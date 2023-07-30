@@ -1,4 +1,6 @@
-import {LinWuh} from '../../Deity/LinWuh';
+import {Deities} from '../../Devotion/Deities';
+import {DeityName} from '../../Devotion/DeityName';
+import {Devotion} from '../../Devotion/Devotion';
 import {EquipmentName} from '../../Inventory/Equipment/EquipmentName';
 import {LeatherArmor} from '../../Inventory/Equipment/Weapon/DefensiveWeapon/Armor/LightArmor/LeatherArmor';
 import {LongSword} from '../../Inventory/Equipment/Weapon/OffensiveWeapon/MartialWeapon/LongSword';
@@ -12,6 +14,7 @@ import {OriginBenefitSkill} from '../../Origin/OriginBenefit/OriginBenefitSkill'
 import {OneWeaponStyle} from '../../Power';
 import {IronWill} from '../../Power/GeneralPower/DestinyPower/IronWill/IronWill';
 import {GeneralPowerName} from '../../Power/GeneralPower/GeneralPowerName';
+import {AnalyticMind} from '../../Power/GrantedPower/AnalyticMind/AnalyticMind';
 import {EmptyMind} from '../../Power/GrantedPower/EmptyMind/EmptyMind';
 import {GrantedPowerName} from '../../Power/GrantedPower/GrantedPowerName';
 import {SpecialFriend} from '../../Power/OriginPower/SpecialFriend';
@@ -42,6 +45,7 @@ describe('Sheet', () => {
 		let race: Race;
 		let sheetBuilder: SheetBuilder;
 		let origin: OriginInterface;
+
 		beforeAll(() => {
 			const choices = [
 				new VersatileChoiceSkill(SkillName.acrobatics),
@@ -157,11 +161,15 @@ describe('Sheet', () => {
 			expect(sheet.getSheetDevotion().isDevout()).toBeFalsy();
 		});
 
+		it('should receive 1 granted power if devout', () => {
+			expect(sheet.getSheetDevotion().getGrantedPowerCount()).toBe(1);
+		});
+
 		describe('Devout', () => {
 			let devoutSheet: CharacterSheet;
 
 			beforeAll(() => {
-				sheetBuilder.addDevotion(new LinWuh([
+				sheetBuilder.addDevotion(new Devotion(Deities.get(DeityName.linwuh), [
 					new EmptyMind(),
 				]));
 				devoutSheet = sheetBuilder.build();
@@ -175,6 +183,31 @@ describe('Sheet', () => {
 			it('should have granted power', () => {
 				const powers = devoutSheet.getSheetPowers();
 				expect(powers.getGrantedPowers().has(GrantedPowerName.emptyMind)).toBeTruthy();
+			});
+
+			it('should not accept not allowed power', () => {
+				const build = () => {
+					const linWuh = Deities.get(DeityName.linwuh);
+					const devotion = new Devotion(linWuh, [
+						new AnalyticMind(),
+					]);
+					sheetBuilder.addDevotion(devotion);
+				};
+
+				expect(build).toThrow('NOT_ALLOWED_POWER');
+			});
+
+			it('should should accept only one power', () => {
+				const build = () => {
+					const linWuh = Deities.get(DeityName.linwuh);
+					const devotion = new Devotion(linWuh, [
+						new EmptyMind(),
+						new EmptyMind(),
+					]);
+					sheetBuilder.addDevotion(devotion);
+				};
+
+				expect(build).toThrow('INVALID_POWER_COUNT');
 			});
 		});
 	});

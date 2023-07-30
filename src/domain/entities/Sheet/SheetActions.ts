@@ -1,4 +1,4 @@
-import {type Deity} from '../Deity/Deity';
+import {type Devotion} from '../Devotion/Devotion';
 import type {Equipment} from '../Inventory/Equipment/Equipment';
 import type {Armor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/Armor/Armor';
 import type {MartialWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/MartialWeapon/MartialWeapon';
@@ -55,7 +55,7 @@ type ActionHandlersPayloads = {
 	decreaseAttribute: {attribute: Attribute; quantity: number; source: TranslatableName};
 	changeClimbingDisplacement: {climbingDisplacement: number; source: TranslatableName};
 	changeSize: {size: Size; source: TranslatableName};
-	becomeDevout: {deity: Deity};
+	becomeDevout: {devotion: Devotion};
 	pickGrantedPower: {power: GrantedPower; source: TranslatableName};
 };
 

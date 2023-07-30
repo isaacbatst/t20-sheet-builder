@@ -1,15 +1,21 @@
-import {type Deity} from '../Deity/Deity';
+import {type Devotion} from '../Devotion/Devotion';
 import {type TransactionInterface} from './TransactionInterface';
 
 export class SheetDevotion {
-	private deity: Deity | undefined = undefined;
+	private devotion: Devotion | undefined = undefined;
+	// eslint-disable-next-line @typescript-eslint/prefer-readonly
+	private grantedPowerCount = 1;
 
 	isDevout() {
-		return Boolean(this.deity);
+		return Boolean(this.devotion);
 	}
 
-	becomeDevout(deity: Deity, transaction: TransactionInterface) {
-		this.deity = deity;
-		deity.addToSheet(transaction);
+	becomeDevout(devotion: Devotion, transaction: TransactionInterface) {
+		this.devotion = devotion;
+		devotion.addToSheet(transaction);
+	}
+
+	getGrantedPowerCount() {
+		return this.grantedPowerCount;
 	}
 }

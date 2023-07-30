@@ -16,3 +16,4 @@ export * from './Modifier';
 export * from './Ability';
 export * from './Context';
 export * from './Attack';
+export * from './Devotion';
