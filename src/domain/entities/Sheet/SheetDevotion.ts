@@ -18,4 +18,8 @@ export class SheetDevotion {
 	getGrantedPowerCount() {
 		return this.grantedPowerCount;
 	}
+
+	getDeity() {
+		return this.devotion?.deity;
+	}
 }

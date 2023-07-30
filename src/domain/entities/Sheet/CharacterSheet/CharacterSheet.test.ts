@@ -185,6 +185,11 @@ describe('Sheet', () => {
 				expect(powers.getGrantedPowers().has(GrantedPowerName.emptyMind)).toBeTruthy();
 			});
 
+			it('should have devotion deity', () => {
+				const devotion = devoutSheet.getSheetDevotion();
+				expect(devotion.getDeity()!.name).toBe(DeityName.linwuh);
+			});
+
 			it('should not accept not allowed power', () => {
 				const build = () => {
 					const linWuh = Deities.get(DeityName.linwuh);
@@ -208,6 +213,17 @@ describe('Sheet', () => {
 				};
 
 				expect(build).toThrow('INVALID_POWER_COUNT');
+			});
+
+			it('should not accept a deity that does not permit this race and role', () => {
+				const build = () => {
+					const devotion = new Devotion(Deities.get(DeityName.lena), [
+						new EmptyMind(),
+					]);
+					sheetBuilder.addDevotion(devotion);
+				};
+
+				expect(build).toThrow('NOT_ALLOWED_TO_DEVOTE');
 			});
 		});
 	});
