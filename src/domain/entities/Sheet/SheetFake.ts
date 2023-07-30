@@ -10,6 +10,7 @@ import {SheetAttributes} from './SheetAttributes';
 import {type SheetAttributesInterface} from './SheetAttributesInterface';
 import {SheetDefense} from './SheetDefense';
 import {type SheetDefenseInterface} from './SheetDefenseInterface';
+import {SheetDevotion} from './SheetDevotion';
 import {SheetDisplacement} from './SheetDisplacement';
 import {type SheetDisplacementInterface} from './SheetDisplacementInterface';
 import {type SheetInterface} from './SheetInterface';
@@ -55,6 +56,11 @@ export class SheetFake implements SheetInterface {
 	sheetProficiencies = new SheetProficiencies();
 	sheetDisplacement = new SheetDisplacement();
 	sheetSize = new SheetSize();
+	sheetDevotion = new SheetDevotion();
+
+	getSheetDevotion(): SheetDevotion {
+		return this.sheetDevotion;
+	}
 
 	getAttacks(): Map<EquipmentName, CharacterAttack> {
 		return new Map();

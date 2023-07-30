@@ -167,6 +167,8 @@ export class Translator {
 		churchMember: 'Membro da Igreja',
 		specialFriend: 'Amigo Especial',
 		shell: 'Carapaça',
+		analyticMind: 'Mente Analítica',
+		emptyMind: 'Mente Vazia',
 	};
 
 	private static readonly visionsTranslation: Record<Vision, string> = {
@@ -293,6 +295,25 @@ export class Translator {
 		tiny: 'Minúsculo',
 	};
 
+	private static readonly deitiesTranslation: Record<DeityName, string> = {
+		aharadak: 'Aharadak',
+		allihanna: 'Allihanna',
+		azgher: 'Azgher',
+		kallyadranoch: 'Kallyadranoch',
+		khalmyr: 'Khalmyr',
+		lena: 'Lena',
+		linwuh: 'Lin-Wu',
+		marah: 'Marah',
+		megalokk: 'Megalokk',
+		nimb: 'Nimb',
+		sszzzaas: 'Sszzaas',
+		tannatoh: 'Tanna-Toh',
+		tenebra: 'Tenebra',
+		thwor: 'Thwor',
+		thyatis: 'Thyatis',
+		valkaria: 'Valkaria',
+	};
+
 	private static readonly translation: Record<TranslatableName, string> = {
 		...Translator.attributesTranslation,
 		...Translator.raceAbilitiesTranslation,
@@ -312,6 +333,7 @@ export class Translator {
 		...Translator.spellTypesTranslation,
 		...Translator.spellSchoolsTranslation,
 		...Translator.sizesTranslation,
+		...Translator.deitiesTranslation,
 		default: 'Padrão',
 	};
 }
