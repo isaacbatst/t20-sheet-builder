@@ -29,4 +29,12 @@ export type SerializedDahllan = {
 	name: RaceName.dahllan;
 };
 
-export type SerializedRace = SerializedHuman | SerializedDwarf | SerializedDahllan;
+export type SerializedGoblin = {
+	name: RaceName.goblin;
+};
+
+export type SerializedElf = {
+	name: RaceName.elf;
+};
+
+export type SerializedRace = SerializedHuman | SerializedDwarf | SerializedDahllan | SerializedElf | SerializedGoblin;

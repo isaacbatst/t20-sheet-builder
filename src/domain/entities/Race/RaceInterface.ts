@@ -7,6 +7,5 @@ export type RaceInterface = {
 	name: RaceName;
 	attributeModifiers: Partial<Attributes>;
 	abilities: Record<string, RaceAbility>;
-
 	addToSheet(transaction: TransactionInterface): void;
 };
