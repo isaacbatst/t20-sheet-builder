@@ -20,7 +20,7 @@ import {type SheetPointsInterface} from '../SheetPointsInterface';
 import {type SheetPowersInterface} from '../SheetPowersInterface';
 import {type SheetSkillsInterface} from '../SheetSkillsInterface';
 import {type SheetSpellsInterface} from '../SheetSpellsInterface';
-import {type SerializedSheetBuildStep, type SerializedSheetAbilityEffect, type SerializedSheetContextualModifiersList, type SerializedSheetDefense, type SerializedSheetGeneralPower, type SerializedSheetInterface, type SerializedSheetInventoryEquipment, type SerializedSheetLearnedCircles, type SerializedSheetModifier, type SerializedSheetModifiersList, type SerializedSheetOrigin, type SerializedSheetOriginPower, type SerializedSheetPerLevelModifiersList, type SerializedSheetPoints, type SerializedSheetRace, type SerializedSheetRaceAbility, type SerializedSheetRole, type SerializedSheetRoleAbility, type SerializedSheetRolePower, type SerializedSheetSkill, type SerializedSheetSkills, type SerializedSheetSpell} from './SerializedSheetInterface';
+import {type SerializedSheetBuildStep, type SerializedSheetAbilityEffect, type SerializedSheetContextualModifiersList, type SerializedSheetDefense, type SerializedSheetGeneralPower, type SerializedSheetInterface, type SerializedSheetInventoryEquipment, type SerializedSheetLearnedCircles, type SerializedSheetModifier, type SerializedSheetModifiersList, type SerializedSheetOrigin, type SerializedSheetOriginPower, type SerializedSheetPerLevelModifiersList, type SerializedSheetPoints, type SerializedSheetRace, type SerializedSheetRaceAbility, type SerializedSheetRole, type SerializedSheetRoleAbility, type SerializedSheetRolePower, type SerializedSheetSkill, type SerializedSheetSkills, type SerializedSheetSpell, type SerializedSheetGrantedPower} from './SerializedSheetInterface';
 
 export class SheetSerializer {
 	constructor(
@@ -48,6 +48,8 @@ export class SheetSerializer {
 			generalPowers: this.serializeGeneralPowers(powers),
 			rolePowers: this.serializeRolePowers(powers),
 			originPowers: this.serializeOriginPowers(powers),
+			grantedPowers: this.serializeGrantedPowers(powers),
+			grantedPowersCount: sheet.getSheetDevotion().getGrantedPowerCount(),
 			learnedCircles: this.serializeLearnedCircles(sheet.getSheetSpells()),
 			proficiencies: sheet.getSheetProficiencies().getProficiencies(),
 			skills: this.serializeSkills(sheet.getSheetSkills(), sheet),
@@ -138,6 +140,18 @@ export class SheetSerializer {
 			});
 		});
 		return originPowers;
+	}
+
+	private serializeGrantedPowers(powers: SheetPowersInterface): SerializedSheetGrantedPower[] {
+		const grantedPowers: SerializedSheetGrantedPower[] = [];
+		powers.getGrantedPowers().forEach(grantedPower => {
+			grantedPowers.push({
+				name: grantedPower.name,
+				effects: this.serializeAbilityEffects(grantedPower.effects),
+				abilityType: 'power',
+			});
+		});
+		return grantedPowers;
 	}
 
 	private serializeRolePowers(powers: SheetPowersInterface): SerializedSheetRolePower[] {

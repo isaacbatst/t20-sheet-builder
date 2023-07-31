@@ -3,6 +3,7 @@ import {type EquipmentName} from '../../Inventory';
 import {type ModifierType} from '../../Modifier';
 import {type OriginName} from '../../Origin';
 import {type GeneralPowerGroup, type GeneralPowerName, type OriginPowerName} from '../../Power';
+import {type GrantedPowerName} from '../../Power/GrantedPower/GrantedPowerName';
 import {type RaceAbilityName, type RaceName} from '../../Race';
 import {type RoleAbilityName, type RoleName, type RolePowerName} from '../../Role';
 import {type SkillName} from '../../Skill';
@@ -102,6 +103,10 @@ export type SerializedSheetOriginPower = {
 	name: OriginPowerName;
 } & SerializedSheetAbility;
 
+export type SerializedSheetGrantedPower = {
+	name: GrantedPowerName;
+} & SerializedSheetAbility;
+
 export type SerializedSheetDefense = {
 	attribute: Attribute;
 	fixedModifiers: SerializedSheetModifiersList;
@@ -158,6 +163,8 @@ export type SerializedSheetInterface = {
 	generalPowers: SerializedSheetGeneralPower[];
 	rolePowers: SerializedSheetRolePower[];
 	originPowers: SerializedSheetOriginPower[];
+	grantedPowers: SerializedSheetGrantedPower[];
+	grantedPowersCount: number;
 	defense: SerializedSheetDefense;
 	vision: Vision;
 	race: SerializedSheetRace | undefined;
