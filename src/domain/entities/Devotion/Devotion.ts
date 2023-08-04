@@ -12,20 +12,28 @@ export type SerializedDevotion = {
 export class Devotion {
 	constructor(
 		readonly deity: Deity,
-		readonly choosedPowers: GrantedPower[],
+		private _choosedPowers: GrantedPower[],
 	) {}
 
 	serialize() {
 		return {
 			deity: this.deity,
-			choosedPowers: this.choosedPowers.map(power => power.name),
+			choosedPowers: this._choosedPowers.map(power => power.name),
 		};
+	}
+
+	addPower(power: GrantedPower) {
+		this._choosedPowers.push(power);
+	}
+
+	removePower(powerName: GrantedPowerName) {
+		this._choosedPowers = this._choosedPowers.filter(power => power.name !== powerName);
 	}
 
 	addToSheet(transaction: TransactionInterface) {
 		const sheetDevotion = transaction.sheet.getSheetDevotion();
 
-		if (sheetDevotion.getGrantedPowerCount() !== this.choosedPowers.length) {
+		if (sheetDevotion.getGrantedPowerCount() !== this._choosedPowers.length) {
 			throw new Error('INVALID_POWER_COUNT');
 		}
 
@@ -42,7 +50,7 @@ export class Devotion {
 			}
 		}
 
-		this.choosedPowers.forEach(power => {
+		this._choosedPowers.forEach(power => {
 			const isAllowed = this.deity.grantedPowers.includes(power.name);
 
 			if (!isAllowed) {
@@ -57,5 +65,9 @@ export class Devotion {
 				transaction,
 			}));
 		});
+	}
+
+	get choosedPowers() {
+		return this._choosedPowers;
 	}
 }
