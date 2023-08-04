@@ -1,5 +1,10 @@
-import {type Devotion} from '../Devotion/Devotion';
+import {type SerializedDevotion, type Devotion} from '../Devotion/Devotion';
 import {type TransactionInterface} from './TransactionInterface';
+
+export type SerializedSheetDevotion = {
+	devotion?: SerializedDevotion;
+	grantedPowerCount: number;
+};
 
 export class SheetDevotion {
 	private devotion: Devotion | undefined = undefined;
@@ -21,5 +26,12 @@ export class SheetDevotion {
 
 	getDeity() {
 		return this.devotion?.deity;
+	}
+
+	serialize() {
+		return {
+			devotion: this.devotion?.serialize(),
+			grantedPowerCount: this.grantedPowerCount,
+		};
 	}
 }

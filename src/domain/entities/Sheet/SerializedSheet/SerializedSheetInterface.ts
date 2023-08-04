@@ -11,6 +11,7 @@ import {type LearnableSpellType, type SpellCircle, type SpellName, type SpellSch
 import {type TranslatableName} from '../../Translator';
 import {type Attribute, type Attributes} from '../Attributes';
 import {type Proficiency} from '../Proficiency';
+import {type SerializedSheetDevotion} from '../SheetDevotion';
 import {type Vision} from '../Vision';
 
 export type SerializedSheetEquipment<T extends EquipmentName = EquipmentName> = {
@@ -171,5 +172,6 @@ export type SerializedSheetInterface = {
 	role: SerializedSheetRole | undefined;
 	proficiencies: Proficiency[];
 	displacement: number;
+	devotion: SerializedSheetDevotion;
 };
 

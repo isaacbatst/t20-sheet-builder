@@ -1,13 +1,26 @@
 import {PickGrantedPower} from '../Action/PickGrantedPower';
+import {type GrantedPowerName} from '../Power/GrantedPower/GrantedPowerName';
 import {type GrantedPower} from '../Power/GrantedPower/GrantedPower';
 import {type TransactionInterface} from '../Sheet/TransactionInterface';
 import {type Deity} from './Deities';
+
+export type SerializedDevotion = {
+	deity: Deity;
+	choosedPowers: GrantedPowerName[];
+};
 
 export class Devotion {
 	constructor(
 		readonly deity: Deity,
 		readonly choosedPowers: GrantedPower[],
 	) {}
+
+	serialize() {
+		return {
+			deity: this.deity,
+			choosedPowers: this.choosedPowers.map(power => power.name),
+		};
+	}
 
 	addToSheet(transaction: TransactionInterface) {
 		const sheetDevotion = transaction.sheet.getSheetDevotion();

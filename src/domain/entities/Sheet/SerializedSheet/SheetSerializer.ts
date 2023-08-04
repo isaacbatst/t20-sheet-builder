@@ -3,7 +3,6 @@ import {type BuildStepInterface} from '../../BuildStep';
 import {type ContextInterface} from '../../Context/ContextInterface';
 import {DefenseTotalCalculatorFactory} from '../../Defense/DefenseTotalCalculatorFactory';
 import {ContextualModifierAppliableValueCalculator, ContextualModifiersListTotalCalculator, FixedModifierAppliableValueCalculator, FixedModifiersListTotalCalculator, PerLevelModifierAppliableValueCalculator, PerLevelModifiersListTotalCalculator, type ContextualModifiersListInterface, type FixedModifiersListInterface, type ModifierAppliableValueCalculator, type ModifierInterface, type PerLevelModifiersListInterface} from '../../Modifier';
-import {type OriginInterface} from '../../Origin';
 import {type RaceInterface} from '../../Race';
 import {type RaceAbility} from '../../Race/RaceAbility';
 import {type RoleInterface} from '../../Role';
@@ -20,7 +19,7 @@ import {type SheetPointsInterface} from '../SheetPointsInterface';
 import {type SheetPowersInterface} from '../SheetPowersInterface';
 import {type SheetSkillsInterface} from '../SheetSkillsInterface';
 import {type SheetSpellsInterface} from '../SheetSpellsInterface';
-import {type SerializedSheetBuildStep, type SerializedSheetAbilityEffect, type SerializedSheetContextualModifiersList, type SerializedSheetDefense, type SerializedSheetGeneralPower, type SerializedSheetInterface, type SerializedSheetInventoryEquipment, type SerializedSheetLearnedCircles, type SerializedSheetModifier, type SerializedSheetModifiersList, type SerializedSheetOrigin, type SerializedSheetOriginPower, type SerializedSheetPerLevelModifiersList, type SerializedSheetPoints, type SerializedSheetRace, type SerializedSheetRaceAbility, type SerializedSheetRole, type SerializedSheetRoleAbility, type SerializedSheetRolePower, type SerializedSheetSkill, type SerializedSheetSkills, type SerializedSheetSpell, type SerializedSheetGrantedPower} from './SerializedSheetInterface';
+import {type SerializedSheetAbilityEffect, type SerializedSheetBuildStep, type SerializedSheetContextualModifiersList, type SerializedSheetDefense, type SerializedSheetGeneralPower, type SerializedSheetGrantedPower, type SerializedSheetInterface, type SerializedSheetInventoryEquipment, type SerializedSheetLearnedCircles, type SerializedSheetModifier, type SerializedSheetModifiersList, type SerializedSheetOriginPower, type SerializedSheetPerLevelModifiersList, type SerializedSheetPoints, type SerializedSheetRace, type SerializedSheetRaceAbility, type SerializedSheetRole, type SerializedSheetRoleAbility, type SerializedSheetRolePower, type SerializedSheetSkill, type SerializedSheetSkills, type SerializedSheetSpell} from './SerializedSheetInterface';
 
 export class SheetSerializer {
 	constructor(
@@ -56,6 +55,7 @@ export class SheetSerializer {
 			spells: this.serializeSpells(sheet.getSheetSpells()),
 			tormentaPowersAttribute: sheet.getSheetAttributes().getTormentaPowersAttribute(),
 			vision: sheet.getSheetVision().getVision(),
+			devotion: sheet.getSheetDevotion().serialize(),
 		};
 	}
 

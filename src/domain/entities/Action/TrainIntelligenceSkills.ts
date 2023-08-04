@@ -1,4 +1,3 @@
-import type {ActionPayload} from '../Sheet/SheetActions';
 import {Translator} from '../Translator';
 import {Action, type ActionSubClassParams} from './Action';
 
