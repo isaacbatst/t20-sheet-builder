@@ -12,7 +12,7 @@ import {type TransactionInterface} from './TransactionInterface';
 
 export class SheetInventory implements SheetInventoryInterface {
 	static readonly initialArmors = new Set([EquipmentName.leatherArmor, EquipmentName.studdedLeather]);
-	static readonly initialArmorsForHeavyProficients = new Set([EquipmentName.leatherArmor, EquipmentName.studdedLeather, EquipmentName.brunea]);
+	static readonly initialArmorsForHeavyProficients = new Set([EquipmentName.brunea]);
 
 	constructor(
 		private readonly inventory: Inventory = new Inventory(),
@@ -91,16 +91,16 @@ export class SheetInventory implements SheetInventoryInterface {
 			throw new SheetBuilderError('MISSING_ARMOR');
 		}
 
-		if (params.armor) {
-			if (!params.role.startsWithArmor) {
-				throw new SheetBuilderError('UNEXPECTED_ARMOR');
-			}
+		if (!params.role.startsWithArmor && params.armor) {
+			throw new SheetBuilderError('UNEXPECTED_ARMOR');
+		}
 
+		if (params.armor) {
 			const hasHeavyArmorProficiency = proficiencies.has(Proficiency.heavyArmor);
 			const allowedArmors = hasHeavyArmorProficiency ? SheetInventory.initialArmorsForHeavyProficients : SheetInventory.initialArmors;
 
 			if (!allowedArmors.has(params.armor.name)) {
-				throw new SheetBuilderError('INVALID_ARMOR');
+				throw new SheetBuilderError('INVALID_CHOOSED_ARMOR');
 			}
 		}
 	}
