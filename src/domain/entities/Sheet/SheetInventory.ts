@@ -12,7 +12,7 @@ import {type TransactionInterface} from './TransactionInterface';
 
 export class SheetInventory implements SheetInventoryInterface {
 	static readonly initialArmors = new Set([EquipmentName.leatherArmor, EquipmentName.studdedLeather]);
-	static readonly initialArmorsForHeavyProficients = new Set([EquipmentName.brunea]);
+	static readonly initialArmorsForHeavyProficients = new Set([EquipmentName.leatherArmor, EquipmentName.studdedLeather, EquipmentName.brunea]);
 
 	constructor(
 		private readonly inventory: Inventory = new Inventory(),
