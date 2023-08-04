@@ -97,7 +97,9 @@ export class SheetInventory implements SheetInventoryInterface {
 
 		if (params.armor) {
 			const hasHeavyArmorProficiency = proficiencies.has(Proficiency.heavyArmor);
-			const allowedArmors = hasHeavyArmorProficiency ? SheetInventory.initialArmorsForHeavyProficients : SheetInventory.initialArmors;
+			const allowedArmors = hasHeavyArmorProficiency
+				? SheetInventory.initialArmorsForHeavyProficients
+				: SheetInventory.initialArmors;
 
 			if (!allowedArmors.has(params.armor.name)) {
 				throw new SheetBuilderError('INVALID_CHOOSED_ARMOR');
