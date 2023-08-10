@@ -4,4 +4,5 @@ export enum RaceName {
 	dahllan = 'dahllan',
 	elf = 'elf',
 	goblin = 'goblin',
+	lefeu = 'lefeu',
 }

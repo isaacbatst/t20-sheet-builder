@@ -127,6 +127,8 @@ export class Translator {
 		jointer: 'Espelunqueiro',
 		slenderPlage: 'Peste Esguia',
 		streetRat: 'Rato das Ruas	',
+		deformity: 'Deformidade',
+		sonOfTormenta: 'Filho da Tormenta',
 	};
 
 	private static readonly skillsTranslation: Record<SkillName, string> = {
@@ -183,6 +185,7 @@ export class Translator {
 		dahllan: 'Dahllan',
 		elf: 'Elfo',
 		goblin: 'Goblin',
+		lefeu: 'Lefeu',
 	};
 
 	private static readonly rolesTranslation: Record<RoleName, string> = {
