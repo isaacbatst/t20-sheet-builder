@@ -1,10 +1,9 @@
 import {describe, expect, it} from 'vitest';
-import {FixedModifier, FixedModifiersListTotalCalculator, PerLevelModifiersListTotalCalculator} from '../../Modifier';
-import {BuildingSheet, Level, Vision} from '../../Sheet';
+import {BuildingSheet} from '../../Sheet';
 import {SheetBuilder} from '../../Sheet/SheetBuilder';
 import {Minotaur} from './Minotaur';
 import {EquipmentName} from '../../Inventory';
-import { DefenseTotalCalculatorFactory } from '../../Defense/DefenseTotalCalculatorFactory';
+import {DefenseTotalCalculatorFactory} from '../../Defense/DefenseTotalCalculatorFactory';
 
 describe('Minotaur', () => {
 	let sheet: BuildingSheet;
@@ -27,9 +26,10 @@ describe('Minotaur', () => {
 	});
 
 	it('should have hornes as an attack', () => {
+		const attackName: EquipmentName = EquipmentName.horns;
 		const attacks = sheet.getAttacks();
-		const hornsAttack = Array.from(attacks.keys()).find(attack => attack === EquipmentName.horns);
-		expect(hornsAttack).toBe(EquipmentName.horns);
+		const hornsAttack = attacks.get(attackName);
+		expect(hornsAttack).to.not.equal(null);
 	});
 
 	it('should have +1 in defense', () => {
