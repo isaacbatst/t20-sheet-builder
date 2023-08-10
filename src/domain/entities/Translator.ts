@@ -127,6 +127,10 @@ export class Translator {
 		jointer: 'Espelunqueiro',
 		slenderPlage: 'Peste Esguia',
 		streetRat: 'Rato das Ruas	',
+		fearOfHeights: 'Medo de Altura',
+		hornes: 'Chifres',
+		nose: 'Faro',
+		stiffLeather: 'Couro Rígido',
 	};
 
 	private static readonly skillsTranslation: Record<SkillName, string> = {
@@ -183,6 +187,7 @@ export class Translator {
 		dahllan: 'Dahllan',
 		elf: 'Elfo',
 		goblin: 'Goblin',
+		minotaur: 'Minotauro',
 	};
 
 	private static readonly rolesTranslation: Record<RoleName, string> = {
@@ -253,6 +258,7 @@ export class Translator {
 		fullPlate: 'Armadura Completa',
 		staff: 'Cajado',
 		wand: 'Varinha',
+		horns: 'Chifres',
 	};
 
 	private static readonly arcanistPathsTranslation: Record<ArcanistPathName, string> = {
