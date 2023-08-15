@@ -3,7 +3,7 @@ import {SheetBuilderError} from '../../../../errors/SheetBuilderError';
 import {type TransactionInterface} from '../../../Sheet/TransactionInterface';
 import {RaceAbilityName} from '../../RaceAbilityName';
 import {type SkillName} from '../../../Skill';
-import {type FixedModifierInterface} from '../../../Modifier';
+import {FixedModifier} from '../../../Modifier';
 
 export class DeformityEffect extends PassiveEffect {
 	get description() {
@@ -31,7 +31,7 @@ export class DeformityEffect extends PassiveEffect {
 		const found = this.choices.find(choice => choice === newChoice);
 
 		if (found) {
-			throw new SheetBuilderError('REPEATED_VERSATILE_CHOICE');
+			throw new SheetBuilderError('REPEATED_DEFORMITY_CHOICE');
 		}
 
 		this.choices.push(newChoice);
@@ -43,22 +43,7 @@ export class DeformityEffect extends PassiveEffect {
 		}
 
 		this.choices.forEach(choice => {
-			const modifier: FixedModifierInterface = {
-				source: RaceAbilityName.deformity,
-				type: 'fixed',
-				baseValue: 2,
-				attributeBonuses: [],
-				getAppliableValue: () => 2,
-				getTotalAttributeBonuses: () => 0,
-				serialize: () => ({
-					source: RaceAbilityName.deformity,
-					type: 'fixed',
-					baseValue: 2,
-					appliableValue: 2,
-					attributeBonuses: [],
-					totalAttributeBonuses: 0,
-				}),
-			};
+			const modifier = new FixedModifier(RaceAbilityName.deformity, 2);
 			transaction.sheet.getSheetSkills().addFixedModifierTo(choice, modifier);
 		});
 	}

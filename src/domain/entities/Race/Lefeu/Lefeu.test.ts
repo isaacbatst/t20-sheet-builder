@@ -105,6 +105,18 @@ describe('Lefeu', () => {
 		}).toThrow('EXCEEDED_CHOICES_QUANTITY');
 	});
 
+	it('should throw error if select repeated deformitis', () => {
+		expect(() => {
+			const lefeu = new Lefeu([
+				'constitution',
+				'dexterity',
+				'strength',
+			]);
+
+			lefeu.addDeformities([SkillName.acrobatics, SkillName.acrobatics]);
+		}).toThrow('REPEATED_DEFORMITY_CHOICE');
+	});
+
 	it('should add resistances', () => {
 		const lefeu = new Lefeu([
 			'constitution',
