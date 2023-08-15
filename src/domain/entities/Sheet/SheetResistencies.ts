@@ -9,15 +9,6 @@ export type SheetResistenciesType = Record<ResistanceName, Resistance>;
 export class SheetResistences implements SheetResistencesInterface {
 	private resistances: Partial<SheetResistenciesType> = {};
 
-	// constructor(
-	// 	resistance: ResistanceName,
-	// 	source: TranslatableName,
-	// ) {
-	// 	this.resistances[resistance] = new Resistance(resistance, 0, source);
-	// }
-
-	// constructor() {}
-
 	addResistance(resistance: ResistanceName, value: number, source: TranslatableName): void {
 		this.resistances[resistance] = new Resistance(resistance, value, source);
 	}

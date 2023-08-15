@@ -2,7 +2,7 @@ import {ResistanceName} from '../../Resistance/ResistanceName';
 import {TransactionFake} from '../../Sheet/TransactionFake';
 import {SkillName} from '../../Skill/SkillName';
 import {RaceAbilityName} from '../RaceAbilityName';
-import { RaceName } from '../RaceName';
+import {RaceName} from '../RaceName';
 import {Lefeu} from './Lefeu';
 
 describe('Lefeu', () => {
