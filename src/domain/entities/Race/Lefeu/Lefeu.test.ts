@@ -2,6 +2,7 @@ import {ResistanceName} from '../../Resistance/ResistanceName';
 import {TransactionFake} from '../../Sheet/TransactionFake';
 import {SkillName} from '../../Skill/SkillName';
 import {RaceAbilityName} from '../RaceAbilityName';
+import { RaceName } from '../RaceName';
 import {Lefeu} from './Lefeu';
 
 describe('Lefeu', () => {
@@ -16,6 +17,19 @@ describe('Lefeu', () => {
 		expect(transaction.sheet.getSheetAttributes().getValues().strength).toBe(1);
 		expect(transaction.sheet.getSheetAttributes().getValues().constitution).toBe(1);
 		expect(transaction.sheet.getSheetAttributes().getValues().dexterity).toBe(1);
+	});
+
+	it('should have a previous race default human', () => {
+		const lefeu = new Lefeu(['strength', 'constitution', 'dexterity']);
+
+		expect(lefeu.getPreviousRace()).toBe(RaceName.human);
+	});
+
+	it('should be able to change previous race', () => {
+		const lefeu = new Lefeu(['strength', 'constitution', 'dexterity']);
+		lefeu.setPreviousRace(RaceName.elf);
+
+		expect(lefeu.getPreviousRace()).toBe(RaceName.elf);
 	});
 
 	it('should throw error when selecting charisma', () => {
