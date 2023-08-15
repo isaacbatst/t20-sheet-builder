@@ -1,4 +1,4 @@
-import { SheetBuilderError } from '../../../errors';
+import {SheetBuilderError} from '../../../errors';
 import {SelectableAttributesRace} from '../../SelectableAttributesRace';
 import type {Attribute, Attributes} from '../../Sheet/Attributes';
 import {type SkillName} from '../../Skill';

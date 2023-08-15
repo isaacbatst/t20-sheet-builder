@@ -134,6 +134,10 @@ export class Translator {
 		streetRat: 'Rato das Ruas	',
 		deformity: 'Deformidade',
 		sonOfTormenta: 'Filho da Tormenta',
+		fearOfHeights: 'Medo de Altura',
+		hornes: 'Chifres',
+		nose: 'Faro',
+		stiffLeather: 'Couro Rígido',
 	};
 
 	private static readonly skillsTranslation: Record<SkillName, string> = {
@@ -191,6 +195,7 @@ export class Translator {
 		elf: 'Elfo',
 		goblin: 'Goblin',
 		lefeu: 'Lefeu',
+		minotaur: 'Minotauro',
 	};
 
 	private static readonly rolesTranslation: Record<RoleName, string> = {
@@ -261,6 +266,31 @@ export class Translator {
 		fullPlate: 'Armadura Completa',
 		staff: 'Cajado',
 		wand: 'Varinha',
+		horns: 'Chifres',
+		shortSword: 'Espada Curta',
+		spear: 'Lança',
+		mace: 'Maça',
+		staffStick: 'Bordão',
+		pike: 'Pique',
+		baton: 'Tacape',
+		assegai: 'Azagaia',
+		lightCrossbow: 'Besta Leve',
+		sling: 'Funda',
+		shortbow: 'Arco Curto',
+		hatchet: 'Machadinha',
+		scimitar: 'Cimitarra',
+		foil: 'Florete',
+		battleAxe: 'Machado de Batalha',
+		flail: 'Mangual',
+		warHammer: 'Martelo de Guerra',
+		pickaxe: 'Picareta',
+		trident: 'Tridente',
+		halberd: 'Alabarda',
+		cutlass: 'Alfange',
+		mountedSpear: 'Lança Montada',
+		handAndaHalfSword: 'Montante',
+		longBow: 'Arco Longo',
+		heavyCrossbow: 'Besta Pesada',
 	};
 
 	private static readonly arcanistPathsTranslation: Record<ArcanistPathName, string> = {
@@ -324,6 +354,7 @@ export class Translator {
 
 	private static readonly resistancesTranslation: Record<ResistanceName, string> = {
 		tormenta: 'Tormenta',
+		lefeu: 'Lefeu',
 	};
 
 	private static readonly translation: Record<TranslatableName, string> = {

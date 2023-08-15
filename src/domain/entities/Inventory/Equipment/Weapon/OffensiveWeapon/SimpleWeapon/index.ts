@@ -5,3 +5,4 @@ export * from './SimpleWeaponName';
 export * from './SimpleWeaponStatic';
 export * from './Club';
 export * from './Dagger';
+export * from './Horns';
