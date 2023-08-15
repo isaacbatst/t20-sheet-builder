@@ -21,7 +21,7 @@ export class Lefeu extends SelectableAttributesRace {
   **/
 
 	constructor(selectedAttributes: Attribute[]) {
-		super(selectedAttributes, RaceName.human);
+		super(selectedAttributes, RaceName.lefeu);
 	}
 
 	addDeformities(skills: SkillName[]) {
