@@ -39,7 +39,7 @@ export class DeformityEffect extends PassiveEffect {
 
 	apply(transaction: TransactionInterface): void {
 		if (this.choices.length !== 2) {
-			throw new SheetBuilderError('MISSING_CHOICES');
+			throw new SheetBuilderError('INVALID_DEFORMITIES_CHOICES');
 		}
 
 		this.choices.forEach(choice => {

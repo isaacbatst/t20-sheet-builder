@@ -1,10 +1,11 @@
 import {PassiveEffect} from '../../Ability';
+import {ResistanceName} from '../../Resistance/ResistanceName';
 import {type TransactionInterface} from '../../Sheet/TransactionInterface';
 import {RaceAbilityName} from '../RaceAbilityName';
 
 export class SonOfTormentaEffect extends PassiveEffect {
 	override description: string = 'Você é uma criatura do tipo monstro '
-	+ 'e recebe +5 em testes de resistência contra efeitos causados por lefeu e '
+	+ 'e recebe +5 em testes de resistência contra efeitos causados por Lefeu e '
 	+ 'pela Tormenta.';
 
 	constructor() {
@@ -12,6 +13,7 @@ export class SonOfTormentaEffect extends PassiveEffect {
 	}
 
 	override apply(transaction: TransactionInterface): void {
-		console.log('SonOfTormentaEffect.apply not implemented');
+		transaction.sheet.getSheetResistences().addResistance(ResistanceName.tormenta, 5, RaceAbilityName.sonOfTormenta);
+		transaction.sheet.getSheetResistences().addResistance(ResistanceName.lefeu, 5, RaceAbilityName.sonOfTormenta);
 	}
 }

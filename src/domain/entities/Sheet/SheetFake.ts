@@ -36,6 +36,8 @@ import {SheetSpells} from './SheetSpells';
 import {type SheetSpellsInterface} from './SheetSpellsInterface';
 import {SheetVision} from './SheetVision';
 import {type SheetVisionInterface} from './SheetVisionInterface';
+import {SheetResistences} from './SheetResistencies';
+import {type SheetResistencesInterface} from './SheetResistencesInterface';
 
 export class SheetFake implements SheetInterface {
 	buildSteps: BuildStepInterface[] = [];
@@ -57,6 +59,7 @@ export class SheetFake implements SheetInterface {
 	sheetDisplacement = new SheetDisplacement();
 	sheetSize = new SheetSize();
 	sheetDevotion = new SheetDevotion();
+	sheetResistences = new SheetResistences();
 
 	getSheetDevotion(): SheetDevotion {
 		return this.sheetDevotion;
@@ -148,5 +151,9 @@ export class SheetFake implements SheetInterface {
 
 	getSheetDisplacement(): SheetDisplacementInterface {
 		return this.sheetDisplacement;
+	}
+
+	getSheetResistences(): SheetResistencesInterface {
+		return this.sheetResistences;
 	}
 }

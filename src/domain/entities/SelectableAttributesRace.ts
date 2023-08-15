@@ -6,9 +6,13 @@ import type {Attribute, Attributes} from './Sheet/Attributes';
 export abstract class SelectableAttributesRace extends Race {
 	readonly attributeModifiers: Partial<Attributes> = {};
 
-	constructor(selectedAttributes: Attribute[], name: RaceName) {
+	constructor(selectedAttributes: Attribute[], name: RaceName, initialAttributeModifiers?: Partial<Attributes>) {
 		super(name);
 		this.validateSelectedAttributes(selectedAttributes);
+
+		if (initialAttributeModifiers) {
+			this.attributeModifiers = initialAttributeModifiers;
+		}
 
 		selectedAttributes.forEach(attribute => {
 			this.attributeModifiers[attribute] = this.fixedModifier;

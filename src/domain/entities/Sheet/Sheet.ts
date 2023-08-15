@@ -15,10 +15,12 @@ import {type SheetSkillsInterface} from './SheetSkillsInterface';
 import {type SheetSpellsInterface} from './SheetSpellsInterface';
 import {type SheetVisionInterface} from './SheetVisionInterface';
 import {type SheetSizeInterface} from './SheetSizeInterface';
+import {type SheetResistencesInterface} from './SheetResistencesInterface';
 import {WeaponAttack} from '../Attack/WeaponAttack';
 import {CharacterAttack} from '../Character/CharacterAttack';
 import {type EquipmentName, OffensiveWeapon} from '../Inventory';
 import {type SheetDevotion} from './SheetDevotion';
+import {type SheetResistences} from './SheetResistencies';
 export abstract class Sheet implements SheetInterface {
 	protected abstract buildSteps: BuildStepInterface[];
 	protected abstract level: number;
@@ -39,6 +41,7 @@ export abstract class Sheet implements SheetInterface {
 	protected abstract sheetDisplacement: SheetDisplacementInterface;
 	protected abstract sheetSize: SheetSizeInterface;
 	protected abstract sheetDevotion: SheetDevotion;
+	protected abstract sheetResistences: SheetResistences;
 
 	getAttacks(): Map<EquipmentName, CharacterAttack> {
 		const attacks = new Map<EquipmentName, CharacterAttack>();
@@ -141,5 +144,9 @@ export abstract class Sheet implements SheetInterface {
 
 	getSheetDisplacement(): SheetDisplacementInterface {
 		return this.sheetDisplacement;
+	}
+
+	getSheetResistences(): SheetResistencesInterface {
+		return this.sheetResistences;
 	}
 }

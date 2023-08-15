@@ -21,6 +21,7 @@ import {type SheetSpellsInterface} from '../SheetSpellsInterface';
 import {type SheetVisionInterface} from '../SheetVisionInterface';
 import {type SheetSizeInterface} from '../SheetSizeInterface';
 import {type SheetDevotion} from '../SheetDevotion';
+import {type SheetResistencies} from '../SheetResistencies';
 
 type SheetParams = {
 	race: RaceInterface;
@@ -42,6 +43,7 @@ type SheetParams = {
 	inventory: SheetInventoryInterface;
 	size: SheetSizeInterface;
 	devotion: SheetDevotion;
+	sheetResistences: SheetResistencies;
 };
 
 export class CharacterSheet extends Sheet {
@@ -64,6 +66,7 @@ export class CharacterSheet extends Sheet {
 	protected sheetProficiencies: SheetProficienciesInterface;
 	protected sheetDisplacement: SheetDisplacementInterface;
 	protected sheetDevotion: SheetDevotion;
+	protected sheetResistences: SheetResistencies;
 
 	constructor(
 		params: SheetParams,
@@ -88,5 +91,6 @@ export class CharacterSheet extends Sheet {
 		this.sheetInventory = params.inventory;
 		this.sheetSize = params.size;
 		this.sheetDevotion = params.devotion;
+		this.sheetResistences = params.sheetResistences;
 	}
 }
