@@ -11,6 +11,7 @@ import type {RoleAbilityName} from './Role/RoleAbilityName';
 import type {RoleName} from './Role/RoleName';
 import type {Attribute} from './Sheet/Attributes';
 import type {Proficiency} from './Sheet/Proficiency';
+import type {ResistanceName} from './Resistance/ResistanceName';
 import type {Vision} from './Sheet/Vision';
 import {type SizeName} from './Size';
 import type {SkillName} from './Skill/SkillName';
@@ -21,7 +22,7 @@ import type {SpellName} from './Spell/SpellName';
 export type TranslatableName = Attribute
 | RaceAbilityName | SkillName | PowerName | RaceName | Proficiency
 | Vision | RoleAbilityName | SpellName | SpellCircle | RoleName | OriginName
-| EquipmentName | ArcanistPathName | DamageType | SpellSchool | SizeName | DeityName | 'default';
+| EquipmentName | ArcanistPathName | DamageType | SpellSchool | SizeName | DeityName | ResistanceName | 'default';
 
 export class Translator {
 	static getAttributeTranslation(attribute: Attribute, capitalized = true) {
@@ -98,6 +99,10 @@ export class Translator {
 		return Translator.sizesTranslation[size];
 	}
 
+	static getResistanceTranslation(resistance: ResistanceName) {
+		return Translator.resistancesTranslation[resistance];
+	}
+
 	static getTranslation(string: TranslatableName) {
 		return Translator.translation[string];
 	}
@@ -127,6 +132,8 @@ export class Translator {
 		jointer: 'Espelunqueiro',
 		slenderPlage: 'Peste Esguia',
 		streetRat: 'Rato das Ruas	',
+		deformity: 'Deformidade',
+		sonOfTormenta: 'Filho da Tormenta',
 		fearOfHeights: 'Medo de Altura',
 		hornes: 'Chifres',
 		nose: 'Faro',
@@ -187,6 +194,7 @@ export class Translator {
 		dahllan: 'Dahllan',
 		elf: 'Elfo',
 		goblin: 'Goblin',
+		lefeu: 'Lefeu',
 		minotaur: 'Minotauro',
 	};
 
@@ -344,6 +352,11 @@ export class Translator {
 		valkaria: 'Valkaria',
 	};
 
+	private static readonly resistancesTranslation: Record<ResistanceName, string> = {
+		tormenta: 'Tormenta',
+		lefeu: 'Lefeu',
+	};
+
 	private static readonly translation: Record<TranslatableName, string> = {
 		...Translator.attributesTranslation,
 		...Translator.raceAbilitiesTranslation,
@@ -364,6 +377,7 @@ export class Translator {
 		...Translator.spellSchoolsTranslation,
 		...Translator.sizesTranslation,
 		...Translator.deitiesTranslation,
+		...Translator.resistancesTranslation,
 		default: 'Padrão',
 	};
 }

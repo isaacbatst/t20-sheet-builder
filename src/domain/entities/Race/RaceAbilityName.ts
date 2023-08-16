@@ -14,6 +14,8 @@ export enum RaceAbilityName {
 	jointer = 'jointer',
 	slenderPlage = 'slenderPlage',
 	streetRat = 'streetRat',
+	sonOfTormenta = 'sonOfTormenta',
+	deformity = 'deformity',
 	hornes = 'hornes',
 	stiffLeather = 'stiffLeather',
 	nose = 'nose',
