@@ -44,4 +44,13 @@ export enum EquipmentName {
 	handAndaHalfSword = 'handAndaHalfSword',
 	longBow = 'longBow',
 	heavyCrossbow = 'heavyCrossbow',
+	warAxe = 'warAxe',
+	whip = 'whip',
+	bastardSword = 'bastardSword',
+	katana = 'katana',
+	dwarfAxe = 'dwarfAxe',
+	chainofThorns = 'chainofThorns',
+	tauricAxe = 'tauricAxe',
+	pistol = 'pistol',
+	musket = 'musket',
 }

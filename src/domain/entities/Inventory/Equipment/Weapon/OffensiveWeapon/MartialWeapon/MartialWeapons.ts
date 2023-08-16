@@ -11,6 +11,7 @@ import {Pickaxe} from './Pickaxe';
 import {Scimitar} from './Scimitar';
 import {Scythe} from './Scythe';
 import {Trident} from './Trident';
+import {WarAxe} from './WarAxe';
 import {WarHammer} from './WarHammer';
 
 export class MartialWeapons {
@@ -29,6 +30,7 @@ export class MartialWeapons {
 			Scythe,
 			Trident,
 			WarHammer,
+			WarAxe,
 		];
 	}
 }
