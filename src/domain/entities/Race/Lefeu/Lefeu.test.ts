@@ -1,4 +1,6 @@
+import {BuildingSheet} from '../..';
 import {ResistanceName} from '../../Resistance/ResistanceName';
+import {Transaction} from '../../Sheet/Transaction';
 import {TransactionFake} from '../../Sheet/TransactionFake';
 import {SkillName} from '../../Skill/SkillName';
 import {RaceAbilityName} from '../RaceAbilityName';
@@ -9,14 +11,14 @@ describe('Lefeu', () => {
 	it('should apply +1 to strength, dexterity and constitution, and -1 to charisma', () => {
 		const lefeu = new Lefeu(['strength', 'constitution', 'dexterity']);
 		lefeu.addDeformities([SkillName.acrobatics, SkillName.animalHandling]);
-
-		const transaction = new TransactionFake();
+		const sheet = new BuildingSheet();
+		const transaction = new Transaction(sheet);
 		lefeu.addToSheet(transaction);
 
-		expect(transaction.sheet.getSheetAttributes().getValues().charisma).toBe(-1);
-		expect(transaction.sheet.getSheetAttributes().getValues().strength).toBe(1);
-		expect(transaction.sheet.getSheetAttributes().getValues().constitution).toBe(1);
-		expect(transaction.sheet.getSheetAttributes().getValues().dexterity).toBe(1);
+		expect(sheet.getSheetAttributes().getValues().charisma).toBe(-1);
+		expect(sheet.getSheetAttributes().getValues().strength).toBe(1);
+		expect(sheet.getSheetAttributes().getValues().constitution).toBe(1);
+		expect(sheet.getSheetAttributes().getValues().dexterity).toBe(1);
 	});
 
 	it('should have a previous race default human', () => {
@@ -80,11 +82,11 @@ describe('Lefeu', () => {
 		]);
 
 		lefeu.addDeformities([SkillName.acrobatics, SkillName.animalHandling]);
-
-		const transaction = new TransactionFake();
+		const sheet = new BuildingSheet();
+		const transaction = new Transaction(sheet);
 		lefeu.addToSheet(transaction);
 
-		const {acrobatics, animalHandling} = transaction.sheet.getSheetSkills().getSkills();
+		const {acrobatics, animalHandling} = sheet.getSheetSkills().getSkills();
 		const acrobaticsModifier = acrobatics.fixedModifiers.modifiers[0];
 		const animalHandlingModifier = animalHandling.fixedModifiers.modifiers[0];
 		expect(acrobaticsModifier.baseValue).toBe(2);
@@ -126,10 +128,12 @@ describe('Lefeu', () => {
 
 		lefeu.addDeformities([SkillName.acrobatics, SkillName.animalRide]);
 
-		const transaction = new TransactionFake();
+		const sheet = new BuildingSheet();
+		const transaction = new Transaction(sheet);
 		lefeu.addToSheet(transaction);
 
-		expect(transaction.sheet.getSheetResistences().getTotal(ResistanceName.lefeu, transaction.sheet.getSheetAttributes().getValues())).toBe(5);
-		expect(transaction.sheet.getSheetResistences().getTotal(ResistanceName.tormenta, transaction.sheet.getSheetAttributes().getValues())).toBe(5);
+		const attributes = sheet.getSheetAttributes().getValues();
+		expect(sheet.getSheetResistences().getTotal(ResistanceName.lefeu, attributes)).toBe(5);
+		expect(sheet.getSheetResistences().getTotal(ResistanceName.tormenta, attributes)).toBe(5);
 	});
 });

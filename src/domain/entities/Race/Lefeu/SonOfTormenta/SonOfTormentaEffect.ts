@@ -1,4 +1,5 @@
 import {PassiveEffect} from '../../../Ability';
+import {AddResistance} from '../../../Action/AddResistance';
 import {ResistanceName} from '../../../Resistance/ResistanceName';
 import {type TransactionInterface} from '../../../Sheet/TransactionInterface';
 import {RaceAbilityName} from '../../RaceAbilityName';
@@ -13,7 +14,24 @@ export class SonOfTormentaEffect extends PassiveEffect {
 	}
 
 	override apply(transaction: TransactionInterface): void {
-		transaction.sheet.getSheetResistences().addResistance(ResistanceName.tormenta, 5, RaceAbilityName.sonOfTormenta);
-		transaction.sheet.getSheetResistences().addResistance(ResistanceName.lefeu, 5, RaceAbilityName.sonOfTormenta);
+		const addLefeuResistance = new AddResistance({
+			payload: {
+				resistance: ResistanceName.lefeu,
+				value: 5,
+				source: this.source,
+			},
+			transaction,
+		});
+
+		const addTormentaResistance = new AddResistance({
+			payload: {
+				resistance: ResistanceName.tormenta,
+				value: 5,
+				source: this.source,
+			},
+			transaction,
+		});
+		transaction.run(addLefeuResistance);
+		transaction.run(addTormentaResistance);
 	}
 }

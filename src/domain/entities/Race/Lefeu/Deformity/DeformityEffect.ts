@@ -4,6 +4,7 @@ import {type TransactionInterface} from '../../../Sheet/TransactionInterface';
 import {RaceAbilityName} from '../../RaceAbilityName';
 import {type SkillName} from '../../../Skill';
 import {FixedModifier} from '../../../Modifier';
+import {AddFixedModifierToSkill} from '../../../Action/AddFixedModifierToSkill';
 
 export class DeformityEffect extends PassiveEffect {
 	get description() {
@@ -44,7 +45,13 @@ export class DeformityEffect extends PassiveEffect {
 
 		this.choices.forEach(choice => {
 			const modifier = new FixedModifier(RaceAbilityName.deformity, 2);
-			transaction.sheet.getSheetSkills().addFixedModifierTo(choice, modifier);
+			transaction.run(new AddFixedModifierToSkill({
+				payload: {
+					modifier,
+					skill: choice,
+				},
+				transaction,
+			}));
 		});
 	}
 }

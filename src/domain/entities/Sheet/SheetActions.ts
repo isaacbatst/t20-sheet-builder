@@ -12,6 +12,7 @@ import {type GrantedPower} from '../Power/GrantedPower/GrantedPower';
 import type {OriginPowerInterface} from '../Power/OriginPower/OriginPower';
 import type {RaceAbilityInterface} from '../Race/RaceAbility';
 import type {RaceInterface} from '../Race/RaceInterface';
+import {type ResistanceName} from '../Resistance/ResistanceName';
 import type {RoleAbilityInterface} from '../Role/RoleAbility';
 import type {RoleInterface} from '../Role/RoleInterface';
 import type {RolePowerInterface} from '../Role/RolePower';
@@ -57,6 +58,7 @@ type ActionHandlersPayloads = {
 	changeSize: {size: Size; source: TranslatableName};
 	becomeDevout: {devotion: Devotion};
 	pickGrantedPower: {power: GrantedPower; source: TranslatableName};
+	addResistance: {resistance: ResistanceName; value: number; source: TranslatableName};
 };
 
 export type ActionType = keyof ActionHandlersPayloads;
