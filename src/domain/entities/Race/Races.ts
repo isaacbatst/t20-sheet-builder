@@ -3,6 +3,8 @@ import {Dwarf} from './Dwarf';
 import {Elf} from './Elf';
 import {Goblin} from './Goblin/';
 import {Human} from './Human';
+import {Lefeu} from './Lefeu/Lefeu';
+import {Minotaur} from './Minotaur';
 import {type RaceName} from './RaceName';
 import {type RaceStatic} from './RaceStatic';
 
@@ -13,6 +15,8 @@ export class Races {
 		dahllan: Dahllan,
 		elf: Elf,
 		goblin: Goblin,
+		lefeu: Lefeu,
+		minotaur: Minotaur,
 	};
 
 	static getAll(): RaceStatic[] {
