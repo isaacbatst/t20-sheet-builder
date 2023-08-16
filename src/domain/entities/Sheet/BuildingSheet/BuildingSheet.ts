@@ -11,6 +11,7 @@ import {SheetInventory} from '../SheetInventory';
 import {SheetPoints} from '../SheetPoints';
 import {SheetPowers} from '../SheetPowers';
 import {SheetProficiencies} from '../SheetProficiencies';
+import {SheetResistences} from '../SheetResistencies';
 import {SheetSize} from '../SheetSize';
 import {SheetSkills} from '../SheetSkills';
 import {SheetSpells} from '../SheetSpells';
@@ -37,6 +38,7 @@ export class BuildingSheet extends Sheet {
 	protected sheetDisplacement = new SheetDisplacement();
 	protected sheetDevotion = new SheetDevotion();
 	protected sheetSize = new SheetSize();
+	protected sheetResistences = new SheetResistences();
 	protected buildSteps = [];
 	protected level = Level.one;
 
