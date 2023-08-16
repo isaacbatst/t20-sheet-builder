@@ -3,6 +3,8 @@ export * from './Human';
 export * from './Dahllan';
 export * from './Elf';
 export * from './Goblin';
+export * from './Minotaur';
+export * from './Lefeu';
 export * from './RaceInterface';
 export * from './RaceName';
 export * from './Races';
