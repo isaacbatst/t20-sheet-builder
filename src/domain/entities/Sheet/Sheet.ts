@@ -1,26 +1,25 @@
+import {WeaponAttack} from '../Attack/WeaponAttack';
 import type {BuildStepInterface} from '../BuildStep';
-import {type SheetInventoryInterface} from './SheetInventoryInterface';
+import {CharacterAttack} from '../Character/CharacterAttack';
+import {OffensiveWeapon, type EquipmentName} from '../Inventory';
 import {type SheetAbilitiesInterface} from './SheetAbilitiesInterface';
 import {type SheetAttributesInterface} from './SheetAttributesInterface';
 import {type SheetDefenseInterface} from './SheetDefenseInterface';
+import {type SheetDevotion} from './SheetDevotion';
 import {type SheetDisplacementInterface} from './SheetDisplacementInterface';
 import type {SheetInterface} from './SheetInterface';
+import {type SheetInventoryInterface} from './SheetInventoryInterface';
 import {type SheetOriginInterface} from './SheetOriginInterface';
 import {type SheetPointsInterface} from './SheetPointsInterface';
 import {type SheetPowersInterface} from './SheetPowersInterface';
 import {type SheetProficienciesInterface} from './SheetProficienciesInterface';
 import {type SheetRaceInterface} from './SheetRaceInterface';
+import {type SheetResistencesInterface} from './SheetResistencesInterface';
 import {type SheetRoleInterface} from './SheetRoleInterface';
+import {type SheetSizeInterface} from './SheetSizeInterface';
 import {type SheetSkillsInterface} from './SheetSkillsInterface';
 import {type SheetSpellsInterface} from './SheetSpellsInterface';
 import {type SheetVisionInterface} from './SheetVisionInterface';
-import {type SheetSizeInterface} from './SheetSizeInterface';
-import {type SheetResistencesInterface} from './SheetResistencesInterface';
-import {WeaponAttack} from '../Attack/WeaponAttack';
-import {CharacterAttack} from '../Character/CharacterAttack';
-import {type EquipmentName, OffensiveWeapon} from '../Inventory';
-import {type SheetDevotion} from './SheetDevotion';
-import {type SheetResistences} from './SheetResistencies';
 export abstract class Sheet implements SheetInterface {
 	protected abstract buildSteps: BuildStepInterface[];
 	protected abstract level: number;
@@ -41,7 +40,7 @@ export abstract class Sheet implements SheetInterface {
 	protected abstract sheetDisplacement: SheetDisplacementInterface;
 	protected abstract sheetSize: SheetSizeInterface;
 	protected abstract sheetDevotion: SheetDevotion;
-	protected abstract sheetResistences: SheetResistences;
+	protected abstract sheetResistences: SheetResistencesInterface;
 
 	getAttacks(): Map<EquipmentName, CharacterAttack> {
 		const attacks = new Map<EquipmentName, CharacterAttack>();

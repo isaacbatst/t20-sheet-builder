@@ -172,6 +172,7 @@ export class SheetBuilder implements SheetBuilderInterface {
 			vision: this.sheet.getSheetVision(),
 			size: this.sheet.getSheetSize(),
 			devotion: this.sheet.getSheetDevotion(),
+			sheetResistences: this.sheet.getSheetResistences(),
 		});
 	}
 }
