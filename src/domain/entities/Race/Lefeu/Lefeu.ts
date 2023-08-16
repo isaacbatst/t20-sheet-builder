@@ -4,7 +4,7 @@ import type {Attribute, Attributes} from '../../Sheet/Attributes';
 import {type SkillName} from '../../Skill';
 import {RaceName} from '../RaceName';
 import {Deformity} from './Deformity/Deformity';
-import {SonOfTormenta} from './SonOfTormenta';
+import {SonOfTormenta} from './SonOfTormenta/SonOfTormenta';
 
 export class Lefeu extends SelectableAttributesRace {
 	static raceName = RaceName.lefeu;
