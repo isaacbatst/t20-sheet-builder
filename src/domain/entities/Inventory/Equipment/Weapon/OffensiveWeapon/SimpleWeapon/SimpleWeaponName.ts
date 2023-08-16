@@ -13,4 +13,5 @@ export type SimpleWeaponName =
     EquipmentName.assegai |
     EquipmentName.lightCrossbow |
     EquipmentName.sling |
-    EquipmentName.shortbow;
+    EquipmentName.shortbow |
+    EquipmentName.horns;

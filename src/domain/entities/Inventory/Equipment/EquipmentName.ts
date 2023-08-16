@@ -19,6 +19,7 @@ export enum EquipmentName {
 	fullPlate = 'fullPlate',
 	wand = 'wand',
 	staff = 'staff',
+	horns = 'horns',
 	shortSword = 'shortSword',
 	spear = 'spear',
 	mace = 'mace',
