@@ -1,10 +1,11 @@
-import type {Attributes} from '../Sheet/Attributes';
-import {RaceName} from './RaceName';
-import type {RaceInterface} from './RaceInterface';
 import {vi} from 'vitest';
+import type {Attributes} from '../Sheet/Attributes';
 import {type RaceAbility} from './RaceAbility';
+import type {RaceInterface} from './RaceInterface';
+import {RaceName} from './RaceName';
 
 export class RaceFake implements RaceInterface {
+	serialize = vi.fn();
 	abilities: Record<string, RaceAbility> = {};
 	name = RaceName.human;
 	attributeModifiers: Partial<Attributes> = {};
