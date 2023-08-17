@@ -1,7 +1,6 @@
 import {BuildingSheet} from '../..';
 import {ResistanceName} from '../../Resistance/ResistanceName';
 import {Transaction} from '../../Sheet/Transaction';
-import {TransactionFake} from '../../Sheet/TransactionFake';
 import {SkillName} from '../../Skill/SkillName';
 import {RaceAbilityName} from '../RaceAbilityName';
 import {RaceName} from '../RaceName';
