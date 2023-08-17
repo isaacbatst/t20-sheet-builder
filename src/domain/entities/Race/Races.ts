@@ -20,13 +20,7 @@ export class Races {
 	};
 
 	static getAll(): RaceStatic[] {
-		return [
-			Dwarf,
-			Human,
-			Dahllan,
-			Elf,
-			Goblin,
-		];
+		return Object.values(Races.map);
 	}
 
 	static getByName(name: RaceName): RaceStatic {
