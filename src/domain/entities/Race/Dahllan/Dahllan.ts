@@ -3,7 +3,7 @@ import {type Attributes} from '../../Sheet';
 import {Race} from '../Race';
 import {type RaceAbility} from '../RaceAbility';
 import {RaceName} from '../RaceName';
-import {type SerializedDahllan} from '../SerializedRace';
+import {type SerializedRace} from '../SerializedRace';
 import {AllihannaArmor} from './AllihannaArmor';
 import {PlantsFriend} from './PlantsFriend';
 
@@ -25,11 +25,5 @@ export class Dahllan extends Race {
 
 	constructor() {
 		super(Dahllan.raceName);
-	}
-
-	override serialize(): SerializedDahllan {
-		return {
-			name: Dahllan.raceName,
-		};
 	}
 }

@@ -28,10 +28,4 @@ export class Minotaur extends Race {
 	constructor() {
 		super(RaceName.minotaur);
 	}
-
-	override serialize(): SerializedMinotaur {
-		return {
-			name: Minotaur.raceName,
-		};
-	}
 }

@@ -49,8 +49,11 @@ export class Lefeu extends SelectableAttributesRace {
 		return this.previousRace;
 	}
 
-	override serialize(): SerializedLefeu {
+	override serialize(): SerializedRace {
+		const serialized = super.serialize();
+
 		return {
+			...serialized,
 			name: Lefeu.raceName,
 			selectedAttributes: this.selectedAttributes,
 			previousRace: this.previousRace,

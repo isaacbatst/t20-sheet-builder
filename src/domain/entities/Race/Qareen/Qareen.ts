@@ -3,7 +3,7 @@ import {type SpellName} from '../../Spell';
 import {Race} from '../Race';
 import {type RaceAbility} from '../RaceAbility';
 import {RaceName} from '../RaceName';
-import {type SerializedQareen} from '../SerializedRace';
+import {type SerializedRace, type SerializedQareen} from '../SerializedRace';
 import {Desires} from './Desires/Desires';
 import {ElementalResistance} from './ElementalResistance/ElementalResistance';
 import {MysticTattoo} from './MysticTattoo/MysticTattoo';
@@ -34,8 +34,11 @@ export class Qareen extends Race {
 		};
 	}
 
-	override serialize(): SerializedQareen {
+	override serialize(): SerializedRace {
+		const serialized = super.serialize();
+
 		return {
+			...serialized,
 			name: Qareen.raceName,
 			mysticTattooSpell: this.abilities.mysticTattoo.spell,
 			qareenType: this.qareenType,

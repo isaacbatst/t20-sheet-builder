@@ -4,7 +4,7 @@ import {type ModifierType} from '../../Modifier';
 import {type OriginName} from '../../Origin';
 import {type GeneralPowerGroup, type GeneralPowerName, type OriginPowerName} from '../../Power';
 import {type GrantedPowerName} from '../../Power/GrantedPower/GrantedPowerName';
-import {type RaceAbilityName, type RaceName} from '../../Race';
+import {type SerializedRace, type RaceAbilityName, type RaceName} from '../../Race';
 import {type RoleAbilityName, type RoleName, type RolePowerName} from '../../Role';
 import {type SkillName} from '../../Skill';
 import {type LearnableSpellType, type SpellCircle, type SpellName, type SpellSchool, type SpellType} from '../../Spell';
@@ -114,6 +114,9 @@ export type SerializedSheetDefense = {
 	total: number;
 };
 
+/**
+ * @deprecated Use "SerializedRace" instead
+ */
 export type SerializedSheetRace = {
 	name: RaceName;
 	attributeModifiers: Partial<Attributes>;
@@ -168,7 +171,7 @@ export type SerializedSheetInterface = {
 	grantedPowersCount: number;
 	defense: SerializedSheetDefense;
 	vision: Vision;
-	race: SerializedSheetRace | undefined;
+	race: SerializedRace | undefined;
 	role: SerializedSheetRole | undefined;
 	proficiencies: Proficiency[];
 	displacement: number;

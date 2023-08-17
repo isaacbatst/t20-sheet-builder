@@ -2,7 +2,7 @@ import type {Attributes} from '../../Sheet/Attributes';
 import {Race} from '../Race';
 import type {RaceAbility} from '../RaceAbility';
 import {RaceName} from '../RaceName';
-import {type SerializedDwarf} from '../SerializedRace';
+import {type SerializedRace, type SerializedDwarf} from '../SerializedRace';
 import {HardAsRock} from './HardAsRock/HardAsRock';
 import {HeredrimmTradition} from './HeredrimmTradition/HeredrimmTradition';
 import {RockKnowledge} from './RockKnowledge/RockKnowledge';
@@ -28,11 +28,5 @@ export class Dwarf extends Race {
 
 	constructor() {
 		super(RaceName.dwarf);
-	}
-
-	override serialize(): SerializedDwarf {
-		return {
-			name: Dwarf.raceName,
-		};
 	}
 }

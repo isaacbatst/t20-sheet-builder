@@ -1,5 +1,5 @@
 import {type GeneralPowerName} from '../Power';
-import {type Attribute} from '../Sheet';
+import {type SerializedSheetRaceAbility, type Attribute} from '../Sheet';
 import {type SkillName} from '../Skill';
 import {type SpellName} from '../Spell';
 import {type QareenType} from './Qareen';
@@ -61,7 +61,13 @@ export type SerializedQareen = {
 	qareenType: QareenType;
 };
 
-export type SerializedRace =
+export type SerializedRaceBasic = {
+	attributeModifiers: Partial<Record<Attribute, number>>;
+	abilities: SerializedSheetRaceAbility[];
+	name: RaceName;
+};
+
+export type SerializedRace = SerializedRaceBasic & (
 	SerializedHuman
 	| SerializedDwarf
 	| SerializedDahllan
@@ -69,4 +75,6 @@ export type SerializedRace =
 	| SerializedGoblin
 	| SerializedMinotaur
 	| SerializedLefeu
-	| SerializedQareen;
+	| SerializedQareen
+);
+
