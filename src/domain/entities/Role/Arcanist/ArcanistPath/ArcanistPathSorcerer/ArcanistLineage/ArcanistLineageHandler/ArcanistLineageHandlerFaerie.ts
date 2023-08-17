@@ -1,3 +1,4 @@
+import {SheetBuilderError} from '../../../../../../../errors';
 import {SpellFactory} from '../../../../../../Spell';
 import {type ArcanistLineage} from '../ArcanistLineage';
 import {ArcanistLineageFaerie} from '../ArcanistLineageFaerie';
@@ -7,7 +8,7 @@ import {ArcanistLineageHandler, type ArcanistLineageHandlerRequest} from './Arca
 export class ArcanistLineageFactoryHandlerFaerie extends ArcanistLineageHandler {
 	protected override handle(request: ArcanistLineageHandlerRequest): ArcanistLineage {
 		if (!request.sorcererLineageFaerieExtraSpell) {
-			throw new Error('MISSING_SORCERER_LINEAGE_FAERIE_DAMAGE_TYPE');
+			throw new SheetBuilderError('MISSING_SORCERER_LINEAGE_FAERIE_DAMAGE_TYPE');
 		}
 
 		const spell = SpellFactory.make(request.sorcererLineageFaerieExtraSpell);

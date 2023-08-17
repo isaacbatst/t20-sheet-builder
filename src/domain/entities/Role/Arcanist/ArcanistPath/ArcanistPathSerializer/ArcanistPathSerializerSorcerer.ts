@@ -1,3 +1,4 @@
+import {SheetBuilderError} from '../../../../../errors';
 import {type SerializedArcanistSorcerer} from '../../SerializedArcanist';
 import {ArcanistLineageDraconic, ArcanistLineageFaerie, ArcanistLineageRed, ArcanistLineageSerializerDraconic, ArcanistLineageSerializerFaerie, ArcanistLineageSerializerRed, type ArcanistLineage, type ArcanistLineageSerializer, type ArcanistPathSorcerer} from '../ArcanistPathSorcerer';
 import {ArcanistPathSerializer} from './ArcanistPathSerializer';
@@ -32,6 +33,6 @@ SerializedArcanistSorcerer
 			return new ArcanistLineageSerializerRed(lineage);
 		}
 
-		throw new Error('INVALID_LINEAGE');
+		throw new SheetBuilderError('INVALID_LINEAGE');
 	}
 }

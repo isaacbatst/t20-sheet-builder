@@ -1,3 +1,4 @@
+import {SheetBuilderError} from '../../../errors';
 import {GeneralPowerFactory, OriginPowerFactory, OriginPowerName, SpecialFriend} from '../../Power';
 import {Acolyte} from '../Acolyte/Acolyte';
 import {AnimalsFriend} from '../AnimalsFriend/AnimalsFriend';
@@ -24,7 +25,7 @@ export class OriginFactory {
 			return new AnimalsFriend(benefits, serialized.chosenAnimal);
 		}
 
-		throw new Error('UNKNOWN_ORIGIN');
+		throw new SheetBuilderError('UNKNOWN_ORIGIN');
 	}
 
 	static makeBenefitsFromSerialized(serialized: SerializedOriginBenefit) {
@@ -44,6 +45,6 @@ export class OriginFactory {
 			return new OriginBenefitOriginPower(OriginPowerFactory.make({power: serialized.name}));
 		}
 
-		throw new Error('UNKNOWN_ORIGIN_BENEFIT_TYPE');
+		throw new SheetBuilderError('UNKNOWN_ORIGIN_BENEFIT_TYPE');
 	}
 }

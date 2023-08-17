@@ -1,3 +1,4 @@
+import {SheetBuilderError} from '../../../../../../../errors';
 import {SpellFactory} from '../../../../../../Spell';
 import {type SerializedArcanistLineageFaerie} from '../../../../SerializedArcanist';
 import {type ArcanistLineage} from '../ArcanistLineage';
@@ -8,7 +9,7 @@ import {ArcanistLineageSerializedHandler} from './ArcanistLineageSerializedHandl
 export class ArcanistLineageSerializedHandlerFaerie extends ArcanistLineageSerializedHandler<SerializedArcanistLineageFaerie> {
 	public override handle(request: SerializedArcanistLineageFaerie): ArcanistLineage {
 		if (!request.extraSpell) {
-			throw new Error('MISSING_SORCERER_LINEAGE_FAERIE_DAMAGE_TYPE');
+			throw new SheetBuilderError('MISSING_SORCERER_LINEAGE_FAERIE_DAMAGE_TYPE');
 		}
 
 		const spell = SpellFactory.make(request.extraSpell);

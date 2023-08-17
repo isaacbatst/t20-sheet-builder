@@ -1,3 +1,4 @@
+import {SheetBuilderError} from '../../../../../errors';
 import {EquipmentName} from '../../../../Inventory';
 import {type ArcanistPathWizardFocus} from './ArcanistPathWizardFocus';
 import {ArcanistPathWizardFocusStaff} from './ArcanistPathWizardFocusStaff';
@@ -14,6 +15,6 @@ export class ArcanistPathWizardFocusFactory {
 			return new ArcanistPathWizardFocusWand();
 		}
 
-		throw new Error('INVALID_WIZARD_FOCUS');
+		throw new SheetBuilderError('INVALID_WIZARD_FOCUS');
 	}
 }
