@@ -2,7 +2,7 @@ import type {Attributes} from '../../Sheet/Attributes';
 import {Race} from '../Race';
 import type {RaceAbility} from '../RaceAbility';
 import {RaceName} from '../RaceName';
-import {type SerializedRace, type SerializedDwarf} from '../SerializedRace';
+import {type SerializedDwarf, type SerializedRace} from '../SerializedRace';
 import {HardAsRock} from './HardAsRock/HardAsRock';
 import {HeredrimmTradition} from './HeredrimmTradition/HeredrimmTradition';
 import {RockKnowledge} from './RockKnowledge/RockKnowledge';
@@ -16,6 +16,10 @@ export class Dwarf extends Race {
 		constitution: 2,
 		wisdom: 1,
 	};
+
+	static makeFromSerialized(serialized: SerializedRace<SerializedDwarf>): Dwarf {
+		return new Dwarf();
+	}
 
 	readonly abilities: Record<string, RaceAbility> = {
 		rockKnowledge: new RockKnowledge(),

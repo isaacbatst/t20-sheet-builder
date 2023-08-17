@@ -3,7 +3,7 @@ import {SelectableAttributesRace} from '../../SelectableAttributesRace';
 import type {Attribute, Attributes} from '../../Sheet/Attributes';
 import {type SkillName} from '../../Skill';
 import {RaceName} from '../RaceName';
-import {type SerializedLefeu, type SerializedRace} from '../SerializedRace';
+import {type SerializedRace} from '../SerializedRace';
 import {Deformity} from './Deformity/Deformity';
 import {SonOfTormenta} from './SonOfTormenta/SonOfTormenta';
 

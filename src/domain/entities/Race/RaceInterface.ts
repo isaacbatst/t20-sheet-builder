@@ -2,7 +2,7 @@ import type {Attributes} from '../Sheet/Attributes';
 import {type TransactionInterface} from '../Sheet/TransactionInterface';
 import {type RaceAbility} from './RaceAbility';
 import type {RaceName} from './RaceName';
-import {type SerializedRaceBasic} from './SerializedRace';
+import {type SerializedRace, type SerializedRaceBasic} from './SerializedRace';
 
 export type RaceInterface = {
 	name: RaceName;

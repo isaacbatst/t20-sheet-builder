@@ -3,7 +3,6 @@ import {type Attributes} from '../../Sheet';
 import {Race} from '../Race';
 import {type RaceAbility} from '../RaceAbility';
 import {RaceName} from '../RaceName';
-import {type SerializedRace} from '../SerializedRace';
 import {AllihannaArmor} from './AllihannaArmor';
 import {PlantsFriend} from './PlantsFriend';
 
