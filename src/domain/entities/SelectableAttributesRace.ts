@@ -6,7 +6,11 @@ import type {Attribute, Attributes} from './Sheet/Attributes';
 export abstract class SelectableAttributesRace extends Race {
 	readonly attributeModifiers: Partial<Attributes> = {};
 
-	constructor(selectedAttributes: Attribute[], name: RaceName, initialAttributeModifiers?: Partial<Attributes>) {
+	constructor(
+		readonly selectedAttributes: Attribute[],
+		name: RaceName,
+		initialAttributeModifiers?: Partial<Attributes>,
+	) {
 		super(name);
 		this.validateSelectedAttributes(selectedAttributes);
 

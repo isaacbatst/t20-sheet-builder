@@ -2,6 +2,7 @@ import {type Attributes} from '../../Sheet';
 import {Race} from '../Race';
 import {type RaceAbility} from '../RaceAbility';
 import {RaceName} from '../RaceName';
+import {type SerializedElf} from '../SerializedRace';
 import {ElvenSenses} from './ElvenSenses';
 import {GloriennGrace} from './GloriennGrace';
 import {MagicBlood} from './MagicBlood';
@@ -13,7 +14,7 @@ export class Elf extends Race {
 		constitution: -1,
 	};
 
-	static raceName = RaceName.elf;
+	static readonly raceName = RaceName.elf;
 	override attributeModifiers = Elf.attributeModifiers;
 
 	override abilities: Record<string, RaceAbility> = {
@@ -24,5 +25,11 @@ export class Elf extends Race {
 
 	constructor() {
 		super(RaceName.elf);
+	}
+
+	override serialize(): SerializedElf {
+		return {
+			name: Elf.raceName,
+		};
 	}
 }

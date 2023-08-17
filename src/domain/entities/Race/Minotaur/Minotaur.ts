@@ -2,6 +2,7 @@ import {type Attributes} from '../../Sheet';
 import {Race} from '../Race';
 import {type RaceAbility} from '../RaceAbility';
 import {RaceName} from '../RaceName';
+import {type SerializedMinotaur, type SerializedRace} from '../SerializedRace';
 import {FearOfHeights} from './FearOfHeights';
 import {Hornes} from './Hornes';
 import {Nose} from './Nose';
@@ -14,7 +15,7 @@ export class Minotaur extends Race {
 		wisdom: -1,
 	};
 
-	static raceName = RaceName.minotaur;
+	static readonly raceName = RaceName.minotaur;
 	override attributeModifiers = Minotaur.attributeModifiers;
 
 	override abilities: Record<string, RaceAbility> = {
@@ -26,5 +27,11 @@ export class Minotaur extends Race {
 
 	constructor() {
 		super(RaceName.minotaur);
+	}
+
+	override serialize(): SerializedMinotaur {
+		return {
+			name: Minotaur.raceName,
+		};
 	}
 }

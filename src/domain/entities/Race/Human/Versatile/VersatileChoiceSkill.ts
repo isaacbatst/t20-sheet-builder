@@ -2,6 +2,7 @@ import {TrainSkill} from '../../../Action/TrainSkill';
 import {type TransactionInterface} from '../../../Sheet/TransactionInterface';
 import type {SkillName} from '../../../Skill/SkillName';
 import type {TranslatableName} from '../../../Translator';
+import {type SerializedVersatileChoiceSkill} from '../../SerializedRace';
 import {VersatileChoice} from './VersatileChoice';
 
 export class VersatileChoiceSkill extends VersatileChoice {
@@ -17,5 +18,12 @@ export class VersatileChoiceSkill extends VersatileChoice {
 			},
 			transaction,
 		}));
+	}
+
+	override serialize(): SerializedVersatileChoiceSkill {
+		return {
+			name: this.skill,
+			type: 'skill',
+		};
 	}
 }

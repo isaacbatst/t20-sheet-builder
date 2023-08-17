@@ -2,13 +2,14 @@ import {type Attributes} from '../../Sheet';
 import {Race} from '../Race';
 import {type RaceAbility} from '../RaceAbility';
 import {RaceName} from '../RaceName';
+import {type SerializedGoblin} from '../SerializedRace';
 import {Ingenious} from './Ingenious';
 import {Jointer} from './Jointer';
 import {SlenderPlage} from './SlenderPlage';
 import {StreetRat} from './StreetRat';
 
 export class Goblin extends Race {
-	static raceName = RaceName.goblin;
+	static readonly raceName = RaceName.goblin;
 	static attributeModifiers: Partial<Attributes> = {
 		charisma: -1,
 		dexterity: 2,
@@ -27,5 +28,11 @@ export class Goblin extends Race {
 
 	constructor() {
 		super(RaceName.goblin);
+	}
+
+	override serialize(): SerializedGoblin {
+		return {
+			name: Goblin.raceName,
+		};
 	}
 }

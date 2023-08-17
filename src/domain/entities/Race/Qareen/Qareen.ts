@@ -3,6 +3,7 @@ import {type SpellName} from '../../Spell';
 import {Race} from '../Race';
 import {type RaceAbility} from '../RaceAbility';
 import {RaceName} from '../RaceName';
+import {type SerializedQareen} from '../SerializedRace';
 import {Desires} from './Desires/Desires';
 import {ElementalResistance} from './ElementalResistance/ElementalResistance';
 import {MysticTattoo} from './MysticTattoo/MysticTattoo';
@@ -15,10 +16,14 @@ export class Qareen extends Race {
 		wisdom: -1,
 	};
 
-	static raceName = RaceName.qareen;
+	static readonly raceName = RaceName.qareen;
 
 	override attributeModifiers: Partial<Attributes> = Qareen.attributeModifiers;
-	override abilities: Record<string, RaceAbility>;
+	override abilities: {
+		desires: Desires;
+		elementalResistance: ElementalResistance;
+		mysticTattoo: MysticTattoo;
+	};
 
 	constructor(readonly qareenType: QareenType, mysticTattooSpell: SpellName) {
 		super(Qareen.raceName);
@@ -26,6 +31,14 @@ export class Qareen extends Race {
 			desires: new Desires(),
 			elementalResistance: new ElementalResistance(this.qareenType),
 			mysticTattoo: new MysticTattoo(mysticTattooSpell),
+		};
+	}
+
+	override serialize(): SerializedQareen {
+		return {
+			name: Qareen.raceName,
+			mysticTattooSpell: this.abilities.mysticTattoo.spell,
+			qareenType: this.qareenType,
 		};
 	}
 }

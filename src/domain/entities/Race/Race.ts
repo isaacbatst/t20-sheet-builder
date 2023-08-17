@@ -5,6 +5,7 @@ import {type TransactionInterface} from '../Sheet/TransactionInterface';
 import type {RaceAbility} from './RaceAbility';
 import type {RaceInterface} from './RaceInterface';
 import type {RaceName} from './RaceName';
+import {type SerializedRace} from './SerializedRace';
 
 export abstract class Race implements RaceInterface {
 	abstract readonly attributeModifiers: Partial<Attributes>;
@@ -16,6 +17,8 @@ export abstract class Race implements RaceInterface {
 		this.applyAttributesModifiers(transaction);
 		this.applyAbilities(transaction);
 	}
+
+	abstract serialize(): SerializedRace;
 
 	private applyAttributesModifiers(transaction: TransactionInterface): void {
 		transaction.run(new ApplyRaceModifiers({
