@@ -138,6 +138,9 @@ export class Translator {
 		hornes: 'Chifres',
 		nose: 'Faro',
 		stiffLeather: 'Couro Rígido',
+		desires: 'Desejos',
+		elementalResistance: 'Resistência Elemental',
+		mysticTattoo: 'Tatuagem Mística',
 	};
 
 	private static readonly skillsTranslation: Record<SkillName, string> = {
@@ -196,6 +199,7 @@ export class Translator {
 		goblin: 'Goblin',
 		lefeu: 'Lefeu',
 		minotaur: 'Minotauro',
+		qareen: 'Qareen',
 	};
 
 	private static readonly rolesTranslation: Record<RoleName, string> = {
@@ -355,6 +359,12 @@ export class Translator {
 	private static readonly resistancesTranslation: Record<ResistanceName, string> = {
 		tormenta: 'Tormenta',
 		lefeu: 'Lefeu',
+		acid: 'Ácido',
+		cold: 'Frio',
+		darkness: 'Trevas',
+		electricity: 'Eletricidade',
+		fire: 'Fogo',
+		light: 'Luz',
 	};
 
 	private static readonly translation: Record<TranslatableName, string> = {

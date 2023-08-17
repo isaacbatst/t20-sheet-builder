@@ -20,4 +20,7 @@ export enum RaceAbilityName {
 	stiffLeather = 'stiffLeather',
 	nose = 'nose',
 	fearOfHeights = 'fearOfHeights',
+	desires = 'desires',
+	elementalResistance = 'elementalResistance',
+	mysticTattoo = 'mysticTattoo',
 }

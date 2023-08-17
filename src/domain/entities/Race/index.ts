@@ -5,6 +5,7 @@ export * from './Elf';
 export * from './Goblin';
 export * from './Minotaur';
 export * from './Lefeu';
+export * from './Qareen';
 export * from './RaceInterface';
 export * from './RaceName';
 export * from './Races';

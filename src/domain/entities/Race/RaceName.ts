@@ -6,4 +6,5 @@ export enum RaceName {
 	goblin = 'goblin',
 	lefeu = 'lefeu',
 	minotaur = 'minotaur',
+	qareen = 'qareen',
 }
