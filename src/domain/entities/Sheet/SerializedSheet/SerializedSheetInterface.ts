@@ -1,11 +1,11 @@
 import {type AbilityName, type AbilityType} from '../../Ability';
 import {type EquipmentName} from '../../Inventory';
 import {type ModifierType} from '../../Modifier';
-import {type OriginName, type SerializedOrigin} from '../../Origin';
+import {type SerializedOrigin} from '../../Origin';
 import {type GeneralPowerGroup, type GeneralPowerName, type OriginPowerName} from '../../Power';
 import {type GrantedPowerName} from '../../Power/GrantedPower/GrantedPowerName';
 import {type RaceAbilityName, type RaceName, type SerializedRace} from '../../Race';
-import {type SerializedRole, type RoleAbilityName, type RoleName, type RolePowerName} from '../../Role';
+import {type RoleAbilityName, type RoleName, type RolePowerName, type SerializedRole} from '../../Role';
 import {type SkillName} from '../../Skill';
 import {type LearnableSpellType, type SpellCircle, type SpellName, type SpellSchool, type SpellType} from '../../Spell';
 import {type TranslatableName} from '../../Translator';
@@ -156,7 +156,6 @@ export type SerializedSheetInterface = {
 	level: number;
 	lifePoints: SerializedSheetPoints;
 	manaPoints: SerializedSheetPoints;
-	origin: SerializedOrigin | undefined;
 	skills: SerializedSheetSkills;
 	tormentaPowersAttribute: Attribute;
 	learnedCircles:	SerializedSheetLearnedCircles;
@@ -172,6 +171,7 @@ export type SerializedSheetInterface = {
 	vision: Vision;
 	race: SerializedRace | undefined;
 	role: SerializedRole | undefined;
+	origin: SerializedOrigin | undefined;
 	proficiencies: Proficiency[];
 	displacement: number;
 	devotion: SerializedSheetDevotion;

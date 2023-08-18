@@ -16,7 +16,7 @@ export class Devotion {
 		private _choosedPowers: GrantedPower[],
 	) {}
 
-	serialize() {
+	serialize(): SerializedDevotion {
 		return {
 			deity: this.deity,
 			choosedPowers: this._choosedPowers.map(power => power.name),
