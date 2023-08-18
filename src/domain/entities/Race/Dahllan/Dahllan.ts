@@ -13,7 +13,7 @@ export class Dahllan extends Race {
 		intelligence: -1,
 	};
 
-	static raceName = RaceName.dahllan;
+	static readonly raceName = RaceName.dahllan;
 
 	override attributeModifiers = Dahllan.attributeModifiers;
 	override abilities: Record<string, RaceAbility> = {

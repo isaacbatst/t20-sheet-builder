@@ -1,3 +1,4 @@
+import {SheetBuilderError} from '../../../../errors';
 import {RoleSerializer} from '../../RoleSerializer';
 import {type Arcanist} from '../Arcanist';
 import {ArcanistPathMage, ArcanistPathSerializerMage, ArcanistPathSerializerSorcerer, ArcanistPathSerializerWizard, ArcanistPathSorcerer, ArcanistPathWizard, type ArcanistPath, type ArcanistPathSerializer} from '../ArcanistPath';
@@ -36,6 +37,6 @@ export class ArcanistSerializer extends RoleSerializer<SerializedArcanist> {
 			return new ArcanistPathSerializerWizard(path);
 		}
 
-		throw new Error('INVALID_PATH');
+		throw new SheetBuilderError('INVALID_PATH');
 	}
 }

@@ -1,21 +1,10 @@
-import {type SimpleWeapon, type Equipment} from '../../..';
-import {SheetBuilderError} from '../../../../../../errors';
 import {type SerializedSheetEquipment} from '../../../../../Sheet';
-import {EquipmentName} from '../../../EquipmentName';
-import {Club} from './Club';
-import {Dagger} from './Dagger';
+import {type SimpleWeapon} from './SimpleWeapon';
 import {type SimpleWeaponName} from './SimpleWeaponName';
+import {SimpleWeapons} from './SimpleWeapons';
 
 export class SimpleWeaponFactory {
 	static	makeFromSerialized(serialized: SerializedSheetEquipment<SimpleWeaponName>): SimpleWeapon {
-		if (serialized.name === EquipmentName.dagger) {
-			return new Dagger();
-		}
-
-		if (serialized.name === EquipmentName.club) {
-			return new Club();
-		}
-
-		throw new SheetBuilderError('UNKNOWN_SIMPLE_WEAPON');
+		return new (SimpleWeapons.getByName(serialized.name))();
 	}
 }

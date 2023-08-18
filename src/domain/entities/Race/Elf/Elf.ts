@@ -13,7 +13,7 @@ export class Elf extends Race {
 		constitution: -1,
 	};
 
-	static raceName = RaceName.elf;
+	static readonly raceName = RaceName.elf;
 	override attributeModifiers = Elf.attributeModifiers;
 
 	override abilities: Record<string, RaceAbility> = {

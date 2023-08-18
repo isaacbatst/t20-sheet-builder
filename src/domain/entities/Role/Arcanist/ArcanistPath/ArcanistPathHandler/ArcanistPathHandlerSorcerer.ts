@@ -1,3 +1,4 @@
+import {SheetBuilderError} from '../../../../../errors';
 import {type ArcanistPath, ArcanistPathName} from '../ArcanistPath';
 import {ArcanistLineageFactoryHandlerDraconic, ArcanistLineageFactoryHandlerFaerie, ArcanistLineageFactoryHandlerRed, ArcanistPathSorcerer} from '../ArcanistPathSorcerer';
 import {ArcanistPathHandler, type ArcanistPathHandlerRequest} from './ArcanistPathHandler';
@@ -5,7 +6,7 @@ import {ArcanistPathHandler, type ArcanistPathHandlerRequest} from './ArcanistPa
 export class ArcanistPathHandlerSorcerer extends ArcanistPathHandler {
 	public override handle(request: ArcanistPathHandlerRequest): ArcanistPath {
 		if (!request.sorcererLineage) {
-			throw new Error('MISSING_SORCERER_LINEAGE');
+			throw new SheetBuilderError('MISSING_SORCERER_LINEAGE');
 		}
 
 		const draconic = new ArcanistLineageFactoryHandlerDraconic();

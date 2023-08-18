@@ -18,4 +18,11 @@ export class Deformity extends RaceAbility {
 	addDeformity(choices: SkillName) {
 		this.effects.passive.default.addChoice(choices);
 	}
+
+	serializeChoices() {
+		return this.effects.passive.default.choices.map(choice => ({
+			type: 'skill' as const,
+			name: choice,
+		}));
+	}
 }

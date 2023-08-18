@@ -1,4 +1,5 @@
-import {type SerializedArcanistLineageDraconic, type SerializedArcanistLineage} from '../../../../SerializedArcanist';
+import {SheetBuilderError} from '../../../../../../../errors';
+import {type SerializedArcanistLineage, type SerializedArcanistLineageDraconic} from '../../../../SerializedArcanist';
 import {type ArcanistLineage} from '../ArcanistLineage';
 import {ArcanistLineageDraconic} from '../ArcanistLineageDraconic';
 import {ArcanistLineageType} from '../ArcanistLineageType';
@@ -7,7 +8,7 @@ import {ArcanistLineageSerializedHandler} from './ArcanistLineageSerializedHandl
 export class ArcanistLineageSerializedHandlerDraconic extends ArcanistLineageSerializedHandler<SerializedArcanistLineageDraconic> {
 	public override handle(request: SerializedArcanistLineageDraconic): ArcanistLineage {
 		if (!request.damageType) {
-			throw new Error('MISSING_SORCERER_LINEAGE_DRACONIC_DAMAGE_TYPE');
+			throw new SheetBuilderError('MISSING_SORCERER_LINEAGE_DRACONIC_DAMAGE_TYPE');
 		}
 
 		return new ArcanistLineageDraconic(request.damageType);

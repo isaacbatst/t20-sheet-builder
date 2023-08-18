@@ -12,23 +12,32 @@ import {type SimpleWeaponStatic} from './SimpleWeaponStatic';
 import {Sling} from './Sling';
 import {Spear} from './Spear';
 import {StaffStick} from './Staff';
+import {type SimpleWeaponName} from './SimpleWeaponName';
+import {Horns} from './Horns';
 
 export class SimpleWeapons {
+	static map: Record<SimpleWeaponName, SimpleWeaponStatic> = {
+		assegai: Assegai,
+		baton: Baton,
+		club: Club,
+		dagger: Dagger,
+		horns: Horns,
+		lightCrossbow: LightCrossbow,
+		mace: Mace,
+		pike: Pike,
+		scythe: Scythe,
+		shortbow: Shortbow,
+		shortSword: ShortSword,
+		sling: Sling,
+		spear: Spear,
+		staffStick: StaffStick,
+	};
+
 	static getAll(): SimpleWeaponStatic[] {
-		return [
-			Assegai,
-			Baton,
-			Club,
-			Dagger,
-			LightCrossbow,
-			Mace,
-			Pike,
-			Scythe,
-			Shortbow,
-			ShortSword,
-			Sling,
-			Spear,
-			StaffStick,
-		];
+		return Object.values(this.map);
+	}
+
+	static getByName(name: SimpleWeaponName): SimpleWeaponStatic {
+		return this.map[name];
 	}
 }

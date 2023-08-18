@@ -1,6 +1,7 @@
 import {type ContextInterface} from '../Context';
+import {type SerializedSheetModifiersList} from '../Sheet/SerializedSheet/SerializedSheetInterface';
 import {type SheetInterface} from '../Sheet/SheetInterface';
-import type {ModifierInterface, SerializedModifier} from './ModifierInterface';
+import type {ModifierInterface} from './ModifierInterface';
 import type {ModifiersListInterface, ModifiersListTotalCalculator} from './ModifiersListInterface';
 
 export abstract class ModifiersList<T extends ModifierInterface> implements ModifiersListInterface<T> {
@@ -18,5 +19,5 @@ export abstract class ModifiersList<T extends ModifierInterface> implements Modi
 		this.modifiers.splice(index, 1);
 	}
 
-	abstract serialize(sheet: SheetInterface, context: ContextInterface): SerializedModifier[];
+	abstract serialize(sheet: SheetInterface, context: ContextInterface): SerializedSheetModifiersList;
 }

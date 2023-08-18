@@ -1,8 +1,9 @@
+import {type ContextInterface, type TranslatableName} from '..';
+import {Resistance, type SerializedResistance} from '../Resistance/Resistance';
 import {type ResistanceName} from '../Resistance/ResistanceName';
-import {type SheetResistencesInterface} from './SheetResistencesInterface';
-import {Resistance} from '../Resistance/Resistance';
 import {type Attributes} from './Attributes';
-import {type TranslatableName} from '..';
+import {type SheetInterface} from './SheetInterface';
+import {type SerializedSheetResistencies, type SheetResistencesInterface} from './SheetResistencesInterface';
 
 export type SheetResistenciesType = Record<ResistanceName, Resistance>;
 
@@ -24,5 +25,17 @@ export class SheetResistences implements SheetResistencesInterface {
 
 	getResistances() {
 		return this.resistances;
+	}
+
+	serialize(sheet: SheetInterface, context: ContextInterface): SerializedSheetResistencies {
+		const serializedResistencies: Partial<Record<ResistanceName, SerializedResistance>> = {};
+
+		Object.values(this.resistances).forEach(resistance => {
+			serializedResistencies[resistance.resisted] = resistance.serialize(sheet, context);
+		});
+
+		return {
+			resistances: serializedResistencies,
+		};
 	}
 }

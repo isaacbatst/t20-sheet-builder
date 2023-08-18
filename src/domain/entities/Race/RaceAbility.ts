@@ -1,3 +1,4 @@
+import {type SerializedSheetRaceAbility} from '..';
 import type {AbilityInterface} from '../Ability/Ability';
 import {Ability} from '../Ability/Ability';
 import type {RaceAbilityName} from './RaceAbilityName';
@@ -11,5 +12,13 @@ export abstract class RaceAbility extends Ability implements RaceAbilityInterfac
 		override readonly name: RaceAbilityName,
 	) {
 		super(name, 'race');
+	}
+
+	serialize(): SerializedSheetRaceAbility {
+		return {
+			abilityType: this.abilityType,
+			effects: this.effects.serialize(),
+			name: this.name,
+		};
 	}
 }
