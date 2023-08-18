@@ -7,16 +7,13 @@ import {EquipmentName} from '../../Inventory/Equipment/EquipmentName';
 import {IronWill} from '../../Power/GeneralPower/DestinyPower/IronWill/IronWill';
 import {Medicine} from '../../Power/GeneralPower/DestinyPower/Medicine/Medicine';
 import {ChurchMember} from '../../Power/OriginPower/ChurchMember';
-import {SpecialFriend} from '../../Power/OriginPower/SpecialFriend';
 import {TransactionFake} from '../../Sheet/TransactionFake';
 import {SkillName} from '../../Skill/SkillName';
-import {Acolyte} from './Acolyte';
 import {OriginBenefitGeneralPower} from '../OriginBenefit/OriginBenefitGeneralPower';
 import {OriginBenefitOriginPower} from '../OriginBenefit/OriginBenefitOriginPower';
 import {OriginBenefitSkill} from '../OriginBenefit/OriginBenefitSkill';
 import {OriginName} from '../OriginName';
-import {type SerializedOriginBenefitsAcolyte} from '../OriginBenefit/SerializedOriginBenefit';
-import {type OriginBenefit} from '../OriginBenefit/OriginBenefit';
+import {Acolyte} from './Acolyte';
 
 describe('Acolyte', () => {
 	it('should dispatch add items', () => {

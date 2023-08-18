@@ -1,3 +1,4 @@
+import {type CharacterModifiers} from '../Character/CharacterModifiers';
 import {type Armor, type Equipment, type EquipmentName, type MartialWeapon, type SimpleWeapon} from '../Inventory/Equipment';
 import {type InventoryEquipment} from '../Inventory/InventoryEquipment';
 import {type RoleInterface} from '../Role';
@@ -11,11 +12,17 @@ export type AddInitialEquipmentParams = {
 	money: number;
 };
 
+export type ToggleEquippedItemParams = {
+	name: EquipmentName;
+	modifiers: CharacterModifiers;
+	maxWieldedItems: number;
+};
+
 export type SheetInventoryInterface = {
 	addEquipment(equipment: Equipment): void;
 	addInitialEquipment(params: AddInitialEquipmentParams, transaction: TransactionInterface): void;
 	addMoney(quantity: number): void;
-	toggleEquippedItem(name: EquipmentName): void;
+	toggleEquippedItem({maxWieldedItems, modifiers, name}: ToggleEquippedItemParams): void;
 	removeMoney(amount: number): void;
 	getMoney(): number;
 

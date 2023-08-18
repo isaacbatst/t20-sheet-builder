@@ -6,6 +6,11 @@ import type {Critical} from '../../../../Attack/Critical';
 export abstract class OffensiveWeapon extends Weapon {
 	abstract readonly damage: DiceRoll;
 	abstract readonly critical: Critical;
+
+	get isWieldable(): boolean {
+		return true;
+	}
+
 	get type(): WeaponType {
 		return 'offensive';
 	}

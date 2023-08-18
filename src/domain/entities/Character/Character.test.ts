@@ -2,11 +2,12 @@ import {WeaponAttack} from '../Attack/WeaponAttack';
 import type {ContextInterface} from '../Context/ContextInterface';
 import {InGameContextFake} from '../Context/InGameContextFake';
 import {Dagger, EquipmentName, LeatherArmor, LongSword} from '../Inventory';
+import {FixedModifiersListTotalCalculator} from '../Modifier';
 import {ContextualModifiersListTotalCalculator} from '../Modifier/ContextualModifier/ContextualModifiersListTotalCalculator';
 import {Acolyte, OriginBenefitGeneralPower, OriginBenefitSkill} from '../Origin';
-import type {Origin, OriginInterface} from '../Origin/Origin';
+import type {OriginInterface} from '../Origin/Origin';
 import {IronWill, OneWeaponStyle} from '../Power';
-import {Human, type VersatileChoice, VersatileChoicePower, VersatileChoiceSkill} from '../Race';
+import {Human, VersatileChoicePower, VersatileChoiceSkill, type VersatileChoice} from '../Race';
 import type {Race} from '../Race/Race';
 import {Warrior} from '../Role';
 import type {Role} from '../Role/Role';
@@ -55,10 +56,17 @@ describe('Character', () => {
 
 	it('should toggle wield item', () => {
 		expect(character.getWieldedItems()).toEqual([]);
-		character.toggleWieldItem(EquipmentName.dagger);
+		character.toggleEquipItem(EquipmentName.dagger);
 		expect(character.getWieldedItems()).toEqual([EquipmentName.dagger]);
-		character.toggleWieldItem(EquipmentName.dagger);
+		character.toggleEquipItem(EquipmentName.dagger);
 		expect(character.getWieldedItems()).toEqual([]);
+	});
+
+	it('should have armor defense modifier', () => {
+		character.toggleEquipItem(EquipmentName.leatherArmor);
+		expect(character.modifiers.defense.fixed.get(EquipmentName.leatherArmor)).toBeTruthy();
+		const calculator = new FixedModifiersListTotalCalculator(character.getAttributes());
+		expect(character.modifiers.defense.fixed.getTotal(calculator)).toBe(2);
 	});
 
 	describe('Attack', () => {
@@ -86,7 +94,7 @@ describe('Character', () => {
 		});
 
 		it('should get dagger attack with one weapon style modifier', () => {
-			character.toggleWieldItem(EquipmentName.dagger);
+			character.toggleEquipItem(EquipmentName.dagger);
 			expect(dagger.modifiers.contextual.getMaxTotal(attributes)).toBe(2);
 			expect(dagger.modifiers.contextual.getTotal(totalCalculator)).toBe(2);
 		});

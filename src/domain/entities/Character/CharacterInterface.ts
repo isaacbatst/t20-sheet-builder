@@ -8,11 +8,10 @@ export type CharacterInterface = {
 	selectFightStyle(fightStyle: FightStyle): void;
 	unselectFightStyle(): void;
 
-	toggleWieldItem(name: EquipmentName): void;
-
 	getAttributes(): Attributes;
 	getAttacks(): Map<EquipmentName, CharacterAttack>;
 
+	toggleEquipItem(name: EquipmentName): void;
 	getWieldedItems(): EquipmentName[];
 
 	getFightStyle(): CharacterAppliedFightStyle | undefined;

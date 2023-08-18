@@ -134,7 +134,7 @@ describe('Sheet', () => {
 			expect(sheet.getSheetInventory().getEquipments().has(EquipmentName.travelerCostume)).toBeTruthy();
 		});
 
-		it('should have chosen weapo', () => {
+		it('should have chosen weapon', () => {
 			expect(sheet.getSheetInventory().getEquipments().has(EquipmentName.dagger)).toBeTruthy();
 		});
 
@@ -143,7 +143,8 @@ describe('Sheet', () => {
 		});
 
 		it('should have chosen armor', () => {
-			expect(sheet.getSheetInventory().getEquipments().has(EquipmentName.leatherArmor)).toBeTruthy();
+			const armor = sheet.getSheetInventory().getEquipments().get(EquipmentName.leatherArmor);
+			expect(armor).toBeTruthy();
 		});
 
 		it('should have initial money', () => {

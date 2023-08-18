@@ -1,3 +1,4 @@
+import {type TranslatableName} from '..';
 import {type ContextInterface} from '../Context';
 import {type SerializedSheetModifiersList} from '../Sheet/SerializedSheet/SerializedSheetInterface';
 import {type SheetInterface} from '../Sheet/SheetInterface';
@@ -17,6 +18,10 @@ export abstract class ModifiersList<T extends ModifierInterface> implements Modi
 
 	remove(index: number): void {
 		this.modifiers.splice(index, 1);
+	}
+
+	get(source: TranslatableName): ModifierInterface | undefined {
+		return this.modifiers.find(modifier => modifier.source === source);
 	}
 
 	abstract serialize(sheet: SheetInterface, context: ContextInterface): SerializedSheetModifiersList;
