@@ -4,7 +4,7 @@ import {type ModifierType} from '../../Modifier';
 import {type OriginName} from '../../Origin';
 import {type GeneralPowerGroup, type GeneralPowerName, type OriginPowerName} from '../../Power';
 import {type GrantedPowerName} from '../../Power/GrantedPower/GrantedPowerName';
-import {type SerializedRace, type RaceAbilityName, type RaceName} from '../../Race';
+import {type RaceAbilityName, type RaceName, type SerializedRace} from '../../Race';
 import {type RoleAbilityName, type RoleName, type RolePowerName} from '../../Role';
 import {type SkillName} from '../../Skill';
 import {type LearnableSpellType, type SpellCircle, type SpellName, type SpellSchool, type SpellType} from '../../Spell';
@@ -12,6 +12,7 @@ import {type TranslatableName} from '../../Translator';
 import {type Attribute, type Attributes} from '../Attributes';
 import {type Proficiency} from '../Proficiency';
 import {type SerializedSheetDevotion} from '../SheetDevotion';
+import {type SerializedSheetResistencies} from '../SheetResistencesInterface';
 import {type Vision} from '../Vision';
 
 export type SerializedSheetEquipment<T extends EquipmentName = EquipmentName> = {
@@ -34,6 +35,7 @@ export type SerializedSheetModifier = {
 	baseValue: number;
 	appliableValue: number;
 	attributeBonuses: Attribute[];
+	totalAttributeBonuses: number;
 };
 
 export type SerializedSheetModifiersList = {
@@ -176,5 +178,6 @@ export type SerializedSheetInterface = {
 	proficiencies: Proficiency[];
 	displacement: number;
 	devotion: SerializedSheetDevotion;
+	resistencies: SerializedSheetResistencies;
 };
 

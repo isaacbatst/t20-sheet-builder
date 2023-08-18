@@ -30,14 +30,14 @@ export abstract class Modifier implements ModifierInterface {
 		return this.attributeBonuses.reduce((acc, attribute) => attributes[attribute] + acc, 0);
 	}
 
-	serialize(appliableValueCalculator: ModifierAppliableValueCalculatorInterface, attributeBonuses: Attributes): SerializedModifier {
+	serialize(appliableValueCalculator: ModifierAppliableValueCalculatorInterface, attributes: Attributes): SerializedModifier {
 		return {
 			source: this.source,
 			type: this.type,
 			attributeBonuses: this.attributeBonuses,
 			baseValue: this.baseValue,
 			appliableValue: this.getAppliableValue(appliableValueCalculator),
-			totalAttributeBonuses: this.getTotalAttributeBonuses(attributeBonuses),
+			totalAttributeBonuses: this.getTotalAttributeBonuses(attributes),
 		};
 	}
 }
