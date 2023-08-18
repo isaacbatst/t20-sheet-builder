@@ -33,6 +33,7 @@ export abstract class Role<
 			startsWithArmor: role.startsWithArmor,
 			totalInitialSkills: role.getTotalInitialSkills(),
 			name: role.name,
+			chosenSkills: role.chosenSkills,
 		};
 	}
 

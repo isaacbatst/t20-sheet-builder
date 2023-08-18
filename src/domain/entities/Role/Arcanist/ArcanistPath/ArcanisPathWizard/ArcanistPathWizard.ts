@@ -29,7 +29,7 @@ export class ArcanistPathWizard extends ArcanistPath {
 		return this.effects.passive.focus.focus;
 	}
 
-	override serialize(): SerializedArcanistPath {
+	override serializePath(): SerializedArcanistPath {
 		return {
 			name: this.pathName,
 			focus: this.focus.equipment.name,

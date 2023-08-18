@@ -16,7 +16,7 @@ export class ArcanistPathSorcerer extends ArcanistPath {
 		this.effects = new AbilityEffects(lineage.effects.basic);
 	}
 
-	override serialize(): SerializedArcanistPath {
+	override serializePath(): SerializedArcanistPath {
 		return {
 			name: this.pathName,
 			lineage: this.lineage.serialize(),

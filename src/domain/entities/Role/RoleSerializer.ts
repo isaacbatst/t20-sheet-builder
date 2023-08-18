@@ -1,17 +1,16 @@
 import {type RoleInterface} from './RoleInterface';
-import {type SerializedRoles, type SerializedRole} from './SerializedRole';
+import {type SerializedRole, type SerializedRoles} from './SerializedRole';
 
+/**
+* @deprecated Use `role.serialize()` instead
+*/
 export abstract class RoleSerializer<S extends SerializedRoles> {
-	constructor(readonly role: RoleInterface) {}
+	constructor(readonly role: RoleInterface<S>) {}
 
 	serialize(): SerializedRole<S> {
-		const role = this.serializeRole();
+		const serialized = this.role.serialize();
 
-		return {
-			...role,
-			chosenSkills: this.role.chosenSkills,
-			name: this.role.name,
-		};
+		return serialized;
 	}
 
 	protected abstract serializeRole(): S;

@@ -16,6 +16,7 @@ export type SerializedRoleBasic = {
 	lifePointsPerLevel: number;
 	manaPerLevel: number;
 	mandatorySkills: SkillName[];
+	chosenSkills: SkillName[];
 	selectSkillGroups: Array<{skills: SkillName[]; amount: number}>;
 	proficiencies: Proficiency[];
 	name: RoleName;

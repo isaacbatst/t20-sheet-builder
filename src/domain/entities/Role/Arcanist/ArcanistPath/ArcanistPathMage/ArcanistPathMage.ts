@@ -25,7 +25,7 @@ export class ArcanistPathMage extends ArcanistPath {
 		return this.effects.passive.extraSpell.spell;
 	}
 
-	override serialize(): SerializedArcanistPath {
+	override serializePath(): SerializedArcanistPath {
 		return {
 			name: this.pathName,
 			extraSpell: this.getExtraSpell().name,
