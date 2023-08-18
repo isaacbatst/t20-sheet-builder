@@ -295,6 +295,8 @@ export class Translator {
 		handAndaHalfSword: 'Montante',
 		longBow: 'Arco Longo',
 		heavyCrossbow: 'Besta Pesada',
+		heavyShield: 'Escudo Pesado',
+		lightShield: 'Escudo Leve',
 	};
 
 	private static readonly arcanistPathsTranslation: Record<ArcanistPathName, string> = {

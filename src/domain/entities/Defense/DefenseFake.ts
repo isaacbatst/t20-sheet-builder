@@ -1,13 +1,13 @@
-import type {Attributes} from '../Sheet/Attributes';
-import type {FixedModifiersList} from '../Modifier/FixedModifier/FixedModifiersList';
+import type {FixedModifiersListInterface} from '../Modifier/FixedModifier/FixedModifiersList';
 import {FixedModifiersListFake} from '../Modifier/FixedModifier/FixedModifiersListFake';
-import type {DefenseInterface} from './DefenseInterface';
 import {type ModifierInterface} from '../Modifier/ModifierInterface';
+import type {Attributes} from '../Sheet/Attributes';
+import type {DefenseInterface} from './DefenseInterface';
 
 export class DefenseFake implements DefenseInterface {
 	attribute: keyof Attributes = 'dexterity';
 	total = 10;
-	fixedModifiers: FixedModifiersList = new FixedModifiersListFake();
+	fixedModifiers: FixedModifiersListInterface = new FixedModifiersListFake();
 	getTotal() {
 		return this.total;
 	}

@@ -1,4 +1,3 @@
-import {type Character} from '../Character';
 import type {EquipmentName} from './Equipment';
 import type {Equipment} from './Equipment/Equipment';
 import {InventoryEquipment} from './InventoryEquipment';
@@ -9,14 +8,6 @@ export class Inventory {
 
 	addEquipment(equipment: Equipment) {
 		this.equipments.set(equipment.name, new InventoryEquipment(equipment));
-	}
-
-	toggleEquippedItem(name: EquipmentName, character: Character) {
-		const item = this.equipments.get(name);
-
-		if (item) {
-			item.toggleEquipped(character);
-		}
 	}
 
 	addMoney(amount: number) {

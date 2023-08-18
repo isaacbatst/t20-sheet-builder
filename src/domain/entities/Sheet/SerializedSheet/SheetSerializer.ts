@@ -2,7 +2,7 @@ import {type AbilityEffectsInterface} from '../../Ability';
 import {type BuildStepInterface} from '../../BuildStep';
 import {type ContextInterface} from '../../Context/ContextInterface';
 import {DefenseTotalCalculatorFactory} from '../../Defense/DefenseTotalCalculatorFactory';
-import {ContextualModifierAppliableValueCalculator, type ContextualModifiersList, ContextualModifiersListTotalCalculator, type FixedModifiersListInterface, type PerLevelModifiersList} from '../../Modifier';
+import {type PerLevelModifiersListInterface, type ContextualModifiersList, type FixedModifiersListInterface} from '../../Modifier';
 import {type RaceInterface, type SerializedRace} from '../../Race';
 import {type RoleInterface} from '../../Role';
 import {type RoleAbility} from '../../Role/RoleAbility';
@@ -249,7 +249,7 @@ export class SheetSerializer {
 		return list.serialize(sheet, this.context);
 	}
 
-	private serializePerLevelModifiersList(list: PerLevelModifiersList, sheet: SheetInterface): SerializedSheetPerLevelModifiersList {
+	private serializePerLevelModifiersList(list: PerLevelModifiersListInterface, sheet: SheetInterface): SerializedSheetPerLevelModifiersList {
 		return list.serialize(sheet, this.context);
 	}
 
