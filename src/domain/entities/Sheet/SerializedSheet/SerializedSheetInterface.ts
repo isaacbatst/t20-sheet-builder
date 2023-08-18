@@ -1,7 +1,7 @@
 import {type AbilityName, type AbilityType} from '../../Ability';
 import {type EquipmentName} from '../../Inventory';
 import {type ModifierType} from '../../Modifier';
-import {type OriginName} from '../../Origin';
+import {type OriginName, type SerializedOrigin} from '../../Origin';
 import {type GeneralPowerGroup, type GeneralPowerName, type OriginPowerName} from '../../Power';
 import {type GrantedPowerName} from '../../Power/GrantedPower/GrantedPowerName';
 import {type RaceAbilityName, type RaceName} from '../../Race';
@@ -154,7 +154,7 @@ export type SerializedSheetInterface = {
 	level: number;
 	lifePoints: SerializedSheetPoints;
 	manaPoints: SerializedSheetPoints;
-	origin: SerializedSheetOrigin | undefined;
+	origin: SerializedOrigin | undefined;
 	skills: SerializedSheetSkills;
 	tormentaPowersAttribute: Attribute;
 	learnedCircles:	SerializedSheetLearnedCircles;
