@@ -4,6 +4,9 @@ import {type Arcanist} from '../Arcanist';
 import {ArcanistPathMage, ArcanistPathSerializerMage, ArcanistPathSerializerSorcerer, ArcanistPathSerializerWizard, ArcanistPathSorcerer, ArcanistPathWizard, type ArcanistPath, type ArcanistPathSerializer} from '../ArcanistPath';
 import {type SerializedArcanist} from '../SerializedArcanist';
 
+/**
+* @deprecated Use `arcanist.serialize()` instead
+*/
 export class ArcanistSerializer extends RoleSerializer<SerializedArcanist> {
 	private readonly pathSerializer: ArcanistPathSerializer;
 
@@ -19,7 +22,7 @@ export class ArcanistSerializer extends RoleSerializer<SerializedArcanist> {
 
 		return {
 			name: this.arcanist.name,
-			spells: this.arcanist.getInitialSpells().map(spell => spell.name),
+			initialSpells: this.arcanist.getInitialSpells().map(spell => spell.name),
 			path,
 		};
 	}

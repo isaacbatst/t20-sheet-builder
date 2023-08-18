@@ -10,7 +10,7 @@ export type SerializedArcanist<
 	P = SerializedArcanistPath> = {
 		name: RoleName.arcanist;
 		path: P;
-		spells: SpellName[];
+		initialSpells: SpellName[];
 	};
 
 export type SerializedArcanistMage = {

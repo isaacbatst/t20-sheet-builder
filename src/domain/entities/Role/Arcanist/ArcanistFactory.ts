@@ -49,6 +49,6 @@ export class ArcanistFactory {
 		return ArcanistBuilder
 			.chooseSkills(serialized.chosenSkills)
 			.choosePath(sorcerer.execute(serialized.path))
-			.chooseSpells(serialized.spells.map(spellName => SpellFactory.make(spellName)));
+			.chooseSpells(serialized.initialSpells.map(spellName => SpellFactory.make(spellName)));
 	}
 }

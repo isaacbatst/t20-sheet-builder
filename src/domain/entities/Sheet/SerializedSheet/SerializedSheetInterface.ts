@@ -5,7 +5,7 @@ import {type OriginName, type SerializedOrigin} from '../../Origin';
 import {type GeneralPowerGroup, type GeneralPowerName, type OriginPowerName} from '../../Power';
 import {type GrantedPowerName} from '../../Power/GrantedPower/GrantedPowerName';
 import {type RaceAbilityName, type RaceName, type SerializedRace} from '../../Race';
-import {type RoleAbilityName, type RoleName, type RolePowerName} from '../../Role';
+import {type SerializedRole, type RoleAbilityName, type RoleName, type RolePowerName} from '../../Role';
 import {type SkillName} from '../../Skill';
 import {type LearnableSpellType, type SpellCircle, type SpellName, type SpellSchool, type SpellType} from '../../Spell';
 import {type TranslatableName} from '../../Translator';
@@ -21,12 +21,6 @@ export type SerializedSheetEquipment<T extends EquipmentName = EquipmentName> = 
 
 export type SerializedSheetOriginBenefit = {
 	name: SkillName | GeneralPowerName | OriginPowerName;
-};
-
-export type SerializedSheetOrigin = {
-	name: OriginName;
-	equipments: SerializedSheetEquipment[];
-	chosenBenefits: SerializedSheetOriginBenefit[];
 };
 
 export type SerializedSheetModifier = {
@@ -125,6 +119,9 @@ export type SerializedSheetRace = {
 	abilities: SerializedSheetRaceAbility[];
 };
 
+/**
+ * @deprecated Use "SerializedRole" instead
+ */
 export type SerializedSheetRole = {
 	initialLifePoints: number;
 	lifePointsPerLevel: number;
@@ -174,7 +171,7 @@ export type SerializedSheetInterface = {
 	defense: SerializedSheetDefense;
 	vision: Vision;
 	race: SerializedRace | undefined;
-	role: SerializedSheetRole | undefined;
+	role: SerializedRole | undefined;
 	proficiencies: Proficiency[];
 	displacement: number;
 	devotion: SerializedSheetDevotion;

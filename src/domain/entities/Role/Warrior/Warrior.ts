@@ -1,3 +1,4 @@
+import {type SerializedRole} from '../..';
 import {Level} from '../../Sheet/Level';
 import {Proficiency} from '../../Sheet/Proficiency';
 import {SkillName} from '../../Skill/SkillName';
@@ -56,5 +57,12 @@ export class Warrior extends Role {
 
 	constructor(chosenSkills: SkillName[]) {
 		super(chosenSkills, Warrior.selectSkillGroups);
+	}
+
+	override serialize(): SerializedRole {
+		return {
+			...Role.serializeBasic(this),
+			name: Warrior.roleName,
+		};
 	}
 }

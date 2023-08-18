@@ -1,3 +1,4 @@
+import {type SerializedArcanist, type SerializedRole} from '../..';
 import type {Attribute} from '../../Sheet/Attributes';
 import {Level} from '../../Sheet/Level';
 import type {Proficiency} from '../../Sheet/Proficiency';
@@ -93,6 +94,15 @@ export class Arcanist<T extends ArcanistPath = ArcanistPath> extends Role {
 			[Level.eight]: {},
 			[Level.nine]: {},
 			[Level.ten]: {},
+		};
+	}
+
+	override serialize(): SerializedRole<SerializedArcanist> {
+		return {
+			...Role.serializeBasic(this),
+			name: Arcanist.roleName,
+			path: this.getPath().serializePath(),
+			initialSpells: this.getInitialSpells().map(spell => spell.name),
 		};
 	}
 

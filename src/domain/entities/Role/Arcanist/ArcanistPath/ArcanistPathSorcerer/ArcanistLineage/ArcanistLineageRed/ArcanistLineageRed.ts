@@ -2,6 +2,7 @@ import {AbilityEffects, type AbilityEffectsInterface} from '../../../../../../Ab
 import {type AbilityLevel} from '../../../../../../Ability/AbilityLevel';
 import {type TormentaPower} from '../../../../../../Power/GeneralPower/TormentaPower/TormentaPower';
 import {type Attribute} from '../../../../../../Sheet';
+import {type SerializedArcanistLineage} from '../../../../SerializedArcanist';
 import {ArcanistLineage} from '../ArcanistLineage';
 import {ArcanistLineageType} from '../ArcanistLineageType';
 import {ArcanistLineageRedCustomTormentaPowersAttributeEffect} from './ArcanistLineageRedCustomTormentaPowersAttributeEffect';
@@ -38,5 +39,13 @@ export class ArcanistLineageRed extends ArcanistLineage {
 
 	getCustomTormentaPowersAttribute(): Attribute {
 		return this.effects.basic.passive.customTormentaPowersAttribute.attribute;
+	}
+
+	override serialize(): SerializedArcanistLineage {
+		return {
+			type: this.type,
+			extraPower: this.getExtraPower().name,
+			customTormentaAttribute: this.getCustomTormentaPowersAttribute(),
+		};
 	}
 }

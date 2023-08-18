@@ -1,3 +1,4 @@
+import {type SerializedSheetRoleAbility} from '..';
 import type {AbilityInterface} from '../Ability/Ability';
 import {Ability} from '../Ability/Ability';
 import type {RoleAbilityName} from './RoleAbilityName';
@@ -11,5 +12,13 @@ export abstract class RoleAbility extends Ability implements RoleAbilityInterfac
 		override readonly name: RoleAbilityName,
 	) {
 		super(name, 'role');
+	}
+
+	serialize(): SerializedSheetRoleAbility	{
+		return {
+			effects: this.effects.serialize(),
+			name: this.name,
+			abilityType: 'role',
+		};
 	}
 }

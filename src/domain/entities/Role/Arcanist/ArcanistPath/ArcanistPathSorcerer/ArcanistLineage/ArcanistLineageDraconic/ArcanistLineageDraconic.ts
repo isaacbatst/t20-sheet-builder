@@ -1,5 +1,6 @@
 import {AbilityEffects, type AbilityEffectsInterface} from '../../../../../../Ability/AbilityEffects';
 import {type AbilityLevel} from '../../../../../../Ability/AbilityLevel';
+import {type SerializedArcanistLineage} from '../../../../SerializedArcanist';
 import {ArcanistLineage} from '../ArcanistLineage';
 import {ArcanistLineageType} from '../ArcanistLineageType';
 import {ArcanistLineageDraconicCharismaBonusEffect} from './ArcanistLineageDraconicCharismaBonusEffect';
@@ -39,5 +40,12 @@ export class ArcanistLineageDraconic extends ArcanistLineage {
 
 	getDamageType(): ArcanistLineageDraconicDamageType {
 		return this.effects.basic.passive.damageReduction.damageType;
+	}
+
+	override serialize(): SerializedArcanistLineage {
+		return {
+			type: this.type,
+			damageType: this.getDamageType(),
+		};
 	}
 }

@@ -38,7 +38,7 @@ export class SheetSerializer {
 			defense: this.serializeDefense(sheet.getSheetDefense(), sheet),
 			money: sheet.getSheetInventory().getMoney(),
 			race: race ? this.serializeRace(race) : undefined,
-			role: role ? this.serializeRole(role) : undefined,
+			role: role ? role.serialize() : undefined,
 			origin: origin ? origin.serialize() : undefined,
 			lifePoints: this.serializePoints(sheet.getSheetLifePoints(), sheet),
 			manaPoints: this.serializePoints(sheet.getSheetManaPoints(), sheet),

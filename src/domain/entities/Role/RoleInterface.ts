@@ -4,6 +4,7 @@ import {type TransactionInterface} from '../Sheet/TransactionInterface';
 import type {SkillName} from '../Skill/SkillName';
 import {type RoleAbility} from './RoleAbility';
 import type {RoleName} from './RoleName';
+import {type SerializedRole} from './SerializedRole';
 
 export type SelectSkillGroup = {skills: SkillName[]; amount: number};
 
@@ -20,4 +21,5 @@ export type RoleInterface = {
 	chosenSkills: SkillName[];
 	getTotalInitialSkills(): number;
 	addToSheet(transaction: TransactionInterface): void;
+	serialize(): SerializedRole;
 };
