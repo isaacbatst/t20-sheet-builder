@@ -1,4 +1,4 @@
-import {type SerializedRoleBasic, type SerializedRole} from '..';
+import {type SerializedRoleBasic, type SerializedRole, type SerializedRoles} from '..';
 import {SheetBuilderError} from '../../errors/SheetBuilderError';
 import {AddFixedModifierToLifePoints} from '../Action/AddFixedModifierToLifePoints';
 import {AddPerLevelModifierToLifePoints} from '../Action/AddPerLevelModifierToLifePoints';
@@ -16,7 +16,9 @@ import type {RoleAbility} from './RoleAbility';
 import type {RoleInterface, SelectSkillGroup} from './RoleInterface';
 import type {RoleName} from './RoleName';
 
-export abstract class Role implements RoleInterface {
+export abstract class Role<
+	S extends SerializedRoles = SerializedRoles,
+> implements RoleInterface<S> {
 	static serializeBasic(role: Role): SerializedRoleBasic {
 		return {
 			abilities: Object.values(role.abilitiesPerLevel)
@@ -84,7 +86,14 @@ export abstract class Role implements RoleInterface {
 		return this.mandatorySkills.length + this.selectSkillGroups.reduce((acc, curr) => curr.amount + acc, 0);
 	}
 
-	abstract serialize(): SerializedRole;
+	serialize(): SerializedRole<S> {
+		return {
+			...Role.serializeBasic(this),
+			...this.serializeSpecific(),
+		};
+	}
+
+	protected abstract serializeSpecific(): S;
 
 	private addLifePointsModifiers(transaction: TransactionInterface) {
 		transaction.run(new AddFixedModifierToLifePoints({

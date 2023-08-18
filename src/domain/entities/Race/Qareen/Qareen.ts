@@ -33,7 +33,7 @@ export class Qareen extends Race<SerializedQareen> {
 		};
 	}
 
-	override serializeSpecific(): SerializedQareen {
+	protected override serializeSpecific(): SerializedQareen {
 		return {
 			name: Qareen.raceName,
 			mysticTattooSpell: this.abilities.mysticTattoo.spell,

@@ -30,7 +30,7 @@ export class Dwarf extends Race<SerializedDwarf> {
 		super(RaceName.dwarf);
 	}
 
-	override serializeSpecific(): SerializedDwarf {
+	protected override serializeSpecific(): SerializedDwarf {
 		return {
 			name: Dwarf.raceName,
 		};

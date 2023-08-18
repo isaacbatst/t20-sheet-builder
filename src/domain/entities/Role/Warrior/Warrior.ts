@@ -1,4 +1,4 @@
-import {type SerializedRole} from '../..';
+import {type SerializedWarrior} from '../..';
 import {Level} from '../../Sheet/Level';
 import {Proficiency} from '../../Sheet/Proficiency';
 import {SkillName} from '../../Skill/SkillName';
@@ -8,7 +8,7 @@ import type {SelectSkillGroup} from '../RoleInterface';
 import {RoleName} from '../RoleName';
 import {SpecialAttack} from './SpecialAttack/SpecialAttack';
 
-export class Warrior extends Role {
+export class Warrior extends Role<SerializedWarrior> {
 	static readonly roleName = RoleName.warrior;
 	static readonly selectSkillGroups: SelectSkillGroup[] = [
 		{amount: 1, skills: [SkillName.fight, SkillName.aim]},
@@ -59,9 +59,8 @@ export class Warrior extends Role {
 		super(chosenSkills, Warrior.selectSkillGroups);
 	}
 
-	override serialize(): SerializedRole {
+	protected override serializeSpecific(): SerializedWarrior {
 		return {
-			...Role.serializeBasic(this),
 			name: Warrior.roleName,
 		};
 	}

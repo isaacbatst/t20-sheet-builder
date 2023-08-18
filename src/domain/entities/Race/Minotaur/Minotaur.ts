@@ -29,7 +29,7 @@ export class Minotaur extends Race<SerializedMinotaur> {
 		super(RaceName.minotaur);
 	}
 
-	override serializeSpecific(): SerializedMinotaur {
+	protected override serializeSpecific(): SerializedMinotaur {
 		return {
 			name: Minotaur.raceName,
 		};

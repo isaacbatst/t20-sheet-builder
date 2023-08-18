@@ -50,7 +50,7 @@ export class Lefeu extends SelectableAttributesRace<SerializedLefeu> {
 		return this.previousRace;
 	}
 
-	override serializeSpecific(): SerializedLefeu {
+	protected override serializeSpecific(): SerializedLefeu {
 		return {
 			name: Lefeu.raceName,
 			selectedAttributes: this.selectedAttributes,

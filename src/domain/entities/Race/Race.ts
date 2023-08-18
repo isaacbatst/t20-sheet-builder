@@ -35,7 +35,7 @@ export abstract class Race<
 		};
 	}
 
-	abstract serializeSpecific(): S;
+	protected abstract serializeSpecific(): S;
 
 	private applyAttributesModifiers(transaction: TransactionInterface): void {
 		transaction.run(new ApplyRaceModifiers({

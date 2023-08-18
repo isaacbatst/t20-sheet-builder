@@ -1,4 +1,4 @@
-import {type SerializedArcanist, type SerializedRole} from '../..';
+import {type SerializedArcanist} from '../..';
 import type {Attribute} from '../../Sheet/Attributes';
 import {Level} from '../../Sheet/Level';
 import type {Proficiency} from '../../Sheet/Proficiency';
@@ -12,7 +12,9 @@ import type {SpellLearnFrequency} from '../SpellsAbility';
 import type {ArcanistPath} from './ArcanistPath/ArcanistPath';
 import {ArcanistSpells} from './ArcanistSpells/ArcanistSpells';
 
-export class Arcanist<T extends ArcanistPath = ArcanistPath> extends Role {
+export class Arcanist<T extends ArcanistPath = ArcanistPath> extends Role<
+SerializedArcanist
+> {
 	static readonly roleName = RoleName.arcanist;
 	static readonly selectSkillGroups: SelectSkillGroup[] = [
 		{
@@ -97,15 +99,6 @@ export class Arcanist<T extends ArcanistPath = ArcanistPath> extends Role {
 		};
 	}
 
-	override serialize(): SerializedRole<SerializedArcanist> {
-		return {
-			...Role.serializeBasic(this),
-			name: Arcanist.roleName,
-			path: this.getPath().serializePath(),
-			initialSpells: this.getInitialSpells().map(spell => spell.name),
-		};
-	}
-
 	getSpellsAttribute(): Attribute {
 		return this.abilitiesPerLevel[Level.one].arcanistPath.spellsAttribute;
 	}
@@ -120,5 +113,13 @@ export class Arcanist<T extends ArcanistPath = ArcanistPath> extends Role {
 
 	getInitialSpells(): Spell[] {
 		return this.abilitiesPerLevel[Level.one].arcanistSpells.effects.passive.default.spells;
+	}
+
+	protected override serializeSpecific(): SerializedArcanist {
+		return {
+			name: Arcanist.roleName,
+			path: this.getPath().serializePath(),
+			initialSpells: this.getInitialSpells().map(spell => spell.name),
+		};
 	}
 }

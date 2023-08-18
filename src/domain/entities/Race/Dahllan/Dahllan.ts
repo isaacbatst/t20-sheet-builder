@@ -27,7 +27,7 @@ export class Dahllan extends Race<SerializedDahllan> {
 		super(Dahllan.raceName);
 	}
 
-	override serializeSpecific(): SerializedDahllan {
+	protected override serializeSpecific(): SerializedDahllan {
 		return {
 			name: Dahllan.raceName,
 		};

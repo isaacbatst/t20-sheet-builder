@@ -30,7 +30,7 @@ export class Goblin extends Race<SerializedGoblin> {
 		super(RaceName.goblin);
 	}
 
-	override serializeSpecific(): SerializedGoblin {
+	protected override serializeSpecific(): SerializedGoblin {
 		return {
 			name: Goblin.raceName,
 		};

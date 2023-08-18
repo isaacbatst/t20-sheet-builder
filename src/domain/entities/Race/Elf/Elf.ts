@@ -27,7 +27,7 @@ export class Elf extends Race<SerializedElf> {
 		super(RaceName.elf);
 	}
 
-	override serializeSpecific(): SerializedElf {
+	protected override serializeSpecific(): SerializedElf {
 		return {
 			name: Elf.raceName,
 		};
