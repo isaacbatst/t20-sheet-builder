@@ -147,6 +147,11 @@ describe('Sheet', () => {
 			expect(armor).toBeTruthy();
 		});
 
+		it('should receive a light shield', () => {
+			const shield = sheet.getSheetInventory().getEquipments().get(EquipmentName.lightShield);
+			expect(shield).toBeTruthy();
+		});
+
 		it('should have initial money', () => {
 			expect(sheet.getSheetInventory().getMoney()).toBe(24);
 		});

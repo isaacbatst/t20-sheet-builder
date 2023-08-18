@@ -44,4 +44,6 @@ export enum EquipmentName {
 	handAndaHalfSword = 'handAndaHalfSword',
 	longBow = 'longBow',
 	heavyCrossbow = 'heavyCrossbow',
+	lightShield = 'lightShield',
+	heavyShield = 'heavyShield',
 }

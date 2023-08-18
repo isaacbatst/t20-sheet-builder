@@ -2,7 +2,6 @@ import {WeaponAttack} from '../Attack/WeaponAttack';
 import type {ContextInterface} from '../Context/ContextInterface';
 import {InGameContextFake} from '../Context/InGameContextFake';
 import {Dagger, EquipmentName, LeatherArmor, LongSword} from '../Inventory';
-import {FixedModifiersListTotalCalculator} from '../Modifier';
 import {ContextualModifiersListTotalCalculator} from '../Modifier/ContextualModifier/ContextualModifiersListTotalCalculator';
 import {Acolyte, OriginBenefitGeneralPower, OriginBenefitSkill} from '../Origin';
 import type {OriginInterface} from '../Origin/Origin';
@@ -25,7 +24,7 @@ describe('Character', () => {
 	let sheetBuilder: SheetBuilder;
 	let origin: OriginInterface;
 	let character: Character;
-	beforeAll(() => {
+	beforeEach(() => {
 		const choices: VersatileChoice[] = [
 			new VersatileChoiceSkill(SkillName.acrobatics),
 			new VersatileChoicePower(new OneWeaponStyle()),
@@ -64,9 +63,16 @@ describe('Character', () => {
 
 	it('should have armor defense modifier', () => {
 		character.toggleEquipItem(EquipmentName.leatherArmor);
-		expect(character.modifiers.defense.fixed.get(EquipmentName.leatherArmor)).toBeTruthy();
-		const calculator = new FixedModifiersListTotalCalculator(character.getAttributes());
-		expect(character.modifiers.defense.fixed.getTotal(calculator)).toBe(2);
+		const modifier = character.modifiers.defense.fixed.get(EquipmentName.leatherArmor);
+		expect(modifier).toBeTruthy();
+		expect(modifier?.baseValue).toBe(2);
+	});
+
+	it('should have shield defense modifier', () => {
+		character.toggleEquipItem(EquipmentName.lightShield);
+		const modifier = character.modifiers.defense.fixed.get(EquipmentName.lightShield);
+		expect(modifier).toBeTruthy();
+		expect(modifier?.baseValue).toBe(1);
 	});
 
 	describe('Attack', () => {
@@ -75,7 +81,7 @@ describe('Character', () => {
 		let context: ContextInterface;
 		let totalCalculator: ContextualModifiersListTotalCalculator;
 
-		beforeAll(() => {
+		beforeEach(() => {
 			const attacks = character.getAttacks();
 			dagger = attacks.get(EquipmentName.dagger)!;
 			attributes = character.getAttributes();

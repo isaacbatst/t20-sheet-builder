@@ -3,6 +3,7 @@ import {AddEquipment} from '../Action/AddEquipment';
 import {AddMoney} from '../Action/AddMoney';
 import {EquipmentName, type Equipment} from '../Inventory';
 import {EquipmentAdventure} from '../Inventory/Equipment/EquipmentAdventure/EquipmentAdventure';
+import {LightShield} from '../Inventory/Equipment/Weapon/DefensiveWeapon/Shield/LightShield';
 import {Inventory} from '../Inventory/Inventory';
 import {type InventoryEquipment} from '../Inventory/InventoryEquipment';
 import {Proficiency} from './Proficiency';
@@ -60,6 +61,10 @@ export class SheetInventory implements SheetInventoryInterface {
 
 		if (params.armor) {
 			transaction.run(new AddEquipment({payload: {equipment: params.armor, source}, transaction}));
+		}
+
+		if (params.role.proficiencies.includes(Proficiency.shield)) {
+			transaction.run(new AddEquipment({payload: {equipment: new LightShield(), source}, transaction}));
 		}
 
 		transaction.run(new AddMoney({payload: {quantity: params.money, source}, transaction}));
