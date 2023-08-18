@@ -2,11 +2,12 @@ import {type Attributes} from '../../Sheet';
 import {Race} from '../Race';
 import {type RaceAbility} from '../RaceAbility';
 import {RaceName} from '../RaceName';
+import {type SerializedElf} from '../SerializedRace';
 import {ElvenSenses} from './ElvenSenses';
 import {GloriennGrace} from './GloriennGrace';
 import {MagicBlood} from './MagicBlood';
 
-export class Elf extends Race {
+export class Elf extends Race<SerializedElf> {
 	static attributeModifiers: Partial<Attributes> = {
 		intelligence: 2,
 		dexterity: 1,
@@ -24,5 +25,11 @@ export class Elf extends Race {
 
 	constructor() {
 		super(RaceName.elf);
+	}
+
+	override serializeSpecific(): SerializedElf {
+		return {
+			name: Elf.raceName,
+		};
 	}
 }

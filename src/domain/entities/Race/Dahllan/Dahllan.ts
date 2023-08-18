@@ -3,10 +3,11 @@ import {type Attributes} from '../../Sheet';
 import {Race} from '../Race';
 import {type RaceAbility} from '../RaceAbility';
 import {RaceName} from '../RaceName';
+import {type SerializedDahllan} from '../SerializedRace';
 import {AllihannaArmor} from './AllihannaArmor';
 import {PlantsFriend} from './PlantsFriend';
 
-export class Dahllan extends Race {
+export class Dahllan extends Race<SerializedDahllan> {
 	static attributeModifiers: Partial<Attributes> = {
 		wisdom: 2,
 		dexterity: 1,
@@ -24,5 +25,11 @@ export class Dahllan extends Race {
 
 	constructor() {
 		super(Dahllan.raceName);
+	}
+
+	override serializeSpecific(): SerializedDahllan {
+		return {
+			name: Dahllan.raceName,
+		};
 	}
 }

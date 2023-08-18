@@ -2,13 +2,13 @@ import {type Attributes} from '../../Sheet';
 import {Race} from '../Race';
 import {type RaceAbility} from '../RaceAbility';
 import {RaceName} from '../RaceName';
-import {type SerializedMinotaur, type SerializedRace} from '../SerializedRace';
+import {type SerializedRaces, type SerializedRace, type SerializedMinotaur} from '../SerializedRace';
 import {FearOfHeights} from './FearOfHeights';
 import {Hornes} from './Hornes';
 import {Nose} from './Nose';
 import {StiffLeather} from './StiffLeather';
 
-export class Minotaur extends Race {
+export class Minotaur extends Race<SerializedMinotaur> {
 	static attributeModifiers: Partial<Attributes> = {
 		strength: 2,
 		constitution: 1,
@@ -27,5 +27,11 @@ export class Minotaur extends Race {
 
 	constructor() {
 		super(RaceName.minotaur);
+	}
+
+	override serializeSpecific(): SerializedMinotaur {
+		return {
+			name: Minotaur.raceName,
+		};
 	}
 }

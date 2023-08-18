@@ -5,9 +5,19 @@ import {type TransactionInterface} from '../Sheet/TransactionInterface';
 import type {RaceAbility} from './RaceAbility';
 import type {RaceInterface} from './RaceInterface';
 import type {RaceName} from './RaceName';
-import {type SerializedRaceBasic} from './SerializedRace';
+import {type SerializedRace, type SerializedRaceBasic, type SerializedRaces} from './SerializedRace';
 
-export abstract class Race implements RaceInterface {
+export abstract class Race<
+	S extends SerializedRaces = SerializedRaces,
+> implements RaceInterface<S> {
+	static 	serialize(race: Race): SerializedRaceBasic {
+		return {
+			name: race.name,
+			abilities: Object.values(race.abilities).map(ability => ability.serialize()),
+			attributeModifiers: race.attributeModifiers,
+		};
+	}
+
 	abstract readonly attributeModifiers: Partial<Attributes>;
 	abstract readonly abilities: Record<string, RaceAbility>;
 
@@ -18,13 +28,14 @@ export abstract class Race implements RaceInterface {
 		this.applyAbilities(transaction);
 	}
 
-	serialize(): SerializedRaceBasic {
+	serialize(): SerializedRace<S> {
 		return {
-			name: this.name,
-			abilities: Object.values(this.abilities).map(ability => ability.serialize()),
-			attributeModifiers: this.attributeModifiers,
+			...Race.serialize(this),
+			...this.serializeSpecific(),
 		};
 	}
+
+	abstract serializeSpecific(): S;
 
 	private applyAttributesModifiers(transaction: TransactionInterface): void {
 		transaction.run(new ApplyRaceModifiers({

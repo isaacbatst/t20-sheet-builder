@@ -8,7 +8,7 @@ import {HeredrimmTradition} from './HeredrimmTradition/HeredrimmTradition';
 import {RockKnowledge} from './RockKnowledge/RockKnowledge';
 import {SlowAndAlways} from './SlowAndAlways/SlowAndAlways';
 
-export class Dwarf extends Race {
+export class Dwarf extends Race<SerializedDwarf> {
 	static readonly raceName = RaceName.dwarf;
 
 	static attributeModifiers: Partial<Attributes> = {
@@ -16,10 +16,6 @@ export class Dwarf extends Race {
 		constitution: 2,
 		wisdom: 1,
 	};
-
-	static makeFromSerialized(serialized: SerializedRace<SerializedDwarf>): Dwarf {
-		return new Dwarf();
-	}
 
 	readonly abilities: Record<string, RaceAbility> = {
 		rockKnowledge: new RockKnowledge(),
@@ -32,5 +28,11 @@ export class Dwarf extends Race {
 
 	constructor() {
 		super(RaceName.dwarf);
+	}
+
+	override serializeSpecific(): SerializedDwarf {
+		return {
+			name: Dwarf.raceName,
+		};
 	}
 }

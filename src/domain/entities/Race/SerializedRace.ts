@@ -77,4 +77,6 @@ export type SerializedRaces =
 	| SerializedLefeu
 	| SerializedQareen;
 
-export type SerializedRace<T extends SerializedRaces = SerializedRaces> = SerializedRaceBasic & T;
+export type SerializedRace<
+	T extends SerializedRaces = SerializedRaces,
+> = SerializedRaceBasic & T;

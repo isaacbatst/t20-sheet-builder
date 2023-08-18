@@ -2,12 +2,13 @@ import {SheetBuilderError} from '../../../errors';
 import {SelectableAttributesRace} from '../../SelectableAttributesRace';
 import type {Attribute, Attributes} from '../../Sheet/Attributes';
 import {type SkillName} from '../../Skill';
+import {Race} from '../Race';
 import {RaceName} from '../RaceName';
-import {type SerializedRace} from '../SerializedRace';
+import {type SerializedLefeu, type SerializedRace} from '../SerializedRace';
 import {Deformity} from './Deformity/Deformity';
 import {SonOfTormenta} from './SonOfTormenta/SonOfTormenta';
 
-export class Lefeu extends SelectableAttributesRace {
+export class Lefeu extends SelectableAttributesRace<SerializedLefeu> {
 	static readonly raceName = RaceName.lefeu;
 	static attributeModifiers: Partial<Attributes> = {};
 
@@ -49,11 +50,8 @@ export class Lefeu extends SelectableAttributesRace {
 		return this.previousRace;
 	}
 
-	override serialize(): SerializedRace {
-		const serialized = super.serialize();
-
+	override serializeSpecific(): SerializedLefeu {
 		return {
-			...serialized,
 			name: Lefeu.raceName,
 			selectedAttributes: this.selectedAttributes,
 			previousRace: this.previousRace,
