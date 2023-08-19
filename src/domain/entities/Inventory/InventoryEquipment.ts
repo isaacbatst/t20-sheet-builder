@@ -2,9 +2,9 @@ import {type CharacterModifiers} from '../Character/CharacterModifiers';
 import {type SerializedSheetInventoryEquipment} from '../Sheet';
 import type {Equipment} from './Equipment';
 
-export class InventoryEquipment {
+export class InventoryEquipment<T extends Equipment = Equipment> {
 	constructor(
-		readonly equipment: Equipment,
+		readonly equipment: T,
 		private isEquipped = false,
 	) {}
 

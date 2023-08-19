@@ -1,5 +1,6 @@
-import type {EquipmentName} from './Equipment';
+import {Armor, type EquipmentName} from './Equipment';
 import type {Equipment} from './Equipment/Equipment';
+import {Shield} from './Equipment/Weapon/DefensiveWeapon/Shield/Shield';
 import {InventoryEquipment} from './InventoryEquipment';
 
 export class Inventory {
@@ -24,6 +25,16 @@ export class Inventory {
 
 	getEquipments() {
 		return this.equipments;
+	}
+
+	getArmor(): InventoryEquipment<Armor> | undefined {
+		const found = [...this.equipments.values()].find(item => item.getIsEquipped() && item.equipment instanceof Armor);
+		return found as InventoryEquipment<Armor> | undefined;
+	}
+
+	getShield(): InventoryEquipment<Shield> | undefined {
+		const found = [...this.equipments.values()].find(item => item.getIsEquipped() && item.equipment instanceof Shield);
+		return found as InventoryEquipment<Shield> | undefined;
 	}
 
 	getWieldedItems(): EquipmentName[] {

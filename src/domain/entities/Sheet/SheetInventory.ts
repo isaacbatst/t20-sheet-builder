@@ -20,11 +20,11 @@ export class SheetInventory implements SheetInventoryInterface {
 	) {}
 
 	getArmorBonus(): number {
-		return 0;
+		return this.getArmor()?.equipment.defenseBonus ?? 0;
 	}
 
 	getShieldBonus(): number {
-		return 0;
+		return this.getShield()?.equipment.defenseBonus ?? 0;
 	}
 
 	toggleEquippedItem({maxWieldedItems, modifiers, name}: ToggleEquippedItemParams): void {
@@ -68,6 +68,14 @@ export class SheetInventory implements SheetInventoryInterface {
 		}
 
 		transaction.run(new AddMoney({payload: {quantity: params.money, source}, transaction}));
+	}
+
+	getArmor() {
+		return this.inventory.getArmor();
+	}
+
+	getShield() {
+		return this.inventory.getShield();
 	}
 
 	addMoney(quantity: number): void {
