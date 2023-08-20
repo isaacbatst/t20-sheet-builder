@@ -8,8 +8,10 @@ export class Scimitar extends MartialWeapon {
 	static damage = new DiceRoll(1, 6);
 	static critical = new Critical(18);
 	static equipmentName: MartialWeaponName = EquipmentName.scimitar;
+	static purposes = [];
 
 	override damage: DiceRoll = Scimitar.damage;
 	override critical: Critical = Scimitar.critical;
 	override name = Scimitar.equipmentName;
+	override purposes = Scimitar.purposes;
 }
