@@ -4,6 +4,7 @@ import {type GrantedPower} from '../Power/GrantedPower/GrantedPower';
 import {type OriginPowerInterface} from '../Power/OriginPower/OriginPower';
 import {type RolePowerInterface} from '../Role/RolePower';
 import {type TranslatableName} from '../Translator';
+import {type SerializedSheetOriginPower, type SerializedSheetGrantedPower, type SerializedSheetRolePower, type SerializedSheetGeneralPower} from './SerializedSheet';
 import {type SheetPowersInterface, type SheetPowersMap} from './SheetPowersInterface';
 import {type TransactionInterface} from './TransactionInterface';
 
@@ -51,5 +52,37 @@ export class SheetPowers implements SheetPowersInterface {
 
 	getGrantedPowers(): GrantedPowerMap {
 		return this.powers.granted;
+	}
+
+	serializeOriginPowers(): SerializedSheetOriginPower[] {
+		const originPowers: SerializedSheetOriginPower[] = [];
+		this.getOriginPowers().forEach(originPower => {
+			originPowers.push(originPower.serialize());
+		});
+		return originPowers;
+	}
+
+	serializeGrantedPowers(): SerializedSheetGrantedPower[] {
+		const grantedPowers: SerializedSheetGrantedPower[] = [];
+		this.getGrantedPowers().forEach(grantedPower => {
+			grantedPowers.push(grantedPower.serialize());
+		});
+		return grantedPowers;
+	}
+
+	serializeRolePowers(): SerializedSheetRolePower[] {
+		const rolePowers: SerializedSheetRolePower[] = [];
+		this.getRolePowers().forEach(rolePower => {
+			rolePowers.push(rolePower.serialize());
+		});
+		return rolePowers;
+	}
+
+	serializeGeneralPowers(): SerializedSheetGeneralPower[] {
+		const generalPowers: SerializedSheetGeneralPower[] = [];
+		this.getGeneralPowers().forEach(generalPower => {
+			generalPowers.push(generalPower.serialize());
+		});
+		return generalPowers;
 	}
 }

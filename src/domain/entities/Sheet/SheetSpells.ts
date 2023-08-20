@@ -1,5 +1,6 @@
 import {SheetBuilderError} from '../../errors';
 import {type SpellCircle, type LearnableSpellType, type Spell} from '../Spell';
+import {type SerializedSheetSpell, type SerializedSheetLearnedCircles} from './SerializedSheet/SerializedSheetInterface';
 import {type SheetLearnedCircles, type SheetSpellsInterface, type SpellMap} from './SheetSpellsInterface';
 
 export class SheetSpells implements SheetSpellsInterface {
@@ -29,6 +30,39 @@ export class SheetSpells implements SheetSpellsInterface {
 
 	getSpells(): SpellMap {
 		return this.spells;
+	}
+
+	serializeLearnedCircles(): SerializedSheetLearnedCircles {
+		const circlesPerType = this.getLearnedCircles();
+		const serialized: SerializedSheetLearnedCircles = {
+			arcane: [],
+			divine: [],
+		};
+
+		Object.entries(circlesPerType).forEach(([type, circles]) => {
+			serialized[type as LearnableSpellType] = [...circles];
+		});
+
+		return serialized;
+	}
+
+	serializeSpells(): SerializedSheetSpell[] {
+		const serialized: SerializedSheetSpell[] = [];
+
+		this.getSpells().forEach(spell => {
+			const serializedSpell: SerializedSheetSpell = {
+				name: spell.name,
+				circle: spell.circle,
+				abilityType: spell.abilityType,
+				type: spell.type,
+				effects: spell.effects.serialize(),
+				school: spell.school,
+				shortDescription: spell.shortDescription,
+			};
+			serialized.push(serializedSpell);
+		});
+
+		return serialized;
 	}
 
 	private isSpellCircleLearned(spell: Spell) {

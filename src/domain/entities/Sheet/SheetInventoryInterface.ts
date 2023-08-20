@@ -1,6 +1,7 @@
 import {type Armor, type Equipment, type EquipmentName, type MartialWeapon, type SimpleWeapon} from '../Inventory/Equipment';
 import {type InventoryEquipment} from '../Inventory/InventoryEquipment';
 import {type RoleInterface} from '../Role';
+import {type SerializedSheetInventoryEquipment} from './SerializedSheet/SerializedSheetInterface';
 import {type TransactionInterface} from './TransactionInterface';
 
 export type AddInitialEquipmentParams = {
@@ -25,5 +26,5 @@ export type SheetInventoryInterface = {
 	getWieldedItems(): EquipmentName[];
 	getArmorBonus(): number;
 	getShieldBonus(): number;
-
+	serialize(): SerializedSheetInventoryEquipment[];
 };

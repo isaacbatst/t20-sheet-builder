@@ -1,6 +1,6 @@
 import type {AbilityEffectsInterface} from '../../Ability/AbilityEffects';
 import {AbilityEffects} from '../../Ability/AbilityEffects';
-import {type SerializedSpecialFriend} from '../../Origin/OriginBenefit/SerializedOriginBenefit';
+import {type SerializedOriginPower, type SerializedSpecialFriend} from '../../Origin/OriginBenefit/SerializedOriginBenefit';
 import {OriginName} from '../../Origin/OriginName';
 import {type SkillName} from '../../Skill/SkillName';
 import {OriginPower} from './OriginPower';
@@ -25,11 +25,13 @@ export class SpecialFriend extends OriginPower<SerializedSpecialFriend> {
 		});
 	}
 
-	override serialize(): SerializedSpecialFriend {
+	override serialize(): SerializedOriginPower<SerializedSpecialFriend> {
 		return {
 			name: SpecialFriend.powerName,
 			skill: this.effects.passive.default.skill,
 			type: 'originPower',
+			abilityType: 'power',
+			effects: this.effects.serialize(),
 		};
 	}
 }

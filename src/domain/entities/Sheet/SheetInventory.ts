@@ -9,6 +9,7 @@ import {Proficiency} from './Proficiency';
 import {type AddInitialEquipmentParams, type SheetInventoryInterface} from './SheetInventoryInterface';
 import {type SheetProficienciesInterface} from './SheetProficienciesInterface';
 import {type TransactionInterface} from './TransactionInterface';
+import {type SerializedSheetInventoryEquipment} from './SerializedSheet';
 
 export class SheetInventory implements SheetInventoryInterface {
 	static readonly initialArmors = new Set([EquipmentName.leatherArmor, EquipmentName.studdedLeather]);
@@ -17,6 +18,15 @@ export class SheetInventory implements SheetInventoryInterface {
 	constructor(
 		private readonly inventory: Inventory = new Inventory(),
 	) {}
+
+	serialize(): SerializedSheetInventoryEquipment[] {
+		const equipments: SerializedSheetInventoryEquipment[] = [];
+		this.getEquipments().forEach(inventoryEquipment => {
+			equipments.push(inventoryEquipment.serialize());
+		});
+
+		return equipments;
+	}
 
 	getArmorBonus(): number {
 		return 0;

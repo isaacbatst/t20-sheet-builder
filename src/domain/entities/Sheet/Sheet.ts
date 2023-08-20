@@ -1,7 +1,9 @@
 import {WeaponAttack} from '../Attack/WeaponAttack';
 import type {BuildStepInterface} from '../BuildStep';
 import {CharacterAttack} from '../Character/CharacterAttack';
+import {type ContextInterface, OutOfGameContext} from '../Context';
 import {OffensiveWeapon, type EquipmentName} from '../Inventory';
+import {type SerializedSheetInterface, SheetSerializer, type SerializedSheetPoints} from './SerializedSheet';
 import {type SheetAbilitiesInterface} from './SheetAbilitiesInterface';
 import {type SheetAttributesInterface} from './SheetAttributesInterface';
 import {type SheetDefenseInterface} from './SheetDefenseInterface';
@@ -147,5 +149,39 @@ export abstract class Sheet implements SheetInterface {
 
 	getSheetResistences(): SheetResistencesInterface {
 		return this.sheetResistences;
+	}
+
+	serialize(context: ContextInterface = new OutOfGameContext()): SerializedSheetInterface {
+		const race = this.getSheetRace().getRace();
+		const role = this.getSheetRole().getRole();
+		const origin = this.getSheetOrigin().getOrigin();
+		const powers = this.getSheetPowers();
+		return {
+			buildSteps: this.getBuildSteps().map(buildStep => buildStep.serialize()),
+			level: this.getLevel(),
+			displacement: this.getSheetDisplacement().getDisplacement(),
+			attributes: this.getSheetAttributes().getValues(),
+			defense: this.getSheetDefense().serialize(this, context),
+			money: this.getSheetInventory().getMoney(),
+			race: race ? race.serialize() : undefined,
+			role: role ? role.serialize() : undefined,
+			origin: origin ? origin.serialize() : undefined,
+			lifePoints: this.getSheetLifePoints().serialize(this, context),
+			manaPoints: this.getSheetManaPoints().serialize(this, context),
+			equipments: this.getSheetInventory().serialize(),
+			generalPowers: powers.serializeGeneralPowers(),
+			rolePowers: powers.serializeRolePowers(),
+			originPowers: powers.serializeOriginPowers(),
+			grantedPowers: powers.serializeGrantedPowers(),
+			grantedPowersCount: this.getSheetDevotion().getGrantedPowerCount(),
+			learnedCircles: this.getSheetSpells().serializeLearnedCircles(),
+			proficiencies: this.getSheetProficiencies().getProficiencies(),
+			skills: this.getSheetSkills().serialize(this, context),
+			spells: this.getSheetSpells().serializeSpells(),
+			tormentaPowersAttribute: this.getSheetAttributes().getTormentaPowersAttribute(),
+			vision: this.getSheetVision().getVision(),
+			devotion: this.getSheetDevotion().serialize(),
+			resistencies: this.getSheetResistences().serialize(this, context),
+		};
 	}
 }

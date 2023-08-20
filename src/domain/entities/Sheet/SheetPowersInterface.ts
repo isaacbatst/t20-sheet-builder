@@ -4,6 +4,7 @@ import {type GrantedPower} from '../Power/GrantedPower/GrantedPower';
 import {type OriginPowerInterface} from '../Power/OriginPower/OriginPower';
 import {type RolePowerInterface} from '../Role/RolePower';
 import {type TranslatableName} from '../Translator';
+import {type SerializedSheetOriginPower, type SerializedSheetGrantedPower, type SerializedSheetRolePower, type SerializedSheetGeneralPower} from './SerializedSheet';
 import {type TransactionInterface} from './TransactionInterface';
 
 export type SheetPowersMap = {
@@ -21,4 +22,8 @@ export type SheetPowersInterface = {
 	getRolePowers(): RolePowerMap;
 	getOriginPowers(): OriginPowerMap;
 	getGrantedPowers(): GrantedPowerMap;
+	serializeOriginPowers(): SerializedSheetOriginPower[];
+	serializeGrantedPowers(): SerializedSheetGrantedPower[];
+	serializeRolePowers(): SerializedSheetRolePower[];
+	serializeGeneralPowers(): SerializedSheetGeneralPower[];
 };

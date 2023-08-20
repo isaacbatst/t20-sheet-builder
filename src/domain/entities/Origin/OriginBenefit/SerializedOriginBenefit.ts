@@ -1,4 +1,5 @@
 import {type OriginPowerName} from '../../Power';
+import {type SerializedSheetAbilityEffect} from '../../Sheet/SerializedSheet/SerializedSheetInterface';
 import {type SkillName} from '../../Skill';
 import {type SerializedOriginBenefitGeneralPower} from './OriginBenefitGeneralPower';
 
@@ -26,7 +27,12 @@ export type SerializedSpecialFriend = {
 	skill: SkillName;
 };
 
-export type SerializedOriginPowers = SerializedChurchMember | SerializedSpecialFriend;
+export type SerializedOriginPowers = (SerializedChurchMember | SerializedSpecialFriend);
+
+export type SerializedOriginPower<T extends SerializedOriginPowers = SerializedOriginPowers> = T & {
+	abilityType: 'power';
+	effects: SerializedSheetAbilityEffect[];
+};
 
 export type SerializedOriginBenefitsAcolyte = SerializedOriginBenefit<SerializedChurchMember>;
 export type SerializedOriginBenefitsAnimalsFriend = SerializedOriginBenefit<SerializedSpecialFriend>;

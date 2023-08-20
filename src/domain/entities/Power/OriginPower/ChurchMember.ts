@@ -1,6 +1,6 @@
 import {AbilityEffects} from '../../Ability/AbilityEffects';
 import {RolePlayEffect} from '../../Ability/RolePlayEffect';
-import {type SerializedChurchMember} from '../../Origin/OriginBenefit/SerializedOriginBenefit';
+import {type SerializedOriginPower, type SerializedChurchMember} from '../../Origin/OriginBenefit/SerializedOriginBenefit';
 import {OriginName} from '../../Origin/OriginName';
 import {OriginPower} from './OriginPower';
 import {OriginPowerName} from './OriginPowerName';
@@ -20,10 +20,12 @@ export class ChurchMember extends OriginPower<SerializedChurchMember> {
 		super(OriginPowerName.churchMember);
 	}
 
-	override serialize(): SerializedChurchMember {
+	override serialize(): SerializedOriginPower<SerializedChurchMember> {
 		return {
 			name: OriginPowerName.churchMember,
 			type: 'originPower',
+			abilityType: 'power',
+			effects: this.effects.serialize(),
 		};
 	}
 }

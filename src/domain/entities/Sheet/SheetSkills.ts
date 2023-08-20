@@ -1,8 +1,15 @@
+import {type ContextInterface} from '../Context';
 import {type ContextualModifierInterface} from '../Modifier/ContextualModifier/ContextualModifierInterface';
 import {type ModifierInterface} from '../Modifier/ModifierInterface';
 import {type SkillName} from '../Skill';
 import {InitialSkillsGenerator} from '../Skill/InitialSkillsGenerator';
 import {type Skill} from '../Skill/Skill';
+import {type SkillTotalCalculator} from '../Skill/SkillTotalCalculator';
+import {SkillTotalCalculatorFactory} from '../Skill/SkillTotalCalculatorFactory';
+import {type Attributes} from './Attributes';
+import {type Level} from './Level';
+import {type SerializedSheetSkill, type SerializedSheetSkills} from './SerializedSheet/SerializedSheetInterface';
+import {type SheetInterface} from './SheetInterface';
 import {type SheetSkillsInterface} from './SheetSkillsInterface';
 
 export class SheetSkills implements SheetSkillsInterface {
@@ -30,5 +37,30 @@ export class SheetSkills implements SheetSkillsInterface {
 
 	getSkills(): Record<SkillName, Skill> {
 		return this.skills;
+	}
+
+	serialize(sheet: SheetInterface, context: ContextInterface): SerializedSheetSkills {
+		const attributes = sheet.getSheetAttributes().getValues();
+		const level = sheet.getLevel();
+		const calculator = SkillTotalCalculatorFactory.make(attributes, level, context);
+		const entries = Object.entries(this.skills);
+		const serialized = entries.reduce<SerializedSheetSkills>((acc, [skillName, skill]) => {
+			acc[skillName as SkillName] = this.serializeSkill(skill, calculator, sheet, context);
+			return acc;
+			// eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
+		}, {} as SerializedSheetSkills);
+
+		return serialized;
+	}
+
+	private serializeSkill(skill: Skill, totalCalculator: SkillTotalCalculator, sheet: SheetInterface, context: ContextInterface): SerializedSheetSkill {
+		return {
+			attribute: skill.attribute,
+			contextualModifiers: skill.contextualModifiers.serialize(sheet, context),
+			fixedModifiers: skill.fixedModifiers.serialize(sheet, context),
+			isTrained: skill.getIsTrained(),
+			total: skill.getTotal(totalCalculator),
+			trainingPoints: skill.getTrainingPoints(),
+		};
 	}
 }
