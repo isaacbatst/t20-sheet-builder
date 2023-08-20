@@ -7,7 +7,7 @@ import {Katana} from './Katana';
 import {TauricAxe} from './TauricAxe';
 import {Whip} from './Whip';
 
-export class MartialWeapons {
+export class ExoticWeapons {
 	static map: Record<ExoticWeaponName, ExoticWeaponStatic> = {
 		whip: Whip,
 		bastardSword: BastardSword,
