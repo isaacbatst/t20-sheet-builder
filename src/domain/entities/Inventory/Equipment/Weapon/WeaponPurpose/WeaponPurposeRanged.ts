@@ -1,6 +1,16 @@
 import {SkillName} from '../../../../Skill';
-import {WeaponPurpose} from './WeaponPurpose';
+import {WeaponPurpose, type WeaponPurposeParams} from './WeaponPurpose';
+
+export type WeaponPurposeRangedParams = Omit<
+WeaponPurposeParams,
+'defaultSkill'
+>;
 
 export abstract class WeaponPurposeRanged extends WeaponPurpose {
-	defaultSkill = SkillName.aim;
+	constructor(params: WeaponPurposeRangedParams) {
+		super({
+			defaultSkill: SkillName.aim,
+			...params,
+		});
+	}
 }

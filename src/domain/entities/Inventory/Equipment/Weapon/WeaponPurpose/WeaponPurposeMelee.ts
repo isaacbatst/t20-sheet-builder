@@ -1,8 +1,17 @@
-import {type Attribute} from '../../../../Sheet';
 import {SkillName} from '../../../../Skill';
-import {WeaponPurpose} from './WeaponPurpose';
+import {WeaponPurpose, type WeaponPurposeParams} from './WeaponPurpose';
+
+type WeaponPurposeMeleeParams = Omit<
+WeaponPurposeParams,
+'defaultSkill'
+>;
 
 export class WeaponPurposeMelee extends WeaponPurpose {
-	defaultSkill = SkillName.fight;
-	defaultDamageAttribute: Attribute = 'strength';
+	constructor(params: WeaponPurposeMeleeParams = {}) {
+		super({
+			defaultSkill: SkillName.fight,
+			damageAttribute: params.damageAttribute ?? 'strength',
+			...params,
+		});
+	}
 }

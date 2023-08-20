@@ -1,6 +1,10 @@
-import {type Attribute} from '../../../../Sheet';
-import {WeaponPurposeRanged} from './WeaponPurposeRanged';
+import {WeaponPurposeRanged, type WeaponPurposeRangedParams} from './WeaponPurposeRanged';
 
 export class WeaponPurposeRangedThrowing extends WeaponPurposeRanged {
-	override defaultDamageAttribute: Attribute = 'strength';
+	constructor(params: WeaponPurposeRangedParams = {}) {
+		super({
+			...params,
+			damageAttribute: params.damageAttribute ?? 'strength',
+		});
+	}
 }
