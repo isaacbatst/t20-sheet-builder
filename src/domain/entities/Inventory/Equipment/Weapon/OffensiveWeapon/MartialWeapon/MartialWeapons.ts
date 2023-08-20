@@ -15,10 +15,12 @@ import {Pickaxe} from './Pickaxe';
 import {Scimitar} from './Scimitar';
 import {Scythe} from './Scythe';
 import {Trident} from './Trident';
+import {WarAxe} from './WarAxe';
 import {WarHammer} from './WarHammer';
 
 export class MartialWeapons {
 	static map: Record<MartialWeaponName, MartialWeaponStatic> = {
+		warAxe: WarAxe,
 		battleAxe: BattleAxe,
 		cutlass: Cutlass,
 		flail: Flail,
