@@ -1,4 +1,5 @@
 import type {BuildStepInterface} from './BuildStep';
+import {type SerializedSheetBuildStep} from './Sheet';
 import type {ActionInterface, ActionType} from './Sheet/SheetActions';
 
 export class ProgressionStepFake<T extends ActionType> implements BuildStepInterface<T> {
@@ -8,5 +9,14 @@ export class ProgressionStepFake<T extends ActionType> implements BuildStepInter
 		readonly action: ActionInterface<T>,
 	) {
 		this.description = action.type;
+	}
+
+	serialize(): SerializedSheetBuildStep {
+		return {
+			action: {
+				type: this.action.type,
+				description: this.action.description,
+			},
+		};
 	}
 }

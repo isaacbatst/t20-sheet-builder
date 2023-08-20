@@ -7,6 +7,7 @@ import type {GeneralPowerInterface} from './GeneralPower/GeneralPower';
 import {GeneralPowerName} from './GeneralPower/GeneralPowerName';
 import type {PowerInterface, PowerType} from './Power';
 import {GeneralPowerGroup} from './GeneralPower';
+import {type SerializedSheetRolePower} from '../Sheet';
 
 export class PowerFake implements PowerInterface {
 	powerType: PowerType = 'general';
@@ -25,9 +26,12 @@ export class GeneralPowerFake implements GeneralPowerInterface {
 	addToSheet = vi.fn();
 	verifyRequirements = vi.fn();
 	effects = new AbilityEffects({});
+	serialize = vi.fn();
 }
 
 export class RolePowerFake implements RolePowerInterface {
+	serialize = vi.fn();
+
 	powerType: PowerType = 'role';
 	name: RolePowerName = RolePowerName.archer;
 	abilityType: AbilityType = 'power';

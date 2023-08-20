@@ -20,7 +20,7 @@ export class OriginBenefitOriginPower<S extends SerializedOriginPowers> extends 
 	apply(transaction: Transaction, source: TranslatableName): void {
 		transaction.run(new PickOriginPower({
 			payload: {
-				power: this.power,
+				power: this.power as OriginPowerInterface,
 				source,
 			},
 			transaction,

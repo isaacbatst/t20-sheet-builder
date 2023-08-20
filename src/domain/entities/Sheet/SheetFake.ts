@@ -38,6 +38,8 @@ import {SheetVision} from './SheetVision';
 import {type SheetVisionInterface} from './SheetVisionInterface';
 import {SheetResistences} from './SheetResistencies';
 import {type SheetResistencesInterface} from './SheetResistencesInterface';
+import {type ContextInterface} from '../Context';
+import {type SerializedSheetInterface} from './SerializedSheet';
 
 export class SheetFake implements SheetInterface {
 	buildSteps: BuildStepInterface[] = [];
@@ -60,6 +62,8 @@ export class SheetFake implements SheetInterface {
 	sheetSize = new SheetSize();
 	sheetDevotion = new SheetDevotion();
 	sheetResistences = new SheetResistences();
+
+	serialize = vi.fn();
 
 	getSheetDevotion(): SheetDevotion {
 		return this.sheetDevotion;
