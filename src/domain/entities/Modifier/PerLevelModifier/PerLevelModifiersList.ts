@@ -1,14 +1,13 @@
 import {type ContextInterface} from '../../Context';
-import {type SerializedSheetModifiersList, type Level, type SerializedSheetPerLevelModifiersList} from '../../Sheet';
+import {type Level, type SerializedSheetPerLevelModifiersList} from '../../Sheet';
 import {type SheetInterface} from '../../Sheet/SheetInterface';
-import {type SerializedModifier} from '../ModifierInterface';
 import {ModifiersList} from '../ModifiersList';
 import type {ModifiersListInterface} from '../ModifiersListInterface';
 import {PerLevelModifierAppliableValueCalculator} from './PerLevelModifierAppliableValueCalculator';
 import type {PerLevelModifierInterface} from './PerLevelModifierInterface';
 import {PerLevelModifiersListTotalCalculator} from './PerLevelModifiersListTotalCalculator';
 
-export type PerLevelModifiersListInterface = ModifiersListInterface<PerLevelModifierInterface> & {
+export type PerLevelModifiersListInterface = Omit<ModifiersListInterface<PerLevelModifierInterface>, 'serialize'> & {
 	getTotalPerLevel(level: Level): number;
 	serialize(sheet: SheetInterface, context: ContextInterface): SerializedSheetPerLevelModifiersList;
 };

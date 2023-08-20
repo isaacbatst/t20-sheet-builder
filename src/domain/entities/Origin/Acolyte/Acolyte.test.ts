@@ -1,44 +1,29 @@
-import {AddEquipment} from '../../Action/AddEquipment';
 import {PickGeneralPower} from '../../Action/PickGeneralPower';
 import {PickOriginPower} from '../../Action/PickOriginPower';
 import {TrainSkill} from '../../Action/TrainSkill';
-import {EquipmentClothing} from '../../Inventory/Equipment/EquipmentClothing/EquipmentClothing';
 import {EquipmentName} from '../../Inventory/Equipment/EquipmentName';
 import {IronWill} from '../../Power/GeneralPower/DestinyPower/IronWill/IronWill';
 import {Medicine} from '../../Power/GeneralPower/DestinyPower/Medicine/Medicine';
 import {ChurchMember} from '../../Power/OriginPower/ChurchMember';
-import {SpecialFriend} from '../../Power/OriginPower/SpecialFriend';
+import {BuildingSheet} from '../../Sheet';
+import {Transaction} from '../../Sheet/Transaction';
 import {TransactionFake} from '../../Sheet/TransactionFake';
 import {SkillName} from '../../Skill/SkillName';
-import {Acolyte} from './Acolyte';
 import {OriginBenefitGeneralPower} from '../OriginBenefit/OriginBenefitGeneralPower';
 import {OriginBenefitOriginPower} from '../OriginBenefit/OriginBenefitOriginPower';
 import {OriginBenefitSkill} from '../OriginBenefit/OriginBenefitSkill';
 import {OriginName} from '../OriginName';
-import {type SerializedOriginBenefitsAcolyte} from '../OriginBenefit/SerializedOriginBenefit';
-import {type OriginBenefit} from '../OriginBenefit/OriginBenefit';
+import {Acolyte} from './Acolyte';
 
 describe('Acolyte', () => {
 	it('should dispatch add items', () => {
 		const acolyte = new Acolyte([new OriginBenefitSkill(SkillName.cure), new OriginBenefitSkill(SkillName.religion)]);
-		const transaction = new TransactionFake();
+		const sheet = new BuildingSheet();
+		const transaction = new Transaction(sheet);
 		acolyte.addToSheet(transaction);
 
-		expect(transaction.run).toHaveBeenCalledWith(new AddEquipment({
-			payload: {
-				equipment: new EquipmentClothing(EquipmentName.sacredSymbol),
-				source: OriginName.acolyte,
-			},
-			transaction,
-		}));
-
-		expect(transaction.run).toHaveBeenCalledWith(new AddEquipment({
-			payload: {
-				equipment: new EquipmentClothing(EquipmentName.priestCostume),
-				source: OriginName.acolyte,
-			},
-			transaction,
-		}));
+		expect(sheet.getSheetInventory().getItem(EquipmentName.sacredSymbol)).toBeDefined();
+		expect(sheet.getSheetInventory().getItem(EquipmentName.priestCostume)).toBeDefined();
 	});
 
 	it('should dispatch skill benefits training', () => {

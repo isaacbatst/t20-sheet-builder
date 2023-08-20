@@ -4,9 +4,9 @@ import {InGameContextFake} from '../Context/InGameContextFake';
 import {Dagger, EquipmentName, LeatherArmor, LongSword} from '../Inventory';
 import {ContextualModifiersListTotalCalculator} from '../Modifier/ContextualModifier/ContextualModifiersListTotalCalculator';
 import {Acolyte, OriginBenefitGeneralPower, OriginBenefitSkill} from '../Origin';
-import type {Origin, OriginInterface} from '../Origin/Origin';
+import type {OriginInterface} from '../Origin/Origin';
 import {IronWill, OneWeaponStyle} from '../Power';
-import {Human, type VersatileChoice, VersatileChoicePower, VersatileChoiceSkill} from '../Race';
+import {Human, VersatileChoicePower, VersatileChoiceSkill, type VersatileChoice} from '../Race';
 import type {Race} from '../Race/Race';
 import {Warrior} from '../Role';
 import type {Role} from '../Role/Role';
@@ -24,7 +24,7 @@ describe('Character', () => {
 	let sheetBuilder: SheetBuilder;
 	let origin: OriginInterface;
 	let character: Character;
-	beforeAll(() => {
+	beforeEach(() => {
 		const choices: VersatileChoice[] = [
 			new VersatileChoiceSkill(SkillName.acrobatics),
 			new VersatileChoicePower(new OneWeaponStyle()),
@@ -55,10 +55,24 @@ describe('Character', () => {
 
 	it('should toggle wield item', () => {
 		expect(character.getWieldedItems()).toEqual([]);
-		character.toggleWieldItem(EquipmentName.dagger);
+		character.toggleEquipItem(EquipmentName.dagger);
 		expect(character.getWieldedItems()).toEqual([EquipmentName.dagger]);
-		character.toggleWieldItem(EquipmentName.dagger);
+		character.toggleEquipItem(EquipmentName.dagger);
 		expect(character.getWieldedItems()).toEqual([]);
+	});
+
+	it('should have armor defense modifier', () => {
+		character.toggleEquipItem(EquipmentName.leatherArmor);
+		const modifier = character.modifiers.defense.fixed.get(EquipmentName.leatherArmor);
+		expect(modifier).toBeTruthy();
+		expect(modifier?.baseValue).toBe(2);
+	});
+
+	it('should have shield defense modifier', () => {
+		character.toggleEquipItem(EquipmentName.lightShield);
+		const modifier = character.modifiers.defense.fixed.get(EquipmentName.lightShield);
+		expect(modifier).toBeTruthy();
+		expect(modifier?.baseValue).toBe(1);
 	});
 
 	describe('Attack', () => {
@@ -67,7 +81,7 @@ describe('Character', () => {
 		let context: ContextInterface;
 		let totalCalculator: ContextualModifiersListTotalCalculator;
 
-		beforeAll(() => {
+		beforeEach(() => {
 			const attacks = character.getAttacks();
 			dagger = attacks.get(EquipmentName.dagger)!;
 			attributes = character.getAttributes();
@@ -86,7 +100,7 @@ describe('Character', () => {
 		});
 
 		it('should get dagger attack with one weapon style modifier', () => {
-			character.toggleWieldItem(EquipmentName.dagger);
+			character.toggleEquipItem(EquipmentName.dagger);
 			expect(dagger.modifiers.contextual.getMaxTotal(attributes)).toBe(2);
 			expect(dagger.modifiers.contextual.getTotal(totalCalculator)).toBe(2);
 		});

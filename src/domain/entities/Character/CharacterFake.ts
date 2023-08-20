@@ -1,6 +1,9 @@
+import {type EquipmentName} from '../Inventory';
 import type {CharacterInterface} from './CharacterInterface';
 
 export class CharacterFake implements CharacterInterface {
+	toggleEquipItem = vi.fn();
+
 	toggleWieldItem = vi.fn();
 	selectFightStyle = vi.fn();
 

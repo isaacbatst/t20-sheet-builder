@@ -1,12 +1,13 @@
+import {SheetBuilderError} from '../../errors';
 import {AddEquipment} from '../Action/AddEquipment';
 import {AddMoney} from '../Action/AddMoney';
-import {SheetBuilderError} from '../../errors';
 import {EquipmentName, type Equipment} from '../Inventory';
 import {EquipmentAdventure} from '../Inventory/Equipment/EquipmentAdventure/EquipmentAdventure';
+import {LightShield} from '../Inventory/Equipment/Weapon/DefensiveWeapon/Shield/LightShield';
 import {Inventory} from '../Inventory/Inventory';
 import {type InventoryEquipment} from '../Inventory/InventoryEquipment';
 import {Proficiency} from './Proficiency';
-import {type AddInitialEquipmentParams, type SheetInventoryInterface} from './SheetInventoryInterface';
+import {type AddInitialEquipmentParams, type SheetInventoryInterface, type ToggleEquippedItemParams} from './SheetInventoryInterface';
 import {type SheetProficienciesInterface} from './SheetProficienciesInterface';
 import {type TransactionInterface} from './TransactionInterface';
 import {type SerializedSheetInventoryEquipment} from './SerializedSheet';
@@ -29,15 +30,27 @@ export class SheetInventory implements SheetInventoryInterface {
 	}
 
 	getArmorBonus(): number {
-		return 0;
+		return this.getArmor()?.equipment.defenseBonus ?? 0;
 	}
 
 	getShieldBonus(): number {
-		return 0;
+		return this.getShield()?.equipment.defenseBonus ?? 0;
 	}
 
-	toggleEquippedItem(name: EquipmentName): void {
-		this.inventory.toggleEquippedItem(name);
+	toggleEquippedItem({maxWieldedItems, modifiers, name}: ToggleEquippedItemParams): void {
+		const item = this.getItem(name);
+
+		if (!item) {
+			throw new SheetBuilderError('ITEM_NOT_FOUND');
+		}
+
+		const wieldedItems = this.getWieldedItems();
+
+		if (item.equipment.isWieldable && !item.getIsEquipped() && maxWieldedItems <= wieldedItems.length) {
+			throw new SheetBuilderError('MAX_WIELDED_ITEMS');
+		}
+
+		item.toggleEquipped(modifiers);
 	}
 
 	addEquipment(equipment: Equipment): void {
@@ -60,7 +73,19 @@ export class SheetInventory implements SheetInventoryInterface {
 			transaction.run(new AddEquipment({payload: {equipment: params.armor, source}, transaction}));
 		}
 
+		if (params.role.proficiencies.includes(Proficiency.shield)) {
+			transaction.run(new AddEquipment({payload: {equipment: new LightShield(), source}, transaction}));
+		}
+
 		transaction.run(new AddMoney({payload: {quantity: params.money, source}, transaction}));
+	}
+
+	getArmor() {
+		return this.inventory.getArmor();
+	}
+
+	getShield() {
+		return this.inventory.getShield();
 	}
 
 	addMoney(quantity: number): void {

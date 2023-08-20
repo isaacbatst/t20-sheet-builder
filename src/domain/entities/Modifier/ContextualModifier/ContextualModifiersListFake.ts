@@ -4,7 +4,7 @@ import type {ContextualModifiersListInterface} from './ContextualModifiersListIn
 
 export class ContextualModifiersListFake implements ContextualModifiersListInterface {
 	serialize = vi.fn();
-
+	get = vi.fn();
 	modifiers: ContextualModifierInterface[] = [];
 	total = 0;
 	maxTotal = 0;

@@ -16,4 +16,5 @@ export type MartialWeaponName =
     EquipmentName.mountedSpear |
     EquipmentName.handAndaHalfSword |
     EquipmentName.longBow |
-    EquipmentName.heavyCrossbow;
+    EquipmentName.heavyCrossbow |
+    EquipmentName.warAxe;

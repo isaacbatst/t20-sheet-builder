@@ -127,6 +127,13 @@ export abstract class Sheet implements SheetInterface {
 		return this.sheetDefense;
 	}
 
+	getSheetDefenseValue(): number {
+		const attributes = this.sheetAttributes.getValues();
+		const armorBonus = this.sheetInventory.getArmorBonus();
+		const shieldBonus = this.sheetInventory.getShieldBonus();
+		return this.sheetDefense.getTotal(attributes, armorBonus, shieldBonus);
+	}
+
 	getSheetVision(): SheetVisionInterface {
 		return this.sheetVision;
 	}
