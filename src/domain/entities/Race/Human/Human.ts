@@ -1,11 +1,12 @@
 import {SelectableAttributesRace} from '../../SelectableAttributesRace';
 import type {Attribute, Attributes} from '../../Sheet/Attributes';
 import {RaceName} from '../RaceName';
+import {type SerializedHuman} from '../SerializedRace';
 import {Versatile} from './Versatile/Versatile';
 import type {VersatileChoice} from './Versatile/VersatileChoice';
 
-export class Human extends SelectableAttributesRace {
-	static raceName = RaceName.human;
+export class Human extends SelectableAttributesRace<SerializedHuman> {
+	static readonly raceName = RaceName.human;
 	static attributeModifiers: Partial<Attributes> = {};
 
 	readonly abilities = {
@@ -28,6 +29,15 @@ export class Human extends SelectableAttributesRace {
 
 	addVersatilChoice(choice: VersatileChoice) {
 		this.abilities.versatile.addChoice(choice);
+	}
+
+	override serializeSpecific(): SerializedHuman {
+		return {
+			name: Human.raceName,
+			selectedAttributes: this.selectedAttributes,
+			versatileChoices: this.abilities.versatile.effects.passive.default.choices
+				.map(choice => choice.serialize()),
+		};
 	}
 
 	protected get restrictedAttributes(): string[] {

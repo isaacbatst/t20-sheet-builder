@@ -1,6 +1,7 @@
 import {AbilityEffects, type AbilityEffectsInterface} from '../../../../../../Ability/AbilityEffects';
 import {type AbilityLevel} from '../../../../../../Ability/AbilityLevel';
 import {type Spell} from '../../../../../../Spell';
+import {type SerializedArcanistLineage} from '../../../../SerializedArcanist';
 import {ArcanistLineage} from '../ArcanistLineage';
 import {ArcanistLineageType} from '../ArcanistLineageType';
 import {ArcanistLineageFaerieCheatTrainingEffect} from './ArcanistLineageFaerieCheatTrainingEffect';
@@ -34,5 +35,12 @@ export class ArcanistLineageFaerie extends ArcanistLineage {
 
 	getExtraSpell(): Spell {
 		return this.effects.basic.passive.extraSpell.spell;
+	}
+
+	override serialize(): SerializedArcanistLineage {
+		return {
+			type: this.type,
+			extraSpell: this.getExtraSpell().name,
+		};
 	}
 }

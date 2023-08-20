@@ -5,6 +5,7 @@ import {Goblin} from './Goblin/';
 import {Human} from './Human';
 import {Lefeu} from './Lefeu/Lefeu';
 import {Minotaur} from './Minotaur';
+import {Qareen} from './Qareen/Qareen';
 import {type RaceName} from './RaceName';
 import {type RaceStatic} from './RaceStatic';
 
@@ -17,16 +18,11 @@ export class Races {
 		goblin: Goblin,
 		lefeu: Lefeu,
 		minotaur: Minotaur,
+		qareen: Qareen,
 	};
 
 	static getAll(): RaceStatic[] {
-		return [
-			Dwarf,
-			Human,
-			Dahllan,
-			Elf,
-			Goblin,
-		];
+		return Object.values(Races.map);
 	}
 
 	static getByName(name: RaceName): RaceStatic {

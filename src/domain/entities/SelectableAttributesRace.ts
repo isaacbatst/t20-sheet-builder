@@ -1,12 +1,19 @@
 import {SheetBuilderError} from '../errors';
+import {type SerializedRaces} from './Race';
 import {Race} from './Race/Race';
 import type {RaceName} from './Race/RaceName';
 import type {Attribute, Attributes} from './Sheet/Attributes';
 
-export abstract class SelectableAttributesRace extends Race {
+export abstract class SelectableAttributesRace<
+	S extends SerializedRaces = SerializedRaces,
+> extends Race<S> {
 	readonly attributeModifiers: Partial<Attributes> = {};
 
-	constructor(selectedAttributes: Attribute[], name: RaceName, initialAttributeModifiers?: Partial<Attributes>) {
+	constructor(
+		readonly selectedAttributes: Attribute[],
+		name: RaceName,
+		initialAttributeModifiers?: Partial<Attributes>,
+	) {
 		super(name);
 		this.validateSelectedAttributes(selectedAttributes);
 

@@ -1,10 +1,11 @@
+import {type SerializedRoleBasic, type SerializedRole, type SerializedRoles} from '..';
+import {SheetBuilderError} from '../../errors/SheetBuilderError';
 import {AddFixedModifierToLifePoints} from '../Action/AddFixedModifierToLifePoints';
 import {AddPerLevelModifierToLifePoints} from '../Action/AddPerLevelModifierToLifePoints';
 import {AddPerLevelModifierToManaPoints} from '../Action/AddPerLevelModifierToManaPoints';
 import {AddProficiency} from '../Action/AddProficiency';
 import {ApplyRoleAbility} from '../Action/ApplyRoleAbility';
 import {TrainSkill} from '../Action/TrainSkill';
-import {SheetBuilderError} from '../../errors/SheetBuilderError';
 import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
 import {PerLevelModifier} from '../Modifier/PerLevelModifier/PerLevelModifier';
 import {Level} from '../Sheet/Level';
@@ -15,7 +16,27 @@ import type {RoleAbility} from './RoleAbility';
 import type {RoleInterface, SelectSkillGroup} from './RoleInterface';
 import type {RoleName} from './RoleName';
 
-export abstract class Role implements RoleInterface {
+export abstract class Role<
+	S extends SerializedRoles = SerializedRoles,
+> implements RoleInterface<S> {
+	static serializeBasic(role: Role): SerializedRoleBasic {
+		return {
+			abilities: Object.values(role.abilitiesPerLevel)
+				.flatMap(levelAbilities => Object.values(levelAbilities)
+					.map(roleAbility => roleAbility.serialize())),
+			initialLifePoints: role.initialLifePoints,
+			lifePointsPerLevel: role.lifePointsPerLevel,
+			manaPerLevel: role.manaPerLevel,
+			mandatorySkills: role.mandatorySkills,
+			proficiencies: role.proficiencies,
+			selectSkillGroups: role.selectSkillGroups,
+			startsWithArmor: role.startsWithArmor,
+			totalInitialSkills: role.getTotalInitialSkills(),
+			name: role.name,
+			chosenSkills: role.chosenSkills,
+		};
+	}
+
 	abstract readonly initialLifePoints: number;
 	abstract readonly lifePointsPerLevel: number;
 	abstract readonly manaPerLevel: number;
@@ -65,6 +86,15 @@ export abstract class Role implements RoleInterface {
 	getTotalInitialSkills(): number {
 		return this.mandatorySkills.length + this.selectSkillGroups.reduce((acc, curr) => curr.amount + acc, 0);
 	}
+
+	serialize(): SerializedRole<S> {
+		return {
+			...Role.serializeBasic(this),
+			...this.serializeSpecific(),
+		};
+	}
+
+	protected abstract serializeSpecific(): S;
 
 	private addLifePointsModifiers(transaction: TransactionInterface) {
 		transaction.run(new AddFixedModifierToLifePoints({

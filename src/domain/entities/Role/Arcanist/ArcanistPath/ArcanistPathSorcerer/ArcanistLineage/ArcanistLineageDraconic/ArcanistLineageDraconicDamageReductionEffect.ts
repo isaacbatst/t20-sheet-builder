@@ -13,6 +13,6 @@ export class ArcanistLineageDraconicDamageReductionEffect extends PassiveEffect 
 	}
 
 	override apply(transaction: TransactionInterface): void {
-		// Throw new Error('Method not implemented.');
+		console.log('TODO: ArcanistLineageDraconicDamageReductionEffect.apply()');
 	}
 }

@@ -11,4 +11,9 @@ export class CharacterModifiers {
 		fixed: new FixedModifiersList(),
 		contextual: new ContextualModifiersList(),
 	};
+
+	readonly armorPenalty = {
+		fixed: new FixedModifiersList(),
+		contextual: new ContextualModifiersList(),
+	};
 }

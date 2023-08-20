@@ -1,5 +1,4 @@
 import {WeaponAttack} from '../Attack/WeaponAttack';
-import {SheetBuilderError} from '../../errors/SheetBuilderError';
 import type {EquipmentName} from '../Inventory';
 import {OffensiveWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/OffensiveWeapon';
 import {type GeneralPowerMap} from '../Map';
@@ -16,11 +15,11 @@ export class Character implements CharacterInterface {
 		return 2;
 	}
 
+	readonly modifiers = new CharacterModifiers();
 	private fightStyle: CharacterAppliedFightStyle | undefined;
-	private readonly modifiers = new CharacterModifiers();
 
 	constructor(
-		private	readonly sheet: CharacterSheet,
+		readonly sheet: CharacterSheet,
 	) {
 		this.selectDefaultFightStyle(sheet.getSheetPowers().getGeneralPowers());
 	}
@@ -35,21 +34,13 @@ export class Character implements CharacterInterface {
 		this.fightStyle = undefined;
 	}
 
-	toggleWieldItem(name: EquipmentName) {
+	toggleEquipItem(name: EquipmentName) {
 		const inventory = this.sheet.getSheetInventory();
-		const item = inventory.getItem(name);
-
-		if (!item) {
-			throw new SheetBuilderError('ITEM_NOT_FOUND');
-		}
-
-		const wieldedItems = inventory.getWieldedItems();
-
-		if (!item.getIsEquipped() && this.maxWieldedItems <= wieldedItems.length) {
-			throw new SheetBuilderError('MAX_WIELDED_ITEMS');
-		}
-
-		item.toggleEquipped();
+		inventory.toggleEquippedItem({
+			maxWieldedItems: this.maxWieldedItems,
+			modifiers: this.modifiers,
+			name,
+		});
 	}
 
 	getAttributes(): Attributes {

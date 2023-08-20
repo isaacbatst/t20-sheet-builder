@@ -8,7 +8,10 @@ import {type SerializedOriginBenefit, type SerializedOriginBenefits} from './Ori
 import type {OriginName} from './OriginName';
 import {type SerializedOrigins} from './SerializedOrigin';
 
-export type OriginInterface<Sb extends SerializedOriginBenefit = SerializedOriginBenefits, So extends SerializedOrigins = SerializedOrigins> = {
+export type OriginInterface<
+	Sb extends SerializedOriginBenefit = SerializedOriginBenefits,
+	So extends SerializedOrigins = SerializedOrigins,
+> = {
 	name: OriginName;
 	equipments: Equipment[];
 	chosenBenefits: Array<OriginBenefit<Sb>>;
@@ -17,7 +20,10 @@ export type OriginInterface<Sb extends SerializedOriginBenefit = SerializedOrigi
 	serialize(): So;
 };
 
-export abstract class Origin<Sb extends SerializedOriginBenefit = SerializedOriginBenefit, So extends SerializedOrigins = SerializedOrigins> implements OriginInterface<Sb, So> {
+export abstract class Origin<
+	Sb extends SerializedOriginBenefit = SerializedOriginBenefit,
+	So extends SerializedOrigins = SerializedOrigins,
+> implements OriginInterface<Sb, So> {
 	abstract name: OriginName;
 	abstract equipments: Equipment[];
 

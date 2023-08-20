@@ -1,5 +1,6 @@
-import type {EquipmentName} from './Equipment';
+import {Armor, type EquipmentName} from './Equipment';
 import type {Equipment} from './Equipment/Equipment';
+import {Shield} from './Equipment/Weapon/DefensiveWeapon/Shield/Shield';
 import {InventoryEquipment} from './InventoryEquipment';
 
 export class Inventory {
@@ -8,14 +9,6 @@ export class Inventory {
 
 	addEquipment(equipment: Equipment) {
 		this.equipments.set(equipment.name, new InventoryEquipment(equipment));
-	}
-
-	toggleEquippedItem(name: EquipmentName) {
-		const item = this.equipments.get(name);
-
-		if (item) {
-			item.toggleEquipped();
-		}
 	}
 
 	addMoney(amount: number) {
@@ -34,9 +27,19 @@ export class Inventory {
 		return this.equipments;
 	}
 
+	getArmor(): InventoryEquipment<Armor> | undefined {
+		const found = [...this.equipments.values()].find(item => item.getIsEquipped() && item.equipment instanceof Armor);
+		return found as InventoryEquipment<Armor> | undefined;
+	}
+
+	getShield(): InventoryEquipment<Shield> | undefined {
+		const found = [...this.equipments.values()].find(item => item.getIsEquipped() && item.equipment instanceof Shield);
+		return found as InventoryEquipment<Shield> | undefined;
+	}
+
 	getWieldedItems(): EquipmentName[] {
 		return Array.from(this.equipments.values())
-			.filter(item => item.getIsEquipped())
+			.filter(item => item.getIsEquipped() && item.equipment.isWieldable)
 			.map(item => item.equipment.name);
 	}
 

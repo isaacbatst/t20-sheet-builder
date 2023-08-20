@@ -4,6 +4,7 @@ import type {Proficiency} from '../Sheet/Proficiency';
 import type {SkillName} from '../Skill/SkillName';
 import type {RoleInterface, SelectSkillGroup} from './RoleInterface';
 import {RoleName} from './RoleName';
+import {type SerializedRole, type SerializedRoles} from './SerializedRole';
 
 export class RoleFake implements RoleInterface {
 	chosenSkills: SkillName[] = [];
@@ -30,4 +31,5 @@ export class RoleFake implements RoleInterface {
 	startsWithArmor = true;
 	getTotalInitialSkills = vi.fn(() => 5);
 	addToSheet = vi.fn();
+	serialize = vi.fn();
 }

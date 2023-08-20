@@ -2,13 +2,14 @@ import type {Attributes} from '../../Sheet/Attributes';
 import {Race} from '../Race';
 import type {RaceAbility} from '../RaceAbility';
 import {RaceName} from '../RaceName';
+import {type SerializedDwarf, type SerializedRace} from '../SerializedRace';
 import {HardAsRock} from './HardAsRock/HardAsRock';
 import {HeredrimmTradition} from './HeredrimmTradition/HeredrimmTradition';
 import {RockKnowledge} from './RockKnowledge/RockKnowledge';
 import {SlowAndAlways} from './SlowAndAlways/SlowAndAlways';
 
-export class Dwarf extends Race {
-	static raceName = RaceName.dwarf;
+export class Dwarf extends Race<SerializedDwarf> {
+	static readonly raceName = RaceName.dwarf;
 
 	static attributeModifiers: Partial<Attributes> = {
 		dexterity: -1,
@@ -27,5 +28,11 @@ export class Dwarf extends Race {
 
 	constructor() {
 		super(RaceName.dwarf);
+	}
+
+	protected override serializeSpecific(): SerializedDwarf {
+		return {
+			name: Dwarf.raceName,
+		};
 	}
 }

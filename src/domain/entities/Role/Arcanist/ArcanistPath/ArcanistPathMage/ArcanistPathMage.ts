@@ -2,6 +2,7 @@ import {AbilityEffects, type AbilityEffectsInterface} from '../../../../Ability/
 import type {Attribute} from '../../../../Sheet';
 import type {Spell} from '../../../../Spell/Spell';
 import type {SpellLearnFrequency} from '../../../SpellsAbility';
+import {type SerializedArcanistPath} from '../../SerializedArcanist';
 import {ArcanistPath, ArcanistPathName} from '../ArcanistPath';
 import {ArcanistPathMageExtraSpellEffect} from './ArcanistPathMageExtraSpellEffect';
 
@@ -22,5 +23,12 @@ export class ArcanistPathMage extends ArcanistPath {
 
 	getExtraSpell(): Spell {
 		return this.effects.passive.extraSpell.spell;
+	}
+
+	override serializePath(): SerializedArcanistPath {
+		return {
+			name: this.pathName,
+			extraSpell: this.getExtraSpell().name,
+		};
 	}
 }

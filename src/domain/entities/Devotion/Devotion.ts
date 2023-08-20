@@ -1,6 +1,7 @@
+import {SheetBuilderError} from '../../errors';
 import {PickGrantedPower} from '../Action/PickGrantedPower';
-import {type GrantedPowerName} from '../Power/GrantedPower/GrantedPowerName';
 import {type GrantedPower} from '../Power/GrantedPower/GrantedPower';
+import {type GrantedPowerName} from '../Power/GrantedPower/GrantedPowerName';
 import {type TransactionInterface} from '../Sheet/TransactionInterface';
 import {type Deity} from './Deities';
 
@@ -15,7 +16,7 @@ export class Devotion {
 		private _choosedPowers: GrantedPower[],
 	) {}
 
-	serialize() {
+	serialize(): SerializedDevotion {
 		return {
 			deity: this.deity,
 			choosedPowers: this._choosedPowers.map(power => power.name),
@@ -34,7 +35,7 @@ export class Devotion {
 		const sheetDevotion = transaction.sheet.getSheetDevotion();
 
 		if (sheetDevotion.getGrantedPowerCount() !== this._choosedPowers.length) {
-			throw new Error('INVALID_POWER_COUNT');
+			throw new SheetBuilderError('INVALID_POWER_COUNT');
 		}
 
 		if (this.deity.allowedToDevote !== 'all') {
@@ -46,7 +47,7 @@ export class Devotion {
 			);
 
 			if (!isRaceAllowedToDevote && !isRoleAllowedToDevote) {
-				throw new Error('NOT_ALLOWED_TO_DEVOTE');
+				throw new SheetBuilderError('NOT_ALLOWED_TO_DEVOTE');
 			}
 		}
 
@@ -54,7 +55,7 @@ export class Devotion {
 			const isAllowed = this.deity.grantedPowers.includes(power.name);
 
 			if (!isAllowed) {
-				throw new Error('NOT_ALLOWED_POWER');
+				throw new SheetBuilderError('NOT_ALLOWED_POWER');
 			}
 
 			transaction.run(new PickGrantedPower({

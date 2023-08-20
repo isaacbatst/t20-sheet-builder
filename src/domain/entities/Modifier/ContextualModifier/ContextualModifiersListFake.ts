@@ -1,8 +1,10 @@
+import {vi} from 'vitest';
 import type {ContextualModifierInterface} from './ContextualModifierInterface';
 import type {ContextualModifiersListInterface} from './ContextualModifiersListInterface';
-import {vi} from 'vitest';
 
 export class ContextualModifiersListFake implements ContextualModifiersListInterface {
+	serialize = vi.fn();
+	get = vi.fn();
 	modifiers: ContextualModifierInterface[] = [];
 	total = 0;
 	maxTotal = 0;

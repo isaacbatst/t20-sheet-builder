@@ -1,17 +1,18 @@
 import {type AbilityName, type AbilityType} from '../../Ability';
 import {type EquipmentName} from '../../Inventory';
 import {type ModifierType} from '../../Modifier';
-import {type OriginName} from '../../Origin';
+import {type SerializedOrigin} from '../../Origin';
 import {type GeneralPowerGroup, type GeneralPowerName, type OriginPowerName} from '../../Power';
 import {type GrantedPowerName} from '../../Power/GrantedPower/GrantedPowerName';
-import {type RaceAbilityName, type RaceName} from '../../Race';
-import {type RoleAbilityName, type RoleName, type RolePowerName} from '../../Role';
+import {type RaceAbilityName, type RaceName, type SerializedRace} from '../../Race';
+import {type RoleAbilityName, type RoleName, type RolePowerName, type SerializedRole} from '../../Role';
 import {type SkillName} from '../../Skill';
 import {type LearnableSpellType, type SpellCircle, type SpellName, type SpellSchool, type SpellType} from '../../Spell';
 import {type TranslatableName} from '../../Translator';
 import {type Attribute, type Attributes} from '../Attributes';
 import {type Proficiency} from '../Proficiency';
 import {type SerializedSheetDevotion} from '../SheetDevotion';
+import {type SerializedSheetResistencies} from '../SheetResistencesInterface';
 import {type Vision} from '../Vision';
 
 export type SerializedSheetEquipment<T extends EquipmentName = EquipmentName> = {
@@ -22,18 +23,13 @@ export type SerializedSheetOriginBenefit = {
 	name: SkillName | GeneralPowerName | OriginPowerName;
 };
 
-export type SerializedSheetOrigin = {
-	name: OriginName;
-	equipments: SerializedSheetEquipment[];
-	chosenBenefits: SerializedSheetOriginBenefit[];
-};
-
 export type SerializedSheetModifier = {
 	source: TranslatableName;
 	type: ModifierType;
 	baseValue: number;
 	appliableValue: number;
 	attributeBonuses: Attribute[];
+	totalAttributeBonuses: number;
 };
 
 export type SerializedSheetModifiersList = {
@@ -114,12 +110,18 @@ export type SerializedSheetDefense = {
 	total: number;
 };
 
+/**
+ * @deprecated Use "SerializedRace" instead
+ */
 export type SerializedSheetRace = {
 	name: RaceName;
 	attributeModifiers: Partial<Attributes>;
 	abilities: SerializedSheetRaceAbility[];
 };
 
+/**
+ * @deprecated Use "SerializedRole" instead
+ */
 export type SerializedSheetRole = {
 	initialLifePoints: number;
 	lifePointsPerLevel: number;
@@ -154,7 +156,6 @@ export type SerializedSheetInterface = {
 	level: number;
 	lifePoints: SerializedSheetPoints;
 	manaPoints: SerializedSheetPoints;
-	origin: SerializedSheetOrigin | undefined;
 	skills: SerializedSheetSkills;
 	tormentaPowersAttribute: Attribute;
 	learnedCircles:	SerializedSheetLearnedCircles;
@@ -168,10 +169,12 @@ export type SerializedSheetInterface = {
 	grantedPowersCount: number;
 	defense: SerializedSheetDefense;
 	vision: Vision;
-	race: SerializedSheetRace | undefined;
-	role: SerializedSheetRole | undefined;
+	race: SerializedRace | undefined;
+	role: SerializedRole | undefined;
+	origin: SerializedOrigin | undefined;
 	proficiencies: Proficiency[];
 	displacement: number;
 	devotion: SerializedSheetDevotion;
+	resistencies: SerializedSheetResistencies;
 };
 

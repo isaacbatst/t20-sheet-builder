@@ -53,4 +53,6 @@ export enum EquipmentName {
 	tauricAxe = 'tauricAxe',
 	pistol = 'pistol',
 	musket = 'musket',
+	lightShield = 'lightShield',
+	heavyShield = 'heavyShield',
 }

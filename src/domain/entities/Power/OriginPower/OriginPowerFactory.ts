@@ -1,3 +1,4 @@
+import {SheetBuilderError} from '../../../errors';
 import {type SkillName} from '../../Skill';
 import {ChurchMember} from './ChurchMember';
 import {type OriginPower} from './OriginPower';
@@ -18,13 +19,13 @@ export class OriginPowerFactory {
 
 		if (params.power === OriginPowerName.specialFriend) {
 			if (!params.specialFriendSkill) {
-				throw new Error('MISSING_SPECIAL_FRIEND_SKILL');
+				throw new SheetBuilderError('MISSING_SPECIAL_FRIEND_SKILL');
 			}
 
 			return new SpecialFriend(params.specialFriendSkill);
 		}
 
-		throw new Error('UNKNOWN_ORIGIN_POWER');
+		throw new SheetBuilderError('UNKNOWN_ORIGIN_POWER');
 	}
 
 	private static readonly map: Record<OriginPowerName, OriginPowerStatic> = {

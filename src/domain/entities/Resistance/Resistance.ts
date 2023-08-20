@@ -1,12 +1,19 @@
+import {type SerializedSheetModifiersList, type ContextInterface, type TranslatableName} from '..';
 import {FixedModifier, FixedModifiersList, FixedModifiersListTotalCalculator} from '../Modifier';
-import {type ResistanceName} from './ResistanceName';
 import {type Attributes} from '../Sheet/Attributes';
-import {type TranslatableName} from '..';
+import {type SheetInterface} from '../Sheet/SheetInterface';
+import {type ResistanceName} from './ResistanceName';
+
+export type SerializedResistance = {
+	resisted: ResistanceName;
+	fixedModifiers: SerializedSheetModifiersList;
+	source: TranslatableName;
+};
 
 export class Resistance {
-	private readonly resisted: ResistanceName;
+	readonly source: TranslatableName;
+	readonly resisted: ResistanceName;
 	private readonly fixedModifiers: FixedModifiersList;
-	private readonly source: TranslatableName;
 
 	constructor(resistance: ResistanceName, value: number, source: TranslatableName) {
 		this.resisted = resistance;
@@ -18,5 +25,13 @@ export class Resistance {
 	getTotal(attributes: Attributes) {
 		const calculator = new FixedModifiersListTotalCalculator(attributes);
 		return this.fixedModifiers.getTotal(calculator);
+	}
+
+	serialize(sheet: SheetInterface, context: ContextInterface): SerializedResistance {
+		return {
+			resisted: this.resisted,
+			fixedModifiers: this.fixedModifiers.serialize(sheet, context),
+			source: this.source,
+		};
 	}
 }
