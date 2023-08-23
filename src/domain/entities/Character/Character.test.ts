@@ -46,6 +46,14 @@ describe('Character', () => {
 		character = new Character(sheet);
 	});
 
+	it('should get trained skill', () => {
+		expect(character.sheet.getSheetSkills().getSkill(SkillName.fight).getIsTrained()).toBeTruthy()
+	})
+
+	it('should get untrained skill', () => {
+		expect(character.sheet.getSheetSkills().getSkill(SkillName.animalHandling).getIsTrained()).toBeFalsy()
+	})
+
 	it('should have fight style', () => {
 		expect(character.getFightStyle()).toBeDefined();
 	});

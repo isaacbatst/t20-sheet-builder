@@ -48,6 +48,9 @@ export abstract class Sheet implements SheetInterface {
 	protected abstract sheetDevotion: SheetDevotion;
 	protected abstract sheetResistences: SheetResistencesInterface;
 
+/**
+* @deprecated Use `character.getAttacks()` instead for getting attacks with all character modifiers (like fight style).
+*/
 	getAttacks(skillTotalCalculator = this.makeSkillTotalCalculator()): Map<EquipmentName, CharacterAttack> {
 		const attacks = new Map<EquipmentName, CharacterAttack>();
 		const inventory = this.getSheetInventory();

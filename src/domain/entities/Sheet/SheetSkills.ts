@@ -53,7 +53,7 @@ export class SheetSkills implements SheetSkillsInterface {
 			acc.skills[skillName as SkillName] = this.serializeSkill(skill, calculator, sheet, context);
 			return acc;
 			// eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
-		}, {} as SerializedSheetSkills);
+		}, {skills: {}, intelligenceSkills: []} as unknown as SerializedSheetSkills);
 		serialized.intelligenceSkills = this.intelligenceSkills;
 		return serialized;
 	}
