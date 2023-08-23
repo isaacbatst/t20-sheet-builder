@@ -3,6 +3,7 @@ import {OutOfGameContext, type ContextInterface} from '../Context';
 import type {EquipmentName} from '../Inventory';
 import {OffensiveWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/OffensiveWeapon';
 import {type GeneralPowerMap} from '../Map';
+import {type ModifiersMaxTotalCalculators} from '../Modifier/Modifiers';
 import {FightStyle} from '../Power/GeneralPower/CombatPower/FightStyle/FightStyle';
 import type {Attributes} from '../Sheet';
 import type {CharacterSheet} from '../Sheet/CharacterSheet/CharacterSheet';
@@ -56,7 +57,10 @@ export class Character implements CharacterInterface {
 		const equipments = inventory.getEquipments();
 		equipments.forEach(({equipment}) => {
 			if (equipment instanceof OffensiveWeapon) {
-				const attack = new CharacterAttack(new WeaponAttack(equipment), this.modifiers.attack);
+				const attack = new CharacterAttack(new WeaponAttack(equipment), {
+					test: this.modifiers.attack,
+					damage: this.modifiers.damage,
+				});
 				attacks.set(equipment.name, attack);
 			}
 		});
@@ -64,8 +68,8 @@ export class Character implements CharacterInterface {
 		return attacks;
 	}
 
-	getAttackMaxTotal(attack: CharacterAttack): number {
-		return attack.getModifiersMaxTotal(this.getAttributes());
+	getAttackTestModifiersMaxTotal(attack: CharacterAttack, calculators: ModifiersMaxTotalCalculators): number {
+		return attack.getTestModifiersMaxTotal(this.getAttributes(), calculators);
 	}
 
 	getWieldedItems(): EquipmentName[] {

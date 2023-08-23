@@ -9,9 +9,9 @@ describe('Attack', () => {
 		const attack = new Attack(damage, critical);
 		const fakeRandom = {get: vi.fn(() => 1)};
 		const result = attack.roll(fakeRandom);
-		expect(result.rolls).toEqual([1]);
-		expect(result.discartedRolls).toEqual([]);
-		expect(result.total).toEqual(1);
+		expect(result.damage.rolls).toEqual([1]);
+		expect(result.damage.discartedRolls).toEqual([]);
+		expect(result.damage.total).toEqual(1);
 	});
 
 	it('should calculate critical roll 20/x2', () => {
@@ -20,9 +20,9 @@ describe('Attack', () => {
 		const attack = new Attack(damage, critical);
 		const fakeRandom = {get: vi.fn().mockReturnValueOnce(20).mockReturnValue(1)};
 		const result = attack.roll(fakeRandom);
-		expect(result.rolls).toEqual([1, 1]);
-		expect(result.discartedRolls).toEqual([]);
-		expect(result.total).toEqual(2);
+		expect(result.damage.rolls).toEqual([1, 1]);
+		expect(result.damage.discartedRolls).toEqual([]);
+		expect(result.damage.total).toEqual(2);
 	});
 
 	it('should calculate critical roll 19/x3', () => {
@@ -31,8 +31,9 @@ describe('Attack', () => {
 		const attack = new Attack(damage, critical);
 		const fakeRandom = {get: vi.fn().mockReturnValueOnce(19).mockReturnValue(1)};
 		const result = attack.roll(fakeRandom);
-		expect(result.rolls).toEqual([1, 1, 1]);
-		expect(result.discartedRolls).toEqual([]);
-		expect(result.total).toEqual(3);
+		expect(result.damage.rolls).toEqual([1, 1, 1]);
+		expect(result.damage.discartedRolls).toEqual([]);
+		expect(result.damage.total).toEqual(3);
+		expect(result.test.total).toEqual(19);
 	});
 });

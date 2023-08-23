@@ -88,14 +88,14 @@ describe('Character', () => {
 		});
 
 		it('should get dagger attack without one weapon style modifier', () => {
-			expect(context.getCharacterAttackModifiersMaxTotal(dagger)).toBe(2);
-			expect(context.getCharacterAttackModifiersTotal(dagger)).toBe(0);
+			expect(context.getCharacterAttackTestModifiersMaxTotal(dagger)).toBe(2);
+			expect(context.getCharacterAttackTestModifiersTotal(dagger)).toBe(0);
 		});
 
 		it('should get dagger attack with one weapon style modifier', () => {
 			character.toggleEquipItem(EquipmentName.dagger);
-			expect(context.getCharacterAttackModifiersMaxTotal(dagger)).toBe(2);
-			expect(context.getCharacterAttackModifiersTotal(dagger)).toBe(2);
+			expect(context.getCharacterAttackTestModifiersMaxTotal(dagger)).toBe(2);
+			expect(context.getCharacterAttackTestModifiersTotal(dagger)).toBe(2);
 		});
 
 		it('should unselect fight style and remove modifiers', () => {
@@ -103,31 +103,33 @@ describe('Character', () => {
 			expect(fightStyle).toBeDefined();
 			character.unselectFightStyle();
 			expect(character.getFightStyle()).toBeUndefined();
-			expect(context.getCharacterAttackModifiersMaxTotal(dagger)).toBe(0);
-			expect(context.getCharacterAttackModifiersTotal(dagger)).toBe(0);
+			expect(context.getCharacterAttackTestModifiersMaxTotal(dagger)).toBe(0);
+			expect(context.getCharacterAttackTestModifiersTotal(dagger)).toBe(0);
 		});
 
 		it('should roll dagger attack', () => {
 			const fakeRandom = {get: vi.fn(() => 1)};
 			const result = context.roll(dagger, fakeRandom);
-			expect(result.rollResult.rolls).toEqual([1]);
-			expect(result.rollResult.discartedRolls).toEqual([]);
-			expect(result.rollResult.total).toEqual(1);
-			expect(result.total).toBe(1);
+			expect(result.damage.rollResult.rolls).toEqual([1]);
+			expect(result.damage.rollResult.discartedRolls).toEqual([]);
+			expect(result.damage.rollResult.total).toBe(1);
+			expect(result.damage.total).toEqual(1);
+			expect(result.test.total).toBe(1);
 		});
 
 		it('should roll dagger attack with one weapon style modifier', () => {
 			character.toggleEquipItem(EquipmentName.dagger);
 			const fakeRandom = {get: vi.fn(() => 1)};
 			const result = context.roll(dagger, fakeRandom);
-			expect(result.rollResult.total).toBe(1);
-			expect(result.rollResult.rolls).toEqual([1]);
-			expect(result.rollResult.discartedRolls).toEqual([]);
-			expect(result.modifiers.contextual.modifiers).toHaveLength(1);
-			const oneWeaponStyleModifier = result.modifiers.contextual.get(GeneralPowerName.oneWeaponStyle);
+			expect(result.damage.total).toBe(1);
+			expect(result.damage.rollResult.rolls).toEqual([1]);
+			expect(result.damage.rollResult.discartedRolls).toEqual([]);
+			expect(result.test.modifiers.contextual.modifiers).toHaveLength(1);
+			const oneWeaponStyleModifier = result.test.modifiers.contextual.get(GeneralPowerName.oneWeaponStyle);
 			expect(oneWeaponStyleModifier).toBeDefined();
 			expect(oneWeaponStyleModifier?.baseValue).toBe(2);
-			expect(result.total).toBe(3);
+			expect(result.damage.total).toBe(1);
+			expect(result.test.total).toBe(3);
 		});
 	});
 });
