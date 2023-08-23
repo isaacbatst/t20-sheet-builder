@@ -1,5 +1,5 @@
 import {WeaponAttack} from '../Attack/WeaponAttack';
-import {SheetPreviewContext} from '../Context/SheetPreviewContext';
+import {PreviewContext} from '../Context/PreviewContext';
 import {Dagger, EquipmentName, LeatherArmor, LongSword} from '../Inventory';
 import {Acolyte, OriginBenefitGeneralPower, OriginBenefitSkill} from '../Origin';
 import type {OriginInterface} from '../Origin/Origin';
@@ -74,10 +74,10 @@ describe('Character', () => {
 
 	describe('Attack', () => {
 		let dagger: CharacterAttack;
-		let context: SheetPreviewContext;
+		let context: PreviewContext;
 
 		beforeEach(() => {
-			context = new SheetPreviewContext(character);
+			context = new PreviewContext(character);
 			const attacks = context.getAttacks();
 			dagger = attacks.get(EquipmentName.dagger)!;
 		});

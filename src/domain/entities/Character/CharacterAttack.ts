@@ -1,8 +1,8 @@
-import type {Attack} from '../Attack/Attack';
+import type {Attack, SerializedAttack} from '../Attack/Attack';
 import {type ContextInterface} from '../Context';
 import {type RollResult} from '../Dice/RollResult';
 import {type FixedModifier, type ContextualModifiersListTotalCalculator} from '../Modifier';
-import {Modifiers, type ModifiersMaxTotalCalculators, type ModifiersTotalCalculators} from '../Modifier/Modifiers';
+import {Modifiers, type SerializedModifiers, type ModifiersMaxTotalCalculators, type ModifiersTotalCalculators} from '../Modifier/Modifiers';
 import {type RandomInterface} from '../Random';
 import {type Attributes} from '../Sheet';
 import {type SheetInterface} from '../Sheet/SheetInterface';
@@ -23,6 +23,14 @@ type AttackResult = {
 type CharacterAttackModifiers = {
 	test: Modifiers;
 	damage: Modifiers;
+};
+
+export type SerializedCharacterAttack = {
+	attack: SerializedAttack;
+	modifiers: {
+		test: SerializedModifiers;
+		damage: SerializedModifiers;
+	};
 };
 
 export class CharacterAttack {
@@ -74,7 +82,7 @@ export class CharacterAttack {
 		return this.modifiers.damage.getTotal(calculators);
 	}
 
-	serialize(sheet: SheetInterface, context: ContextInterface) {
+	serialize(sheet: SheetInterface, context: ContextInterface): SerializedCharacterAttack {
 		return {
 			attack: this.attack.serialize(),
 			modifiers: {

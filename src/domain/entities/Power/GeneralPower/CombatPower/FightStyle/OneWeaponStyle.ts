@@ -2,7 +2,7 @@ import {AbilityEffects} from '../../../../Ability/AbilityEffects';
 import {type Character} from '../../../../Character';
 import {CharacterAppliedFightStyle} from '../../../../Character/CharacterAppliedFightStyle';
 import {type CharacterModifiers} from '../../../../Character/CharacterModifiers';
-import {type CharacterContextAbstract} from '../../../../Context/CharacterContextAbstract';
+import {type PreviewContextAbstract} from '../../../../Context/PreviewContextAbstract';
 import {ContextualModifier} from '../../../../Modifier/ContextualModifier/ContextualModifier';
 import {type ModifierCondition} from '../../../../Modifier/ContextualModifier/ContextualModifiersListInterface';
 import {SkillName} from '../../../../Skill';
@@ -20,8 +20,8 @@ export class OneWeaponStyle extends FightStyle {
 
 	private readonly condition: ModifierCondition = {
 		description: 'Se estiver usando uma arma corpo a corpo em uma das mãos e nada na outra,',
-		verify(context: CharacterContextAbstract) {
-			return context.character.getWieldedItems().length === 1;
+		verify(context: PreviewContextAbstract) {
+			return context.character?.getWieldedItems().length === 1;
 		},
 	};
 

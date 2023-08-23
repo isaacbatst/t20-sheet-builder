@@ -4,6 +4,7 @@ import type {CharacterInterface} from './CharacterInterface';
 import {CharacterModifiers} from './CharacterModifiers';
 
 export class CharacterFake implements CharacterInterface {
+	serialize = vi.fn();
 	sheet: CharacterSheetInterface = new CharacterSheetFake();
 
 	modifiers: CharacterModifiers = new CharacterModifiers();

@@ -4,6 +4,7 @@ import {type CharacterAttack} from '../Character/CharacterAttack';
 import {type ContextInterface} from '../Context';
 import {type EquipmentName} from '../Inventory/Equipment/EquipmentName';
 import type {TriggeredEffectMap} from '../Map';
+import {type SkillTotalCalculator} from '../Skill/SkillTotalCalculator';
 import {type SerializedSheetInterface} from './SerializedSheet';
 import {type SheetAbilitiesInterface} from './SheetAbilitiesInterface';
 import {type SheetAttributesInterface} from './SheetAttributesInterface';
@@ -28,7 +29,7 @@ export type SheetTriggeredEffects = Record<TriggerEvent, TriggeredEffectMap>;
 export type SheetInterface = {
 	serialize(context?: ContextInterface): SerializedSheetInterface;
 	pushBuildSteps(...buildSteps: BuildStepInterface[]): void;
-	getAttacks(): Map<EquipmentName, CharacterAttack>;
+	getAttacks(skillTotalCalculator?: SkillTotalCalculator): Map<EquipmentName, CharacterAttack>;
 	getBuildSteps(): BuildStepInterface[];
 	getLevel(): number;
 	getSheetAbilities(): SheetAbilitiesInterface;

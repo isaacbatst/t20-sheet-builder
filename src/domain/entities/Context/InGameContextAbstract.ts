@@ -1,8 +1,8 @@
 import type {Location} from '../Sheet/CharacterSheet/CharacterSheetInterface';
-import {CharacterContextAbstract} from './CharacterContextAbstract';
+import {PreviewContextAbstract} from './PreviewContextAbstract';
 import {type ContextType} from './ContextInterface';
 
-export abstract class InGameContextAbstract extends CharacterContextAbstract {
+export abstract class InGameContextAbstract extends PreviewContextAbstract {
 	get type(): ContextType {
 		return 'ingame';
 	}

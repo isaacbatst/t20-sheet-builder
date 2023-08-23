@@ -48,15 +48,7 @@ export abstract class Sheet implements SheetInterface {
 	protected abstract sheetDevotion: SheetDevotion;
 	protected abstract sheetResistences: SheetResistencesInterface;
 
-	/**
-	* @deprecated Use `character.getAttacks` instead
-	*/
-	getAttacks(): Map<EquipmentName, CharacterAttack> {
-		const skillTotalCalculator = SkillTotalCalculatorFactory.make(
-			this.getSheetAttributes().getValues(),
-			this.getLevel(),
-			new OutOfGameContext(),
-		);
+	getAttacks(skillTotalCalculator = this.makeSkillTotalCalculator()): Map<EquipmentName, CharacterAttack> {
 		const attacks = new Map<EquipmentName, CharacterAttack>();
 		const inventory = this.getSheetInventory();
 		const equipments = inventory.getEquipments();
@@ -68,6 +60,14 @@ export abstract class Sheet implements SheetInterface {
 		});
 
 		return attacks;
+	}
+
+	makeSkillTotalCalculator(context: ContextInterface = new OutOfGameContext()) {
+		return SkillTotalCalculatorFactory.make(
+			this.getSheetAttributes().getValues(),
+			this.getLevel(),
+			context,
+		);
 	}
 
 	makeCharacterAttack(equipment: OffensiveWeapon, skillTotalCalculator: SkillTotalCalculator) {

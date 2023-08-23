@@ -1,7 +1,7 @@
 import {PassiveEffect} from '../../../Ability/PassiveEffect';
 import {AddContextualModifierToSkill} from '../../../Action/AddContextualModifierToSkill';
 import {ChangeVision} from '../../../Action/ChangeVision';
-import type {CharacterContextAbstract} from '../../../Context/CharacterContextAbstract';
+import type {PreviewContextAbstract} from '../../../Context/PreviewContextAbstract';
 import {ContextualModifier} from '../../../Modifier/ContextualModifier/ContextualModifier';
 import type {ModifierCondition} from '../../../Modifier/ContextualModifier/ContextualModifiersListInterface';
 import {type TransactionInterface} from '../../../Sheet/TransactionInterface';
@@ -16,7 +16,7 @@ export class RockKnowledgeEffect extends PassiveEffect {
 
 	static readonly condition: ModifierCondition = {
 		description: 'testes devem ser realizados no subterrâneo',
-		verify: (context: CharacterContextAbstract) => context.getCurrentLocation()?.isUnderground ?? false,
+		verify: (context: PreviewContextAbstract) => context.getCurrentLocation()?.isUnderground ?? false,
 	};
 
 	static get skillModifier() {

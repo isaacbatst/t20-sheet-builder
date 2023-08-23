@@ -1,3 +1,5 @@
+import {type SerializedCharacter} from '.';
+import {type ContextInterface} from '../Context';
 import type {EquipmentName} from '../Inventory';
 import {type FightStyle} from '../Power/GeneralPower/CombatPower/FightStyle/FightStyle';
 import {type CharacterSheetInterface} from '../Sheet';
@@ -13,7 +15,7 @@ export type CharacterInterface = {
 	sheet: CharacterSheetInterface;
 	selectFightStyle(fightStyle: FightStyle): void;
 	unselectFightStyle(): void;
-
+	serialize(context: ContextInterface, skillTotalCalculator: SkillTotalCalculator): SerializedCharacter;
 	getAttributes(): Attributes;
 	getAttacks(skillTotalCalculator: SkillTotalCalculator): Map<EquipmentName, CharacterAttack>;
 	changeAttackTestAttribute(attack: CharacterAttack, attribute: Attribute, calculator: SkillTotalCalculatorFactory): void;

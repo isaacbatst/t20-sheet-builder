@@ -3,4 +3,4 @@ export * from './ContextInterface';
 export * from './InGameContext';
 export * from './InGameContextAbstract';
 export * from './OutOfGameContext';
-export * from './SheetPreviewContext';
+export * from './PreviewContext';

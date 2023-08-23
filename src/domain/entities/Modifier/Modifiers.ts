@@ -1,4 +1,5 @@
 import {type ContextInterface} from '../Context';
+import {type SerializedSheetContextualModifiersList, type SerializedSheetModifiersList, type SerializedSheetPerLevelModifiersList} from '../Sheet';
 import {type Attributes} from '../Sheet/Attributes';
 import {type SheetInterface} from '../Sheet/SheetInterface';
 import {ContextualModifiersList, type ContextualModifiersListTotalCalculator} from './ContextualModifier';
@@ -18,6 +19,12 @@ export type ModifiersTotalCalculators = {
 };
 
 export type ModifiersMaxTotalCalculators = Omit<ModifiersTotalCalculators, 'contextCalculator'>;
+
+export type SerializedModifiers = {
+	fixed: SerializedSheetModifiersList;
+	contextual: SerializedSheetContextualModifiersList;
+	perLevel: SerializedSheetPerLevelModifiersList;
+};
 
 export class Modifiers {
 	readonly fixed: FixedModifiersList;
@@ -49,7 +56,7 @@ export class Modifiers {
 			+ this.perLevel.getTotal(perLevelCalculator);
 	}
 
-	serialize(sheet: SheetInterface, context: ContextInterface) {
+	serialize(sheet: SheetInterface, context: ContextInterface): SerializedModifiers {
 		return {
 			fixed: this.fixed.serialize(sheet, context),
 			contextual: this.contextual.serialize(sheet, context),
