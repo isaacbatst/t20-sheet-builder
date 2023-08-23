@@ -2,7 +2,7 @@ import {PassiveEffect} from '../../Ability';
 import {AddFixedModifierToSkill} from '../../Action/AddFixedModifierToSkill';
 import {ChangeVision} from '../../Action/ChangeVision';
 import {FixedModifier} from '../../Modifier';
-import {Vision} from '../../Sheet';
+import {Vision} from '../../Sheet/Vision';
 import {type TransactionInterface} from '../../Sheet/TransactionInterface';
 import {SkillName} from '../../Skill';
 import {RaceAbilityName} from '../RaceAbilityName';

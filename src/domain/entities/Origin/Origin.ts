@@ -6,7 +6,7 @@ import type {OriginBenefit} from './OriginBenefit/OriginBenefit';
 import {type OriginBenefits} from './OriginBenefit/OriginBenefits';
 import {type SerializedOriginBenefit, type SerializedOriginBenefits} from './OriginBenefit/SerializedOriginBenefit';
 import type {OriginName} from './OriginName';
-import {type SerializedOrigins} from './SerializedOrigin';
+import {SerializedSheetOrigin, type SerializedOrigins} from './SerializedOrigin';
 
 export type OriginInterface<
 	Sb extends SerializedOriginBenefit = SerializedOriginBenefits,
@@ -39,7 +39,7 @@ export abstract class Origin<
 		this.applyBenefits(transaction);
 	}
 
-	abstract serialize(): So;
+	abstract serialize(): SerializedSheetOrigin<So>;
 
 	protected serializeBenefits(): Sb[] {
 		return this.chosenBenefits.map(benefit => benefit.serialize());

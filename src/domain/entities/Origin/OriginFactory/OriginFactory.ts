@@ -1,18 +1,18 @@
-import {SheetBuilderError} from '../../../errors';
-import {GeneralPowerFactory, OriginPowerFactory, OriginPowerName, SpecialFriend} from '../../Power';
-import {Acolyte} from '../Acolyte/Acolyte';
-import {AnimalsFriend} from '../AnimalsFriend/AnimalsFriend';
-import {OriginBenefitFactoryAcolyte} from '../OriginBenefit/OriginBenefitFactory/OriginBenefitFactoryAcolyte';
-import {OriginBenefitFactoryAnimalsFriend} from '../OriginBenefit/OriginBenefitFactory/OriginBenefitFactoryAnimalsFriend';
-import {OriginBenefitGeneralPower} from '../OriginBenefit/OriginBenefitGeneralPower';
-import {OriginBenefitOriginPower} from '../OriginBenefit/OriginBenefitOriginPower';
-import {OriginBenefitSkill} from '../OriginBenefit/OriginBenefitSkill';
-import {type SerializedOriginBenefit} from '../OriginBenefit/SerializedOriginBenefit';
-import {OriginName} from '../OriginName';
-import {type SerializedOrigins} from '../SerializedOrigin';
+import { SheetBuilderError } from '../../../errors';
+import { GeneralPowerFactory, OriginPowerFactory, OriginPowerName, SpecialFriend } from '../../Power';
+import { Acolyte } from '../Acolyte/Acolyte';
+import { AnimalsFriend } from '../AnimalsFriend/AnimalsFriend';
+import { OriginBenefitFactoryAcolyte } from '../OriginBenefit/OriginBenefitFactory/OriginBenefitFactoryAcolyte';
+import { OriginBenefitFactoryAnimalsFriend } from '../OriginBenefit/OriginBenefitFactory/OriginBenefitFactoryAnimalsFriend';
+import { OriginBenefitGeneralPower } from '../OriginBenefit/OriginBenefitGeneralPower';
+import { OriginBenefitOriginPower } from '../OriginBenefit/OriginBenefitOriginPower';
+import { OriginBenefitSkill } from '../OriginBenefit/OriginBenefitSkill';
+import { type SerializedOriginBenefit } from '../OriginBenefit/SerializedOriginBenefit';
+import { OriginName } from '../OriginName';
+import { SerializedOrigins, SerializedSheetOrigin } from '../SerializedOrigin';
 
 export class OriginFactory {
-	static makeFromSerialized(serialized: SerializedOrigins) {
+	static makeFromSerialized<T extends SerializedOrigins>(serialized: SerializedSheetOrigin<T>) {
 		if (serialized.name === OriginName.acolyte) {
 			const benefitFactory = new OriginBenefitFactoryAcolyte();
 			const benefits = serialized.chosenBenefits.map(benefitFactory.makeFromSerialized);

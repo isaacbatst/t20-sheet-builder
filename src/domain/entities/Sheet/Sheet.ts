@@ -207,6 +207,7 @@ export abstract class Sheet implements SheetInterface {
 			lifePoints: this.getSheetLifePoints().serialize(this, context),
 			manaPoints: this.getSheetManaPoints().serialize(this, context),
 			equipments: this.getSheetInventory().serialize(),
+			initialEquipment: this.getSheetInventory().serializeInitialEquipment(),
 			generalPowers: powers.serializeGeneralPowers(),
 			rolePowers: powers.serializeRolePowers(),
 			originPowers: powers.serializeOriginPowers(),

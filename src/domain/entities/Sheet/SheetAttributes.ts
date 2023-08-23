@@ -1,7 +1,12 @@
 import {type Attribute, type Attributes} from './Attributes';
+import {type SerializedSheetInterface} from './SerializedSheet';
 import {type SheetAttributesInterface} from './SheetAttributesInterface';
 
 export class SheetAttributes implements SheetAttributesInterface {
+	static makeFromSerialized(serialized: SerializedSheetInterface) {
+		return new SheetAttributes(serialized.attributes, serialized.tormentaPowersAttribute);
+	}
+
 	constructor(
 		private attributes: Attributes = {
 			charisma: 0,
@@ -12,9 +17,7 @@ export class SheetAttributes implements SheetAttributesInterface {
 			wisdom: 0,
 		},
 		private tormentaPowersAttribute: Attribute = 'charisma',
-	) {
-
-	}
+	) {}
 
 	setInitialAttributes(attributes: Attributes): void {
 		this.attributes = attributes;

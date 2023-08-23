@@ -15,3 +15,4 @@ export type SerializedAnimalsFriend = SerializedOrigin<SerializedOriginBenefitsA
 };
 
 export type SerializedOrigins = SerializedAcolyte | SerializedAnimalsFriend;
+export type SerializedSheetOrigin<T extends SerializedOrigins = SerializedOrigins> = T

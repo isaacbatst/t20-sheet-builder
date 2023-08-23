@@ -1,3 +1,4 @@
+import { RoleFactory } from '..';
 import {SheetBuilderError} from '../../errors';
 import {AddInitialEquipment} from '../Action/AddInitialEquipment';
 import {BecomeDevout} from '../Action/BecomeDevout';
@@ -6,17 +7,22 @@ import {ChooseRace} from '../Action/ChooseRace';
 import {ChooseRole} from '../Action/ChooseRole';
 import {SetInitialAttributes} from '../Action/SetInitialAttributes';
 import {TrainIntelligenceSkills} from '../Action/TrainIntelligenceSkills';
-import {type Devotion} from '../Devotion/Devotion';
+import { Devotion} from '../Devotion/Devotion';
+import { SimpleWeaponFactory, MartialWeaponFactory, LeatherArmor } from '../Inventory';
 import type {Armor} from '../Inventory/Equipment/Weapon/DefensiveWeapon/Armor/Armor';
 import type {MartialWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/MartialWeapon/MartialWeapon';
 import type {SimpleWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/SimpleWeapon/SimpleWeapon';
+import { OriginFactory } from '../Origin';
 import type {OriginInterface} from '../Origin/Origin';
+import { GrantedPowerFactory } from '../Power';
+import { RaceFactory } from '../Race';
 import type {RaceInterface} from '../Race/RaceInterface';
 import type {RoleInterface} from '../Role/RoleInterface';
 import type {SkillName} from '../Skill/SkillName';
 import type {Attributes} from './Attributes';
 import {BuildingSheet} from './BuildingSheet/BuildingSheet';
 import {CharacterSheet} from './CharacterSheet/CharacterSheet';
+import { SerializedSheetInterface } from './SerializedSheet';
 import {Transaction} from './Transaction';
 
 export type SheetBuilderInitialEquipmentParams = {
@@ -37,6 +43,54 @@ export type SheetBuilderInterface = {
 };
 
 export class SheetBuilder implements SheetBuilderInterface {
+	static makeFromSerialized(serialized: SerializedSheetInterface): CharacterSheet {
+		const sheetBuilder = new SheetBuilder();
+
+		if (!serialized.race) {
+			throw new SheetBuilderError('MISSING_RACE');
+		}
+
+		if (!serialized.role) {
+			throw new SheetBuilderError('MISSING_ROLE');
+		}
+
+		if (!serialized.origin) {
+			throw new SheetBuilderError('MISSING_ORIGIN');
+		}
+
+		const race = RaceFactory.makeFromSerialized(serialized.race);
+		sheetBuilder.chooseRace(race);
+		const role = RoleFactory.makeFromSerialized(serialized.role);
+		sheetBuilder.chooseRole(role);
+		const origin = OriginFactory.makeFromSerialized(serialized.origin);
+		sheetBuilder.chooseOrigin(origin);
+		sheetBuilder.trainIntelligenceSkills(serialized.skills.intelligenceSkills);
+
+		if (serialized.devotion.devotion) {
+			const powers = serialized.devotion.devotion.choosedPowers.map((power) =>
+				GrantedPowerFactory.make(power)
+			);
+			sheetBuilder.addDevotion(
+				new Devotion(serialized.devotion.devotion.deity, powers)
+			);
+		}
+		
+		if (serialized.initialEquipment?.simpleWeapon) {
+			const {money, armor, martialWeapon, simpleWeapon} = serialized.initialEquipment;
+			sheetBuilder.addInitialEquipment({
+				simpleWeapon: SimpleWeaponFactory.makeFromSerialized(simpleWeapon),
+				martialWeapon: martialWeapon
+					? MartialWeaponFactory.makeFromSerialized(martialWeapon)
+					: undefined,
+				armor: new LeatherArmor(),
+				money: money,
+			});
+		}
+
+		return sheetBuilder.build();
+	}
+
+
 	constructor(private sheet = new BuildingSheet()) {}
 
 	getBuildingSheet(): BuildingSheet {

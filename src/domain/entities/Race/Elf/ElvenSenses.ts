@@ -1,4 +1,4 @@
-import {AbilityEffects, type AbilityEffectsInterface} from '../../Ability';
+import {AbilityEffects} from '../../Ability';
 import {RaceAbility} from '../RaceAbility';
 import {RaceAbilityName} from '../RaceAbilityName';
 import {ElvenSensesEffect} from './ElvenSensesEffect';

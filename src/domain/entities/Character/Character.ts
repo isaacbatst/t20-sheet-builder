@@ -5,7 +5,8 @@ import {type GeneralPowerMap} from '../Map';
 import {FixedModifier} from '../Modifier';
 import {type ModifiersMaxTotalCalculators} from '../Modifier/Modifiers';
 import {FightStyle} from '../Power/GeneralPower/CombatPower/FightStyle/FightStyle';
-import type {Attribute, Attributes, CharacterSheetInterface, SerializedSheetGeneralPower, SerializedSheetInterface} from '../Sheet';
+import {CharacterSheet, type Attribute, type Attributes, type CharacterSheetInterface, type SerializedSheetGeneralPower, type SerializedSheetInterface} from '../Sheet';
+import { SheetBuilder } from '../Sheet/SheetBuilder';
 import {type SkillTotalCalculator} from '../Skill/SkillTotalCalculator';
 import {SkillTotalCalculatorFactory} from '../Skill/SkillTotalCalculatorFactory';
 import type {CharacterAppliedFightStyle} from './CharacterAppliedFightStyle';
@@ -22,6 +23,11 @@ export type SerializedCharacter = {
 };
 
 export class Character implements CharacterInterface {
+	static makeFromSerialized(serialized: SerializedCharacter): Character {
+		const sheet = SheetBuilder.makeFromSerialized(serialized.sheet);
+		return new Character(sheet);
+	}
+
 	private get maxWieldedItems() {
 		return 2;
 	}

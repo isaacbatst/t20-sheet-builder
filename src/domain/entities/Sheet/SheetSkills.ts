@@ -1,18 +1,18 @@
-import {type ContextInterface} from '../Context';
-import {type ContextualModifierInterface} from '../Modifier/ContextualModifier/ContextualModifierInterface';
-import {type ModifierInterface} from '../Modifier/ModifierInterface';
-import {type SkillName} from '../Skill';
-import {InitialSkillsGenerator} from '../Skill/InitialSkillsGenerator';
-import {type Skill} from '../Skill/Skill';
-import {type SkillTotalCalculator} from '../Skill/SkillTotalCalculator';
-import {SkillTotalCalculatorFactory} from '../Skill/SkillTotalCalculatorFactory';
-import {type Attributes} from './Attributes';
-import {type Level} from './Level';
-import {type SerializedSheetSkill, type SerializedSheetSkills} from './SerializedSheet/SerializedSheetInterface';
-import {type SheetInterface} from './SheetInterface';
-import {type SheetSkillsInterface} from './SheetSkillsInterface';
+import { type ContextInterface } from '../Context';
+import { type ContextualModifierInterface } from '../Modifier/ContextualModifier/ContextualModifierInterface';
+import { type ModifierInterface } from '../Modifier/ModifierInterface';
+import { type SkillName } from '../Skill';
+import { InitialSkillsGenerator } from '../Skill/InitialSkillsGenerator';
+import { type Skill } from '../Skill/Skill';
+import { type SkillTotalCalculator } from '../Skill/SkillTotalCalculator';
+import { SkillTotalCalculatorFactory } from '../Skill/SkillTotalCalculatorFactory';
+import { type SerializedSheetSkill, type SerializedSheetSkills } from './SerializedSheet/SerializedSheetInterface';
+import { type SheetInterface } from './SheetInterface';
+import { type SheetSkillsInterface } from './SheetSkillsInterface';
 
 export class SheetSkills implements SheetSkillsInterface {
+	readonly intelligenceSkills: SkillName[] = []
+
 	constructor(
 		private readonly skills = InitialSkillsGenerator.generate(),
 	) {}
@@ -36,6 +36,7 @@ export class SheetSkills implements SheetSkillsInterface {
 	trainIntelligenceSkills(skills: SkillName[]): void {
 		skills.forEach(skill => {
 			this.skills[skill].train();
+			this.intelligenceSkills.push(skill);
 		});
 	}
 
@@ -49,11 +50,11 @@ export class SheetSkills implements SheetSkillsInterface {
 		const calculator = SkillTotalCalculatorFactory.make(attributes, level, context);
 		const entries = Object.entries(this.skills);
 		const serialized = entries.reduce<SerializedSheetSkills>((acc, [skillName, skill]) => {
-			acc[skillName as SkillName] = this.serializeSkill(skill, calculator, sheet, context);
+			acc.skills[skillName as SkillName] = this.serializeSkill(skill, calculator, sheet, context);
 			return acc;
 			// eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
 		}, {} as SerializedSheetSkills);
-
+		serialized.intelligenceSkills = this.intelligenceSkills;
 		return serialized;
 	}
 
