@@ -18,6 +18,15 @@ export class SheetPreviewContext extends CharacterContextAbstract {
 		return attack.roll(random, totalCalculator);
 	}
 
+	getCharacterAttackMaxTotal(attack: CharacterAttack) {
+		return attack.getModifiersMaxTotal(this.character.getAttributes());
+	}
+
+	getCharacterAttackTotal(attack: CharacterAttack) {
+		const totalCalculator = new ContextualModifiersListTotalCalculator(this, this.character.getAttributes());
+		return attack.getModifiersTotal(totalCalculator);
+	}
+
 	override getCurrentLocation(): Location | undefined {
 		return undefined;
 	}

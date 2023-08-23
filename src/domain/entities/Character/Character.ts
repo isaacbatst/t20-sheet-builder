@@ -69,6 +69,10 @@ export class Character implements CharacterInterface {
 		return attacks;
 	}
 
+	getAttackMaxTotal(attack: CharacterAttack): number {
+		return attack.getModifiersMaxTotal(this.getAttributes());
+	}
+
 	getWieldedItems(): EquipmentName[] {
 		const inventory = this.sheet.getSheetInventory();
 		return inventory.getWieldedItems();

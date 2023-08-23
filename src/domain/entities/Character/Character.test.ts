@@ -76,16 +76,12 @@ describe('Character', () => {
 
 	describe('Attack', () => {
 		let dagger: CharacterAttack;
-		let attributes: Attributes;
 		let context: SheetPreviewContext;
-		let totalCalculator: ContextualModifiersListTotalCalculator;
 
 		beforeEach(() => {
 			const attacks = character.getAttacks();
 			dagger = attacks.get(EquipmentName.dagger)!;
-			attributes = character.getAttributes();
 			context = new SheetPreviewContext(character);
-			totalCalculator = new ContextualModifiersListTotalCalculator(context, character.getAttributes());
 		});
 
 		it('should find dagger attack', () => {
@@ -94,21 +90,23 @@ describe('Character', () => {
 		});
 
 		it('should get dagger attack without one weapon style modifier', () => {
-			expect(dagger.modifiers.contextual.getMaxTotal(attributes)).toBe(2);
-			expect(dagger.modifiers.contextual.getTotal(totalCalculator)).toBe(0);
+			expect(context.getCharacterAttackMaxTotal(dagger)).toBe(2);
+			expect(context.getCharacterAttackTotal(dagger)).toBe(0);
 		});
 
 		it('should get dagger attack with one weapon style modifier', () => {
 			character.toggleEquipItem(EquipmentName.dagger);
-			expect(dagger.modifiers.contextual.getMaxTotal(attributes)).toBe(2);
-			expect(dagger.modifiers.contextual.getTotal(totalCalculator)).toBe(2);
+			expect(context.getCharacterAttackMaxTotal(dagger)).toBe(2);
+			expect(context.getCharacterAttackTotal(dagger)).toBe(2);
 		});
 
 		it('should unselect fight style and remove modifiers', () => {
+			const fightStyle = character.getFightStyle();
+			expect(fightStyle).toBeDefined();
 			character.unselectFightStyle();
 			expect(character.getFightStyle()).toBeUndefined();
-			expect(dagger.modifiers.contextual.getMaxTotal(attributes)).toBe(0);
-			expect(dagger.modifiers.contextual.getTotal(totalCalculator)).toBe(0);
+			expect(context.getCharacterAttackMaxTotal(dagger)).toBe(0);
+			expect(context.getCharacterAttackTotal(dagger)).toBe(0);
 		});
 
 		it('should roll dagger attack', () => {

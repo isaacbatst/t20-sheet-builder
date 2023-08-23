@@ -4,6 +4,7 @@ import {type RollResult} from '../Dice/DiceRoll';
 import {type ContextualModifiersListTotalCalculator} from '../Modifier';
 import {ContextualModifiersList} from '../Modifier/ContextualModifier/ContextualModifierList';
 import {type RandomInterface} from '../Random';
+import {type Attributes} from '../Sheet';
 import {type SheetInterface} from '../Sheet/SheetInterface';
 
 type Modifiers = {
@@ -29,8 +30,16 @@ export class CharacterAttack {
 		return {
 			rollResult,
 			modifiers: this.modifiers,
-			total: rollResult.total + this.modifiers.contextual.getTotal(totalCalculator),
+			total: rollResult.total + this.getModifiersTotal(totalCalculator),
 		};
+	}
+
+	getModifiersMaxTotal(attributes: Attributes) {
+		return this.modifiers.contextual.getMaxTotal(attributes);
+	}
+
+	getModifiersTotal(totalCalculator: ContextualModifiersListTotalCalculator) {
+		return this.modifiers.contextual.getTotal(totalCalculator);
 	}
 
 	serialize(sheet: SheetInterface, context: ContextInterface) {
