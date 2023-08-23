@@ -1,3 +1,4 @@
+import {type CharacterContextAbstract} from '../../Context/CharacterContextAbstract';
 import {InGameContextFake} from '../../Context/InGameContextFake';
 import {RaceAbilityName} from '../../Race/RaceAbilityName';
 import {type Attributes} from '../../Sheet';
@@ -5,24 +6,26 @@ import {ContextualModifier} from './ContextualModifier';
 import {ContextualModifiersList} from './ContextualModifierList';
 import {ContextualModifiersListTotalCalculator} from './ContextualModifiersListTotalCalculator';
 
+const isUnderground = (context: CharacterContextAbstract) => context.getCurrentLocation()?.isUnderground ?? false;
+
 describe('ContextualModifierList', () => {
 	it('should calculate total', () => {
 		const list = new ContextualModifiersList();
 		list.add(new ContextualModifier({
 			source: RaceAbilityName.rockKnowledge,
 			value: 2,
-			condition: {description: 'any', verify: context => context.getCurrentLocation().isUnderground},
+			condition: {description: 'any', verify: isUnderground},
 		}));
 		list.add(new ContextualModifier({
 			source: RaceAbilityName.rockKnowledge,
 			value: 2,
-			condition: {description: 'any', verify: context => context.getCurrentLocation().isUnderground},
+			condition: {description: 'any', verify: isUnderground},
 			attributeBonuses: new Set(['constitution']),
 		}));
 		list.add(new ContextualModifier({
 			source: RaceAbilityName.hardAsRock,
 			value: 2,
-			condition: {description: 'any', verify: context => !context.getCurrentLocation().isUnderground},
+			condition: {description: 'any', verify: context => !isUnderground(context)},
 		}));
 
 		const totalCalculator = new ContextualModifiersListTotalCalculator(
@@ -38,18 +41,18 @@ describe('ContextualModifierList', () => {
 		list.add(new ContextualModifier({
 			source: RaceAbilityName.rockKnowledge,
 			value: 2,
-			condition: {description: 'any', verify: context => context.getCurrentLocation().isUnderground},
+			condition: {description: 'any', verify: isUnderground},
 		}));
 		list.add(new ContextualModifier({
 			source: RaceAbilityName.rockKnowledge,
 			value: 2,
-			condition: {description: 'any', verify: context => context.getCurrentLocation().isUnderground},
+			condition: {description: 'any', verify: isUnderground},
 			attributeBonuses: new Set(['constitution']),
 		}));
 		list.add(new ContextualModifier({
 			source: RaceAbilityName.hardAsRock,
 			value: 2,
-			condition: {description: 'any', verify: context => !context.getCurrentLocation().isUnderground},
+			condition: {description: 'any', verify: context => !isUnderground(context)},
 		}));
 		const attributes: Attributes = {
 			charisma: 0,

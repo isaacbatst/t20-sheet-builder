@@ -106,7 +106,7 @@ describe('Skill', () => {
 		skill.contextualModifiers.add(new ContextualModifier({
 			source: RaceAbilityName.rockKnowledge,
 			value: 5,
-			condition: {description: 'any', verify: context => context.getCurrentLocation().isUnderground},
+			condition: {description: 'any', verify: context => context.getCurrentLocation()?.isUnderground ?? false},
 		}));
 
 		const calculator = SkillTotalCalculatorFactory.make(sheet.getSheetAttributes().getValues(), sheet.getLevel(), new OutOfGameContext());
@@ -127,7 +127,7 @@ describe('Skill', () => {
 			source: RaceAbilityName.rockKnowledge,
 			value: 5,
 			condition: {
-				description: 'any', verify: context => context.getCurrentLocation().isUnderground,
+				description: 'any', verify: context => context.getCurrentLocation()?.isUnderground ?? false,
 			},
 		}));
 		const calculator = SkillTotalCalculatorFactory.make(
