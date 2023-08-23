@@ -5,7 +5,7 @@ import {Dagger, EquipmentName, LeatherArmor, LongSword} from '../Inventory';
 import {ContextualModifiersListTotalCalculator} from '../Modifier/ContextualModifier/ContextualModifiersListTotalCalculator';
 import {Acolyte, OriginBenefitGeneralPower, OriginBenefitSkill} from '../Origin';
 import type {OriginInterface} from '../Origin/Origin';
-import {IronWill, OneWeaponStyle} from '../Power';
+import {GeneralPowerName, IronWill, OneWeaponStyle} from '../Power';
 import {Human, VersatileChoicePower, VersatileChoiceSkill, type VersatileChoice} from '../Race';
 import type {Race} from '../Race/Race';
 import {Warrior} from '../Role';
@@ -110,6 +110,27 @@ describe('Character', () => {
 			expect(character.getFightStyle()).toBeUndefined();
 			expect(dagger.modifiers.contextual.getMaxTotal(attributes)).toBe(0);
 			expect(dagger.modifiers.contextual.getTotal(totalCalculator)).toBe(0);
+		});
+
+		it('should roll dagger attack', () => {
+			const result = dagger.roll({get: () => 1}, totalCalculator);
+			expect(result.rollResult.rolls).toEqual([1]);
+			expect(result.rollResult.discartedRolls).toEqual([]);
+			expect(result.rollResult.total).toEqual(1);
+			expect(result.total).toBe(1);
+		});
+
+		it('should roll dagger attack with one weapon style modifier', () => {
+			character.toggleEquipItem(EquipmentName.dagger);
+			const result = dagger.roll({get: () => 1}, totalCalculator);
+			expect(result.rollResult.total).toBe(1);
+			expect(result.rollResult.rolls).toEqual([1]);
+			expect(result.rollResult.discartedRolls).toEqual([]);
+			expect(result.modifiers.contextual.modifiers).toHaveLength(1);
+			const oneWeaponStyleModifier = result.modifiers.contextual.get(GeneralPowerName.oneWeaponStyle);
+			expect(oneWeaponStyleModifier).toBeDefined();
+			expect(oneWeaponStyleModifier?.baseValue).toBe(2);
+			expect(result.total).toBe(3);
 		});
 	});
 });
