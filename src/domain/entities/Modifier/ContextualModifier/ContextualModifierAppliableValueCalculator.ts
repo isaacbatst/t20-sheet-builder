@@ -1,6 +1,6 @@
 import {type ContextualModifierInterface} from '.';
+import {CharacterContextAbstract} from '../../Context/CharacterContextAbstract';
 import type {ContextInterface} from '../../Context/ContextInterface';
-import {InGameContextAbstract} from '../../Context/InGameContextInterface';
 import type {Attribute, Attributes} from '../../Sheet/Attributes';
 import type {ModifierAppliableValueCalculatorInterface} from '../ModifierInterface';
 import {ModifierAppliableValueCalculator} from '../ModifierValueGetter';
@@ -19,7 +19,10 @@ export class ContextualModifierAppliableValueCalculator
 	calculate(value: number, attributes: Attribute[]): number {
 		const bonusesTotal = this.getAttributesBonusesTotal(attributes);
 
-		if (this.context instanceof InGameContextAbstract && this.modifier.condition.verify(this.context)) {
+		if (
+			this.context instanceof CharacterContextAbstract
+			&& this.modifier.condition.verify(this.context)
+		) {
 			return value + bonusesTotal;
 		}
 

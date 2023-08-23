@@ -1,9 +1,9 @@
 import type {Attributes} from '../../Sheet/Attributes';
-import type {InGameContextInterface} from '../../Context/InGameContextInterface';
+import type {CharacterContextAbstract} from '../../Context/CharacterContextAbstract';
 import type {ModifiersListInterface} from '../ModifiersListInterface';
 import type {ContextualModifierInterface} from './ContextualModifierInterface';
 
-export type ModifierConditionVerify = (context: InGameContextInterface) => boolean;
+export type ModifierConditionVerify = (context: CharacterContextAbstract) => boolean;
 
 export type ModifierCondition = {
 	description: string;

@@ -1,7 +1,7 @@
 import {CharacterFake} from '../Character/CharacterFake';
 import type {CharacterInterface} from '../Character/CharacterInterface';
 import type {Location} from '../Sheet/CharacterSheet/CharacterSheetInterface';
-import {InGameContextAbstract} from './InGameContextInterface';
+import {InGameContextAbstract} from './InGameContextAbstract';
 
 export class InGameContextFake extends InGameContextAbstract {
 	location: Location = {isUnderground: true};

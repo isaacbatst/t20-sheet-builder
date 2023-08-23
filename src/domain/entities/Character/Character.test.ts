@@ -1,6 +1,5 @@
 import {WeaponAttack} from '../Attack/WeaponAttack';
-import type {ContextInterface} from '../Context/ContextInterface';
-import {InGameContextFake} from '../Context/InGameContextFake';
+import {SheetPreviewContext} from '../Context/SheetPreviewContext';
 import {Dagger, EquipmentName, LeatherArmor, LongSword} from '../Inventory';
 import {ContextualModifiersListTotalCalculator} from '../Modifier/ContextualModifier/ContextualModifiersListTotalCalculator';
 import {Acolyte, OriginBenefitGeneralPower, OriginBenefitSkill} from '../Origin';
@@ -78,14 +77,14 @@ describe('Character', () => {
 	describe('Attack', () => {
 		let dagger: CharacterAttack;
 		let attributes: Attributes;
-		let context: ContextInterface;
+		let context: SheetPreviewContext;
 		let totalCalculator: ContextualModifiersListTotalCalculator;
 
 		beforeEach(() => {
 			const attacks = character.getAttacks();
 			dagger = attacks.get(EquipmentName.dagger)!;
 			attributes = character.getAttributes();
-			context = new InGameContextFake(character);
+			context = new SheetPreviewContext(character);
 			totalCalculator = new ContextualModifiersListTotalCalculator(context, character.getAttributes());
 		});
 
@@ -113,7 +112,8 @@ describe('Character', () => {
 		});
 
 		it('should roll dagger attack', () => {
-			const result = dagger.roll({get: () => 1}, totalCalculator);
+			const fakeRandom = {get: vi.fn(() => 1)};
+			const result = context.roll(dagger, fakeRandom);
 			expect(result.rollResult.rolls).toEqual([1]);
 			expect(result.rollResult.discartedRolls).toEqual([]);
 			expect(result.rollResult.total).toEqual(1);
@@ -122,7 +122,8 @@ describe('Character', () => {
 
 		it('should roll dagger attack with one weapon style modifier', () => {
 			character.toggleEquipItem(EquipmentName.dagger);
-			const result = dagger.roll({get: () => 1}, totalCalculator);
+			const fakeRandom = {get: vi.fn(() => 1)};
+			const result = context.roll(dagger, fakeRandom);
 			expect(result.rollResult.total).toBe(1);
 			expect(result.rollResult.rolls).toEqual([1]);
 			expect(result.rollResult.discartedRolls).toEqual([]);

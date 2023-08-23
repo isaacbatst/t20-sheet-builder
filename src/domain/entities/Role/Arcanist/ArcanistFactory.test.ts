@@ -1,4 +1,4 @@
-import {ArcaneArmor, ArcanistFactory, ArcanistLineageType, ArcanistPathName, DamageType, IllusoryDisguise, MentalDagger, SkillName, SpellName} from '../..';
+import {ArcanistFactory, ArcanistLineageType, ArcanistPathName, DamageType, SkillName, SpellName} from '../..';
 
 describe('Arcanist Factory', () => {
 	it('should create sorcerer', () => {

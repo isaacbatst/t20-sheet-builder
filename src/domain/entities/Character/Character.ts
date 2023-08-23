@@ -1,4 +1,5 @@
 import {WeaponAttack} from '../Attack/WeaponAttack';
+import {OutOfGameContext, type ContextInterface} from '../Context';
 import type {EquipmentName} from '../Inventory';
 import {OffensiveWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/OffensiveWeapon';
 import {type GeneralPowerMap} from '../Map';
@@ -20,6 +21,7 @@ export class Character implements CharacterInterface {
 
 	constructor(
 		readonly sheet: CharacterSheet,
+		readonly context: ContextInterface = new OutOfGameContext(),
 	) {
 		this.selectDefaultFightStyle(sheet.getSheetPowers().getGeneralPowers());
 	}

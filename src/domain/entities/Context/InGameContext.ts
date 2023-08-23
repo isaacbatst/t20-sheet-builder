@@ -1,6 +1,6 @@
 import type {Character} from '../Character/Character';
 import type {Location} from '../Sheet/CharacterSheet/CharacterSheetInterface';
-import {InGameContextAbstract} from './InGameContextInterface';
+import {InGameContextAbstract} from './InGameContextAbstract';
 
 export class InGameContext extends InGameContextAbstract {
 	readonly character: Character;
