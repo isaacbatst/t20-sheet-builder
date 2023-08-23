@@ -5,6 +5,10 @@
   "types": "build/index.d.ts",
   "exports": "./build/index.js",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/isaacbatst/t20-sheet-builder"
+  },
   "scripts": {
     "build": "rm -rf ./build && npx tsc",
     "prepack": "yarn build",
