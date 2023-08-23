@@ -1,7 +1,7 @@
 import type {EquipmentName} from '../Inventory';
 import {type FightStyle} from '../Power/GeneralPower/CombatPower/FightStyle/FightStyle';
-import {type Attributes, type Attribute} from '../Sheet/Attributes';
-import {type CharacterSheet} from '../Sheet/CharacterSheet/CharacterSheet';
+import {type CharacterSheetInterface} from '../Sheet';
+import {type Attribute, type Attributes} from '../Sheet/Attributes';
 import {type SkillTotalCalculator} from '../Skill/SkillTotalCalculator';
 import {type SkillTotalCalculatorFactory} from '../Skill/SkillTotalCalculatorFactory';
 import type {CharacterAppliedFightStyle} from './CharacterAppliedFightStyle';
@@ -10,7 +10,7 @@ import {type CharacterModifiers} from './CharacterModifiers';
 
 export type CharacterInterface = {
 	modifiers: CharacterModifiers;
-	sheet: CharacterSheet;
+	sheet: CharacterSheetInterface;
 	selectFightStyle(fightStyle: FightStyle): void;
 	unselectFightStyle(): void;
 

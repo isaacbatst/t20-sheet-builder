@@ -7,7 +7,7 @@ export class SpellResistanceDifficultyCalculator {
 	}
 
 	static calculate(sheet: CharacterSheetInterface, spellsAttribute: Attribute): number {
-		const attributes = sheet.getAttributes();
+		const attributes = sheet.getSheetAttributes().getValues();
 		const spellsAttributeValue = attributes[spellsAttribute];
 		return 10 + Math.floor(sheet.getLevel() / 2) + spellsAttributeValue;
 	}

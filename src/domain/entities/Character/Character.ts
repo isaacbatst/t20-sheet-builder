@@ -7,8 +7,7 @@ import {type GeneralPowerMap} from '../Map';
 import {FixedModifier, FixedModifiersList} from '../Modifier';
 import {Modifiers, type ModifiersMaxTotalCalculators} from '../Modifier/Modifiers';
 import {FightStyle} from '../Power/GeneralPower/CombatPower/FightStyle/FightStyle';
-import type {Attribute, Attributes} from '../Sheet';
-import type {CharacterSheet} from '../Sheet/CharacterSheet/CharacterSheet';
+import type {Attribute, Attributes, CharacterSheetInterface} from '../Sheet';
 import {type SkillTotalCalculator} from '../Skill/SkillTotalCalculator';
 import type {CharacterAppliedFightStyle} from './CharacterAppliedFightStyle';
 import {CharacterAttack} from './CharacterAttack';
@@ -24,7 +23,7 @@ export class Character implements CharacterInterface {
 	private fightStyle: CharacterAppliedFightStyle | undefined;
 
 	constructor(
-		readonly sheet: CharacterSheet,
+		readonly sheet: CharacterSheetInterface,
 		readonly context: ContextInterface = new OutOfGameContext(),
 	) {
 		this.selectDefaultFightStyle(sheet.getSheetPowers().getGeneralPowers());

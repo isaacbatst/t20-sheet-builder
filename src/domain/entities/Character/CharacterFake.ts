@@ -1,7 +1,11 @@
+import {type CharacterSheetInterface} from '../Sheet';
+import {CharacterSheetFake} from '../Sheet/CharacterSheet/CharacterSheetFake';
 import type {CharacterInterface} from './CharacterInterface';
 import {CharacterModifiers} from './CharacterModifiers';
 
 export class CharacterFake implements CharacterInterface {
+	sheet: CharacterSheetInterface = new CharacterSheetFake();
+
 	modifiers: CharacterModifiers = new CharacterModifiers();
 	toggleEquipItem = vi.fn();
 
@@ -17,4 +21,5 @@ export class CharacterFake implements CharacterInterface {
 	getWieldedItems = vi.fn();
 
 	getFightStyle = vi.fn();
+	changeAttackTestAttribute = vi.fn();
 }
