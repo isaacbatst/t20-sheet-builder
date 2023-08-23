@@ -3,8 +3,10 @@ import {type FightStyle} from '../Power/GeneralPower/CombatPower/FightStyle/Figh
 import type {Attributes} from '../Sheet';
 import type {CharacterAppliedFightStyle} from './CharacterAppliedFightStyle';
 import type {CharacterAttack} from './CharacterAttack';
+import {type CharacterModifiers} from './CharacterModifiers';
 
 export type CharacterInterface = {
+	modifiers: CharacterModifiers;
 	selectFightStyle(fightStyle: FightStyle): void;
 	unselectFightStyle(): void;
 

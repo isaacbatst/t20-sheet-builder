@@ -88,14 +88,14 @@ describe('Character', () => {
 		});
 
 		it('should get dagger attack without one weapon style modifier', () => {
-			expect(context.getCharacterAttackMaxTotal(dagger)).toBe(2);
-			expect(context.getCharacterAttackTotal(dagger)).toBe(0);
+			expect(context.getCharacterAttackModifiersMaxTotal(dagger)).toBe(2);
+			expect(context.getCharacterAttackModifiersTotal(dagger)).toBe(0);
 		});
 
 		it('should get dagger attack with one weapon style modifier', () => {
 			character.toggleEquipItem(EquipmentName.dagger);
-			expect(context.getCharacterAttackMaxTotal(dagger)).toBe(2);
-			expect(context.getCharacterAttackTotal(dagger)).toBe(2);
+			expect(context.getCharacterAttackModifiersMaxTotal(dagger)).toBe(2);
+			expect(context.getCharacterAttackModifiersTotal(dagger)).toBe(2);
 		});
 
 		it('should unselect fight style and remove modifiers', () => {
@@ -103,8 +103,8 @@ describe('Character', () => {
 			expect(fightStyle).toBeDefined();
 			character.unselectFightStyle();
 			expect(character.getFightStyle()).toBeUndefined();
-			expect(context.getCharacterAttackMaxTotal(dagger)).toBe(0);
-			expect(context.getCharacterAttackTotal(dagger)).toBe(0);
+			expect(context.getCharacterAttackModifiersMaxTotal(dagger)).toBe(0);
+			expect(context.getCharacterAttackModifiersTotal(dagger)).toBe(0);
 		});
 
 		it('should roll dagger attack', () => {
