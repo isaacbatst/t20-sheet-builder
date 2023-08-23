@@ -1,7 +1,8 @@
-import {type EquipmentName} from '../Inventory';
 import type {CharacterInterface} from './CharacterInterface';
+import {CharacterModifiers} from './CharacterModifiers';
 
 export class CharacterFake implements CharacterInterface {
+	modifiers: CharacterModifiers = new CharacterModifiers();
 	toggleEquipItem = vi.fn();
 
 	toggleWieldItem = vi.fn();
