@@ -3,6 +3,10 @@ import type {BuildStepInterface} from '../BuildStep';
 import {CharacterAttack} from '../Character/CharacterAttack';
 import {type ContextInterface, OutOfGameContext} from '../Context';
 import {OffensiveWeapon, type EquipmentName} from '../Inventory';
+import {FixedModifier, FixedModifiersList} from '../Modifier';
+import {Modifiers} from '../Modifier/Modifiers';
+import {type SkillTotalCalculator} from '../Skill/SkillTotalCalculator';
+import {SkillTotalCalculatorFactory} from '../Skill/SkillTotalCalculatorFactory';
 import {type SerializedSheetInterface, SheetSerializer, type SerializedSheetPoints} from './SerializedSheet';
 import {type SheetAbilitiesInterface} from './SheetAbilitiesInterface';
 import {type SheetAttributesInterface} from './SheetAttributesInterface';
@@ -44,17 +48,44 @@ export abstract class Sheet implements SheetInterface {
 	protected abstract sheetDevotion: SheetDevotion;
 	protected abstract sheetResistences: SheetResistencesInterface;
 
+	/**
+	* @deprecated Use `character.getAttacks` instead
+	*/
 	getAttacks(): Map<EquipmentName, CharacterAttack> {
+		const skillTotalCalculator = SkillTotalCalculatorFactory.make(
+			this.getSheetAttributes().getValues(),
+			this.getLevel(),
+			new OutOfGameContext(),
+		);
 		const attacks = new Map<EquipmentName, CharacterAttack>();
-		const equipments = this.sheetInventory.getEquipments();
+		const inventory = this.getSheetInventory();
+		const equipments = inventory.getEquipments();
 		equipments.forEach(({equipment}) => {
 			if (equipment instanceof OffensiveWeapon) {
-				const attack = new CharacterAttack(new WeaponAttack(equipment));
+				const attack = this.makeCharacterAttack(equipment, skillTotalCalculator);
 				attacks.set(equipment.name, attack);
 			}
 		});
 
 		return attacks;
+	}
+
+	makeCharacterAttack(equipment: OffensiveWeapon, skillTotalCalculator: SkillTotalCalculator) {
+		const weaponAttack = new WeaponAttack(equipment);
+		const testSkill = weaponAttack.getTestDefaultSkill();
+		const skillValue = this.getSheetSkills().getSkill(testSkill).getTotal(skillTotalCalculator);
+		const skillModifier = new FixedModifier(testSkill, skillValue);
+		const fixedModifiers = new FixedModifiersList();
+		const skillModifierIndex = fixedModifiers.add(skillModifier);
+		const attack = new CharacterAttack(
+			weaponAttack,
+			skillModifierIndex,
+			{
+				test: new Modifiers({
+					fixed: fixedModifiers,
+				}),
+			});
+		return attack;
 	}
 
 	pushBuildSteps(...buildSteps: BuildStepInterface[]): void {
