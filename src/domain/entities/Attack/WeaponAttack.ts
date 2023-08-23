@@ -6,7 +6,7 @@ export class WeaponAttack extends Attack {
 	private selectedPurposeIndex = 0;
 
 	constructor(readonly weapon: OffensiveWeapon) {
-		super(weapon.damage, weapon.critical);
+		super(weapon.damage, weapon.critical, weapon.name);
 	}
 
 	override getTestDefaultSkill() {

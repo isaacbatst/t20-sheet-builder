@@ -1,3 +1,4 @@
+import {type TranslatableName} from '../Translator';
 import {DiceRoll, type SerializedDiceRoll} from '../Dice/DiceRoll';
 import {type RollResult} from '../Dice/RollResult';
 import {type RandomInterface} from '../Random';
@@ -8,6 +9,7 @@ import type {Critical, SerializedCritical} from './Critical';
 export type SerializedAttack = {
 	damage: SerializedDiceRoll;
 	critical: SerializedCritical;
+	name: TranslatableName;
 };
 
 export class Attack {
@@ -16,6 +18,7 @@ export class Attack {
 	constructor(
 		readonly damage: DiceRoll,
 		readonly critical: Critical,
+		readonly name: TranslatableName,
 	) {}
 
 	roll(random: RandomInterface): {
@@ -60,6 +63,7 @@ export class Attack {
 		return {
 			damage: this.damage.serialize(),
 			critical: this.critical.serialize(),
+			name: this.name,
 		};
 	}
 }
