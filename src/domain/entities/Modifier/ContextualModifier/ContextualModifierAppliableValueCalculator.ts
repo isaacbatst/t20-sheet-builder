@@ -19,10 +19,10 @@ export class ContextualModifierAppliableValueCalculator
 	calculate(value: number, attributes: Attribute[]): number {
 		const bonusesTotal = this.getAttributesBonusesTotal(attributes);
 
-		if (!(this.context instanceof InGameContextAbstract) || !this.modifier.condition.verify(this.context)) {
-			return 0;
+		if (this.context instanceof InGameContextAbstract && this.modifier.condition.verify(this.context)) {
+			return value + bonusesTotal;
 		}
 
-		return value + bonusesTotal;
+		return 0;
 	}
 }
