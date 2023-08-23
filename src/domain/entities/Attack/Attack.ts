@@ -1,4 +1,5 @@
-import type {DiceRoll, RollResult, SerializedDiceRoll} from '../Dice/DiceRoll';
+import {DiceRoll, type SerializedDiceRoll} from '../Dice/DiceRoll';
+import {type RollResult} from '../Dice/RollResult';
 import {type RandomInterface} from '../Random';
 import type {Critical, SerializedCritical} from './Critical';
 
@@ -7,15 +8,36 @@ export type SerializedAttack = {
 	critical: SerializedCritical;
 };
 
-export abstract class Attack {
+export class Attack {
+	static test = new DiceRoll(1, 20);
+
 	constructor(
 		readonly damage: DiceRoll,
 		readonly critical: Critical,
 	) {}
 
 	roll(random: RandomInterface): RollResult {
-		const result = this.damage.roll(random);
-		return result;
+		const testResult = this.rollTest(random);
+		const isCritical = testResult.total >= this.critical.threat;
+
+		const damageResult = this.rollDamage(random);
+
+		if (isCritical) {
+			for (let i = 1; i < this.critical.multiplier; i++) {
+				damageResult.append(this.rollDamage(random));
+			}
+		}
+
+		return damageResult;
+	}
+
+	rollTest(random: RandomInterface): RollResult {
+		const damageResult = Attack.test.roll(random);
+		return damageResult;
+	}
+
+	rollDamage(random: RandomInterface): RollResult {
+		return this.damage.roll(random);
 	}
 
 	serialize(): SerializedAttack {

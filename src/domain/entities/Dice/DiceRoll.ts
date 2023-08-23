@@ -1,16 +1,11 @@
 import {SheetBuilderError} from '../../errors/SheetBuilderError';
 import {type RandomInterface} from '../Random';
 import type {DiceSides} from './DiceSides';
+import {RollResult} from './RollResult';
 
 export type SerializedDiceRoll = {
 	diceQuantity: number;
 	diceSides: DiceSides;
-};
-
-export type RollResult = {
-	total: number;
-	rolls: number[];
-	discartedRolls: number[];
 };
 
 export class DiceRoll {
@@ -42,11 +37,11 @@ export class DiceRoll {
 		const rolls: number[] = allResults.filter((_, i) => i >= this.discardLowestDiceQty);
 		const total = rolls.reduce((a, b) => a + b, 0);
 
-		return {
-			total,
-			rolls,
+		return new RollResult({
 			discartedRolls,
-		};
+			rolls,
+			total,
+		});
 	}
 
 	private validateDiceQuantity(diceQuantity: number) {
