@@ -17,3 +17,5 @@ export * from './Ability';
 export * from './Context';
 export * from './Attack';
 export * from './Devotion';
+export * from './Context';
+export * from './Character';
