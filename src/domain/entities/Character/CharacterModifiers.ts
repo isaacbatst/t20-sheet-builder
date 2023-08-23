@@ -1,19 +1,7 @@
-import {ContextualModifiersList} from '../Modifier/ContextualModifier/ContextualModifierList';
-import {FixedModifiersList} from '../Modifier/FixedModifier/FixedModifiersList';
+import {Modifiers} from '../Modifier/Modifiers';
 
 export class CharacterModifiers {
-	readonly attack = {
-		fixed: new FixedModifiersList(),
-		contextual: new ContextualModifiersList(),
-	};
-
-	readonly defense = {
-		fixed: new FixedModifiersList(),
-		contextual: new ContextualModifiersList(),
-	};
-
-	readonly armorPenalty = {
-		fixed: new FixedModifiersList(),
-		contextual: new ContextualModifiersList(),
-	};
+	readonly attack = new Modifiers();
+	readonly defense = new Modifiers();
+	readonly armorPenalty = new Modifiers();
 }

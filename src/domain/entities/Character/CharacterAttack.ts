@@ -2,14 +2,10 @@ import type {Attack} from '../Attack/Attack';
 import {type ContextInterface} from '../Context';
 import {type RollResult} from '../Dice/DiceRoll';
 import {type ContextualModifiersListTotalCalculator} from '../Modifier';
-import {ContextualModifiersList} from '../Modifier/ContextualModifier/ContextualModifierList';
+import {Modifiers} from '../Modifier/Modifiers';
 import {type RandomInterface} from '../Random';
 import {type Attributes} from '../Sheet';
 import {type SheetInterface} from '../Sheet/SheetInterface';
-
-type Modifiers = {
-	contextual: ContextualModifiersList;
-};
 
 type AttackResult = {
 	rollResult: RollResult;
@@ -20,9 +16,7 @@ type AttackResult = {
 export class CharacterAttack {
 	constructor(
 		readonly attack: Attack,
-		readonly modifiers: Modifiers = {
-			contextual: new ContextualModifiersList(),
-		},
+		readonly modifiers: Modifiers = new Modifiers(),
 	) {}
 
 	roll(random: RandomInterface, totalCalculator: ContextualModifiersListTotalCalculator): AttackResult {
