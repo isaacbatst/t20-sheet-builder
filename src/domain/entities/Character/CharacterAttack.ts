@@ -1,7 +1,7 @@
 import type {Attack} from '../Attack/Attack';
 import {type ContextInterface} from '../Context';
 import {type RollResult} from '../Dice/RollResult';
-import {type ContextualModifiersListTotalCalculator} from '../Modifier';
+import {type FixedModifier, type ContextualModifiersListTotalCalculator} from '../Modifier';
 import {Modifiers, type ModifiersMaxTotalCalculators, type ModifiersTotalCalculators} from '../Modifier/Modifiers';
 import {type RandomInterface} from '../Random';
 import {type Attributes} from '../Sheet';
@@ -29,11 +29,17 @@ export class CharacterAttack {
 	readonly modifiers: CharacterAttackModifiers;
 	constructor(
 		readonly attack: Attack,
+		private skillModifierIndex: number,
 		modifiers: Partial<CharacterAttackModifiers> = {},
 	) {
 		modifiers.test = modifiers.test ?? new Modifiers();
 		modifiers.damage = modifiers.damage ?? new Modifiers();
 		this.modifiers = modifiers as CharacterAttackModifiers;
+	}
+
+	changeTestSkillModifier(modifier: FixedModifier) {
+		this.modifiers.test.fixed.remove(this.skillModifierIndex);
+		this.skillModifierIndex = this.modifiers.test.fixed.add(modifier);
 	}
 
 	roll(random: RandomInterface, calculators: ModifiersTotalCalculators): AttackResult {

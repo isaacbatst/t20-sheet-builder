@@ -1,6 +1,8 @@
 import {DiceRoll, type SerializedDiceRoll} from '../Dice/DiceRoll';
 import {type RollResult} from '../Dice/RollResult';
 import {type RandomInterface} from '../Random';
+import {type Attribute} from '../Sheet';
+import {SkillName} from '../Skill';
 import type {Critical, SerializedCritical} from './Critical';
 
 export type SerializedAttack = {
@@ -44,6 +46,14 @@ export class Attack {
 
 	rollDamage(random: RandomInterface): RollResult {
 		return this.damage.roll(random);
+	}
+
+	getTestDefaultSkill() {
+		return SkillName.fight;
+	}
+
+	getCustomTestAttributes(): Set<Attribute> {
+		return new Set(['strength']);
 	}
 
 	serialize(): SerializedAttack {

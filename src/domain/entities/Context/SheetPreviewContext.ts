@@ -2,9 +2,9 @@ import {type CharacterAttack} from '../Character/CharacterAttack';
 import {type CharacterInterface} from '../Character/CharacterInterface';
 import {FixedModifiersListTotalCalculator, PerLevelModifiersListTotalCalculator} from '../Modifier';
 import {ContextualModifiersListTotalCalculator} from '../Modifier/ContextualModifier/ContextualModifiersListTotalCalculator';
-import {type ModifiersTotalCalculators, type ModifiersMaxTotalCalculators} from '../Modifier/Modifiers';
+import {type ModifiersMaxTotalCalculators, type ModifiersTotalCalculators} from '../Modifier/Modifiers';
 import {Random, type RandomInterface} from '../Random';
-import {type Location} from '../Sheet';
+import {type Attribute, type Location} from '../Sheet';
 import {SkillTotalCalculatorFactory} from '../Skill/SkillTotalCalculatorFactory';
 import {CharacterContextAbstract} from './CharacterContextAbstract';
 import {type ContextType} from './ContextInterface';
@@ -20,16 +20,21 @@ export class SheetPreviewContext extends CharacterContextAbstract {
 		return attack.roll(random, this.makeTotalCalculators());
 	}
 
-	getCharacterAttacks() {
+	changeAttackTestAttribute(attack: CharacterAttack, attribute: Attribute) {
+		const skillTotalCalculator = SkillTotalCalculatorFactory.make(this.character.getAttributes(), this.character.sheet.getLevel(), this);
+		this.character.changeAttackTestAttribute(attack, attribute, skillTotalCalculator);
+	}
+
+	getAttacks() {
 		const skillTotalCalculator = SkillTotalCalculatorFactory.make(this.character.getAttributes(), this.character.sheet.getLevel(), this);
 		return this.character.getAttacks(skillTotalCalculator);
 	}
 
-	getCharacterAttackTestModifiersMaxTotal(attack: CharacterAttack) {
+	getAttackTestModifiersMaxTotal(attack: CharacterAttack) {
 		return attack.getTestModifiersMaxTotal(this.character.getAttributes(), this.makeMaxTotalCalculators());
 	}
 
-	getCharacterAttackTestModifiersTotal(attack: CharacterAttack) {
+	getAttackTestModifiersTotal(attack: CharacterAttack) {
 		return attack.getTestModifiersTotal(this.makeTotalCalculators());
 	}
 

@@ -41,6 +41,10 @@ export class SheetAttributes implements SheetAttributesInterface {
 		this.attributes[attribute] -= quantity;
 	}
 
+	increaseAttribute(attribute: keyof Attributes, quantity: number): void {
+		this.attributes[attribute] += quantity;
+	}
+
 	getTormentaPowersAttribute(): keyof Attributes {
 		return this.tormentaPowersAttribute;
 	}

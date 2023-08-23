@@ -1,3 +1,4 @@
+import {SheetBuilderError} from '../../errors';
 import {WeaponAttack} from '../Attack/WeaponAttack';
 import {OutOfGameContext, type ContextInterface} from '../Context';
 import type {EquipmentName} from '../Inventory';
@@ -6,7 +7,7 @@ import {type GeneralPowerMap} from '../Map';
 import {FixedModifier, FixedModifiersList} from '../Modifier';
 import {Modifiers, type ModifiersMaxTotalCalculators} from '../Modifier/Modifiers';
 import {FightStyle} from '../Power/GeneralPower/CombatPower/FightStyle/FightStyle';
-import type {Attributes} from '../Sheet';
+import type {Attribute, Attributes} from '../Sheet';
 import type {CharacterSheet} from '../Sheet/CharacterSheet/CharacterSheet';
 import {type SkillTotalCalculator} from '../Skill/SkillTotalCalculator';
 import type {CharacterAppliedFightStyle} from './CharacterAppliedFightStyle';
@@ -63,24 +64,45 @@ export class Character implements CharacterInterface {
 				attacks.set(equipment.name, attack);
 			}
 		});
+
 		return attacks;
 	}
 
+	changeAttackTestAttribute(attack: CharacterAttack, attribute: Attribute, calculator: SkillTotalCalculator) {
+		const skillName = attack.attack.getTestDefaultSkill();
+		const skill = this.sheet.getSheetSkills().getSkill(skillName);
+		const customTestAttributes = attack.attack.getCustomTestAttributes();
+		const allowed = customTestAttributes.has(attribute) || attribute === skill.attribute;
+
+		if (!allowed) {
+			throw new SheetBuilderError('INVALID_ATTRIBUTE');
+		}
+
+		const skillWithAttribute = skill.makeWithOtherAttribute(attribute);
+		const skillTotal = skillWithAttribute.getTotal(calculator);
+		const skillModifier = new FixedModifier(skillName, skillTotal);
+		attack.changeTestSkillModifier(skillModifier);
+	}
+
 	makeCharacterAttack(equipment: OffensiveWeapon, skillTotalCalculator: SkillTotalCalculator) {
-		const [purpose] = equipment.purposes;
-		const skillValue = this.sheet.getSheetSkills().getSkill(purpose.defaultSkill).getTotal(skillTotalCalculator);
-		const skillModifier = new FixedModifier(purpose.defaultSkill, skillValue);
+		const weaponAttack = new WeaponAttack(equipment);
+		const testSkill = weaponAttack.getTestDefaultSkill();
+		const skillValue = this.sheet.getSheetSkills().getSkill(testSkill).getTotal(skillTotalCalculator);
+		const skillModifier = new FixedModifier(testSkill, skillValue);
 		const fixedModifiers = new FixedModifiersList();
-		fixedModifiers.add(skillModifier);
+		const skillModifierIndex = fixedModifiers.add(skillModifier);
 		fixedModifiers.add(...this.modifiers.attack.fixed.modifiers);
-		const attack = new CharacterAttack(new WeaponAttack(equipment), {
-			test: new Modifiers({
-				fixed: fixedModifiers,
-				contextual: this.modifiers.attack.contextual,
-				perLevel: this.modifiers.attack.perLevel,
-			}),
-			damage: this.modifiers.damage,
-		});
+		const attack = new CharacterAttack(
+			weaponAttack,
+			skillModifierIndex,
+			{
+				test: new Modifiers({
+					fixed: fixedModifiers,
+					contextual: this.modifiers.attack.contextual,
+					perLevel: this.modifiers.attack.perLevel,
+				}),
+				damage: this.modifiers.damage,
+			});
 		return attack;
 	}
 

@@ -50,6 +50,17 @@ export class Skill {
 		this.attribute = params.attribute;
 	}
 
+	makeWithOtherAttribute(attribute: Attribute) {
+		const skill = new Skill({
+			attribute,
+			isTrained: this.isTrained,
+		});
+
+		skill.contextualModifiers.add(...this.contextualModifiers.modifiers);
+		skill.fixedModifiers.add(...this.fixedModifiers.modifiers);
+		return skill;
+	}
+
 	addContextualModifier(modifier: ContextualModifierInterface) {
 		this.contextualModifiers.add(modifier);
 	}

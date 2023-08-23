@@ -5,6 +5,7 @@ export type SheetAttributesInterface = {
 	applyRaceModifiers(modifiers: Partial<Attributes>): void;
 	changeTormentaPowersAttribute(attribute: keyof Attributes): void;
 	decreaseAttribute(attribute: keyof Attributes, quantity: number): void;
+	increaseAttribute(attribute: keyof Attributes, quantity: number): void;
 	getTormentaPowersAttribute(): Attribute;
 	getValues(): Attributes;
 };
