@@ -1,7 +1,6 @@
 import {WeaponAttack} from '../Attack/WeaponAttack';
 import {SheetPreviewContext} from '../Context/SheetPreviewContext';
 import {Dagger, EquipmentName, LeatherArmor, LongSword} from '../Inventory';
-import {ContextualModifiersListTotalCalculator} from '../Modifier/ContextualModifier/ContextualModifiersListTotalCalculator';
 import {Acolyte, OriginBenefitGeneralPower, OriginBenefitSkill} from '../Origin';
 import type {OriginInterface} from '../Origin/Origin';
 import {GeneralPowerName, IronWill, OneWeaponStyle} from '../Power';
@@ -9,7 +8,6 @@ import {Human, VersatileChoicePower, VersatileChoiceSkill, type VersatileChoice}
 import type {Race} from '../Race/Race';
 import {Warrior} from '../Role';
 import type {Role} from '../Role/Role';
-import type {Attributes} from '../Sheet';
 import type {CharacterSheet} from '../Sheet/CharacterSheet/CharacterSheet';
 import {SheetBuilder} from '../Sheet/SheetBuilder';
 import {SkillName} from '../Skill';
