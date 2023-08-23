@@ -5,6 +5,7 @@ import {ContextualModifiersListTotalCalculator} from '../Modifier/ContextualModi
 import {type ModifiersTotalCalculators, type ModifiersMaxTotalCalculators} from '../Modifier/Modifiers';
 import {Random, type RandomInterface} from '../Random';
 import {type Location} from '../Sheet';
+import {SkillTotalCalculatorFactory} from '../Skill/SkillTotalCalculatorFactory';
 import {CharacterContextAbstract} from './CharacterContextAbstract';
 import {type ContextType} from './ContextInterface';
 
@@ -17,6 +18,11 @@ export class SheetPreviewContext extends CharacterContextAbstract {
 
 	roll(attack: CharacterAttack, random: RandomInterface = new Random()) {
 		return attack.roll(random, this.makeTotalCalculators());
+	}
+
+	getCharacterAttacks() {
+		const skillTotalCalculator = SkillTotalCalculatorFactory.make(this.character.getAttributes(), this.character.sheet.getLevel(), this);
+		return this.character.getAttacks(skillTotalCalculator);
 	}
 
 	getCharacterAttackTestModifiersMaxTotal(attack: CharacterAttack) {

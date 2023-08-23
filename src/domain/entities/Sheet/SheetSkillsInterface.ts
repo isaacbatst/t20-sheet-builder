@@ -12,5 +12,6 @@ export type SheetSkillsInterface = {
 	addFixedModifierTo(skill: SkillName, modifier: ModifierInterface): void;
 	trainIntelligenceSkills(skills: SkillName[]): void;
 	getSkills(): Record<SkillName, Skill>;
+	getSkill(name: SkillName): Skill;
 	serialize(sheet: SheetInterface, context: ContextInterface): SerializedSheetSkills;
 };

@@ -3,10 +3,12 @@ import {OutOfGameContext, type ContextInterface} from '../Context';
 import type {EquipmentName} from '../Inventory';
 import {OffensiveWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/OffensiveWeapon';
 import {type GeneralPowerMap} from '../Map';
-import {type ModifiersMaxTotalCalculators} from '../Modifier/Modifiers';
+import {FixedModifier, FixedModifiersList} from '../Modifier';
+import {Modifiers, type ModifiersMaxTotalCalculators} from '../Modifier/Modifiers';
 import {FightStyle} from '../Power/GeneralPower/CombatPower/FightStyle/FightStyle';
 import type {Attributes} from '../Sheet';
 import type {CharacterSheet} from '../Sheet/CharacterSheet/CharacterSheet';
+import {type SkillTotalCalculator} from '../Skill/SkillTotalCalculator';
 import type {CharacterAppliedFightStyle} from './CharacterAppliedFightStyle';
 import {CharacterAttack} from './CharacterAttack';
 import type {CharacterInterface} from './CharacterInterface';
@@ -51,21 +53,35 @@ export class Character implements CharacterInterface {
 		return attributes.getValues();
 	}
 
-	getAttacks(): Map<EquipmentName, CharacterAttack> {
+	getAttacks(skillTotalCalculator: SkillTotalCalculator): Map<EquipmentName, CharacterAttack> {
 		const attacks = new Map<EquipmentName, CharacterAttack>();
 		const inventory = this.sheet.getSheetInventory();
 		const equipments = inventory.getEquipments();
 		equipments.forEach(({equipment}) => {
 			if (equipment instanceof OffensiveWeapon) {
-				const attack = new CharacterAttack(new WeaponAttack(equipment), {
-					test: this.modifiers.attack,
-					damage: this.modifiers.damage,
-				});
+				const attack = this.makeCharacterAttack(equipment, skillTotalCalculator);
 				attacks.set(equipment.name, attack);
 			}
 		});
-
 		return attacks;
+	}
+
+	makeCharacterAttack(equipment: OffensiveWeapon, skillTotalCalculator: SkillTotalCalculator) {
+		const [purpose] = equipment.purposes;
+		const skillValue = this.sheet.getSheetSkills().getSkill(purpose.defaultSkill).getTotal(skillTotalCalculator);
+		const skillModifier = new FixedModifier(purpose.defaultSkill, skillValue);
+		const fixedModifiers = new FixedModifiersList();
+		fixedModifiers.add(skillModifier);
+		fixedModifiers.add(...this.modifiers.attack.fixed.modifiers);
+		const attack = new CharacterAttack(new WeaponAttack(equipment), {
+			test: new Modifiers({
+				fixed: fixedModifiers,
+				contextual: this.modifiers.attack.contextual,
+				perLevel: this.modifiers.attack.perLevel,
+			}),
+			damage: this.modifiers.damage,
+		});
+		return attack;
 	}
 
 	getAttackTestModifiersMaxTotal(attack: CharacterAttack, calculators: ModifiersMaxTotalCalculators): number {

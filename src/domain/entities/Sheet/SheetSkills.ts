@@ -21,6 +21,10 @@ export class SheetSkills implements SheetSkillsInterface {
 		this.skills[name].train();
 	}
 
+	getSkill(name: SkillName): Skill {
+		return this.skills[name];
+	}
+
 	addContextualModifierTo(skill: SkillName, modifier: ContextualModifierInterface): void {
 		this.skills[skill].addContextualModifier(modifier);
 	}

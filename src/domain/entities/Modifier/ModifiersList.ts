@@ -11,8 +11,8 @@ export abstract class ModifiersList<T extends ModifierInterface> implements Modi
 		return totalCalculator.calculate(this.modifiers);
 	}
 
-	add(modifier: T): number {
-		const nextIndex = this.modifiers.push(modifier);
+	add(...modifier: T[]): number {
+		const nextIndex = this.modifiers.push(...modifier);
 		return nextIndex - 1;
 	}
 

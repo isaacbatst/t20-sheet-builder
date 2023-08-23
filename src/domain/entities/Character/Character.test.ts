@@ -77,9 +77,9 @@ describe('Character', () => {
 		let context: SheetPreviewContext;
 
 		beforeEach(() => {
-			const attacks = character.getAttacks();
-			dagger = attacks.get(EquipmentName.dagger)!;
 			context = new SheetPreviewContext(character);
+			const attacks = context.getCharacterAttacks();
+			dagger = attacks.get(EquipmentName.dagger)!;
 		});
 
 		it('should find dagger attack', () => {
@@ -88,14 +88,14 @@ describe('Character', () => {
 		});
 
 		it('should get dagger attack without one weapon style modifier', () => {
-			expect(context.getCharacterAttackTestModifiersMaxTotal(dagger)).toBe(2);
-			expect(context.getCharacterAttackTestModifiersTotal(dagger)).toBe(0);
+			expect(context.getCharacterAttackTestModifiersMaxTotal(dagger)).toBe(4);
+			expect(context.getCharacterAttackTestModifiersTotal(dagger)).toBe(2);
 		});
 
 		it('should get dagger attack with one weapon style modifier', () => {
 			character.toggleEquipItem(EquipmentName.dagger);
-			expect(context.getCharacterAttackTestModifiersMaxTotal(dagger)).toBe(2);
-			expect(context.getCharacterAttackTestModifiersTotal(dagger)).toBe(2);
+			expect(context.getCharacterAttackTestModifiersMaxTotal(dagger)).toBe(4);
+			expect(context.getCharacterAttackTestModifiersTotal(dagger)).toBe(4);
 		});
 
 		it('should unselect fight style and remove modifiers', () => {
@@ -103,8 +103,8 @@ describe('Character', () => {
 			expect(fightStyle).toBeDefined();
 			character.unselectFightStyle();
 			expect(character.getFightStyle()).toBeUndefined();
-			expect(context.getCharacterAttackTestModifiersMaxTotal(dagger)).toBe(0);
-			expect(context.getCharacterAttackTestModifiersTotal(dagger)).toBe(0);
+			expect(context.getCharacterAttackTestModifiersMaxTotal(dagger)).toBe(2);
+			expect(context.getCharacterAttackTestModifiersTotal(dagger)).toBe(2);
 		});
 
 		it('should roll dagger attack', () => {
@@ -114,7 +114,7 @@ describe('Character', () => {
 			expect(result.damage.rollResult.discartedRolls).toEqual([]);
 			expect(result.damage.rollResult.total).toBe(1);
 			expect(result.damage.total).toEqual(1);
-			expect(result.test.total).toBe(1);
+			expect(result.test.total).toBe(3);
 		});
 
 		it('should roll dagger attack with one weapon style modifier', () => {
@@ -129,7 +129,14 @@ describe('Character', () => {
 			expect(oneWeaponStyleModifier).toBeDefined();
 			expect(oneWeaponStyleModifier?.baseValue).toBe(2);
 			expect(result.damage.total).toBe(1);
-			expect(result.test.total).toBe(3);
+			expect(result.test.total).toBe(5);
+		});
+
+		it('should roll dagger with default purpose skill', () => {
+			const fakeRandom = {get: vi.fn(() => 1)};
+			const result = context.roll(dagger, fakeRandom);
+			const fightModifier = result.test.modifiers.fixed.get(SkillName.fight);
+			expect(fightModifier).toBeDefined();
 		});
 	});
 });
