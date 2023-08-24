@@ -1,13 +1,13 @@
 import {WeaponAttack} from '../Attack/WeaponAttack';
 import type {BuildStepInterface} from '../BuildStep';
 import {CharacterAttack} from '../Character/CharacterAttack';
-import {type ContextInterface, OutOfGameContext} from '../Context';
+import {OutOfGameContext, type ContextInterface} from '../Context';
 import {OffensiveWeapon, type EquipmentName} from '../Inventory';
 import {FixedModifier, FixedModifiersList} from '../Modifier';
 import {Modifiers} from '../Modifier/Modifiers';
 import {type SkillTotalCalculator} from '../Skill/SkillTotalCalculator';
 import {SkillTotalCalculatorFactory} from '../Skill/SkillTotalCalculatorFactory';
-import {type SerializedSheetInterface, SheetSerializer, type SerializedSheetPoints} from './SerializedSheet';
+import {type SerializedSheetInterface} from './SerializedSheet';
 import {type SheetAbilitiesInterface} from './SheetAbilitiesInterface';
 import {type SheetAttributesInterface} from './SheetAttributesInterface';
 import {type SheetDefenseInterface} from './SheetDefenseInterface';
@@ -48,7 +48,7 @@ export abstract class Sheet implements SheetInterface {
 	protected abstract sheetDevotion: SheetDevotion;
 	protected abstract sheetResistences: SheetResistencesInterface;
 
-/**
+	/**
 * @deprecated Use `character.getAttacks()` instead for getting attacks with all character modifiers (like fight style).
 */
 	getAttacks(skillTotalCalculator = this.makeSkillTotalCalculator()): Map<EquipmentName, CharacterAttack> {
@@ -57,8 +57,9 @@ export abstract class Sheet implements SheetInterface {
 		const equipments = inventory.getEquipments();
 		equipments.forEach(({equipment}) => {
 			if (equipment instanceof OffensiveWeapon) {
-				const attack = this.makeCharacterAttack(equipment, skillTotalCalculator);
-				attacks.set(equipment.name, attack);
+				const typedEquipment = equipment as OffensiveWeapon;
+				const attack = this.makeCharacterAttack(typedEquipment, skillTotalCalculator);
+				attacks.set(typedEquipment.name, attack);
 			}
 		});
 
@@ -80,14 +81,16 @@ export abstract class Sheet implements SheetInterface {
 		const skillModifier = new FixedModifier(testSkill, skillValue);
 		const fixedModifiers = new FixedModifiersList();
 		const skillModifierIndex = fixedModifiers.add(skillModifier);
-		const attack = new CharacterAttack(
-			weaponAttack,
-			skillModifierIndex,
-			{
+		const attack = new CharacterAttack({
+			attack: weaponAttack,
+			testSkillModifierIndex: skillModifierIndex,
+			damageAttributeModifierIndex: undefined,
+			modifiers: {
 				test: new Modifiers({
 					fixed: fixedModifiers,
 				}),
-			});
+			},
+		});
 		return attack;
 	}
 
