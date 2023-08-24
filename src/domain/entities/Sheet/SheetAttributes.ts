@@ -3,24 +3,31 @@ import {type SerializedSheetInterface} from './SerializedSheet';
 import {type SheetAttributesInterface} from './SheetAttributesInterface';
 
 export class SheetAttributes implements SheetAttributesInterface {
+	static initial = {
+		charisma: 0,
+		constitution: 0,
+		dexterity: 0,
+		intelligence: 0,
+		strength: 0,
+		wisdom: 0,
+	};
+
 	static makeFromSerialized(serialized: SerializedSheetInterface) {
-		return new SheetAttributes(serialized.attributes, serialized.tormentaPowersAttribute);
+		const attributes = new SheetAttributes(SheetAttributes.initial, serialized.tormentaPowersAttribute);
+		attributes.setInitialAttributes(serialized.initialAttributes);
+		return attributes;
 	}
 
+	initialAttributes: Attributes | undefined;
+
 	constructor(
-		private attributes: Attributes = {
-			charisma: 0,
-			constitution: 0,
-			dexterity: 0,
-			intelligence: 0,
-			strength: 0,
-			wisdom: 0,
-		},
+		private attributes: Attributes = SheetAttributes.initial,
 		private tormentaPowersAttribute: Attribute = 'charisma',
 	) {}
 
 	setInitialAttributes(attributes: Attributes): void {
 		this.attributes = attributes;
+		this.initialAttributes = attributes;
 	}
 
 	applyRaceModifiers(modifiers: Partial<Attributes>): void {

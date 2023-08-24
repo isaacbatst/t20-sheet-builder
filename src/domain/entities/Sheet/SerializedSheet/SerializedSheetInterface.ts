@@ -1,20 +1,20 @@
-import { type AbilityName, type AbilityType } from '../../Ability';
-import { MartialWeaponName, SimpleWeaponName, type EquipmentName } from '../../Inventory';
-import { type ModifierType } from '../../Modifier';
-import { SerializedSheetOrigin } from '../../Origin';
-import { type GeneralPowerGroup, type GeneralPowerName, type OriginPowerName } from '../../Power';
-import { type GrantedPowerName } from '../../Power/GrantedPower/GrantedPowerName';
-import { type RaceAbilityName, type RaceName, type SerializedRace } from '../../Race';
-import { type RoleAbilityName, type RoleName, type RolePowerName, type SerializedRole } from '../../Role';
-import { type SkillName } from '../../Skill';
-import { type LearnableSpellType, type SpellCircle, type SpellName, type SpellSchool, type SpellType } from '../../Spell';
-import { type TranslatableName } from '../../Translator';
-import { type Attribute, type Attributes } from '../Attributes';
-import { type Proficiency } from '../Proficiency';
-import { type SerializedSheetDevotion } from '../SheetDevotion';
-import { SerializedInitialEquipment } from '../SheetInventoryInterface';
-import { type SerializedSheetResistencies } from '../SheetResistencesInterface';
-import { type Vision } from '../Vision';
+import {type AbilityName, type AbilityType} from '../../Ability';
+import {type EquipmentName} from '../../Inventory';
+import {type ModifierType} from '../../Modifier';
+import {type SerializedSheetOrigin} from '../../Origin';
+import {type GeneralPowerGroup, type GeneralPowerName, type OriginPowerName} from '../../Power';
+import {type GrantedPowerName} from '../../Power/GrantedPower/GrantedPowerName';
+import {type RaceAbilityName, type RaceName, type SerializedRace} from '../../Race';
+import {type RoleAbilityName, type RoleName, type RolePowerName, type SerializedRole} from '../../Role';
+import {type SkillName} from '../../Skill';
+import {type LearnableSpellType, type SpellCircle, type SpellName, type SpellSchool, type SpellType} from '../../Spell';
+import {type TranslatableName} from '../../Translator';
+import {type Attribute, type Attributes} from '../Attributes';
+import {type Proficiency} from '../Proficiency';
+import {type SerializedSheetDevotion} from '../SheetDevotion';
+import {type SerializedInitialEquipment} from '../SheetInventoryInterface';
+import {type SerializedSheetResistencies} from '../SheetResistencesInterface';
+import {type Vision} from '../Vision';
 
 export type SerializedSheetEquipment<T extends EquipmentName = EquipmentName> = {
 	name: T;
@@ -156,6 +156,7 @@ export type SerializedSheetBuildStep = {
 
 export type SerializedSheetInterface = {
 	attributes: Attributes;
+	initialAttributes: Attributes;
 	tormentaPowersAttribute: Attribute;
 	buildSteps: SerializedSheetBuildStep[];
 	level: number;

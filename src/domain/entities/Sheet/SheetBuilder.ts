@@ -58,6 +58,7 @@ export class SheetBuilder implements SheetBuilderInterface {
 			throw new SheetBuilderError('MISSING_ORIGIN');
 		}
 
+		sheetBuilder.setInitialAttributes(serialized.initialAttributes);
 		const race = RaceFactory.makeFromSerialized(serialized.race);
 		sheetBuilder.chooseRace(race);
 		const role = RoleFactory.makeFromSerialized(serialized.role);
