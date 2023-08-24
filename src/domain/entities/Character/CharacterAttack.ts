@@ -13,13 +13,16 @@ export type AttackResult = {
 		total: number;
 		modifiers: Modifiers;
 		rollResult: RollResult;
+		modifiersTotal: number;
 	};
 	test: {
 		total: number;
 		modifiers: Modifiers;
 		rollResult: RollResult;
+		modifiersTotal: number;
 	};
 	isCritical: boolean;
+	isFumble: boolean;
 };
 
 export type SerializedCharacterAttack = {
@@ -57,19 +60,24 @@ export class CharacterAttack {
 	}
 
 	roll(random: RandomInterface, calculators: ModifiersTotalCalculators): AttackResult {
-		const {damage, test, isCritical} = this.attack.roll(random);
+		const {damage, test, isCritical, isFumble} = this.attack.roll(random);
+		const damageModifiersTotal = this.getDamageModifiersTotal(calculators);
+		const testModifiersTotal = this.getTestModifiersTotal(calculators);
 		return {
 			damage: {
 				rollResult: damage,
 				modifiers: this.modifiers.damage,
+				modifiersTotal: damageModifiersTotal,
 				total: damage.total + this.getDamageModifiersTotal(calculators),
 			},
 			test: {
 				rollResult: test,
 				modifiers: this.modifiers.test,
+				modifiersTotal: testModifiersTotal,
 				total: test.total + this.getTestModifiersTotal(calculators),
 			},
 			isCritical,
+			isFumble,
 		};
 	}
 

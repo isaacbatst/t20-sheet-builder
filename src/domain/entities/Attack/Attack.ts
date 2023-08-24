@@ -25,9 +25,12 @@ export class Attack {
 		damage: RollResult;
 		test: RollResult;
 		isCritical: boolean;
+		isFumble: boolean;
 	} {
 		const testResult = this.rollTest(random);
+
 		const isCritical = testResult.total >= this.critical.threat;
+		const isFumble = testResult.total <= 1;
 
 		const damageResult = this.rollDamage(random);
 
@@ -41,6 +44,7 @@ export class Attack {
 			damage: damageResult,
 			test: testResult,
 			isCritical,
+			isFumble,
 		};
 	}
 
