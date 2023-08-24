@@ -18,7 +18,7 @@ export class SheetAttributes implements SheetAttributesInterface {
 		return attributes;
 	}
 
-	initialAttributes: Attributes | undefined;
+	private initialAttributes: Attributes | undefined;
 
 	constructor(
 		private attributes: Attributes = SheetAttributes.initial,
@@ -28,6 +28,10 @@ export class SheetAttributes implements SheetAttributesInterface {
 	setInitialAttributes(attributes: Attributes): void {
 		this.attributes = attributes;
 		this.initialAttributes = attributes;
+	}
+
+	getInitialAttributes(): Attributes {
+		return this.initialAttributes ?? SheetAttributes.initial;
 	}
 
 	applyRaceModifiers(modifiers: Partial<Attributes>): void {

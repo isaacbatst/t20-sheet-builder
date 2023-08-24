@@ -203,6 +203,7 @@ export abstract class Sheet implements SheetInterface {
 		return {
 			buildSteps: this.getBuildSteps().map(buildStep => buildStep.serialize()),
 			level: this.getLevel(),
+			initialAttributes: this.getSheetAttributes().getInitialAttributes(),
 			displacement: this.getSheetDisplacement().getDisplacement(),
 			attributes: this.getSheetAttributes().getValues(),
 			defense: this.getSheetDefense().serialize(this, context),

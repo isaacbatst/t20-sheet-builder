@@ -7,5 +7,6 @@ export type SheetAttributesInterface = {
 	decreaseAttribute(attribute: keyof Attributes, quantity: number): void;
 	increaseAttribute(attribute: keyof Attributes, quantity: number): void;
 	getTormentaPowersAttribute(): Attribute;
+	getInitialAttributes(): Attributes;
 	getValues(): Attributes;
 };
