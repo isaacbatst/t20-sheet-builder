@@ -53,6 +53,18 @@ export class PreviewContext extends PreviewContextAbstract {
 		return attack.getTestModifiersTotal(this.makeTotalCalculators());
 	}
 
+	getAttackDamageModifiersMaxTotal(attack: CharacterAttack) {
+		if (!this.character) {
+			throw new PreviewContextError('CHARACTER_NOT_DEFINED');
+		}
+
+		return attack.getDamageModifiersMaxTotal(this.character.getAttributes(), this.makeMaxTotalCalculators());
+	}
+
+	getAttackDamageModifiersTotal(attack: CharacterAttack) {
+		return attack.getDamageModifiersTotal(this.makeTotalCalculators());
+	}
+
 	override getCurrentLocation(): Location | undefined {
 		return undefined;
 	}
