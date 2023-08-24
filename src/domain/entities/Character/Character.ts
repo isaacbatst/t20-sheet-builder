@@ -72,8 +72,9 @@ export class Character implements CharacterInterface {
 		const equipments = inventory.getEquipments();
 		equipments.forEach(({equipment}) => {
 			if (equipment instanceof OffensiveWeapon) {
-				const attack = this.makeCharacterAttack(equipment, skillTotalCalculator);
-				attacks.set(equipment.name, attack);
+				const typedEquipment = equipment as OffensiveWeapon;
+				const attack = this.makeCharacterAttack(typedEquipment, skillTotalCalculator);
+				attacks.set(typedEquipment.name, attack);
 			}
 		});
 
