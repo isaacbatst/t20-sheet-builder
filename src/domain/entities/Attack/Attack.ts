@@ -24,6 +24,7 @@ export class Attack {
 	roll(random: RandomInterface): {
 		damage: RollResult;
 		test: RollResult;
+		isCritical: boolean;
 	} {
 		const testResult = this.rollTest(random);
 		const isCritical = testResult.total >= this.critical.threat;
@@ -39,6 +40,7 @@ export class Attack {
 		return {
 			damage: damageResult,
 			test: testResult,
+			isCritical,
 		};
 	}
 

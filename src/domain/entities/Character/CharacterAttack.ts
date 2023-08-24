@@ -8,7 +8,7 @@ import {type Attributes} from '../Sheet';
 import {type SheetInterface} from '../Sheet/SheetInterface';
 import {CharacterAttackModifiers} from './CharactterAttackModifiers';
 
-type AttackResult = {
+export type AttackResult = {
 	damage: {
 		total: number;
 		modifiers: Modifiers;
@@ -19,6 +19,7 @@ type AttackResult = {
 		modifiers: Modifiers;
 		rollResult: RollResult;
 	};
+	isCritical: boolean;
 };
 
 export type SerializedCharacterAttack = {
@@ -56,7 +57,7 @@ export class CharacterAttack {
 	}
 
 	roll(random: RandomInterface, calculators: ModifiersTotalCalculators): AttackResult {
-		const {damage, test} = this.attack.roll(random);
+		const {damage, test, isCritical} = this.attack.roll(random);
 		return {
 			damage: {
 				rollResult: damage,
@@ -68,6 +69,7 @@ export class CharacterAttack {
 				modifiers: this.modifiers.test,
 				total: test.total + this.getTestModifiersTotal(calculators),
 			},
+			isCritical,
 		};
 	}
 
