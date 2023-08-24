@@ -1,13 +1,13 @@
 import {SheetBuilderError} from '../../errors';
-import { WeaponAttack } from '../Attack';
+import {WeaponAttack} from '../Attack';
 import {OutOfGameContext, type ContextInterface} from '../Context';
-import {EquipmentName, OffensiveWeapon} from '../Inventory';
+import {OffensiveWeapon, type EquipmentName} from '../Inventory';
 import {type GeneralPowerMap} from '../Map';
 import {FixedModifier, FixedModifiersList} from '../Modifier';
 import {Modifiers, type ModifiersMaxTotalCalculators} from '../Modifier/Modifiers';
 import {FightStyle} from '../Power/GeneralPower/CombatPower/FightStyle/FightStyle';
-import {CharacterSheet, type Attribute, type Attributes, type CharacterSheetInterface, type SerializedSheetGeneralPower, type SerializedSheetInterface} from '../Sheet';
-import { SheetBuilder } from '../Sheet/SheetBuilder';
+import {type Attribute, type Attributes, type CharacterSheetInterface, type SerializedSheetGeneralPower, type SerializedSheetInterface} from '../Sheet';
+import {SheetBuilder} from '../Sheet/SheetBuilder';
 import {type SkillTotalCalculator} from '../Skill/SkillTotalCalculator';
 import {SkillTotalCalculatorFactory} from '../Skill/SkillTotalCalculatorFactory';
 import type {CharacterAppliedFightStyle} from './CharacterAppliedFightStyle';
@@ -17,10 +17,10 @@ import {CharacterModifiers, type SerializedCharacterModifiers} from './Character
 
 export type SerializedCharacter = {
 	sheet: SerializedSheetInterface;
-	attacks: SerializedCharacterAttack[];
-	modifiers: SerializedCharacterModifiers;
+	attacks?: SerializedCharacterAttack[];
+	modifiers?: SerializedCharacterModifiers;
 	fightStyle?: SerializedSheetGeneralPower;
-	maxWieldedItems: number;
+	maxWieldedItems?: number;
 };
 
 export class Character implements CharacterInterface {
@@ -79,7 +79,7 @@ export class Character implements CharacterInterface {
 
 		return attacks;
 	}
-	
+
 	makeCharacterAttack(equipment: OffensiveWeapon, skillTotalCalculator: SkillTotalCalculator) {
 		const weaponAttack = new WeaponAttack(equipment);
 		const testSkill = weaponAttack.getTestDefaultSkill();

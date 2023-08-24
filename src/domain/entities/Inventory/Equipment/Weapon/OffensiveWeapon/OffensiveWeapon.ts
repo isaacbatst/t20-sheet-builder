@@ -3,7 +3,7 @@ import type {WeaponType} from '../Weapon';
 import {Weapon} from '../Weapon';
 import type {Critical} from '../../../../Attack/Critical';
 import {type WeaponPurpose} from '../WeaponPurpose';
-import { EquipmentName } from '../../EquipmentName';
+import {type EquipmentName} from '../../EquipmentName';
 
 export abstract class OffensiveWeapon<T extends EquipmentName = EquipmentName> extends Weapon<T> {
 	abstract readonly damage: DiceRoll;

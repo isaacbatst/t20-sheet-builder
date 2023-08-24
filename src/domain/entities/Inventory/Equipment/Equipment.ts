@@ -3,12 +3,12 @@ import {type SerializedSheetEquipment} from '../../Sheet';
 import type {EquipmentName} from './EquipmentName';
 
 export abstract class Equipment<T extends EquipmentName = EquipmentName> {
-	abstract readonly name: EquipmentName;
+	abstract readonly name: T;
 	abstract readonly isWieldable: boolean;
 
 	serialize(): SerializedSheetEquipment<T> {
 		return {
-			name: this.name as T,
+			name: this.name,
 		};
 	}
 
