@@ -1,5 +1,4 @@
 import {PreviewContextError} from '../../errors/PreviewContextError';
-import {type SerializedCharacter} from '../Character';
 import {type CharacterAttack} from '../Character/CharacterAttack';
 import {type CharacterInterface} from '../Character/CharacterInterface';
 import {FixedModifiersListTotalCalculator, PerLevelModifiersListTotalCalculator} from '../Modifier';
