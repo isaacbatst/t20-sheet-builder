@@ -1,11 +1,12 @@
 import type {Attack, SerializedAttack} from '../Attack/Attack';
 import {type ContextInterface} from '../Context';
 import {type RollResult} from '../Dice/RollResult';
-import {type FixedModifier, type ContextualModifiersListTotalCalculator} from '../Modifier';
-import {Modifiers, type SerializedModifiers, type ModifiersMaxTotalCalculators, type ModifiersTotalCalculators} from '../Modifier/Modifiers';
+import {type FixedModifier} from '../Modifier';
+import {type Modifiers, type ModifiersMaxTotalCalculators, type ModifiersTotalCalculators, type SerializedModifiers} from '../Modifier/Modifiers';
 import {type RandomInterface} from '../Random';
 import {type Attributes} from '../Sheet';
 import {type SheetInterface} from '../Sheet/SheetInterface';
+import {CharacterAttackModifiers} from './CharactterAttackModifiers';
 
 type AttackResult = {
 	damage: {
@@ -20,11 +21,6 @@ type AttackResult = {
 	};
 };
 
-type CharacterAttackModifiers = {
-	test: Modifiers;
-	damage: Modifiers;
-};
-
 export type SerializedCharacterAttack = {
 	attack: SerializedAttack;
 	modifiers: {
@@ -33,21 +29,30 @@ export type SerializedCharacterAttack = {
 	};
 };
 
+type CharacterAttackConstructorParams = {
+	attack: Attack;
+	modifiers?: Partial<CharacterAttackModifiers>;
+	testSkillModifierIndex: number;
+	damageAttributeModifierIndex?: number;
+};
+
 export class CharacterAttack {
 	readonly modifiers: CharacterAttackModifiers;
-	constructor(
-		readonly attack: Attack,
-		private skillModifierIndex: number,
-		modifiers: Partial<CharacterAttackModifiers> = {},
-	) {
-		modifiers.test = modifiers.test ?? new Modifiers();
-		modifiers.damage = modifiers.damage ?? new Modifiers();
-		this.modifiers = modifiers as CharacterAttackModifiers;
+	readonly attack: Attack;
+	private readonly damageAttributeModifierIndex: number | undefined;
+	private testSkillModifierIndex: number;
+
+	constructor(params: CharacterAttackConstructorParams) {
+		const {attack, modifiers, testSkillModifierIndex, damageAttributeModifierIndex} = params;
+		this.attack = attack;
+		this.damageAttributeModifierIndex = damageAttributeModifierIndex;
+		this.testSkillModifierIndex = testSkillModifierIndex;
+		this.modifiers = new CharacterAttackModifiers(modifiers);
 	}
 
 	changeTestSkillModifier(modifier: FixedModifier) {
-		this.modifiers.test.fixed.remove(this.skillModifierIndex);
-		this.skillModifierIndex = this.modifiers.test.fixed.add(modifier);
+		this.modifiers.test.fixed.remove(this.testSkillModifierIndex);
+		this.testSkillModifierIndex = this.modifiers.test.fixed.add(modifier);
 	}
 
 	roll(random: RandomInterface, calculators: ModifiersTotalCalculators): AttackResult {

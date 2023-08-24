@@ -55,6 +55,10 @@ export class Attack {
 		return SkillName.fight;
 	}
 
+	getDamageAttribute(): Attribute | undefined {
+		return undefined;
+	}
+
 	getCustomTestAttributes(): Set<Attribute> {
 		return new Set(['strength']);
 	}

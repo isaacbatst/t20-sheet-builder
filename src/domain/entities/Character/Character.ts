@@ -86,20 +86,36 @@ export class Character implements CharacterInterface {
 		const testSkill = weaponAttack.getTestDefaultSkill();
 		const skillValue = this.sheet.getSheetSkills().getSkill(testSkill).getTotal(skillTotalCalculator);
 		const skillModifier = new FixedModifier(testSkill, skillValue);
-		const fixedModifiers = new FixedModifiersList();
-		const skillModifierIndex = fixedModifiers.add(skillModifier);
-		fixedModifiers.add(...this.modifiers.attack.fixed.modifiers);
-		const attack = new CharacterAttack(
-			weaponAttack,
-			skillModifierIndex,
-			{
+		const testFixedModifiers = new FixedModifiersList();
+		testFixedModifiers.add(...this.modifiers.attack.fixed.modifiers);
+		const testSkillModifierIndex = testFixedModifiers.add(skillModifier);
+		const damageAttribute = weaponAttack.getDamageAttribute();
+		const damageFixedModifiers = new FixedModifiersList();
+		damageFixedModifiers.add(...this.modifiers.damage.fixed.modifiers);
+		let damageAttributeModifierIndex: number | undefined;
+		if (damageAttribute) {
+			const attribute = this.sheet.getSheetAttributes().getValues()[damageAttribute];
+			const modifier = new FixedModifier(damageAttribute, attribute);
+			damageAttributeModifierIndex = damageFixedModifiers.add(modifier);
+		}
+
+		const attack = new CharacterAttack({
+			attack: weaponAttack,
+			testSkillModifierIndex,
+			damageAttributeModifierIndex,
+			modifiers: {
 				test: new Modifiers({
-					fixed: fixedModifiers,
+					fixed: testFixedModifiers,
 					contextual: this.modifiers.attack.contextual,
 					perLevel: this.modifiers.attack.perLevel,
 				}),
-				damage: this.modifiers.damage,
-			});
+				damage: new Modifiers({
+					fixed: damageFixedModifiers,
+					contextual: this.modifiers.damage.contextual,
+					perLevel: this.modifiers.damage.perLevel,
+				}),
+			},
+		});
 		return attack;
 	}
 

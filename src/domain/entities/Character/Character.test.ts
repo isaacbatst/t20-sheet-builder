@@ -47,12 +47,12 @@ describe('Character', () => {
 	});
 
 	it('should get trained skill', () => {
-		expect(character.sheet.getSheetSkills().getSkill(SkillName.fight).getIsTrained()).toBeTruthy()
-	})
+		expect(character.sheet.getSheetSkills().getSkill(SkillName.fight).getIsTrained()).toBeTruthy();
+	});
 
 	it('should get untrained skill', () => {
-		expect(character.sheet.getSheetSkills().getSkill(SkillName.animalHandling).getIsTrained()).toBeFalsy()
-	})
+		expect(character.sheet.getSheetSkills().getSkill(SkillName.animalHandling).getIsTrained()).toBeFalsy();
+	});
 
 	it('should have fight style', () => {
 		expect(character.getFightStyle()).toBeDefined();
@@ -113,6 +113,13 @@ describe('Character', () => {
 			expect(character.getFightStyle()).toBeUndefined();
 			expect(context.getAttackTestModifiersMaxTotal(dagger)).toBe(2);
 			expect(context.getAttackTestModifiersTotal(dagger)).toBe(2);
+		});
+
+		it('should have default purpose damage modifier', () => {
+			character.sheet.getSheetAttributes().increaseAttribute('strength', 2);
+			dagger = context.getAttacks().get(EquipmentName.dagger)!;
+			expect(context.getAttackDamageModifiersMaxTotal(dagger)).toBe(2);
+			expect(context.getAttackDamageModifiersTotal(dagger)).toBe(2);
 		});
 
 		it('should roll dagger attack', () => {
