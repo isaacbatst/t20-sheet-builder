@@ -1,7 +1,6 @@
 import {WeaponAttack} from '../Attack/WeaponAttack';
 import {PreviewContext, type Context} from '../Context';
 import {Dagger, EquipmentName, LeatherArmor, LongSword} from '../Inventory';
-import {ContextualModifierAppliableValueCalculator, ModifierAppliableValueCalculator} from '../Modifier';
 import {Acolyte, OriginBenefitGeneralPower, OriginBenefitSkill} from '../Origin';
 import type {OriginInterface} from '../Origin/Origin';
 import {GeneralPowerName, IronWill, OneWeaponStyle} from '../Power';
@@ -99,7 +98,7 @@ describe('Character', () => {
 
 		it('should roll dagger attack', () => {
 			const fakeRandom = {get: vi.fn().mockReturnValue(1)};
-			const result = character.attack(dagger, context, fakeRandom);
+			const result = character.attack(dagger, fakeRandom);
 			expect(result).toBeDefined();
 		});
 
@@ -109,7 +108,7 @@ describe('Character', () => {
 
 			beforeAll(() => {
 				fakeRandom = {get: vi.fn().mockReturnValue(1)};
-				result = character.attack(dagger, context, fakeRandom);
+				result = character.attack(dagger, fakeRandom);
 			});
 
 			beforeEach(() => {
@@ -150,17 +149,17 @@ describe('Character', () => {
 			});
 
 			it('should sum test modifiers total', () => {
-				expect(character.getAttackTestModifiersTotal(dagger, context)).toBe(6);
+				expect(dagger.getTestModifiersTotal()).toBe(6);
 			});
 
 			it('should sum test modifiers max total', () => {
-				expect(character.getAttackTestModifiersMaxTotal(dagger)).toBe(6);
+				expect(dagger.getTestModifiersMaxTotal()).toBe(6);
 			});
 		});
 
 		it('should get dagger attack without one weapon style modifier', () => {
-			expect(character.getAttackTestModifiersMaxTotal(dagger)).toBe(6);
-			expect(character.getAttackTestModifiersTotal(dagger, context)).toBe(4);
+			expect(dagger.getTestModifiersMaxTotal()).toBe(6);
+			expect(dagger.getTestModifiersTotal()).toBe(4);
 		});
 
 		it('should unselect fight style and remove modifiers', () => {
@@ -172,13 +171,13 @@ describe('Character', () => {
 
 		it('should have default purpose damage modifier', () => {
 			dagger = character.getAttacks(context).get(EquipmentName.dagger)!;
-			expect(character.getAttackDamageModifiersMaxTotal(dagger)).toBe(2);
-			expect(character.getAttackDamageModifiersTotal(dagger, context)).toBe(2);
+			expect(dagger.getDamageModifiersMaxTotal()).toBe(2);
+			expect(dagger.getDamageModifiersTotal()).toBe(2);
 		});
 
 		it('should roll dagger with default purpose skill (fight)', () => {
 			const fakeRandom = {get: vi.fn(() => 1)};
-			const result = character.attack(dagger, context, fakeRandom);
+			const result = character.attack(dagger, fakeRandom);
 			const fightModifier = result.test.modifiers.fixed.get(SkillName.fight);
 			expect(fightModifier).toBeDefined();
 		});

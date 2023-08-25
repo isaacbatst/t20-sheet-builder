@@ -43,8 +43,8 @@ export class Character implements CharacterInterface {
 		this.selectDefaultFightStyle(sheet.getSheetPowers().getGeneralPowers());
 	}
 
-	attack(attack: CharacterAttack, context: Context, random: RandomInterface = new Random()) {
-		return attack.roll(random, this.makeTotalCalculators(context));
+	attack(attack: CharacterAttack, random: RandomInterface = new Random()) {
+		return attack.roll(random);
 	}
 
 	selectFightStyle(fightStyle: FightStyle) {
@@ -77,14 +77,13 @@ export class Character implements CharacterInterface {
 	}
 
 	getAttacks(context: Context): Map<EquipmentName, CharacterAttack> {
-		const skillTotalCalculator = this.makeSkillTotalCalculator(context);
 		const attacks = new Map<EquipmentName, CharacterAttack>();
 		const inventory = this.sheet.getSheetInventory();
 		const equipments = inventory.getEquipments();
 		equipments.forEach(({equipment}) => {
 			if (equipment instanceof OffensiveWeapon) {
 				const typedEquipment = equipment as OffensiveWeapon;
-				const attack = this.makeCharacterAttack(typedEquipment, skillTotalCalculator);
+				const attack = this.makeCharacterAttack(typedEquipment, context);
 				attacks.set(typedEquipment.name, attack);
 			}
 		});
@@ -92,8 +91,9 @@ export class Character implements CharacterInterface {
 		return attacks;
 	}
 
-	makeCharacterAttack(equipment: OffensiveWeapon, skillTotalCalculator: SkillTotalCalculator) {
+	makeCharacterAttack(equipment: OffensiveWeapon, context: Context) {
 		const weaponAttack = new WeaponAttack(equipment);
+		const skillTotalCalculator = this.makeSkillTotalCalculator(context);
 		const testSkill = weaponAttack.getTestDefaultSkill();
 		const skillValue = this.sheet.getSheetSkills().getSkill(testSkill).getTotal(skillTotalCalculator);
 		const skillModifier = new FixedModifier(testSkill, skillValue);
@@ -114,6 +114,9 @@ export class Character implements CharacterInterface {
 			attack: weaponAttack,
 			testSkillModifierIndex,
 			damageAttributeModifierIndex,
+			maxTotalCalculators: this.makeMaxTotalCalculators(),
+			totalCalculators: this.makeTotalCalculators(context),
+			attributes: this.getAttributes(),
 			modifiers: {
 				test: new Modifiers({
 					fixed: testFixedModifiers,
@@ -145,22 +148,6 @@ export class Character implements CharacterInterface {
 		const skillTotal = skillWithAttribute.getTotal(calculator);
 		const skillModifier = new FixedModifier(skillName, skillTotal);
 		attack.changeTestSkillModifier(skillModifier);
-	}
-
-	getAttackTestModifiersMaxTotal(attack: CharacterAttack): number {
-		return attack.getTestModifiersMaxTotal(this.getAttributes(), this.makeMaxTotalCalculators());
-	}
-
-	getAttackTestModifiersTotal(attack: CharacterAttack, context: Context) {
-		return attack.getTestModifiersTotal(this.makeTotalCalculators(context));
-	}
-
-	getAttackDamageModifiersMaxTotal(attack: CharacterAttack) {
-		return attack.getDamageModifiersMaxTotal(this.getAttributes(), this.makeMaxTotalCalculators());
-	}
-
-	getAttackDamageModifiersTotal(attack: CharacterAttack, context: Context) {
-		return attack.getDamageModifiersTotal(this.makeTotalCalculators(context));
 	}
 
 	getWieldedItems(): EquipmentName[] {

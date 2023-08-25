@@ -38,6 +38,9 @@ type CharacterAttackConstructorParams = {
 	modifiers?: Partial<CharacterAttackModifiers>;
 	testSkillModifierIndex: number;
 	damageAttributeModifierIndex?: number;
+	totalCalculators: ModifiersTotalCalculators;
+	maxTotalCalculators: ModifiersMaxTotalCalculators;
+	attributes: Attributes;
 };
 
 export class CharacterAttack {
@@ -45,12 +48,18 @@ export class CharacterAttack {
 	readonly attack: Attack;
 	private readonly damageAttributeModifierIndex: number | undefined;
 	private testSkillModifierIndex: number;
+	private readonly maxTotalCalculators: ModifiersMaxTotalCalculators;
+	private readonly totalCalculators: ModifiersTotalCalculators;
+	private readonly attributes: Attributes;
 
 	constructor(params: CharacterAttackConstructorParams) {
 		const {attack, modifiers, testSkillModifierIndex, damageAttributeModifierIndex} = params;
 		this.attack = attack;
 		this.damageAttributeModifierIndex = damageAttributeModifierIndex;
 		this.testSkillModifierIndex = testSkillModifierIndex;
+		this.totalCalculators = params.totalCalculators;
+		this.maxTotalCalculators = params.maxTotalCalculators;
+		this.attributes = params.attributes;
 		this.modifiers = new CharacterAttackModifiers(modifiers);
 	}
 
@@ -59,42 +68,42 @@ export class CharacterAttack {
 		this.testSkillModifierIndex = this.modifiers.test.fixed.add(modifier);
 	}
 
-	roll(random: RandomInterface, calculators: ModifiersTotalCalculators): AttackResult {
+	roll(random: RandomInterface): AttackResult {
 		const {damage, test, isCritical, isFumble} = this.attack.roll(random);
-		const damageModifiersTotal = this.getDamageModifiersTotal(calculators);
-		const testModifiersTotal = this.getTestModifiersTotal(calculators);
+		const damageModifiersTotal = this.getDamageModifiersTotal();
+		const testModifiersTotal = this.getTestModifiersTotal();
 		return {
 			damage: {
 				rollResult: damage,
 				modifiers: this.modifiers.damage,
 				modifiersTotal: damageModifiersTotal,
-				total: damage.total + this.getDamageModifiersTotal(calculators),
+				total: damage.total + this.getDamageModifiersTotal(),
 			},
 			test: {
 				rollResult: test,
 				modifiers: this.modifiers.test,
 				modifiersTotal: testModifiersTotal,
-				total: test.total + this.getTestModifiersTotal(calculators),
+				total: test.total + this.getTestModifiersTotal(),
 			},
 			isCritical,
 			isFumble,
 		};
 	}
 
-	getTestModifiersMaxTotal(attributes: Attributes, calculators: ModifiersMaxTotalCalculators) {
-		return this.modifiers.test.getMaxTotal(attributes, calculators);
+	getTestModifiersMaxTotal() {
+		return this.modifiers.test.getMaxTotal(this.attributes, this.maxTotalCalculators);
 	}
 
-	getTestModifiersTotal(calculators: ModifiersTotalCalculators) {
-		return this.modifiers.test.getTotal(calculators);
+	getTestModifiersTotal() {
+		return this.modifiers.test.getTotal(this.totalCalculators);
 	}
 
-	getDamageModifiersMaxTotal(attributes: Attributes, calculators: ModifiersMaxTotalCalculators) {
-		return this.modifiers.damage.getMaxTotal(attributes, calculators);
+	getDamageModifiersMaxTotal() {
+		return this.modifiers.damage.getMaxTotal(this.attributes, this.maxTotalCalculators);
 	}
 
-	getDamageModifiersTotal(calculators: ModifiersTotalCalculators) {
-		return this.modifiers.damage.getTotal(calculators);
+	getDamageModifiersTotal() {
+		return this.modifiers.damage.getTotal(this.totalCalculators);
 	}
 
 	serialize(sheet: SheetInterface, context: ContextInterface): SerializedCharacterAttack {
