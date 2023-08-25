@@ -183,10 +183,16 @@ describe('Character', () => {
 			expect(fightModifier).toBeDefined();
 		});
 
-		it('should change skill to dexterity', () => {
+		it('should change test attribute to dexterity', () => {
 			dagger.changeTestAttackAttribute('dexterity');
 			const fightModifier = dagger.modifiers.test.fixed.get(SkillName.fight);
 			expect(fightModifier?.baseValue).toBe(3);
+		});
+
+		it('should throw with invalid skill attribute', () => {
+			expect(() => {
+				dagger.changeTestAttackAttribute('charisma');
+			}).toThrow();
 		});
 	});
 });

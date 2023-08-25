@@ -71,20 +71,6 @@ export class CharacterAttack {
 		this.skills = skills;
 	}
 
-	addTestSkillFixedModifier(skills: SheetSkillsObject): number {
-		const testSkill = this.attack.getTestDefaultSkill();
-		const skillValue = skills[testSkill].getTotal();
-		return this.modifiers.test.fixed.add(new FixedModifier(testSkill, skillValue));
-	}
-
-	addDamageAttributeFixedModifier(attributes: Attributes): number | undefined {
-		const damageAttribute = this.attack.getDamageAttribute();
-		if (damageAttribute) {
-			const damageAttributeModifier = new FixedModifier(damageAttribute, attributes[damageAttribute]);
-			return this.modifiers.damage.fixed.add(damageAttributeModifier);
-		}
-	}
-
 	changeTestAttackAttribute(attribute: Attribute) {
 		const skillName = this.attack.getTestDefaultSkill();
 		const customTestAttributes = this.attack.getCustomTestAttributes();
@@ -147,5 +133,19 @@ export class CharacterAttack {
 				damage: this.modifiers.damage.serialize(sheet, context),
 			},
 		};
+	}
+
+	private addTestSkillFixedModifier(skills: SheetSkillsObject): number {
+		const testSkill = this.attack.getTestDefaultSkill();
+		const skillValue = skills[testSkill].getTotal();
+		return this.modifiers.test.fixed.add(new FixedModifier(testSkill, skillValue));
+	}
+
+	private addDamageAttributeFixedModifier(attributes: Attributes): number | undefined {
+		const damageAttribute = this.attack.getDamageAttribute();
+		if (damageAttribute) {
+			const damageAttributeModifier = new FixedModifier(damageAttribute, attributes[damageAttribute]);
+			return this.modifiers.damage.fixed.add(damageAttributeModifier);
+		}
 	}
 }
