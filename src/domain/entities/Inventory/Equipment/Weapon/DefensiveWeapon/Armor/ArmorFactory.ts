@@ -15,4 +15,8 @@ export class ArmorFactory {
 	static getAll() {
 		return Object.values(this.map);
 	}
+
+	static make(name: ArmorName) {
+		return new (this.get(name))();
+	}
 }

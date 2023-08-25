@@ -13,7 +13,11 @@ export class LightArmorFactory {
 		return Object.values(this.map);
 	}
 
-	static getByName(name: LightArmorName): LightArmorStatic {
+	static get(name: LightArmorName): LightArmorStatic {
 		return this.map[name];
+	}
+
+	static make(name: LightArmorName) {
+		return new (this.get(name))();
 	}
 }
