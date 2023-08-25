@@ -140,14 +140,6 @@ export class Character implements CharacterInterface {
 		return attack;
 	}
 
-	private makeSkillTotalCalculator(context: Context) {
-		return SkillTotalCalculatorFactory.make(
-			this.sheet.getSheetAttributes().getValues(),
-			this.sheet.getLevel(),
-			context,
-		);
-	}
-
 	private selectDefaultFightStyle(powers: GeneralPowerMap) {
 		for (const power of powers.values()) {
 			if (power instanceof FightStyle) {
