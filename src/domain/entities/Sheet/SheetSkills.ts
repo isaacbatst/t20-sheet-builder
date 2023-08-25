@@ -1,17 +1,17 @@
-import { type ContextInterface } from '../Context';
-import { type ContextualModifierInterface } from '../Modifier/ContextualModifier/ContextualModifierInterface';
-import { type ModifierInterface } from '../Modifier/ModifierInterface';
-import { type SkillName } from '../Skill';
-import { InitialSkillsGenerator } from '../Skill/InitialSkillsGenerator';
-import { type Skill } from '../Skill/Skill';
-import { type SkillTotalCalculator } from '../Skill/SkillTotalCalculator';
-import { SkillTotalCalculatorFactory } from '../Skill/SkillTotalCalculatorFactory';
-import { type SerializedSheetSkill, type SerializedSheetSkills } from './SerializedSheet/SerializedSheetInterface';
-import { type SheetInterface } from './SheetInterface';
-import { type SheetSkillsInterface } from './SheetSkillsInterface';
+import {type ContextInterface} from '../Context';
+import {type ContextualModifierInterface} from '../Modifier/ContextualModifier/ContextualModifierInterface';
+import {type ModifierInterface} from '../Modifier/ModifierInterface';
+import {type SkillName} from '../Skill';
+import {InitialSkillsGenerator} from '../Skill/InitialSkillsGenerator';
+import {type Skill} from '../Skill/Skill';
+import {type SkillTotalCalculator} from '../Skill/SkillTotalCalculator';
+import {SkillTotalCalculatorFactory} from '../Skill/SkillTotalCalculatorFactory';
+import {type SerializedSheetSkill, type SerializedSheetSkills} from './SerializedSheet/SerializedSheetInterface';
+import {type SheetInterface} from './SheetInterface';
+import {type SheetSkillsInterface} from './SheetSkillsInterface';
 
 export class SheetSkills implements SheetSkillsInterface {
-	readonly intelligenceSkills: SkillName[] = []
+	readonly intelligenceSkills: SkillName[] = [];
 
 	constructor(
 		private readonly skills = InitialSkillsGenerator.generate(),

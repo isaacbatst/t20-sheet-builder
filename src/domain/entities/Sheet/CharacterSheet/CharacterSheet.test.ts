@@ -171,6 +171,12 @@ describe('Sheet', () => {
 			expect(sheet.getSheetDevotion().getGrantedPowerCount()).toBe(1);
 		});
 
+		it('should get sheet skills', () => {
+			const skills = sheet.getSkills();
+			const total = skills[SkillName.fight].getTotal();
+			expect(total).toBe(2);
+		});
+
 		describe('Devout', () => {
 			let devoutSheet: CharacterSheet;
 

@@ -1,4 +1,4 @@
-import {type PreviewContextAbstract} from '../../Context/PreviewContext';
+import {type Context} from '../../Context';
 import {InGameContextFake} from '../../Context/InGameContextFake';
 import {RaceAbilityName} from '../../Race/RaceAbilityName';
 import {type Attributes} from '../../Sheet';
@@ -6,7 +6,7 @@ import {ContextualModifier} from './ContextualModifier';
 import {ContextualModifiersList} from './ContextualModifierList';
 import {ContextualModifiersListTotalCalculator} from './ContextualModifiersListTotalCalculator';
 
-const isUnderground = (context: PreviewContextAbstract) => context.getCurrentLocation()?.isUnderground ?? false;
+const isUnderground = (context: Context) => context.getCurrentLocation()?.isUnderground ?? false;
 
 describe('ContextualModifierList', () => {
 	it('should calculate total', () => {

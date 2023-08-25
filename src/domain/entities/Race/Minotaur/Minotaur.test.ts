@@ -25,11 +25,10 @@ describe('Minotaur', () => {
 		expect(attributes.charisma).toBe(0);
 	});
 
-	it('should have hornes as an attack', () => {
+	it('should have hornes', () => {
 		const attackName: EquipmentName = EquipmentName.horns;
-		const attacks = sheet.getAttacks();
-		const hornsAttack = attacks.get(attackName);
-		expect(hornsAttack).to.not.equal(null);
+		const inventory = sheet.getSheetInventory();
+		expect(inventory.getItem(attackName)).to.not.equal(null);
 	});
 
 	it('should have +1 in defense', () => {
