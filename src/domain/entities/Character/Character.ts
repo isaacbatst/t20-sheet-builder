@@ -9,7 +9,6 @@ import {FightStyle} from '../Power/GeneralPower/CombatPower/FightStyle/FightStyl
 import {Random, type RandomInterface} from '../Random';
 import {type Attribute, type Attributes, type CharacterSheetInterface, type SerializedSheetGeneralPower, type SerializedSheetInterface} from '../Sheet';
 import {SheetBuilder} from '../Sheet/SheetBuilder';
-import {type SkillTotalCalculator} from '../Skill/SkillTotalCalculator';
 import {SkillTotalCalculatorFactory} from '../Skill/SkillTotalCalculatorFactory';
 import type {CharacterAppliedFightStyle} from './CharacterAppliedFightStyle';
 import {CharacterAttack, type SerializedCharacterAttack} from './CharacterAttack';
