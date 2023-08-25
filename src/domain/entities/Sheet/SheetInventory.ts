@@ -1,16 +1,16 @@
-import { SheetBuilderError } from '../../errors';
-import { AddEquipment } from '../Action/AddEquipment';
-import { AddMoney } from '../Action/AddMoney';
-import { Armor, EquipmentName, MartialWeapon, SimpleWeapon, type Equipment } from '../Inventory';
-import { EquipmentAdventure } from '../Inventory/Equipment/EquipmentAdventure/EquipmentAdventure';
-import { LightShield } from '../Inventory/Equipment/Weapon/DefensiveWeapon/Shield/LightShield';
-import { Inventory } from '../Inventory/Inventory';
-import { type InventoryEquipment } from '../Inventory/InventoryEquipment';
-import { Proficiency } from './Proficiency';
-import { type SerializedSheetInventoryEquipment } from './SerializedSheet';
-import { SerializedInitialEquipment, type AddInitialEquipmentParams, type SheetInventoryInterface, type ToggleEquippedItemParams } from './SheetInventoryInterface';
-import { type SheetProficienciesInterface } from './SheetProficienciesInterface';
-import { type TransactionInterface } from './TransactionInterface';
+import {SheetBuilderError} from '../../errors';
+import {AddEquipment} from '../Action/AddEquipment';
+import {AddMoney} from '../Action/AddMoney';
+import {type Armor, EquipmentName, type MartialWeapon, type SimpleWeapon, type Equipment} from '../Inventory';
+import {EquipmentAdventure} from '../Inventory/Equipment/EquipmentAdventure/EquipmentAdventure';
+import {LightShield} from '../Inventory/Equipment/Weapon/DefensiveWeapon/Shield/LightShield';
+import {Inventory} from '../Inventory/Inventory';
+import {type InventoryEquipment} from '../Inventory/InventoryEquipment';
+import {Proficiency} from './Proficiency';
+import {type SerializedSheetInventoryEquipment} from './SerializedSheet';
+import {type SerializedInitialEquipment, type AddInitialEquipmentParams, type SheetInventoryInterface, type ToggleEquippedItemParams} from './SheetInventoryInterface';
+import {type SheetProficienciesInterface} from './SheetProficienciesInterface';
+import {type TransactionInterface} from './TransactionInterface';
 
 export class SheetInventory implements SheetInventoryInterface {
 	static readonly initialArmors = new Set([EquipmentName.leatherArmor, EquipmentName.studdedLeather]);
@@ -21,21 +21,23 @@ export class SheetInventory implements SheetInventoryInterface {
 		martialWeapon?: MartialWeapon;
 		armor?: Armor;
 		money: number;
-	}
+	};
 
 	constructor(
 		private readonly inventory: Inventory = new Inventory(),
 	) {}
 
 	serializeInitialEquipment(): SerializedInitialEquipment | undefined {
-		if(!this.initialEquipment) return
+		if (!this.initialEquipment) {
+			return;
+		}
 
 		return {
 			simpleWeapon: this.initialEquipment.simpleWeapon.serialize(),
 			martialWeapon: this.initialEquipment.martialWeapon?.serialize(),
 			armor: this.initialEquipment.armor?.serialize(),
 			money: this.initialEquipment.money,
-		}
+		};
 	}
 
 	serialize(): SerializedSheetInventoryEquipment[] {
