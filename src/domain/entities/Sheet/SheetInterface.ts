@@ -4,6 +4,7 @@ import {type CharacterAttack} from '../Character/CharacterAttack';
 import {type ContextInterface} from '../Context';
 import {type EquipmentName} from '../Inventory/Equipment/EquipmentName';
 import type {TriggeredEffectMap} from '../Map';
+import {type SheetSkillsObject} from '../Skill/SheetSkill';
 import {type SkillTotalCalculator} from '../Skill/SkillTotalCalculator';
 import {type SerializedSheetInterface} from './SerializedSheet';
 import {type SheetAbilitiesInterface} from './SheetAbilitiesInterface';
@@ -41,6 +42,7 @@ export type SheetInterface = {
 	getSheetAttributes(): SheetAttributesInterface;
 	getSheetSpells(): SheetSpellsInterface;
 	getSheetInventory(): SheetInventoryInterface;
+	getSkills(): SheetSkillsObject;
 	getSheetPowers(): SheetPowersInterface;
 	getSheetDefense(): SheetDefenseInterface;
 	getSheetVision(): SheetVisionInterface;

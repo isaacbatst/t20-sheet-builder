@@ -1,6 +1,6 @@
 import type {BuildStepInterface} from '../BuildStep';
 import {OutOfGameContext, type ContextInterface} from '../Context';
-import {SheetSkill} from '../Skill/SheetSkill';
+import {SheetSkill, type SheetSkillsObject} from '../Skill/SheetSkill';
 import {type SkillName} from '../Skill/SkillName';
 import {SkillTotalCalculatorFactory} from '../Skill/SkillTotalCalculatorFactory';
 import {type SerializedSheetInterface} from './SerializedSheet';
@@ -153,7 +153,7 @@ export abstract class Sheet implements SheetInterface {
 		return this.sheetResistences;
 	}
 
-	getSkills(): Record<SkillName, SheetSkill> {
+	getSkills(): SheetSkillsObject {
 		const skills = this.getSheetSkills().getSkills();
 
 		// eslint-disable-next-line @typescript-eslint/consistent-type-assertions

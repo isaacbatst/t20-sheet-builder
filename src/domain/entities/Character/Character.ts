@@ -82,7 +82,7 @@ export class Character implements CharacterInterface {
 		equipments.forEach(({equipment}) => {
 			if (equipment instanceof OffensiveWeapon) {
 				const typedEquipment = equipment as OffensiveWeapon;
-				const attack = this.makeCharacterAttack(typedEquipment, context);
+				const attack = this.makeAttack(typedEquipment, context);
 				attacks.set(typedEquipment.name, attack);
 			}
 		});
@@ -90,43 +90,28 @@ export class Character implements CharacterInterface {
 		return attacks;
 	}
 
-	makeCharacterAttack(equipment: OffensiveWeapon, context: Context) {
-		const weaponAttack = new WeaponAttack(equipment);
-		const skillTotalCalculator = this.makeSkillTotalCalculator(context);
-		const testSkill = weaponAttack.getTestDefaultSkill();
-		const skillValue = this.sheet.getSheetSkills().getSkill(testSkill).getTotal(skillTotalCalculator);
-		const skillModifier = new FixedModifier(testSkill, skillValue);
-		const testFixedModifiers = new FixedModifiersList();
-		testFixedModifiers.add(...this.modifiers.attack.fixed.modifiers);
-		const testSkillModifierIndex = testFixedModifiers.add(skillModifier);
-		const damageAttribute = weaponAttack.getDamageAttribute();
-		const damageFixedModifiers = new FixedModifiersList();
-		damageFixedModifiers.add(...this.modifiers.damage.fixed.modifiers);
-		let damageAttributeModifierIndex: number | undefined;
-		if (damageAttribute) {
-			const attribute = this.sheet.getSheetAttributes().getValues()[damageAttribute];
-			const modifier = new FixedModifier(damageAttribute, attribute);
-			damageAttributeModifierIndex = damageFixedModifiers.add(modifier);
+	getAttack(weaponName: EquipmentName, context: Context) {
+		const inventory = this.sheet.getSheetInventory();
+		const weapon = inventory.getEquipment(weaponName);
+		if (!weapon || !(weapon.equipment instanceof OffensiveWeapon)) {
+			throw new Error('INVALID_EQUIPMENT');
 		}
 
+		const typedWeapon = weapon.equipment as OffensiveWeapon;
+
+		return this.makeAttack(typedWeapon, context);
+	}
+
+	makeAttack(weapon: OffensiveWeapon, context: Context) {
 		const attack = new CharacterAttack({
-			attack: weaponAttack,
-			testSkillModifierIndex,
-			damageAttributeModifierIndex,
+			weapon,
+			skills: this.sheet.getSkills(),
 			maxTotalCalculators: this.makeMaxTotalCalculators(),
 			totalCalculators: this.makeTotalCalculators(context),
 			attributes: this.getAttributes(),
 			modifiers: {
-				test: new Modifiers({
-					fixed: testFixedModifiers,
-					contextual: this.modifiers.attack.contextual,
-					perLevel: this.modifiers.attack.perLevel,
-				}),
-				damage: new Modifiers({
-					fixed: damageFixedModifiers,
-					contextual: this.modifiers.damage.contextual,
-					perLevel: this.modifiers.damage.perLevel,
-				}),
+				damage: this.modifiers.damage,
+				test: this.modifiers.attack,
 			},
 		});
 		return attack;

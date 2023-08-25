@@ -1,15 +1,15 @@
-import { SheetBuilderError } from '../../../errors';
-import { GeneralPowerFactory, OriginPowerFactory, OriginPowerName, SpecialFriend } from '../../Power';
-import { Acolyte } from '../Acolyte/Acolyte';
-import { AnimalsFriend } from '../AnimalsFriend/AnimalsFriend';
-import { OriginBenefitFactoryAcolyte } from '../OriginBenefit/OriginBenefitFactory/OriginBenefitFactoryAcolyte';
-import { OriginBenefitFactoryAnimalsFriend } from '../OriginBenefit/OriginBenefitFactory/OriginBenefitFactoryAnimalsFriend';
-import { OriginBenefitGeneralPower } from '../OriginBenefit/OriginBenefitGeneralPower';
-import { OriginBenefitOriginPower } from '../OriginBenefit/OriginBenefitOriginPower';
-import { OriginBenefitSkill } from '../OriginBenefit/OriginBenefitSkill';
-import { type SerializedOriginBenefit } from '../OriginBenefit/SerializedOriginBenefit';
-import { OriginName } from '../OriginName';
-import { SerializedOrigins, SerializedSheetOrigin } from '../SerializedOrigin';
+import {SheetBuilderError} from '../../../errors';
+import {GeneralPowerFactory, OriginPowerFactory, OriginPowerName, SpecialFriend} from '../../Power';
+import {Acolyte} from '../Acolyte/Acolyte';
+import {AnimalsFriend} from '../AnimalsFriend/AnimalsFriend';
+import {OriginBenefitFactoryAcolyte} from '../OriginBenefit/OriginBenefitFactory/OriginBenefitFactoryAcolyte';
+import {OriginBenefitFactoryAnimalsFriend} from '../OriginBenefit/OriginBenefitFactory/OriginBenefitFactoryAnimalsFriend';
+import {OriginBenefitGeneralPower} from '../OriginBenefit/OriginBenefitGeneralPower';
+import {OriginBenefitOriginPower} from '../OriginBenefit/OriginBenefitOriginPower';
+import {OriginBenefitSkill} from '../OriginBenefit/OriginBenefitSkill';
+import {type SerializedOriginBenefit} from '../OriginBenefit/SerializedOriginBenefit';
+import {OriginName} from '../OriginName';
+import {type SerializedOrigins, type SerializedSheetOrigin} from '../SerializedOrigin';
 
 export class OriginFactory {
 	static makeFromSerialized<T extends SerializedOrigins>(serialized: SerializedSheetOrigin<T>) {

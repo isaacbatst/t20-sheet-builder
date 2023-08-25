@@ -58,7 +58,7 @@ export class SheetInventory implements SheetInventoryInterface {
 	}
 
 	toggleEquippedItem({maxWieldedItems, modifiers, name}: ToggleEquippedItemParams): void {
-		const item = this.getItem(name);
+		const item = this.getEquipment(name);
 
 		if (!item) {
 			throw new SheetBuilderError('ITEM_NOT_FOUND');
@@ -121,7 +121,7 @@ export class SheetInventory implements SheetInventoryInterface {
 		return this.inventory.getMoney();
 	}
 
-	getItem(name: EquipmentName): InventoryEquipment | undefined {
+	getEquipment(name: EquipmentName): InventoryEquipment | undefined {
 		return this.inventory.getItem(name);
 	}
 

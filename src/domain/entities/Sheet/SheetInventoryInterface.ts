@@ -34,7 +34,7 @@ export type SheetInventoryInterface = {
 	removeMoney(amount: number): void;
 	getMoney(): number;
 
-	getItem(name: EquipmentName): InventoryEquipment | undefined;
+	getEquipment(name: EquipmentName): InventoryEquipment | undefined;
 	getEquipments(): Map<EquipmentName, InventoryEquipment>;
 
 	getWieldedItems(): EquipmentName[];

@@ -28,7 +28,7 @@ describe('Minotaur', () => {
 	it('should have hornes', () => {
 		const attackName: EquipmentName = EquipmentName.horns;
 		const inventory = sheet.getSheetInventory();
-		expect(inventory.getItem(attackName)).to.not.equal(null);
+		expect(inventory.getEquipment(attackName)).to.not.equal(null);
 	});
 
 	it('should have +1 in defense', () => {

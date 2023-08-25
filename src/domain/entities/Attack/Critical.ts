@@ -7,8 +7,8 @@ export type SerializedCritical = {
 
 export class Critical {
 	constructor(
-		readonly threat: number = 20,
-		readonly multiplier: number = 2,
+		readonly threat = 20,
+		readonly multiplier = 2,
 	) {
 		this.validateThreat(threat);
 		this.validateMultiplier(multiplier);

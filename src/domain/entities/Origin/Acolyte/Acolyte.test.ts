@@ -22,8 +22,8 @@ describe('Acolyte', () => {
 		const transaction = new Transaction(sheet);
 		acolyte.addToSheet(transaction);
 
-		expect(sheet.getSheetInventory().getItem(EquipmentName.sacredSymbol)).toBeDefined();
-		expect(sheet.getSheetInventory().getItem(EquipmentName.priestCostume)).toBeDefined();
+		expect(sheet.getSheetInventory().getEquipment(EquipmentName.sacredSymbol)).toBeDefined();
+		expect(sheet.getSheetInventory().getEquipment(EquipmentName.priestCostume)).toBeDefined();
 	});
 
 	it('should dispatch skill benefits training', () => {

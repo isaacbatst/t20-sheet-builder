@@ -6,7 +6,7 @@ import type {OriginBenefit} from './OriginBenefit/OriginBenefit';
 import {type OriginBenefits} from './OriginBenefit/OriginBenefits';
 import {type SerializedOriginBenefit, type SerializedOriginBenefits} from './OriginBenefit/SerializedOriginBenefit';
 import type {OriginName} from './OriginName';
-import {SerializedSheetOrigin, type SerializedOrigins} from './SerializedOrigin';
+import {type SerializedSheetOrigin, type SerializedOrigins} from './SerializedOrigin';
 
 export type OriginInterface<
 	Sb extends SerializedOriginBenefit = SerializedOriginBenefits,

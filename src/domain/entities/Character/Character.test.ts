@@ -108,11 +108,12 @@ describe('Character', () => {
 
 			beforeAll(() => {
 				fakeRandom = {get: vi.fn().mockReturnValue(1)};
-				result = character.attack(dagger, fakeRandom);
 			});
 
 			beforeEach(() => {
 				character.toggleEquipItem(EquipmentName.dagger);
+				const attack = character.getAttack(EquipmentName.dagger, context);
+				result = attack.roll(fakeRandom);
 			});
 
 			it('should calculate damage roll result', () => {
@@ -145,7 +146,7 @@ describe('Character', () => {
 			});
 
 			it('should calculate test total', () => {
-				expect(result.test.total).toBe(5);
+				expect(result.test.total).toBe(7);
 			});
 
 			it('should sum test modifiers total', () => {

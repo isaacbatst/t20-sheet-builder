@@ -1,9 +1,9 @@
-import { type RaceAbilityMap, type RoleAbilityMap } from '../Map';
-import { type RaceAbilityInterface } from '../Race/RaceAbility';
-import { type RoleAbilityInterface } from '../Role/RoleAbility';
-import { type TranslatableName } from '../Translator';
-import { type SheetAbilitiesInterface } from './SheetAbilitiesInterface';
-import { type TransactionInterface } from './TransactionInterface';
+import {type RaceAbilityMap, type RoleAbilityMap} from '../Map';
+import {type RaceAbilityInterface} from '../Race/RaceAbility';
+import {type RoleAbilityInterface} from '../Role/RoleAbility';
+import {type TranslatableName} from '../Translator';
+import {type SheetAbilitiesInterface} from './SheetAbilitiesInterface';
+import {type TransactionInterface} from './TransactionInterface';
 
 export class SheetAbilities implements SheetAbilitiesInterface {
 	constructor(
