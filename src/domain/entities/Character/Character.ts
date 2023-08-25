@@ -1,11 +1,12 @@
 import {SheetBuilderError} from '../../errors';
 import {WeaponAttack} from '../Attack';
-import {OutOfGameContext, type ContextInterface} from '../Context';
+import {type Context} from '../Context';
 import {OffensiveWeapon, type EquipmentName} from '../Inventory';
 import {type GeneralPowerMap} from '../Map';
-import {FixedModifier, FixedModifiersList} from '../Modifier';
+import {ContextualModifierAppliableValueCalculator, ContextualModifiersListTotalCalculator, FixedModifier, FixedModifiersList, FixedModifiersListTotalCalculator, PerLevelModifiersListTotalCalculator, type ContextualModifier, type ModifiersTotalCalculators} from '../Modifier';
 import {Modifiers, type ModifiersMaxTotalCalculators} from '../Modifier/Modifiers';
 import {FightStyle} from '../Power/GeneralPower/CombatPower/FightStyle/FightStyle';
+import {Random, type RandomInterface} from '../Random';
 import {type Attribute, type Attributes, type CharacterSheetInterface, type SerializedSheetGeneralPower, type SerializedSheetInterface} from '../Sheet';
 import {SheetBuilder} from '../Sheet/SheetBuilder';
 import {type SkillTotalCalculator} from '../Skill/SkillTotalCalculator';
@@ -42,6 +43,10 @@ export class Character implements CharacterInterface {
 		this.selectDefaultFightStyle(sheet.getSheetPowers().getGeneralPowers());
 	}
 
+	attack(attack: CharacterAttack, context: Context, random: RandomInterface = new Random()) {
+		return attack.roll(random, this.makeTotalCalculators(context));
+	}
+
 	selectFightStyle(fightStyle: FightStyle) {
 		const applied = fightStyle.applyModifiers(this.modifiers);
 		this.fightStyle = applied;
@@ -61,12 +66,18 @@ export class Character implements CharacterInterface {
 		});
 	}
 
+	getContextualModifierAppliableValue(modifier: ContextualModifier, context: Context) {
+		const calculator = new ContextualModifierAppliableValueCalculator(this.getAttributes(), context, modifier);
+		return modifier.getAppliableValue(calculator);
+	}
+
 	getAttributes(): Attributes {
 		const attributes = this.sheet.getSheetAttributes();
 		return attributes.getValues();
 	}
 
-	getAttacks(skillTotalCalculator: SkillTotalCalculator): Map<EquipmentName, CharacterAttack> {
+	getAttacks(context: Context): Map<EquipmentName, CharacterAttack> {
+		const skillTotalCalculator = this.makeSkillTotalCalculator(context);
 		const attacks = new Map<EquipmentName, CharacterAttack>();
 		const inventory = this.sheet.getSheetInventory();
 		const equipments = inventory.getEquipments();
@@ -119,7 +130,7 @@ export class Character implements CharacterInterface {
 		return attack;
 	}
 
-	changeAttackTestAttribute(attack: CharacterAttack, attribute: Attribute, calculator: SkillTotalCalculator) {
+	changeAttackTestAttribute(attack: CharacterAttack, attribute: Attribute, context: Context) {
 		const skillName = attack.attack.getTestDefaultSkill();
 		const skill = this.sheet.getSheetSkills().getSkill(skillName);
 		const customTestAttributes = attack.attack.getCustomTestAttributes();
@@ -130,13 +141,26 @@ export class Character implements CharacterInterface {
 		}
 
 		const skillWithAttribute = skill.makeWithOtherAttribute(attribute);
+		const calculator = this.makeSkillTotalCalculator(context);
 		const skillTotal = skillWithAttribute.getTotal(calculator);
 		const skillModifier = new FixedModifier(skillName, skillTotal);
 		attack.changeTestSkillModifier(skillModifier);
 	}
 
-	getAttackTestModifiersMaxTotal(attack: CharacterAttack, calculators: ModifiersMaxTotalCalculators): number {
-		return attack.getTestModifiersMaxTotal(this.getAttributes(), calculators);
+	getAttackTestModifiersMaxTotal(attack: CharacterAttack): number {
+		return attack.getTestModifiersMaxTotal(this.getAttributes(), this.makeMaxTotalCalculators());
+	}
+
+	getAttackTestModifiersTotal(attack: CharacterAttack, context: Context) {
+		return attack.getTestModifiersTotal(this.makeTotalCalculators(context));
+	}
+
+	getAttackDamageModifiersMaxTotal(attack: CharacterAttack) {
+		return attack.getDamageModifiersMaxTotal(this.getAttributes(), this.makeMaxTotalCalculators());
+	}
+
+	getAttackDamageModifiersTotal(attack: CharacterAttack, context: Context) {
+		return attack.getDamageModifiersTotal(this.makeTotalCalculators(context));
 	}
 
 	getWieldedItems(): EquipmentName[] {
@@ -148,10 +172,10 @@ export class Character implements CharacterInterface {
 		return this.fightStyle;
 	}
 
-	serialize(context: ContextInterface, skillTotalCalculator = this.makeSkillTotalCalculator(context)): SerializedCharacter {
+	serialize(context: Context): SerializedCharacter {
 		const attacks: SerializedCharacterAttack[] = [];
 
-		for (const attack of this.getAttacks(skillTotalCalculator).values()) {
+		for (const attack of this.getAttacks(context).values()) {
 			attacks.push(attack.serialize(this.sheet, context));
 		}
 
@@ -164,7 +188,7 @@ export class Character implements CharacterInterface {
 		};
 	}
 
-	private makeSkillTotalCalculator(context: ContextInterface = new OutOfGameContext()) {
+	private makeSkillTotalCalculator(context: Context) {
 		return SkillTotalCalculatorFactory.make(
 			this.sheet.getSheetAttributes().getValues(),
 			this.sheet.getLevel(),
@@ -179,5 +203,32 @@ export class Character implements CharacterInterface {
 				break;
 			}
 		}
+	}
+
+	private makeMaxTotalCalculators(): ModifiersMaxTotalCalculators {
+		return {
+			fixedCalculator: this.makeFixedTotalCalculator(),
+			perLevelCalculator: this.makePerLevelCalculator(),
+		};
+	}
+
+	private makeTotalCalculators(context: Context): ModifiersTotalCalculators {
+		return {
+			contextCalculator: this.makeContextTotalCalculator(context),
+			fixedCalculator: this.makeFixedTotalCalculator(),
+			perLevelCalculator: this.makePerLevelCalculator(),
+		};
+	}
+
+	private makeContextTotalCalculator(context: Context) {
+		return new ContextualModifiersListTotalCalculator(context, this.getAttributes());
+	}
+
+	private makeFixedTotalCalculator() {
+		return new FixedModifiersListTotalCalculator(this.getAttributes());
+	}
+
+	private makePerLevelCalculator() {
+		return new PerLevelModifiersListTotalCalculator(this.getAttributes(), this.sheet.getLevel());
 	}
 }

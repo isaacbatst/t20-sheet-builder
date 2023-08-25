@@ -1,9 +1,11 @@
 import type {Character} from '../Character/Character';
+import {type CharacterInterface} from '../Character/CharacterInterface';
 import type {Location} from '../Sheet/CharacterSheet/CharacterSheetInterface';
-import {InGameContextAbstract} from './InGameContextAbstract';
+import {Context} from './Context';
 
-export class InGameContext extends InGameContextAbstract {
-	readonly character: Character;
+export class InGameContext extends Context {
+	override activateContextualModifiers = true;
+	readonly character: CharacterInterface;
 	private readonly location: Location;
 
 	constructor(
@@ -15,7 +17,7 @@ export class InGameContext extends InGameContextAbstract {
 		this.character = character;
 	}
 
-	getCurrentLocation(): Location {
+	override getCurrentLocation(): Location {
 		return this.location;
 	}
 }

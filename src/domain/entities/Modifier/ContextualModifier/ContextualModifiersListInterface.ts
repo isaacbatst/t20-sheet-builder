@@ -1,9 +1,9 @@
+import {type Context} from '../../Context';
 import type {Attributes} from '../../Sheet/Attributes';
-import type {PreviewContextAbstract} from '../../Context/PreviewContextAbstract';
 import type {ModifiersListInterface} from '../ModifiersListInterface';
 import type {ContextualModifierInterface} from './ContextualModifierInterface';
 
-export type ModifierConditionVerify = (context: PreviewContextAbstract) => boolean;
+export type ModifierConditionVerify = (context: Context) => boolean;
 
 export type ModifierCondition = {
 	description: string;

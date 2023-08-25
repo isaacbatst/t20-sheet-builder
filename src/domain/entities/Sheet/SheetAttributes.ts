@@ -3,14 +3,16 @@ import {type SerializedSheetInterface} from './SerializedSheet';
 import {type SheetAttributesInterface} from './SheetAttributesInterface';
 
 export class SheetAttributes implements SheetAttributesInterface {
-	static initial = {
-		charisma: 0,
-		constitution: 0,
-		dexterity: 0,
-		intelligence: 0,
-		strength: 0,
-		wisdom: 0,
-	};
+	static get initial(): Attributes {
+		return {
+			charisma: 0,
+			constitution: 0,
+			dexterity: 0,
+			intelligence: 0,
+			strength: 0,
+			wisdom: 0,
+		};
+	}
 
 	static makeFromSerialized(serialized: SerializedSheetInterface) {
 		const attributes = new SheetAttributes(SheetAttributes.initial, serialized.tormentaPowersAttribute);

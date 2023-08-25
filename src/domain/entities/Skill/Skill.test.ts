@@ -47,7 +47,8 @@ describe('Skill', () => {
 			isTrained: true,
 			attribute: 'dexterity',
 		});
-		const calculator = SkillTotalCalculatorFactory.make(sheet.getSheetAttributes().getValues(), sheet.getLevel(), new OutOfGameContext());
+		const sheetAttributes = sheet.getSheetAttributes().getValues();
+		const calculator = SkillTotalCalculatorFactory.make(sheetAttributes, sheet.getLevel(), new OutOfGameContext());
 		expect(skill.getTotal(calculator)).toBe(2);
 	});
 

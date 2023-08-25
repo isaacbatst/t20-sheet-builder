@@ -1,18 +1,20 @@
 import {WeaponAttack} from '../Attack/WeaponAttack';
-import {PreviewContext} from '../Context/PreviewContext';
+import {PreviewContext, type Context} from '../Context';
 import {Dagger, EquipmentName, LeatherArmor, LongSword} from '../Inventory';
+import {ContextualModifierAppliableValueCalculator, ModifierAppliableValueCalculator} from '../Modifier';
 import {Acolyte, OriginBenefitGeneralPower, OriginBenefitSkill} from '../Origin';
 import type {OriginInterface} from '../Origin/Origin';
 import {GeneralPowerName, IronWill, OneWeaponStyle} from '../Power';
 import {Human, VersatileChoicePower, VersatileChoiceSkill, type VersatileChoice} from '../Race';
 import type {Race} from '../Race/Race';
+import {type RandomInterface} from '../Random';
 import {Warrior} from '../Role';
 import type {Role} from '../Role/Role';
 import type {CharacterSheet} from '../Sheet/CharacterSheet/CharacterSheet';
 import {SheetBuilder} from '../Sheet/SheetBuilder';
 import {SkillName} from '../Skill';
 import {Character} from './Character';
-import type {CharacterAttack} from './CharacterAttack';
+import type {AttackResult, CharacterAttack} from './CharacterAttack';
 
 describe('Character', () => {
 	let sheet: CharacterSheet;
@@ -21,6 +23,7 @@ describe('Character', () => {
 	let sheetBuilder: SheetBuilder;
 	let origin: OriginInterface;
 	let character: Character;
+	let context: Context;
 	beforeEach(() => {
 		const choices: VersatileChoice[] = [
 			new VersatileChoiceSkill(SkillName.acrobatics),
@@ -31,7 +34,7 @@ describe('Character', () => {
 		sheetBuilder = new SheetBuilder();
 		origin = new Acolyte([new OriginBenefitGeneralPower(new IronWill()), new OriginBenefitSkill(SkillName.cure)]);
 		sheet = sheetBuilder
-			.setInitialAttributes({strength: 0, dexterity: 0, charisma: 0, constitution: 0, intelligence: 0, wisdom: 2})
+			.setInitialAttributes({strength: 2, dexterity: 0, charisma: 0, constitution: 0, intelligence: 0, wisdom: 2})
 			.chooseRace(race)
 			.chooseRole(role)
 			.chooseOrigin(origin)
@@ -44,6 +47,7 @@ describe('Character', () => {
 			})
 			.build();
 		character = new Character(sheet);
+		context = new PreviewContext(character);
 	});
 
 	it('should get trained skill', () => {
@@ -82,11 +86,9 @@ describe('Character', () => {
 
 	describe('Attack', () => {
 		let dagger: CharacterAttack;
-		let context: PreviewContext;
 
 		beforeEach(() => {
-			context = new PreviewContext(character);
-			const attacks = context.getAttacks();
+			const attacks = character.getAttacks(context);
 			dagger = attacks.get(EquipmentName.dagger)!;
 		});
 
@@ -95,15 +97,70 @@ describe('Character', () => {
 			expect(dagger.attack).toEqual(new WeaponAttack(new Dagger()));
 		});
 
-		it('should get dagger attack without one weapon style modifier', () => {
-			expect(context.getAttackTestModifiersMaxTotal(dagger)).toBe(4);
-			expect(context.getAttackTestModifiersTotal(dagger)).toBe(2);
+		it('should roll dagger attack', () => {
+			const fakeRandom = {get: vi.fn().mockReturnValue(1)};
+			const result = character.attack(dagger, context, fakeRandom);
+			expect(result).toBeDefined();
 		});
 
-		it('should get dagger attack with one weapon style modifier', () => {
-			character.toggleEquipItem(EquipmentName.dagger);
-			expect(context.getAttackTestModifiersMaxTotal(dagger)).toBe(4);
-			expect(context.getAttackTestModifiersTotal(dagger)).toBe(4);
+		describe('With one weapon style active', () => {
+			let fakeRandom: RandomInterface;
+			let result: AttackResult;
+
+			beforeAll(() => {
+				fakeRandom = {get: vi.fn().mockReturnValue(1)};
+				result = character.attack(dagger, context, fakeRandom);
+			});
+
+			beforeEach(() => {
+				character.toggleEquipItem(EquipmentName.dagger);
+			});
+
+			it('should calculate damage roll result', () => {
+				expect(result.damage.rollResult.rolls).toEqual([1]);
+				expect(result.damage.rollResult.discartedRolls).toEqual([]);
+			});
+
+			it('should have default attribute modifier on damage', () => {
+				const modifier = result.damage.modifiers.fixed.get('strength');
+				expect(modifier).toBeDefined();
+				expect(modifier?.baseValue).toBe(2);
+			});
+
+			it('should calculate damage total', () => {
+				expect(result.damage.total).toBe(3);
+			});
+
+			it('should have one weapon style modifier on test', () => {
+				const oneWeaponStyleModifier = result.test.modifiers.contextual.get(GeneralPowerName.oneWeaponStyle);
+				expect(oneWeaponStyleModifier).toBeDefined();
+				expect(oneWeaponStyleModifier?.baseValue).toBe(2);
+				const appliableValue = character.getContextualModifierAppliableValue(oneWeaponStyleModifier!, context);
+				expect(appliableValue).toBe(2);
+			});
+
+			it('should have default skill modifier on test', () => {
+				const modifier = result.test.modifiers.fixed.get(SkillName.fight);
+				expect(modifier).toBeDefined();
+				expect(modifier?.baseValue).toBe(4);
+			});
+
+			it('should calculate test total', () => {
+				expect(result.test.total).toBe(5);
+			});
+
+			it('should sum test modifiers total', () => {
+				expect(character.getAttackTestModifiersTotal(dagger, context)).toBe(6);
+			});
+
+			it('should sum test modifiers max total', () => {
+				expect(character.getAttackTestModifiersMaxTotal(dagger)).toBe(6);
+			});
+		});
+
+		it('should get dagger attack without one weapon style modifier', () => {
+			expect(character.getAttackTestModifiersMaxTotal(dagger)).toBe(6);
+			expect(character.getAttackTestModifiersTotal(dagger, context)).toBe(4);
 		});
 
 		it('should unselect fight style and remove modifiers', () => {
@@ -111,52 +168,23 @@ describe('Character', () => {
 			expect(fightStyle).toBeDefined();
 			character.unselectFightStyle();
 			expect(character.getFightStyle()).toBeUndefined();
-			expect(context.getAttackTestModifiersMaxTotal(dagger)).toBe(2);
-			expect(context.getAttackTestModifiersTotal(dagger)).toBe(2);
 		});
 
 		it('should have default purpose damage modifier', () => {
-			character.sheet.getSheetAttributes().increaseAttribute('strength', 2);
-			dagger = context.getAttacks().get(EquipmentName.dagger)!;
-			expect(context.getAttackDamageModifiersMaxTotal(dagger)).toBe(2);
-			expect(context.getAttackDamageModifiersTotal(dagger)).toBe(2);
-		});
-
-		it('should roll dagger attack', () => {
-			const fakeRandom = {get: vi.fn(() => 1)};
-			const result = context.roll(dagger, fakeRandom);
-			expect(result.damage.rollResult.rolls).toEqual([1]);
-			expect(result.damage.rollResult.discartedRolls).toEqual([]);
-			expect(result.damage.rollResult.total).toBe(1);
-			expect(result.damage.total).toEqual(1);
-			expect(result.test.total).toBe(3);
-		});
-
-		it('should roll dagger attack with one weapon style modifier', () => {
-			character.toggleEquipItem(EquipmentName.dagger);
-			const fakeRandom = {get: vi.fn(() => 1)};
-			const result = context.roll(dagger, fakeRandom);
-			expect(result.damage.total).toBe(1);
-			expect(result.damage.rollResult.rolls).toEqual([1]);
-			expect(result.damage.rollResult.discartedRolls).toEqual([]);
-			expect(result.test.modifiers.contextual.modifiers).toHaveLength(1);
-			const oneWeaponStyleModifier = result.test.modifiers.contextual.get(GeneralPowerName.oneWeaponStyle);
-			expect(oneWeaponStyleModifier).toBeDefined();
-			expect(oneWeaponStyleModifier?.baseValue).toBe(2);
-			expect(result.damage.total).toBe(1);
-			expect(result.test.total).toBe(5);
+			dagger = character.getAttacks(context).get(EquipmentName.dagger)!;
+			expect(character.getAttackDamageModifiersMaxTotal(dagger)).toBe(2);
+			expect(character.getAttackDamageModifiersTotal(dagger, context)).toBe(2);
 		});
 
 		it('should roll dagger with default purpose skill (fight)', () => {
 			const fakeRandom = {get: vi.fn(() => 1)};
-			const result = context.roll(dagger, fakeRandom);
+			const result = character.attack(dagger, context, fakeRandom);
 			const fightModifier = result.test.modifiers.fixed.get(SkillName.fight);
 			expect(fightModifier).toBeDefined();
 		});
 
 		it('should change skill to dexterity', () => {
-			const fakeRandom = {get: vi.fn(() => 1)};
-			context.changeAttackTestAttribute(dagger, 'dexterity');
+			character.changeAttackTestAttribute(dagger, 'dexterity', context);
 			const fightModifier = dagger.modifiers.test.fixed.get(SkillName.fight);
 			expect(fightModifier?.baseValue).toBe(3);
 		});

@@ -1,4 +1,4 @@
-import {type PreviewContextAbstract} from '../../Context/PreviewContextAbstract';
+import {type PreviewContextAbstract} from '../../Context/PreviewContext';
 import {InGameContextFake} from '../../Context/InGameContextFake';
 import {RaceAbilityName} from '../../Race/RaceAbilityName';
 import {type Attributes} from '../../Sheet';

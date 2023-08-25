@@ -1,7 +1,7 @@
 import {PassiveEffect} from '../../../Ability/PassiveEffect';
 import {AddContextualModifierToSkill} from '../../../Action/AddContextualModifierToSkill';
 import {ChangeVision} from '../../../Action/ChangeVision';
-import type {PreviewContextAbstract} from '../../../Context/PreviewContextAbstract';
+import type {PreviewContextAbstract} from '../../../Context/PreviewContext';
 import {ContextualModifier} from '../../../Modifier/ContextualModifier/ContextualModifier';
 import type {ModifierCondition} from '../../../Modifier/ContextualModifier/ContextualModifiersListInterface';
 import {type TransactionInterface} from '../../../Sheet/TransactionInterface';

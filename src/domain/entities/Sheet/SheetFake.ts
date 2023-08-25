@@ -26,6 +26,8 @@ import {SheetProficiencies} from './SheetProficiencies';
 import {type SheetProficienciesInterface} from './SheetProficienciesInterface';
 import {SheetRaceFake} from './SheetRaceFake';
 import {type SheetRaceInterface} from './SheetRaceInterface';
+import {type SheetResistencesInterface} from './SheetResistencesInterface';
+import {SheetResistences} from './SheetResistencies';
 import {SheetRoleFake} from './SheetRoleFake';
 import {type SheetRoleInterface} from './SheetRoleInterface';
 import {SheetSize} from './SheetSize';
@@ -36,10 +38,6 @@ import {SheetSpells} from './SheetSpells';
 import {type SheetSpellsInterface} from './SheetSpellsInterface';
 import {SheetVision} from './SheetVision';
 import {type SheetVisionInterface} from './SheetVisionInterface';
-import {SheetResistences} from './SheetResistencies';
-import {type SheetResistencesInterface} from './SheetResistencesInterface';
-import {type ContextInterface} from '../Context';
-import {type SerializedSheetInterface} from './SerializedSheet';
 
 export class SheetFake implements SheetInterface {
 	buildSteps: BuildStepInterface[] = [];
