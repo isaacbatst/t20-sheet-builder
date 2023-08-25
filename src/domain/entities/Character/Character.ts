@@ -1,13 +1,11 @@
-import {SheetBuilderError} from '../../errors';
-import {WeaponAttack} from '../Attack';
 import {type Context} from '../Context';
 import {OffensiveWeapon, type EquipmentName} from '../Inventory';
 import {type GeneralPowerMap} from '../Map';
-import {ContextualModifierAppliableValueCalculator, ContextualModifiersListTotalCalculator, FixedModifier, FixedModifiersList, FixedModifiersListTotalCalculator, PerLevelModifiersListTotalCalculator, type ContextualModifier, type ModifiersTotalCalculators} from '../Modifier';
-import {Modifiers, type ModifiersMaxTotalCalculators} from '../Modifier/Modifiers';
+import {ContextualModifierAppliableValueCalculator, ContextualModifiersListTotalCalculator, FixedModifiersListTotalCalculator, PerLevelModifiersListTotalCalculator, type ContextualModifier, type ModifiersTotalCalculators} from '../Modifier';
+import {type ModifiersMaxTotalCalculators} from '../Modifier/Modifiers';
 import {FightStyle} from '../Power/GeneralPower/CombatPower/FightStyle/FightStyle';
 import {Random, type RandomInterface} from '../Random';
-import {type Attribute, type Attributes, type CharacterSheetInterface, type SerializedSheetGeneralPower, type SerializedSheetInterface} from '../Sheet';
+import {type Attributes, type CharacterSheetInterface, type SerializedSheetGeneralPower, type SerializedSheetInterface} from '../Sheet';
 import {SheetBuilder} from '../Sheet/SheetBuilder';
 import {SkillTotalCalculatorFactory} from '../Skill/SkillTotalCalculatorFactory';
 import type {CharacterAppliedFightStyle} from './CharacterAppliedFightStyle';
@@ -102,38 +100,6 @@ export class Character implements CharacterInterface {
 		return this.makeAttack(typedWeapon, context);
 	}
 
-	makeAttack(weapon: OffensiveWeapon, context: Context) {
-		const attack = new CharacterAttack({
-			weapon,
-			skills: this.sheet.getSkills(),
-			maxTotalCalculators: this.makeMaxTotalCalculators(),
-			totalCalculators: this.makeTotalCalculators(context),
-			attributes: this.getAttributes(),
-			modifiers: {
-				damage: this.modifiers.damage,
-				test: this.modifiers.attack,
-			},
-		});
-		return attack;
-	}
-
-	changeAttackTestAttribute(attack: CharacterAttack, attribute: Attribute, context: Context) {
-		const skillName = attack.attack.getTestDefaultSkill();
-		const skill = this.sheet.getSheetSkills().getSkill(skillName);
-		const customTestAttributes = attack.attack.getCustomTestAttributes();
-		const allowed = customTestAttributes.has(attribute) || attribute === skill.attribute;
-
-		if (!allowed) {
-			throw new SheetBuilderError('INVALID_ATTRIBUTE');
-		}
-
-		const skillWithAttribute = skill.makeWithOtherAttribute(attribute);
-		const calculator = this.makeSkillTotalCalculator(context);
-		const skillTotal = skillWithAttribute.getTotal(calculator);
-		const skillModifier = new FixedModifier(skillName, skillTotal);
-		attack.changeTestSkillModifier(skillModifier);
-	}
-
 	getWieldedItems(): EquipmentName[] {
 		const inventory = this.sheet.getSheetInventory();
 		return inventory.getWieldedItems();
@@ -157,6 +123,21 @@ export class Character implements CharacterInterface {
 			maxWieldedItems: this.maxWieldedItems,
 			attacks,
 		};
+	}
+
+	private makeAttack(weapon: OffensiveWeapon, context: Context) {
+		const attack = new CharacterAttack({
+			weapon,
+			skills: this.sheet.getSkills(),
+			maxTotalCalculators: this.makeMaxTotalCalculators(),
+			totalCalculators: this.makeTotalCalculators(context),
+			attributes: this.getAttributes(),
+			modifiers: {
+				damage: this.modifiers.damage,
+				test: this.modifiers.attack,
+			},
+		});
+		return attack;
 	}
 
 	private makeSkillTotalCalculator(context: Context) {

@@ -184,7 +184,7 @@ describe('Character', () => {
 		});
 
 		it('should change skill to dexterity', () => {
-			character.changeAttackTestAttribute(dagger, 'dexterity', context);
+			dagger.changeTestAttackAttribute('dexterity');
 			const fightModifier = dagger.modifiers.test.fixed.get(SkillName.fight);
 			expect(fightModifier?.baseValue).toBe(3);
 		});

@@ -6,7 +6,7 @@ import {type OffensiveWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapo
 import {FixedModifiersList, FixedModifier} from '../Modifier';
 import {type Modifiers, type ModifiersMaxTotalCalculators, type ModifiersTotalCalculators, type SerializedModifiers} from '../Modifier/Modifiers';
 import {Random, type RandomInterface} from '../Random';
-import {type Attributes} from '../Sheet';
+import {type Attribute, type Attributes} from '../Sheet';
 import {type SheetInterface} from '../Sheet/SheetInterface';
 import {type SheetSkillsObject} from '../Skill/SheetSkill';
 import {CharacterAttackModifiers} from './CharactterAttackModifiers';
@@ -53,6 +53,7 @@ export class CharacterAttack {
 	private readonly maxTotalCalculators: ModifiersMaxTotalCalculators;
 	private readonly totalCalculators: ModifiersTotalCalculators;
 	private readonly attributes: Attributes;
+	private readonly skills: SheetSkillsObject;
 
 	constructor(params: CharacterAttackConstructorParams) {
 		const {modifiers, attributes, maxTotalCalculators, skills, totalCalculators, weapon} = params;
@@ -67,6 +68,7 @@ export class CharacterAttack {
 		this.totalCalculators = totalCalculators;
 		this.maxTotalCalculators = maxTotalCalculators;
 		this.attributes = attributes;
+		this.skills = skills;
 	}
 
 	addTestSkillFixedModifier(skills: SheetSkillsObject): number {
@@ -83,9 +85,20 @@ export class CharacterAttack {
 		}
 	}
 
-	changeTestSkillModifier(modifier: FixedModifier) {
+	changeTestAttackAttribute(attribute: Attribute) {
+		const skillName = this.attack.getTestDefaultSkill();
+		const customTestAttributes = this.attack.getCustomTestAttributes();
+		const allowed = customTestAttributes.has(attribute) || attribute === this.skills[skillName].skill.attribute;
+
+		if (!allowed) {
+			throw new Error('INVALID_ATTRIBUTE');
+		}
+
+		const skillWithAttribute = this.skills[skillName].makeWithOtherAttribute(attribute);
+		const skillModifier = new FixedModifier(skillName, skillWithAttribute.getTotal());
+
 		this.modifiers.test.fixed.remove(this.testSkillModifierIndex);
-		this.testSkillModifierIndex = this.modifiers.test.fixed.add(modifier);
+		this.testSkillModifierIndex = this.modifiers.test.fixed.add(skillModifier);
 	}
 
 	roll(random: RandomInterface = new Random()): AttackResult {
