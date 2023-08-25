@@ -1,5 +1,5 @@
 import {type CharacterModifiers} from '../Character/CharacterModifiers';
-import {type MartialWeaponName, type SimpleWeaponName, type Armor, type Equipment, type EquipmentName, type MartialWeapon, type SimpleWeapon} from '../Inventory/Equipment';
+import {type MartialWeaponName, type SimpleWeaponName, type Armor, type Equipment, type EquipmentName, type MartialWeapon, type SimpleWeapon, type ArmorName} from '../Inventory/Equipment';
 import {type InventoryEquipment} from '../Inventory/InventoryEquipment';
 import {type RoleInterface} from '../Role';
 import {type SerializedSheetEquipment, type SerializedSheetInventoryEquipment} from './SerializedSheet/SerializedSheetInterface';
@@ -22,7 +22,7 @@ export type ToggleEquippedItemParams = {
 export type SerializedInitialEquipment = {
 	simpleWeapon?: SerializedSheetEquipment<SimpleWeaponName>;
 	martialWeapon?: SerializedSheetEquipment<MartialWeaponName>;
-	armor?: SerializedSheetEquipment;
+	armor?: SerializedSheetEquipment<ArmorName>;
 	money: number;
 };
 
