@@ -1,5 +1,5 @@
 import {type ContextualModifierInterface} from '.';
-import {PreviewContextAbstract} from '../../Context/PreviewContextAbstract';
+import {type Context} from '../../Context';
 import type {ContextInterface} from '../../Context/ContextInterface';
 import type {Attribute, Attributes} from '../../Sheet/Attributes';
 import type {ModifierAppliableValueCalculatorInterface} from '../ModifierInterface';
@@ -20,8 +20,8 @@ export class ContextualModifierAppliableValueCalculator
 		const bonusesTotal = this.getAttributesBonusesTotal(attributes);
 
 		if (
-			this.context instanceof PreviewContextAbstract
-			&& this.modifier.condition.verify(this.context)
+			this.context.activateContextualModifiers
+			&& this.modifier.condition.verify(this.context as Context)
 		) {
 			return value + bonusesTotal;
 		}

@@ -20,7 +20,7 @@ export abstract class ModifiersList<T extends ModifierInterface> implements Modi
 		this.modifiers.splice(index, 1);
 	}
 
-	get(source: TranslatableName): ModifierInterface | undefined {
+	get(source: TranslatableName): T | undefined {
 		return this.modifiers.find(modifier => modifier.source === source);
 	}
 

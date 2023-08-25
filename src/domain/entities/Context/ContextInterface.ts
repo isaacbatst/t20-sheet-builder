@@ -1,6 +1,6 @@
-export type ContextType = 'outgame' | 'ingame';
+import {type Location} from '../Sheet';
 
 export type ContextInterface = {
-	type: ContextType;
 	activateContextualModifiers: boolean;
+	getCurrentLocation(): Location | undefined;
 };

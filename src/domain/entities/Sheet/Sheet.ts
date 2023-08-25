@@ -1,13 +1,9 @@
-import {WeaponAttack} from '../Attack/WeaponAttack';
 import type {BuildStepInterface} from '../BuildStep';
-import {CharacterAttack} from '../Character/CharacterAttack';
-import {type ContextInterface, OutOfGameContext} from '../Context';
-import {OffensiveWeapon, type EquipmentName} from '../Inventory';
-import {FixedModifier, FixedModifiersList} from '../Modifier';
-import {Modifiers} from '../Modifier/Modifiers';
-import {type SkillTotalCalculator} from '../Skill/SkillTotalCalculator';
+import {OutOfGameContext, type ContextInterface} from '../Context';
+import {SheetSkill} from '../Skill/SheetSkill';
+import {type SkillName} from '../Skill/SkillName';
 import {SkillTotalCalculatorFactory} from '../Skill/SkillTotalCalculatorFactory';
-import {type SerializedSheetInterface, SheetSerializer, type SerializedSheetPoints} from './SerializedSheet';
+import {type SerializedSheetInterface} from './SerializedSheet';
 import {type SheetAbilitiesInterface} from './SheetAbilitiesInterface';
 import {type SheetAttributesInterface} from './SheetAttributesInterface';
 import {type SheetDefenseInterface} from './SheetDefenseInterface';
@@ -48,47 +44,12 @@ export abstract class Sheet implements SheetInterface {
 	protected abstract sheetDevotion: SheetDevotion;
 	protected abstract sheetResistences: SheetResistencesInterface;
 
-/**
-* @deprecated Use `character.getAttacks()` instead for getting attacks with all character modifiers (like fight style).
-*/
-	getAttacks(skillTotalCalculator = this.makeSkillTotalCalculator()): Map<EquipmentName, CharacterAttack> {
-		const attacks = new Map<EquipmentName, CharacterAttack>();
-		const inventory = this.getSheetInventory();
-		const equipments = inventory.getEquipments();
-		equipments.forEach(({equipment}) => {
-			if (equipment instanceof OffensiveWeapon) {
-				const attack = this.makeCharacterAttack(equipment, skillTotalCalculator);
-				attacks.set(equipment.name, attack);
-			}
-		});
-
-		return attacks;
-	}
-
 	makeSkillTotalCalculator(context: ContextInterface = new OutOfGameContext()) {
 		return SkillTotalCalculatorFactory.make(
 			this.getSheetAttributes().getValues(),
 			this.getLevel(),
 			context,
 		);
-	}
-
-	makeCharacterAttack(equipment: OffensiveWeapon, skillTotalCalculator: SkillTotalCalculator) {
-		const weaponAttack = new WeaponAttack(equipment);
-		const testSkill = weaponAttack.getTestDefaultSkill();
-		const skillValue = this.getSheetSkills().getSkill(testSkill).getTotal(skillTotalCalculator);
-		const skillModifier = new FixedModifier(testSkill, skillValue);
-		const fixedModifiers = new FixedModifiersList();
-		const skillModifierIndex = fixedModifiers.add(skillModifier);
-		const attack = new CharacterAttack(
-			weaponAttack,
-			skillModifierIndex,
-			{
-				test: new Modifiers({
-					fixed: fixedModifiers,
-				}),
-			});
-		return attack;
 	}
 
 	pushBuildSteps(...buildSteps: BuildStepInterface[]): void {
@@ -192,6 +153,19 @@ export abstract class Sheet implements SheetInterface {
 		return this.sheetResistences;
 	}
 
+	getSkills(): Record<SkillName, SheetSkill> {
+		const skills = this.getSheetSkills().getSkills();
+
+		// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+		const sheetSkills = {} as Record<SkillName, SheetSkill>;
+
+		Object.entries(skills).forEach(([skillName, skill]) => {
+			sheetSkills[skillName as SkillName] = new SheetSkill(skill, this.makeSkillTotalCalculator());
+		});
+
+		return sheetSkills;
+	}
+
 	serialize(context: ContextInterface = new OutOfGameContext()): SerializedSheetInterface {
 		const race = this.getSheetRace().getRace();
 		const role = this.getSheetRole().getRole();
@@ -200,6 +174,7 @@ export abstract class Sheet implements SheetInterface {
 		return {
 			buildSteps: this.getBuildSteps().map(buildStep => buildStep.serialize()),
 			level: this.getLevel(),
+			initialAttributes: this.getSheetAttributes().getInitialAttributes(),
 			displacement: this.getSheetDisplacement().getDisplacement(),
 			attributes: this.getSheetAttributes().getValues(),
 			defense: this.getSheetDefense().serialize(this, context),

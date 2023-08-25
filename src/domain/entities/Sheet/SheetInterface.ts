@@ -29,7 +29,6 @@ export type SheetTriggeredEffects = Record<TriggerEvent, TriggeredEffectMap>;
 export type SheetInterface = {
 	serialize(context?: ContextInterface): SerializedSheetInterface;
 	pushBuildSteps(...buildSteps: BuildStepInterface[]): void;
-	getAttacks(skillTotalCalculator?: SkillTotalCalculator): Map<EquipmentName, CharacterAttack>;
 	getBuildSteps(): BuildStepInterface[];
 	getLevel(): number;
 	getSheetAbilities(): SheetAbilitiesInterface;

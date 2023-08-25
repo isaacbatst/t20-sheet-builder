@@ -24,9 +24,13 @@ export class Attack {
 	roll(random: RandomInterface): {
 		damage: RollResult;
 		test: RollResult;
+		isCritical: boolean;
+		isFumble: boolean;
 	} {
 		const testResult = this.rollTest(random);
+
 		const isCritical = testResult.total >= this.critical.threat;
+		const isFumble = testResult.total <= 1;
 
 		const damageResult = this.rollDamage(random);
 
@@ -39,6 +43,8 @@ export class Attack {
 		return {
 			damage: damageResult,
 			test: testResult,
+			isCritical,
+			isFumble,
 		};
 	}
 
@@ -53,6 +59,10 @@ export class Attack {
 
 	getTestDefaultSkill() {
 		return SkillName.fight;
+	}
+
+	getDamageAttribute(): Attribute | undefined {
+		return undefined;
 	}
 
 	getCustomTestAttributes(): Set<Attribute> {

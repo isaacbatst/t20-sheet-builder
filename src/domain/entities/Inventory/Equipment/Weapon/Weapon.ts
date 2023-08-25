@@ -1,6 +1,6 @@
 import type {Proficiency} from '../../../Sheet/Proficiency';
 import {Equipment} from '../Equipment';
-import { EquipmentName } from '../EquipmentName';
+import {type EquipmentName} from '../EquipmentName';
 
 export type WeaponType = 'offensive' | 'defensive' | 'exotic' | 'firearm';
 

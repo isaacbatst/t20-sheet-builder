@@ -1,13 +1,13 @@
-import {CharacterFake} from '../Character/CharacterFake';
 import type {CharacterInterface} from '../Character/CharacterInterface';
 import type {Location} from '../Sheet/CharacterSheet/CharacterSheetInterface';
-import {InGameContextAbstract} from './InGameContextAbstract';
+import {Context} from './Context';
 
-export class InGameContextFake extends InGameContextAbstract {
-	location: Location = {isUnderground: true};
-	constructor(public character: CharacterInterface = new CharacterFake()) {
-		super();
-	}
+export class InGameContextFake extends Context {
+	override character: CharacterInterface | undefined;
+	override activateContextualModifiers = true;
+	location: Location = {
+		isUnderground: true,
+	};
 
 	getCurrentLocation(): Location {
 		return this.location;

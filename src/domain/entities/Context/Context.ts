@@ -1,4 +1,8 @@
-import type {ContextInterface, ContextType} from './ContextInterface';
+import {type CharacterInterface} from '../Character/CharacterInterface';
+import {type Location} from '../Sheet';
+import type {ContextInterface} from './ContextInterface';
 export abstract class Context implements ContextInterface {
-	constructor(readonly type: ContextType, readonly activateContextualModifiers: boolean) {}
+	abstract character: CharacterInterface | undefined;
+	abstract activateContextualModifiers: boolean;
+	abstract getCurrentLocation(): Location | undefined;
 }

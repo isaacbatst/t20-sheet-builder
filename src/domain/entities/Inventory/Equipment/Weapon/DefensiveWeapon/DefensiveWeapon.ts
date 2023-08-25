@@ -1,9 +1,10 @@
 import {type CharacterModifiers} from '../../../../Character/CharacterModifiers';
 import {FixedModifier} from '../../../../Modifier';
+import {type EquipmentName} from '../../EquipmentName';
 import type {WeaponType} from '../Weapon';
 import {Weapon} from '../Weapon';
 
-export abstract class DefensiveWeapon extends Weapon {
+export abstract class DefensiveWeapon<T extends EquipmentName = EquipmentName> extends Weapon<T> {
 	abstract defenseBonus: number;
 	abstract armorPenalty: number;
 	abstract slots: number;

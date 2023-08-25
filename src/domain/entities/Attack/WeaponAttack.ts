@@ -1,5 +1,5 @@
 import type {OffensiveWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/OffensiveWeapon';
-import {type Attribute} from '../Sheet';
+import {type Attributes, type Attribute} from '../Sheet';
 import {Attack} from './Attack';
 
 export class WeaponAttack extends Attack {
@@ -16,6 +16,11 @@ export class WeaponAttack extends Attack {
 
 	selectPurpose(index: number) {
 		this.selectedPurposeIndex = index;
+	}
+
+	override getDamageAttribute(): keyof Attributes | undefined {
+		const purpose = this.weapon.purposes[this.selectedPurposeIndex];
+		return purpose.damageAttribute;
 	}
 
 	override getCustomTestAttributes(): Set<Attribute> {

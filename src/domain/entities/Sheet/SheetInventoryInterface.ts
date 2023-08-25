@@ -1,9 +1,9 @@
-import { type CharacterModifiers } from '../Character/CharacterModifiers';
-import { MartialWeaponName, SimpleWeaponName, type Armor, type Equipment, type EquipmentName, type MartialWeapon, type SimpleWeapon } from '../Inventory/Equipment';
-import { type InventoryEquipment } from '../Inventory/InventoryEquipment';
-import { type RoleInterface } from '../Role';
-import { SerializedSheetEquipment, type SerializedSheetInventoryEquipment } from './SerializedSheet/SerializedSheetInterface';
-import { type TransactionInterface } from './TransactionInterface';
+import {type CharacterModifiers} from '../Character/CharacterModifiers';
+import {type MartialWeaponName, type SimpleWeaponName, type Armor, type Equipment, type EquipmentName, type MartialWeapon, type SimpleWeapon, type ArmorName} from '../Inventory/Equipment';
+import {type InventoryEquipment} from '../Inventory/InventoryEquipment';
+import {type RoleInterface} from '../Role';
+import {type SerializedSheetEquipment, type SerializedSheetInventoryEquipment} from './SerializedSheet/SerializedSheetInterface';
+import {type TransactionInterface} from './TransactionInterface';
 
 export type AddInitialEquipmentParams = {
 	role: RoleInterface;
@@ -21,10 +21,10 @@ export type ToggleEquippedItemParams = {
 
 export type SerializedInitialEquipment = {
 	simpleWeapon?: SerializedSheetEquipment<SimpleWeaponName>;
-  martialWeapon?: SerializedSheetEquipment<MartialWeaponName>;
-  armor?: SerializedSheetEquipment;
-  money: number;
-}
+	martialWeapon?: SerializedSheetEquipment<MartialWeaponName>;
+	armor?: SerializedSheetEquipment<ArmorName>;
+	money: number;
+};
 
 export type SheetInventoryInterface = {
 	addEquipment(equipment: Equipment): void;
