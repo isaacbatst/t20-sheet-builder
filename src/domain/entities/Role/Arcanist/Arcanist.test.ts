@@ -1,8 +1,7 @@
 import {TrainSkill} from '../../Action/TrainSkill';
 import {DamageType} from '../../Damage/DamageType';
-import {SheetFake} from '../../Sheet/SheetFake';
+import {BuildingSheet} from '../../Sheet';
 import {Transaction} from '../../Sheet/Transaction';
-import {TransactionFake} from '../../Sheet/TransactionFake';
 import {SkillName} from '../../Skill/SkillName';
 import {ArcaneArmor} from '../../Spell/ArcaneArmor/ArcaneArmor';
 import {FlamesExplosion} from '../../Spell/FlamesExplosion/FlamesExplosion';
@@ -17,45 +16,27 @@ import {ArcanistPathMage} from './ArcanistPath/ArcanistPathMage/ArcanistPathMage
 import {ArcanistLineageDraconic} from './ArcanistPath/ArcanistPathSorcerer/ArcanistLineage';
 
 describe('Arcanist', () => {
+	let sheet: BuildingSheet;
+	let transaction: Transaction;
+
+	beforeEach(() => {
+		sheet = new BuildingSheet();
+		transaction = new Transaction(sheet);
+	});
+
 	it('should dispatch proper train skills', () => {
 		const arcanist = ArcanistBuilder
 			.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
 			.choosePath(new ArcanistPathMage(new FlamesExplosion()))
 			.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
-		const transaction = new TransactionFake();
 		arcanist.addToSheet(transaction);
 
-		expect(transaction.run).toHaveBeenCalledWith(new TrainSkill({
-			payload: {
-				skill: SkillName.mysticism,
-				source: RoleName.arcanist,
-			},
-			transaction,
-		}));
+		const skills = transaction.sheet.getSkills();
 
-		expect(transaction.run).toHaveBeenCalledWith(new TrainSkill({
-			payload: {
-				skill: SkillName.will,
-				source: RoleName.arcanist,
-			},
-			transaction,
-		}));
-
-		expect(transaction.run).toHaveBeenCalledWith(new TrainSkill({
-			payload: {
-				skill: SkillName.knowledge,
-				source: RoleName.arcanist,
-			},
-			transaction,
-		}));
-
-		expect(transaction.run).toHaveBeenCalledWith(new TrainSkill({
-			payload: {
-				skill: SkillName.diplomacy,
-				source: RoleName.arcanist,
-			},
-			transaction,
-		}));
+		expect(skills[SkillName.knowledge].skill.getIsTrained()).toBe(true);
+		expect(skills[SkillName.diplomacy].skill.getIsTrained()).toBe(true);
+		expect(skills[SkillName.will].skill.getIsTrained()).toBe(true);
+		expect(skills[SkillName.mysticism].skill.getIsTrained()).toBe(true);
 	});
 
 	it('should not train with missing chooses', () => {
@@ -81,9 +62,9 @@ describe('Arcanist', () => {
 			.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
 			.choosePath(new ArcanistPathMage(new FlamesExplosion()))
 			.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
-		const transaction = new TransactionFake();
 		arcanist.addToSheet(transaction);
-		expect(transaction.run).not.toHaveBeenCalledWith(expect.objectContaining({type: 'addProficiency'}));
+		const proficiencies = transaction.sheet.getSheetProficiencies().getProficiencies();
+		expect(proficiencies).toHaveLength(2);
 	});
 
 	it('should learn spells', () => {
@@ -92,7 +73,6 @@ describe('Arcanist', () => {
 			.choosePath(new ArcanistPathMage(new FlamesExplosion()))
 			.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 
-		const transaction = new Transaction(new SheetFake());
 		arcanist.addToSheet(transaction);
 		const spells = transaction.sheet.getSheetSpells().getSpells();
 		expect(spells.has(ArcaneArmor.spellName)).toBeTruthy();
@@ -126,7 +106,6 @@ describe('Arcanist', () => {
 				.choosePath(new ArcanistPathMage(mageExtraSpell))
 				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 
-			const transaction = new Transaction(new SheetFake());
 			const spells = transaction.sheet.getSheetSpells().getSpells();
 			arcanist.addToSheet(transaction);
 			expect(spells.has(mageExtraSpell.name)).toBeTruthy();
@@ -159,7 +138,6 @@ describe('Arcanist', () => {
 				.choosePath(new ArcanistPathWizard(focus))
 				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 
-			const transaction = new Transaction(new SheetFake());
 			arcanist.addToSheet(transaction);
 
 			const equipments = transaction.sheet.getSheetInventory().getEquipments();

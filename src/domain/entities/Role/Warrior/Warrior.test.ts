@@ -6,47 +6,34 @@ import {ApplyRoleAbility} from '../../Action/ApplyRoleAbility';
 import {TrainSkill} from '../../Action/TrainSkill';
 import {FixedModifier} from '../../Modifier/FixedModifier/FixedModifier';
 import {PerLevelModifier} from '../../Modifier/PerLevelModifier/PerLevelModifier';
+import {BuildingSheet} from '../../Sheet';
 import {Proficiency} from '../../Sheet/Proficiency';
-import {TransactionFake} from '../../Sheet/TransactionFake';
+import {Transaction} from '../../Sheet/Transaction';
 import {SkillName} from '../../Skill/SkillName';
+import {RoleAbilityName} from '../RoleAbilityName';
 import {RoleName} from '../RoleName';
 import {SpecialAttack} from './SpecialAttack/SpecialAttack';
 import {Warrior} from './Warrior';
 
 describe('Warrior', () => {
+	let sheet: BuildingSheet;
+	let transaction: Transaction;
+
+	beforeEach(() => {
+		sheet = new BuildingSheet();
+		transaction = new Transaction(sheet);
+	});
+
 	it('should dispatch proper train skills', () => {
 		const warrior = new Warrior([SkillName.fight, SkillName.animalHandling, SkillName.aim]);
-		const transaction = new TransactionFake();
 		warrior.addToSheet(transaction);
 
-		expect(transaction.run).toHaveBeenCalledWith(new TrainSkill({
-			payload: {
-				skill: SkillName.fight,
-				source: RoleName.warrior,
-			},
-			transaction,
-		}));
-		expect(transaction.run).toHaveBeenCalledWith(new TrainSkill({
-			payload: {
-				skill: SkillName.animalHandling,
-				source: RoleName.warrior,
-			},
-			transaction,
-		}));
-		expect(transaction.run).toHaveBeenCalledWith(new TrainSkill({
-			payload: {
-				skill: SkillName.aim,
-				source: RoleName.warrior,
-			},
-			transaction,
-		}));
-		expect(transaction.run).toHaveBeenCalledWith(new TrainSkill({
-			payload: {
-				skill: SkillName.fortitude,
-				source: RoleName.warrior,
-			},
-			transaction,
-		}));
+		const skills = transaction.sheet.getSkills();
+
+		expect(skills[SkillName.fight].skill.getIsTrained()).toBe(true);
+		expect(skills[SkillName.animalHandling].skill.getIsTrained()).toBe(true);
+		expect(skills[SkillName.aim].skill.getIsTrained()).toBe(true);
+		expect(skills[SkillName.fortitude].skill.getIsTrained()).toBe(true);
 	});
 
 	it('should not train skills choosing more than allowed from the same group', () => {
@@ -69,84 +56,44 @@ describe('Warrior', () => {
 
 	it('should dispatch profiencies add', () => {
 		const warrior = new Warrior([SkillName.fight, SkillName.animalHandling, SkillName.aim]);
-		const transaction = new TransactionFake();
 		warrior.addToSheet(transaction);
 
-		expect(transaction.run).toHaveBeenCalledWith(new AddProficiency({
-			payload: {
-				proficiency: Proficiency.martial,
-				source: RoleName.warrior,
-			},
-			transaction,
-		}));
-		expect(transaction.run).toHaveBeenCalledWith(new AddProficiency({
-			payload: {
-				proficiency: Proficiency.heavyArmor,
-				source: RoleName.warrior,
-			},
-			transaction,
-		}));
-		expect(transaction.run).toHaveBeenCalledWith(new AddProficiency({
-			payload: {
-				proficiency: Proficiency.shield,
-				source: RoleName.warrior,
-			},
-			transaction,
-		}));
+		const proficiencies = transaction.sheet.getSheetProficiencies().getProficiencies();
+		expect(proficiencies).toContain(Proficiency.martial);
+		expect(proficiencies).toContain(Proficiency.heavyArmor);
+		expect(proficiencies).toContain(Proficiency.shield);
 	});
 
 	it('should dispatch abilities add', () => {
 		const warrior = new Warrior([SkillName.fight, SkillName.animalHandling, SkillName.aim]);
-		const transaction = new TransactionFake();
 		warrior.addToSheet(transaction);
 
-		expect(transaction.run).toHaveBeenCalledWith(new ApplyRoleAbility({
-			payload: {
-				ability: new SpecialAttack(),
-				source: RoleName.warrior,
-			},
-			transaction,
-		}));
+		expect(sheet.getSheetAbilities().getRoleAbilities().get(RoleAbilityName.specialAttack)).toBeDefined();
 	});
 
 	it('should dispatch life points modifiers add', () => {
 		const warrior = new Warrior([SkillName.fight, SkillName.animalHandling, SkillName.aim]);
-		const transaction = new TransactionFake();
 		warrior.addToSheet(transaction);
 
-		expect(transaction.run).toHaveBeenCalledWith(new AddFixedModifierToLifePoints({
-			payload: {
-				modifier: new FixedModifier(RoleName.warrior, 20, new Set(['constitution'])),
-			},
-			transaction,
-		}));
+		const lifePoints = sheet.getSheetLifePoints();
+		const fixedModifier = lifePoints.getFixedModifiers().get(RoleName.warrior);
+		const perLevelModifier = lifePoints.getPerLevelModifiers().get(RoleName.warrior);
 
-		expect(transaction.run).toHaveBeenCalledWith(new AddPerLevelModifierToLifePoints({
-			payload: {
-				modifier: new PerLevelModifier({
-					source: RoleName.warrior,
-					value: 5,
-					includeFirstLevel: false,
-					attributeBonuses: new Set(['constitution']),
-				}),
-			},
-			transaction,
-		}));
+		expect(fixedModifier).toBeDefined();
+		expect(fixedModifier?.baseValue).toBe(20);
+		expect(perLevelModifier).toBeDefined();
+		expect(perLevelModifier?.baseValue).toBe(5);
+		expect(perLevelModifier?.includeFirstLevel).toBe(false);
 	});
 
 	it('should dispatch mana points modifiers add', () => {
 		const warrior = new Warrior([SkillName.fight, SkillName.animalHandling, SkillName.aim]);
-		const transaction = new TransactionFake();
 		warrior.addToSheet(transaction);
 
-		expect(transaction.run).toHaveBeenCalledWith(new AddPerLevelModifierToManaPoints({
-			payload: {
-				modifier: new PerLevelModifier({
-					source: RoleName.warrior,
-					value: 3,
-				}),
-			},
-			transaction,
-		}));
+		const manaPoints = sheet.getSheetManaPoints();
+		const perLevelModifier = manaPoints.getPerLevelModifiers().get(RoleName.warrior);
+		expect(perLevelModifier).toBeDefined();
+		expect(perLevelModifier?.baseValue).toBe(3);
+		expect(perLevelModifier?.includeFirstLevel).toBe(true);
 	});
 });

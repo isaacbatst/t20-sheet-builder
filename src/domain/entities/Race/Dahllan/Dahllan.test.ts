@@ -1,48 +1,44 @@
-import {describe, it, expect} from 'vitest';
-import {ApplyRaceModifiers} from '../../Action/ApplyRaceModifiers';
-import {TransactionFake} from '../../Sheet/TransactionFake';
-import {Dahllan} from './Dahllan';
-import {LearnSpell} from '../../Action/LearnSpell';
-import {RaceAbilityName} from '../RaceAbilityName';
-import {ControlPlants} from '../../Spell/ControlPlants/ControlPlants';
-import {ApplyRaceAbility} from '../../Action/ApplyRaceAbility';
+import {describe, expect, it} from 'vitest';
 import {WildEmpathy} from '../../Ability/common/WildEmpathy';
+import {ApplyRaceAbility} from '../../Action/ApplyRaceAbility';
 import {FixedModifier} from '../../Modifier';
+import {BuildingSheet} from '../../Sheet/BuildingSheet/BuildingSheet';
+import {Transaction} from '../../Sheet/Transaction';
+import {SpellName} from '../../Spell';
+import {RaceAbilityName} from '../RaceAbilityName';
+import {Dahllan} from './Dahllan';
 
 describe('Dahllan', () => {
+	let sheet: BuildingSheet;
+	let transaction: Transaction;
+
+	beforeEach(() => {
+		sheet = new BuildingSheet();
+		transaction = new Transaction(sheet);
+	});
+
 	it('should apply +2 to wisdom, +1 to dexterity and -1 to intelligence', () => {
 		const dahllan = new Dahllan();
-		const transaction = new TransactionFake();
 		dahllan.addToSheet(transaction);
-		expect(transaction.run).toHaveBeenCalledWith(new ApplyRaceModifiers({
-			payload: {
-				modifiers: {
-					wisdom: 2,
-					dexterity: 1,
-					intelligence: -1,
-				},
-			},
-			transaction,
-		}));
+		expect(sheet.getSheetAttributes().getValues()).toEqual({
+			strength: 0,
+			dexterity: 1,
+			constitution: 0,
+			intelligence: -1,
+			wisdom: 2,
+			charisma: 0,
+		});
 	});
 
 	it('should learn Control Plants', () => {
 		const dahllan = new Dahllan();
-		const transaction = new TransactionFake();
 		dahllan.addToSheet(transaction);
-		expect(transaction.run).toHaveBeenCalledWith(new LearnSpell({
-			payload: {
-				source: RaceAbilityName.plantsFriend,
-				spell: new ControlPlants(),
-				needsCircle: false,
-			},
-			transaction,
-		}));
+		const spells = transaction.sheet.getSheetSpells().getSpells();
+		expect(spells.get(SpellName.controlPlants)).toBeDefined();
 	});
 
 	it('should have Allihanna Armor ability', () => {
 		const dahllan = new Dahllan();
-		const transaction = new TransactionFake();
 		dahllan.addToSheet(transaction);
 		expect(transaction.sheet
 			.getSheetAbilities()
@@ -52,7 +48,6 @@ describe('Dahllan', () => {
 
 	it('should have Wild Empathy ability', () => {
 		const dahllan = new Dahllan();
-		const transaction = new TransactionFake();
 		dahllan.addToSheet(transaction);
 		expect(transaction.sheet
 			.getSheetAbilities()
@@ -62,7 +57,6 @@ describe('Dahllan', () => {
 
 	it('should add animal handling bonus if apply repeated Wild Empathy', () => {
 		const dahllan = new Dahllan();
-		const transaction = new TransactionFake();
 		dahllan.addToSheet(transaction);
 		transaction.run(new ApplyRaceAbility({
 			payload: {

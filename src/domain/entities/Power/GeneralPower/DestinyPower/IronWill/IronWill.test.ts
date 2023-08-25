@@ -3,15 +3,23 @@ import {AddPerLevelModifierToManaPoints} from '../../../../Action/AddPerLevelMod
 import {FixedModifier} from '../../../../Modifier/FixedModifier/FixedModifier';
 import {PerLevelModifier} from '../../../../Modifier/PerLevelModifier/PerLevelModifier';
 import {OriginName} from '../../../../Origin/OriginName';
-import {TransactionFake} from '../../../../Sheet/TransactionFake';
+import {BuildingSheet} from '../../../../Sheet/BuildingSheet/BuildingSheet';
+import {Transaction} from '../../../../Sheet/Transaction';
 import {SkillName} from '../../../../Skill/SkillName';
 import {GeneralPowerName} from '../../GeneralPowerName';
 import {IronWill} from './IronWill';
 
 describe('IronWill', () => {
+	let sheet: BuildingSheet;
+	let transaction: Transaction;
+
+	beforeEach(() => {
+		sheet = new BuildingSheet();
+		transaction = new Transaction(sheet);
+	});
+
 	it('should require wisdom 1', () => {
 		const ironWill = new IronWill();
-		const transaction = new TransactionFake();
 		expect(() => {
 			ironWill.addToSheet(transaction, OriginName.acolyte);
 			ironWill.verifyRequirements(transaction.sheet);
@@ -20,34 +28,21 @@ describe('IronWill', () => {
 
 	it('should dispatch mana points modifier add', () => {
 		const ironWill = new IronWill();
-		const transaction = new TransactionFake();
 		transaction.sheet.getSheetAttributes().getValues().wisdom = 1;
 		ironWill.addToSheet(transaction, OriginName.acolyte);
-
-		expect(transaction.run).toHaveBeenCalledWith(new AddPerLevelModifierToManaPoints({
-			payload: {
-				modifier: new PerLevelModifier({
-					source: GeneralPowerName.ironWill,
-					value: 1,
-					includeFirstLevel: true,
-					frequency: 2,
-				}),
-			},
-			transaction,
-		}));
+		const manaModifier = sheet.getSheetManaPoints().getPerLevelModifiers().get(GeneralPowerName.ironWill);
+		expect(manaModifier).toBeDefined();
+		expect(manaModifier?.baseValue).toBe(1);
+		expect(manaModifier?.includeFirstLevel).toBe(true);
+		expect(manaModifier?.frequency).toBe(2);
 	});
 
 	it('should dispatch will modifier add', () => {
 		const ironWill = new IronWill();
-		const transaction = new TransactionFake();
 		transaction.sheet.getSheetAttributes().getValues().wisdom = 1;
 		ironWill.addToSheet(transaction, OriginName.acolyte);
-
-		expect(transaction.run).toHaveBeenCalledWith(new AddFixedModifierToSkill({
-			payload: {
-				modifier: new FixedModifier(GeneralPowerName.ironWill, 2),
-				skill: SkillName.will,
-			}, transaction,
-		}));
+		const willModifier = sheet.getSkills()[SkillName.will].skill.fixedModifiers.get(GeneralPowerName.ironWill);
+		expect(willModifier).toBeDefined();
+		expect(willModifier?.baseValue).toBe(2);
 	});
 });

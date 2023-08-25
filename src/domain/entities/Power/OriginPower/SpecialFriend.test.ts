@@ -1,36 +1,36 @@
 import {AddFixedModifierToSkill} from '../../Action/AddFixedModifierToSkill';
 import {FixedModifier} from '../../Modifier/FixedModifier/FixedModifier';
 import {OriginName} from '../../Origin';
-import {TransactionFake} from '../../Sheet/TransactionFake';
+import {BuildingSheet} from '../../Sheet/BuildingSheet/BuildingSheet';
+import {Transaction} from '../../Sheet/Transaction';
 import {SkillName} from '../../Skill/SkillName';
 import {OriginPowerName} from './OriginPowerName';
 import {SpecialFriend} from './SpecialFriend';
 
 describe('SpecialFriend', () => {
+	let sheet: BuildingSheet;
+	let transaction: Transaction;
+
+	beforeEach(() => {
+		sheet = new BuildingSheet();
+		transaction = new Transaction(sheet);
+	});
+
 	it('should dispatch animalHandling modifier add', () => {
 		const specialFriend = new SpecialFriend(SkillName.acrobatics);
-		const transaction = new TransactionFake();
 		specialFriend.addToSheet(transaction, OriginName.animalsFriend);
-		expect(transaction.run).toHaveBeenCalledWith(new AddFixedModifierToSkill({
-			payload: {
-				modifier: new FixedModifier(OriginPowerName.specialFriend, 5),
-				skill: SkillName.animalHandling,
-			},
-			transaction,
-		}));
+
+		const skillModifier = sheet.getSkills()[SkillName.animalHandling].skill.fixedModifiers.get(OriginPowerName.specialFriend);
+		expect(skillModifier).toBeDefined();
+		expect(skillModifier?.baseValue).toBe(5);
 	});
 
 	it('should dispatch custom skill modifier add', () => {
 		const specialFriend = new SpecialFriend(SkillName.acrobatics);
-		const transaction = new TransactionFake();
 		specialFriend.addToSheet(transaction, OriginName.animalsFriend);
-		expect(transaction.run).toHaveBeenCalledWith(new AddFixedModifierToSkill({
-			payload: {
-				modifier: new FixedModifier(OriginPowerName.specialFriend, 2),
-				skill: SkillName.acrobatics,
-			},
-			transaction,
-		}));
+		const skillModifier = sheet.getSkills()[SkillName.acrobatics].skill.fixedModifiers.get(OriginPowerName.specialFriend);
+		expect(skillModifier).toBeDefined();
+		expect(skillModifier?.baseValue).toBe(2);
 	});
 
 	it('should not allow custom skill to be fight', () => {

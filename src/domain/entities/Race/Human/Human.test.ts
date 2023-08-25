@@ -1,9 +1,8 @@
-import {ApplyRaceAbility} from '../../Action/ApplyRaceAbility';
-import {ApplyRaceModifiers} from '../../Action/ApplyRaceModifiers';
+import {GeneralPowerName} from '../../Power';
 import {Dodge} from '../../Power/GeneralPower/CombatPower/Dodge/Dodge';
-import {TransactionFake} from '../../Sheet/TransactionFake';
+import {BuildingSheet} from '../../Sheet';
+import {Transaction} from '../../Sheet/Transaction';
 import {SkillName} from '../../Skill/SkillName';
-import {RaceName} from '../RaceName';
 import {Human} from './Human';
 import {Versatile} from './Versatile/Versatile';
 import type {VersatileChoice} from './Versatile/VersatileChoice';
@@ -11,6 +10,14 @@ import {VersatileChoicePower} from './Versatile/VersatileChoicePower';
 import {VersatileChoiceSkill} from './Versatile/VersatileChoiceSkill';
 
 describe('Human', () => {
+	let sheet: BuildingSheet;
+	let transaction: Transaction;
+
+	beforeEach(() => {
+		sheet = new BuildingSheet();
+		transaction = new Transaction(sheet);
+	});
+
 	it('should apply +1 to strength, dexterity and constitution', () => {
 		const acrobatics = new VersatileChoiceSkill(SkillName.acrobatics);
 		const animalHandling = new VersatileChoiceSkill(SkillName.animalHandling);
@@ -23,19 +30,16 @@ describe('Human', () => {
 		human.addVersatilChoice(acrobatics);
 		human.addVersatilChoice(animalHandling);
 
-		const transaction = new TransactionFake();
 		human.addToSheet(transaction);
 
-		expect(transaction.run).toHaveBeenCalledWith(new ApplyRaceModifiers({
-			payload: {
-				modifiers: {
-					constitution: 1,
-					dexterity: 1,
-					strength: 1,
-				},
-			},
-			transaction,
-		}));
+		expect(sheet.getSheetAttributes().getValues()).toEqual({
+			strength: 1,
+			dexterity: 1,
+			constitution: 1,
+			intelligence: 0,
+			wisdom: 0,
+			charisma: 0,
+		});
 	});
 
 	it('should throw error with more than 3 selections', () => {
@@ -93,20 +97,15 @@ describe('Human', () => {
 			animalHandling,
 		]);
 
-		const transaction = new TransactionFake();
 		human.addToSheet(transaction);
 
 		const versatile = new Versatile();
 		versatile.addChoice(acrobatics);
 		versatile.addChoice(animalHandling);
 
-		expect(transaction.run).toHaveBeenCalledWith(new ApplyRaceAbility({
-			payload: {
-				ability: versatile,
-				source: RaceName.human,
-			},
-			transaction,
-		}));
+		const skills = sheet.getSkills();
+		expect(skills[SkillName.acrobatics].skill.getIsTrained()).toBe(true);
+		expect(skills[SkillName.animalHandling].skill.getIsTrained()).toBe(true);
 	});
 
 	it('should apply versatile training chosen skill and power', () => {
@@ -119,7 +118,6 @@ describe('Human', () => {
 			'strength',
 		], [acrobatics, dodge]);
 
-		const transaction = new TransactionFake();
 		transaction.sheet.getSheetAttributes().getValues().dexterity = 1;
 		human.addToSheet(transaction);
 
@@ -127,11 +125,9 @@ describe('Human', () => {
 		versatile.addChoice(acrobatics);
 		versatile.addChoice(dodge);
 
-		expect(transaction.run).toHaveBeenCalledWith(new ApplyRaceAbility({
-			payload: {
-				source: RaceName.human, ability: versatile,
-			},
-			transaction,
-		}));
+		const skills = sheet.getSkills();
+		const powers = sheet.getSheetPowers().getGeneralPowers();
+		expect(skills[SkillName.acrobatics].skill.getIsTrained()).toBe(true);
+		expect(powers.get(GeneralPowerName.dodge)).toBeDefined();
 	});
 });

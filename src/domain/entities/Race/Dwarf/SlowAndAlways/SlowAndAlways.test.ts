@@ -1,21 +1,14 @@
-import {ChangeDisplacement} from '../../../Action/ChangeDisplacement';
-import {TransactionFake} from '../../../Sheet/TransactionFake';
-import {RaceAbilityName} from '../../RaceAbilityName';
+import {BuildingSheet} from '../../../Sheet';
+import {Transaction} from '../../../Sheet/Transaction';
 import {RaceName} from '../../RaceName';
 import {SlowAndAlways} from './SlowAndAlways';
 
 describe('SlowAndAlways', () => {
 	it('should dispatch displacement change', () => {
 		const slowAndAlways = new SlowAndAlways();
-		const transaction = new TransactionFake();
+		const sheet = new BuildingSheet();
+		const transaction = new Transaction(sheet);
 		slowAndAlways.addToSheet(transaction, RaceName.dwarf);
-
-		expect(transaction.run).toHaveBeenCalledWith(new ChangeDisplacement({
-			payload: {
-				displacement: 6,
-				source: RaceAbilityName.slowAndAlways,
-			},
-			transaction,
-		}));
+		expect(sheet.getSheetDisplacement().getDisplacement()).toBe(6);
 	});
 });

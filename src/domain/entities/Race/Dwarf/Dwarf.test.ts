@@ -1,79 +1,51 @@
-import {ApplyRaceAbility} from '../../Action/ApplyRaceAbility';
-import {ApplyRaceModifiers} from '../../Action/ApplyRaceModifiers';
-import {TransactionFake} from '../../Sheet/TransactionFake';
-import {RaceName} from '../RaceName';
+import {BuildingSheet} from '../../Sheet';
+import {Transaction} from '../../Sheet/Transaction';
+import {RaceAbilityName} from '../RaceAbilityName';
 import {Dwarf} from './Dwarf';
-import {HardAsRock} from './HardAsRock/HardAsRock';
-import {HeredrimmTradition} from './HeredrimmTradition/HeredrimmTradition';
-import {RockKnowledge} from './RockKnowledge/RockKnowledge';
-import {SlowAndAlways} from './SlowAndAlways/SlowAndAlways';
 
 describe('Dwarf', () => {
+	let sheet: BuildingSheet;
+	let transaction: Transaction;
+
+	beforeEach(() => {
+		sheet = new BuildingSheet();
+		transaction = new Transaction(sheet);
+	});
+
 	it('should dispatch dwarf attributes modifiers appliance', () => {
 		const dwarf = new Dwarf();
-		const transaction = new TransactionFake();
 		dwarf.addToSheet(transaction);
-		expect(transaction.run).toHaveBeenCalledWith(new ApplyRaceModifiers({
-			payload: {
-				modifiers: {
-					dexterity: -1,
-					constitution: 2,
-					wisdom: 1,
-				},
-			},
-			transaction,
-		}));
+		expect(sheet.getSheetAttributes().getValues()).toEqual({
+			strength: 0,
+			dexterity: -1,
+			constitution: 2,
+			intelligence: 0,
+			wisdom: 1,
+			charisma: 0,
+		});
 	});
 
 	it('should dispatch rock knowledge appliance', () => {
 		const dwarf = new Dwarf();
-		const transaction = new TransactionFake();
 		dwarf.addToSheet(transaction);
-		expect(transaction.run).toHaveBeenCalledWith(new ApplyRaceAbility({
-			payload: {
-				ability: new RockKnowledge(),
-				source: RaceName.dwarf,
-			},
-			transaction,
-		}));
+		expect(sheet.getSheetAbilities().getRaceAbilities().get(RaceAbilityName.rockKnowledge)).toBeDefined();
 	});
 
 	it('should dispatch slow and always appliance', () => {
 		const dwarf = new Dwarf();
-		const transaction = new TransactionFake();
 		dwarf.addToSheet(transaction);
-		expect(transaction.run).toHaveBeenCalledWith(new ApplyRaceAbility({
-			payload: {
-				ability: new SlowAndAlways(),
-				source: RaceName.dwarf,
-			},
-			transaction,
-		}));
+		expect(sheet.getSheetAbilities().getRaceAbilities().get(RaceAbilityName.slowAndAlways)).toBeDefined();
 	});
 
 	it('should dispatch Hard as Rock appliance', () => {
 		const dwarf = new Dwarf();
-		const transaction = new TransactionFake();
 		dwarf.addToSheet(transaction);
-		expect(transaction.run).toHaveBeenCalledWith(new ApplyRaceAbility({
-			payload: {
-				ability: new HardAsRock(),
-				source: RaceName.dwarf,
-			},
-			transaction,
-		}));
+		expect(sheet.getSheetAbilities().getRaceAbilities().get(RaceAbilityName.hardAsRock)).toBeDefined();
 	});
 
 	it('should dispatch Heredrimm Tradition appliance', () => {
 		const dwarf = new Dwarf();
-		const transaction = new TransactionFake();
 		dwarf.addToSheet(transaction);
-		expect(transaction.run).toHaveBeenCalledWith(new ApplyRaceAbility({
-			payload: {
-				ability: new HeredrimmTradition(),
-				source: RaceName.dwarf,
-			},
-			transaction,
-		}));
+		expect(sheet.getSheetAbilities().getRaceAbilities().get(RaceAbilityName.heredrimmTradition)).toBeDefined();
 	});
 });

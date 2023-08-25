@@ -8,11 +8,21 @@ import {RaceName} from '../../RaceName';
 import {Versatile} from './Versatile';
 import {VersatileChoicePower} from './VersatileChoicePower';
 import {VersatileChoiceSkill} from './VersatileChoiceSkill';
-import {TransactionFake} from '../../../Sheet/TransactionFake';
 import {TrainSkill} from '../../../Action/TrainSkill';
 import {PickGeneralPower} from '../../../Action/PickGeneralPower';
+import {BuildingSheet} from '../../../Sheet';
+import {Transaction} from '../../../Sheet/Transaction';
+import {GeneralPowerName} from '../../../Power/GeneralPower/GeneralPowerName';
 
 describe('Versatile', () => {
+	let sheet: BuildingSheet;
+	let transaction: Transaction;
+
+	beforeEach(() => {
+		sheet = new BuildingSheet();
+		transaction = new Transaction(sheet);
+	});
+
 	it('should add choice', () => {
 		const versatile = new Versatile();
 		versatile.addChoice(new VersatileChoiceSkill(SkillName.acrobatics));
@@ -63,7 +73,6 @@ describe('Versatile', () => {
 
 	it('should not allow apply without choices', () => {
 		const versatile = new Versatile();
-		const transaction = new TransactionFake();
 		expect(() => {
 			versatile.addToSheet(transaction, RaceName.human);
 		}).toThrow('MISSING_CHOICES');
@@ -73,48 +82,25 @@ describe('Versatile', () => {
 		const versatile = new Versatile();
 		versatile.addChoice(new VersatileChoiceSkill(SkillName.acrobatics));
 		versatile.addChoice(new VersatileChoiceSkill(SkillName.animalHandling));
-		const transaction = new TransactionFake();
 		versatile.addToSheet(transaction, RaceName.human);
 
-		expect(transaction.run).toHaveBeenCalledWith(new TrainSkill({
-			payload: {
-				skill: SkillName.acrobatics,
-				source: RaceAbilityName.versatile,
-			},
-			transaction,
-		}));
+		const firstChoice = sheet.getSkills()[SkillName.acrobatics];
+		const secondChoice = sheet.getSkills()[SkillName.animalHandling];
 
-		expect(transaction.run).toHaveBeenCalledWith(new TrainSkill({
-			payload: {
-				skill: SkillName.acrobatics,
-				source: RaceAbilityName.versatile,
-			},
-			transaction,
-		}));
+		expect(firstChoice.skill.getIsTrained()).toBe(true);
+		expect(secondChoice.skill.getIsTrained()).toBe(true);
 	});
 
 	it('should apply chosen power', () => {
 		const versatile = new Versatile();
 		versatile.addChoice(new VersatileChoiceSkill(SkillName.acrobatics));
 		versatile.addChoice(new VersatileChoicePower(new Dodge()));
-		const transaction = new TransactionFake();
 		transaction.sheet.getSheetAttributes().getValues().dexterity = 1;
 		versatile.addToSheet(transaction, RaceName.human);
 
-		expect(transaction.run).toHaveBeenCalledWith(new TrainSkill({
-			payload: {
-				skill: SkillName.acrobatics,
-				source: RaceAbilityName.versatile,
-			},
-			transaction,
-		}));
-
-		expect(transaction.run).toHaveBeenCalledWith(new PickGeneralPower({
-			payload: {
-				power: new Dodge(),
-				source: RaceAbilityName.versatile,
-			},
-			transaction,
-		}));
+		const firstChoice = sheet.getSkills()[SkillName.acrobatics];
+		const secondChoice = sheet.getSheetPowers().getGeneralPowers().get(GeneralPowerName.dodge);
+		expect(firstChoice.skill.getIsTrained()).toBe(true);
+		expect(secondChoice).toBeDefined();
 	});
 });

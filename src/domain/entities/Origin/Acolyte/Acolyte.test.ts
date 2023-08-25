@@ -1,13 +1,12 @@
 import {PickGeneralPower} from '../../Action/PickGeneralPower';
 import {PickOriginPower} from '../../Action/PickOriginPower';
-import {TrainSkill} from '../../Action/TrainSkill';
 import {EquipmentName} from '../../Inventory/Equipment/EquipmentName';
+import {GeneralPowerName, OriginPowerName} from '../../Power';
 import {IronWill} from '../../Power/GeneralPower/DestinyPower/IronWill/IronWill';
 import {Medicine} from '../../Power/GeneralPower/DestinyPower/Medicine/Medicine';
 import {ChurchMember} from '../../Power/OriginPower/ChurchMember';
 import {BuildingSheet} from '../../Sheet';
 import {Transaction} from '../../Sheet/Transaction';
-import {TransactionFake} from '../../Sheet/TransactionFake';
 import {SkillName} from '../../Skill/SkillName';
 import {OriginBenefitGeneralPower} from '../OriginBenefit/OriginBenefitGeneralPower';
 import {OriginBenefitOriginPower} from '../OriginBenefit/OriginBenefitOriginPower';
@@ -16,6 +15,14 @@ import {OriginName} from '../OriginName';
 import {Acolyte} from './Acolyte';
 
 describe('Acolyte', () => {
+	let sheet: BuildingSheet;
+	let transaction: Transaction;
+
+	beforeEach(() => {
+		sheet = new BuildingSheet();
+		transaction = new Transaction(sheet);
+	});
+
 	it('should dispatch add items', () => {
 		const acolyte = new Acolyte([new OriginBenefitSkill(SkillName.cure), new OriginBenefitSkill(SkillName.religion)]);
 		const sheet = new BuildingSheet();
@@ -28,24 +35,13 @@ describe('Acolyte', () => {
 
 	it('should dispatch skill benefits training', () => {
 		const acolyte = new Acolyte([new OriginBenefitSkill(SkillName.cure), new OriginBenefitSkill(SkillName.religion)]);
-		const transaction = new TransactionFake();
 		acolyte.addToSheet(transaction);
 
-		expect(transaction.run).toHaveBeenCalledWith(new TrainSkill({
-			payload: {
-				skill: SkillName.cure,
-				source: OriginName.acolyte,
-			},
-			transaction,
-		}));
+		const firstSkill = sheet.getSkills()[SkillName.cure].skill;
+		const secondSkill = sheet.getSkills()[SkillName.religion].skill;
 
-		expect(transaction.run).toHaveBeenCalledWith(new TrainSkill({
-			payload: {
-				skill: SkillName.religion,
-				source: OriginName.acolyte,
-			},
-			transaction,
-		}));
+		expect(firstSkill.getIsTrained()).toBe(true);
+		expect(secondSkill.getIsTrained()).toBe(true);
 	});
 
 	it('should not allow not listed skills', () => {
@@ -68,44 +64,20 @@ describe('Acolyte', () => {
 
 	it('should dispatch general power benefits appliance', () => {
 		const acolyte = new Acolyte([new OriginBenefitGeneralPower(new IronWill()), new OriginBenefitGeneralPower(new Medicine())]);
-		const transaction = new TransactionFake();
 		acolyte.addToSheet(transaction);
-		expect(transaction.actions).toContainEqual(new PickGeneralPower({
-			payload: {
-				power: new IronWill(),
-				source: OriginName.acolyte,
-			},
-			transaction,
-		}));
-
-		expect(transaction.actions).toContainEqual(new PickGeneralPower({
-			payload: {
-				power: new Medicine(),
-				source: OriginName.acolyte,
-			},
-			transaction,
-		}));
+		const powers = sheet.getSheetPowers().getGeneralPowers();
+		expect(powers.get(GeneralPowerName.ironWill)).toBeDefined();
+		expect(powers.get(GeneralPowerName.medicine)).toBeDefined();
 	});
 
 	it('should dispatch origin power as benefit appliance', () => {
 		const acolyte = new Acolyte([new OriginBenefitOriginPower(new ChurchMember()), new OriginBenefitGeneralPower(new Medicine())]);
-		const transaction = new TransactionFake();
 		acolyte.addToSheet(transaction);
 
-		expect(transaction.actions).toContainEqual(new PickOriginPower({
-			payload: {
-				power: new ChurchMember(),
-				source: OriginName.acolyte,
-			},
-			transaction,
-		}));
+		const originPowers = sheet.getSheetPowers().getOriginPowers();
+		const generalPowers = sheet.getSheetPowers().getGeneralPowers();
 
-		expect(transaction.actions).toContainEqual(new PickGeneralPower({
-			payload: {
-				power: new Medicine(),
-				source: OriginName.acolyte,
-			},
-			transaction,
-		}));
+		expect(originPowers.get(OriginPowerName.churchMember)).toBeDefined();
+		expect(generalPowers.get(GeneralPowerName.medicine)).toBeDefined();
 	});
 });

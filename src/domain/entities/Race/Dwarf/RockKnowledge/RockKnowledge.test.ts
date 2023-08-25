@@ -1,10 +1,6 @@
-import {AddContextualModifierToSkill} from '../../../Action/AddContextualModifierToSkill';
-import {ChangeVision} from '../../../Action/ChangeVision';
 import {InGameContextFake} from '../../../Context/InGameContextFake';
-import {ContextualModifier} from '../../../Modifier/ContextualModifier/ContextualModifier';
-import type {ModifierConditionVerify} from '../../../Modifier/ContextualModifier/ContextualModifiersListInterface';
-import type {ActionInterface} from '../../../Sheet/SheetActions';
-import {TransactionFake} from '../../../Sheet/TransactionFake';
+import {BuildingSheet} from '../../../Sheet';
+import {Transaction} from '../../../Sheet/Transaction';
 import {Vision} from '../../../Sheet/Vision';
 import {SkillName} from '../../../Skill/SkillName';
 import {RaceAbilityName} from '../../RaceAbilityName';
@@ -12,89 +8,56 @@ import {RaceName} from '../../RaceName';
 import {RockKnowledge} from './RockKnowledge';
 
 describe('RockKnowledge', () => {
+	let sheet: BuildingSheet;
+	let transaction: Transaction;
+
+	beforeEach(() => {
+		sheet = new BuildingSheet();
+		transaction = new Transaction(sheet);
+	});
+
 	it('should provide dark vision', () => {
 		const rockKnowledge = new RockKnowledge();
-		const transaction = new TransactionFake();
 		rockKnowledge.addToSheet(transaction, RaceName.dwarf);
-
-		expect(transaction.run).toHaveBeenCalledWith(new ChangeVision({
-			payload: {
-				source: RaceAbilityName.rockKnowledge,
-				vision: Vision.dark,
-			},
-			transaction,
-		}));
+		expect(sheet.getSheetVision().getVision()).toBe(Vision.dark);
 	});
 
 	it('should dispatch +2 perception bonus', () => {
 		const rockKnowledge = new RockKnowledge();
-		const transaction = new TransactionFake();
 		rockKnowledge.addToSheet(transaction, RaceName.dwarf);
-
-		expect(transaction.run).toHaveBeenCalledWith(expect.objectContaining(new AddContextualModifierToSkill({
-			payload: {
-				modifier: new ContextualModifier({
-					source: RaceAbilityName.rockKnowledge,
-					value: 2,
-					condition: {
-						description: 'testes devem ser realizados no subterrâneo',
-						verify: expect.any(Function) as ModifierConditionVerify,
-					},
-				}),
-				skill: SkillName.perception,
-			},
-			transaction,
-		})));
+		const perceptionModifier = sheet.getSkills()[SkillName.perception].skill.contextualModifiers.get(RaceAbilityName.rockKnowledge);
+		expect(perceptionModifier).toBeDefined();
+		expect(perceptionModifier?.baseValue).toBe(2);
 	});
 
 	it('should dispatch +2 survival bonus', () => {
 		const rockKnowledge = new RockKnowledge();
-		const transaction = new TransactionFake();
 		rockKnowledge.addToSheet(transaction, RaceName.dwarf);
-
-		expect(transaction.run).toHaveBeenCalledWith(expect.objectContaining(new AddContextualModifierToSkill({
-			payload: {
-				skill: SkillName.survival,
-				modifier: new ContextualModifier({
-					source: RaceAbilityName.rockKnowledge,
-					value: 2,
-					condition: {
-						description: 'testes devem ser realizados no subterrâneo',
-						verify: expect.any(Function) as ModifierConditionVerify,
-					}}),
-			},
-			transaction,
-		})));
+		const survivalModifier = sheet.getSkills()[SkillName.survival].skill.contextualModifiers.get(RaceAbilityName.rockKnowledge);
+		expect(survivalModifier).toBeDefined();
+		expect(survivalModifier?.baseValue).toBe(2);
 	});
 
 	it('should not activate bonus in game context outside underground', () => {
 		const rockKnowledge = new RockKnowledge();
-		const transaction = new TransactionFake();
 		rockKnowledge.addToSheet(transaction, RaceName.dwarf);
-		const perceptionCall = transaction.run.mock.calls[1][0] as ActionInterface<'addContextualModifierToSkill'>;
-		const survivalCall = transaction.run.mock.calls[2][0] as ActionInterface<'addContextualModifierToSkill'>;
 
-		const verifyPerception = (perceptionCall.payload).modifier.condition.verify;
-		const verifySurvival = (survivalCall.payload).modifier.condition.verify;
+		const perceptionModifier = sheet.getSkills()[SkillName.perception].skill.contextualModifiers.get(RaceAbilityName.rockKnowledge);
+		const survivalModifier = sheet.getSkills()[SkillName.survival].skill.contextualModifiers.get(RaceAbilityName.rockKnowledge);
 		const context = new InGameContextFake();
 		context.location.isUnderground = false;
-		expect(verifySurvival(context)).toBe(false);
-		expect(verifyPerception(context)).toBe(false);
+		expect(survivalModifier?.condition.verify(context)).toBe(false);
+		expect(perceptionModifier?.condition.verify(context)).toBe(false);
 	});
 
 	it('should activate bonus in game context inside underground', () => {
 		const rockKnowledge = new RockKnowledge();
-		const transaction = new TransactionFake();
 		rockKnowledge.addToSheet(transaction, RaceName.dwarf);
-
-		const perceptionCall = transaction.run.mock.calls[1][0] as ActionInterface<'addContextualModifierToSkill'>;
-		const survivalCall = transaction.run.mock.calls[2][0] as ActionInterface<'addContextualModifierToSkill'>;
-
-		const verifyPerception = (perceptionCall.payload).modifier.condition.verify;
-		const verifySurvival = (survivalCall.payload).modifier.condition.verify;
+		const perceptionModifier = sheet.getSkills()[SkillName.perception].skill.contextualModifiers.get(RaceAbilityName.rockKnowledge);
+		const survivalModifier = sheet.getSkills()[SkillName.survival].skill.contextualModifiers.get(RaceAbilityName.rockKnowledge);
 		const context = new InGameContextFake();
-
-		expect(verifySurvival(context)).toBe(true);
-		expect(verifyPerception(context)).toBe(true);
+		context.location.isUnderground = true;
+		expect(survivalModifier?.condition.verify(context)).toBe(true);
+		expect(perceptionModifier?.condition.verify(context)).toBe(true);
 	});
 });

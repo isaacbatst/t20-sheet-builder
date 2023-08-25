@@ -3,14 +3,18 @@ import {OutOfGameContext} from '../Context/OutOfGameContext';
 import {ContextualModifier} from '../Modifier/ContextualModifier/ContextualModifier';
 import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
 import {RaceAbilityName} from '../Race/RaceAbilityName';
-import {Level} from '../Sheet';
-import {SheetFake} from '../Sheet/SheetFake';
+import {BuildingSheetFake} from '../Sheet/BuildingSheet/BuildingSheetFake';
 import {Skill} from './Skill';
 import {SkillTotalCalculatorFactory} from './SkillTotalCalculatorFactory';
 
 describe('Skill', () => {
+	let sheet: BuildingSheetFake;
+
+	beforeEach(() => {
+		sheet = new BuildingSheetFake();
+	});
+
 	it('should calculate level 1 untrained skill', () => {
-		const sheet = new SheetFake();
 		const skill = new Skill({
 			attribute: 'dexterity',
 		});
@@ -20,7 +24,6 @@ describe('Skill', () => {
 	});
 
 	it('should update total by training', () => {
-		const sheet = new SheetFake();
 		const skill = new Skill({
 			attribute: 'dexterity',
 		});
@@ -30,7 +33,6 @@ describe('Skill', () => {
 	});
 
 	it('should calculate level 1 untrained skill with modifier', () => {
-		const sheet = new SheetFake();
 		sheet.getSheetAttributes().getValues().dexterity = 2;
 		const skill = new Skill({
 			attribute: 'dexterity',
@@ -41,8 +43,6 @@ describe('Skill', () => {
 	});
 
 	it('should calculate level 1 trained skill', () => {
-		const sheet = new SheetFake();
-
 		const skill = new Skill({
 			isTrained: true,
 			attribute: 'dexterity',
@@ -53,7 +53,6 @@ describe('Skill', () => {
 	});
 
 	it('should calculate level 1 trained skill with attribute modifier', () => {
-		const sheet = new SheetFake();
 		sheet.getSheetAttributes().getValues().dexterity = 2;
 
 		const skill = new Skill({
@@ -66,7 +65,6 @@ describe('Skill', () => {
 	});
 
 	it('should calculate level 1 trained skill with attribute modifier and fixed modifier', () => {
-		const sheet = new SheetFake();
 		sheet.getSheetAttributes().getValues().dexterity = 2;
 
 		const skill = new Skill({
@@ -80,10 +78,9 @@ describe('Skill', () => {
 	});
 
 	it('should calculate level 10 trained skill with attribute modifier and fixed modifier', () => {
-		const sheet = new SheetFake();
 		sheet.getSheetAttributes().getValues().dexterity = 2;
 
-		sheet.level = 10;
+		sheet.setLevel(10);
 		const skill = new Skill({
 			isTrained: true,
 			attribute: 'dexterity',
@@ -95,10 +92,9 @@ describe('Skill', () => {
 	});
 
 	it('should calculate level 10 trained skill with attribute modifier, fixed modifier and contextual modifier using out of game context', () => {
-		const sheet = new SheetFake();
 		sheet.getSheetAttributes().getValues().dexterity = 2;
 
-		sheet.level = 10;
+		sheet.setLevel(10);
 		const skill = new Skill({
 			isTrained: true,
 			attribute: 'dexterity',
@@ -115,10 +111,8 @@ describe('Skill', () => {
 	});
 
 	it('should calculate level 10 trained skill with attribute modifier, fixed modifier and contextual modifier using in game context', () => {
-		const sheet = new SheetFake();
 		sheet.getSheetAttributes().getValues().dexterity = 2;
-
-		sheet.level = Level.ten;
+		sheet.setLevel(10);
 		const skill = new Skill({
 			isTrained: true,
 			attribute: 'dexterity',
