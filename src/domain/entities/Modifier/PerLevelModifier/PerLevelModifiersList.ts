@@ -1,5 +1,6 @@
 import {type ContextInterface} from '../../Context';
-import {type Level, type SerializedSheetPerLevelModifiersList} from '../../Sheet';
+import {Level} from '../../Sheet/Level';
+import {type SerializedSheetPerLevelModifiersList} from '../../Sheet/SerializedSheet/SerializedSheetInterface';
 import {type SheetInterface} from '../../Sheet/SheetInterface';
 import {ModifiersList} from '../ModifiersList';
 import type {ModifiersListInterface} from '../ModifiersListInterface';
@@ -29,7 +30,7 @@ export class PerLevelModifiersList extends ModifiersList<PerLevelModifierInterfa
 	}
 
 	getTotalPerLevel(level: Level): number {
-		const isFirstLevel = level === 1;
+		const isFirstLevel = level === Level.one;
 		return this.modifiers
 			.reduce((acc, modifier) =>
 				acc + (isFirstLevel && !modifier.includeFirstLevel ? 0 : modifier.getPerLevelValue()),

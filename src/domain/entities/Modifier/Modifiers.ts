@@ -37,6 +37,14 @@ export class Modifiers {
 		this.perLevel = params.perLevel ?? new PerLevelModifiersList();
 	}
 
+	clone() {
+		return new Modifiers({
+			fixed: this.fixed.clone(),
+			contextual: this.contextual.clone() as ContextualModifiersList,
+			perLevel: this.perLevel.clone() as PerLevelModifiersList,
+		});
+	}
+
 	getTotal({
 		contextCalculator,
 		fixedCalculator,

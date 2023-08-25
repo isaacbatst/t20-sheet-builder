@@ -12,7 +12,7 @@ export class CharacterAttackModifiers {
 	constructor(params: CharacterAttackModifiersConstructorParams = {}) {
 		const {test, damage} = params;
 
-		this.test = test ?? new Modifiers();
-		this.damage = damage ?? new Modifiers();
+		this.test = test?.clone() ?? new Modifiers();
+		this.damage = damage?.clone() ?? new Modifiers();
 	}
 }
