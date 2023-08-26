@@ -1,22 +1,8 @@
 import {type ArmorName} from './ArmorName';
-import {HeavyArmorFactory} from './HeavyArmor';
-import {LightArmorFactory} from './LightArmor';
+import {Armors} from './Armors';
 
 export class ArmorFactory {
-	static map = {
-		...LightArmorFactory.map,
-		...HeavyArmorFactory.map,
-	};
-
-	static get(name: ArmorName) {
-		return this.map[name];
-	}
-
-	static getAll() {
-		return Object.values(this.map);
-	}
-
 	static make(name: ArmorName) {
-		return new (this.get(name))();
+		return new (Armors.get(name))();
 	}
 }

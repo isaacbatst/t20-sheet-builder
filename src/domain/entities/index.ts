@@ -21,3 +21,4 @@ export * from './Context';
 export * from './Character';
 export * from './Random';
 export * from './Dice';
+export * from './Content';
