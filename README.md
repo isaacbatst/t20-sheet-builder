@@ -61,12 +61,10 @@ Represents a possible attack with an weapon. It has the following methods:
 
 ```ts
 export type CharacterAttack = {
-	roll(): AttackResult 
+  roll(): AttackResult 
 	changeTestAttackAttribute(attribute: Attribute) // used for weapons that allow to change the used attribute
-	
   // you can get the modifiers applied to the attack/damage
   modifiers: CharacterAttackModifiers
-
   // but also the final calculated values for them
   // theis values are calculated based on the context
   // max total is the maximum value if all conditions are met
