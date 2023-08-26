@@ -103,16 +103,29 @@ export type AttackResult = {
 
 Most content can be retrieved from a method like these:
 
+
 ```ts
-Races.getAll() // [Human, Dwarf, Elf, ...]
-Roles.getAll()
-Origins.getAll()
-Spells.getAll()
-GeneralPowers.getAll()
-Armors.getAll()
-SimpleWeapons.getAll()
-// etc
+import {Content} from 't20-sheet-builder';
+
+const races = Content.getRaces();
 ```
+
+#### Content API
+
+- getDeities(): Deities 
+- getHeavyArmors(): HeavyArmors 
+- getLightArmors(): LightArmors 
+- getExoticWeapons(): ExoticWeapons 
+- getFireArmWeapons(): FireArmWeapons 
+- getMartialWeapons(): MartialWeapons 
+- getSimpleWeapons(): SimpleWeapons 
+- getOrigins(): Origins 
+- getTormentaPowers(): TormentaPowers 
+- getRaces(): Races 
+- getRoles(): Roles 
+- getArcanistPathWizardFocuses(): ArcanistPathWizardFocuses 
+- getSpells(): Spells 
+- getArmors(): Armors 
 
 #### Content names
 
