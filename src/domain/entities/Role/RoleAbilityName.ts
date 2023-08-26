@@ -4,4 +4,5 @@ export enum RoleAbilityName {
 	arcanistPath = 'arcanistPath',
 	arcanistSpells = 'arcanistSpells',
 	arcanistSupernaturalLineage = 'arcanistSupernaturalLineage',
+	rage = 'rage',
 }
