@@ -18,6 +18,5 @@ export type CharacterInterface = {
 	getAttacks(context: Context): Map<EquipmentName, CharacterAttack>;
 	toggleEquipItem(name: EquipmentName): void;
 	getWieldedItems(): EquipmentName[];
-
 	getFightStyle(): CharacterAppliedFightStyle | undefined;
 };
