@@ -21,6 +21,7 @@ import {type SheetRoleInterface} from './SheetRoleInterface';
 import {type SheetSizeInterface} from './SheetSizeInterface';
 import {type SheetSkillsInterface} from './SheetSkillsInterface';
 import {type SheetSpellsInterface} from './SheetSpellsInterface';
+import {type SheetTriggeredEffects} from './SheetTriggeredEffects';
 import {type SheetVisionInterface} from './SheetVisionInterface';
 export abstract class Sheet implements SheetInterface {
 	protected abstract buildSteps: BuildStepInterface[];
@@ -43,6 +44,7 @@ export abstract class Sheet implements SheetInterface {
 	protected abstract sheetSize: SheetSizeInterface;
 	protected abstract sheetDevotion: SheetDevotion;
 	protected abstract sheetResistences: SheetResistencesInterface;
+	protected abstract sheetTriggeredEffects: SheetTriggeredEffects;
 
 	makeSkillTotalCalculator(context: ContextInterface = new OutOfGameContext()) {
 		return SkillTotalCalculatorFactory.make(
@@ -116,6 +118,10 @@ export abstract class Sheet implements SheetInterface {
 
 	getSheetPowers(): SheetPowersInterface {
 		return this.sheetPowers;
+	}
+
+	getSheetTriggeredEffects(): SheetTriggeredEffects {
+		return this.sheetTriggeredEffects;
 	}
 
 	getSheetDefense(): SheetDefenseInterface {

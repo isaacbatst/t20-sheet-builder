@@ -20,9 +20,10 @@ import {type SheetRoleInterface} from './SheetRoleInterface';
 import {type SheetSizeInterface} from './SheetSizeInterface';
 import {type SheetSkillsInterface} from './SheetSkillsInterface';
 import {type SheetSpellsInterface} from './SheetSpellsInterface';
+import {type SheetTriggeredEffects} from './SheetTriggeredEffects';
 import {type SheetVisionInterface} from './SheetVisionInterface';
 
-export type SheetTriggeredEffects = Record<TriggerEvent, TriggeredEffectMap>;
+export type SheetTriggeredEffectsType = Record<TriggerEvent, TriggeredEffectMap>;
 
 export type SheetInterface = {
 	serialize(context?: ContextInterface): SerializedSheetInterface;
@@ -50,5 +51,6 @@ export type SheetInterface = {
 	getSheetSize(): SheetSizeInterface;
 	getSheetDevotion(): SheetDevotion;
 	getSheetResistences(): SheetResistencesInterface;
+	getSheetTriggeredEffects(): SheetTriggeredEffects;
 };
 

@@ -1,4 +1,4 @@
-import {type SerializedRoleBasic, type SerializedRole, type SerializedRoles} from '..';
+import {type SerializedRole, type SerializedRoleBasic, type SerializedRoles} from '..';
 import {SheetBuilderError} from '../../errors/SheetBuilderError';
 import {AddFixedModifierToLifePoints} from '../Action/AddFixedModifierToLifePoints';
 import {AddPerLevelModifierToLifePoints} from '../Action/AddPerLevelModifierToLifePoints';
@@ -12,7 +12,7 @@ import {Level} from '../Sheet/Level';
 import type {Proficiency} from '../Sheet/Proficiency';
 import {type TransactionInterface} from '../Sheet/TransactionInterface';
 import type {SkillName} from '../Skill/SkillName';
-import type {RoleAbility} from './RoleAbility';
+import {type RoleAbilitiesPerLevel} from './RoleAbilitiesPerLevel';
 import type {RoleInterface, SelectSkillGroup} from './RoleInterface';
 import type {RoleName} from './RoleName';
 
@@ -43,7 +43,7 @@ export abstract class Role<
 	abstract readonly mandatorySkills: SkillName[];
 	abstract readonly proficiencies: Proficiency[];
 	abstract readonly name: RoleName;
-	abstract readonly abilitiesPerLevel: Record<Level, Record<string, RoleAbility>>;
+	abstract readonly abilitiesPerLevel: RoleAbilitiesPerLevel;
 
 	get startsWithArmor() {
 		return true;

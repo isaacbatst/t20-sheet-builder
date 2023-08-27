@@ -1,6 +1,7 @@
 import {Level, Proficiency} from '../../Sheet';
 import {SkillName} from '../../Skill';
 import {Role} from '../Role';
+import {RoleAbilitiesPerLevelFactory} from '../RoleAbilitiesPerLevelFactory';
 import {type RoleAbility} from '../RoleAbility';
 import {type SelectSkillGroup} from '../RoleInterface';
 import {RoleName} from '../RoleName';
@@ -29,20 +30,11 @@ export class Barbarian extends Role {
 	override mandatorySkills: SkillName[] = [SkillName.fight, SkillName.fortitude];
 	override proficiencies: Proficiency[] = [Proficiency.martial, Proficiency.shield];
 	override name: RoleName = RoleName.barbarian;
-	readonly abilitiesPerLevel: Record<Level, Record<string, RoleAbility>> = {
+	readonly abilitiesPerLevel: Record<Level, Record<string, RoleAbility>> = RoleAbilitiesPerLevelFactory.make({
 		[Level.one]: {
 			rage: new Rage(),
 		},
-		[Level.two]: {},
-		[Level.three]: {},
-		[Level.four]: {},
-		[Level.five]: {},
-		[Level.six]: {},
-		[Level.seven]: {},
-		[Level.eight]: {},
-		[Level.nine]: {},
-		[Level.ten]: {},
-	};
+	});
 
 	constructor(chosenSkills: SkillName[] = []) {
 		super(chosenSkills, Barbarian.selectSkillGroups);

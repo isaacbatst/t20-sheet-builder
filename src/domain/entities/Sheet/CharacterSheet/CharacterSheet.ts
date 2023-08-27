@@ -18,6 +18,7 @@ import {type SheetRoleInterface} from '../SheetRoleInterface';
 import {type SheetSizeInterface} from '../SheetSizeInterface';
 import {type SheetSkillsInterface} from '../SheetSkillsInterface';
 import {type SheetSpellsInterface} from '../SheetSpellsInterface';
+import {type SheetTriggeredEffects} from '../SheetTriggeredEffects';
 import {type SheetVisionInterface} from '../SheetVisionInterface';
 import {CharacterSheetOrigin} from './CharacterSheetOrigin';
 import {CharacterSheetRace} from './CharacterSheetRace';
@@ -44,6 +45,7 @@ type SheetParams = {
 	size: SheetSizeInterface;
 	devotion: SheetDevotion;
 	sheetResistences: SheetResistencesInterface;
+	sheetTriggeredEffects: SheetTriggeredEffects;
 };
 
 export class CharacterSheet extends Sheet {
@@ -67,6 +69,7 @@ export class CharacterSheet extends Sheet {
 	protected sheetDisplacement: SheetDisplacementInterface;
 	protected sheetDevotion: SheetDevotion;
 	protected sheetResistences: SheetResistencesInterface;
+	protected sheetTriggeredEffects: SheetTriggeredEffects;
 
 	constructor(
 		params: SheetParams,
@@ -92,5 +95,6 @@ export class CharacterSheet extends Sheet {
 		this.sheetSize = params.size;
 		this.sheetDevotion = params.devotion;
 		this.sheetResistences = params.sheetResistences;
+		this.sheetTriggeredEffects = params.sheetTriggeredEffects;
 	}
 }

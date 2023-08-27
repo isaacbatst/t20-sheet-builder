@@ -5,6 +5,8 @@ import type {Proficiency} from '../../Sheet/Proficiency';
 import {SkillName} from '../../Skill/SkillName';
 import type {Spell, SpellType} from '../../Spell/Spell';
 import {Role} from '../Role';
+import {type RoleAbilitiesPerLevel} from '../RoleAbilitiesPerLevel';
+import {RoleAbilitiesPerLevelFactory} from '../RoleAbilitiesPerLevelFactory';
 import type {RoleAbility} from '../RoleAbility';
 import type {SelectSkillGroup} from '../RoleInterface';
 import {RoleName} from '../RoleName';
@@ -54,21 +56,12 @@ SerializedArcanist
 	static readonly mandatorySkills: SkillName[] = [SkillName.mysticism, SkillName.will];
 	static readonly proficiencies: Proficiency[] = [];
 
-	readonly abilitiesPerLevel: {
+	readonly abilitiesPerLevel: RoleAbilitiesPerLevel<{
 		[Level.one]: {
 			arcanistPath: ArcanistPath;
 			arcanistSpells: ArcanistSpells;
 		};
-		[Level.two]: Record<string, RoleAbility>;
-		[Level.three]: Record<string, RoleAbility>;
-		[Level.four]: Record<string, RoleAbility>;
-		[Level.five]: Record<string, RoleAbility>;
-		[Level.six]: Record<string, RoleAbility>;
-		[Level.seven]: Record<string, RoleAbility>;
-		[Level.eight]: Record<string, RoleAbility>;
-		[Level.nine]: Record<string, RoleAbility>;
-		[Level.ten]: Record<string, RoleAbility>;
-	};
+	}>;
 
 	override initialLifePoints: number = Arcanist.initialLifePoints;
 	override lifePointsPerLevel: number = Arcanist.lifePointsPerLevel;
@@ -82,21 +75,12 @@ SerializedArcanist
 	constructor(chosenSkills: SkillName[], path: T, spells: Spell[]) {
 		super(chosenSkills, Arcanist.selectSkillGroups);
 		const arcanistSpells = new ArcanistSpells(spells, path.spellLearnFrequency, path.spellsAttribute);
-		this.abilitiesPerLevel = {
+		this.abilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({
 			[Level.one]: {
 				arcanistSpells,
 				arcanistPath: path,
 			},
-			[Level.two]: {},
-			[Level.three]: {},
-			[Level.four]: {},
-			[Level.five]: {},
-			[Level.six]: {},
-			[Level.seven]: {},
-			[Level.eight]: {},
-			[Level.nine]: {},
-			[Level.ten]: {},
-		};
+		});
 	}
 
 	getSpellsAttribute(): Attribute {

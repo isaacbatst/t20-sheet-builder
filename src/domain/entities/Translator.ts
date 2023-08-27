@@ -211,6 +211,7 @@ export class Translator {
 		warrior: 'Guerreiro',
 		arcanist: 'Arcanista',
 		barbarian: 'Bárbaro',
+		buccaneer: 'Bucaneiro',
 	};
 
 	private static readonly proficienciesTranslation: Record<Proficiency, string> = {
@@ -230,6 +231,7 @@ export class Translator {
 		arcanistSpells: 'Magias do Arcanista',
 		arcanistSupernaturalLineage: 'Linhagem Sobrenatural',
 		rage: 'Fúria',
+		audacity: 'Audácia',
 	};
 
 	private static readonly spellTypesTranslation: Record<SpellType, string> = {

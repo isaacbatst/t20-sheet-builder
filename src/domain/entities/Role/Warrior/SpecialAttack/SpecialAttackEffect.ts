@@ -1,4 +1,4 @@
-import {TriggeredEffect} from '../../../Ability/TriggeredEffect';
+import {TriggerEvent, TriggeredEffect} from '../../../Ability/TriggeredEffect';
 import {TriggeredEffectName} from '../../../Ability/TriggeredEffectName';
 import {ManaCost} from '../../../ManaCost';
 import {Level} from '../../../Sheet/Level';
@@ -33,7 +33,7 @@ export class SpecialAttackEffect extends TriggeredEffect {
 			duration: 'next',
 			execution: 'reaction',
 			source: RoleAbilityName.specialAttack,
-			triggerEvent: 'attack',
+			triggerEvent: TriggerEvent.attack,
 			name: TriggeredEffectName.specialAttack,
 		});
 		this.baseCosts = [new ManaCost(1)];

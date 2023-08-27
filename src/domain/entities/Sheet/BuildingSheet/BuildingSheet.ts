@@ -15,6 +15,7 @@ import {SheetResistences} from '../SheetResistencies';
 import {SheetSize} from '../SheetSize';
 import {SheetSkills} from '../SheetSkills';
 import {SheetSpells} from '../SheetSpells';
+import {SheetTriggeredEffects} from '../SheetTriggeredEffects';
 import {SheetVision} from '../SheetVision';
 import {BuildingSheetOrigin} from './BuildingSheetOrigin';
 import {BuildingSheetRace} from './BuildingSheetRace';
@@ -41,6 +42,7 @@ export class BuildingSheet extends Sheet {
 	protected sheetResistences = new SheetResistences();
 	protected buildSteps = [];
 	protected level = Level.one;
+	protected sheetTriggeredEffects = new SheetTriggeredEffects();
 
 	override getSheetRace(): BuildingSheetRace {
 		return this.sheetRace;

@@ -2,7 +2,12 @@ import type {ActivateableAbilityEffectInterface, ActivateableEffectParams, Activ
 import {ActivateableAbilityEffect} from './ActivateableAbilityEffect';
 import {type TriggeredEffectName} from './TriggeredEffectName';
 
-export type TriggerEvent = 'attack' | 'defense';
+export enum TriggerEvent {
+	attack = 'attack',
+	defend = 'defend',
+	skillTest = 'skillTest',
+	skillTestExceptAttack = 'skillTestExceptAttack',
+}
 
 export type TriggeredEffectInterface = ActivateableAbilityEffectInterface & {
 	triggerEvent: TriggerEvent;
