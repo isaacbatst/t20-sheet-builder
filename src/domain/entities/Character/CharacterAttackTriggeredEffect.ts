@@ -28,6 +28,14 @@ export class CharacterAttackTriggeredEffect {
 		this.isEnabled = true;
 	}
 
+	disable(modifiers: CharacterAttackModifiers): void {
+		this.effect.disable({
+			modifiersIndexes: this.modifiersIndexes,
+			modifiers,
+		});
+		this.isEnabled = false;
+	}
+
 	getIsEnabled() {
 		return this.isEnabled;
 	}

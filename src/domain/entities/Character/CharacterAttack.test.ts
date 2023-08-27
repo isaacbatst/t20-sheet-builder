@@ -6,7 +6,7 @@ import {Acolyte, OriginBenefitGeneralPower, OriginBenefitSkill, type OriginInter
 import {GeneralPowerName, IronWill, OneWeaponStyle} from '../Power';
 import {Human, VersatileChoicePower, VersatileChoiceSkill, type Race, type VersatileChoice} from '../Race';
 import {type RandomInterface} from '../Random';
-import {Warrior} from '../Role';
+import {RoleAbilityName, Warrior} from '../Role';
 import {type Role} from '../Role/Role';
 import {type CharacterSheet} from '../Sheet';
 import {SheetBuilder} from '../Sheet/SheetBuilder';
@@ -181,5 +181,18 @@ describe('Attack', () => {
 		const cost = attack.getManaCost();
 		expect(cost).toBeDefined();
 		expect(cost).toEqual({type: 'mana', value: 1});
+	});
+
+	it('should disable triggered effect', () => {
+		const attack = character.getAttacks(context).get(EquipmentName.dagger)!;
+		attack.enableTriggeredEffect({
+			effectName: TriggeredEffectName.specialAttack,
+		});
+
+		attack.disableTriggeredEffect(TriggeredEffectName.specialAttack);
+		const cost = attack.getManaCost();
+		expect(cost).toBeDefined();
+		expect(cost).toEqual({type: 'mana', value: 0});
+		expect(attack.modifiers.test.fixed.get(RoleAbilityName.specialAttack)).toBeUndefined();
 	});
 });

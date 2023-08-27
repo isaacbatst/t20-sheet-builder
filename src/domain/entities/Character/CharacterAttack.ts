@@ -130,6 +130,15 @@ export class CharacterAttack {
 		effect.enable(this.modifiers, activation);
 	}
 
+	disableTriggeredEffect(effectName: TriggeredEffectName) {
+		const effect = this.triggeredEffects.get(effectName);
+		if (!effect) {
+			throw new Error('INVALID_TRIGGERED_EFFECT');
+		}
+
+		effect.disable(this.modifiers);
+	}
+
 	getTestModifiersMaxTotal() {
 		return this.modifiers.test.getMaxTotal(this.attributes, this.maxTotalCalculators);
 	}

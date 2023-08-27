@@ -47,4 +47,9 @@ export abstract class TriggeredEffect<A extends TriggeredEffectActivation = Trig
 		modifiers: CharacterAttackModifiers;
 		modifiersIndexes: EnabledEffectModifiersIndexes;
 	}, activation: A): {manaCost?: ManaCost};
+
+	abstract disable({modifiersIndexes, modifiers}: {
+		modifiers: CharacterAttackModifiers;
+		modifiersIndexes: EnabledEffectModifiersIndexes;
+	}): void;
 }
