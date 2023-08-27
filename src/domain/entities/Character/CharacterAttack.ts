@@ -93,7 +93,7 @@ export class CharacterAttack {
 		}
 
 		const skillWithAttribute = this.skills[skillName].makeWithOtherAttribute(attribute);
-		const skillModifier = new FixedModifier(skillName, skillWithAttribute.getTotal());
+		const skillModifier = new FixedModifier(skillName, skillWithAttribute.getModifiersTotal());
 
 		this.modifiers.test.fixed.remove(this.testSkillModifierIndex);
 		this.testSkillModifierIndex = this.modifiers.test.fixed.add(skillModifier);
@@ -183,7 +183,7 @@ export class CharacterAttack {
 
 	private addTestSkillFixedModifier(skills: SheetSkillsObject): number {
 		const testSkill = this.attack.getTestDefaultSkill();
-		const skillValue = skills[testSkill].getTotal();
+		const skillValue = skills[testSkill].getModifiersTotal();
 		return this.modifiers.test.fixed.add(new FixedModifier(testSkill, skillValue));
 	}
 

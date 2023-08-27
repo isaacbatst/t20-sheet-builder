@@ -3,6 +3,8 @@ import type {Level} from '../Sheet/Level';
 import {Skill} from './Skill';
 
 export type SkillBaseCalculatorInterface = {
+	level: Level;
+	attributes: Attributes;
 	calculate(attribute: Attribute, isTrained: boolean): number;
 };
 
@@ -15,6 +17,7 @@ export class SkillBaseCalculator implements SkillBaseCalculatorInterface {
 	calculate(attribute: Attribute, isTrained: boolean): number {
 		const trainingPoints = Skill.calculateTrainingPoints(this.level, isTrained);
 		const levelPoints = Skill.calculateLevelPoints(this.level);
+
 		return levelPoints + this.attributes[attribute] + trainingPoints;
 	}
 }

@@ -173,7 +173,7 @@ describe('Sheet', () => {
 
 		it('should get sheet skills', () => {
 			const skills = sheet.getSkills();
-			const total = skills[SkillName.fight].getTotal();
+			const total = skills[SkillName.fight].getModifiersTotal();
 			expect(total).toBe(2);
 		});
 
