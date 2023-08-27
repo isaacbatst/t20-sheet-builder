@@ -206,6 +206,7 @@ export class Translator {
 	private static readonly rolesTranslation: Record<RoleName, string> = {
 		warrior: 'Guerreiro',
 		arcanist: 'Arcanista',
+		barbarian: 'Bárbaro',
 	};
 
 	private static readonly proficienciesTranslation: Record<Proficiency, string> = {
@@ -224,6 +225,7 @@ export class Translator {
 		arcanistPath: 'Caminho do Arcanista',
 		arcanistSpells: 'Magias do Arcanista',
 		arcanistSupernaturalLineage: 'Linhagem Sobrenatural',
+		rage: 'Fúria',
 	};
 
 	private static readonly spellTypesTranslation: Record<SpellType, string> = {
