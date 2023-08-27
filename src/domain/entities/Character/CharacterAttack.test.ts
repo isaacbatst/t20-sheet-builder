@@ -165,6 +165,13 @@ describe('Attack', () => {
 		expect(effects.get(TriggeredEffectName.specialAttack)).toBeDefined();
 	});
 
+	it('should have attack cost with disabled triggered effect', () => {
+		const attack = character.getAttacks(context).get(EquipmentName.dagger)!;
+		const cost = attack.getManaCost();
+		expect(cost).toBeDefined();
+		expect(cost).toEqual({type: 'mana', value: 0});
+	});
+
 	it('should have attack cost with enabled triggered effect', () => {
 		const attack = character.getAttacks(context).get(EquipmentName.dagger)!;
 		attack.enableTriggeredEffect({
