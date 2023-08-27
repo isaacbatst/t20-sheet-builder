@@ -1,3 +1,4 @@
+import {TriggerEvent} from '../Ability';
 import {type Context} from '../Context';
 import {OffensiveWeapon, type EquipmentName} from '../Inventory';
 import {type GeneralPowerMap} from '../Map';
@@ -125,6 +126,12 @@ export class Character implements CharacterInterface {
 	}
 
 	private makeAttack(weapon: OffensiveWeapon, context: Context) {
+		const attackTriggeredEffects = this.sheet.getSheetTriggeredEffects().getByEvent(TriggerEvent.attack);
+		const testTriggeredEffects = this.sheet.getSheetTriggeredEffects().getByEvent(TriggerEvent.skillTest);
+		const effects = new Map([
+			...attackTriggeredEffects,
+			...testTriggeredEffects,
+		]);
 		const attack = new CharacterAttack({
 			weapon,
 			skills: this.sheet.getSkills(),
@@ -135,6 +142,7 @@ export class Character implements CharacterInterface {
 				damage: this.modifiers.damage,
 				test: this.modifiers.attack,
 			},
+			triggeredEffects: effects,
 		});
 		return attack;
 	}

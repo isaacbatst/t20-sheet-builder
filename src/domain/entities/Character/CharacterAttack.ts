@@ -1,14 +1,19 @@
+import {type TriggeredEffectName} from '../Ability';
+import {type TriggeredEffectActivation} from '../Ability/TriggeredEffectActivation';
 import {WeaponAttack} from '../Attack';
 import type {Attack, SerializedAttack} from '../Attack/Attack';
 import {type ContextInterface} from '../Context';
 import {type RollResult} from '../Dice/RollResult';
 import {type OffensiveWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/OffensiveWeapon';
-import {FixedModifiersList, FixedModifier} from '../Modifier';
+import {ManaCost} from '../ManaCost';
+import {type TriggeredEffectMap} from '../Map';
+import {FixedModifier} from '../Modifier';
 import {type Modifiers, type ModifiersMaxTotalCalculators, type ModifiersTotalCalculators, type SerializedModifiers} from '../Modifier/Modifiers';
 import {Random, type RandomInterface} from '../Random';
 import {type Attribute, type Attributes} from '../Sheet';
 import {type SheetInterface} from '../Sheet/SheetInterface';
 import {type SheetSkillsObject} from '../Skill/SheetSkill';
+import {CharacterAttackTriggeredEffect} from './CharacterAttackTriggeredEffect';
 import {CharacterAttackModifiers} from './CharactterAttackModifiers';
 
 export type AttackResult = {
@@ -43,6 +48,7 @@ type CharacterAttackConstructorParams = {
 	skills: SheetSkillsObject;
 	weapon: OffensiveWeapon;
 	totalCalculators: ModifiersTotalCalculators;
+	triggeredEffects: TriggeredEffectMap;
 };
 
 export class CharacterAttack {
@@ -54,6 +60,7 @@ export class CharacterAttack {
 	private readonly totalCalculators: ModifiersTotalCalculators;
 	private readonly attributes: Attributes;
 	private readonly skills: SheetSkillsObject;
+	private readonly triggeredEffects: Map<TriggeredEffectName, CharacterAttackTriggeredEffect>;
 
 	constructor(params: CharacterAttackConstructorParams) {
 		const {modifiers, attributes, maxTotalCalculators, skills, totalCalculators, weapon} = params;
@@ -69,6 +76,11 @@ export class CharacterAttack {
 		this.maxTotalCalculators = maxTotalCalculators;
 		this.attributes = attributes;
 		this.skills = skills;
+		this.triggeredEffects = new Map();
+
+		params.triggeredEffects.forEach((effect, effectName) => {
+			this.triggeredEffects.set(effectName, new CharacterAttackTriggeredEffect(effect));
+		});
 	}
 
 	changeTestAttackAttribute(attribute: Attribute) {
@@ -109,6 +121,15 @@ export class CharacterAttack {
 		};
 	}
 
+	enableTriggeredEffect(activation: TriggeredEffectActivation) {
+		const effect = this.triggeredEffects.get(activation.effectName);
+		if (!effect) {
+			throw new Error('INVALID_TRIGGERED_EFFECT');
+		}
+
+		effect.enable(this.modifiers, activation);
+	}
+
 	getTestModifiersMaxTotal() {
 		return this.modifiers.test.getMaxTotal(this.attributes, this.maxTotalCalculators);
 	}
@@ -123,6 +144,22 @@ export class CharacterAttack {
 
 	getDamageModifiersTotal() {
 		return this.modifiers.damage.getTotal(this.totalCalculators);
+	}
+
+	getTriggeredEffects(): Map<TriggeredEffectName, CharacterAttackTriggeredEffect> {
+		return this.triggeredEffects;
+	}
+
+	getManaCost(): ManaCost {
+		let sum = 0;
+
+		this.triggeredEffects.forEach(effect => {
+			if (effect.getIsEnabled()) {
+				sum += effect.getManaCost()?.value ?? 0;
+			}
+		});
+
+		return new ManaCost(sum);
 	}
 
 	serialize(sheet: SheetInterface, context: ContextInterface): SerializedCharacterAttack {

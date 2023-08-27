@@ -1,3 +1,4 @@
+import {RegisterTriggeredEffect} from '../Action/RegisterTriggeredEffect';
 import type {PowerName} from '../Power/PowerName';
 import type {RaceAbilityName} from '../Race/RaceAbilityName';
 import type {RoleAbilityName} from '../Role/RoleAbilityName';
@@ -26,11 +27,26 @@ export abstract class Ability implements AbilityInterface {
 
 	addToSheet(transaction: TransactionInterface, source: TranslatableName): void {
 		this.applyPassiveEffects(transaction);
+		this.registerTriggeredEffects(transaction);
 	}
 
 	private applyPassiveEffects(transaction: TransactionInterface) {
 		Object.values(this.effects.passive).forEach(effect => {
 			effect.apply(transaction);
+		});
+	}
+
+	private registerTriggeredEffects(transaction: TransactionInterface) {
+		Object.values(this.effects.triggered).forEach(effect => {
+			const action = new RegisterTriggeredEffect({
+				payload: {
+					effect,
+					event: effect.triggerEvent,
+					source: this.name,
+				},
+				transaction,
+			});
+			transaction.run(action);
 		});
 	}
 }

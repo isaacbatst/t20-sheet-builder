@@ -1,4 +1,4 @@
-import {type TriggerEvent} from '../Ability';
+import {type TriggeredEffect, type TriggerEvent} from '../Ability';
 import {type TriggeredEffectMap} from '../Map';
 
 export class SheetTriggeredEffects {
@@ -11,5 +11,9 @@ export class SheetTriggeredEffects {
 
 	getByEvent(event: TriggerEvent): TriggeredEffectMap {
 		return this.effects[event];
+	}
+
+	registerEffect(event: TriggerEvent, effect: TriggeredEffect): void {
+		this.effects[event].set(effect.name, effect);
 	}
 }

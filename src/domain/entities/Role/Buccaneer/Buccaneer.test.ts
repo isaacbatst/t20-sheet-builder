@@ -62,7 +62,7 @@ describe('buccaneer', () => {
 		expect(abilities.getRoleAbilities().get(RoleAbilityName.audacity)).toBeDefined();
 	});
 
-	it.skip('should have audacity as testExceptAttack triggered effect', () => {
+	it('should have audacity as testExceptAttack triggered effect', () => {
 		const effects = sheet.getSheetTriggeredEffects().getByEvent(TriggerEvent.skillTestExceptAttack);
 		const audacity = effects.get(TriggeredEffectName.audacity);
 		expect(audacity).toBeDefined();
