@@ -5,21 +5,11 @@ import type {SkillName} from '../Skill/SkillName';
 import type {RoleInterface, SelectSkillGroup} from './RoleInterface';
 import {RoleName} from './RoleName';
 import {type SerializedRole, type SerializedRoles} from './SerializedRole';
+import {RoleAbilitiesPerLevelFactory} from './RoleAbilitiesPerLevelFactory';
 
 export class RoleFake implements RoleInterface {
 	chosenSkills: SkillName[] = [];
-	abilitiesPerLevel = {
-		[Level.one]: {},
-		[Level.two]: {},
-		[Level.three]: {},
-		[Level.four]: {},
-		[Level.five]: {},
-		[Level.six]: {},
-		[Level.seven]: {},
-		[Level.eight]: {},
-		[Level.nine]: {},
-		[Level.ten]: {},
-	};
+	abilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
 
 	initialLifePoints = 10;
 	lifePointsPerLevel = 5;

@@ -3,6 +3,7 @@ import {Level} from '../../Sheet/Level';
 import {Proficiency} from '../../Sheet/Proficiency';
 import {SkillName} from '../../Skill/SkillName';
 import {Role} from '../Role';
+import {RoleAbilitiesPerLevelFactory} from '../RoleAbilitiesPerLevelFactory';
 import type {RoleAbility} from '../RoleAbility';
 import type {SelectSkillGroup} from '../RoleInterface';
 import {RoleName} from '../RoleName';
@@ -34,20 +35,12 @@ export class Warrior extends Role<SerializedWarrior> {
 	static readonly mandatorySkills: SkillName[] = [SkillName.fortitude];
 	static readonly proficiencies: Proficiency[] = [Proficiency.martial, Proficiency.shield, Proficiency.heavyArmor];
 	readonly name: RoleName = RoleName.warrior;
-	readonly abilitiesPerLevel: Record<Level, Record<string, RoleAbility>> = {
-		[Level.one]: {
-			specialAttack: new SpecialAttack(),
-		},
-		[Level.two]: {},
-		[Level.three]: {},
-		[Level.four]: {},
-		[Level.five]: {},
-		[Level.six]: {},
-		[Level.seven]: {},
-		[Level.eight]: {},
-		[Level.nine]: {},
-		[Level.ten]: {},
-	};
+	readonly abilitiesPerLevel: Record<Level, Record<string, RoleAbility>> = RoleAbilitiesPerLevelFactory
+		.make({
+			[Level.one]: {
+				specialAttack: new SpecialAttack(),
+			},
+		});
 
 	override initialLifePoints = Warrior.initialLifePoints;
 	override lifePointsPerLevel = Warrior.lifePointsPerLevel;
