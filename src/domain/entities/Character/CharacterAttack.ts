@@ -12,7 +12,7 @@ import {type Modifiers, type ModifiersMaxTotalCalculators, type ModifiersTotalCa
 import {Random, type RandomInterface} from '../Random';
 import {type Attribute, type Attributes} from '../Sheet';
 import {type SheetInterface} from '../Sheet/SheetInterface';
-import {type SheetSkillsObject} from '../Skill/SheetSkill';
+import {type SheetSkill, type SheetSkillsObject} from '../Skill/SheetSkill';
 import {CharacterAttackTriggeredEffect} from './CharacterAttackTriggeredEffect';
 import {CharacterAttackModifiers} from './CharactterAttackModifiers';
 
@@ -55,7 +55,6 @@ export class CharacterAttack {
 	readonly modifiers: CharacterAttackModifiers;
 	readonly attack: Attack;
 	private readonly damageAttributeModifierIndex: number | undefined;
-	private testSkillModifierIndex: number;
 	private readonly maxTotalCalculators: ModifiersMaxTotalCalculators;
 	private readonly totalCalculators: ModifiersTotalCalculators;
 	private readonly attributes: Attributes;
@@ -69,7 +68,6 @@ export class CharacterAttack {
 		this.modifiers.damage.fixed.add(...this.modifiers.damage.fixed.modifiers);
 
 		this.attack = new WeaponAttack(weapon);
-		this.testSkillModifierIndex = this.addTestSkillFixedModifier(skills);
 		this.damageAttributeModifierIndex = this.addDamageAttributeFixedModifier(attributes);
 
 		this.totalCalculators = totalCalculators;
@@ -92,15 +90,16 @@ export class CharacterAttack {
 			throw new Error('INVALID_ATTRIBUTE');
 		}
 
-		const skillWithAttribute = this.skills[skillName].makeWithOtherAttribute(attribute);
-		const skillModifier = new FixedModifier(skillName, skillWithAttribute.getModifiersTotal());
+		this.skills[skillName].changeAttribute(attribute);
+	}
 
-		this.modifiers.test.fixed.remove(this.testSkillModifierIndex);
-		this.testSkillModifierIndex = this.modifiers.test.fixed.add(skillModifier);
+	getDefaultTestSkill(): SheetSkill {
+		return this.skills[this.attack.getTestDefaultSkill()];
 	}
 
 	roll(random: RandomInterface = new Random()): AttackResult {
-		const {damage, test, isCritical, isFumble} = this.attack.roll(random);
+		const skill = this.skills[this.attack.getTestDefaultSkill()];
+		const {damage, test} = this.attack.roll(random, skill);
 		const damageModifiersTotal = this.getDamageModifiersTotal();
 		const testModifiersTotal = this.getTestModifiersTotal();
 		return {
@@ -111,13 +110,13 @@ export class CharacterAttack {
 				total: damage.total + this.getDamageModifiersTotal(),
 			},
 			test: {
-				rollResult: test,
+				rollResult: test.roll,
 				modifiers: this.modifiers.test,
 				modifiersTotal: testModifiersTotal,
 				total: test.total + this.getTestModifiersTotal(),
 			},
-			isCritical,
-			isFumble,
+			isCritical: test.isCritical,
+			isFumble: test.isFumble,
 		};
 	}
 
@@ -171,6 +170,11 @@ export class CharacterAttack {
 		return new ManaCost(sum);
 	}
 
+	getTestSkillAttributeModifier(): number {
+		const skillAttribute = this.getDefaultTestSkill().skill.attribute;
+		return this.attributes[skillAttribute];
+	}
+
 	serialize(sheet: SheetInterface, context: ContextInterface): SerializedCharacterAttack {
 		return {
 			attack: this.attack.serialize(),
@@ -179,12 +183,6 @@ export class CharacterAttack {
 				damage: this.modifiers.damage.serialize(sheet, context),
 			},
 		};
-	}
-
-	private addTestSkillFixedModifier(skills: SheetSkillsObject): number {
-		const testSkill = this.attack.getTestDefaultSkill();
-		const skillValue = skills[testSkill].getModifiersTotal();
-		return this.modifiers.test.fixed.add(new FixedModifier(testSkill, skillValue));
 	}
 
 	private addDamageAttributeFixedModifier(attributes: Attributes): number | undefined {

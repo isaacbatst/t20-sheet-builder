@@ -1,5 +1,6 @@
 import {type RollResult} from '../Dice';
 import {DiceRoll} from '../Dice/DiceRoll';
+import {Modifiers} from '../Modifier';
 import {Random, type RandomInterface} from '../Random';
 import {type Attribute} from '../Sheet/Attributes';
 import {type Skill} from './Skill';
@@ -9,6 +10,11 @@ import {type SkillTotalCalculator} from './SkillTotalCalculator';
 export type SheetSkillsObject = Record<SkillName, SheetSkill>;
 
 export type SkillRollResult = {
+	roll: RollResult;
+	modifiers: Modifiers;
+	modifiersTotal: number;
+	isCritical: boolean;
+	isFumble: boolean;
 	total: number;
 };
 
@@ -28,14 +34,23 @@ export class SheetSkill {
 		return this.calculator.baseCalculator.attributes[this.skill.attribute];
 	}
 
-	makeWithOtherAttribute(attribute: Attribute): SheetSkill {
-		return new SheetSkill(this.skill.makeWithOtherAttribute(attribute), this.calculator);
+	changeAttribute(attribute: Attribute) {
+		this.skill.changeAttribute(attribute);
 	}
 
-	roll(random: RandomInterface = new Random()): SkillRollResult {
-		const testResult = SheetSkill.test.roll(random);
+	roll(random: RandomInterface = new Random(), threat = 20): SkillRollResult {
+		const rollResult = SheetSkill.test.roll(random);
+
 		return {
-			total: testResult.total + this.getModifiersTotal(),
+			isCritical: rollResult.total >= threat,
+			isFumble: rollResult.total <= 1,
+			modifiers: new Modifiers({
+				contextual: this.skill.contextualModifiers,
+				fixed: this.skill.fixedModifiers,
+			}),
+			modifiersTotal: this.getModifiersTotal(),
+			roll: rollResult,
+			total: rollResult.total + this.getModifiersTotal(),
 		};
 	}
 }

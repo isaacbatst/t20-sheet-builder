@@ -66,11 +66,11 @@ export class SpecialAttackEffect extends TriggeredEffect<SpecialAttackActivation
 	}
 
 	override disable({modifiersIndexes, modifiers}: {modifiers: CharacterAttackModifiers; modifiersIndexes: EnabledEffectModifiersIndexes}): void {
-		if (modifiersIndexes.attack) {
+		if (typeof modifiersIndexes.attack === 'number') {
 			modifiers.test.fixed.remove(modifiersIndexes.attack);
 		}
 
-		if (modifiersIndexes.damage) {
+		if (typeof modifiersIndexes.damage === 'number') {
 			modifiers.damage.fixed.remove(modifiersIndexes.damage);
 		}
 	}

@@ -36,7 +36,8 @@ export class Skill {
 		return Math.floor(level / 2);
 	}
 
-	readonly attribute: Attribute;
+	attribute: Attribute;
+	readonly defaultAttribute: Attribute;
 	readonly contextualModifiers: ContextualModifiersList = new ContextualModifiersList();
 	readonly fixedModifiers: FixedModifiersList = new FixedModifiersList();
 	private isTrained: boolean;
@@ -48,17 +49,11 @@ export class Skill {
 	constructor(params: SkillParams) {
 		this.isTrained = Boolean(params.isTrained);
 		this.attribute = params.attribute;
+		this.defaultAttribute = params.attribute;
 	}
 
-	makeWithOtherAttribute(attribute: Attribute) {
-		const skill = new Skill({
-			attribute,
-			isTrained: this.isTrained,
-		});
-
-		skill.contextualModifiers.add(...this.contextualModifiers.modifiers);
-		skill.fixedModifiers.add(...this.fixedModifiers.modifiers);
-		return skill;
+	changeAttribute(attribute: Attribute) {
+		this.attribute = attribute;
 	}
 
 	addContextualModifier(modifier: ContextualModifierInterface) {

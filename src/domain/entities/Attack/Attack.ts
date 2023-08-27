@@ -1,9 +1,10 @@
-import {type TranslatableName} from '../Translator';
-import {DiceRoll, type SerializedDiceRoll} from '../Dice/DiceRoll';
+import {type DiceRoll, type SerializedDiceRoll} from '../Dice/DiceRoll';
 import {type RollResult} from '../Dice/RollResult';
 import {type RandomInterface} from '../Random';
 import {type Attribute} from '../Sheet';
 import {SkillName} from '../Skill';
+import {type SkillRollResult, type SheetSkill} from '../Skill/SheetSkill';
+import {type TranslatableName} from '../Translator';
 import type {Critical, SerializedCritical} from './Critical';
 
 export type SerializedAttack = {
@@ -13,44 +14,29 @@ export type SerializedAttack = {
 };
 
 export class Attack {
-	static test = new DiceRoll(1, 20);
-
 	constructor(
 		readonly damage: DiceRoll,
 		readonly critical: Critical,
 		readonly name: TranslatableName,
 	) {}
 
-	roll(random: RandomInterface): {
+	roll(random: RandomInterface, skill: SheetSkill): {
 		damage: RollResult;
-		test: RollResult;
-		isCritical: boolean;
-		isFumble: boolean;
+		test: SkillRollResult;
 	} {
-		const testResult = this.rollTest(random);
+		const test = skill.roll(random, this.critical.threat);
+		const damage = this.rollDamage(random);
 
-		const isCritical = testResult.total >= this.critical.threat;
-		const isFumble = testResult.total <= 1;
-
-		const damageResult = this.rollDamage(random);
-
-		if (isCritical) {
+		if (test.isCritical) {
 			for (let i = 1; i < this.critical.multiplier; i++) {
-				damageResult.append(this.rollDamage(random));
+				damage.append(this.rollDamage(random));
 			}
 		}
 
 		return {
-			damage: damageResult,
-			test: testResult,
-			isCritical,
-			isFumble,
+			test,
+			damage,
 		};
-	}
-
-	rollTest(random: RandomInterface): RollResult {
-		const damageResult = Attack.test.roll(random);
-		return damageResult;
 	}
 
 	rollDamage(random: RandomInterface): RollResult {

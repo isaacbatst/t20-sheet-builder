@@ -103,28 +103,22 @@ describe('Attack', () => {
 			expect(appliableValue).toBe(2);
 		});
 
-		it('should have default skill modifier on test', () => {
-			const modifier = result.test.modifiers.fixed.get(SkillName.fight);
-			expect(modifier).toBeDefined();
-			expect(modifier?.baseValue).toBe(4);
-		});
-
 		it('should calculate test total', () => {
 			expect(result.test.total).toBe(7);
 		});
 
 		it('should sum test modifiers total', () => {
-			expect(dagger.getTestModifiersTotal()).toBe(6);
+			expect(dagger.getTestModifiersTotal()).toBe(2);
 		});
 
 		it('should sum test modifiers max total', () => {
-			expect(dagger.getTestModifiersMaxTotal()).toBe(6);
+			expect(dagger.getTestModifiersMaxTotal()).toBe(2);
 		});
 	});
 
 	it('should get dagger attack without one weapon style modifier', () => {
-		expect(dagger.getTestModifiersMaxTotal()).toBe(6);
-		expect(dagger.getTestModifiersTotal()).toBe(4);
+		expect(dagger.getTestModifiersMaxTotal()).toBe(2);
+		expect(dagger.getTestModifiersTotal()).toBe(0);
 	});
 
 	it('should unselect fight style and remove modifiers', () => {
@@ -140,17 +134,15 @@ describe('Attack', () => {
 		expect(dagger.getDamageModifiersTotal()).toBe(2);
 	});
 
-	it('should roll dagger with default purpose skill (fight)', () => {
-		const fakeRandom = {get: vi.fn(() => 1)};
-		const result = character.attack(dagger, fakeRandom);
-		const fightModifier = result.test.modifiers.fixed.get(SkillName.fight);
-		expect(fightModifier).toBeDefined();
+	it('should get default test attribute', () => {
+		const modifier = dagger.getTestSkillAttributeModifier();
+		expect(modifier).toBe(2);
 	});
 
 	it('should change test attribute to dexterity', () => {
 		dagger.changeTestAttackAttribute('dexterity');
-		const fightModifier = dagger.modifiers.test.fixed.get(SkillName.fight);
-		expect(fightModifier?.baseValue).toBe(3);
+		const modifier = dagger.getTestSkillAttributeModifier();
+		expect(modifier).toBe(1);
 	});
 
 	it('should throw with invalid skill attribute', () => {
@@ -188,8 +180,8 @@ describe('Attack', () => {
 		attack.enableTriggeredEffect({
 			effectName: TriggeredEffectName.specialAttack,
 		});
-
 		attack.disableTriggeredEffect(TriggeredEffectName.specialAttack);
+
 		const cost = attack.getManaCost();
 		expect(cost).toBeDefined();
 		expect(cost).toEqual({type: 'mana', value: 0});
