@@ -168,6 +168,7 @@ export class Translator {
 		will: 'Vontade',
 		cure: 'Cura',
 		religion: 'Religião',
+		acting: 'Atuação',
 	};
 
 	private static readonly powersTranslation: Record<PowerName, string> = {
