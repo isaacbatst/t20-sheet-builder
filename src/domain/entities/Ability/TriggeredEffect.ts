@@ -1,9 +1,10 @@
 import {type EnabledEffectModifiersIndexes} from '../Character/CharacterAttackTriggeredEffect';
 import {type CharacterAttackModifiers} from '../Character/CharactterAttackModifiers';
 import {type ManaCost} from '../ManaCost';
+import {type Modifiers} from '../Modifier';
 import type {ActivateableAbilityEffectInterface, ActivateableEffectParams, ActivationType} from './ActivateableAbilityEffect';
 import {ActivateableAbilityEffect} from './ActivateableAbilityEffect';
-import {type SpecialAttackActivation, type TriggeredEffectActivation} from './TriggeredEffectActivation';
+import {type TriggeredEffectActivation} from './TriggeredEffectActivation';
 import {type TriggeredEffectName} from './TriggeredEffectName';
 
 export enum TriggerEvent {
@@ -12,6 +13,13 @@ export enum TriggerEvent {
 	skillTest = 'skillTest',
 	skillTestExceptAttack = 'skillTestExceptAttack',
 }
+
+export type TriggeredEffectModifiers = {
+	attack?: Modifiers;
+	damage?: Modifiers;
+	skillExceptAttack?: Modifiers;
+	skill?: Modifiers;
+};
 
 export type TriggeredEffectInterface = ActivateableAbilityEffectInterface & {
 	triggerEvent: TriggerEvent;
@@ -44,12 +52,12 @@ export abstract class TriggeredEffect<A extends TriggeredEffectActivation = Trig
 	}
 
 	abstract enable({modifiersIndexes, modifiers}: {
-		modifiers: CharacterAttackModifiers;
+		modifiers: TriggeredEffectModifiers;
 		modifiersIndexes: EnabledEffectModifiersIndexes;
 	}, activation: A): {manaCost?: ManaCost};
 
 	abstract disable({modifiersIndexes, modifiers}: {
-		modifiers: CharacterAttackModifiers;
+		modifiers: TriggeredEffectModifiers;
 		modifiersIndexes: EnabledEffectModifiersIndexes;
 	}): void;
 }

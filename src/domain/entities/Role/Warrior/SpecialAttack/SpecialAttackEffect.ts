@@ -1,4 +1,4 @@
-import {TriggerEvent, TriggeredEffect} from '../../../Ability/TriggeredEffect';
+import {TriggerEvent, TriggeredEffect, type TriggeredEffectModifiers} from '../../../Ability/TriggeredEffect';
 import {type SpecialAttackActivation} from '../../../Ability/TriggeredEffectActivation';
 import {TriggeredEffectName} from '../../../Ability/TriggeredEffectName';
 import {type EnabledEffectModifiersIndexes} from '../../../Character/CharacterAttackTriggeredEffect';
@@ -65,42 +65,45 @@ export class SpecialAttackEffect extends TriggeredEffect<SpecialAttackActivation
 		}
 	}
 
-	override disable({modifiersIndexes, modifiers}: {modifiers: CharacterAttackModifiers; modifiersIndexes: EnabledEffectModifiersIndexes}): void {
+	override disable({modifiersIndexes, modifiers}: {
+		modifiers: TriggeredEffectModifiers;
+		modifiersIndexes: EnabledEffectModifiersIndexes;
+	}): void {
 		if (typeof modifiersIndexes.attack === 'number') {
-			modifiers.test.fixed.remove(modifiersIndexes.attack);
+			modifiers.attack?.fixed.remove(modifiersIndexes.attack);
 		}
 
 		if (typeof modifiersIndexes.damage === 'number') {
-			modifiers.damage.fixed.remove(modifiersIndexes.damage);
+			modifiers.damage?.fixed.remove(modifiersIndexes.damage);
 		}
 	}
 
 	private enableAttackBonus({modifiersIndexes, modifiers, bonusValue}: {
-		modifiers: CharacterAttackModifiers;
+		modifiers: TriggeredEffectModifiers;
 		modifiersIndexes: EnabledEffectModifiersIndexes;
 		bonusValue: number;
 	}) {
 		const modifier = new FixedModifier(RoleAbilityName.specialAttack, bonusValue);
-		modifiersIndexes.attack = modifiers.test.fixed.add(modifier);
+		modifiersIndexes.attack = modifiers.attack?.fixed.add(modifier);
 	}
 
 	private enableDamageBonus({modifiersIndexes, modifiers, bonusValue}: {
-		modifiers: CharacterAttackModifiers;
+		modifiers: TriggeredEffectModifiers;
 		modifiersIndexes: EnabledEffectModifiersIndexes;
 		bonusValue: number;
 	}) {
 		const modifier = new FixedModifier(RoleAbilityName.specialAttack, bonusValue);
-		modifiersIndexes.damage = modifiers.damage.fixed.add(modifier);
+		modifiersIndexes.damage = modifiers.damage?.fixed.add(modifier);
 	}
 
 	private enableSplittedBonus({modifiersIndexes, modifiers, bonusValue}: {
-		modifiers: CharacterAttackModifiers;
+		modifiers: TriggeredEffectModifiers;
 		modifiersIndexes: EnabledEffectModifiersIndexes;
 		bonusValue: number;
 	}) {
 		const modifier = new FixedModifier(RoleAbilityName.specialAttack, bonusValue / 2);
-		modifiersIndexes.attack =	modifiers.test.fixed.add(modifier);
-		modifiersIndexes.damage =	 modifiers.damage.fixed.add(modifier);
+		modifiersIndexes.attack =	modifiers.attack?.fixed.add(modifier);
+		modifiersIndexes.damage =	 modifiers.damage?.fixed.add(modifier);
 	}
 
 	private getBonusFromManaCost(manaCost: ManaCost) {

@@ -1,3 +1,4 @@
+import {type Attributes} from '../Sheet';
 import {type TriggeredEffectName} from './TriggeredEffectName';
 
 export type SpecialAttackActivation = {
@@ -8,6 +9,7 @@ export type SpecialAttackActivation = {
 
 export type AudacityActivation = {
 	effectName: TriggeredEffectName.audacity;
+	attributes: Attributes;
 };
 
 export type TriggeredEffectActivation = SpecialAttackActivation | AudacityActivation;

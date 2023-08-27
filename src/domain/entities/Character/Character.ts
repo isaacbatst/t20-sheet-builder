@@ -1,4 +1,4 @@
-import {TriggerEvent} from '../Ability';
+import {TriggerEvent, TriggeredEffectName, type TriggeredEffect} from '../Ability';
 import {type Context} from '../Context';
 import {OffensiveWeapon, type EquipmentName} from '../Inventory';
 import {type GeneralPowerMap} from '../Map';
@@ -8,6 +8,9 @@ import {FightStyle} from '../Power/GeneralPower/CombatPower/FightStyle/FightStyl
 import {Random, type RandomInterface} from '../Random';
 import {type Attributes, type CharacterSheetInterface, type SerializedSheetGeneralPower, type SerializedSheetInterface} from '../Sheet';
 import {SheetBuilder} from '../Sheet/SheetBuilder';
+import {type SkillName} from '../Skill';
+import {CharacterSkill} from '../Skill/CharacterSkill';
+import {SheetSkillTriggeredEffect} from '../Skill/SheetSkillTriggeredEffect';
 import type {CharacterAppliedFightStyle} from './CharacterAppliedFightStyle';
 import {CharacterAttack, type SerializedCharacterAttack} from './CharacterAttack';
 import type {CharacterInterface} from './CharacterInterface';
@@ -71,6 +74,29 @@ export class Character implements CharacterInterface {
 	getAttributes(): Attributes {
 		const attributes = this.sheet.getSheetAttributes();
 		return attributes.getValues();
+	}
+
+	getSkills(context: Context): Record<SkillName, CharacterSkill> {
+		// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+		const skills = {} as Record<SkillName, CharacterSkill>;
+		const totalCalculators = this.makeTotalCalculators(context);
+		Object.entries(this.sheet.getSkills()).forEach(([skillName, skill]) => {
+			skills[skillName as SkillName] = new CharacterSkill(
+				skill,
+				this.modifiers,
+				this.makeSkillTriggeredEffects(),
+				totalCalculators,
+			);
+		});
+
+		return skills;
+	}
+
+	makeSkillTriggeredEffects() {
+		return new Map([
+			...this.sheet.getSheetTriggeredEffects().getByEvent(TriggerEvent.skillTest),
+			...this.sheet.getSheetTriggeredEffects().getByEvent(TriggerEvent.skillTestExceptAttack),
+		]);
 	}
 
 	getAttacks(context: Context): Map<EquipmentName, CharacterAttack> {

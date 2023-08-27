@@ -1,4 +1,6 @@
+import {TriggerEvent} from '../Ability';
 import type {BuildStepInterface} from '../BuildStep';
+import {CharacterAttackTriggeredEffect} from '../Character/CharacterAttackTriggeredEffect';
 import {OutOfGameContext, type ContextInterface} from '../Context';
 import {SheetSkill, type SheetSkillsObject} from '../Skill/SheetSkill';
 import {type SkillName} from '../Skill/SkillName';
@@ -166,7 +168,9 @@ export abstract class Sheet implements SheetInterface {
 		const sheetSkills = {} as Record<SkillName, SheetSkill>;
 
 		Object.entries(skills).forEach(([skillName, skill]) => {
-			sheetSkills[skillName as SkillName] = new SheetSkill(skill, this.makeSkillTotalCalculator());
+			sheetSkills[skillName as SkillName] = new SheetSkill(
+				skill, this.makeSkillTotalCalculator(),
+			);
 		});
 
 		return sheetSkills;

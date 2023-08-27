@@ -64,9 +64,6 @@ export class CharacterAttack {
 	constructor(params: CharacterAttackConstructorParams) {
 		const {modifiers, attributes, maxTotalCalculators, skills, totalCalculators, weapon} = params;
 		this.modifiers = new CharacterAttackModifiers(modifiers);
-		this.modifiers.test.fixed.add(...this.modifiers.test.fixed.modifiers);
-		this.modifiers.damage.fixed.add(...this.modifiers.damage.fixed.modifiers);
-
 		this.attack = new WeaponAttack(weapon);
 		this.damageAttributeModifierIndex = this.addDamageAttributeFixedModifier(attributes);
 
@@ -77,7 +74,7 @@ export class CharacterAttack {
 		this.triggeredEffects = new Map();
 
 		params.triggeredEffects.forEach((effect, effectName) => {
-			this.triggeredEffects.set(effectName, new CharacterAttackTriggeredEffect(effect));
+			this.triggeredEffects.set(effectName, new CharacterAttackTriggeredEffect(effect, this.modifiers));
 		});
 	}
 
@@ -126,7 +123,7 @@ export class CharacterAttack {
 			throw new Error('INVALID_TRIGGERED_EFFECT');
 		}
 
-		effect.enable(this.modifiers, activation);
+		effect.enable(activation);
 	}
 
 	disableTriggeredEffect(effectName: TriggeredEffectName) {
@@ -135,7 +132,7 @@ export class CharacterAttack {
 			throw new Error('INVALID_TRIGGERED_EFFECT');
 		}
 
-		effect.disable(this.modifiers);
+		effect.disable();
 	}
 
 	getTestModifiersMaxTotal() {

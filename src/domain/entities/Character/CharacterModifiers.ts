@@ -7,6 +7,8 @@ export type SerializedCharacterModifiers = {
 	damage: SerializedModifiers;
 	defense: SerializedModifiers;
 	armorPenalty: SerializedModifiers;
+	skillExceptAttack: SerializedModifiers;
+	skill: SerializedModifiers;
 };
 
 export class CharacterModifiers {
@@ -14,6 +16,8 @@ export class CharacterModifiers {
 	readonly damage = new Modifiers();
 	readonly defense = new Modifiers();
 	readonly armorPenalty = new Modifiers();
+	readonly skillExceptAttack = new Modifiers();
+	readonly skill = new Modifiers();
 
 	serialize(sheet: SheetInterface, context: ContextInterface): SerializedCharacterModifiers {
 		return {
@@ -21,6 +25,8 @@ export class CharacterModifiers {
 			damage: this.damage.serialize(sheet, context),
 			defense: this.defense.serialize(sheet, context),
 			armorPenalty: this.armorPenalty.serialize(sheet, context),
+			skillExceptAttack: this.skillExceptAttack.serialize(sheet, context),
+			skill: this.skill.serialize(sheet, context),
 		};
 	}
 }

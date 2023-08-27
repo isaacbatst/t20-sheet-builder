@@ -1,4 +1,6 @@
 import {TriggerEvent, TriggeredEffectName} from '../../Ability';
+import {Character} from '../../Character';
+import {OutOfGameContext, type Context} from '../../Context';
 import {BuildingSheet, Proficiency} from '../../Sheet';
 import {Transaction} from '../../Sheet/Transaction';
 import {SkillName} from '../../Skill';
@@ -10,6 +12,8 @@ describe('buccaneer', () => {
 	let sheet: BuildingSheet;
 	let transaction: Transaction;
 	let buccaneer: Buccaneer;
+	let character: Character;
+	let context: Context;
 
 	beforeEach(() => {
 		sheet = new BuildingSheet();
@@ -22,6 +26,8 @@ describe('buccaneer', () => {
 			SkillName.gambling,
 		]);
 		buccaneer.addToSheet(transaction);
+		character = new Character(sheet);
+		context = new OutOfGameContext();
 	});
 
 	it('should have reflexes trained', () => {
@@ -57,14 +63,48 @@ describe('buccaneer', () => {
 		expect(perLevelModifier?.includeFirstLevel).toBe(true);
 	});
 
-	it('should dispatch audacity ability add', () => {
-		const abilities = sheet.getSheetAbilities();
-		expect(abilities.getRoleAbilities().get(RoleAbilityName.audacity)).toBeDefined();
-	});
+	describe('audacity', () => {
+		it('should dispatch audacity ability add', () => {
+			const abilities = sheet.getSheetAbilities();
+			expect(abilities.getRoleAbilities().get(RoleAbilityName.audacity)).toBeDefined();
+		});
 
-	it('should have audacity as testExceptAttack triggered effect', () => {
-		const effects = sheet.getSheetTriggeredEffects().getByEvent(TriggerEvent.skillTestExceptAttack);
-		const audacity = effects.get(TriggeredEffectName.audacity);
-		expect(audacity).toBeDefined();
+		it('should have audacity as testExceptAttack triggered effect', () => {
+			const effects = sheet.getSheetTriggeredEffects().getByEvent(TriggerEvent.skillTestExceptAttack);
+			const audacity = effects.get(TriggeredEffectName.audacity);
+			expect(audacity).toBeDefined();
+		});
+
+		it('should enable audacity triggered effect', () => {
+			const skill = character.getSkills(context)[SkillName.gambling];
+			skill.enableTriggeredEffect({
+				attributes: sheet.getSheetAttributes().getValues(),
+				effectName: TriggeredEffectName.audacity,
+			});
+			const triggeredEffect = skill.triggeredEffects.get(TriggeredEffectName.audacity);
+			expect(triggeredEffect?.getIsEnabled()).toBe(true);
+		});
+
+		it('should add skill modifier when audacity is enabled', () => {
+			const skill = character.getSkills(context)[SkillName.gambling];
+			skill.enableTriggeredEffect({
+				attributes: sheet.getSheetAttributes().getValues(),
+				effectName: TriggeredEffectName.audacity,
+			});
+			expect(skill.getFixedModifier('skillExceptAttack', RoleAbilityName.audacity)).toBeDefined();
+		});
+
+		it('should roll skill test with audacity', () => {
+			character.sheet.getSheetAttributes().increaseAttribute('charisma', 2);
+			const skill = character.getSkills(context)[SkillName.stealth];
+			skill.enableTriggeredEffect({
+				attributes: sheet.getSheetAttributes().getValues(),
+				effectName: TriggeredEffectName.audacity,
+			});
+			const roll = skill.roll({get: () => 10});
+			expect(roll.modifiers.fixed.get(RoleAbilityName.audacity)).toBeDefined();
+			expect(roll.modifiersTotal).toBe(2);
+			expect(roll.total).toBe(12);
+		});
 	});
 });

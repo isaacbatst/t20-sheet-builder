@@ -1,26 +1,19 @@
-import {type TriggeredEffectModifiers, type TriggeredEffect} from '../Ability';
+import {type TriggeredEffect} from '../Ability';
 import {type TriggeredEffectActivation} from '../Ability/TriggeredEffectActivation';
+import {type EnabledEffectModifiersIndexes} from '../Character/CharacterAttackTriggeredEffect';
 import {type ManaCost} from '../ManaCost';
-import {type CharacterAttackModifiers} from './CharactterAttackModifiers';
+import {type Modifiers, type Modifier} from '../Modifier';
 
-export type EnabledEffectModifiersIndexes = {
-	attack?: number;
-	damage?: number;
-};
-
-export class CharacterAttackTriggeredEffect {
+export class SheetSkillTriggeredEffect {
 	readonly modifiersIndexes: EnabledEffectModifiersIndexes = {};
-	readonly modifiers: TriggeredEffectModifiers;
 
 	private isEnabled = false;
 	private manaCost?: ManaCost;
 
-	constructor(readonly effect: TriggeredEffect, modifiers: CharacterAttackModifiers) {
-		this.modifiers = {
-			attack: modifiers.test,
-			damage: modifiers.damage,
-		};
-	}
+	constructor(readonly effect: TriggeredEffect, readonly modifiers: {
+		skill: Modifiers;
+		skillExceptAttack: Modifiers;
+	}) {}
 
 	enable(activation: TriggeredEffectActivation): void {
 		const {manaCost} = this.effect.enable({
@@ -36,8 +29,10 @@ export class CharacterAttackTriggeredEffect {
 
 	disable(): void {
 		this.effect.disable({
+			modifiers: {
+
+			},
 			modifiersIndexes: this.modifiersIndexes,
-			modifiers: this.modifiers,
 		});
 		this.isEnabled = false;
 	}
