@@ -169,6 +169,10 @@ export class Translator {
 		cure: 'Cura',
 		religion: 'Religião',
 		acting: 'Atuação',
+		stealth: 'Furtividade',
+		gambling: 'Jogatina',
+		piloting: 'Pilotagem',
+		thievery: 'Ladinagem',
 	};
 
 	private static readonly powersTranslation: Record<PowerName, string> = {
