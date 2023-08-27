@@ -7,6 +7,21 @@ export class InitialSkillsGenerator {
 			acrobatics: new Skill({
 				attribute: 'dexterity',
 			}),
+			acting: new Skill({
+				attribute: 'charisma',
+			}),
+			stealth: new Skill({
+				attribute: 'dexterity',
+			}),
+			thievery: new Skill({
+				attribute: 'dexterity',
+			}),
+			gambling: new Skill({
+				attribute: 'charisma',
+			}),
+			piloting: new Skill({
+				attribute: 'dexterity',
+			}),
 			animalHandling: new Skill({
 				attribute: 'charisma',
 			}),
