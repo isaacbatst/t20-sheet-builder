@@ -5,10 +5,17 @@ import {type RoleAbilitiesPerLevel} from '../RoleAbilitiesPerLevel';
 import {RoleAbilitiesPerLevelFactory} from '../RoleAbilitiesPerLevelFactory';
 import {type SelectSkillGroup} from '../RoleInterface';
 import {RoleName} from '../RoleName';
-import {type SerializedRoles} from '../SerializedRole';
+import {type SerializedBuccaneer, type SerializedRoles} from '../SerializedRole';
 import {Audacity} from './Audacity/Audacity';
 
-export class Buccaneer extends Role {
+export class Buccaneer extends Role<SerializedBuccaneer> {
+	static readonly roleName = RoleName.buccaneer;
+	static initialLifePoints = 12;
+	static lifePointsPerLevel = 4;
+	static manaPerLevel = 3;
+	static readonly mandatorySkills: SkillName[] = [SkillName.reflexes];
+	static readonly proficiencies: Proficiency[] = [Proficiency.martial];
+	static startsWithArmor = true;
 	static readonly selectSkillGroups: SelectSkillGroup[] = [
 		{amount: 1, skills: [
 			SkillName.aim,
@@ -32,12 +39,12 @@ export class Buccaneer extends Role {
 		]},
 	];
 
-	override initialLifePoints = 16;
-	override lifePointsPerLevel = 4;
-	override manaPerLevel = 3;
-	override mandatorySkills: SkillName[] = [SkillName.reflexes];
-	override proficiencies: Proficiency[] = [Proficiency.martial];
-	override name: RoleName = RoleName.buccaneer;
+	override initialLifePoints = Buccaneer.initialLifePoints;
+	override lifePointsPerLevel = Buccaneer.lifePointsPerLevel;
+	override manaPerLevel = Buccaneer.manaPerLevel;
+	override mandatorySkills = Buccaneer.mandatorySkills;
+	override proficiencies = Buccaneer.proficiencies;
+	override name = Buccaneer.roleName;
 	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({
 		[Level.one]: {
 			audacity: new Audacity(),
@@ -48,7 +55,9 @@ export class Buccaneer extends Role {
 		super(chosenSkills, Buccaneer.selectSkillGroups);
 	}
 
-	protected override serializeSpecific(): SerializedRoles {
-		throw new Error('Method not implemented.');
+	protected override serializeSpecific(): SerializedBuccaneer {
+		return {
+			name: Buccaneer.roleName,
+		};
 	}
 }

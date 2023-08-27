@@ -5,10 +5,11 @@ import {RoleAbilitiesPerLevelFactory} from '../RoleAbilitiesPerLevelFactory';
 import {type RoleAbility} from '../RoleAbility';
 import {type SelectSkillGroup} from '../RoleInterface';
 import {RoleName} from '../RoleName';
-import {type SerializedRoles} from '../SerializedRole';
+import {type SerializedBarbarian} from '../SerializedRole';
 import {Rage} from './Rage/Rage';
 
-export class Barbarian extends Role {
+export class Barbarian extends Role<SerializedBarbarian> {
+	static readonly roleName = RoleName.barbarian;
 	static readonly selectSkillGroups: SelectSkillGroup[] = [
 		{amount: 4, skills: [
 			SkillName.animalHandling,
@@ -24,12 +25,19 @@ export class Barbarian extends Role {
 		]},
 	];
 
-	override initialLifePoints = 24;
-	override lifePointsPerLevel = 6;
-	override manaPerLevel = 3;
-	override mandatorySkills: SkillName[] = [SkillName.fight, SkillName.fortitude];
-	override proficiencies: Proficiency[] = [Proficiency.martial, Proficiency.shield];
-	override name: RoleName = RoleName.barbarian;
+	static initialLifePoints = 24;
+	static lifePointsPerLevel = 6;
+	static manaPerLevel = 3;
+	static mandatorySkills: SkillName[] = [SkillName.fight, SkillName.fortitude];
+	static proficiencies: Proficiency[] = [Proficiency.martial, Proficiency.shield];
+	static startsWithArmor = true;
+
+	override initialLifePoints = Barbarian.initialLifePoints;
+	override lifePointsPerLevel = Barbarian.lifePointsPerLevel;
+	override manaPerLevel = Barbarian.manaPerLevel;
+	override mandatorySkills = Barbarian.mandatorySkills;
+	override proficiencies = Barbarian.proficiencies;
+	override readonly name = Barbarian.roleName;
 	readonly abilitiesPerLevel: Record<Level, Record<string, RoleAbility>> = RoleAbilitiesPerLevelFactory.make({
 		[Level.one]: {
 			rage: new Rage(),
@@ -40,7 +48,9 @@ export class Barbarian extends Role {
 		super(chosenSkills, Barbarian.selectSkillGroups);
 	}
 
-	protected override serializeSpecific(): SerializedRoles {
-		throw new Error('Method not implemented.');
+	protected override serializeSpecific(): SerializedBarbarian {
+		return {
+			name: Barbarian.roleName,
+		};
 	}
 }

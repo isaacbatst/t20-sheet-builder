@@ -7,7 +7,15 @@ export type SerializedWarrior = {
 	name: RoleName.warrior;
 };
 
-export type SerializedRoles = SerializedWarrior | SerializedArcanist;
+export type SerializedBarbarian = {
+	name: RoleName.barbarian;
+};
+
+export type SerializedBuccaneer = {
+	name: RoleName.buccaneer;
+};
+
+export type SerializedRoles = SerializedWarrior | SerializedArcanist | SerializedBarbarian | SerializedBuccaneer;
 
 export type SerializedRole<R extends SerializedRoles = SerializedRoles> = SerializedRoleBasic & R;
 
