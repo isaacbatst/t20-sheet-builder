@@ -6,11 +6,11 @@ import {type ContextualModifiersList, Modifiers, type ModifiersTotalCalculators}
 import {Random, type RandomInterface} from '../Random';
 import {type Attribute} from '../Sheet/Attributes';
 import {type SheetSkill, type SkillRollResult} from './SheetSkill';
-import {SheetSkillTriggeredEffect} from './SheetSkillTriggeredEffect';
+import {CharacterSkillTriggeredEffect} from './CharacterSkillTriggeredEffect';
 
 export class CharacterSkill {
 	static test = new DiceRoll(1, 20);
-	readonly triggeredEffects = new Map<TriggeredEffectName, SheetSkillTriggeredEffect>();
+	readonly triggeredEffects = new Map<TriggeredEffectName, CharacterSkillTriggeredEffect>();
 
 	constructor(
 		readonly sheetSkill: SheetSkill,
@@ -24,7 +24,7 @@ export class CharacterSkill {
 		modifiers.skill.fixed.append(this.sheetSkill.skill.fixedModifiers);
 		modifiers.skill.contextual.append(this.sheetSkill.skill.contextualModifiers);
 		triggeredEffects.forEach((triggeredEffect, name) => {
-			this.triggeredEffects.set(name, new SheetSkillTriggeredEffect(triggeredEffect, modifiers));
+			this.triggeredEffects.set(name, new CharacterSkillTriggeredEffect(triggeredEffect, modifiers));
 		});
 	}
 

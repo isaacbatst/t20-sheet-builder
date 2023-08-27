@@ -106,5 +106,17 @@ describe('buccaneer', () => {
 			expect(roll.modifiersTotal).toBe(2);
 			expect(roll.total).toBe(12);
 		});
+
+		it('should disable audacity triggered effect', () => {
+			const skill = character.getSkills(context)[SkillName.gambling];
+			skill.enableTriggeredEffect({
+				attributes: sheet.getSheetAttributes().getValues(),
+				effectName: TriggeredEffectName.audacity,
+			});
+			skill.disableTriggeredEffect(TriggeredEffectName.audacity);
+			const triggeredEffect = skill.triggeredEffects.get(TriggeredEffectName.audacity);
+			expect(triggeredEffect?.getIsEnabled()).toBe(false);
+			expect(skill.getFixedModifier('skillExceptAttack', RoleAbilityName.audacity)).toBeUndefined();
+		});
 	});
 });

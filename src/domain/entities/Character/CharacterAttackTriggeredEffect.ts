@@ -6,6 +6,7 @@ import {type CharacterAttackModifiers} from './CharactterAttackModifiers';
 export type EnabledEffectModifiersIndexes = {
 	attack?: number;
 	damage?: number;
+	skillExceptAttack?: number;
 };
 
 export class CharacterAttackTriggeredEffect {

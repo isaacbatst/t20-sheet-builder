@@ -7,7 +7,7 @@ import {DiceRoll} from '../Dice/DiceRoll';
 import {Modifiers} from '../Modifier';
 import {Random, type RandomInterface} from '../Random';
 import {type Attribute} from '../Sheet/Attributes';
-import {SheetSkillTriggeredEffect} from './SheetSkillTriggeredEffect';
+import {CharacterSkillTriggeredEffect} from './CharacterSkillTriggeredEffect';
 import {type Skill} from './Skill';
 import {type SkillName} from './SkillName';
 import {type SkillTotalCalculator} from './SkillTotalCalculator';

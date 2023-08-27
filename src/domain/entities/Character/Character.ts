@@ -10,7 +10,7 @@ import {type Attributes, type CharacterSheetInterface, type SerializedSheetGener
 import {SheetBuilder} from '../Sheet/SheetBuilder';
 import {type SkillName} from '../Skill';
 import {CharacterSkill} from '../Skill/CharacterSkill';
-import {SheetSkillTriggeredEffect} from '../Skill/SheetSkillTriggeredEffect';
+import {CharacterSkillTriggeredEffect} from '../Skill/CharacterSkillTriggeredEffect';
 import type {CharacterAppliedFightStyle} from './CharacterAppliedFightStyle';
 import {CharacterAttack, type SerializedCharacterAttack} from './CharacterAttack';
 import type {CharacterInterface} from './CharacterInterface';

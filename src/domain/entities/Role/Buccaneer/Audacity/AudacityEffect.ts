@@ -29,14 +29,19 @@ export class AudacityEffect extends TriggeredEffect<AudacityActivation> {
 		modifiers: TriggeredEffectModifiers;
 		modifiersIndexes: EnabledEffectModifiersIndexes;
 	}, activation: AudacityActivation): {manaCost?: ManaCost | undefined} {
-		modifiers.skillExceptAttack?.fixed.add(new FixedModifier(this.source, activation.attributes.charisma));
+		modifiersIndexes.skillExceptAttack = modifiers.skillExceptAttack?.fixed.add(new FixedModifier(this.source, activation.attributes.charisma));
 
 		return {
 			manaCost: AudacityEffect.cost,
 		};
 	}
 
-	override disable({modifiersIndexes, modifiers}: {modifiers: TriggeredEffectModifiers; modifiersIndexes: EnabledEffectModifiersIndexes}): void {
-
+	override disable({modifiersIndexes, modifiers}: {
+		modifiers: TriggeredEffectModifiers;
+		modifiersIndexes: EnabledEffectModifiersIndexes;
+	}): void {
+		if (typeof modifiersIndexes.skillExceptAttack === 'number') {
+			modifiers.skillExceptAttack?.fixed.remove(modifiersIndexes.skillExceptAttack);
+		}
 	}
 }

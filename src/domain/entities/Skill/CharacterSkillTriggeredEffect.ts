@@ -4,7 +4,7 @@ import {type EnabledEffectModifiersIndexes} from '../Character/CharacterAttackTr
 import {type ManaCost} from '../ManaCost';
 import {type Modifiers, type Modifier} from '../Modifier';
 
-export class SheetSkillTriggeredEffect {
+export class CharacterSkillTriggeredEffect {
 	readonly modifiersIndexes: EnabledEffectModifiersIndexes = {};
 
 	private isEnabled = false;
@@ -29,9 +29,7 @@ export class SheetSkillTriggeredEffect {
 
 	disable(): void {
 		this.effect.disable({
-			modifiers: {
-
-			},
+			modifiers: this.modifiers,
 			modifiersIndexes: this.modifiersIndexes,
 		});
 		this.isEnabled = false;
