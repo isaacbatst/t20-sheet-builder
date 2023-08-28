@@ -50,22 +50,11 @@ export class SheetSkills implements SheetSkillsInterface {
 		const calculator = SkillTotalCalculatorFactory.make(attributes, level, context);
 		const entries = Object.entries(this.skills);
 		const serialized = entries.reduce<SerializedSheetSkills>((acc, [skillName, skill]) => {
-			acc.skills[skillName as SkillName] = this.serializeSkill(skill, calculator, sheet, context);
+			acc.skills[skillName as SkillName] = skill.serialize(calculator, sheet, context);
 			return acc;
 			// eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
 		}, {skills: {}, intelligenceSkills: []} as unknown as SerializedSheetSkills);
 		serialized.intelligenceSkills = this.intelligenceSkills;
 		return serialized;
-	}
-
-	private serializeSkill(skill: Skill, totalCalculator: SkillTotalCalculator, sheet: SheetInterface, context: ContextInterface): SerializedSheetSkill {
-		return {
-			attribute: skill.attribute,
-			contextualModifiers: skill.contextualModifiers.serialize(sheet, context),
-			fixedModifiers: skill.fixedModifiers.serialize(sheet, context),
-			isTrained: skill.getIsTrained(),
-			total: skill.getTotal(totalCalculator),
-			trainingPoints: skill.getTrainingPoints(),
-		};
 	}
 }

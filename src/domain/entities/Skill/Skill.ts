@@ -1,9 +1,12 @@
 import {SheetBuilderError} from '../../errors/SheetBuilderError';
+import {type ContextInterface} from '../Context';
 import {type ContextualModifierInterface} from '../Modifier/ContextualModifier/ContextualModifierInterface';
 import {ContextualModifiersList} from '../Modifier/ContextualModifier/ContextualModifierList';
 import {type FixedModifierInterface} from '../Modifier/FixedModifier/FixedModifier';
 import {FixedModifiersList} from '../Modifier/FixedModifier/FixedModifiersList';
+import {type SerializedSheetSkill} from '../Sheet';
 import type {Attribute} from '../Sheet/Attributes';
+import {type SheetInterface} from '../Sheet/SheetInterface';
 import type {SkillTotalCalculator} from './SkillTotalCalculator';
 
 export type SkillParams = {
@@ -84,5 +87,17 @@ export class Skill {
 
 	getTrainingPoints(level = 1) {
 		return Skill.calculateTrainingPoints(level, this.isTrained);
+	}
+
+	serialize(totalCalculator: SkillTotalCalculator, sheet: SheetInterface, context: ContextInterface): SerializedSheetSkill {
+		return {
+			attribute: this.attribute,
+			contextualModifiers: this.contextualModifiers.serialize(sheet, context),
+			fixedModifiers: this.fixedModifiers.serialize(sheet, context),
+			isTrained: this.getIsTrained(),
+			total: this.getTotal(totalCalculator),
+			trainingPoints: this.getTrainingPoints(),
+			defaultAttribute: this.defaultAttribute,
+		};
 	}
 }

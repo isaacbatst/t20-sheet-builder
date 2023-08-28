@@ -47,6 +47,7 @@ export type SerializedSheetPerLevelModifiersList = SerializedSheetModifiersList 
 };
 
 export type SerializedSheetSkill = {
+	defaultAttribute: Attribute;
 	attribute: Attribute;
 	isTrained: boolean;
 	total: number;

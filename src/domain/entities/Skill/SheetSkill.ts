@@ -1,13 +1,9 @@
 import {type TranslatableName} from '..';
-import {type TriggeredEffect, type TriggeredEffectName} from '../Ability';
-import {type TriggeredEffectActivation} from '../Ability/TriggeredEffectActivation';
-import {CharacterModifiers} from '../Character/CharacterModifiers';
 import {type RollResult} from '../Dice';
 import {DiceRoll} from '../Dice/DiceRoll';
 import {Modifiers} from '../Modifier';
 import {Random, type RandomInterface} from '../Random';
 import {type Attribute} from '../Sheet/Attributes';
-import {CharacterSkillTriggeredEffect} from './CharacterSkillTriggeredEffect';
 import {type Skill} from './Skill';
 import {type SkillName} from './SkillName';
 import {type SkillTotalCalculator} from './SkillTotalCalculator';
