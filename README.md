@@ -66,13 +66,13 @@ export type CharacterAttack = {
   // you can get the modifiers applied to the attack/damage
   modifiers: CharacterAttackModifiers
   // but also the final calculated values for them
-  // theis values are calculated based on the context
-  // max total is the maximum value if all conditions are met
-  // total is the value for current character context
   getTestModifiersMaxTotal(): number
 	getTestModifiersTotal(): number
 	getDamageModifiersMaxTotal(): number
 	getDamageModifiersTotal(): number
+  // these values are calculated based on the context
+  // max total is the maximum value if all conditions are met
+  // total is the value for current character context
 }
 ```
 
