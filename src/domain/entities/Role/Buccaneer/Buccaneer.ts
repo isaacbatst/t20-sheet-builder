@@ -10,7 +10,7 @@ import {Audacity} from './Audacity/Audacity';
 
 export class Buccaneer extends Role<SerializedBuccaneer> {
 	static readonly roleName = RoleName.buccaneer;
-	static initialLifePoints = 12;
+	static initialLifePoints = 16;
 	static lifePointsPerLevel = 4;
 	static manaPerLevel = 3;
 	static readonly mandatorySkills: SkillName[] = [SkillName.reflexes];
