@@ -1,4 +1,4 @@
-import {TriggerEvent, TriggeredEffectName, type TriggeredEffect} from '../Ability';
+import {TriggerEvent} from '../Ability';
 import {type Context} from '../Context';
 import {OffensiveWeapon, type EquipmentName} from '../Inventory';
 import {type GeneralPowerMap} from '../Map';
@@ -10,7 +10,6 @@ import {type Attributes, type CharacterSheetInterface, type SerializedSheetGener
 import {SheetBuilder} from '../Sheet/SheetBuilder';
 import {type SkillName} from '../Skill';
 import {CharacterSkill} from '../Skill/CharacterSkill';
-import {CharacterSkillTriggeredEffect} from '../Skill/CharacterSkillTriggeredEffect';
 import type {CharacterAppliedFightStyle} from './CharacterAppliedFightStyle';
 import {CharacterAttack, type SerializedCharacterAttack} from './CharacterAttack';
 import type {CharacterInterface} from './CharacterInterface';
