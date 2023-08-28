@@ -1,12 +1,25 @@
-import {type TriggeredEffectModifiers, type TriggeredEffect} from '../Ability';
+import {type TriggeredEffectModifiers, type TriggeredEffect, type SerializedTriggeredEffect} from '../Ability';
 import {type TriggeredEffectActivation} from '../Ability/TriggeredEffectActivation';
+import {type Context} from '../Context';
 import {type ManaCost} from '../ManaCost';
+import {type SerializedModifiers} from '../Modifier';
+import {type SheetInterface} from '../Sheet/SheetInterface';
 import {type CharacterAttackModifiers} from './CharactterAttackModifiers';
 
 export type EnabledEffectModifiersIndexes = {
 	attack?: number;
 	damage?: number;
 	skillExceptAttack?: number;
+};
+
+export type SerializedCharacterAttackTriggeredEffect = {
+	effect: SerializedTriggeredEffect;
+	modifiers: {
+		attack?: SerializedModifiers;
+		damage?: SerializedModifiers;
+		skillExceptAttack?: SerializedModifiers;
+		skill?: SerializedModifiers;
+	};
 };
 
 export class CharacterAttackTriggeredEffect {
@@ -49,5 +62,17 @@ export class CharacterAttackTriggeredEffect {
 
 	getManaCost() {
 		return this.manaCost;
+	}
+
+	serialize(sheet: SheetInterface, context: Context): SerializedCharacterAttackTriggeredEffect {
+		return {
+			effect: this.effect.serialize(),
+			modifiers: {
+				attack: this.modifiers.attack?.serialize(sheet, context),
+				damage: this.modifiers.damage?.serialize(sheet, context),
+				skillExceptAttack: this.modifiers.skillExceptAttack?.serialize(sheet, context),
+				skill: this.modifiers.skill?.serialize(sheet, context),
+			},
+		};
 	}
 }

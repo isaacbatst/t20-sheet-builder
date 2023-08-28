@@ -2,18 +2,19 @@ import {type TriggeredEffectName} from '../Ability';
 import {type TriggeredEffectActivation} from '../Ability/TriggeredEffectActivation';
 import {WeaponAttack} from '../Attack';
 import type {Attack, SerializedAttack} from '../Attack/Attack';
-import {type ContextInterface} from '../Context';
+import {type Context, type ContextInterface} from '../Context';
 import {type RollResult} from '../Dice/RollResult';
 import {type OffensiveWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/OffensiveWeapon';
-import {ManaCost} from '../ManaCost';
+import {ManaCost, type SerializedManaCost} from '../ManaCost';
 import {type TriggeredEffectMap} from '../Map';
 import {FixedModifier} from '../Modifier';
 import {type Modifiers, type ModifiersMaxTotalCalculators, type ModifiersTotalCalculators, type SerializedModifiers} from '../Modifier/Modifiers';
 import {Random, type RandomInterface} from '../Random';
 import {type Attribute, type Attributes} from '../Sheet';
 import {type SheetInterface} from '../Sheet/SheetInterface';
+import {type SkillName} from '../Skill';
 import {type SheetSkill, type SheetSkillsObject} from '../Skill/SheetSkill';
-import {CharacterAttackTriggeredEffect} from './CharacterAttackTriggeredEffect';
+import {CharacterAttackTriggeredEffect, type SerializedCharacterAttackTriggeredEffect} from './CharacterAttackTriggeredEffect';
 import {CharacterAttackModifiers} from './CharactterAttackModifiers';
 
 export type AttackResult = {
@@ -39,6 +40,10 @@ export type SerializedCharacterAttack = {
 		test: SerializedModifiers;
 		damage: SerializedModifiers;
 	};
+	defaultSkill: SkillName;
+	testSkillAttributeModifier: number;
+	manaCost: SerializedManaCost;
+	triggeredEffects: SerializedCharacterAttackTriggeredEffect[];
 };
 
 type CharacterAttackConstructorParams = {
@@ -172,9 +177,13 @@ export class CharacterAttack {
 		return this.attributes[skillAttribute];
 	}
 
-	serialize(sheet: SheetInterface, context: ContextInterface): SerializedCharacterAttack {
+	serialize(sheet: SheetInterface, context: Context): SerializedCharacterAttack {
 		return {
 			attack: this.attack.serialize(),
+			defaultSkill: this.attack.getTestDefaultSkill(),
+			testSkillAttributeModifier: this.getTestSkillAttributeModifier(),
+			manaCost: this.getManaCost().serialize(),
+			triggeredEffects: Array.from(this.triggeredEffects.values()).map(effect => effect.serialize(sheet, context)),
 			modifiers: {
 				test: this.modifiers.test.serialize(sheet, context),
 				damage: this.modifiers.damage.serialize(sheet, context),
