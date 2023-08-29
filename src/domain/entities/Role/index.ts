@@ -1,5 +1,7 @@
 export * from './Arcanist';
 export * from './Warrior';
+export * from './Barbarian';
+export * from './Buccaneer';
 export * from './RoleInterface';
 export * from './RoleName';
 export * from './RoleAbilityName';
