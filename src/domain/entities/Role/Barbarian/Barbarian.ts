@@ -30,7 +30,6 @@ export class Barbarian extends Role<SerializedBarbarian> {
 	static manaPerLevel = 3;
 	static mandatorySkills: SkillName[] = [SkillName.fight, SkillName.fortitude];
 	static proficiencies: Proficiency[] = [Proficiency.martial, Proficiency.shield];
-	static startsWithArmor = true;
 
 	override initialLifePoints = Barbarian.initialLifePoints;
 	override lifePointsPerLevel = Barbarian.lifePointsPerLevel;

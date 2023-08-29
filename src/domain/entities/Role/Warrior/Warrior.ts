@@ -28,10 +28,6 @@ export class Warrior extends Role<SerializedWarrior> {
 		return 3;
 	}
 
-	static get startsWithArmor(): boolean {
-		return true;
-	}
-
 	static readonly mandatorySkills: SkillName[] = [SkillName.fortitude];
 	static readonly proficiencies: Proficiency[] = [Proficiency.martial, Proficiency.shield, Proficiency.heavyArmor];
 	readonly name: RoleName = RoleName.warrior;

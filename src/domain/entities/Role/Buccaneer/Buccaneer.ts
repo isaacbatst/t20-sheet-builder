@@ -15,7 +15,6 @@ export class Buccaneer extends Role<SerializedBuccaneer> {
 	static manaPerLevel = 3;
 	static readonly mandatorySkills: SkillName[] = [SkillName.reflexes];
 	static readonly proficiencies: Proficiency[] = [Proficiency.martial];
-	static startsWithArmor = true;
 	static readonly selectSkillGroups: SelectSkillGroup[] = [
 		{amount: 1, skills: [
 			SkillName.aim,
