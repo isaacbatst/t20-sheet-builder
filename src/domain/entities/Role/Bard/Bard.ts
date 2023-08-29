@@ -8,6 +8,13 @@ import {RoleName} from '../RoleName';
 import {type SerializedBard} from '../SerializedRole';
 
 export class Bard extends Role<SerializedBard> {
+	static readonly roleName = RoleName.bard;
+	static initialLifePoints = 12;
+	static lifePointsPerLevel = 3;
+	static manaPerLevel = 4;
+	static mandatorySkills: SkillName[] = [SkillName.acting, SkillName.reflexes];
+	static proficiencies: Proficiency[] = [Proficiency.martial];
+
 	static selectSkillGroups: SelectSkillGroup[] = [
 		{
 			amount: 6,
@@ -33,12 +40,12 @@ export class Bard extends Role<SerializedBard> {
 		},
 	];
 
-	override initialLifePoints = 12;
-	override lifePointsPerLevel = 3;
-	override manaPerLevel = 4;
-	override mandatorySkills: SkillName[] = [SkillName.acting, SkillName.reflexes];
-	override proficiencies: Proficiency[] = [Proficiency.martial];
-	override readonly name = RoleName.bard;
+	override initialLifePoints = Bard.initialLifePoints;
+	override lifePointsPerLevel = Bard.lifePointsPerLevel;
+	override manaPerLevel = Bard.manaPerLevel;
+	override mandatorySkills = Bard.mandatorySkills;
+	override proficiencies = Bard.proficiencies;
+	override readonly name = Bard.roleName;
 	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
 
 	constructor(chosenSkills: SkillName[]) {

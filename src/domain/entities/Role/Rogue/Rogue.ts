@@ -32,12 +32,19 @@ export class Rogue extends Role<SerializedRogue> {
 		},
 	];
 
-	override initialLifePoints = 12;
-	override lifePointsPerLevel = 3;
-	override manaPerLevel = 4;
-	override mandatorySkills: SkillName[] = [SkillName.thievery, SkillName.reflexes];
-	override proficiencies: Proficiency[] = [];
-	override readonly name = RoleName.rogue;
+	static initialLifePoints = 12;
+	static lifePointsPerLevel = 3;
+	static manaPerLevel = 4;
+	static mandatorySkills: SkillName[] = [SkillName.thievery, SkillName.reflexes];
+	static proficiencies: Proficiency[] = [];
+	static readonly roleName = RoleName.rogue;
+
+	override initialLifePoints = Rogue.initialLifePoints;
+	override lifePointsPerLevel = Rogue.lifePointsPerLevel;
+	override manaPerLevel = Rogue.manaPerLevel;
+	override mandatorySkills = Rogue.mandatorySkills;
+	override proficiencies = Rogue.proficiencies;
+	override readonly name = Rogue.roleName;
 	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
 
 	constructor(chosenSkills: SkillName[]) {

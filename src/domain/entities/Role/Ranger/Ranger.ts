@@ -33,12 +33,19 @@ export class Ranger extends Role<SerializedRanger> {
 		},
 	];
 
-	override initialLifePoints = 16;
-	override lifePointsPerLevel = 4;
-	override manaPerLevel = 4;
-	override mandatorySkills: SkillName[] = [SkillName.survival];
-	override proficiencies: Proficiency[] = [Proficiency.martial, Proficiency.shield];
-	override readonly name = RoleName.ranger;
+	static initialLifePoints = 16;
+	static lifePointsPerLevel = 4;
+	static manaPerLevel = 4;
+	static mandatorySkills: SkillName[] = [SkillName.survival];
+	static proficiencies: Proficiency[] = [Proficiency.martial, Proficiency.shield];
+	static readonly roleName = RoleName.ranger;
+
+	override initialLifePoints = Ranger.initialLifePoints;
+	override lifePointsPerLevel = Ranger.lifePointsPerLevel;
+	override manaPerLevel = Ranger.manaPerLevel;
+	override mandatorySkills = Ranger.mandatorySkills;
+	override proficiencies = Ranger.proficiencies;
+	override readonly name = Ranger.roleName;
 	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
 
 	constructor(chosenSkills: SkillName[]) {

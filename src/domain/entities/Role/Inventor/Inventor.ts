@@ -33,12 +33,19 @@ export class Inventor extends Role<SerializedInventor> {
 		},
 	];
 
-	override initialLifePoints = 12;
-	override lifePointsPerLevel = 3;
-	override manaPerLevel = 4;
-	override mandatorySkills: SkillName[] = [SkillName.craft, SkillName.will];
-	override proficiencies: Proficiency[] = [];
-	override readonly name = RoleName.inventor;
+	static initialLifePoints = 12;
+	static lifePointsPerLevel = 3;
+	static manaPerLevel = 4;
+	static mandatorySkills: SkillName[] = [SkillName.craft, SkillName.will];
+	static proficiencies: Proficiency[] = [];
+	static readonly roleName = RoleName.inventor;
+
+	override initialLifePoints = Inventor.initialLifePoints;
+	override lifePointsPerLevel = Inventor.lifePointsPerLevel;
+	override manaPerLevel = Inventor.manaPerLevel;
+	override mandatorySkills = Inventor.mandatorySkills;
+	override proficiencies = Inventor.proficiencies;
+	readonly name = Inventor.roleName;
 	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
 
 	constructor(chosenSkills: SkillName[]) {

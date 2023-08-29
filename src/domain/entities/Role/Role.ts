@@ -19,6 +19,8 @@ import type {RoleName} from './RoleName';
 export abstract class Role<
 	S extends SerializedRoles = SerializedRoles,
 > implements RoleInterface<S> {
+	static startsWithArmor = true;
+
 	static serializeBasic(role: Role): SerializedRoleBasic {
 		return {
 			abilities: Object.values(role.abilitiesPerLevel)

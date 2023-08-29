@@ -27,12 +27,19 @@ export class Cleric extends Role<SerializedCleric> {
 		},
 	];
 
-	override initialLifePoints = 16;
-	override lifePointsPerLevel = 4;
-	override manaPerLevel = 5;
-	override mandatorySkills: SkillName[] = [SkillName.religion, SkillName.will];
-	override proficiencies: Proficiency[] = [Proficiency.heavyArmor, Proficiency.shield];
-	override readonly name = RoleName.cleric;
+	static initialLifePoints = 16;
+	static lifePointsPerLevel = 4;
+	static manaPerLevel = 5;
+	static mandatorySkills: SkillName[] = [SkillName.religion, SkillName.will];
+	static proficiencies: Proficiency[] = [Proficiency.heavyArmor, Proficiency.shield];
+	static readonly roleName = RoleName.cleric;
+
+	override initialLifePoints = Cleric.initialLifePoints;
+	override lifePointsPerLevel = Cleric.lifePointsPerLevel;
+	override manaPerLevel = Cleric.manaPerLevel;
+	override mandatorySkills = Cleric.mandatorySkills;
+	override proficiencies = Cleric.proficiencies;
+	override readonly name = Cleric.roleName;
 	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
 
 	constructor(chosenSkills: SkillName[]) {

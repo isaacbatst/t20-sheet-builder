@@ -29,12 +29,19 @@ export class Druid extends Role<SerializedDruid> {
 		},
 	];
 
-	override initialLifePoints = 16;
-	override lifePointsPerLevel = 4;
-	override manaPerLevel = 4;
-	override mandatorySkills: SkillName[] = [SkillName.survival, SkillName.will];
-	override proficiencies: Proficiency[] = [Proficiency.shield];
-	override readonly name = RoleName.druid;
+	static initialLifePoints = 16;
+	static lifePointsPerLevel = 4;
+	static manaPerLevel = 4;
+	static mandatorySkills: SkillName[] = [SkillName.survival, SkillName.will];
+	static proficiencies: Proficiency[] = [Proficiency.shield];
+	static readonly roleName = RoleName.druid;
+
+	override initialLifePoints = Druid.initialLifePoints;
+	override lifePointsPerLevel = Druid.lifePointsPerLevel;
+	override manaPerLevel = Druid.manaPerLevel;
+	override mandatorySkills = Druid.mandatorySkills;
+	override proficiencies = Druid.proficiencies;
+	override readonly name = Druid.roleName;
 	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
 
 	constructor(chosenSkills: SkillName[]) {

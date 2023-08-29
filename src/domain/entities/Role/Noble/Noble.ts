@@ -55,17 +55,24 @@ export class Noble extends Role<SerializedNoble> {
 		},
 	];
 
-	override initialLifePoints = 16;
-	override lifePointsPerLevel = 4;
-	override manaPerLevel = 4;
-	override mandatorySkills: SkillName[] = [SkillName.will];
-	override proficiencies: Proficiency[] = [
+	static initialLifePoints = 16;
+	static lifePointsPerLevel = 4;
+	static manaPerLevel = 4;
+	static mandatorySkills: SkillName[] = [SkillName.will];
+	static proficiencies: Proficiency[] = [
 		Proficiency.martial,
 		Proficiency.heavyArmor,
 		Proficiency.shield,
 	];
 
-	override readonly name = RoleName.noble;
+	static readonly roleName = RoleName.noble;
+
+	override initialLifePoints = Noble.initialLifePoints;
+	override lifePointsPerLevel = Noble.lifePointsPerLevel;
+	override manaPerLevel = Noble.manaPerLevel;
+	override mandatorySkills = Noble.mandatorySkills;
+	override proficiencies = Noble.proficiencies;
+	override readonly name = Noble.roleName;
 	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
 
 	constructor(chosenSkills: SkillName[]) {

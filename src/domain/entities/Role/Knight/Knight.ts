@@ -26,12 +26,19 @@ export class Knight extends Role<SerializedKnight> {
 		},
 	];
 
-	override initialLifePoints = 20;
-	override lifePointsPerLevel = 5;
-	override manaPerLevel = 3;
-	override mandatorySkills: SkillName[] = [SkillName.fight, SkillName.fortitude];
-	override proficiencies: Proficiency[] = [Proficiency.martial, Proficiency.heavyArmor, Proficiency.shield];
-	override readonly name = RoleName.knight;
+	static initialLifePoints = 20;
+	static lifePointsPerLevel = 5;
+	static manaPerLevel = 3;
+	static mandatorySkills: SkillName[] = [SkillName.fight, SkillName.fortitude];
+	static proficiencies: Proficiency[] = [Proficiency.martial, Proficiency.heavyArmor, Proficiency.shield];
+	static readonly roleName = RoleName.knight;
+
+	override initialLifePoints = Knight.initialLifePoints;
+	override lifePointsPerLevel = Knight.lifePointsPerLevel;
+	override manaPerLevel = Knight.manaPerLevel;
+	override mandatorySkills = Knight.mandatorySkills;
+	override proficiencies = Knight.proficiencies;
+	override readonly name = Knight.roleName;
 	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
 
 	constructor(chosenSkills: SkillName[]) {

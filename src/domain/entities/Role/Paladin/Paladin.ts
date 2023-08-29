@@ -40,12 +40,19 @@ export class Paladin extends Role {
 		},
 	];
 
-	override initialLifePoints = 20;
-	override lifePointsPerLevel = 5;
-	override manaPerLevel = 3;
-	override mandatorySkills: SkillName[] = [SkillName.fight, SkillName.will];
-	override proficiencies: Proficiency[] = [Proficiency.martial, Proficiency.heavyArmor, Proficiency.shield];
-	override readonly name = RoleName.paladin;
+	static initialLifePoints = 20;
+	static lifePointsPerLevel = 5;
+	static manaPerLevel = 3;
+	static mandatorySkills: SkillName[] = [SkillName.fight, SkillName.will];
+	static proficiencies: Proficiency[] = [Proficiency.martial, Proficiency.heavyArmor, Proficiency.shield];
+	static readonly roleName = RoleName.paladin;
+
+	override initialLifePoints = Paladin.initialLifePoints;
+	override lifePointsPerLevel = Paladin.lifePointsPerLevel;
+	override manaPerLevel = Paladin.manaPerLevel;
+	override mandatorySkills = Paladin.mandatorySkills;
+	override proficiencies = Paladin.proficiencies;
+	override readonly name = Paladin.roleName;
 	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
 
 	constructor(chosenSkills: SkillName[]) {

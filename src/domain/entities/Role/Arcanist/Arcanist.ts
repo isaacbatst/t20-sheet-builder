@@ -7,7 +7,6 @@ import type {Spell, SpellType} from '../../Spell/Spell';
 import {Role} from '../Role';
 import {type RoleAbilitiesPerLevel} from '../RoleAbilitiesPerLevel';
 import {RoleAbilitiesPerLevelFactory} from '../RoleAbilitiesPerLevelFactory';
-import type {RoleAbility} from '../RoleAbility';
 import type {SelectSkillGroup} from '../RoleInterface';
 import {RoleName} from '../RoleName';
 import type {SpellLearnFrequency} from '../SpellsAbility';
@@ -37,7 +36,7 @@ SerializedArcanist
 		},
 	];
 
-	static get startsWithArmor(): boolean {
+	static override get startsWithArmor(): boolean {
 		return false;
 	}
 
