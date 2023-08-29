@@ -31,6 +31,10 @@ export type SerializedCleric = {
 	name: RoleName.cleric;
 };
 
+export type SerializedDruid = {
+	name: RoleName.druid;
+};
+
 export type SerializedRoles =
  | SerializedWarrior
  | SerializedArcanist
@@ -39,7 +43,8 @@ export type SerializedRoles =
  | SerializedBard
  | SerializedRanger
  | SerializedKnight
- | SerializedCleric;
+ | SerializedCleric
+ | SerializedDruid;
 
 export type SerializedRole<R extends SerializedRoles = SerializedRoles> = SerializedRoleBasic & R;
 

@@ -6,6 +6,8 @@ export * from './Bard';
 export * from './Ranger';
 export * from './Knight';
 export * from './Cleric';
+export * from './Druid';
+
 export * from './RoleInterface';
 export * from './RoleName';
 export * from './RoleAbilityName';

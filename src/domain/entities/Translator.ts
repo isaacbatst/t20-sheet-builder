@@ -216,6 +216,7 @@ export class Translator {
 		ranger: 'Caçador',
 		knight: 'Cavaleiro',
 		cleric: 'Clérigo',
+		druid: 'Druida',
 	};
 
 	private static readonly proficienciesTranslation: Record<Proficiency, string> = {
