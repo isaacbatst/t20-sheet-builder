@@ -10,6 +10,7 @@ export * from './Druid';
 export * from './Inventor';
 export * from './Rogue';
 export * from './Fighter';
+export * from './Noble';
 
 export * from './RoleInterface';
 export * from './RoleName';

@@ -220,6 +220,7 @@ export class Translator {
 		inventor: 'Inventor',
 		rogue: 'Ladino',
 		fighter: 'Lutador',
+		noble: 'Nobre',
 	};
 
 	private static readonly proficienciesTranslation: Record<Proficiency, string> = {
