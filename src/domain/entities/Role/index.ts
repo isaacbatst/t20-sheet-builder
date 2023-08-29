@@ -13,6 +13,7 @@ export * from './Fighter';
 export * from './Noble';
 export * from './Paladin';
 
+export * from './Role';
 export * from './RoleInterface';
 export * from './RoleName';
 export * from './RoleAbilityName';
