@@ -23,13 +23,18 @@ export type SerializedRanger = {
 	name: RoleName.ranger;
 };
 
+export type SerializedKnight = {
+	name: RoleName.knight;
+};
+
 export type SerializedRoles =
  | SerializedWarrior
  | SerializedArcanist
  | SerializedBarbarian
  | SerializedBuccaneer
  | SerializedBard
- | SerializedRanger;
+ | SerializedRanger
+ | SerializedKnight;
 
 export type SerializedRole<R extends SerializedRoles = SerializedRoles> = SerializedRoleBasic & R;
 
