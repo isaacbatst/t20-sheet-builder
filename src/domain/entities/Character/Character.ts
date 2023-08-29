@@ -10,6 +10,7 @@ import {type Attributes, type CharacterSheetInterface, type SerializedSheetGener
 import {SheetBuilder} from '../Sheet/SheetBuilder';
 import {type SkillName} from '../Skill';
 import {CharacterSkill} from '../Skill/CharacterSkill';
+import {type SheetSkill} from '../Skill/SheetSkill';
 import type {CharacterAppliedFightStyle} from './CharacterAppliedFightStyle';
 import {CharacterAttack, type SerializedCharacterAttack} from './CharacterAttack';
 import type {CharacterInterface} from './CharacterInterface';
@@ -75,20 +76,36 @@ export class Character implements CharacterInterface {
 		return attributes.getValues();
 	}
 
+	getSkill(skillName: SkillName, context: Context): CharacterSkill {
+		const skill = this.makeCharacterSkill(
+			this.sheet.getSkill(skillName),
+			this.makeTotalCalculators(context),
+		);
+
+		return skill;
+	}
+
 	getSkills(context: Context): Record<SkillName, CharacterSkill> {
 		// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 		const skills = {} as Record<SkillName, CharacterSkill>;
 		const totalCalculators = this.makeTotalCalculators(context);
 		Object.entries(this.sheet.getSkills()).forEach(([skillName, skill]) => {
-			skills[skillName as SkillName] = new CharacterSkill(
-				skill,
-				this.modifiers,
-				this.makeSkillTriggeredEffects(),
-				totalCalculators,
-			);
+			skills[skillName as SkillName] = this.makeCharacterSkill(skill, totalCalculators);
 		});
 
 		return skills;
+	}
+
+	makeCharacterSkill(skill: SheetSkill, totalCalculators: ModifiersTotalCalculators) {
+		return new CharacterSkill(
+			skill,
+			{
+				skill: this.modifiers.skill.clone(),
+				skillExceptAttack: this.modifiers.skillExceptAttack.clone(),
+			},
+			this.makeSkillTriggeredEffects(),
+			totalCalculators,
+		);
 	}
 
 	makeSkillTriggeredEffects() {

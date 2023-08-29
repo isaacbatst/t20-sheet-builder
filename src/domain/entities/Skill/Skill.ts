@@ -7,11 +7,13 @@ import {FixedModifiersList} from '../Modifier/FixedModifier/FixedModifiersList';
 import {type SerializedSheetSkill} from '../Sheet';
 import type {Attribute} from '../Sheet/Attributes';
 import {type SheetInterface} from '../Sheet/SheetInterface';
+import {type SkillName} from './SkillName';
 import type {SkillTotalCalculator} from './SkillTotalCalculator';
 
 export type SkillParams = {
 	attribute: Attribute;
 	isTrained?: boolean;
+	name: SkillName;
 };
 
 export class Skill {
@@ -40,6 +42,7 @@ export class Skill {
 	}
 
 	attribute: Attribute;
+	readonly name: SkillName;
 	readonly defaultAttribute: Attribute;
 	readonly contextualModifiers: ContextualModifiersList = new ContextualModifiersList();
 	readonly fixedModifiers: FixedModifiersList = new FixedModifiersList();
@@ -53,6 +56,7 @@ export class Skill {
 		this.isTrained = Boolean(params.isTrained);
 		this.attribute = params.attribute;
 		this.defaultAttribute = params.attribute;
+		this.name = params.name;
 	}
 
 	changeAttribute(attribute: Attribute) {

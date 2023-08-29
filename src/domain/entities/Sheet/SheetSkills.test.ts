@@ -126,6 +126,28 @@ describe('SheetSkills', () => {
 			context = new PreviewContext(character);
 		});
 
+		it('should get skill with attribute modifier', () => {
+			const sheetSkills = character.getSkills(context);
+			const result = sheetSkills[SkillName.gambling].getAttributeModifier();
+			expect(result).toBe(1);
+		});
+
+		it('should roll skill with attribute modifier', () => {
+			const skill = character.getSkill(SkillName.intimidation, context);
+			const result = skill.roll({
+				get: vi.fn().mockReturnValue(10),
+			});
+			expect(result.total).toBe(11);
+		});
+
+		it('should roll skill with attribute modifier getting all skills', () => {
+			const sheetSkills = character.getSkills(context);
+			const result = sheetSkills[SkillName.intimidation].roll({
+				get: vi.fn().mockReturnValue(10),
+			});
+			expect(result.total).toBe(11);
+		});
+
 		it('should get skill triggered effects', () => {
 			const sheetSkills = character.getSkills(context);
 			const effects = sheetSkills[SkillName.gambling].getTriggeredEffects();

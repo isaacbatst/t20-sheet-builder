@@ -1,8 +1,7 @@
-import {TriggerEvent} from '../Ability';
 import type {BuildStepInterface} from '../BuildStep';
-import {CharacterAttackTriggeredEffect} from '../Character/CharacterAttackTriggeredEffect';
 import {OutOfGameContext, type ContextInterface} from '../Context';
 import {SheetSkill, type SheetSkillsObject} from '../Skill/SheetSkill';
+import {type Skill} from '../Skill/Skill';
 import {type SkillName} from '../Skill/SkillName';
 import {SkillTotalCalculatorFactory} from '../Skill/SkillTotalCalculatorFactory';
 import {type SerializedSheetInterface} from './SerializedSheet';
@@ -161,6 +160,11 @@ export abstract class Sheet implements SheetInterface {
 		return this.sheetResistences;
 	}
 
+	getSkill(skillName: SkillName): SheetSkill {
+		const skill = this.getSheetSkills().getSkill(skillName);
+		return this.makeSheetSkill(skill);
+	}
+
 	getSkills(): SheetSkillsObject {
 		const skills = this.getSheetSkills().getSkills();
 
@@ -168,12 +172,14 @@ export abstract class Sheet implements SheetInterface {
 		const sheetSkills = {} as Record<SkillName, SheetSkill>;
 
 		Object.entries(skills).forEach(([skillName, skill]) => {
-			sheetSkills[skillName as SkillName] = new SheetSkill(
-				skill, this.makeSkillTotalCalculator(),
-			);
+			sheetSkills[skillName as SkillName] = this.makeSheetSkill(skill);
 		});
 
 		return sheetSkills;
+	}
+
+	makeSheetSkill(skill: Skill) {
+		return new SheetSkill(skill, this.makeSkillTotalCalculator());
 	}
 
 	serialize(context: ContextInterface = new OutOfGameContext()): SerializedSheetInterface {

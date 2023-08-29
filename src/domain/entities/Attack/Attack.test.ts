@@ -2,6 +2,7 @@ import {OutOfGameContext} from '../Context';
 import {DiceRoll} from '../Dice/DiceRoll';
 import {Level} from '../Sheet';
 import {SheetAttributes} from '../Sheet/SheetAttributes';
+import {SkillName} from '../Skill';
 import {SheetSkill} from '../Skill/SheetSkill';
 import {Skill} from '../Skill/Skill';
 import {SkillTotalCalculatorFactory} from '../Skill/SkillTotalCalculatorFactory';
@@ -12,7 +13,7 @@ describe('Attack', () => {
 	let attackSkill: SheetSkill;
 	beforeAll(() => {
 		attackSkill = new SheetSkill(
-			new Skill({attribute: 'strength', isTrained: false}),
+			new Skill({attribute: 'strength', isTrained: false, name: SkillName.fight}),
 			SkillTotalCalculatorFactory.make(SheetAttributes.initial, Level.one, new OutOfGameContext()),
 		);
 	});

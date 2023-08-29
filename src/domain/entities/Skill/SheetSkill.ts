@@ -50,7 +50,6 @@ export class SheetSkill {
 
 	roll(random: RandomInterface = new Random(), threat = 20): SkillRollResult {
 		const rollResult = SheetSkill.test.roll(random);
-
 		return {
 			isCritical: rollResult.total >= threat,
 			isFumble: rollResult.total <= 1,

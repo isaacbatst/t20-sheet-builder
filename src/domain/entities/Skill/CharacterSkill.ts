@@ -89,6 +89,9 @@ export class CharacterSkill {
 			contextualModifiers.append(this.modifiers.skillExceptAttack.contextual);
 		}
 
+		fixedModifiers.append(skillRollResult.modifiers.fixed);
+		contextualModifiers.append(skillRollResult.modifiers.contextual);
+
 		return {
 			isCritical: skillRollResult.isCritical,
 			isFumble: skillRollResult.isFumble,
