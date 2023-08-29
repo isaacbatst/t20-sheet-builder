@@ -17,6 +17,9 @@ export type SkillRollResult = {
 	isCritical: boolean;
 	isFumble: boolean;
 	total: number;
+	attributeModifier: number;
+	levelPoints: number;
+	trainingPoints: number;
 };
 
 export class SheetSkill {
@@ -72,6 +75,9 @@ export class SheetSkill {
 			modifiersTotal: this.getModifiersTotal(),
 			roll: rollResult,
 			total: rollResult.total + this.getModifiersTotal(),
+			attributeModifier: this.getAttributeModifier(),
+			levelPoints: this.getLevelPoints(),
+			trainingPoints: this.getTrainingPoints(),
 		};
 	}
 }

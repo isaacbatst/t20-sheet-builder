@@ -114,6 +114,9 @@ export class CharacterSkill {
 			}),
 			modifiersTotal: this.getModifiersTotal(isAttack),
 			total: skillRollResult.total + this.getModifiersTotal(isAttack),
+			attributeModifier: skillRollResult.attributeModifier,
+			levelPoints: skillRollResult.levelPoints,
+			trainingPoints: skillRollResult.trainingPoints,
 		};
 	}
 }
