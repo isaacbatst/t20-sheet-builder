@@ -5,6 +5,7 @@ import {FixedModifier} from '../Modifier/FixedModifier/FixedModifier';
 import {RaceAbilityName} from '../Race/RaceAbilityName';
 import {BuildingSheetFake} from '../Sheet/BuildingSheet/BuildingSheetFake';
 import {Skill} from './Skill';
+import {SkillName} from './SkillName';
 import {SkillTotalCalculatorFactory} from './SkillTotalCalculatorFactory';
 
 describe('Skill', () => {
@@ -16,6 +17,7 @@ describe('Skill', () => {
 
 	it('should calculate level 1 untrained skill', () => {
 		const skill = new Skill({
+			name: SkillName.acrobatics,
 			attribute: 'dexterity',
 		});
 
@@ -25,6 +27,7 @@ describe('Skill', () => {
 
 	it('should update total by training', () => {
 		const skill = new Skill({
+			name: SkillName.acrobatics,
 			attribute: 'dexterity',
 		});
 		skill.train();
@@ -35,6 +38,7 @@ describe('Skill', () => {
 	it('should calculate level 1 untrained skill with modifier', () => {
 		sheet.getSheetAttributes().getValues().dexterity = 2;
 		const skill = new Skill({
+			name: SkillName.acrobatics,
 			attribute: 'dexterity',
 		});
 
@@ -44,6 +48,7 @@ describe('Skill', () => {
 
 	it('should calculate level 1 trained skill', () => {
 		const skill = new Skill({
+			name: SkillName.acrobatics,
 			isTrained: true,
 			attribute: 'dexterity',
 		});
@@ -56,6 +61,7 @@ describe('Skill', () => {
 		sheet.getSheetAttributes().getValues().dexterity = 2;
 
 		const skill = new Skill({
+			name: SkillName.acrobatics,
 			isTrained: true,
 			attribute: 'dexterity',
 		});
@@ -68,6 +74,7 @@ describe('Skill', () => {
 		sheet.getSheetAttributes().getValues().dexterity = 2;
 
 		const skill = new Skill({
+			name: SkillName.acrobatics,
 			isTrained: true,
 			attribute: 'dexterity',
 		});
@@ -82,6 +89,7 @@ describe('Skill', () => {
 
 		sheet.setLevel(10);
 		const skill = new Skill({
+			name: SkillName.acrobatics,
 			isTrained: true,
 			attribute: 'dexterity',
 		});
@@ -96,6 +104,7 @@ describe('Skill', () => {
 
 		sheet.setLevel(10);
 		const skill = new Skill({
+			name: SkillName.acrobatics,
 			isTrained: true,
 			attribute: 'dexterity',
 		});
@@ -114,6 +123,7 @@ describe('Skill', () => {
 		sheet.getSheetAttributes().getValues().dexterity = 2;
 		sheet.setLevel(10);
 		const skill = new Skill({
+			name: SkillName.acrobatics,
 			isTrained: true,
 			attribute: 'dexterity',
 		});
