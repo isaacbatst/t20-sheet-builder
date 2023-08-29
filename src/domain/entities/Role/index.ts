@@ -7,6 +7,7 @@ export * from './Ranger';
 export * from './Knight';
 export * from './Cleric';
 export * from './Druid';
+export * from './Inventor';
 
 export * from './RoleInterface';
 export * from './RoleName';

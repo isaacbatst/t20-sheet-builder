@@ -35,6 +35,10 @@ export type SerializedDruid = {
 	name: RoleName.druid;
 };
 
+export type SerializedInventor = {
+	name: RoleName.inventor;
+};
+
 export type SerializedRoles =
  | SerializedWarrior
  | SerializedArcanist
@@ -44,7 +48,8 @@ export type SerializedRoles =
  | SerializedRanger
  | SerializedKnight
  | SerializedCleric
- | SerializedDruid;
+ | SerializedDruid
+ | SerializedInventor;
 
 export type SerializedRole<R extends SerializedRoles = SerializedRoles> = SerializedRoleBasic & R;
 

@@ -8,4 +8,5 @@ export enum RoleName {
 	knight = 'knight',
 	cleric = 'cleric',
 	druid = 'druid',
+	inventor = 'inventor',
 }
