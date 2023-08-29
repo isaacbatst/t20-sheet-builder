@@ -6,4 +6,5 @@ export enum RoleName {
 	bard = 'bard',
 	ranger = 'ranger',
 	knight = 'knight',
+	cleric = 'cleric',
 }
