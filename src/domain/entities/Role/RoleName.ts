@@ -4,4 +4,5 @@ export enum RoleName {
 	barbarian = 'barbarian',
 	buccaneer = 'buccaneer',
 	bard = 'bard',
+	ranger = 'ranger',
 }
