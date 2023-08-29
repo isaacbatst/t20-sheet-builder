@@ -221,6 +221,7 @@ export class Translator {
 		rogue: 'Ladino',
 		fighter: 'Lutador',
 		noble: 'Nobre',
+		paladin: 'Paladino',
 	};
 
 	private static readonly proficienciesTranslation: Record<Proficiency, string> = {

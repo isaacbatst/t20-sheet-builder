@@ -12,4 +12,5 @@ export enum RoleName {
 	rogue = 'rogue',
 	fighter = 'fighter',
 	noble = 'noble',
+	paladin = 'paladin',
 }

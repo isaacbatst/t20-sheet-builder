@@ -11,6 +11,7 @@ export * from './Inventor';
 export * from './Rogue';
 export * from './Fighter';
 export * from './Noble';
+export * from './Paladin';
 
 export * from './RoleInterface';
 export * from './RoleName';
