@@ -138,6 +138,7 @@ describe('SheetSkills', () => {
 				get: vi.fn().mockReturnValue(10),
 			});
 			expect(result.total).toBe(11);
+			expect(skill.getTotalBaseModifier()).toBe(1);
 		});
 
 		it('should roll skill with attribute modifier getting all skills', () => {
@@ -146,6 +147,7 @@ describe('SheetSkills', () => {
 				get: vi.fn().mockReturnValue(10),
 			});
 			expect(result.total).toBe(11);
+			expect(sheetSkills.intimidation.getTotalBaseModifier()).toBe(1);
 		});
 
 		it('should get skill triggered effects', () => {

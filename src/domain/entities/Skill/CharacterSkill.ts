@@ -60,6 +60,18 @@ export class CharacterSkill {
 		return this.sheetSkill.getAttributeModifier();
 	}
 
+	getLevelPoints(): number {
+		return this.sheetSkill.getLevelPoints();
+	}
+
+	getTrainingPoints(): number {
+		return this.sheetSkill.getTrainingPoints();
+	}
+
+	getTotalBaseModifier(): number {
+		return this.sheetSkill.getTotalBaseModifier();
+	}
+
 	changeAttribute(attribute: Attribute) {
 		this.sheetSkill.changeAttribute(attribute);
 	}

@@ -1,3 +1,4 @@
+import {FixedModifier} from '../Modifier';
 import type {ContextualModifiersListTotalCalculatorInterface} from '../Modifier/ContextualModifier/ContextualModifiersListTotalCalculator';
 import type {FixedModifiersListTotalCalculatorInterface} from '../Modifier/FixedModifier/FixedModifiersListTotalCalculator';
 import type {Skill} from './Skill';
@@ -11,9 +12,13 @@ export class SkillTotalCalculator {
 	) {}
 
 	calculate(skill: Skill) {
-		const base = this.baseCalculator.calculate(skill.attribute, skill.getIsTrained());
-		const contextualModifiers = skill.contextualModifiers.getTotal(this.contextualCalculator);
-		const fixedModifiers = skill.fixedModifiers.getTotal(this.fixedCalculator);
-		return base + contextualModifiers + fixedModifiers;
+		const fixedModifiers = skill.fixedModifiers.clone();
+		fixedModifiers.add(new FixedModifier('default', skill.getAttributeModifier(this.baseCalculator.attributes)));
+		fixedModifiers.add(new FixedModifier('default', skill.getLevelPoints(this.baseCalculator.level)));
+		fixedModifiers.add(new FixedModifier('default', skill.getTrainingPoints(this.baseCalculator.level)));
+
+		const fixedModifiersTotal = fixedModifiers.getTotal(this.fixedCalculator);
+		const contextualModifiersTotal = skill.contextualModifiers.getTotal(this.contextualCalculator);
+		return contextualModifiersTotal + fixedModifiersTotal;
 	}
 }

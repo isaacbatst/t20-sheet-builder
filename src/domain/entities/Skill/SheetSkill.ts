@@ -41,7 +41,19 @@ export class SheetSkill {
 	}
 
 	getAttributeModifier(): number {
-		return this.calculator.baseCalculator.attributes[this.skill.attribute];
+		return this.skill.getAttributeModifier(this.calculator.baseCalculator.attributes);
+	}
+
+	getLevelPoints(): number {
+		return this.skill.getLevelPoints(this.calculator.baseCalculator.level);
+	}
+
+	getTrainingPoints(): number {
+		return this.skill.getTrainingPoints(this.calculator.baseCalculator.level);
+	}
+
+	getTotalBaseModifier(): number {
+		return this.getAttributeModifier() + this.getLevelPoints() + this.getTrainingPoints();
 	}
 
 	changeAttribute(attribute: Attribute) {

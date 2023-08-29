@@ -5,7 +5,7 @@ import {ContextualModifiersList} from '../Modifier/ContextualModifier/Contextual
 import {type FixedModifierInterface} from '../Modifier/FixedModifier/FixedModifier';
 import {FixedModifiersList} from '../Modifier/FixedModifier/FixedModifiersList';
 import {type SerializedSheetSkill} from '../Sheet';
-import type {Attribute} from '../Sheet/Attributes';
+import type {Attribute, Attributes} from '../Sheet/Attributes';
 import {type SheetInterface} from '../Sheet/SheetInterface';
 import {type SkillName} from './SkillName';
 import type {SkillTotalCalculator} from './SkillTotalCalculator';
@@ -91,6 +91,14 @@ export class Skill {
 
 	getTrainingPoints(level = 1) {
 		return Skill.calculateTrainingPoints(level, this.isTrained);
+	}
+
+	getLevelPoints(level = 1) {
+		return Skill.calculateLevelPoints(level);
+	}
+
+	getAttributeModifier(attributes: Attributes) {
+		return attributes[this.attribute];
 	}
 
 	serialize(totalCalculator: SkillTotalCalculator, sheet: SheetInterface, context: ContextInterface): SerializedSheetSkill {
