@@ -16,16 +16,31 @@ export abstract class SpellsAbilityEffect extends PassiveEffect {
 	abstract spellsAttribute: Attribute;
 	abstract circleLearnLevel: Record<SpellCircle, Level>;
 
-	constructor(readonly spells: Spell[], readonly initialSpells: number, source: RoleAbilityName) {
+	constructor(
+		readonly spells: Spell[],
+		readonly initialSpells: number,
+		source: RoleAbilityName,
+		readonly schools?: Set<Spell['school']>,
+	) {
 		super(source);
 		this.validateSpells();
 	}
 
 	apply(transaction: TransactionInterface): void {
-		transaction.run(new LearnCircle(
-			{payload: {circle: SpellCircle.first, source: this.source, type: this.spellType}, transaction},
-		));
+		this.learnCircle(transaction);
 		this.learnSpells(transaction);
+	}
+
+	private learnCircle(transaction: TransactionInterface) {
+		transaction.run(new LearnCircle({
+			payload: {
+				circle: SpellCircle.first,
+				source: this.source,
+				type: this.spellType,
+				schools: this.schools,
+			},
+			transaction,
+		}));
 	}
 
 	private learnSpells(transaction: TransactionInterface) {

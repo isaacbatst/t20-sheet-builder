@@ -14,7 +14,7 @@ export class LearnCircle extends Action<'learnCircle'> {
 
 	override execute(): void {
 		const sheetSpells = this.transaction.sheet.getSheetSpells();
-		sheetSpells.learnCircle(this.payload.circle, this.payload.type);
+		sheetSpells.learnCircle(this.payload.circle, this.payload.type, this.payload.schools);
 	}
 
 	override getDescription(): string {

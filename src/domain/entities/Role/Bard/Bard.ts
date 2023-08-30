@@ -1,11 +1,15 @@
-import {Proficiency} from '../../Sheet';
+import {Level, Proficiency} from '../../Sheet';
 import {SkillName} from '../../Skill';
+import {type Spell, type SpellSchool} from '../../Spell';
 import {Role} from '../Role';
 import {type RoleAbilitiesPerLevel} from '../RoleAbilitiesPerLevel';
 import {RoleAbilitiesPerLevelFactory} from '../RoleAbilitiesPerLevelFactory';
+import {RoleAbilityName} from '../RoleAbilityName';
 import {type SelectSkillGroup} from '../RoleInterface';
 import {RoleName} from '../RoleName';
 import {type SerializedBard} from '../SerializedRole';
+import {BardSpells} from './BardSpells/BardSpells';
+import {Inspiration} from './Inspiration/Inspiration';
 
 export class Bard extends Role<SerializedBard> {
 	static readonly roleName = RoleName.bard;
@@ -46,10 +50,16 @@ export class Bard extends Role<SerializedBard> {
 	override mandatorySkills = Bard.mandatorySkills;
 	override proficiencies = Bard.proficiencies;
 	override readonly name = Bard.roleName;
-	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
+	override abilitiesPerLevel: RoleAbilitiesPerLevel;
 
-	constructor(chosenSkills: SkillName[]) {
+	constructor(chosenSkills: SkillName[], chosenSchools: SpellSchool[], chosenSpells: Spell[]) {
 		super(chosenSkills, Bard.selectSkillGroups);
+		this.abilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({
+			[Level.one]: {
+				[RoleAbilityName.inspiration]: new Inspiration(),
+				[RoleAbilityName.bardSpells]: new BardSpells(new Set(chosenSchools), chosenSpells),
+			},
+		});
 	}
 
 	protected override serializeSpecific(): SerializedBard {

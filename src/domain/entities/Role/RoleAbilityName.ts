@@ -6,4 +6,6 @@ export enum RoleAbilityName {
 	arcanistSupernaturalLineage = 'arcanistSupernaturalLineage',
 	rage = 'rage',
 	audacity = 'audacity',
+	inspiration = 'inspiration',
+	bardSpells = 'bardSpells',
 }

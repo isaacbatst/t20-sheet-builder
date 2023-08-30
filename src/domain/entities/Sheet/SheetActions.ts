@@ -21,6 +21,7 @@ import {type Size} from '../Size';
 import type {SkillName} from '../Skill/SkillName';
 import type {LearnableSpellType, Spell} from '../Spell/Spell';
 import type {SpellCircle} from '../Spell/SpellCircle';
+import {type SpellSchool} from '../Spell/SpellSchool';
 import {type TranslatableName} from '../Translator';
 import type {Attribute, Attributes} from './Attributes';
 import type {Proficiency} from './Proficiency';
@@ -41,7 +42,7 @@ type ActionHandlersPayloads = {
 	pickOriginPower: ({power: OriginPowerInterface; source: TranslatableName});
 	changeDisplacement: {displacement: number; source: TranslatableName};
 	addProficiency: {proficiency: Proficiency; source: TranslatableName};
-	learnCircle: {circle: SpellCircle; type: LearnableSpellType; source: TranslatableName};
+	learnCircle: {circle: SpellCircle; type: LearnableSpellType; source: TranslatableName; schools?: Set<SpellSchool>};
 	learnSpell: {spell: Spell; source: TranslatableName; needsCircle?: boolean; needsSchool?: boolean};
 	addContextualModifierToSkill: {modifier: ContextualModifierInterface; skill: SkillName};
 	addFixedModifierToSkill: {modifier: FixedModifierInterface; skill: SkillName};

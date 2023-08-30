@@ -2,9 +2,8 @@ import {SheetBuilderError} from '../../../errors';
 import {SelectableAttributesRace} from '../../SelectableAttributesRace';
 import type {Attribute, Attributes} from '../../Sheet/Attributes';
 import {type SkillName} from '../../Skill';
-import {Race} from '../Race';
 import {RaceName} from '../RaceName';
-import {type SerializedLefeu, type SerializedRace} from '../SerializedRace';
+import {type SerializedLefeu} from '../SerializedRace';
 import {Deformity} from './Deformity/Deformity';
 import {SonOfTormenta} from './SonOfTormenta/SonOfTormenta';
 

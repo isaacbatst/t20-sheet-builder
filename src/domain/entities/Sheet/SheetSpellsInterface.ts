@@ -6,11 +6,12 @@ export type SheetLearnedCircles = Record<LearnableSpellType, Set<SpellCircle>>;
 export type SheetLearnedSchools = Record<LearnableSpellType, Set<SpellSchool>>;
 
 export type SheetSpellsInterface = {
-	learnCircle(circle: SpellCircle, type: LearnableSpellType): void;
+	learnCircle(circle: SpellCircle, type: LearnableSpellType, schools?: Set<SpellSchool>): void;
 	learnSpell(spell: Spell, needsCircle?: boolean, needsSchool?: boolean): void;
 	getLearnedCircles(): SheetLearnedCircles;
 	getSpells(): SpellMap;
 	serializeLearnedCircles(): SerializedSheetLearnedCircles;
 	serializeSpells(): SerializedSheetSpell[];
+	getLearnedSchools(): SheetLearnedSchools;
 };
 

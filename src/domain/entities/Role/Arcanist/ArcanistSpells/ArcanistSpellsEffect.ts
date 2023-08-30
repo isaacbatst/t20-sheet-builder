@@ -16,7 +16,7 @@ export class ArcanistSpellsEffect extends SpellsAbilityEffect {
 
 	circleLearnLevel: Record<SpellCircle, Level> = {
 		[SpellCircle.first]: Level.one,
-		[SpellCircle.second]: Level.two,
+		[SpellCircle.second]: Level.five,
 	};
 
 	spellType: LearnableSpellType = 'arcane';
