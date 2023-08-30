@@ -1,11 +1,14 @@
+import {type ActivateableAbilityEffect} from '../Ability/ActivateableAbilityEffect';
 import type {TriggerEvent} from '../Ability/TriggeredEffect';
 import type {BuildStepInterface} from '../BuildStep';
 import {type ContextInterface} from '../Context';
 import type {TriggeredEffectMap} from '../Map';
 import {type SkillName} from '../Skill';
 import {type SheetSkill, type SheetSkillsObject} from '../Skill/SheetSkill';
+import {type TranslatableName} from '../Translator';
 import {type SerializedSheetInterface} from './SerializedSheet';
 import {type SheetAbilitiesInterface} from './SheetAbilitiesInterface';
+import {type SheetActivateableEffects} from './SheetActivateableEffects';
 import {type SheetAttributesInterface} from './SheetAttributesInterface';
 import {type SheetDefenseInterface} from './SheetDefenseInterface';
 import {type SheetDevotion} from './SheetDevotion';
@@ -53,6 +56,9 @@ export type SheetInterface = {
 	getSheetDevotion(): SheetDevotion;
 	getSheetResistences(): SheetResistencesInterface;
 	getSheetTriggeredEffects(): SheetTriggeredEffects;
+	getSheetActivateableEffects(): SheetActivateableEffects;
+	getActivateableEffects(): ActivateableAbilityEffect[];
+	getActivateableEffect(abilityName: TranslatableName): ActivateableAbilityEffect | undefined;
 	getSkill(skillName: SkillName): SheetSkill;
 };
 

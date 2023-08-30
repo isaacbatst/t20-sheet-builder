@@ -8,4 +8,6 @@ export enum RoleAbilityName {
 	audacity = 'audacity',
 	inspiration = 'inspiration',
 	bardSpells = 'bardSpells',
+	preyMark = 'preyMark',
+	tracker = 'tracker',
 }

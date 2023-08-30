@@ -4,6 +4,7 @@ import {type RaceInterface} from '../../Race';
 import {type RoleInterface} from '../../Role';
 import {Sheet} from '../Sheet';
 import {type SheetAbilitiesInterface} from '../SheetAbilitiesInterface';
+import {type SheetActivateableEffects} from '../SheetActivateableEffects';
 import {type SheetAttributesInterface} from '../SheetAttributesInterface';
 import {type SheetDefenseInterface} from '../SheetDefenseInterface';
 import {type SheetDevotion} from '../SheetDevotion';
@@ -46,6 +47,7 @@ type SheetParams = {
 	devotion: SheetDevotion;
 	sheetResistences: SheetResistencesInterface;
 	sheetTriggeredEffects: SheetTriggeredEffects;
+	activateableEffects: SheetActivateableEffects;
 };
 
 export class CharacterSheet extends Sheet {
@@ -70,6 +72,7 @@ export class CharacterSheet extends Sheet {
 	protected sheetDevotion: SheetDevotion;
 	protected sheetResistences: SheetResistencesInterface;
 	protected sheetTriggeredEffects: SheetTriggeredEffects;
+	protected override activateableEffects: SheetActivateableEffects;
 
 	constructor(
 		params: SheetParams,
@@ -96,5 +99,6 @@ export class CharacterSheet extends Sheet {
 		this.sheetDevotion = params.devotion;
 		this.sheetResistences = params.sheetResistences;
 		this.sheetTriggeredEffects = params.sheetTriggeredEffects;
+		this.activateableEffects = params.activateableEffects;
 	}
 }

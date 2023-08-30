@@ -17,7 +17,7 @@ export class RegisterTriggeredEffect extends Action<'registerTriggeredEffect'> {
 	}
 
 	getDescription(): string {
-		const source = new Translatable(this.payload.source).getTranslation();
+		const source = new Translatable(this.payload.effect.source).getTranslation();
 		return `${source}: habilidade engatilhada.`;
 	}
 }
