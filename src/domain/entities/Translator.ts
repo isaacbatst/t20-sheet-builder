@@ -242,6 +242,10 @@ export class Translator {
 		arcanistSupernaturalLineage: 'Linhagem Sobrenatural',
 		rage: 'Fúria',
 		audacity: 'Audácia',
+		bardSpells: 'Magias do Bardo',
+		preyMark: 'Marca da Presa',
+		inspiration: 'Inspiração',
+		tracker: 'Rastreador',
 	};
 
 	private static readonly spellTypesTranslation: Record<SpellType, string> = {

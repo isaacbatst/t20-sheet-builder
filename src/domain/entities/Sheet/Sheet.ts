@@ -1,3 +1,5 @@
+import {type TranslatableName} from '..';
+import {type ActivateableAbilityEffect} from '../Ability';
 import type {BuildStepInterface} from '../BuildStep';
 import {OutOfGameContext, type ContextInterface} from '../Context';
 import {SheetSkill, type SheetSkillsObject} from '../Skill/SheetSkill';
@@ -6,6 +8,7 @@ import {type SkillName} from '../Skill/SkillName';
 import {SkillTotalCalculatorFactory} from '../Skill/SkillTotalCalculatorFactory';
 import {type SerializedSheetInterface} from './SerializedSheet';
 import {type SheetAbilitiesInterface} from './SheetAbilitiesInterface';
+import {type SheetActivateableEffects} from './SheetActivateableEffects';
 import {type SheetAttributesInterface} from './SheetAttributesInterface';
 import {type SheetDefenseInterface} from './SheetDefenseInterface';
 import {type SheetDevotion} from './SheetDevotion';
@@ -46,6 +49,7 @@ export abstract class Sheet implements SheetInterface {
 	protected abstract sheetDevotion: SheetDevotion;
 	protected abstract sheetResistences: SheetResistencesInterface;
 	protected abstract sheetTriggeredEffects: SheetTriggeredEffects;
+	protected abstract activateableEffects: SheetActivateableEffects;
 
 	makeSkillTotalCalculator(context: ContextInterface = new OutOfGameContext()) {
 		return SkillTotalCalculatorFactory.make(
@@ -178,8 +182,17 @@ export abstract class Sheet implements SheetInterface {
 		return sheetSkills;
 	}
 
-	makeSheetSkill(skill: Skill) {
-		return new SheetSkill(skill, this.makeSkillTotalCalculator());
+	getSheetActivateableEffects(): SheetActivateableEffects {
+		return this.activateableEffects;
+	}
+
+	getActivateableEffects(): ActivateableAbilityEffect[] {
+		const map = this.activateableEffects.getEffects();
+		return Array.from(map.values());
+	}
+
+	getActivateableEffect(name: TranslatableName): ActivateableAbilityEffect | undefined {
+		return this.activateableEffects.getEffect(name);
 	}
 
 	serialize(context: ContextInterface = new OutOfGameContext()): SerializedSheetInterface {
@@ -216,5 +229,9 @@ export abstract class Sheet implements SheetInterface {
 			devotion: this.getSheetDevotion().serialize(),
 			resistencies: this.getSheetResistences().serialize(this, context),
 		};
+	}
+
+	private makeSheetSkill(skill: Skill) {
+		return new SheetSkill(skill, this.makeSkillTotalCalculator());
 	}
 }

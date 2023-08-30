@@ -1,4 +1,5 @@
 import type {Affectable} from '../Affectable/Affectable';
+import {ManaCost} from '../ManaCost';
 import type {Cost} from '../Sheet/CharacterSheet/CharacterSheetInterface';
 import type {AbilityName} from './Ability';
 import {AbilityEffect} from './AbilityEffect';
@@ -12,6 +13,7 @@ export type ActivateableAbilityEffectInterface = {
 	executionType: EffectExecutionType;
 	duration: EffectDuration;
 	source: AbilityName;
+	getManaCost(): number;
 };
 
 export type ActivateableEffectParams = {
@@ -42,5 +44,15 @@ export abstract class ActivateableAbilityEffect extends AbilityEffect implements
 		super('active', params.source);
 		this.executionType = params.execution;
 		this.duration = params.duration;
+	}
+
+	getManaCost(): number {
+		return this.baseCosts.reduce((total, cost) => {
+			if (cost instanceof ManaCost) {
+				return total + cost.value;
+			}
+
+			return total;
+		}, 0);
 	}
 }

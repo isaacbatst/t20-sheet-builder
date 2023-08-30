@@ -1,3 +1,4 @@
+import {type ActivateableAbilityEffect} from '../Ability';
 import {type TriggeredEffect, type TriggerEvent} from '../Ability/TriggeredEffect';
 import {type Devotion} from '../Devotion/Devotion';
 import type {Equipment} from '../Inventory/Equipment/Equipment';
@@ -62,7 +63,8 @@ type ActionHandlersPayloads = {
 	becomeDevout: {devotion: Devotion};
 	pickGrantedPower: {power: GrantedPower; source: TranslatableName};
 	addResistance: {resistance: ResistanceName; value: number; source: TranslatableName};
-	registerTriggeredEffect: {effect: TriggeredEffect; event: TriggerEvent; source: TranslatableName};
+	registerTriggeredEffect: {effect: TriggeredEffect; event: TriggerEvent};
+	registerActivateableEffect: {effect: ActivateableAbilityEffect};
 };
 
 export type ActionType = keyof ActionHandlersPayloads;

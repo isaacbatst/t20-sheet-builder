@@ -228,6 +228,7 @@ export class SheetBuilder implements SheetBuilderInterface {
 			devotion: this.sheet.getSheetDevotion(),
 			sheetResistences: this.sheet.getSheetResistences(),
 			sheetTriggeredEffects: this.sheet.getSheetTriggeredEffects(),
+			activateableEffects: this.sheet.getSheetActivateableEffects(),
 		});
 	}
 }

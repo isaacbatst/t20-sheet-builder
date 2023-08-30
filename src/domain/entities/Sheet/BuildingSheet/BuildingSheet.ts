@@ -3,6 +3,7 @@ import {ManaPoints} from '../../Points/ManaPoints/ManaPoints';
 import {Level} from '../Level';
 import {Sheet} from '../Sheet';
 import {SheetAbilities} from '../SheetAbilities';
+import {SheetActivateableEffects} from '../SheetActivateableEffects';
 import {SheetAttributes} from '../SheetAttributes';
 import {SheetDefense} from '../SheetDefense';
 import {SheetDevotion} from '../SheetDevotion';
@@ -43,6 +44,7 @@ export class BuildingSheet extends Sheet {
 	protected buildSteps = [];
 	protected level = Level.one;
 	protected sheetTriggeredEffects = new SheetTriggeredEffects();
+	protected activateableEffects = new SheetActivateableEffects();
 
 	override getSheetRace(): BuildingSheetRace {
 		return this.sheetRace;
