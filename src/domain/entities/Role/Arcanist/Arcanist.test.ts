@@ -1,3 +1,4 @@
+import {type Arcanist, SpellName, RoleAbilityName, EquipmentName} from '../..';
 import {DamageType} from '../../Damage/DamageType';
 import {BuildingSheet} from '../../Sheet';
 import {Transaction} from '../../Sheet/Transaction';
@@ -79,79 +80,99 @@ describe('Arcanist', () => {
 	});
 
 	describe('Mage', () => {
-		it('should have intelligence as key attribute', () => {
-			const arcanist = ArcanistBuilder
+		let arcanist: Arcanist;
+		let mageSheet: BuildingSheet;
+		let mageTransaction: Transaction;
+		beforeEach(() => {
+			arcanist = ArcanistBuilder
 				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
 				.choosePath(new ArcanistPathMage(new FlamesExplosion()))
 				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
+			mageSheet = new BuildingSheet();
+			mageTransaction = new Transaction(mageSheet);
+			arcanist.addToSheet(mageTransaction);
+		});
 
+		it('should have intelligence as key attribute', () => {
 			expect(arcanist.getSpellsAttribute()).toBe('intelligence');
 		});
 
 		it('should learn all levels', () => {
-			const arcanist = ArcanistBuilder
-				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
-				.choosePath(new ArcanistPathMage(new FlamesExplosion()))
-				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
-
 			expect(arcanist.getSpellLearnFrequency()).toBe('all');
 		});
 
 		it('should learn additional spell', () => {
-			const mageExtraSpell = new FlamesExplosion();
-			const arcanist = ArcanistBuilder
-				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
-				.choosePath(new ArcanistPathMage(mageExtraSpell))
-				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
+			const spells = mageSheet.getSheetSpells().getSpells();
+			expect(spells.has(SpellName.flamesExplosion)).toBeTruthy();
+		});
 
-			const spells = transaction.sheet.getSheetSpells().getSpells();
-			arcanist.addToSheet(transaction);
-			expect(spells.has(mageExtraSpell.name)).toBeTruthy();
+		it('should have mana modifier', () => {
+			const modifiers = mageSheet.getSheetManaPoints().getFixedModifiers();
+			const manaModifier = modifiers.get(RoleAbilityName.arcanistSpells);
+			expect(manaModifier).toBeDefined();
 		});
 	});
 
 	describe('Wizard', () => {
-		it('should have intelligence as key attribute', () => {
-			const arcanist = ArcanistBuilder
+		let arcanist: Arcanist;
+		let wizardSheet: BuildingSheet;
+		let wizardTransaction: Transaction;
+		beforeEach(() => {
+			arcanist = ArcanistBuilder
 				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
 				.choosePath(new ArcanistPathWizard(new ArcanistPathWizardFocusWand()))
 				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
+			wizardSheet = new BuildingSheet();
+			wizardTransaction = new Transaction(wizardSheet);
+			arcanist.addToSheet(wizardTransaction);
+		});
 
+		it('should have intelligence as key attribute', () => {
 			expect(arcanist.getSpellsAttribute()).toBe('intelligence');
 		});
 
 		it('should learn all levels', () => {
-			const arcanist = ArcanistBuilder
-				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
-				.choosePath(new ArcanistPathWizard(new ArcanistPathWizardFocusWand()))
-				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
-
 			expect(arcanist.getSpellLearnFrequency()).toBe('all');
 		});
 
 		it('should dispatch add focus', () => {
-			const focus = new ArcanistPathWizardFocusWand();
-			const arcanist = ArcanistBuilder
-				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
-				.choosePath(new ArcanistPathWizard(focus))
-				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
+			const equipments = wizardSheet.getSheetInventory().getEquipments();
+			expect(equipments.has(EquipmentName.wand)).toBeTruthy();
+		});
 
-			arcanist.addToSheet(transaction);
-
-			const equipments = transaction.sheet.getSheetInventory().getEquipments();
-			expect(equipments.has(focus.equipment.name)).toBeTruthy();
+		it('should have mana modifier', () => {
+			const modifiers = wizardSheet.getSheetManaPoints().getFixedModifiers();
+			const manaModifier = modifiers.get(RoleAbilityName.arcanistSpells);
+			expect(manaModifier).toBeDefined();
+			expect(manaModifier?.attributeBonuses).toEqual(['intelligence']);
 		});
 	});
 
 	describe('Sorcerer', () => {
-		it('should have charisma as key attribute', () => {
+		let arcanist: Arcanist;
+		let sorcererSheet: BuildingSheet;
+		let sorcererTransaction: Transaction;
+		beforeEach(() => {
 			const lineage = new ArcanistLineageDraconic(DamageType.fire);
-			const arcanist = ArcanistBuilder
+			arcanist = ArcanistBuilder
 				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
 				.choosePath(new ArcanistPathSorcerer(lineage))
 				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 
+			sorcererSheet = new BuildingSheet();
+			sorcererTransaction = new Transaction(sorcererSheet);
+			arcanist.addToSheet(sorcererTransaction);
+		});
+
+		it('should have charisma as key attribute', () => {
 			expect(arcanist.getSpellsAttribute()).toBe('charisma');
+		});
+
+		it('should have mana modifier', () => {
+			const modifiers = sorcererSheet.getSheetManaPoints().getFixedModifiers();
+			const manaModifier = modifiers.get(RoleAbilityName.arcanistSpells);
+			expect(manaModifier).toBeDefined();
+			expect(manaModifier?.attributeBonuses).toEqual(['charisma']);
 		});
 	});
 });

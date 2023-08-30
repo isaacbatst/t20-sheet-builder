@@ -9,6 +9,8 @@ import type {LearnableSpellType, Spell} from '../Spell/Spell';
 import {SpellCircle} from '../Spell/SpellCircle';
 import type {RoleAbilityName} from './RoleAbilityName';
 import type {SpellLearnFrequency} from './SpellsAbility';
+import {AddFixedModifierToManaPoints} from '../Action/AddFixedModifierToManaPoints';
+import {FixedModifier} from '../Modifier';
 
 export abstract class SpellsAbilityEffect extends PassiveEffect {
 	abstract spellType: LearnableSpellType;
@@ -29,6 +31,16 @@ export abstract class SpellsAbilityEffect extends PassiveEffect {
 	apply(transaction: TransactionInterface): void {
 		this.learnCircle(transaction);
 		this.learnSpells(transaction);
+		this.addManaModifier(transaction);
+	}
+
+	private addManaModifier(transaction: TransactionInterface) {
+		transaction.run(new AddFixedModifierToManaPoints({
+			payload: {
+				modifier: new FixedModifier(this.source, 0, new Set([this.spellsAttribute])),
+			},
+			transaction,
+		}));
 	}
 
 	private learnCircle(transaction: TransactionInterface) {

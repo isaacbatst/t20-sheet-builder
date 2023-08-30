@@ -45,4 +45,11 @@ describe('Bard', () => {
 		expect(spells.get(SpellName.arcaneArmor)).toBeDefined();
 		expect(spells.get(SpellName.illusoryDisguise)).toBeDefined();
 	});
+
+	it('should have charisma modifier for mana', () => {
+		const modifiers = sheet.getSheetManaPoints().getFixedModifiers();
+		const charismaModifier = modifiers.get(RoleAbilityName.bardSpells);
+		expect(charismaModifier).toBeDefined();
+		expect(charismaModifier?.attributeBonuses).toEqual(['charisma']);
+	});
 });

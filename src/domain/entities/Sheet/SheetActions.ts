@@ -47,6 +47,7 @@ type ActionHandlersPayloads = {
 	addContextualModifierToSkill: {modifier: ContextualModifierInterface; skill: SkillName};
 	addFixedModifierToSkill: {modifier: FixedModifierInterface; skill: SkillName};
 	addFixedModifierToLifePoints: {modifier: FixedModifierInterface};
+	addFixedModifierToManaPoints: {modifier: FixedModifierInterface};
 	addPerLevelModifierToLifePoints: {modifier: PerLevelModifierInterface};
 	addPerLevelModifierToManaPoints: {modifier: PerLevelModifierInterface};
 	addFixedModifierToDefense: {modifier: FixedModifierInterface};
