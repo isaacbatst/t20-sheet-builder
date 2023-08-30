@@ -1,5 +1,4 @@
 import {Translatable} from '../Translatable';
-import {Translator} from '../Translator';
 import {Action, type ActionSubClassParams} from './Action';
 
 export class LearnSpell extends Action<'learnSpell'> {
@@ -14,7 +13,7 @@ export class LearnSpell extends Action<'learnSpell'> {
 
 	execute(): void {
 		const sheetSpells = this.transaction.sheet.getSheetSpells();
-		sheetSpells.learnSpell(this.payload.spell, this.payload.needsCircle);
+		sheetSpells.learnSpell(this.payload.spell, this.payload.needsCircle, this.payload.needsSchool);
 	}
 
 	getDescription(): string {

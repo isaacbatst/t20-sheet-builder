@@ -20,6 +20,7 @@ export class PlantsFriendEffect extends PassiveEffect {
 				source: RaceAbilityName.plantsFriend,
 				spell: new ControlPlants(),
 				needsCircle: false,
+				needsSchool: false,
 			},
 			transaction,
 		}));

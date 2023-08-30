@@ -1,7 +1,7 @@
 import {SheetBuilderError} from '../../errors';
-import {type SpellCircle, type LearnableSpellType, type Spell} from '../Spell';
+import {type SpellCircle, type LearnableSpellType, type Spell, SpellSchool} from '../Spell';
 import {type SerializedSheetSpell, type SerializedSheetLearnedCircles} from './SerializedSheet/SerializedSheetInterface';
-import {type SheetLearnedCircles, type SheetSpellsInterface, type SpellMap} from './SheetSpellsInterface';
+import {type SheetLearnedSchools, type SheetLearnedCircles, type SheetSpellsInterface, type SpellMap} from './SheetSpellsInterface';
 
 export class SheetSpells implements SheetSpellsInterface {
 	constructor(
@@ -10,15 +10,36 @@ export class SheetSpells implements SheetSpellsInterface {
 			arcane: new Set(),
 			divine: new Set(),
 		},
+		private readonly learnedSpellSchools: SheetLearnedSchools = {
+			arcane: new Set(),
+			divine: new Set(),
+		},
 	) {}
 
-	learnCircle(circle: SpellCircle, type: LearnableSpellType): void {
+	learnCircle(circle: SpellCircle, type: LearnableSpellType, schools = new Set<SpellSchool>([
+		SpellSchool.abjuration,
+		SpellSchool.divination,
+		SpellSchool.enchantment,
+		SpellSchool.evocation,
+		SpellSchool.illusion,
+		SpellSchool.necromancy,
+		SpellSchool.summoning,
+		SpellSchool.transmutation,
+	])): void {
 		this.learnedCircles[type].add(circle);
+
+		schools.forEach(school => {
+			this.learnedSpellSchools[type].add(school);
+		});
 	}
 
-	learnSpell(spell: Spell, needsCircle = true): void {
+	learnSpell(spell: Spell, needsCircle = true, needsSchool = true): void {
 		if (needsCircle && !this.isSpellCircleLearned(spell)) {
 			throw new SheetBuilderError('CIRCLE_NOT_LEARNED');
+		}
+
+		if (needsSchool && !this.isSpellSchoolLearned(spell)) {
+			throw new SheetBuilderError('SCHOOL_NOT_LEARNED');
 		}
 
 		this.spells.set(spell.name, spell);
@@ -26,6 +47,10 @@ export class SheetSpells implements SheetSpellsInterface {
 
 	getLearnedCircles(): SheetLearnedCircles {
 		return this.learnedCircles;
+	}
+
+	getLearnedSchools(): SheetLearnedSchools {
+		return this.learnedSpellSchools;
 	}
 
 	getSpells(): SpellMap {
@@ -63,6 +88,14 @@ export class SheetSpells implements SheetSpellsInterface {
 		});
 
 		return serialized;
+	}
+
+	private isSpellSchoolLearned(spell: Spell) {
+		if (spell.type !== 'universal') {
+			return this.learnedSpellSchools[spell.type].has(spell.school);
+		}
+
+		return this.learnedSpellSchools.arcane.has(spell.school) || this.learnedSpellSchools.divine.has(spell.school);
 	}
 
 	private isSpellCircleLearned(spell: Spell) {

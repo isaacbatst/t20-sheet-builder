@@ -23,6 +23,7 @@ export class MysticTattooEffect extends PassiveEffect {
 				source: this.source,
 				spell: SpellFactory.make(this.spell),
 				needsCircle: false,
+				needsSchool: false,
 			},
 			transaction,
 		}));

@@ -42,7 +42,7 @@ type ActionHandlersPayloads = {
 	changeDisplacement: {displacement: number; source: TranslatableName};
 	addProficiency: {proficiency: Proficiency; source: TranslatableName};
 	learnCircle: {circle: SpellCircle; type: LearnableSpellType; source: TranslatableName};
-	learnSpell: {spell: Spell; source: TranslatableName; needsCircle?: boolean};
+	learnSpell: {spell: Spell; source: TranslatableName; needsCircle?: boolean; needsSchool?: boolean};
 	addContextualModifierToSkill: {modifier: ContextualModifierInterface; skill: SkillName};
 	addFixedModifierToSkill: {modifier: FixedModifierInterface; skill: SkillName};
 	addFixedModifierToLifePoints: {modifier: FixedModifierInterface};
