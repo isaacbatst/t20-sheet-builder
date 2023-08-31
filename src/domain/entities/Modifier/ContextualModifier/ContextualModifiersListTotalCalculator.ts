@@ -1,15 +1,15 @@
+import {type Context} from '../../Context';
 import type {Attributes} from '../../Sheet/Attributes';
-import type {ContextInterface} from '../../Context/ContextInterface';
 import type {ModifiersListTotalCalculator} from '../ModifiersListInterface';
-import type {ContextualModifierInterface} from './ContextualModifierInterface';
 import {ContextualModifierAppliableValueCalculator} from './ContextualModifierAppliableValueCalculator';
+import type {ContextualModifierInterface} from './ContextualModifierInterface';
 
 export type ContextualModifiersListTotalCalculatorInterface = ModifiersListTotalCalculator<ContextualModifierInterface>;
 
 export class ContextualModifiersListTotalCalculator
 implements ContextualModifiersListTotalCalculatorInterface {
 	constructor(
-		readonly context: ContextInterface,
+		readonly context: Context,
 		readonly attributes: Attributes,
 	) {}
 

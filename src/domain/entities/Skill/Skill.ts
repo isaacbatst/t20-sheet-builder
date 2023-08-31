@@ -1,5 +1,5 @@
 import {SheetBuilderError} from '../../errors/SheetBuilderError';
-import {type ContextInterface} from '../Context';
+import {type Context} from '../Context';
 import {type ContextualModifierInterface} from '../Modifier/ContextualModifier/ContextualModifierInterface';
 import {ContextualModifiersList} from '../Modifier/ContextualModifier/ContextualModifierList';
 import {type FixedModifierInterface} from '../Modifier/FixedModifier/FixedModifier';
@@ -101,7 +101,7 @@ export class Skill {
 		return attributes[this.attribute];
 	}
 
-	serialize(totalCalculator: SkillTotalCalculator, sheet: SheetInterface, context: ContextInterface): SerializedSheetSkill {
+	serialize(totalCalculator: SkillTotalCalculator, sheet: SheetInterface, context: Context): SerializedSheetSkill {
 		return {
 			attribute: this.attribute,
 			contextualModifiers: this.contextualModifiers.serialize(sheet, context),

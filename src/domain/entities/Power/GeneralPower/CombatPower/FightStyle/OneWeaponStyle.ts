@@ -21,7 +21,7 @@ export class OneWeaponStyle extends FightStyle {
 	private readonly condition: ModifierCondition = {
 		description: 'Se estiver usando uma arma corpo a corpo em uma das mãos e nada na outra,',
 		verify(context: Context) {
-			return context.character?.getWieldedItems().length === 1;
+			return context.sheet?.getSheetInventory().getWieldedItems().length === 1;
 		},
 	};
 

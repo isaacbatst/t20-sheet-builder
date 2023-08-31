@@ -1,5 +1,5 @@
 import {type SerializedSheetContextualModifiersList} from '../..';
-import {type ContextInterface} from '../../Context';
+import {type Context} from '../../Context';
 import type {Attributes} from '../../Sheet/Attributes';
 import {type SheetInterface} from '../../Sheet/SheetInterface';
 import {ModifiersList} from '../ModifiersList';
@@ -11,7 +11,7 @@ import {ContextualModifiersListTotalCalculator} from './ContextualModifiersListT
 export class ContextualModifiersList
 	extends ModifiersList <ContextualModifierInterface>
 	implements ContextualModifiersListInterface {
-	override serialize(sheet: SheetInterface, context: ContextInterface): SerializedSheetContextualModifiersList {
+	override serialize(sheet: SheetInterface, context: Context): SerializedSheetContextualModifiersList {
 		const attributes = sheet.getSheetAttributes().getValues();
 		const totalCalculator = new ContextualModifiersListTotalCalculator(context, attributes);
 		return {

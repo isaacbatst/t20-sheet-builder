@@ -1,4 +1,4 @@
-import {type ContextInterface} from '../Context';
+import {type Context} from '../Context';
 import {Modifiers, type SerializedModifiers} from '../Modifier/Modifiers';
 import {type SheetInterface} from '../Sheet/SheetInterface';
 
@@ -19,7 +19,7 @@ export class CharacterModifiers {
 	readonly skillExceptAttack = new Modifiers();
 	readonly skill = new Modifiers();
 
-	serialize(sheet: SheetInterface, context: ContextInterface): SerializedCharacterModifiers {
+	serialize(sheet: SheetInterface, context: Context): SerializedCharacterModifiers {
 		return {
 			attack: this.attack.serialize(sheet, context),
 			damage: this.damage.serialize(sheet, context),

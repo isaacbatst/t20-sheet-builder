@@ -1,6 +1,5 @@
 import {type ContextualModifierInterface} from '.';
 import {type Context} from '../../Context';
-import type {ContextInterface} from '../../Context/ContextInterface';
 import type {Attribute, Attributes} from '../../Sheet/Attributes';
 import type {ModifierAppliableValueCalculatorInterface} from '../ModifierInterface';
 import {ModifierAppliableValueCalculator} from '../ModifierValueGetter';
@@ -10,7 +9,7 @@ export class ContextualModifierAppliableValueCalculator
 	implements ModifierAppliableValueCalculatorInterface {
 	constructor(
 		attributes: Attributes,
-		readonly context: ContextInterface,
+		readonly context: Context,
 		readonly modifier: ContextualModifierInterface,
 	) {
 		super(attributes);
@@ -21,7 +20,7 @@ export class ContextualModifierAppliableValueCalculator
 
 		if (
 			this.context.activateContextualModifiers
-			&& this.modifier.condition.verify(this.context as Context)
+			&& this.modifier.condition.verify(this.context)
 		) {
 			return value + bonusesTotal;
 		}

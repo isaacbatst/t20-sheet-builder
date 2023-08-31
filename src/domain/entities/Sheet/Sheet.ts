@@ -1,7 +1,7 @@
 import {type TranslatableName} from '..';
 import {type ActivateableAbilityEffect} from '../Ability';
 import type {BuildStepInterface} from '../BuildStep';
-import {OutOfGameContext, type ContextInterface} from '../Context';
+import {type Context, OutOfGameContext, type ContextInterface} from '../Context';
 import {SheetSkill, type SheetSkillsObject} from '../Skill/SheetSkill';
 import {type Skill} from '../Skill/Skill';
 import {type SkillName} from '../Skill/SkillName';
@@ -51,7 +51,7 @@ export abstract class Sheet implements SheetInterface {
 	protected abstract sheetTriggeredEffects: SheetTriggeredEffects;
 	protected abstract activateableEffects: SheetActivateableEffects;
 
-	makeSkillTotalCalculator(context: ContextInterface = new OutOfGameContext()) {
+	makeSkillTotalCalculator(context: Context = new OutOfGameContext()) {
 		return SkillTotalCalculatorFactory.make(
 			this.getSheetAttributes().getValues(),
 			this.getLevel(),

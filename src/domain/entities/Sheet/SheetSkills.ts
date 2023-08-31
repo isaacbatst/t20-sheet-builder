@@ -1,12 +1,11 @@
-import {type ContextInterface} from '../Context';
+import {type Context} from '../Context';
 import {type ContextualModifierInterface} from '../Modifier/ContextualModifier/ContextualModifierInterface';
 import {type ModifierInterface} from '../Modifier/ModifierInterface';
 import {type SkillName} from '../Skill';
 import {InitialSkillsGenerator} from '../Skill/InitialSkillsGenerator';
 import {type Skill} from '../Skill/Skill';
-import {type SkillTotalCalculator} from '../Skill/SkillTotalCalculator';
 import {SkillTotalCalculatorFactory} from '../Skill/SkillTotalCalculatorFactory';
-import {type SerializedSheetSkill, type SerializedSheetSkills} from './SerializedSheet/SerializedSheetInterface';
+import {type SerializedSheetSkills} from './SerializedSheet/SerializedSheetInterface';
 import {type SheetInterface} from './SheetInterface';
 import {type SheetSkillsInterface} from './SheetSkillsInterface';
 
@@ -44,7 +43,7 @@ export class SheetSkills implements SheetSkillsInterface {
 		return this.skills;
 	}
 
-	serialize(sheet: SheetInterface, context: ContextInterface): SerializedSheetSkills {
+	serialize(sheet: SheetInterface, context: Context): SerializedSheetSkills {
 		const attributes = sheet.getSheetAttributes().getValues();
 		const level = sheet.getLevel();
 		const calculator = SkillTotalCalculatorFactory.make(attributes, level, context);
