@@ -75,7 +75,7 @@ export class Noble extends Role<SerializedNoble> {
 	override readonly name = Noble.roleName;
 	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
 
-	constructor(chosenSkills: SkillName[]) {
+	constructor(chosenSkills: SkillName[][]) {
 		super(chosenSkills, Noble.selectSkillGroups);
 	}
 

@@ -18,7 +18,7 @@ describe('SpecialFriend', () => {
 
 	it('should dispatch animalHandling modifier add', () => {
 		const specialFriend = new SpecialFriend(SkillName.acrobatics);
-		specialFriend.addToSheet(transaction, OriginName.animalsFriend);
+		specialFriend.addToSheet(transaction);
 
 		const skillModifier = sheet.getSkills()[SkillName.animalHandling].skill.fixedModifiers.get(OriginPowerName.specialFriend);
 		expect(skillModifier).toBeDefined();
@@ -27,7 +27,7 @@ describe('SpecialFriend', () => {
 
 	it('should dispatch custom skill modifier add', () => {
 		const specialFriend = new SpecialFriend(SkillName.acrobatics);
-		specialFriend.addToSheet(transaction, OriginName.animalsFriend);
+		specialFriend.addToSheet(transaction);
 		const skillModifier = sheet.getSkills()[SkillName.acrobatics].skill.fixedModifiers.get(OriginPowerName.specialFriend);
 		expect(skillModifier).toBeDefined();
 		expect(skillModifier?.baseValue).toBe(2);

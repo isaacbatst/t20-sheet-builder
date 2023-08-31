@@ -42,7 +42,7 @@ export class Cleric extends Role<SerializedCleric> {
 	override readonly name = Cleric.roleName;
 	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
 
-	constructor(chosenSkills: SkillName[]) {
+	constructor(chosenSkills: SkillName[][]) {
 		super(chosenSkills, Cleric.selectSkillGroups);
 	}
 

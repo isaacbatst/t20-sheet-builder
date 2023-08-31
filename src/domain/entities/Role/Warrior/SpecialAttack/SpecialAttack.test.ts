@@ -27,7 +27,7 @@ describe('SpecialAttack', () => {
 			new VersatileChoicePower(new OneWeaponStyle()),
 		];
 		race = new Human(['charisma', 'constitution', 'dexterity'], choices);
-		role = new Warrior([SkillName.fight, SkillName.aim, SkillName.athletics]);
+		role = new Warrior([[SkillName.fight], [SkillName.aim, SkillName.athletics]]);
 		sheetBuilder = new SheetBuilder();
 		origin = new Acolyte([new OriginBenefitGeneralPower(new IronWill()), new OriginBenefitSkill(SkillName.cure)]);
 		sheet = sheetBuilder

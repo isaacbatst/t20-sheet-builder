@@ -34,7 +34,7 @@ export class SheetPowers implements SheetPowersInterface {
 	}
 
 	pickGrantedPower(power: GrantedPower, transaction: TransactionInterface, source: TranslatableName): void {
-		power.addToSheet(transaction, source);
+		power.addToSheet(transaction);
 		this.powers.granted.set(power.name, power);
 	}
 

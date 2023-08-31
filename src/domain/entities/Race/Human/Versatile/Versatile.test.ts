@@ -74,7 +74,7 @@ describe('Versatile', () => {
 	it('should not allow apply without choices', () => {
 		const versatile = new Versatile();
 		expect(() => {
-			versatile.addToSheet(transaction, RaceName.human);
+			versatile.addToSheet(transaction);
 		}).toThrow('MISSING_CHOICES');
 	});
 
@@ -82,7 +82,7 @@ describe('Versatile', () => {
 		const versatile = new Versatile();
 		versatile.addChoice(new VersatileChoiceSkill(SkillName.acrobatics));
 		versatile.addChoice(new VersatileChoiceSkill(SkillName.animalHandling));
-		versatile.addToSheet(transaction, RaceName.human);
+		versatile.addToSheet(transaction);
 
 		const firstChoice = sheet.getSkills()[SkillName.acrobatics];
 		const secondChoice = sheet.getSkills()[SkillName.animalHandling];
@@ -96,7 +96,7 @@ describe('Versatile', () => {
 		versatile.addChoice(new VersatileChoiceSkill(SkillName.acrobatics));
 		versatile.addChoice(new VersatileChoicePower(new Dodge()));
 		transaction.sheet.getSheetAttributes().getValues().dexterity = 1;
-		versatile.addToSheet(transaction, RaceName.human);
+		versatile.addToSheet(transaction);
 
 		const firstChoice = sheet.getSkills()[SkillName.acrobatics];
 		const secondChoice = sheet.getSheetPowers().getGeneralPowers().get(GeneralPowerName.dodge);

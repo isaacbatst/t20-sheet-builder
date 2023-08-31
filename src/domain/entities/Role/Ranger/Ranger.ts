@@ -56,7 +56,7 @@ export class Ranger extends Role<SerializedRanger> {
 		},
 	});
 
-	constructor(chosenSkills: SkillName[]) {
+	constructor(chosenSkills: SkillName[][]) {
 		super(chosenSkills, Ranger.selectSkillGroups);
 	}
 

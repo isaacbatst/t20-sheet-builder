@@ -22,7 +22,7 @@ describe('ArcanistPathSorcerer', () => {
 	it('should create sorcerer with draconic lineage', () => {
 		const lineage = new ArcanistLineageDraconic(DamageType.fire);
 		const arcanistPath = new ArcanistPathSorcerer(lineage);
-		arcanistPath.addToSheet(transaction, RoleAbilityName.arcanistSupernaturalLineage);
+		arcanistPath.addToSheet(transaction);
 		const lifeModifier = sheet.getSheetLifePoints().getFixedModifiers().get(RoleAbilityName.arcanistSupernaturalLineage);
 		expect(lifeModifier).toBeDefined();
 		expect(lifeModifier?.attributeBonuses).toContain('charisma');
@@ -33,7 +33,7 @@ describe('ArcanistPathSorcerer', () => {
 		const lineage = new ArcanistLineageFaerie(spell);
 		const arcanistPath = new ArcanistPathSorcerer(lineage);
 		transaction.sheet.getSheetSpells().learnCircle(SpellCircle.first, 'arcane');
-		arcanistPath.addToSheet(transaction, RoleAbilityName.arcanistSupernaturalLineage);
+		arcanistPath.addToSheet(transaction);
 
 		expect(sheet.getSheetSpells().getSpells().get(spell.name)).toBeDefined();
 		expect(sheet.getSkills()[SkillName.cheat].skill.getIsTrained()).toBe(true);
@@ -43,7 +43,7 @@ describe('ArcanistPathSorcerer', () => {
 		const power = new Shell();
 		const lineage = new ArcanistLineageRed(power, 'wisdom');
 		const arcanistPath = new ArcanistPathSorcerer(lineage);
-		arcanistPath.addToSheet(transaction, RoleAbilityName.arcanistSupernaturalLineage);
+		arcanistPath.addToSheet(transaction);
 
 		expect(sheet.getSheetAttributes().getTormentaPowersAttribute()).toBe('wisdom');
 		expect(sheet.getSheetPowers().getGeneralPowers().get(power.name)).toBeDefined();

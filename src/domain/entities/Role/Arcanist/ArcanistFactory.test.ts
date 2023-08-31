@@ -3,7 +3,7 @@ import {ArcanistFactory, ArcanistLineageType, ArcanistPathName, DamageType, Skil
 describe('Arcanist Factory', () => {
 	it('should create sorcerer', () => {
 		const sorcerer = ArcanistFactory.makeFromParams({
-			chosenSkills: [SkillName.knowledge, SkillName.diplomacy],
+			chosenSkills: [[SkillName.knowledge, SkillName.diplomacy]],
 			path: ArcanistPathName.sorcerer,
 			sorcererLineage: ArcanistLineageType.draconic,
 			sorcererLineageDraconicDamageType: DamageType.acid,

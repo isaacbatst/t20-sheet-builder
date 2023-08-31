@@ -7,7 +7,7 @@ import {ArcanistPathSerializedHandlerMage, ArcanistPathSerializedHandlerSorcerer
 import {type SerializedArcanist, type SerializedArcanistPath} from './SerializedArcanist';
 
 export type ArcanistFactoryParams = {
-	chosenSkills: SkillName[];
+	chosenSkills: SkillName[][];
 	initialSpells: SpellName[];
 	path: ArcanistPathName;
 	mageSpell?: SpellName;
@@ -47,7 +47,7 @@ export class ArcanistFactory {
 			.setNext(wizard);
 
 		return ArcanistBuilder
-			.chooseSkills(serialized.chosenSkills)
+			.chooseSkills(serialized.selectedSkillsByGroup)
 			.choosePath(sorcerer.execute(serialized.path))
 			.chooseSpells(serialized.initialSpells.map(spellName => SpellFactory.make(spellName)));
 	}

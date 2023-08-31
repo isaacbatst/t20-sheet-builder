@@ -18,13 +18,13 @@ describe('RockKnowledge', () => {
 
 	it('should provide dark vision', () => {
 		const rockKnowledge = new RockKnowledge();
-		rockKnowledge.addToSheet(transaction, RaceName.dwarf);
+		rockKnowledge.addToSheet(transaction);
 		expect(sheet.getSheetVision().getVision()).toBe(Vision.dark);
 	});
 
 	it('should dispatch +2 perception bonus', () => {
 		const rockKnowledge = new RockKnowledge();
-		rockKnowledge.addToSheet(transaction, RaceName.dwarf);
+		rockKnowledge.addToSheet(transaction);
 		const perceptionModifier = sheet.getSkills()[SkillName.perception].skill.contextualModifiers.get(RaceAbilityName.rockKnowledge);
 		expect(perceptionModifier).toBeDefined();
 		expect(perceptionModifier?.baseValue).toBe(2);
@@ -32,7 +32,7 @@ describe('RockKnowledge', () => {
 
 	it('should dispatch +2 survival bonus', () => {
 		const rockKnowledge = new RockKnowledge();
-		rockKnowledge.addToSheet(transaction, RaceName.dwarf);
+		rockKnowledge.addToSheet(transaction);
 		const survivalModifier = sheet.getSkills()[SkillName.survival].skill.contextualModifiers.get(RaceAbilityName.rockKnowledge);
 		expect(survivalModifier).toBeDefined();
 		expect(survivalModifier?.baseValue).toBe(2);
@@ -40,7 +40,7 @@ describe('RockKnowledge', () => {
 
 	it('should not activate bonus in game context outside underground', () => {
 		const rockKnowledge = new RockKnowledge();
-		rockKnowledge.addToSheet(transaction, RaceName.dwarf);
+		rockKnowledge.addToSheet(transaction);
 
 		const perceptionModifier = sheet.getSkills()[SkillName.perception].skill.contextualModifiers.get(RaceAbilityName.rockKnowledge);
 		const survivalModifier = sheet.getSkills()[SkillName.survival].skill.contextualModifiers.get(RaceAbilityName.rockKnowledge);
@@ -52,7 +52,7 @@ describe('RockKnowledge', () => {
 
 	it('should activate bonus in game context inside underground', () => {
 		const rockKnowledge = new RockKnowledge();
-		rockKnowledge.addToSheet(transaction, RaceName.dwarf);
+		rockKnowledge.addToSheet(transaction);
 		const perceptionModifier = sheet.getSkills()[SkillName.perception].skill.contextualModifiers.get(RaceAbilityName.rockKnowledge);
 		const survivalModifier = sheet.getSkills()[SkillName.survival].skill.contextualModifiers.get(RaceAbilityName.rockKnowledge);
 		const context = new InGameContextFake();

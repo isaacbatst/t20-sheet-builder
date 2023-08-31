@@ -19,7 +19,7 @@ describe('HardAsRock', () => {
 
 	it('should dispatch addOtherModifierToLifePoints', () => {
 		const hardAsRock = new HardAsRock();
-		hardAsRock.addToSheet(transaction, RaceName.dwarf);
+		hardAsRock.addToSheet(transaction);
 		const lifePointsModifier = sheet.getSheetLifePoints().getFixedModifiers().get(RaceAbilityName.hardAsRock);
 		expect(lifePointsModifier).toBeDefined();
 		expect(lifePointsModifier?.baseValue).toBe(3);
@@ -28,7 +28,7 @@ describe('HardAsRock', () => {
 	it('should dispatch addPerLevelModifierToLifePoints', () => {
 		const hardAsRock = new HardAsRock();
 
-		hardAsRock.addToSheet(transaction, RaceName.dwarf);
+		hardAsRock.addToSheet(transaction);
 		const lifePointsModifier = sheet.getSheetLifePoints().getPerLevelModifiers().get(RaceAbilityName.hardAsRock);
 		expect(lifePointsModifier).toBeDefined();
 		expect(lifePointsModifier?.baseValue).toBe(1);

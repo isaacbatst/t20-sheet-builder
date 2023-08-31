@@ -43,7 +43,7 @@ export class Barbarian extends Role<SerializedBarbarian> {
 		},
 	});
 
-	constructor(chosenSkills: SkillName[] = []) {
+	constructor(chosenSkills: SkillName[][] = []) {
 		super(chosenSkills, Barbarian.selectSkillGroups);
 	}
 

@@ -10,15 +10,18 @@ describe('Ranger', () => {
 	let transaction: Transaction;
 
 	beforeEach(() => {
-		ranger = new Ranger([
-			SkillName.fight,
-			SkillName.animalHandling,
-			SkillName.athletics,
-			SkillName.animalRide,
-			SkillName.cure,
-			SkillName.fortitude,
-			SkillName.stealth,
-		]);
+		const chosenSkills: SkillName[][] = [
+			[SkillName.fight],
+			[
+				SkillName.animalHandling,
+				SkillName.athletics,
+				SkillName.animalRide,
+				SkillName.cure,
+				SkillName.fortitude,
+				SkillName.stealth,
+			],
+		];
+		ranger = new Ranger(chosenSkills);
 		sheet = new BuildingSheet();
 		transaction = new Transaction(sheet);
 		ranger.addToSheet(transaction);

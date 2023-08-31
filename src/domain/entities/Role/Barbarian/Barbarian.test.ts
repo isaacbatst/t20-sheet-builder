@@ -14,12 +14,12 @@ describe('Barbarian', () => {
 	beforeEach(() => {
 		sheet = new BuildingSheet();
 		transaction = new Transaction(sheet);
-		barbarian = new Barbarian([
+		barbarian = new Barbarian([[
 			SkillName.animalHandling,
 			SkillName.athletics,
 			SkillName.animalRide,
 			SkillName.initiative,
-		]);
+		]]);
 		barbarian.addToSheet(transaction);
 	});
 

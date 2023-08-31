@@ -36,6 +36,7 @@ export abstract class Role<
 			totalInitialSkills: role.getTotalInitialSkills(),
 			name: role.name,
 			chosenSkills: role.chosenSkills,
+			selectedSkillsByGroup: role.selectedSkillsByGroup,
 		};
 	}
 
@@ -51,13 +52,16 @@ export abstract class Role<
 		return true;
 	}
 
+	get chosenSkills(): SkillName[] {
+		return this.selectedSkillsByGroup.flat();
+	}
+
 	/**
  * Returns an instance of this role.
  * @param chosenSkills - Chosen role skills to be trained
   **/
-
 	constructor(
-		readonly chosenSkills: SkillName[],
+		readonly selectedSkillsByGroup: SkillName[][],
 		readonly selectSkillGroups: SelectSkillGroup[],
 	) {
 		this.validateChosenSkills();

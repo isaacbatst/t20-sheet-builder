@@ -48,7 +48,7 @@ export class Inventor extends Role<SerializedInventor> {
 	readonly name = Inventor.roleName;
 	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
 
-	constructor(chosenSkills: SkillName[]) {
+	constructor(chosenSkills: SkillName[][]) {
 		super(chosenSkills, Inventor.selectSkillGroups);
 	}
 

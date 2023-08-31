@@ -44,7 +44,7 @@ export class Druid extends Role<SerializedDruid> {
 	override readonly name = Druid.roleName;
 	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
 
-	constructor(chosenSkills: SkillName[]) {
+	constructor(chosenSkills: SkillName[][]) {
 		super(chosenSkills, Druid.selectSkillGroups);
 	}
 

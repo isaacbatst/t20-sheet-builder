@@ -47,7 +47,7 @@ export class Rogue extends Role<SerializedRogue> {
 	override readonly name = Rogue.roleName;
 	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
 
-	constructor(chosenSkills: SkillName[]) {
+	constructor(chosenSkills: SkillName[][]) {
 		super(chosenSkills, Rogue.selectSkillGroups);
 	}
 

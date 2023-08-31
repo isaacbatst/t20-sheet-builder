@@ -25,7 +25,7 @@ describe('Arcanist', () => {
 
 	it('should dispatch proper train skills', () => {
 		const arcanist = ArcanistBuilder
-			.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
+			.chooseSkills([[SkillName.knowledge, SkillName.diplomacy]])
 			.choosePath(new ArcanistPathMage(new FlamesExplosion()))
 			.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 		arcanist.addToSheet(transaction);
@@ -41,7 +41,7 @@ describe('Arcanist', () => {
 	it('should not train with missing chooses', () => {
 		expect(() => {
 			const arcanist = ArcanistBuilder
-				.chooseSkills([SkillName.knowledge])
+				.chooseSkills([[SkillName.knowledge]])
 				.choosePath(new ArcanistPathMage(new FlamesExplosion()))
 				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 		}).toThrow('MISSING_ROLE_SKILLS');
@@ -50,7 +50,7 @@ describe('Arcanist', () => {
 	it('should not train with wrong skills', () => {
 		expect(() => {
 			const arcanist = ArcanistBuilder
-				.chooseSkills([SkillName.knowledge, SkillName.athletics])
+				.chooseSkills([[SkillName.knowledge, SkillName.athletics]])
 				.choosePath(new ArcanistPathMage(new FlamesExplosion()))
 				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 		}).toThrow('INVALID_CHOSEN_SKILLS');
@@ -58,7 +58,7 @@ describe('Arcanist', () => {
 
 	it('should not dispatch profiency add', () => {
 		const arcanist = ArcanistBuilder
-			.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
+			.chooseSkills([[SkillName.knowledge, SkillName.diplomacy]])
 			.choosePath(new ArcanistPathMage(new FlamesExplosion()))
 			.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 		arcanist.addToSheet(transaction);
@@ -68,7 +68,7 @@ describe('Arcanist', () => {
 
 	it('should learn spells', () => {
 		const arcanist = ArcanistBuilder
-			.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
+			.chooseSkills([[SkillName.knowledge, SkillName.diplomacy]])
 			.choosePath(new ArcanistPathMage(new FlamesExplosion()))
 			.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 
@@ -85,7 +85,7 @@ describe('Arcanist', () => {
 		let mageTransaction: Transaction;
 		beforeEach(() => {
 			arcanist = ArcanistBuilder
-				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
+				.chooseSkills([[SkillName.knowledge, SkillName.diplomacy]])
 				.choosePath(new ArcanistPathMage(new FlamesExplosion()))
 				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 			mageSheet = new BuildingSheet();
@@ -119,7 +119,7 @@ describe('Arcanist', () => {
 		let wizardTransaction: Transaction;
 		beforeEach(() => {
 			arcanist = ArcanistBuilder
-				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
+				.chooseSkills([[SkillName.knowledge, SkillName.diplomacy]])
 				.choosePath(new ArcanistPathWizard(new ArcanistPathWizardFocusWand()))
 				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 			wizardSheet = new BuildingSheet();
@@ -155,7 +155,7 @@ describe('Arcanist', () => {
 		beforeEach(() => {
 			const lineage = new ArcanistLineageDraconic(DamageType.fire);
 			arcanist = ArcanistBuilder
-				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
+				.chooseSkills([[SkillName.knowledge, SkillName.diplomacy]])
 				.choosePath(new ArcanistPathSorcerer(lineage))
 				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 

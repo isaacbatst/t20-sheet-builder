@@ -6,7 +6,7 @@ import {RoleSerializedHandler} from './RoleSerializedHandler';
 
 export class RoleSerializedHandlerWarrior extends RoleSerializedHandler<SerializedRole<SerializedWarrior>> {
 	protected override handle(request: SerializedRole<SerializedWarrior>): RoleInterface {
-		return new Warrior(request.chosenSkills);
+		return new Warrior(request.selectedSkillsByGroup);
 	}
 
 	protected override shouldHandle(request: SerializedRole<SerializedWarrior>): boolean {

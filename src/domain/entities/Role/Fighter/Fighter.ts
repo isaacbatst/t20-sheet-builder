@@ -41,7 +41,7 @@ export class Fighter extends Role {
 	override readonly name = Fighter.roleName;
 	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
 
-	constructor(chosenSkills: SkillName[]) {
+	constructor(chosenSkills: SkillName[][]) {
 		super(chosenSkills, Fighter.selectSkillGroups);
 	}
 

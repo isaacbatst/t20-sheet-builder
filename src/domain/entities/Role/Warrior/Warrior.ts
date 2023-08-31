@@ -44,7 +44,7 @@ export class Warrior extends Role<SerializedWarrior> {
 	override mandatorySkills = Warrior.mandatorySkills;
 	override proficiencies = Warrior.proficiencies;
 
-	constructor(chosenSkills: SkillName[]) {
+	constructor(chosenSkills: SkillName[][]) {
 		super(chosenSkills, Warrior.selectSkillGroups);
 	}
 

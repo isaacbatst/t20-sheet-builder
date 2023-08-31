@@ -17,7 +17,7 @@ describe('Medicine', () => {
 		const medicine = new Medicine();
 		transaction.sheet.getSheetSkills().trainSkill(SkillName.cure);
 		expect(() => {
-			medicine.addToSheet(transaction, OriginName.acolyte);
+			medicine.addToSheet(transaction);
 			medicine.verifyRequirements(transaction.sheet);
 		}).toThrow('UNFULFILLED_REQUIREMENT');
 	});
@@ -26,7 +26,7 @@ describe('Medicine', () => {
 		const medicine = new Medicine();
 		transaction.sheet.getSheetAttributes().getValues().wisdom = 1;
 		expect(() => {
-			medicine.addToSheet(transaction, OriginName.acolyte);
+			medicine.addToSheet(transaction);
 			medicine.verifyRequirements(transaction.sheet);
 		}).toThrow('UNFULFILLED_REQUIREMENT');
 	});

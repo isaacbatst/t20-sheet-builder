@@ -19,7 +19,7 @@ describe('Dodge', () => {
 	it('should dispatch defense bonus', () => {
 		const dodge = new Dodge();
 		transaction.sheet.getSheetAttributes().getValues().dexterity = 1;
-		dodge.addToSheet(transaction, RaceAbilityName.versatile);
+		dodge.addToSheet(transaction);
 		const defenseModifier = sheet.getSheetDefense().getDefense().fixedModifiers.get(GeneralPowerName.dodge);
 		expect(defenseModifier).toBeDefined();
 		expect(defenseModifier?.baseValue).toBe(2);
@@ -28,7 +28,7 @@ describe('Dodge', () => {
 	it('should dispatch reflexes bonus', () => {
 		const dodge = new Dodge();
 		transaction.sheet.getSheetAttributes().getValues().dexterity = 1;
-		dodge.addToSheet(transaction, RaceAbilityName.versatile);
+		dodge.addToSheet(transaction);
 		const skillModifier = sheet.getSkills()[SkillName.reflexes].skill.fixedModifiers.get(GeneralPowerName.dodge);
 		expect(skillModifier).toBeDefined();
 		expect(skillModifier?.baseValue).toBe(2);
@@ -37,7 +37,7 @@ describe('Dodge', () => {
 	it('should require dexterity +1', () => {
 		const dodge = new Dodge();
 		expect(() => {
-			dodge.addToSheet(transaction, RaceAbilityName.versatile);
+			dodge.addToSheet(transaction);
 			dodge.verifyRequirements(transaction.sheet);
 		}).toThrow('UNFULFILLED_REQUIREMENT');
 	});

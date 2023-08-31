@@ -19,11 +19,13 @@ describe('buccaneer', () => {
 		sheet = new BuildingSheet();
 		transaction = new Transaction(sheet);
 		buccaneer = new Buccaneer([
-			SkillName.fight,
-			SkillName.aim,
-			SkillName.acting,
-			SkillName.perception,
-			SkillName.gambling,
+			[SkillName.fight],
+			[
+				SkillName.aim,
+				SkillName.acting,
+				SkillName.perception,
+				SkillName.gambling,
+			],
 		]);
 		buccaneer.addToSheet(transaction);
 		character = new Character(sheet);

@@ -8,8 +8,8 @@ import {GeneralPowerGroup} from '../GeneralPowerGroup';
 export abstract class TormentaPower extends GeneralPower {
 	override group: GeneralPowerGroup = GeneralPowerGroup.tormenta;
 
-	override addToSheet(transaction: TransactionInterface, source: TranslatableName): void {
-		super.addToSheet(transaction, source);
+	override addToSheet(transaction: TransactionInterface): void {
+		super.addToSheet(transaction);
 		transaction.run(new DecreaseAttribute({
 			payload: {
 				attribute: transaction.sheet.getSheetAttributes().getTormentaPowersAttribute(),

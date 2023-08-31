@@ -8,7 +8,7 @@ describe('SlowAndAlways', () => {
 		const slowAndAlways = new SlowAndAlways();
 		const sheet = new BuildingSheet();
 		const transaction = new Transaction(sheet);
-		slowAndAlways.addToSheet(transaction, RaceName.dwarf);
+		slowAndAlways.addToSheet(transaction);
 		expect(sheet.getSheetDisplacement().getDisplacement()).toBe(6);
 	});
 });

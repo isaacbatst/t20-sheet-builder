@@ -71,7 +71,7 @@ SerializedArcanist
 	initialSpells = 3;
 	spellType: SpellType = 'arcane';
 
-	constructor(chosenSkills: SkillName[], path: T, spells: Spell[]) {
+	constructor(chosenSkills: SkillName[][], path: T, spells: Spell[]) {
 		super(chosenSkills, Arcanist.selectSkillGroups);
 		const arcanistSpells = new ArcanistSpells(spells, path.spellLearnFrequency, path.spellsAttribute);
 		this.abilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({

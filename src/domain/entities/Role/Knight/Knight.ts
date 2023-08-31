@@ -41,7 +41,7 @@ export class Knight extends Role<SerializedKnight> {
 	override readonly name = Knight.roleName;
 	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
 
-	constructor(chosenSkills: SkillName[]) {
+	constructor(chosenSkills: SkillName[][]) {
 		super(chosenSkills, Knight.selectSkillGroups);
 	}
 

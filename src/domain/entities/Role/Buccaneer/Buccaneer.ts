@@ -50,7 +50,7 @@ export class Buccaneer extends Role<SerializedBuccaneer> {
 		},
 	});
 
-	constructor(chosenSkills: SkillName[] = []) {
+	constructor(chosenSkills: SkillName[][] = []) {
 		super(chosenSkills, Buccaneer.selectSkillGroups);
 	}
 

@@ -52,7 +52,7 @@ describe('Sheet', () => {
 				new VersatileChoicePower(new OneWeaponStyle()),
 			];
 			race = new Human(['charisma', 'constitution', 'dexterity'], choices);
-			role = new Warrior([SkillName.fight, SkillName.aim, SkillName.athletics]);
+			role = new Warrior([[SkillName.fight], [SkillName.aim, SkillName.athletics]]);
 			sheetBuilder = new SheetBuilder();
 			origin = new Acolyte([new OriginBenefitGeneralPower(new IronWill()), new OriginBenefitSkill(SkillName.cure)]);
 			sheet = sheetBuilder
@@ -249,7 +249,7 @@ describe('Sheet', () => {
 
 		beforeAll(() => {
 			role = ArcanistBuilder
-				.chooseSkills([SkillName.knowledge, SkillName.diplomacy])
+				.chooseSkills([[SkillName.knowledge, SkillName.diplomacy]])
 				.choosePath(new ArcanistPathMage(new FlamesExplosion()))
 				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 			race = new Dwarf();
@@ -310,7 +310,7 @@ describe('Sheet', () => {
 				new VersatileChoicePower(new OneWeaponStyle()),
 			];
 			const race = new Human(['charisma', 'constitution', 'dexterity'], choices);
-			const role = new Warrior([SkillName.intimidation, SkillName.aim, SkillName.athletics]);
+			const role = new Warrior([[SkillName.aim], [SkillName.intimidation, SkillName.athletics]]);
 			const sheetBuilder = new SheetBuilder();
 			const origin = new Acolyte([new OriginBenefitGeneralPower(new IronWill()), new OriginBenefitSkill(SkillName.cure)]);
 			expect(() => {

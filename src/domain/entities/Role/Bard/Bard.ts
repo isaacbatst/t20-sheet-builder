@@ -52,7 +52,7 @@ export class Bard extends Role<SerializedBard> {
 	override readonly name = Bard.roleName;
 	override abilitiesPerLevel: RoleAbilitiesPerLevel;
 
-	constructor(chosenSkills: SkillName[], chosenSchools: SpellSchool[], chosenSpells: Spell[]) {
+	constructor(chosenSkills: SkillName[][], chosenSchools: SpellSchool[], chosenSpells: Spell[]) {
 		super(chosenSkills, Bard.selectSkillGroups);
 		this.abilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({
 			[Level.one]: {

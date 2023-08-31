@@ -85,4 +85,5 @@ export type SerializedRoleBasic = {
 	startsWithArmor: boolean;
 	totalInitialSkills: number;
 	abilities: SerializedSheetRoleAbility[];
+	selectedSkillsByGroup: SkillName[][];
 };

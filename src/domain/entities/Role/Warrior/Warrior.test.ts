@@ -16,7 +16,7 @@ describe('Warrior', () => {
 	});
 
 	it('should dispatch proper train skills', () => {
-		const warrior = new Warrior([SkillName.fight, SkillName.animalHandling, SkillName.aim]);
+		const warrior = new Warrior([[SkillName.fight], [SkillName.animalHandling, SkillName.aim]]);
 		warrior.addToSheet(transaction);
 
 		const skills = transaction.sheet.getSkills();
@@ -29,24 +29,24 @@ describe('Warrior', () => {
 
 	it('should not train skills choosing more than allowed from the same group', () => {
 		expect(() => {
-			const warrior = new Warrior([SkillName.fight, SkillName.animalHandling, SkillName.aim, SkillName.athletics]);
+			const warrior = new Warrior([[SkillName.fight], [SkillName.animalHandling, SkillName.aim, SkillName.athletics]]);
 		}).toThrow('INVALID_CHOSEN_SKILLS');
 	});
 
 	it('should not train skills with less than required', () => {
 		expect(() => {
-			const warrior = new Warrior([SkillName.fight, SkillName.animalHandling]);
+			const warrior = new Warrior([[SkillName.fight], [SkillName.animalHandling]]);
 		}).toThrow('MISSING_ROLE_SKILLS');
 	});
 
 	it('should not train skills with repeated skills', () => {
 		expect(() => {
-			const warrior = new Warrior([SkillName.fight, SkillName.fight]);
+			const warrior = new Warrior([[SkillName.fight], [SkillName.fight]]);
 		}).toThrow('REPEATED_ROLE_SKILLS');
 	});
 
 	it('should dispatch profiencies add', () => {
-		const warrior = new Warrior([SkillName.fight, SkillName.animalHandling, SkillName.aim]);
+		const warrior = new Warrior([[SkillName.fight], [SkillName.animalHandling, SkillName.aim]]);
 		warrior.addToSheet(transaction);
 
 		const proficiencies = transaction.sheet.getSheetProficiencies().getProficiencies();
@@ -56,14 +56,14 @@ describe('Warrior', () => {
 	});
 
 	it('should dispatch abilities add', () => {
-		const warrior = new Warrior([SkillName.fight, SkillName.animalHandling, SkillName.aim]);
+		const warrior = new Warrior([[SkillName.fight], [SkillName.animalHandling, SkillName.aim]]);
 		warrior.addToSheet(transaction);
 
 		expect(sheet.getSheetAbilities().getRoleAbilities().get(RoleAbilityName.specialAttack)).toBeDefined();
 	});
 
 	it('should dispatch life points modifiers add', () => {
-		const warrior = new Warrior([SkillName.fight, SkillName.animalHandling, SkillName.aim]);
+		const warrior = new Warrior([[SkillName.fight], [SkillName.animalHandling, SkillName.aim]]);
 		warrior.addToSheet(transaction);
 
 		const lifePoints = sheet.getSheetLifePoints();
@@ -78,7 +78,7 @@ describe('Warrior', () => {
 	});
 
 	it('should dispatch mana points modifiers add', () => {
-		const warrior = new Warrior([SkillName.fight, SkillName.animalHandling, SkillName.aim]);
+		const warrior = new Warrior([[SkillName.fight], [SkillName.animalHandling, SkillName.aim]]);
 		warrior.addToSheet(transaction);
 
 		const manaPoints = sheet.getSheetManaPoints();
