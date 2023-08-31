@@ -30,7 +30,7 @@ export class BulwarkEffect extends TriggeredEffect {
 			modifiers: TriggeredEffectModifiers;
 			modifiersIndexes: EnabledEffectModifiersIndexes;
 		}, activation: TriggeredEffectActivation): {manaCost?: ManaCost | undefined} {
-		modifiersIndexes.defend = modifiers.defense?.fixed.add(new FixedModifier(this.source, 2));
+		modifiersIndexes.defense = modifiers.defense?.fixed.add(new FixedModifier(this.source, 2));
 
 		return {
 			manaCost: new ManaCost(1),
@@ -38,9 +38,9 @@ export class BulwarkEffect extends TriggeredEffect {
 	}
 
 	override disable({modifiersIndexes, modifiers}: {modifiers: TriggeredEffectModifiers; modifiersIndexes: EnabledEffectModifiersIndexes}): void {
-		if (typeof modifiersIndexes.defend !== 'undefined') {
-			modifiers.defense?.fixed.remove(modifiersIndexes.defend);
-			modifiersIndexes.defend = undefined;
+		if (typeof modifiersIndexes.defense !== 'undefined') {
+			modifiers.defense?.fixed.remove(modifiersIndexes.defense);
+			modifiersIndexes.defense = undefined;
 		}
 	}
 }

@@ -7,7 +7,7 @@ import {type SheetInterface} from '../Sheet/SheetInterface';
 import {type CharacterModifierName} from './CharacterModifiers';
 import {type CharacterAttackModifiers} from './CharactterAttackModifiers';
 
-export type EnabledEffectModifiersIndexes = Partial<Record<TriggerEvent, number>>;
+export type EnabledEffectModifiersIndexes = Partial<Record<CharacterModifierName, number>>;
 
 export type SerializedCharacterAttackTriggeredEffect = {
 	effect: SerializedTriggeredEffect;
