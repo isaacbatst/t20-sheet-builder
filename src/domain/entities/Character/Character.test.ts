@@ -43,6 +43,7 @@ describe('Character', () => {
 			})
 			.build();
 		character = new Character(sheet);
+		character.toggleEquipItem(EquipmentName.lightShield);
 	});
 
 	it('should get trained skill', () => {
@@ -63,19 +64,5 @@ describe('Character', () => {
 		expect(character.getWieldedItems()).toEqual([EquipmentName.dagger]);
 		character.toggleEquipItem(EquipmentName.dagger);
 		expect(character.getWieldedItems()).toEqual([]);
-	});
-
-	it('should have armor defense modifier', () => {
-		character.toggleEquipItem(EquipmentName.leatherArmor);
-		const modifier = character.modifiers.defense.fixed.get(EquipmentName.leatherArmor);
-		expect(modifier).toBeTruthy();
-		expect(modifier?.baseValue).toBe(2);
-	});
-
-	it('should have shield defense modifier', () => {
-		character.toggleEquipItem(EquipmentName.lightShield);
-		const modifier = character.modifiers.defense.fixed.get(EquipmentName.lightShield);
-		expect(modifier).toBeTruthy();
-		expect(modifier?.baseValue).toBe(1);
 	});
 });

@@ -1,3 +1,4 @@
+import {type CharacterModifierName} from '../Character';
 import {type EnabledEffectModifiersIndexes} from '../Character/CharacterAttackTriggeredEffect';
 import {type CharacterAttackModifiers} from '../Character/CharactterAttackModifiers';
 import {type ManaCost} from '../ManaCost';
@@ -13,17 +14,13 @@ export enum TriggerEvent {
 	defend = 'defend',
 	skillTest = 'skillTest',
 	skillTestExceptAttack = 'skillTestExceptAttack',
+	resistanceTest = 'resistanceTest',
 }
 
-export type TriggeredEffectModifiers = {
-	attack?: Modifiers;
-	damage?: Modifiers;
-	skillExceptAttack?: Modifiers;
-	skill?: Modifiers;
-};
+export type TriggeredEffectModifiers = Partial<Record<CharacterModifierName, Modifiers>>;
 
 export type TriggeredEffectInterface = ActivateableAbilityEffectInterface & {
-	triggerEvent: TriggerEvent;
+	triggerEvents: TriggerEvent[];
 	name: TriggeredEffectName;
 	enable({enabledTriggeredEffectsModifiers, modifiers}: {
 		modifiers: CharacterAttackModifiers;
@@ -32,17 +29,17 @@ export type TriggeredEffectInterface = ActivateableAbilityEffectInterface & {
 };
 
 type TriggeredEffectParams = ActivateableEffectParams & {
-	triggerEvent: TriggerEvent;
+	triggerEvents: TriggerEvent[] | TriggerEvent;
 	name: TriggeredEffectName;
 };
 
 export type SerializedTriggeredEffect = SerializedSheetAbilityEffect & {
-	triggerEvent: TriggerEvent;
+	triggerEvents: TriggerEvent[];
 	name: TriggeredEffectName;
 };
 
 export abstract class TriggeredEffect<A extends TriggeredEffectActivation = TriggeredEffectActivation> extends ActivateableAbilityEffect {
-	triggerEvent: TriggerEvent;
+	triggerEvents: TriggerEvent[];
 	name: TriggeredEffectName;
 
 	override get activationType(): ActivationType {
@@ -53,14 +50,16 @@ export abstract class TriggeredEffect<A extends TriggeredEffectActivation = Trig
 		params: TriggeredEffectParams,
 	) {
 		super(params);
-		this.triggerEvent = params.triggerEvent;
+		this.triggerEvents = Array.isArray(params.triggerEvents)
+			? params.triggerEvents
+			: [params.triggerEvents];
 		this.name = params.name;
 	}
 
 	override serialize(): SerializedTriggeredEffect {
 		return {
 			...super.serialize(),
-			triggerEvent: this.triggerEvent,
+			triggerEvents: this.triggerEvents,
 			name: this.name,
 		};
 	}

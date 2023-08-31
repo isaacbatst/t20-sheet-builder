@@ -246,6 +246,8 @@ export class Translator {
 		preyMark: 'Marca da Presa',
 		inspiration: 'Inspiração',
 		tracker: 'Rastreador',
+		honourCode: 'Código de Honra',
+		bulwark: 'Baluarte',
 	};
 
 	private static readonly spellTypesTranslation: Record<SpellType, string> = {

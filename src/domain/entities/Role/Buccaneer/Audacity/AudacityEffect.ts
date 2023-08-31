@@ -20,7 +20,7 @@ export class AudacityEffect extends TriggeredEffect<AudacityActivation> {
 			execution: 'reaction',
 			name: TriggeredEffectName.audacity,
 			source: RoleAbilityName.audacity,
-			triggerEvent: TriggerEvent.skillTestExceptAttack,
+			triggerEvents: TriggerEvent.skillTestExceptAttack,
 		});
 	}
 

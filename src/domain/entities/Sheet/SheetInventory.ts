@@ -73,8 +73,8 @@ export class SheetInventory implements SheetInventoryInterface {
 		item.toggleEquipped(modifiers);
 	}
 
-	addEquipment(equipment: Equipment): void {
-		this.inventory.addEquipment(equipment);
+	addEquipment(equipment: Equipment, isEquipped = false): void {
+		this.inventory.addEquipment(equipment, isEquipped);
 	}
 
 	addInitialEquipment(params: AddInitialEquipmentParams, transaction: TransactionInterface): void {
@@ -91,11 +91,11 @@ export class SheetInventory implements SheetInventoryInterface {
 		}
 
 		if (params.armor) {
-			transaction.run(new AddEquipment({payload: {equipment: params.armor, source}, transaction}));
+			transaction.run(new AddEquipment({payload: {equipment: params.armor, isEquipped: true, source}, transaction}));
 		}
 
 		if (params.role.proficiencies.includes(Proficiency.shield)) {
-			transaction.run(new AddEquipment({payload: {equipment: new LightShield(), source}, transaction}));
+			transaction.run(new AddEquipment({payload: {equipment: new LightShield(), isEquipped: true, source}, transaction}));
 		}
 
 		transaction.run(new AddMoney({payload: {quantity: params.money, source}, transaction}));

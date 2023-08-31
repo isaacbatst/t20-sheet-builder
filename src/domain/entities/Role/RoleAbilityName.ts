@@ -10,4 +10,6 @@ export enum RoleAbilityName {
 	bardSpells = 'bardSpells',
 	preyMark = 'preyMark',
 	tracker = 'tracker',
+	honourCode = 'honourCode',
+	bulwark = 'bulwark',
 }

@@ -43,7 +43,7 @@ export abstract class Ability implements AbilityInterface {
 			const action = new RegisterTriggeredEffect({
 				payload: {
 					effect,
-					event: effect.triggerEvent,
+					events: effect.triggerEvents,
 				},
 				transaction,
 			});

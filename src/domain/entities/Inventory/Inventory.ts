@@ -7,8 +7,8 @@ export class Inventory {
 	equipments = new Map<EquipmentName, InventoryEquipment>();
 	money = 0;
 
-	addEquipment(equipment: Equipment) {
-		this.equipments.set(equipment.name, new InventoryEquipment(equipment));
+	addEquipment(equipment: Equipment, isEquipped = false) {
+		this.equipments.set(equipment.name, new InventoryEquipment(equipment, isEquipped));
 	}
 
 	addMoney(amount: number) {

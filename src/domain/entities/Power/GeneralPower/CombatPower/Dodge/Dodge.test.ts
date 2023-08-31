@@ -1,6 +1,3 @@
-import {AddFixedModifierToSkill} from '../../../../Action/AddFixedModifierToSkill';
-import {FixedModifier} from '../../../../Modifier/FixedModifier/FixedModifier';
-import {RaceAbilityName} from '../../../../Race/RaceAbilityName';
 import {BuildingSheet} from '../../../../Sheet/BuildingSheet/BuildingSheet';
 import {Transaction} from '../../../../Sheet/Transaction';
 import {SkillName} from '../../../../Skill/SkillName';

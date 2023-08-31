@@ -27,7 +27,7 @@ export type SerializedInitialEquipment = {
 };
 
 export type SheetInventoryInterface = {
-	addEquipment(equipment: Equipment): void;
+	addEquipment(equipment: Equipment, isEquipped?: boolean): void;
 	addInitialEquipment(params: AddInitialEquipmentParams, transaction: TransactionInterface): void;
 	addMoney(quantity: number): void;
 	toggleEquippedItem({maxWieldedItems, modifiers, name}: ToggleEquippedItemParams): void;

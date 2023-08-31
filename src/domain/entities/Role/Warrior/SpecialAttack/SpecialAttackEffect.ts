@@ -37,7 +37,7 @@ export class SpecialAttackEffect extends TriggeredEffect<SpecialAttackActivation
 			duration: 'next',
 			execution: 'reaction',
 			source: RoleAbilityName.specialAttack,
-			triggerEvent: TriggerEvent.attack,
+			triggerEvents: TriggerEvent.attack,
 			name: TriggeredEffectName.specialAttack,
 		});
 		this.baseCosts = [new ManaCost(1)];

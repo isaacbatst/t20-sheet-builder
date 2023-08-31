@@ -13,7 +13,7 @@ export class RegisterTriggeredEffect extends Action<'registerTriggeredEffect'> {
 
 	override execute(): void {
 		const effects = this.transaction.sheet.getSheetTriggeredEffects();
-		effects.registerEffect(this.payload.event, this.payload.effect);
+		effects.registerEffect(this.payload.events, this.payload.effect);
 	}
 
 	getDescription(): string {
