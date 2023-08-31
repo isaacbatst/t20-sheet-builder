@@ -21,7 +21,6 @@ describe('Attack', () => {
 	let sheetBuilder: SheetBuilder;
 	let origin: OriginInterface;
 	let character: Character;
-	let context: Context;
 	beforeEach(() => {
 		const choices: VersatileChoice[] = [
 			new VersatileChoiceSkill(SkillName.acrobatics),
@@ -45,13 +44,12 @@ describe('Attack', () => {
 			})
 			.build();
 		character = new Character(sheet);
-		context = new PreviewContext(character);
 	});
 
 	let dagger: CharacterAttack;
 
 	beforeEach(() => {
-		const attacks = character.getAttacks(context);
+		const attacks = character.getAttacks();
 		dagger = attacks.get(EquipmentName.dagger)!;
 	});
 
@@ -76,7 +74,7 @@ describe('Attack', () => {
 
 		beforeEach(() => {
 			character.toggleEquipItem(EquipmentName.dagger);
-			const attack = character.getAttack(EquipmentName.dagger, context);
+			const attack = character.getAttack(EquipmentName.dagger);
 			result = attack.roll(fakeRandom);
 		});
 
@@ -99,7 +97,7 @@ describe('Attack', () => {
 			const oneWeaponStyleModifier = result.test.modifiers.contextual.get(GeneralPowerName.oneWeaponStyle);
 			expect(oneWeaponStyleModifier).toBeDefined();
 			expect(oneWeaponStyleModifier?.baseValue).toBe(2);
-			const appliableValue = character.getContextualModifierAppliableValue(oneWeaponStyleModifier!, context);
+			const appliableValue = character.getContextualModifierAppliableValue(oneWeaponStyleModifier!);
 			expect(appliableValue).toBe(2);
 		});
 
@@ -129,7 +127,7 @@ describe('Attack', () => {
 	});
 
 	it('should have default purpose damage modifier', () => {
-		dagger = character.getAttacks(context).get(EquipmentName.dagger)!;
+		dagger = character.getAttacks().get(EquipmentName.dagger)!;
 		expect(dagger.getDamageModifiersMaxTotal()).toBe(2);
 		expect(dagger.getDamageModifiersTotal()).toBe(2);
 	});
@@ -152,20 +150,20 @@ describe('Attack', () => {
 	});
 
 	it('should have triggered special attack', () => {
-		const attack = character.getAttacks(context).get(EquipmentName.dagger)!;
+		const attack = character.getAttacks().get(EquipmentName.dagger)!;
 		const effects = attack.getTriggeredEffects();
 		expect(effects.get(TriggeredEffectName.specialAttack)).toBeDefined();
 	});
 
 	it('should have attack cost with disabled triggered effect', () => {
-		const attack = character.getAttacks(context).get(EquipmentName.dagger)!;
+		const attack = character.getAttacks().get(EquipmentName.dagger)!;
 		const cost = attack.getManaCost();
 		expect(cost).toBeDefined();
 		expect(cost).toEqual({type: 'mana', value: 0});
 	});
 
 	it('should have attack cost with enabled triggered effect', () => {
-		const attack = character.getAttacks(context).get(EquipmentName.dagger)!;
+		const attack = character.getAttacks().get(EquipmentName.dagger)!;
 		attack.enableTriggeredEffect({
 			effectName: TriggeredEffectName.specialAttack,
 		});
@@ -176,7 +174,7 @@ describe('Attack', () => {
 	});
 
 	it('should disable triggered effect', () => {
-		const attack = character.getAttacks(context).get(EquipmentName.dagger)!;
+		const attack = character.getAttacks().get(EquipmentName.dagger)!;
 		attack.enableTriggeredEffect({
 			effectName: TriggeredEffectName.specialAttack,
 		});

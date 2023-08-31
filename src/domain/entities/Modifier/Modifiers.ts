@@ -1,4 +1,4 @@
-import {type ContextInterface} from '../Context';
+import {type Context} from '../Context';
 import {type SerializedSheetContextualModifiersList, type SerializedSheetModifiersList, type SerializedSheetPerLevelModifiersList} from '../Sheet';
 import {type Attributes} from '../Sheet/Attributes';
 import {type SheetInterface} from '../Sheet/SheetInterface';
@@ -64,7 +64,7 @@ export class Modifiers {
 			+ this.perLevel.getTotal(perLevelCalculator);
 	}
 
-	serialize(sheet: SheetInterface, context: ContextInterface): SerializedModifiers {
+	serialize(sheet: SheetInterface, context: Context): SerializedModifiers {
 		return {
 			fixed: this.fixed.serialize(sheet, context),
 			contextual: this.contextual.serialize(sheet, context),

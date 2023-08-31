@@ -46,7 +46,6 @@ describe('SheetSkills', () => {
 				})
 				.build();
 			character = new Character(sheet);
-			context = new PreviewContext(character);
 		});
 
 		it('should be serialized', () => {
@@ -123,17 +122,16 @@ describe('SheetSkills', () => {
 				})
 				.build();
 			character = new Character(sheet);
-			context = new PreviewContext(character);
 		});
 
 		it('should get skill with attribute modifier', () => {
-			const sheetSkills = character.getSkills(context);
+			const sheetSkills = character.getSkills();
 			const result = sheetSkills[SkillName.gambling].getAttributeModifier();
 			expect(result).toBe(1);
 		});
 
 		it('should roll skill with attribute modifier', () => {
-			const skill = character.getSkill(SkillName.intimidation, context);
+			const skill = character.getSkill(SkillName.intimidation);
 			const result = skill.roll({
 				get: vi.fn().mockReturnValue(10),
 			});
@@ -142,7 +140,7 @@ describe('SheetSkills', () => {
 		});
 
 		it('should roll skill with attribute modifier getting all skills', () => {
-			const sheetSkills = character.getSkills(context);
+			const sheetSkills = character.getSkills();
 			const result = sheetSkills[SkillName.intimidation].roll({
 				get: vi.fn().mockReturnValue(10),
 			});
@@ -151,14 +149,14 @@ describe('SheetSkills', () => {
 		});
 
 		it('should get skill triggered effects', () => {
-			const sheetSkills = character.getSkills(context);
+			const sheetSkills = character.getSkills();
 			const effects = sheetSkills[SkillName.gambling].getTriggeredEffects();
 			expect(effects.get(TriggeredEffectName.audacity)).toBeDefined();
 			expect(effects.get(TriggeredEffectName.audacity)?.getIsEnabled()).toBe(false);
 		});
 
 		it('should enable skill triggered effect', () => {
-			const sheetSkills = character.getSkills(context);
+			const sheetSkills = character.getSkills();
 			sheetSkills[SkillName.gambling].enableTriggeredEffect({
 				effectName: TriggeredEffectName.audacity,
 				attributes: {
@@ -172,7 +170,7 @@ describe('SheetSkills', () => {
 		});
 
 		it('should disable skill triggered effect', () => {
-			const sheetSkills = character.getSkills(context);
+			const sheetSkills = character.getSkills();
 			sheetSkills[SkillName.gambling].enableTriggeredEffect({
 				effectName: TriggeredEffectName.audacity,
 				attributes: {

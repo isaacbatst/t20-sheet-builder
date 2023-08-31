@@ -78,7 +78,7 @@ describe('buccaneer', () => {
 		});
 
 		it('should enable audacity triggered effect', () => {
-			const skill = character.getSkills(context)[SkillName.gambling];
+			const skill = character.getSkills()[SkillName.gambling];
 			skill.enableTriggeredEffect({
 				attributes: sheet.getSheetAttributes().getValues(),
 				effectName: TriggeredEffectName.audacity,
@@ -88,7 +88,7 @@ describe('buccaneer', () => {
 		});
 
 		it('should add skill modifier when audacity is enabled', () => {
-			const skill = character.getSkills(context)[SkillName.gambling];
+			const skill = character.getSkills()[SkillName.gambling];
 			skill.enableTriggeredEffect({
 				attributes: sheet.getSheetAttributes().getValues(),
 				effectName: TriggeredEffectName.audacity,
@@ -98,7 +98,7 @@ describe('buccaneer', () => {
 
 		it('should roll skill test with audacity', () => {
 			character.sheet.getSheetAttributes().increaseAttribute('charisma', 2);
-			const skill = character.getSkills(context)[SkillName.stealth];
+			const skill = character.getSkills()[SkillName.stealth];
 			skill.enableTriggeredEffect({
 				attributes: sheet.getSheetAttributes().getValues(),
 				effectName: TriggeredEffectName.audacity,
@@ -110,7 +110,7 @@ describe('buccaneer', () => {
 		});
 
 		it('should disable audacity triggered effect', () => {
-			const skill = character.getSkills(context)[SkillName.gambling];
+			const skill = character.getSkills()[SkillName.gambling];
 			skill.enableTriggeredEffect({
 				attributes: sheet.getSheetAttributes().getValues(),
 				effectName: TriggeredEffectName.audacity,

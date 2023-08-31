@@ -43,7 +43,6 @@ describe('Character', () => {
 			})
 			.build();
 		character = new Character(sheet);
-		context = new PreviewContext(character);
 	});
 
 	it('should get trained skill', () => {

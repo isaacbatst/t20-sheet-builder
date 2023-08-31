@@ -44,17 +44,16 @@ describe('SpecialAttack', () => {
 			})
 			.build();
 		character = new Character(sheet);
-		context = new PreviewContext(character);
 	});
 
 	let dagger: CharacterAttack;
 
 	beforeEach(() => {
-		const attacks = character.getAttacks(context);
+		const attacks = character.getAttacks();
 		dagger = attacks.get(EquipmentName.dagger)!;
 	});
 	it('should enable special attack', () => {
-		const attack = character.getAttacks(context).get(EquipmentName.dagger)!;
+		const attack = character.getAttacks().get(EquipmentName.dagger)!;
 		attack.enableTriggeredEffect({
 			effectName: TriggeredEffectName.specialAttack,
 			bonus: 'attack',
@@ -66,7 +65,7 @@ describe('SpecialAttack', () => {
 	});
 
 	it('should enable special attack splitting bonus', () => {
-		const attack = character.getAttacks(context).get(EquipmentName.dagger)!;
+		const attack = character.getAttacks().get(EquipmentName.dagger)!;
 		attack.enableTriggeredEffect({
 			effectName: TriggeredEffectName.specialAttack,
 			bonus: 'both',
@@ -82,7 +81,7 @@ describe('SpecialAttack', () => {
 	});
 
 	it('should enable special attack on damage', () => {
-		const attack = character.getAttacks(context).get(EquipmentName.dagger)!;
+		const attack = character.getAttacks().get(EquipmentName.dagger)!;
 		attack.enableTriggeredEffect({
 			effectName: TriggeredEffectName.specialAttack,
 			bonus: 'damage',
@@ -94,7 +93,7 @@ describe('SpecialAttack', () => {
 	});
 
 	it('should enable special attack using 2 mana points', () => {
-		const attack = character.getAttacks(context).get(EquipmentName.dagger)!;
+		const attack = character.getAttacks().get(EquipmentName.dagger)!;
 		attack.enableTriggeredEffect({
 			effectName: TriggeredEffectName.specialAttack,
 			mana: 2,

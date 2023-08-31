@@ -1,5 +1,5 @@
 import {TriggerEvent} from '../Ability';
-import {type Context} from '../Context';
+import {PreviewContext, type Context} from '../Context';
 import {OffensiveWeapon, type EquipmentName} from '../Inventory';
 import {type GeneralPowerMap} from '../Map';
 import {ContextualModifierAppliableValueCalculator, ContextualModifiersListTotalCalculator, FixedModifiersListTotalCalculator, PerLevelModifiersListTotalCalculator, type ContextualModifier, type ModifiersTotalCalculators} from '../Modifier';
@@ -39,6 +39,7 @@ export class Character implements CharacterInterface {
 
 	constructor(
 		readonly sheet: CharacterSheetInterface,
+		readonly context: Context = new PreviewContext(sheet),
 	) {
 		this.selectDefaultFightStyle(sheet.getSheetPowers().getGeneralPowers());
 	}
@@ -66,8 +67,12 @@ export class Character implements CharacterInterface {
 		});
 	}
 
-	getContextualModifierAppliableValue(modifier: ContextualModifier, context: Context) {
-		const calculator = new ContextualModifierAppliableValueCalculator(this.getAttributes(), context, modifier);
+	getContextualModifierAppliableValue(modifier: ContextualModifier) {
+		const calculator = new ContextualModifierAppliableValueCalculator(
+			this.getAttributes(),
+			this.context,
+			modifier,
+		);
 		return modifier.getAppliableValue(calculator);
 	}
 
@@ -76,19 +81,19 @@ export class Character implements CharacterInterface {
 		return attributes.getValues();
 	}
 
-	getSkill(skillName: SkillName, context: Context): CharacterSkill {
+	getSkill(skillName: SkillName): CharacterSkill {
 		const skill = this.makeCharacterSkill(
 			this.sheet.getSkill(skillName),
-			this.makeTotalCalculators(context),
+			this.makeTotalCalculators(this.context),
 		);
 
 		return skill;
 	}
 
-	getSkills(context: Context): Record<SkillName, CharacterSkill> {
+	getSkills(): Record<SkillName, CharacterSkill> {
 		// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 		const skills = {} as Record<SkillName, CharacterSkill>;
-		const totalCalculators = this.makeTotalCalculators(context);
+		const totalCalculators = this.makeTotalCalculators(this.context);
 		Object.entries(this.sheet.getSkills()).forEach(([skillName, skill]) => {
 			skills[skillName as SkillName] = this.makeCharacterSkill(skill, totalCalculators);
 		});
@@ -115,14 +120,14 @@ export class Character implements CharacterInterface {
 		]);
 	}
 
-	getAttacks(context: Context): Map<EquipmentName, CharacterAttack> {
+	getAttacks(): Map<EquipmentName, CharacterAttack> {
 		const attacks = new Map<EquipmentName, CharacterAttack>();
 		const inventory = this.sheet.getSheetInventory();
 		const equipments = inventory.getEquipments();
 		equipments.forEach(({equipment}) => {
 			if (equipment instanceof OffensiveWeapon) {
 				const typedEquipment = equipment as OffensiveWeapon;
-				const attack = this.makeAttack(typedEquipment, context);
+				const attack = this.makeAttack(typedEquipment);
 				attacks.set(typedEquipment.name, attack);
 			}
 		});
@@ -130,7 +135,7 @@ export class Character implements CharacterInterface {
 		return attacks;
 	}
 
-	getAttack(weaponName: EquipmentName, context: Context) {
+	getAttack(weaponName: EquipmentName) {
 		const inventory = this.sheet.getSheetInventory();
 		const weapon = inventory.getEquipment(weaponName);
 		if (!weapon || !(weapon.equipment instanceof OffensiveWeapon)) {
@@ -139,7 +144,7 @@ export class Character implements CharacterInterface {
 
 		const typedWeapon = weapon.equipment as OffensiveWeapon;
 
-		return this.makeAttack(typedWeapon, context);
+		return this.makeAttack(typedWeapon);
 	}
 
 	getWieldedItems(): EquipmentName[] {
@@ -151,23 +156,23 @@ export class Character implements CharacterInterface {
 		return this.fightStyle;
 	}
 
-	serialize(context: Context): SerializedCharacter {
+	serialize(): SerializedCharacter {
 		const attacks: SerializedCharacterAttack[] = [];
 
-		for (const attack of this.getAttacks(context).values()) {
-			attacks.push(attack.serialize(this.sheet, context));
+		for (const attack of this.getAttacks().values()) {
+			attacks.push(attack.serialize(this.sheet, this.context));
 		}
 
 		return {
 			sheet: this.sheet.serialize(),
-			modifiers: this.modifiers.serialize(this.sheet, context),
+			modifiers: this.modifiers.serialize(this.sheet, this.context),
 			fightStyle: this.fightStyle?.fightStyle.serialize(),
 			maxWieldedItems: this.maxWieldedItems,
 			attacks,
 		};
 	}
 
-	private makeAttack(weapon: OffensiveWeapon, context: Context) {
+	private makeAttack(weapon: OffensiveWeapon) {
 		const attackTriggeredEffects = this.sheet.getSheetTriggeredEffects().getByEvent(TriggerEvent.attack);
 		const testTriggeredEffects = this.sheet.getSheetTriggeredEffects().getByEvent(TriggerEvent.skillTest);
 		const effects = new Map([
@@ -178,7 +183,7 @@ export class Character implements CharacterInterface {
 			weapon,
 			skills: this.sheet.getSkills(),
 			maxTotalCalculators: this.makeMaxTotalCalculators(),
-			totalCalculators: this.makeTotalCalculators(context),
+			totalCalculators: this.makeTotalCalculators(this.context),
 			attributes: this.getAttributes(),
 			modifiers: {
 				damage: this.modifiers.damage,
