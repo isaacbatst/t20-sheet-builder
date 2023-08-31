@@ -2,14 +2,16 @@ import {type Context} from '../Context';
 import {Modifiers, type SerializedModifiers} from '../Modifier/Modifiers';
 import {type SheetInterface} from '../Sheet/SheetInterface';
 
-export type SerializedCharacterModifiers = {
-	attack: SerializedModifiers;
-	damage: SerializedModifiers;
-	defense: SerializedModifiers;
-	armorPenalty: SerializedModifiers;
-	skillExceptAttack: SerializedModifiers;
-	skill: SerializedModifiers;
-};
+export enum CharacterModifierName {
+	attack = 'attack',
+	damage = 'damage',
+	defense = 'defense',
+	armorPenalty = 'armorPenalty',
+	skillExceptAttack = 'skillExceptAttack',
+	skill = 'skill',
+}
+
+export type SerializedCharacterModifiers = Record<CharacterModifierName, SerializedModifiers>;
 
 export class CharacterModifiers {
 	readonly attack = new Modifiers();

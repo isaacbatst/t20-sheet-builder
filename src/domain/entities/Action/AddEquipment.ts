@@ -11,7 +11,7 @@ export class AddEquipment extends Action<'addEquipment'> {
 
 	execute(): void {
 		const sheetInventory = this.transaction.sheet.getSheetInventory();
-		sheetInventory.addEquipment(this.payload.equipment);
+		sheetInventory.addEquipment(this.payload.equipment, this.payload.isEquipped);
 	}
 
 	getDescription(): string {

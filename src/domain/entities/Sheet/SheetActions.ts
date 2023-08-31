@@ -53,7 +53,7 @@ type ActionHandlersPayloads = {
 	addPerLevelModifierToManaPoints: {modifier: PerLevelModifierInterface};
 	addFixedModifierToDefense: {modifier: FixedModifierInterface};
 	trainIntelligenceSkills: {skills: SkillName[]};
-	addEquipment: {equipment: Equipment; source: TranslatableName};
+	addEquipment: {equipment: Equipment; isEquipped?: boolean; source: TranslatableName};
 	addInitialEquipment: {role: RoleInterface; simpleWeapon: SimpleWeapon; martialWeapon?: MartialWeapon; armor?: Armor; money: number};
 	addMoney: {quantity: number; source: TranslatableName};
 	changeTormentaPowersAttribute: {attribute: Attribute; source: TranslatableName};
@@ -63,7 +63,7 @@ type ActionHandlersPayloads = {
 	becomeDevout: {devotion: Devotion};
 	pickGrantedPower: {power: GrantedPower; source: TranslatableName};
 	addResistance: {resistance: ResistanceName; value: number; source: TranslatableName};
-	registerTriggeredEffect: {effect: TriggeredEffect; event: TriggerEvent};
+	registerTriggeredEffect: {effect: TriggeredEffect; events: TriggerEvent[]};
 	registerActivateableEffect: {effect: ActivateableAbilityEffect};
 };
 

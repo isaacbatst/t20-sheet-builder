@@ -1,4 +1,4 @@
-import {TriggerEvent} from '../Ability';
+import {TriggerEvent, type TriggeredEffectName} from '../Ability';
 import {PreviewContext, type Context} from '../Context';
 import {OffensiveWeapon, type EquipmentName} from '../Inventory';
 import {type GeneralPowerMap} from '../Map';
@@ -13,6 +13,7 @@ import {CharacterSkill} from '../Skill/CharacterSkill';
 import {type SheetSkill} from '../Skill/SheetSkill';
 import type {CharacterAppliedFightStyle} from './CharacterAppliedFightStyle';
 import {CharacterAttack, type SerializedCharacterAttack} from './CharacterAttack';
+import {CharacterDefenseTriggeredEffect} from './CharacterDefenseTriggeredEffect';
 import type {CharacterInterface} from './CharacterInterface';
 import {CharacterModifiers, type SerializedCharacterModifiers} from './CharacterModifiers';
 
@@ -99,6 +100,19 @@ export class Character implements CharacterInterface {
 		});
 
 		return skills;
+	}
+
+	getDefenseTriggeredEffects() {
+		const effects = this.sheet.getSheetTriggeredEffects().getByEvent(TriggerEvent.defend);
+
+		const characterDefenseEffects = new Map<TriggeredEffectName, CharacterDefenseTriggeredEffect>();
+
+		for (const effect of effects.values()) {
+			const defenseEffect = new CharacterDefenseTriggeredEffect(effect, this.modifiers.defense);
+			characterDefenseEffects.set(defenseEffect.effect.name, defenseEffect);
+		}
+
+		return characterDefenseEffects;
 	}
 
 	makeCharacterSkill(skill: SheetSkill, totalCalculators: ModifiersTotalCalculators) {

@@ -44,6 +44,7 @@ describe('Attack', () => {
 			})
 			.build();
 		character = new Character(sheet);
+		character.toggleEquipItem(EquipmentName.lightShield);
 	});
 
 	let dagger: CharacterAttack;

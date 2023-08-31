@@ -12,4 +12,11 @@ export type AudacityActivation = {
 	attributes: Attributes;
 };
 
-export type TriggeredEffectActivation = SpecialAttackActivation | AudacityActivation;
+export type BulwarkActivation = {
+	effectName: TriggeredEffectName.bulwark;
+};
+
+export type TriggeredEffectActivation =
+	| SpecialAttackActivation
+	| AudacityActivation
+	| BulwarkActivation;

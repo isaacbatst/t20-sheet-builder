@@ -1,11 +1,14 @@
-import {Proficiency} from '../../Sheet';
+import {Level, Proficiency} from '../../Sheet';
 import {SkillName} from '../../Skill';
 import {Role} from '../Role';
 import {type RoleAbilitiesPerLevel} from '../RoleAbilitiesPerLevel';
 import {RoleAbilitiesPerLevelFactory} from '../RoleAbilitiesPerLevelFactory';
+import {RoleAbilityName} from '../RoleAbilityName';
 import {type SelectSkillGroup} from '../RoleInterface';
 import {RoleName} from '../RoleName';
 import {type SerializedKnight} from '../SerializedRole';
+import {Bulwark} from './Bulwark/Bulwark';
+import {HonourCode} from './HonourCode/HonourCode';
 
 export class Knight extends Role<SerializedKnight> {
 	static selectSkillGroups: SelectSkillGroup[] = [
@@ -39,7 +42,12 @@ export class Knight extends Role<SerializedKnight> {
 	override mandatorySkills = Knight.mandatorySkills;
 	override proficiencies = Knight.proficiencies;
 	override readonly name = Knight.roleName;
-	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
+	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({
+		[Level.one]: {
+			[RoleAbilityName.honourCode]: new HonourCode(),
+			[RoleAbilityName.bulwark]: new Bulwark(),
+		},
+	});
 
 	constructor(chosenSkills: SkillName[][]) {
 		super(chosenSkills, Knight.selectSkillGroups);

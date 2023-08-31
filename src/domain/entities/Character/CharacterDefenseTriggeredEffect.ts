@@ -2,10 +2,9 @@ import {type SerializedTriggeredEffect, type TriggerEvent, type TriggeredEffect,
 import {type TriggeredEffectActivation} from '../Ability/TriggeredEffectActivation';
 import {type Context} from '../Context';
 import {type ManaCost} from '../ManaCost';
-import {type SerializedModifiers} from '../Modifier';
+import {type Modifiers, type SerializedModifiers} from '../Modifier';
 import {type SheetInterface} from '../Sheet/SheetInterface';
 import {type CharacterModifierName} from './CharacterModifiers';
-import {type CharacterAttackModifiers} from './CharactterAttackModifiers';
 
 export type EnabledEffectModifiersIndexes = Partial<Record<TriggerEvent, number>>;
 
@@ -14,17 +13,16 @@ export type SerializedCharacterAttackTriggeredEffect = {
 	modifiers: Partial<Record<CharacterModifierName, SerializedModifiers>>;
 };
 
-export class CharacterAttackTriggeredEffect {
+export class CharacterDefenseTriggeredEffect {
 	readonly modifiersIndexes: EnabledEffectModifiersIndexes = {};
 	readonly modifiers: TriggeredEffectModifiers;
 
 	private isEnabled = false;
 	private manaCost?: ManaCost;
 
-	constructor(readonly effect: TriggeredEffect, modifiers: CharacterAttackModifiers) {
+	constructor(readonly effect: TriggeredEffect, defenseModifiers: Modifiers) {
 		this.modifiers = {
-			attack: modifiers.test,
-			damage: modifiers.damage,
+			defense: defenseModifiers,
 		};
 	}
 
@@ -60,10 +58,7 @@ export class CharacterAttackTriggeredEffect {
 		return {
 			effect: this.effect.serialize(),
 			modifiers: {
-				attack: this.modifiers.attack?.serialize(sheet, context),
-				damage: this.modifiers.damage?.serialize(sheet, context),
-				skillExceptAttack: this.modifiers.skillExceptAttack?.serialize(sheet, context),
-				skill: this.modifiers.skill?.serialize(sheet, context),
+				defense: this.modifiers.defense?.serialize(sheet, context),
 			},
 		};
 	}

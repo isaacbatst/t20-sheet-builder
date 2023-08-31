@@ -13,7 +13,6 @@ describe('buccaneer', () => {
 	let transaction: Transaction;
 	let buccaneer: Buccaneer;
 	let character: Character;
-	let context: Context;
 
 	beforeEach(() => {
 		sheet = new BuildingSheet();
@@ -29,7 +28,6 @@ describe('buccaneer', () => {
 		]);
 		buccaneer.addToSheet(transaction);
 		character = new Character(sheet);
-		context = new OutOfGameContext();
 	});
 
 	it('should have reflexes trained', () => {
