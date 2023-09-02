@@ -8,6 +8,7 @@ import {CureWounds} from './Divine/CureWounds';
 import {DivineProtection} from './Divine/DivineProtection';
 import {FaithShield} from './Divine/FaithShield';
 import {MagicWeapon} from './Divine/MagicWeapon';
+import {type SpellSchool} from './SpellSchool';
 
 export class Spells {
 	static getAll(): SpellStatic[] {
@@ -34,5 +35,9 @@ export class Spells {
 			FaithShield,
 			MagicWeapon,
 		];
+	}
+
+	static getBySchool(school: SpellSchool): SpellStatic[] {
+		return Spells.getAll().filter(spell => spell.school === school);
 	}
 }

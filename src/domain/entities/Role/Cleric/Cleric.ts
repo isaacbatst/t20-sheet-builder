@@ -49,7 +49,7 @@ export class Cleric extends Role<SerializedCleric> {
 		super(chosenSkills, Cleric.selectSkillGroups);
 		this.abilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({
 			[Level.one]: {
-				[RoleAbilityName.faithfulDevote]: new FaithfulDevote(),
+				[RoleAbilityName.clericFaithfulDevote]: new FaithfulDevote('cleric'),
 				[RoleAbilityName.clericSpells]: new ClericSpells(chosenSpells),
 			},
 		});
