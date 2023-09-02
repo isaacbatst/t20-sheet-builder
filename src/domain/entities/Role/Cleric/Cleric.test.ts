@@ -29,7 +29,7 @@ describe('Cleric', () => {
 
 	it('should have faithful devote ability', () => {
 		const roleAbilities = sheet.getSheetAbilities().getRoleAbilities();
-		expect(roleAbilities.get(RoleAbilityName.faithfulDevote)).toBeDefined();
+		expect(roleAbilities.get(RoleAbilityName.clericFaithfulDevote)).toBeDefined();
 	});
 
 	it('should allow 2 granted powers as faithfull devote', () => {

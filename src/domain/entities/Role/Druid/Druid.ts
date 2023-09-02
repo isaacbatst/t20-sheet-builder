@@ -1,11 +1,16 @@
-import {Proficiency} from '../../Sheet';
+import {Level, Proficiency} from '../../Sheet';
 import {SkillName} from '../../Skill';
+import {type Spell, type SpellSchool} from '../../Spell';
+import {FaithfulDevote} from '../Cleric/FaithfulDevote/FaithfulDevote';
 import {Role} from '../Role';
 import {type RoleAbilitiesPerLevel} from '../RoleAbilitiesPerLevel';
 import {RoleAbilitiesPerLevelFactory} from '../RoleAbilitiesPerLevelFactory';
+import {RoleAbilityName} from '../RoleAbilityName';
 import {type SelectSkillGroup} from '../RoleInterface';
 import {RoleName} from '../RoleName';
 import {type SerializedDruid} from '../SerializedRole';
+import {DruidSpells} from './DruidSpells/DruidSpells';
+import {WildEmpathy} from './WildEmpathy/WildEmpathy';
 
 export class Druid extends Role<SerializedDruid> {
 	static selectSkillGroups: SelectSkillGroup[] = [
@@ -42,10 +47,17 @@ export class Druid extends Role<SerializedDruid> {
 	override mandatorySkills = Druid.mandatorySkills;
 	override proficiencies = Druid.proficiencies;
 	override readonly name = Druid.roleName;
-	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
+	override abilitiesPerLevel: RoleAbilitiesPerLevel;
 
-	constructor(chosenSkills: SkillName[][]) {
+	constructor(chosenSkills: SkillName[][], chosenSpells: Spell[], chosenSchools: Set<SpellSchool>) {
 		super(chosenSkills, Druid.selectSkillGroups);
+		this.abilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({
+			[Level.one]: {
+				[RoleAbilityName.clericFaithfulDevote]: new FaithfulDevote('druid'),
+				[RoleAbilityName.wildEmpathy]: new WildEmpathy(),
+				[RoleAbilityName.druidSpells]: new DruidSpells(chosenSpells, chosenSchools),
+			},
+		});
 	}
 
 	protected override serializeSpecific(): SerializedDruid {
