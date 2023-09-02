@@ -1,11 +1,15 @@
-import {Proficiency} from '../../Sheet';
+import {Level, Proficiency} from '../../Sheet';
 import {SkillName} from '../../Skill';
+import {type Spell} from '../../Spell';
 import {Role} from '../Role';
 import {type RoleAbilitiesPerLevel} from '../RoleAbilitiesPerLevel';
 import {RoleAbilitiesPerLevelFactory} from '../RoleAbilitiesPerLevelFactory';
+import {RoleAbilityName} from '../RoleAbilityName';
 import {type SelectSkillGroup} from '../RoleInterface';
 import {RoleName} from '../RoleName';
 import {type SerializedCleric} from '../SerializedRole';
+import {ClericSpells} from './ClericSpells/ClericSpells';
+import {FaithfulDevote} from './FaithfulDevote/FaithfulDevote';
 
 export class Cleric extends Role<SerializedCleric> {
 	static selectSkillGroups: SelectSkillGroup[] = [
@@ -40,10 +44,15 @@ export class Cleric extends Role<SerializedCleric> {
 	override mandatorySkills = Cleric.mandatorySkills;
 	override proficiencies = Cleric.proficiencies;
 	override readonly name = Cleric.roleName;
-	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
-
-	constructor(chosenSkills: SkillName[][]) {
+	override abilitiesPerLevel: RoleAbilitiesPerLevel;
+	constructor(chosenSkills: SkillName[][], chosenSpells: Spell[]) {
 		super(chosenSkills, Cleric.selectSkillGroups);
+		this.abilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({
+			[Level.one]: {
+				[RoleAbilityName.faithfulDevote]: new FaithfulDevote(),
+				[RoleAbilityName.clericSpells]: new ClericSpells(chosenSpells),
+			},
+		});
 	}
 
 	protected override serializeSpecific(): SerializedCleric {

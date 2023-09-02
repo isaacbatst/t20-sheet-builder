@@ -1,4 +1,4 @@
-import {Spell} from '../Spell';
+import {Spell, type SpellType} from '../Spell';
 import {SpellCircle} from '../SpellCircle';
 import {SpellName} from '../SpellName';
 import {SpellSchool} from '../SpellSchool';
@@ -9,6 +9,8 @@ export class ControlPlants extends Spell {
 	static readonly circle = SpellCircle.first;
 	static readonly school = SpellSchool.transmutation;
 	static readonly spellName = SpellName.controlPlants;
+	static spellType: SpellType = 'arcane';
+
 	static get shortDescription() {
 		return 'Vegetação enreda criaturas.';
 	}

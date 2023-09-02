@@ -9,7 +9,7 @@ export type SerializedSheetDevotion = {
 
 export class SheetDevotion {
 	private devotion: Devotion | undefined = undefined;
-	// eslint-disable-next-line @typescript-eslint/prefer-readonly
+
 	private grantedPowerCount = 1;
 
 	isDevout() {
@@ -23,6 +23,10 @@ export class SheetDevotion {
 
 	getGrantedPowerCount() {
 		return this.grantedPowerCount;
+	}
+
+	changeGrantedPowerCount(count: number) {
+		this.grantedPowerCount = count;
 	}
 
 	getDeity() {

@@ -1,5 +1,5 @@
 import {AbilityEffects} from '../../Ability/AbilityEffects';
-import {Spell} from '../Spell';
+import {Spell, type SpellType} from '../Spell';
 import {SpellCircle} from '../SpellCircle';
 import {SpellName} from '../SpellName';
 import {SpellSchool} from '../SpellSchool';
@@ -10,6 +10,7 @@ export class FlamesExplosion extends Spell {
 	static school = SpellSchool.evocation;
 	static spellName = SpellName.flamesExplosion;
 	static shortDescription = 'Cone causa dano de fogo.';
+	static spellType: SpellType = 'arcane';
 	override shortDescription: string = FlamesExplosion.shortDescription;
 
 	effects = new AbilityEffects({
