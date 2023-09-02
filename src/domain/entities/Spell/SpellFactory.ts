@@ -1,5 +1,9 @@
 import {ArcaneArmor} from './ArcaneArmor/ArcaneArmor';
 import {ControlPlants} from './ControlPlants/ControlPlants';
+import {CureWounds} from './Divine/CureWounds';
+import {DivineProtection} from './Divine/DivineProtection';
+import {FaithShield} from './Divine/FaithShield';
+import {MagicWeapon} from './Divine/MagicWeapon';
 import {FlamesExplosion} from './FlamesExplosion/FlamesExplosion';
 import {IllusoryDisguise} from './IllusoryDisguise/IllusoryDisguise';
 import {MentalDagger} from './MentalDagger/MentalDagger';
@@ -14,6 +18,10 @@ export class SpellFactory {
 		illusoryDisguise: IllusoryDisguise,
 		mentalDagger: MentalDagger,
 		controlPlants: ControlPlants,
+		cureWounds: CureWounds,
+		divineProtection: DivineProtection,
+		faithShield: FaithShield,
+		magicWeapon: MagicWeapon,
 	};
 
 	static make(name: SpellName): Spell {
