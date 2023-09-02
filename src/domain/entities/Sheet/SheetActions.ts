@@ -65,6 +65,7 @@ type ActionHandlersPayloads = {
 	addResistance: {resistance: ResistanceName; value: number; source: TranslatableName};
 	registerTriggeredEffect: {effect: TriggeredEffect; events: TriggerEvent[]};
 	registerActivateableEffect: {effect: ActivateableAbilityEffect};
+	changeGrantPowersCount: {count: number; source: TranslatableName};
 };
 
 export type ActionType = keyof ActionHandlersPayloads;

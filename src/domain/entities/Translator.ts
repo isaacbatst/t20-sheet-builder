@@ -188,6 +188,7 @@ export class Translator {
 		shell: 'Carapaça',
 		analyticMind: 'Mente Analítica',
 		emptyMind: 'Mente Vazia',
+		linWuTradition: 'Tradição de Lin-Wu',
 	};
 
 	private static readonly visionsTranslation: Record<Vision, string> = {
@@ -248,6 +249,8 @@ export class Translator {
 		tracker: 'Rastreador',
 		honourCode: 'Código de Honra',
 		bulwark: 'Baluarte',
+		faithfulDevote: 'Devoto Fiel',
+		clericSpells: 'Magias do Clérigo',
 	};
 
 	private static readonly spellTypesTranslation: Record<SpellType, string> = {
@@ -262,6 +265,10 @@ export class Translator {
 		mentalDagger: 'Adaga Mental',
 		flamesExplosion: 'Explosão de Chamas',
 		controlPlants: 'Controlar Plantas',
+		cureWounds: 'Curar Ferimentos',
+		divineProtection: 'Proteção Divina',
+		faithShield: 'Escudo da Fé',
+		magicWeapon: 'Arma Mágica',
 	};
 
 	private static readonly spellCirclesTranslation: Record<SpellCircle, string> = {
