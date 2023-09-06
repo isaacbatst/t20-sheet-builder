@@ -55,4 +55,6 @@ export enum EquipmentName {
 	musket = 'musket',
 	lightShield = 'lightShield',
 	heavyShield = 'heavyShield',
+	acid = 'acid',
+	bomb = 'bomb',
 }

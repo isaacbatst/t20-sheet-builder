@@ -18,11 +18,14 @@ import type {SkillName} from './Skill/SkillName';
 import {type SpellSchool, type SpellType} from './Spell';
 import {SpellCircle} from './Spell/SpellCircle';
 import type {SpellName} from './Spell/SpellName';
+import {type EquipmentImprovementName} from './Inventory/Equipment/EquipmentImprovement/EquipmentImprovementName';
 
 export type TranslatableName = Attribute
 | RaceAbilityName | SkillName | PowerName | RaceName | Proficiency
 | Vision | RoleAbilityName | SpellName | SpellCircle | RoleName | OriginName
-| EquipmentName | ArcanistPathName | DamageType | SpellSchool | SizeName | DeityName | ResistanceName | 'default';
+| EquipmentName | ArcanistPathName | DamageType | SpellSchool | SizeName | DeityName
+| ResistanceName | EquipmentImprovementName
+| 'default';
 
 export class Translator {
 	static getAttributeTranslation(attribute: Attribute, capitalized = true) {
@@ -254,6 +257,8 @@ export class Translator {
 		druidFaithfulDevote: 'Devoto Fiel (Druida)',
 		wildEmpathy: 'Empatia Selvagem',
 		druidSpells: 'Magias (Druida)',
+		ingenuity: 'Engenhosidade',
+		prototype: 'Protótipo',
 	};
 
 	private static readonly spellTypesTranslation: Record<SpellType, string> = {
@@ -413,6 +418,13 @@ export class Translator {
 		light: 'Luz',
 	};
 
+	private static readonly equipmentImprovementsTranslation: Record<EquipmentImprovementName, string> = {
+		accurate: 'Certeira',
+		cruel: 'Cruel',
+		fit: 'Ajustada',
+		reinforced: 'Reforçada',
+	};
+
 	private static readonly translation: Record<TranslatableName, string> = {
 		...Translator.attributesTranslation,
 		...Translator.raceAbilitiesTranslation,
@@ -434,6 +446,7 @@ export class Translator {
 		...Translator.sizesTranslation,
 		...Translator.deitiesTranslation,
 		...Translator.resistancesTranslation,
+		...Translator.equipmentImprovementsTranslation,
 		default: 'Padrão',
 	};
 }

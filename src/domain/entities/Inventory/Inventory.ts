@@ -8,7 +8,11 @@ export class Inventory {
 	money = 0;
 
 	addEquipment(equipment: Equipment, isEquipped = false) {
-		this.equipments.set(equipment.name, new InventoryEquipment(equipment, isEquipped));
+		if (this.equipments.has(equipment.name)) {
+			this.equipments.get(equipment.name)?.increaseQuantity();
+		} else {
+			this.equipments.set(equipment.name, new InventoryEquipment(equipment, isEquipped));
+		}
 	}
 
 	addMoney(amount: number) {

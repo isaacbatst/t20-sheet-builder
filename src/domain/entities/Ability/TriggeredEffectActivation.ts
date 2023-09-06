@@ -16,7 +16,12 @@ export type BulwarkActivation = {
 	effectName: TriggeredEffectName.bulwark;
 };
 
+export type IngenuityActivation = {
+	effectName: TriggeredEffectName.ingenuity;
+};
+
 export type TriggeredEffectActivation =
 	| SpecialAttackActivation
 	| AudacityActivation
-	| BulwarkActivation;
+	| BulwarkActivation
+	| IngenuityActivation;
