@@ -1,19 +1,18 @@
-import {type Proficiency} from '../../Sheet';
+import {Level, type Proficiency} from '../../Sheet';
 import {SkillName} from '../../Skill';
 import {Role} from '../Role';
 import {type RoleAbilitiesPerLevel} from '../RoleAbilitiesPerLevel';
 import {RoleAbilitiesPerLevelFactory} from '../RoleAbilitiesPerLevelFactory';
+import {RoleAbilityName} from '../RoleAbilityName';
 import {type SelectSkillGroup} from '../RoleInterface';
 import {RoleName} from '../RoleName';
 import {type SerializedInventor} from '../SerializedRole';
+import {Ingenuity} from './Ingenuity/Ingenuity';
+import {Prototype} from './Prototype/Prototype';
+import {type PrototypeParams} from './Prototype/PrototypeEffect';
 
 export class Inventor extends Role<SerializedInventor> {
 	static selectSkillGroups: SelectSkillGroup[] = [
-		//     4 a sua escolha entre Conhecimento (Int), Cura (Sab),
-		// Diplomacia (Car), Fortitude (Con), Iniciativa (Des),
-		// Investigação (Int), Luta (For), Misticismo (Int),
-		// Ofício (Int), Pilotagem (Des), Percepção (Sab) e
-		// Pontaria (Des).
 		{
 			amount: 4,
 			skills: [
@@ -46,10 +45,16 @@ export class Inventor extends Role<SerializedInventor> {
 	override mandatorySkills = Inventor.mandatorySkills;
 	override proficiencies = Inventor.proficiencies;
 	readonly name = Inventor.roleName;
-	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
+	override abilitiesPerLevel: RoleAbilitiesPerLevel;
 
-	constructor(chosenSkills: SkillName[][]) {
+	constructor(chosenSkills: SkillName[][], prototypeParams: PrototypeParams) {
 		super(chosenSkills, Inventor.selectSkillGroups);
+		this.abilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({
+			[Level.one]: {
+				[RoleAbilityName.ingenuity]: new Ingenuity(),
+				[RoleAbilityName.prototype]: new Prototype(prototypeParams),
+			},
+		});
 	}
 
 	protected override serializeSpecific(): SerializedInventor {
