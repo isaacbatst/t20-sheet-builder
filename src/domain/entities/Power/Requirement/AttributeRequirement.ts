@@ -1,5 +1,6 @@
 import type {Attribute} from '../../Sheet/Attributes';
 import type {SheetInterface} from '../../Sheet/SheetInterface';
+import {StringHelper} from '../../StringHelper';
 import {Translator} from '../../Translator';
 import {Requirement} from './Requirement';
 
@@ -20,6 +21,6 @@ export class AttributeRequirement extends Requirement {
 	}
 
 	protected getDescription(): string {
-		return `${Translator.getAttributeTranslation(this.attribute)} ${this.value}`;
+		return `${Translator.getAttributeTranslation(this.attribute)} ${StringHelper.addNumberSign(this.value)}`;
 	}
 }

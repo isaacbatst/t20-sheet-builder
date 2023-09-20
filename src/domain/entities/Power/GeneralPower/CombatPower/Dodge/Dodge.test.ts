@@ -36,6 +36,6 @@ describe('Dodge', () => {
 		expect(() => {
 			dodge.addToSheet(transaction);
 			dodge.verifyRequirements(transaction.sheet);
-		}).toThrow('UNFULFILLED_REQUIREMENT');
+		}).toThrow('Requisito não preenchido: Destreza +1');
 	});
 });
