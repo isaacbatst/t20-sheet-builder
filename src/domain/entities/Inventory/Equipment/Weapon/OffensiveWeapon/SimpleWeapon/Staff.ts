@@ -13,8 +13,11 @@ export class StaffStick extends SimpleWeapon {
 		new WeaponPurposeMelee(),
 	];
 
+	static price = 0;
+
 	damage: DiceRoll = StaffStick.damage;
 	critical: Critical = StaffStick.critical;
 	name = StaffStick.equipmentName;
 	purposes = StaffStick.purposes;
+	price = StaffStick.price;
 }

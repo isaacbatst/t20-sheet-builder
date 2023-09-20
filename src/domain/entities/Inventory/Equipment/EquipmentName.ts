@@ -57,4 +57,6 @@ export enum EquipmentName {
 	heavyShield = 'heavyShield',
 	acid = 'acid',
 	bomb = 'bomb',
+	loveElixir = 'loveElixir',
+	sickle = 'sickle',
 }

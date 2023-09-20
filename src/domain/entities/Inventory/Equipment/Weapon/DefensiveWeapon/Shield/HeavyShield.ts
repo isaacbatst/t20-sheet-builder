@@ -6,4 +6,5 @@ export class HeavyShield extends Shield {
 	override armorPenalty = 2;
 	override slots = 2;
 	override name: EquipmentName = EquipmentName.heavyShield;
+	override price = 15;
 }

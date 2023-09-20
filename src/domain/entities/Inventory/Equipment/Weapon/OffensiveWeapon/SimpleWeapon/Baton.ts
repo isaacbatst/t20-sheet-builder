@@ -13,8 +13,11 @@ export class Baton extends SimpleWeapon {
 		new WeaponPurposeMelee(),
 	];
 
+	static price = 0;
+
 	damage: DiceRoll = Baton.damage;
 	critical: Critical = Baton.critical;
 	name = Baton.equipmentName;
 	purposes = Baton.purposes;
+	price = Baton.price;
 }

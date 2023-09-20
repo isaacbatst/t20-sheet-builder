@@ -10,9 +10,11 @@ export class HandAndaHalfSword extends MartialWeapon {
 	static critical = new Critical(19);
 	static equipmentName: MartialWeaponName = EquipmentName.handAndaHalfSword;
 	static purposes = [new WeaponPurposeMelee(), new WeaponPurposeRangedThrowing()];
+	static price = 50;
 
 	override damage: DiceRoll = HandAndaHalfSword.damage;
 	override critical: Critical = HandAndaHalfSword.critical;
 	override name = HandAndaHalfSword.equipmentName;
 	override purposes = HandAndaHalfSword.purposes;
+	override price = HandAndaHalfSword.price;
 }

@@ -10,9 +10,11 @@ export class Scythe extends MartialWeapon {
 	static critical = new Critical(20, 4);
 	static equipmentName: MartialWeaponName = EquipmentName.scythe;
 	static purposes = [new WeaponPurposeMelee()];
+	static price = 18;
 
 	damage: DiceRoll = Scythe.damage;
 	critical: Critical = Scythe.critical;
 	name = Scythe.equipmentName;
 	override purposes = Scythe.purposes;
+	price = Scythe.price;
 }

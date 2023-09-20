@@ -14,8 +14,11 @@ export class Trident extends MartialWeapon {
 		new WeaponPurposeRangedThrowing(),
 	];
 
+	static price = 15;
+
 	override damage: DiceRoll = Trident.damage;
 	override critical: Critical = Trident.critical;
 	override name = Trident.equipmentName;
 	override purposes = Trident.purposes;
+	override price = Trident.price;
 }

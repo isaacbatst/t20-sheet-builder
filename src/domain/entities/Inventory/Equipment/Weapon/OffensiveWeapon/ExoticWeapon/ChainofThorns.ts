@@ -13,8 +13,11 @@ export class ChainofThorns extends ExoticWeapon {
 		new WeaponPurposeMelee(),
 	];
 
+	static price = 25;
+
 	override damage: DiceRoll = ChainofThorns.damage;
 	override critical: Critical = ChainofThorns.critical;
 	override name = ChainofThorns.equipmentName;
 	override purposes = ChainofThorns.purposes;
+	override price = ChainofThorns.price;
 }

@@ -16,8 +16,11 @@ export class Assegai extends SimpleWeapon {
 		new WeaponPurposeRangedThrowing(),
 	];
 
+	static price = 1;
+
 	damage: DiceRoll = Assegai.damage;
 	critical: Critical = Assegai.critical;
 	name = Assegai.equipmentName;
 	purposes = Assegai.purposes;
+	price = Assegai.price;
 }

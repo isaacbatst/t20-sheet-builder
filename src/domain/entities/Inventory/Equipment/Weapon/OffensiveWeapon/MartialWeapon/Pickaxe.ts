@@ -10,9 +10,11 @@ export class Pickaxe extends MartialWeapon {
 	static critical = new Critical(20, 4);
 	static equipmentName: MartialWeaponName = EquipmentName.pickaxe;
 	static purposes = [new WeaponPurposeMelee()];
+	static price = 8;
 
 	override damage: DiceRoll = Pickaxe.damage;
 	override critical: Critical = Pickaxe.critical;
 	override name = Pickaxe.equipmentName;
 	override purposes: WeaponPurpose[] = Pickaxe.purposes;
+	override price = Pickaxe.price;
 }

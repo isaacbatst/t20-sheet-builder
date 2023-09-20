@@ -13,8 +13,11 @@ export class Katana extends ExoticWeapon {
 		new WeaponPurposeMelee(),
 	];
 
+	static price = 100;
+
 	override damage: DiceRoll = Katana.damage;
 	override critical: Critical = Katana.critical;
 	override name = Katana.equipmentName;
 	override purposes = Katana.purposes;
+	override price = Katana.price;
 }

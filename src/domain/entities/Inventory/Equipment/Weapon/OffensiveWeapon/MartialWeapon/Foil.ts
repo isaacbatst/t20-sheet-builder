@@ -10,9 +10,11 @@ export class Foil extends MartialWeapon {
 	static critical = new Critical(18);
 	static equipmentName: MartialWeaponName = EquipmentName.foil;
 	static purposes = [new WeaponPurposeMelee()];
+	static price = 20;
 
 	override damage: DiceRoll = Foil.damage;
 	override critical: Critical = Foil.critical;
 	override name = Foil.equipmentName;
 	override purposes = Foil.purposes;
+	override price = Foil.price;
 }

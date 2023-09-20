@@ -7,14 +7,17 @@ import {type ExoticWeaponName} from './ExoticWeaponName';
 
 export class Whip extends ExoticWeapon {
 	static damage = new DiceRoll(1, 3);
-	static critical = new Critical(19, 2);
+	static critical = new Critical(20, 2);
 	static equipmentName: ExoticWeaponName = EquipmentName.whip;
 	static purposes = [
 		new WeaponPurposeMelee(),
 	];
 
+	static price = 2;
+
 	override damage: DiceRoll = Whip.damage;
 	override critical: Critical = Whip.critical;
 	override name = Whip.equipmentName;
 	override purposes = Whip.purposes;
+	override price = Whip.price;
 }

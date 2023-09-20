@@ -16,8 +16,11 @@ export class Dagger extends SimpleWeapon {
 		new WeaponPurposeRangedThrowing(),
 	];
 
+	static price = 2;
+
 	damage: DiceRoll = Dagger.damage;
 	critical: Critical = Dagger.critical;
 	name = Dagger.equipmentName;
 	purposes = Dagger.purposes;
+	price = Dagger.price;
 }

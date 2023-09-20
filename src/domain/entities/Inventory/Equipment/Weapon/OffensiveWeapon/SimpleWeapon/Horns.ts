@@ -13,8 +13,11 @@ export class Horns extends SimpleWeapon {
 		new WeaponPurposeMelee(),
 	];
 
+	static price = 0;
+
 	damage: DiceRoll = Horns.damage;
 	critical: Critical = Horns.critical;
 	name = Horns.equipmentName;
 	purposes = Horns.purposes;
+	price = Horns.price;
 }

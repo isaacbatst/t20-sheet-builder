@@ -10,9 +10,11 @@ export class MountedSpear extends MartialWeapon {
 	static critical = new Critical(20, 3);
 	static equipmentName: MartialWeaponName = EquipmentName.mountedSpear;
 	static purposes = [new WeaponPurposeMelee()];
+	static price = 15;
 
 	damage: DiceRoll = MountedSpear.damage;
 	critical: Critical = MountedSpear.critical;
 	name = MountedSpear.equipmentName;
 	override purposes: WeaponPurpose[] = MountedSpear.purposes;
+	price = MountedSpear.price;
 }

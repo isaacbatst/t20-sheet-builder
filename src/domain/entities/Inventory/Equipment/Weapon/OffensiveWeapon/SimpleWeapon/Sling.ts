@@ -15,8 +15,11 @@ export class Sling extends SimpleWeapon {
 		}),
 	];
 
+	static price = 0;
+
 	damage: DiceRoll = Sling.damage;
 	critical: Critical = Sling.critical;
 	name = Sling.equipmentName;
 	purposes = Sling.purposes;
+	price = Sling.price;
 }

@@ -13,8 +13,11 @@ export class DwarfAxe extends ExoticWeapon {
 		new WeaponPurposeMelee(),
 	];
 
+	static price = 30;
+
 	override damage: DiceRoll = DwarfAxe.damage;
 	override critical: Critical = DwarfAxe.critical;
 	override name = DwarfAxe.equipmentName;
 	override purposes = DwarfAxe.purposes;
+	override price = DwarfAxe.price;
 }

@@ -13,8 +13,11 @@ export class Mace extends SimpleWeapon {
 		new WeaponPurposeMelee(),
 	];
 
+	static price = 12;
+
 	damage: DiceRoll = Mace.damage;
 	critical: Critical = Mace.critical;
 	name = Mace.equipmentName;
 	purposes = Mace.purposes;
+	price = Mace.price;
 }

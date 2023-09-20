@@ -13,8 +13,11 @@ export class BastardSword extends ExoticWeapon {
 		new WeaponPurposeMelee(),
 	];
 
+	static price = 35;
+
 	override damage: DiceRoll = BastardSword.damage;
 	override critical: Critical = BastardSword.critical;
 	override name = BastardSword.equipmentName;
 	override purposes = BastardSword.purposes;
+	override price = BastardSword.price;
 }

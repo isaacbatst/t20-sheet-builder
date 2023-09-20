@@ -10,6 +10,7 @@ export class EquipmentAnimal extends Equipment {
 
 	constructor(
 		readonly name: EquipmentName,
+		readonly price = 0,
 	) {
 		super();
 	}

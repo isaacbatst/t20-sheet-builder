@@ -14,8 +14,11 @@ export class Hatchet extends MartialWeapon {
 		new WeaponPurposeRangedThrowing(),
 	];
 
+	static price = 6;
+
 	override damage: DiceRoll = Hatchet.damage;
 	override critical: Critical = Hatchet.critical;
 	override name = Hatchet.equipmentName;
 	override purposes = Hatchet.purposes;
+	override price = Hatchet.price;
 }

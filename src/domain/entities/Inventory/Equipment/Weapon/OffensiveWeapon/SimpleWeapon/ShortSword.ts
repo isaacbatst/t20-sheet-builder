@@ -13,8 +13,11 @@ export class ShortSword extends SimpleWeapon {
 		new WeaponPurposeMelee(),
 	];
 
+	static price = 10;
+
 	damage: DiceRoll = ShortSword.damage;
 	critical: Critical = ShortSword.critical;
 	name = ShortSword.equipmentName;
 	purposes = ShortSword.purposes;
+	price = ShortSword.price;
 }
