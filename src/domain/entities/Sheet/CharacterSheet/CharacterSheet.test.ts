@@ -327,7 +327,7 @@ describe('Sheet', () => {
 						money: 24,
 					})
 					.build();
-			}).toThrow('UNFULFILLED_REQUIREMENT');
+			}).toThrow('Requisito não preenchido: Treinado em Luta');
 		});
 	});
 });

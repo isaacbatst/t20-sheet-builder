@@ -19,7 +19,7 @@ describe('Medicine', () => {
 		expect(() => {
 			medicine.addToSheet(transaction);
 			medicine.verifyRequirements(transaction.sheet);
-		}).toThrow('UNFULFILLED_REQUIREMENT');
+		}).toThrow('Requisito não preenchido: Sabedoria +1');
 	});
 
 	it('should require cure training', () => {
@@ -28,6 +28,6 @@ describe('Medicine', () => {
 		expect(() => {
 			medicine.addToSheet(transaction);
 			medicine.verifyRequirements(transaction.sheet);
-		}).toThrow('UNFULFILLED_REQUIREMENT');
+		}).toThrow('Requisito não preenchido: Treinado em Cura');
 	});
 });

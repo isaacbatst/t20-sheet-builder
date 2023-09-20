@@ -1,4 +1,5 @@
 import {SheetBuilderError} from '../../errors/SheetBuilderError';
+import {UnfulfilledRequirementError} from '../../errors/UnfulfilledRequirementError';
 import type {AbilityInterface} from '../Ability/Ability';
 import {Ability} from '../Ability/Ability';
 import {type SheetInterface} from '../Sheet/SheetInterface';
@@ -28,10 +29,10 @@ export abstract class Power extends Ability implements PowerInterface {
 	}
 
 	verifyRequirements(sheet: SheetInterface) {
-		const everyRequirementAchieved = this.requirements.every(requirement => requirement.verify(sheet));
+		const requirementNotMet = this.requirements.find(requirement => !requirement.verify(sheet));
 
-		if (!everyRequirementAchieved) {
-			throw new SheetBuilderError('UNFULFILLED_REQUIREMENT');
+		if (requirementNotMet) {
+			throw new UnfulfilledRequirementError(requirementNotMet);
 		}
 	}
 

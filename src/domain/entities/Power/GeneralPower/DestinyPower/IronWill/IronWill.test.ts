@@ -18,7 +18,7 @@ describe('IronWill', () => {
 		expect(() => {
 			ironWill.addToSheet(transaction);
 			ironWill.verifyRequirements(transaction.sheet);
-		}).toThrow('UNFULFILLED_REQUIREMENT');
+		}).toThrow('Requisito não preenchido: Sabedoria +1');
 	});
 
 	it('should dispatch mana points modifier add', () => {
