@@ -13,8 +13,11 @@ export class LongSword extends MartialWeapon {
 		new WeaponPurposeMelee(),
 	];
 
+	static price = 15;
+
 	override damage: DiceRoll = LongSword.damage;
 	override critical: Critical = LongSword.critical;
 	override name = LongSword.equipmentName;
 	override purposes = LongSword.purposes;
+	override price = LongSword.price;
 }

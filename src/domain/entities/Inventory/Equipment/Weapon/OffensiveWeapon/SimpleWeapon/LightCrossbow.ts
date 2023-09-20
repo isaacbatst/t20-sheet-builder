@@ -13,8 +13,11 @@ export class LightCrossbow extends SimpleWeapon {
 		new WeaponPurposeRangedShooting(),
 	];
 
+	static price = 35;
+
 	damage: DiceRoll = LightCrossbow.damage;
 	critical: Critical = LightCrossbow.critical;
 	name = LightCrossbow.equipmentName;
 	purposes = LightCrossbow.purposes;
+	price = LightCrossbow.price;
 }

@@ -346,6 +346,10 @@ export class Translator {
 		musket: 'Mosquete',
 		heavyShield: 'Escudo Pesado',
 		lightShield: 'Escudo Leve',
+		acid: 'Ácido',
+		bomb: 'Bomba',
+		loveElixir: 'Elixir do Amor',
+		sickle: 'Foice',
 	};
 
 	private static readonly arcanistPathsTranslation: Record<ArcanistPathName, string> = {

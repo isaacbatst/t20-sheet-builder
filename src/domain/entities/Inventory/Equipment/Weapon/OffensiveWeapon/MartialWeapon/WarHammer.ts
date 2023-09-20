@@ -13,8 +13,11 @@ export class WarHammer extends MartialWeapon {
 		new WeaponPurposeMelee(),
 	];
 
+	static price = 12;
+
 	override damage: DiceRoll = WarHammer.damage;
 	override critical: Critical = WarHammer.critical;
 	override name = WarHammer.equipmentName;
 	override purposes = WarHammer.purposes;
+	override price = WarHammer.price;
 }

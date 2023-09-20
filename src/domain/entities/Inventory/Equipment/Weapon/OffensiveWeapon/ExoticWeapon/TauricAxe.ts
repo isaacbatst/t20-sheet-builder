@@ -13,8 +13,11 @@ export class TauricAxe extends ExoticWeapon {
 		new WeaponPurposeMelee(),
 	];
 
+	static price = 50;
+
 	override damage: DiceRoll = TauricAxe.damage;
 	override critical: Critical = TauricAxe.critical;
 	override name = TauricAxe.equipmentName;
 	override purposes = TauricAxe.purposes;
+	override price = TauricAxe.price;
 }

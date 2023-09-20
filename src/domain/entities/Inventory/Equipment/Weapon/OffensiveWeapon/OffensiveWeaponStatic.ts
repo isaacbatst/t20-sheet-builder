@@ -10,4 +10,5 @@ export type OffensiveWeaponStatic<T extends OffensiveWeapon = OffensiveWeapon> =
 	critical: Critical;
 	equipmentName: EquipmentName;
 	purposes: WeaponPurpose[];
+	price: number;
 }>;

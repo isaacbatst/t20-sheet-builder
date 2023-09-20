@@ -13,8 +13,11 @@ export class Pike extends SimpleWeapon {
 		new WeaponPurposeMelee(),
 	];
 
+	static price = 2;
+
 	damage: DiceRoll = Pike.damage;
 	critical: Critical = Pike.critical;
 	name = Pike.equipmentName;
 	purposes = Pike.purposes;
+	price = Pike.price;
 }

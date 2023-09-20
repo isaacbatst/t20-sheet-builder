@@ -14,8 +14,11 @@ export class Spear extends SimpleWeapon {
 		new WeaponPurposeRangedThrowing(),
 	];
 
+	static price = 2;
+
 	damage: DiceRoll = Spear.damage;
 	critical: Critical = Spear.critical;
 	name = Spear.equipmentName;
 	purposes = Spear.purposes;
+	price = Spear.price;
 }

@@ -3,6 +3,6 @@ import type {Armor} from './Armor';
 import {type ArmorName} from './ArmorName';
 
 export type ArmorStatic<
-	T extends Armor = Armor,
-	E extends ArmorName = ArmorName,
-> = DefensiveWeaponStatic<T, E>;
+	N extends ArmorName = ArmorName,
+	A extends Armor<N> = Armor<N>,
+> = DefensiveWeaponStatic<N, A>;

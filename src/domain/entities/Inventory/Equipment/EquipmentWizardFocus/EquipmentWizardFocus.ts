@@ -8,6 +8,7 @@ export class EquipmentWizardFocus extends Equipment {
 	constructor(
 		readonly name: EquipmentWizardFocusName,
 		readonly isWieldable = false,
+		readonly price = 0,
 	) {
 		super();
 	}

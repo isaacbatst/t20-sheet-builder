@@ -10,9 +10,11 @@ export class Flail extends MartialWeapon {
 	static critical = new Critical();
 	static equipmentName: MartialWeaponName = EquipmentName.flail;
 	static purposes = [new WeaponPurposeMelee()];
+	static price = 8;
 
 	override damage: DiceRoll = Flail.damage;
 	override critical: Critical = Flail.critical;
 	override name = Flail.equipmentName;
 	override purposes = Flail.purposes;
+	override price = Flail.price;
 }

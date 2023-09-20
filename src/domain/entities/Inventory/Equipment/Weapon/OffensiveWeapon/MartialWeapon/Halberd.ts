@@ -10,9 +10,11 @@ export class Halberd extends MartialWeapon {
 	static critical = new Critical(20, 3);
 	static equipmentName: MartialWeaponName = EquipmentName.halberd;
 	static purposes = [new WeaponPurposeMelee()];
+	static price = 10;
 
 	override damage: DiceRoll = Halberd.damage;
 	override critical: Critical = Halberd.critical;
 	override name = Halberd.equipmentName;
 	override purposes = Halberd.purposes;
+	override price = Halberd.price;
 }

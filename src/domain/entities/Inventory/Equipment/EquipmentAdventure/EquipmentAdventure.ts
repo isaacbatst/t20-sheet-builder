@@ -6,6 +6,7 @@ export class EquipmentAdventure extends Equipment {
 	constructor(
 		readonly name: EquipmentName,
 		readonly isWieldable = false,
+		readonly price = 0,
 	) {
 		super();
 	}

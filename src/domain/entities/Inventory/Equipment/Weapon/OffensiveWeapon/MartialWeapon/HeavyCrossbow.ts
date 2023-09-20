@@ -13,8 +13,11 @@ export class HeavyCrossbow extends MartialWeapon {
 		new WeaponPurposeRangedShooting(),
 	];
 
+	static price = 50;
+
 	override damage: DiceRoll = HeavyCrossbow.damage;
 	override critical: Critical = HeavyCrossbow.critical;
 	override name = HeavyCrossbow.equipmentName;
 	override purposes = HeavyCrossbow.purposes;
+	override price = HeavyCrossbow.price;
 }

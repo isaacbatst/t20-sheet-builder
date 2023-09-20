@@ -13,8 +13,11 @@ export class Club extends SimpleWeapon {
 		new WeaponPurposeMelee(),
 	];
 
+	static price = 0;
+
 	damage: DiceRoll = Club.damage;
 	critical: Critical = Club.critical;
 	name = Club.equipmentName;
 	purposes = Club.purposes;
+	price = Club.price;
 }

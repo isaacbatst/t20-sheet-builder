@@ -13,8 +13,11 @@ export class Shortbow extends SimpleWeapon {
 		new WeaponPurposeRangedShooting(),
 	];
 
+	static price = 30;
+
 	damage: DiceRoll = Shortbow.damage;
 	critical: Critical = Shortbow.critical;
 	name = Shortbow.equipmentName;
 	purposes = Shortbow.purposes;
+	price = Shortbow.price;
 }

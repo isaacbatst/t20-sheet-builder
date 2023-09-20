@@ -13,8 +13,11 @@ export class LongBow extends MartialWeapon {
 		new WeaponPurposeRangedShooting(),
 	];
 
+	static price = 100;
+
 	override damage: DiceRoll = LongBow.damage;
 	override critical: Critical = LongBow.critical;
 	override name = LongBow.equipmentName;
 	override purposes = LongBow.purposes;
+	override price = LongBow.price;
 }

@@ -1,4 +1,4 @@
-import {Scythe} from './Scythe';
+import {Scythe} from './Sickle';
 import {Assegai} from './Assegai';
 import {Baton} from './Baton';
 import {Club} from './Club';

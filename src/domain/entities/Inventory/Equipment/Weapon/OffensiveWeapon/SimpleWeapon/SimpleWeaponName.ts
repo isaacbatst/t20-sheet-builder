@@ -3,7 +3,7 @@ import {type EquipmentName} from '../../../EquipmentName';
 export type SimpleWeaponName =
     EquipmentName.club |
     EquipmentName.dagger |
-    EquipmentName.scythe |
+    EquipmentName.sickle |
     EquipmentName.shortSword |
     EquipmentName.spear |
     EquipmentName.mace |

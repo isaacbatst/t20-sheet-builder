@@ -10,9 +10,11 @@ export class BattleAxe extends MartialWeapon {
 	static critical = new Critical(20, 3);
 	static equipmentName: MartialWeaponName = EquipmentName.battleAxe;
 	static purposes: WeaponPurpose[] = [new WeaponPurposeMelee()];
+	static price = 10;
 
 	override damage: DiceRoll = BattleAxe.damage;
 	override critical: Critical = BattleAxe.critical;
 	override name = BattleAxe.equipmentName;
 	override purposes = BattleAxe.purposes;
+	override price = BattleAxe.price;
 }

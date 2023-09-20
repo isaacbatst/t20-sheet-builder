@@ -6,4 +6,5 @@ export class LightShield extends Shield {
 	override armorPenalty = 1;
 	override slots = 1;
 	override name: EquipmentName = EquipmentName.lightShield;
+	override price = 5;
 }

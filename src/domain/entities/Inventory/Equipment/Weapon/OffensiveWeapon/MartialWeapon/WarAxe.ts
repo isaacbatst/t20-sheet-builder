@@ -13,8 +13,11 @@ export class WarAxe extends MartialWeapon {
 		new WeaponPurposeMelee(),
 	];
 
+	static price = 20;
+
 	override damage: DiceRoll = WarAxe.damage;
 	override critical: Critical = WarAxe.critical;
 	override name = WarAxe.equipmentName;
 	override purposes = WarAxe.purposes;
+	override price = WarAxe.price;
 }
