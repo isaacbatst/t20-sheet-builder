@@ -1,4 +1,3 @@
-import {type} from 'os';
 import {type CharacterModifierName} from '../Character';
 import {type EnabledEffectModifiersIndexes} from '../Character/CharacterAttackTriggeredEffect';
 import {type CharacterAttackModifiers} from '../Character/CharactterAttackModifiers';
