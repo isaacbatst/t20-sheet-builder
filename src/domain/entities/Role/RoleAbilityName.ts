@@ -19,4 +19,6 @@ export enum RoleAbilityName {
 	druidSpells = 'druidSpells',
 	ingenuity = 'ingenuity',
 	prototype = 'prototype',
+	sneakAttack = 'sneakAttack',
+	specialist = 'specialist',
 }
