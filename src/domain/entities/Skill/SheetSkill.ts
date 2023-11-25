@@ -31,6 +31,10 @@ export class SheetSkill {
 	) {
 	}
 
+	getName(): SkillName {
+		return this.skill.name;
+	}
+
 	getFixedModifier(name: TranslatableName) {
 		return this.skill.fixedModifiers.get(name);
 	}

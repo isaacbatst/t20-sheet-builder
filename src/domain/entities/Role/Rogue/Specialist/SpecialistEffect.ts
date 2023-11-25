@@ -1,14 +1,13 @@
-import {TriggerEvent, TriggeredEffect, TriggeredEffectName} from '../../../Ability';
-import {type TriggeredEffectActivation} from '../../../Ability/TriggeredEffectActivation';
-import {type CharacterModifierName} from '../../../Character';
+import {TriggerEvent, TriggeredEffect, TriggeredEffectName, type TriggeredEffectDisableParams, type TriggeredEffectEnableParams} from '../../../Ability';
+import {type SpecialistActivation} from '../../../Ability/TriggeredEffectActivation';
 import {ManaCost} from '../../../ManaCost';
-import {type Modifiers} from '../../../Modifier';
+import {FixedModifier} from '../../../Modifier';
 import {type Cost} from '../../../Sheet';
 import {type SkillName} from '../../../Skill';
 import {RoleAbilityName} from '../../RoleAbilityName';
 
 export class SpecialistEffect extends TriggeredEffect {
-	override baseCosts: Cost[] = [new ManaCost(1)];
+	override readonly baseCosts: Cost[] = [new ManaCost(1)];
 	override description: string = 'Escolha um número de perícias'
   + ' treinadas igual a sua Inteligência, exceto bônus'
   + ' temporários (mínimo 1). Ao fazer um teste de uma'
@@ -35,11 +34,24 @@ export class SpecialistEffect extends TriggeredEffect {
 		];
 	}
 
-	override enable({modifiersIndexes, modifiers}: {modifiers: Partial<Record<CharacterModifierName, Modifiers>>; modifiersIndexes: Partial<Record<CharacterModifierName, number>>}, activation: TriggeredEffectActivation): {manaCost?: ManaCost | undefined} {
-		throw new Error('Method not implemented.');
+	override enable({modifiersIndexes, modifiers}: TriggeredEffectEnableParams, activation: SpecialistActivation): {manaCost?: ManaCost | undefined} {
+		const skillName = activation.skill.getName();
+		if (!this.skills.has(skillName)) {
+			throw new Error('INVALID_SPECIALIST_SKILL');
+		}
+
+		const trainingPoints = activation.skill.getTrainingPoints();
+		const modifier = new FixedModifier(RoleAbilityName.specialist, trainingPoints);
+		modifiersIndexes.skillExceptAttack = modifiers.skillExceptAttack?.fixed.add(modifier);
+
+		return {
+			manaCost: this.baseCosts[0] as ManaCost,
+		};
 	}
 
-	override disable({modifiersIndexes, modifiers}: {modifiers: Partial<Record<CharacterModifierName, Modifiers>>; modifiersIndexes: Partial<Record<CharacterModifierName, number>>}): void {
-		throw new Error('Method not implemented.');
+	override disable({modifiersIndexes, modifiers}: TriggeredEffectDisableParams): void {
+		if (modifiersIndexes.skillExceptAttack) {
+			modifiers.skillExceptAttack?.fixed.remove(modifiersIndexes.skillExceptAttack);
+		}
 	}
 }

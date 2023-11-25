@@ -1,3 +1,5 @@
+import {TriggerEvent, TriggeredEffectName} from '../../Ability';
+import {Character} from '../../Character';
 import {BuildingSheet} from '../../Sheet';
 import {SheetBuilder} from '../../Sheet/SheetBuilder';
 import {Transaction} from '../../Sheet/Transaction';
@@ -77,6 +79,29 @@ describe('Rogue', () => {
 			expect(() => {
 				builder.chooseRole(rogue);
 			}).toThrow('INVALID_SPECIALIST_SKILLS_NOT_TRAINED');
+		});
+
+		it('should have specialist triggered effect', () => {
+			const rogue = new Rogue(chosenSkills, new Set([SkillName.reflexes]));
+			const builder = new SheetBuilder();
+			builder.chooseRole(rogue);
+			const sheet = builder.getBuildingSheet();
+			const triggeredEffects = sheet.getSheetTriggeredEffects().getByEvent(TriggerEvent.skillTestExceptAttack);
+			expect(triggeredEffects.get(TriggeredEffectName.specialist)).toBeDefined();
+		});
+
+		it('should add skill modifier when enabled', () => {
+			const rogue = new Rogue(chosenSkills, new Set([SkillName.reflexes]));
+			const builder = new SheetBuilder();
+			builder.chooseRole(rogue);
+			const sheet = builder.getBuildingSheet();
+			const character = new Character(sheet);
+			const skill = character.getSkill(SkillName.reflexes);
+			skill.enableTriggeredEffect({effectName: TriggeredEffectName.specialist, skill});
+			const modifier = skill.getFixedModifier('skillExceptAttack', RoleAbilityName.specialist);
+			expect(modifier).toBeDefined();
+			console.log(modifier?.baseValue);
+			expect(modifier?.baseValue).toBe(skill.getTrainingPoints());
 		});
 	});
 });

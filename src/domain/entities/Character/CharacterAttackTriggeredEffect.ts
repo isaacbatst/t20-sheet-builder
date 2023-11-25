@@ -1,4 +1,4 @@
-import {type SerializedTriggeredEffect, type TriggerEvent, type TriggeredEffect, type TriggeredEffectModifiers} from '../Ability';
+import {type SerializedTriggeredEffect, type TriggeredEffect, type TriggeredEffectModifiers} from '../Ability';
 import {type TriggeredEffectActivation} from '../Ability/TriggeredEffectActivation';
 import {type Context} from '../Context';
 import {type ManaCost} from '../ManaCost';

@@ -64,7 +64,7 @@ describe('buccaneer', () => {
 	});
 
 	describe('audacity', () => {
-		it('should dispatch audacity ability add', () => {
+		it('should add audacity ability', () => {
 			const abilities = sheet.getSheetAbilities();
 			expect(abilities.getRoleAbilities().get(RoleAbilityName.audacity)).toBeDefined();
 		});
