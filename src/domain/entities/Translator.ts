@@ -259,6 +259,8 @@ export class Translator {
 		druidSpells: 'Magias (Druida)',
 		ingenuity: 'Engenhosidade',
 		prototype: 'Protótipo',
+		sneakAttack: 'Ataque Furtivo',
+		specialist: 'Especialista',
 	};
 
 	private static readonly spellTypesTranslation: Record<SpellType, string> = {

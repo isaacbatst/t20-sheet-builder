@@ -28,6 +28,10 @@ export class CharacterSkill {
 		});
 	}
 
+	getName() {
+		return this.sheetSkill.getName();
+	}
+
 	enableTriggeredEffect(activation: TriggeredEffectActivation) {
 		const triggeredEffect = this.triggeredEffects.get(activation.effectName);
 

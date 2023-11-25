@@ -1,4 +1,5 @@
 import {type Attributes} from '../Sheet';
+import {type CharacterSkill} from '../Skill/CharacterSkill';
 import {type TriggeredEffectName} from './TriggeredEffectName';
 
 export type SpecialAttackActivation = {
@@ -20,8 +21,14 @@ export type IngenuityActivation = {
 	effectName: TriggeredEffectName.ingenuity;
 };
 
+export type SpecialistActivation = {
+	effectName: TriggeredEffectName.specialist;
+	skill: CharacterSkill;
+};
+
 export type TriggeredEffectActivation =
 	| SpecialAttackActivation
 	| AudacityActivation
 	| BulwarkActivation
-	| IngenuityActivation;
+	| IngenuityActivation
+	| SpecialistActivation;

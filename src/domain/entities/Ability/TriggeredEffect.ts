@@ -38,6 +38,16 @@ export type SerializedTriggeredEffect = SerializedSheetAbilityEffect & {
 	name: TriggeredEffectName;
 };
 
+export type TriggeredEffectEnableParams = {
+	modifiers: TriggeredEffectModifiers;
+	modifiersIndexes: EnabledEffectModifiersIndexes;
+};
+
+export type	TriggeredEffectDisableParams = {
+	modifiers: TriggeredEffectModifiers;
+	modifiersIndexes: EnabledEffectModifiersIndexes;
+};
+
 export abstract class TriggeredEffect<A extends TriggeredEffectActivation = TriggeredEffectActivation> extends ActivateableAbilityEffect {
 	triggerEvents: TriggerEvent[];
 	name: TriggeredEffectName;
@@ -64,13 +74,6 @@ export abstract class TriggeredEffect<A extends TriggeredEffectActivation = Trig
 		};
 	}
 
-	abstract enable({modifiersIndexes, modifiers}: {
-		modifiers: TriggeredEffectModifiers;
-		modifiersIndexes: EnabledEffectModifiersIndexes;
-	}, activation: A): {manaCost?: ManaCost};
-
-	abstract disable({modifiersIndexes, modifiers}: {
-		modifiers: TriggeredEffectModifiers;
-		modifiersIndexes: EnabledEffectModifiersIndexes;
-	}): void;
+	abstract enable({modifiersIndexes, modifiers}: TriggeredEffectEnableParams, activation: A): {manaCost?: ManaCost};
+	abstract disable({modifiersIndexes, modifiers}: TriggeredEffectDisableParams): void;
 }

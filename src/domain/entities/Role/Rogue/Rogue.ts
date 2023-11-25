@@ -1,10 +1,13 @@
-import {type Proficiency} from '../../Sheet';
+import {Level, type Proficiency} from '../../Sheet';
 import {SkillName} from '../../Skill';
 import {Role} from '../Role';
 import {type RoleAbilitiesPerLevel} from '../RoleAbilitiesPerLevel';
 import {RoleAbilitiesPerLevelFactory} from '../RoleAbilitiesPerLevelFactory';
+import {RoleAbilityName} from '../RoleAbilityName';
 import {RoleName} from '../RoleName';
 import {type SerializedRogue} from '../SerializedRole';
+import {SneakAttack} from './SneakAttack/SneakAttack';
+import {Specialist} from './Specialist/Specialist';
 
 export class Rogue extends Role<SerializedRogue> {
 	static selectSkillGroups = [
@@ -45,10 +48,17 @@ export class Rogue extends Role<SerializedRogue> {
 	override mandatorySkills = Rogue.mandatorySkills;
 	override proficiencies = Rogue.proficiencies;
 	override readonly name = Rogue.roleName;
-	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
+	override abilitiesPerLevel: RoleAbilitiesPerLevel;
 
-	constructor(chosenSkills: SkillName[][]) {
+	constructor(chosenSkills: SkillName[][], specialistSkills: Set<SkillName>) {
 		super(chosenSkills, Rogue.selectSkillGroups);
+
+		this.abilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({
+			[Level.one]: {
+				[RoleAbilityName.sneakAttack]: new SneakAttack(),
+				[RoleAbilityName.specialist]: new Specialist(specialistSkills),
+			},
+		});
 	}
 
 	protected override serializeSpecific(): SerializedRogue {

@@ -2,7 +2,7 @@ import {type TriggeredEffect} from '../Ability';
 import {type TriggeredEffectActivation} from '../Ability/TriggeredEffectActivation';
 import {type EnabledEffectModifiersIndexes} from '../Character/CharacterAttackTriggeredEffect';
 import {type ManaCost} from '../ManaCost';
-import {type Modifiers, type Modifier} from '../Modifier';
+import {type Modifiers} from '../Modifier';
 
 export class CharacterSkillTriggeredEffect {
 	readonly modifiersIndexes: EnabledEffectModifiersIndexes = {};
