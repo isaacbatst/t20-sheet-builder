@@ -85,7 +85,7 @@ export class Character implements CharacterInterface {
 	getSkill(skillName: SkillName): CharacterSkill {
 		const skill = this.makeCharacterSkill(
 			this.sheet.getSkill(skillName),
-			this.makeTotalCalculators(this.context),
+			this.makeTotalCalculators(),
 		);
 
 		return skill;
@@ -94,7 +94,7 @@ export class Character implements CharacterInterface {
 	getSkills(): Record<SkillName, CharacterSkill> {
 		// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 		const skills = {} as Record<SkillName, CharacterSkill>;
-		const totalCalculators = this.makeTotalCalculators(this.context);
+		const totalCalculators = this.makeTotalCalculators();
 		Object.entries(this.sheet.getSkills()).forEach(([skillName, skill]) => {
 			skills[skillName as SkillName] = this.makeCharacterSkill(skill, totalCalculators);
 		});
@@ -197,7 +197,7 @@ export class Character implements CharacterInterface {
 			weapon,
 			skills: this.sheet.getSkills(),
 			maxTotalCalculators: this.makeMaxTotalCalculators(),
-			totalCalculators: this.makeTotalCalculators(this.context),
+			totalCalculators: this.makeTotalCalculators(),
 			attributes: this.getAttributes(),
 			modifiers: {
 				damage: this.modifiers.damage,
@@ -224,9 +224,9 @@ export class Character implements CharacterInterface {
 		};
 	}
 
-	private makeTotalCalculators(context: Context): ModifiersTotalCalculators {
+	private makeTotalCalculators(): ModifiersTotalCalculators {
 		return {
-			contextCalculator: this.makeContextTotalCalculator(context),
+			contextCalculator: this.makeContextTotalCalculator(this.context),
 			fixedCalculator: this.makeFixedTotalCalculator(),
 			perLevelCalculator: this.makePerLevelCalculator(),
 		};
