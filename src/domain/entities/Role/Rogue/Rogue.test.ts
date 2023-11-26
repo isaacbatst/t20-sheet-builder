@@ -97,11 +97,12 @@ describe('Rogue', () => {
 			const sheet = builder.getBuildingSheet();
 			const character = new Character(sheet);
 			const skill = character.getSkill(SkillName.reflexes);
+			expect(skill.getModifiersTotal()).toBe(0);
 			skill.enableTriggeredEffect({effectName: TriggeredEffectName.specialist, skill});
 			const modifier = skill.getFixedModifier('skillExceptAttack', RoleAbilityName.specialist);
 			expect(modifier).toBeDefined();
-			console.log(modifier?.baseValue);
 			expect(modifier?.baseValue).toBe(skill.getTrainingPoints());
+			expect(skill.getModifiersTotal()).toBe(skill.getTrainingPoints());
 		});
 	});
 });
