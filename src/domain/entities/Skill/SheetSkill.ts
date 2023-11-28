@@ -31,6 +31,10 @@ export class SheetSkill {
 	) {
 	}
 
+	isTrained(): boolean {
+		return this.skill.getIsTrained();
+	}
+
 	getName(): SkillName {
 		return this.skill.name;
 	}

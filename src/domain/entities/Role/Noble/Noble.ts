@@ -1,30 +1,18 @@
-import {Proficiency} from '../../Sheet';
+import {Level, Proficiency} from '../../Sheet';
 import {SkillName} from '../../Skill';
 import {Role} from '../Role';
 import {type RoleAbilitiesPerLevel} from '../RoleAbilitiesPerLevel';
 import {RoleAbilitiesPerLevelFactory} from '../RoleAbilitiesPerLevelFactory';
+import {RoleAbilityName} from '../RoleAbilityName';
 import {RoleName} from '../RoleName';
 import {type SerializedNoble} from '../SerializedRole';
-
-// Pontos de Vida. Um nobre começa com
-// 16 pontos de vida + Constituição e ganha 4 PV +
-// Constituição por nível.
-// Pontos de Mana. 4 PM por nível.
-// Perícias. Diplomacia (Car) ou Intimidação
-// (Car), Vontade (Sab), mais 4 a sua escolha entre
-// Adestramento (Car), Atuação (Car), Cavalgar (Des),
-// Conhecimento (Int), Diplomacia (Car), Enganação
-// (Car), Fortitude (Con), Guerra (Int), Iniciativa
-// (Des), Intimidação (Car), Intuição (Sab), Investigação
-// (Int), Jogatina (Car), Luta (For), Nobreza (Int),
-// Ofício (Int), Percepção (Sab) e Pontaria (Des).
-// Proficiências. Armas marciais, armaduras
-// pesadas e escudos.
+import {Asset} from './Asset/Asset';
+import {SelfConfidence} from './SelfConfidence/SelfConfidence';
 
 export class Noble extends Role<SerializedNoble> {
 	static selectSkillGroups = [
 		{
-			amount: 2,
+			amount: 1,
 			skills: [
 				SkillName.diplomacy,
 				SkillName.intimidation,
@@ -73,7 +61,12 @@ export class Noble extends Role<SerializedNoble> {
 	override mandatorySkills = Noble.mandatorySkills;
 	override proficiencies = Noble.proficiencies;
 	override readonly name = Noble.roleName;
-	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
+	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({
+		[Level.one]: {
+			[RoleAbilityName.selfConfidence]: new SelfConfidence(),
+			[RoleAbilityName.asset]: new Asset(),
+		},
+	});
 
 	constructor(chosenSkills: SkillName[][]) {
 		super(chosenSkills, Noble.selectSkillGroups);

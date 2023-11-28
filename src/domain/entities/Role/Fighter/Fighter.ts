@@ -5,11 +5,11 @@ import {type RoleAbilitiesPerLevel} from '../RoleAbilitiesPerLevel';
 import {RoleAbilitiesPerLevelFactory} from '../RoleAbilitiesPerLevelFactory';
 import {RoleAbilityName} from '../RoleAbilityName';
 import {RoleName} from '../RoleName';
-import {type SerializedRoles} from '../SerializedRole';
+import {type SerializedFighter, type SerializedRoles} from '../SerializedRole';
 import {Fight} from './Fight/Fight';
 import {LightningStrike} from './LightningStrike/LightningStrike';
 
-export class Fighter extends Role {
+export class Fighter extends Role<SerializedFighter> {
 	static selectSkillGroups = [
 		{
 			amount: 4,
@@ -53,7 +53,7 @@ export class Fighter extends Role {
 		super(chosenSkills, Fighter.selectSkillGroups);
 	}
 
-	protected override serializeSpecific(): SerializedRoles {
+	protected override serializeSpecific(): SerializedFighter {
 		return {
 			name: this.name,
 		};
