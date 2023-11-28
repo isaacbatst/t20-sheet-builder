@@ -263,6 +263,8 @@ export class Translator {
 		specialist: 'Especialista',
 		fight: 'Briga',
 		lightningStrike: 'Golpe Relâmpago',
+		asset: 'Espólio',
+		selfConfidence: 'Autoconfiança',
 	};
 
 	private static readonly spellTypesTranslation: Record<SpellType, string> = {
