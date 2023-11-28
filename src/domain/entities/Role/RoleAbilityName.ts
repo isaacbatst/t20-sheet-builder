@@ -21,4 +21,6 @@ export enum RoleAbilityName {
 	prototype = 'prototype',
 	sneakAttack = 'sneakAttack',
 	specialist = 'specialist',
+	fight = 'fight',
+	lightningStrike = 'lightningStrike',
 }

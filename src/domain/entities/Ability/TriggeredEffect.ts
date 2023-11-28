@@ -19,13 +19,24 @@ export enum TriggerEvent {
 
 export type TriggeredEffectModifiers = Partial<Record<CharacterModifierName, Modifiers>>;
 
+export type TriggeredEffectEnableParams = {
+	modifiers: TriggeredEffectModifiers;
+	modifiersIndexes: EnabledEffectModifiersIndexes;
+};
+
+export type	TriggeredEffectDisableParams = {
+	modifiers: TriggeredEffectModifiers;
+	modifiersIndexes: EnabledEffectModifiersIndexes;
+};
+
 export type TriggeredEffectInterface = ActivateableAbilityEffectInterface & {
 	triggerEvents: TriggerEvent[];
 	name: TriggeredEffectName;
-	enable({enabledTriggeredEffectsModifiers, modifiers}: {
-		modifiers: CharacterAttackModifiers;
-		enabledTriggeredEffectsModifiers: Map<TriggeredEffectName, number>;
-	}): void;
+	enable({modifiersIndexes, modifiers}: TriggeredEffectEnableParams): void;
+};
+
+export type TriggeredEffectEnableReturn = {
+	manaCost?: ManaCost;
 };
 
 type TriggeredEffectParams = ActivateableEffectParams & {
@@ -36,16 +47,6 @@ type TriggeredEffectParams = ActivateableEffectParams & {
 export type SerializedTriggeredEffect = SerializedSheetAbilityEffect & {
 	triggerEvents: TriggerEvent[];
 	name: TriggeredEffectName;
-};
-
-export type TriggeredEffectEnableParams = {
-	modifiers: TriggeredEffectModifiers;
-	modifiersIndexes: EnabledEffectModifiersIndexes;
-};
-
-export type	TriggeredEffectDisableParams = {
-	modifiers: TriggeredEffectModifiers;
-	modifiersIndexes: EnabledEffectModifiersIndexes;
 };
 
 export abstract class TriggeredEffect<A extends TriggeredEffectActivation = TriggeredEffectActivation> extends ActivateableAbilityEffect {
@@ -74,6 +75,9 @@ export abstract class TriggeredEffect<A extends TriggeredEffectActivation = Trig
 		};
 	}
 
-	abstract enable({modifiersIndexes, modifiers}: TriggeredEffectEnableParams, activation: A): {manaCost?: ManaCost};
+	abstract enable(
+		{modifiersIndexes, modifiers}: TriggeredEffectEnableParams,
+		activation: A
+	): TriggeredEffectEnableReturn;
 	abstract disable({modifiersIndexes, modifiers}: TriggeredEffectDisableParams): void;
 }

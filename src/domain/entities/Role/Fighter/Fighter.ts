@@ -1,10 +1,13 @@
-import {type Proficiency} from '../../Sheet';
+import {Level, type Proficiency} from '../../Sheet';
 import {SkillName} from '../../Skill';
 import {Role} from '../Role';
 import {type RoleAbilitiesPerLevel} from '../RoleAbilitiesPerLevel';
 import {RoleAbilitiesPerLevelFactory} from '../RoleAbilitiesPerLevelFactory';
+import {RoleAbilityName} from '../RoleAbilityName';
 import {RoleName} from '../RoleName';
 import {type SerializedRoles} from '../SerializedRole';
+import {Fight} from './Fight/Fight';
+import {LightningStrike} from './LightningStrike/LightningStrike';
 
 export class Fighter extends Role {
 	static selectSkillGroups = [
@@ -39,7 +42,12 @@ export class Fighter extends Role {
 	override mandatorySkills = Fighter.mandatorySkills;
 	override proficiencies = Fighter.proficiencies;
 	override readonly name = Fighter.roleName;
-	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
+	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({
+		[Level.one]: {
+			[RoleAbilityName.fight]: new Fight(),
+			[RoleAbilityName.lightningStrike]: new LightningStrike(),
+		},
+	});
 
 	constructor(chosenSkills: SkillName[][]) {
 		super(chosenSkills, Fighter.selectSkillGroups);

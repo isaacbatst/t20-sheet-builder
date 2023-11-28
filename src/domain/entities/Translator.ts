@@ -261,6 +261,8 @@ export class Translator {
 		prototype: 'Protótipo',
 		sneakAttack: 'Ataque Furtivo',
 		specialist: 'Especialista',
+		fight: 'Briga',
+		lightningStrike: 'Golpe Relâmpago',
 	};
 
 	private static readonly spellTypesTranslation: Record<SpellType, string> = {
