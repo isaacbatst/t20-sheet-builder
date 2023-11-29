@@ -1,23 +1,14 @@
-import {Proficiency} from '../../Sheet';
+import {Level, Proficiency} from '../../Sheet';
 import {SkillName} from '../../Skill';
 import {Role} from '../Role';
 import {type RoleAbilitiesPerLevel} from '../RoleAbilitiesPerLevel';
 import {RoleAbilitiesPerLevelFactory} from '../RoleAbilitiesPerLevelFactory';
+import {RoleAbilityName} from '../RoleAbilityName';
 import {RoleName} from '../RoleName';
 import {type SerializedRoles} from '../SerializedRole';
-
-// Pontos de Vida. Um paladino começa com
-// 20 pontos de vida + Constituição e ganha 5 PV +
-// Constituição por nível.
-// Pontos de Mana. 3 PM por nível.
-// Perícias. Luta (For) e Vontade (Sab) mais 2
-// a sua escolha entre Adestramento (Car), Atletismo
-// (For), Cavalgar (Des), Cura (Sab), Diplomacia (Car),
-// Fortitude (Con), Guerra (Int), Iniciativa (Des), Intuição
-// (Sab), Nobreza (Int), Percepção (Sab) e Religião
-// (Sab).
-// Proficiências. Armas marciais, armaduras
-// pesadas e escudos.
+import {Blessed} from './Blessed/Blessed';
+import {DivineBlow} from './DivineBlow/DivineBlow';
+import {HeroCode} from './HeroCode/HeroCode';
 
 export class Paladin extends Role {
 	static selectSkillGroups = [
@@ -53,7 +44,13 @@ export class Paladin extends Role {
 	override mandatorySkills = Paladin.mandatorySkills;
 	override proficiencies = Paladin.proficiencies;
 	override readonly name = Paladin.roleName;
-	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({});
+	override abilitiesPerLevel: RoleAbilitiesPerLevel = RoleAbilitiesPerLevelFactory.make({
+		[Level.one]: {
+			[RoleAbilityName.blessed]: new Blessed(),
+			[RoleAbilityName.heroCode]: new HeroCode(),
+			[RoleAbilityName.divineBlow]: new DivineBlow(),
+		},
+	});
 
 	constructor(chosenSkills: SkillName[][]) {
 		super(chosenSkills, Paladin.selectSkillGroups);

@@ -25,4 +25,7 @@ export enum RoleAbilityName {
 	lightningStrike = 'lightningStrike',
 	selfConfidence = 'selfConfidence',
 	asset = 'asset',
+	blessed = 'blessed',
+	heroCode = 'heroCode',
+	divineBlow = 'divineBlow',
 }

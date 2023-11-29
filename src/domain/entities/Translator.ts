@@ -265,6 +265,9 @@ export class Translator {
 		lightningStrike: 'Golpe Relâmpago',
 		asset: 'Espólio',
 		selfConfidence: 'Autoconfiança',
+		blessed: 'Abençoado',
+		divineBlow: 'Golpe Divino',
+		heroCode: 'Código do Herói',
 	};
 
 	private static readonly spellTypesTranslation: Record<SpellType, string> = {

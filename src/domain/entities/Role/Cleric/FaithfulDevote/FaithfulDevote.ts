@@ -4,6 +4,11 @@ import {RoleAbilityName} from '../../RoleAbilityName';
 import {FaithfulDevoteEffect} from './FaithfulDevoteEffect';
 
 export class FaithfulDevote extends RoleAbility {
+	static readonly abilityName = {
+		cleric: RoleAbilityName.clericFaithfulDevote,
+		druid: RoleAbilityName.druidFaithfulDevote,
+	} as const
+
 	override effects: AbilityEffects<{
 		passive: {
 			default: FaithfulDevoteEffect;
@@ -11,9 +16,7 @@ export class FaithfulDevote extends RoleAbility {
 	}>;
 
 	constructor(role: 'cleric' | 'druid') {
-		const name = role === 'cleric'
-			? RoleAbilityName.clericFaithfulDevote
-			: RoleAbilityName.druidFaithfulDevote;
+		const name = FaithfulDevote.abilityName[role];
 		super(name);
 		this.effects = new AbilityEffects({
 			passive: {
