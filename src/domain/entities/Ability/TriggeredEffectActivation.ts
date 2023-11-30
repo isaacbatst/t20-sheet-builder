@@ -26,9 +26,14 @@ export type SpecialistActivation = {
 	skill: CharacterSkill;
 };
 
+export type DivineBlowActivation = {
+	effectName: TriggeredEffectName.divineBlow;
+};
+
 export type TriggeredEffectActivation =
 	| SpecialAttackActivation
 	| AudacityActivation
 	| BulwarkActivation
 	| IngenuityActivation
-	| SpecialistActivation;
+	| SpecialistActivation
+	| DivineBlowActivation;

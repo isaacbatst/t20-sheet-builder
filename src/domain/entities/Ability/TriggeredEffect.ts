@@ -1,6 +1,5 @@
 import {type CharacterModifierName} from '../Character';
 import {type EnabledEffectModifiersIndexes} from '../Character/CharacterAttackTriggeredEffect';
-import {type CharacterAttackModifiers} from '../Character/CharactterAttackModifiers';
 import {type ManaCost} from '../ManaCost';
 import {type Modifiers} from '../Modifier';
 import {type SerializedSheetAbilityEffect} from '../Sheet';

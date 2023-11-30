@@ -4,4 +4,5 @@ export enum TriggeredEffectName {
 	bulwark = 'bulwark',
 	ingenuity = 'ingenuity',
 	specialist = 'specialist',
+	divineBlow = 'divineBlow',
 }
