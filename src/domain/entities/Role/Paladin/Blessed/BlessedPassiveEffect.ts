@@ -1,5 +1,6 @@
 import {PassiveEffect} from '../../../Ability';
 import {AddFixedModifierToManaPoints} from '../../../Action/AddFixedModifierToManaPoints';
+import {ChangeGrantPowersCount} from '../../../Action/ChangeGrantPowersCount';
 import {FixedModifier} from '../../../Modifier';
 import {type TransactionInterface} from '../../../Sheet/TransactionInterface';
 import {RoleAbilityName} from '../../RoleAbilityName';
@@ -17,6 +18,13 @@ export class BlessedPassiveEffect extends PassiveEffect {
 		transaction.run(new AddFixedModifierToManaPoints({
 			payload: {
 				modifier,
+			},
+			transaction,
+		}));
+		transaction.run(new ChangeGrantPowersCount({
+			payload: {
+				count: 2,
+				source: this.source,
 			},
 			transaction,
 		}));

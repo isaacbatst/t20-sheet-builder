@@ -7,7 +7,7 @@ export class FaithfulDevote extends RoleAbility {
 	static readonly abilityName = {
 		cleric: RoleAbilityName.clericFaithfulDevote,
 		druid: RoleAbilityName.druidFaithfulDevote,
-	} as const
+	} as const;
 
 	override effects: AbilityEffects<{
 		passive: {

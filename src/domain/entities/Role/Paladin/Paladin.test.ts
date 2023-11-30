@@ -42,4 +42,9 @@ describe('Paladin', () => {
 		const mana = sheet.getSheetManaPoints().getMax(sheet.getSheetAttributes().getValues(), Level.one);
 		expect(mana).toBe(5);
 	});
+
+	it('should have 2 granted powers', () => {
+		const count = sheet.getSheetDevotion().getGrantedPowerCount();
+		expect(count).toBe(2);
+	});
 });

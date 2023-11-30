@@ -16,6 +16,7 @@ export class FaithfulDevoteEffect extends PassiveEffect {
 			+ ' poderes concedidos por se tornar devoto, em vez de'
 			+ ' apenas um.',
 	};
+
 	override description: string;
 
 	constructor(role: 'cleric' | 'druid', name: RoleAbilityName.clericFaithfulDevote | RoleAbilityName.druidFaithfulDevote) {
