@@ -5,8 +5,10 @@ import {type TransactionInterface} from '../../../../Sheet/TransactionInterface'
 import {GeneralPowerName} from '../../GeneralPowerName';
 
 export class ShellEffect extends PassiveEffect {
+	static description = 'Sua pele é recoberta por placas quitinosas. Você recebe +1 na Defesa.';
+
 	get description() {
-		return 'Sua pele é recoberta por placas quitinosas. Você recebe +1 na Defesa.';
+		return ShellEffect.description;
 	}
 
 	constructor() {

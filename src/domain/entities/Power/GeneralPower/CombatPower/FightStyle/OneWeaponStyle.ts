@@ -1,4 +1,5 @@
 import {AbilityEffects} from '../../../../Ability/AbilityEffects';
+import {AbilityEffectsStatic} from '../../../../Ability/AbilityEffectsStatic';
 import {type Character} from '../../../../Character';
 import {CharacterAppliedFightStyle} from '../../../../Character/CharacterAppliedFightStyle';
 import {type CharacterModifiers} from '../../../../Character/CharacterModifiers';
@@ -12,6 +13,13 @@ import {FightStyle} from './FightStyle';
 import {OneWeaponStyleEffect} from './OneWeaponStyleEffect';
 
 export class OneWeaponStyle extends FightStyle {
+	static readonly powerName = GeneralPowerName.oneWeaponStyle;
+	static readonly effects = new AbilityEffectsStatic({
+		activateable: {
+			default: OneWeaponStyleEffect,
+		},
+	});
+
 	effects = new AbilityEffects({
 		activateable: {
 			default: new OneWeaponStyleEffect(),

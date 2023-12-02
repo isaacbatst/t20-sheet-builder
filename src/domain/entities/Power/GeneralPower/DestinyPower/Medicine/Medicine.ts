@@ -1,4 +1,5 @@
 import {AbilityEffects} from '../../../../Ability/AbilityEffects';
+import {AbilityEffectsStatic} from '../../../../Ability/AbilityEffectsStatic';
 import {SkillName} from '../../../../Skill/SkillName';
 import {AttributeRequirement} from '../../../Requirement/AttributeRequirement';
 import {SkillRequirement} from '../../../Requirement/SkillRequirement';
@@ -8,6 +9,13 @@ import {GeneralPowerName} from '../../GeneralPowerName';
 import {MedicineEffect} from './MedicineEffect';
 
 export class Medicine extends GeneralPower {
+	static readonly powerName = GeneralPowerName.medicine;
+	static readonly effects = new AbilityEffectsStatic({
+		activateable: {
+			default: MedicineEffect,
+		},
+	});
+
 	private static readonly wisdomRequirement = new AttributeRequirement(
 		'wisdom',
 		1,
