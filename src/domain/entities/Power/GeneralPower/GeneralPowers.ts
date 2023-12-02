@@ -5,7 +5,7 @@ import {type GeneralPowerStatic} from './GeneralPowerStatic';
 import {Shell} from './TormentaPower/Shell/Shell';
 
 export class GeneralPowers {
-	readonly map: Record<GeneralPowerName, GeneralPowerStatic> = {
+	static readonly map: Record<GeneralPowerName, GeneralPowerStatic> = {
 		dodge: Dodge,
 		ironWill: IronWill,
 		medicine: Medicine,
