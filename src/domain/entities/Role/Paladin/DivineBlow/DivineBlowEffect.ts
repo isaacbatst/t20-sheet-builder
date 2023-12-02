@@ -24,14 +24,16 @@ export class DivineBlowEffect extends TriggeredEffect {
 	}
 
 	override enable({modifiersIndexes, modifiers}: TriggeredEffectEnableParams, activation: TriggeredEffectActivation): TriggeredEffectEnableReturn {
-		modifiers.attack?.fixed.add(new FixedModifier(RoleAbilityName.divineBlow, 0, new Set(['charisma'])));
-
+		const index = modifiers.attack?.fixed.add(new FixedModifier(RoleAbilityName.divineBlow, 0, new Set(['charisma'])));
+		modifiersIndexes.attack = index;
 		return {
 			manaCost: new ManaCost(this.getManaCost()),
 		};
 	}
 
 	override disable({modifiersIndexes, modifiers}: TriggeredEffectDisableParams): void {
-		throw new Error('Method not implemented.');
+		if (modifiersIndexes.attack) {
+			modifiers.attack?.fixed.remove(modifiersIndexes.attack);
+		}
 	}
 }
