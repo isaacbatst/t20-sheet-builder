@@ -6,7 +6,8 @@ import {SkillName} from '../../../Skill';
 import {GrantedPowerName} from '../GrantedPowerName';
 
 export class EmptyMindEffect extends PassiveEffect {
-	override description = 'Você recebe +2 em Iniciativa, Percepção e Vontade.';
+	static description = 'Você recebe +2 em Iniciativa, Percepção e Vontade.';
+	override description = EmptyMindEffect.description;
 
 	constructor() {
 		super(GrantedPowerName.emptyMind);

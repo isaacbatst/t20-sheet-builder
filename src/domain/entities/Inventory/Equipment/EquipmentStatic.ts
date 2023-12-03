@@ -7,6 +7,6 @@ export type EquipamentStatic<
 	E extends Equipment<N> = Equipment<N>,
 	D extends Record<string, unknown> = Record<string, unknown>,
 > = Static<E, {
-	readonly name: N;
+	readonly equipmentName: N;
 	readonly price: number;
 }> & D;

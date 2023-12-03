@@ -9,6 +9,7 @@ import {MartialWeapons} from './Inventory/Equipment/Weapon/OffensiveWeapon/Marti
 import {SimpleWeapons} from './Inventory/Equipment/Weapon/OffensiveWeapon/SimpleWeapon/SimpleWeapons';
 import {Origins} from './Origin';
 import {TormentaPowers} from './Power';
+import {Powers} from './Power/Powers';
 import {Races} from './Race';
 import {ArcanistPathWizardFocuses} from './Role/Arcanist/ArcanistPath/ArcanisPathWizard/ArcanistPathWizardFocuses';
 import {Roles} from './Role/Roles';
@@ -24,6 +25,7 @@ export const Content = {
 	getSimpleWeapons: () => SimpleWeapons,
 	getOrigins: () => Origins,
 	getTormentaPowers: () => TormentaPowers,
+	getPowers: () => Powers,
 	getRaces: () => Races,
 	getRoles: () => Roles,
 	getArcanistPathWizardFocuses: () => ArcanistPathWizardFocuses,

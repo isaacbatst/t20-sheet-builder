@@ -1,18 +1,23 @@
 import {AbilityEffects} from '../../Ability/AbilityEffects';
-import {RolePlayEffect} from '../../Ability/RolePlayEffect';
-import {type SerializedOriginPower, type SerializedChurchMember} from '../../Origin/OriginBenefit/SerializedOriginBenefit';
+import {AbilityEffectsStatic} from '../../Ability/AbilityEffectsStatic';
+import {type SerializedChurchMember, type SerializedOriginPower} from '../../Origin/OriginBenefit/SerializedOriginBenefit';
 import {OriginName} from '../../Origin/OriginName';
+import {ChurchMemberEffect} from './ChurchMemberEffect';
 import {OriginPower} from './OriginPower';
 import {OriginPowerName} from './OriginPowerName';
 
 export class ChurchMember extends OriginPower<SerializedChurchMember> {
-	static readonly effectDescription = 'Você consegue hospedagem confortável e informação'
-  + 'em qualquer templo de sua divindade, para você e seus aliados.';
+	static readonly powerName = OriginPowerName.churchMember;
+	static readonly effects = new AbilityEffectsStatic({
+		roleplay: {
+			default: ChurchMemberEffect,
+		},
+	});
 
 	source: OriginName = OriginName.acolyte;
 	effects = new AbilityEffects({
 		roleplay: {
-			default: new RolePlayEffect(this.name, ChurchMember.effectDescription),
+			default: new ChurchMemberEffect(),
 		},
 	});
 

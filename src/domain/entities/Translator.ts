@@ -180,8 +180,6 @@ export class Translator {
 
 	private static readonly powersTranslation: Record<PowerName, string> = {
 		dodge: 'Esquiva',
-		swordAndShieldStyle: 'Esttilo Espada e Escudo',
-		twoHandsStyle: 'Estilo de Duas Mãos',
 		oneWeaponStyle: 'Estilo de Uma Arma',
 		archer: 'Arqueiro',
 		medicine: 'Medicina',
@@ -265,6 +263,9 @@ export class Translator {
 		lightningStrike: 'Golpe Relâmpago',
 		asset: 'Espólio',
 		selfConfidence: 'Autoconfiança',
+		blessed: 'Abençoado',
+		divineBlow: 'Golpe Divino',
+		heroCode: 'Código do Herói',
 	};
 
 	private static readonly spellTypesTranslation: Record<SpellType, string> = {

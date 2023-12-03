@@ -2,7 +2,7 @@ import {type TriggeredEffectName} from '../Ability';
 import {type TriggeredEffectActivation} from '../Ability/TriggeredEffectActivation';
 import {WeaponAttack} from '../Attack';
 import type {Attack, SerializedAttack} from '../Attack/Attack';
-import {type Context, type ContextInterface} from '../Context';
+import {type Context} from '../Context';
 import {type RollResult} from '../Dice/RollResult';
 import {type OffensiveWeapon} from '../Inventory/Equipment/Weapon/OffensiveWeapon/OffensiveWeapon';
 import {ManaCost, type SerializedManaCost} from '../ManaCost';

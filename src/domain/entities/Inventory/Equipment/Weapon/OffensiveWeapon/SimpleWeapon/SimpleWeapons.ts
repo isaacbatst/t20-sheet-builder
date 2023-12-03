@@ -1,4 +1,4 @@
-import {Scythe} from './Sickle';
+import {Sickle} from './Sickle';
 import {Assegai} from './Assegai';
 import {Baton} from './Baton';
 import {Club} from './Club';
@@ -25,7 +25,7 @@ export class SimpleWeapons {
 		lightCrossbow: LightCrossbow,
 		mace: Mace,
 		pike: Pike,
-		scythe: Scythe,
+		sickle: Sickle,
 		shortbow: Shortbow,
 		shortSword: ShortSword,
 		sling: Sling,
