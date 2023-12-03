@@ -180,8 +180,6 @@ export class Translator {
 
 	private static readonly powersTranslation: Record<PowerName, string> = {
 		dodge: 'Esquiva',
-		swordAndShieldStyle: 'Esttilo Espada e Escudo',
-		twoHandsStyle: 'Estilo de Duas Mãos',
 		oneWeaponStyle: 'Estilo de Uma Arma',
 		archer: 'Arqueiro',
 		medicine: 'Medicina',
