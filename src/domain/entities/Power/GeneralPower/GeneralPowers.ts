@@ -1,3 +1,4 @@
+import {GrantedPowers} from '../GrantedPower/GrantedPowers';
 import {Dodge, OneWeaponStyle} from './CombatPower';
 import {IronWill, Medicine} from './DestinyPower';
 import {type GeneralPowerName} from './GeneralPowerName';
@@ -11,5 +12,10 @@ export class GeneralPowers {
 		medicine: Medicine,
 		oneWeaponStyle: OneWeaponStyle,
 		shell: Shell,
+		...GrantedPowers.map,
 	};
+
+	static getAll() {
+		return Object.values(this.map);
+	}
 }
