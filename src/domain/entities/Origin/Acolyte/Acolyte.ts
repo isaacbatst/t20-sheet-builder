@@ -6,9 +6,9 @@ import {OriginPowerName} from '../../Power/OriginPower/OriginPowerName';
 import {SkillName} from '../../Skill/SkillName';
 import {Origin} from '../Origin';
 import type {OriginBenefit} from '../OriginBenefit/OriginBenefit';
-import {type SerializedOriginBenefitsAcolyte} from '../OriginBenefit/SerializedOriginBenefit';
+import {type SerializedChurchMember, type SerializedOriginBenefitsAcolyte} from '../OriginBenefit/SerializedOriginBenefit';
 import {OriginName} from '../OriginName';
-import {type SerializedAcolyte, type SerializedOrigins} from '../SerializedOrigin';
+import {type SerializedAcolyte} from '../SerializedOrigin';
 
 export type SerializedChosenChurchMember = {
 	name: OriginPowerName.churchMember;
@@ -23,7 +23,7 @@ export class Acolyte extends Origin<SerializedOriginBenefitsAcolyte, SerializedA
 
 	readonly name = Acolyte.originName;
 
-	constructor(chosenBenefits: Array<OriginBenefit<SerializedOriginBenefitsAcolyte>>) {
+	constructor(chosenBenefits: Array<OriginBenefit<SerializedChurchMember>>) {
 		super(chosenBenefits, {
 			skills: Acolyte.skills,
 			generalPowers: Acolyte.generalPowers,

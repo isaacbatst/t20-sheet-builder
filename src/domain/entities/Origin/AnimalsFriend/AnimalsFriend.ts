@@ -1,4 +1,3 @@
-import type {Equipment} from '../../Inventory/Equipment/Equipment';
 import {EquipmentAnimal} from '../../Inventory/Equipment/EquipmentAnimal/EquipmentAnimal';
 import type {EquipmentName} from '../../Inventory/Equipment/EquipmentName';
 import type {GeneralPowerName} from '../../Power';
@@ -6,9 +5,9 @@ import {OriginPowerName} from '../../Power/OriginPower/OriginPowerName';
 import {SkillName} from '../../Skill/SkillName';
 import {Origin} from '../Origin';
 import type {OriginBenefit} from '../OriginBenefit/OriginBenefit';
-import {type SerializedOriginBenefitsAnimalsFriend} from '../OriginBenefit/SerializedOriginBenefit';
+import {type SerializedOriginBenefitsAnimalsFriend, type SerializedSpecialFriend} from '../OriginBenefit/SerializedOriginBenefit';
 import {OriginName} from '../OriginName';
-import {type SerializedAnimalsFriend, type SerializedOriginBasic} from '../SerializedOrigin';
+import {type SerializedAnimalsFriend} from '../SerializedOrigin';
 
 export type AnimalsFriendEquipments = EquipmentName.hound | EquipmentName.horse | EquipmentName.pony | EquipmentName.trobo;
 
@@ -21,7 +20,7 @@ export class AnimalsFriend extends Origin<SerializedOriginBenefitsAnimalsFriend,
 
 	readonly name = AnimalsFriend.originName;
 	constructor(
-		override chosenBenefits: Array<OriginBenefit<SerializedOriginBenefitsAnimalsFriend>>,
+		override chosenBenefits: Array<OriginBenefit<SerializedSpecialFriend>>,
 		readonly chosenAnimal: AnimalsFriendEquipments,
 	) {
 		super(chosenBenefits, {
