@@ -1,15 +1,15 @@
-import {AddEquipment} from '../Action/AddEquipment';
 import {SheetBuilderError} from '../../errors/SheetBuilderError';
+import {AddEquipment} from '../Action/AddEquipment';
 import type {Equipment} from '../Inventory/Equipment/Equipment';
 import {type TransactionInterface} from '../Sheet/TransactionInterface';
 import type {OriginBenefit} from './OriginBenefit/OriginBenefit';
 import {type OriginBenefits} from './OriginBenefit/OriginBenefits';
-import {type SerializedOriginBenefit, type SerializedOriginBenefits} from './OriginBenefit/SerializedOriginBenefit';
+import {type SerializedOriginBenefit, type SerializedOriginPowers} from './OriginBenefit/SerializedOriginBenefit';
 import type {OriginName} from './OriginName';
-import {type SerializedSheetOrigin, type SerializedOrigins} from './SerializedOrigin';
+import {type SerializedOrigins, type SerializedSheetOrigin} from './SerializedOrigin';
 
 export type OriginInterface<
-	Sb extends SerializedOriginBenefit = SerializedOriginBenefits,
+	Sb extends SerializedOriginPowers = SerializedOriginPowers,
 	So extends SerializedOrigins = SerializedOrigins,
 > = {
 	name: OriginName;
@@ -21,13 +21,13 @@ export type OriginInterface<
 };
 
 export abstract class Origin<
-	Sb extends SerializedOriginBenefit = SerializedOriginBenefit,
-	So extends SerializedOrigins = SerializedOrigins,
-> implements OriginInterface<Sb, So> {
+	SerializedBenefit extends SerializedOriginPowers = SerializedOriginPowers,
+	SerializedOrigin extends SerializedOrigins = SerializedOrigins,
+> implements OriginInterface<SerializedBenefit, SerializedOrigin> {
 	abstract name: OriginName;
 
 	constructor(
-		readonly chosenBenefits: Array<OriginBenefit<Sb>>,
+		readonly chosenBenefits: Array<OriginBenefit<SerializedBenefit>>,
 		readonly benefits: OriginBenefits,
 		readonly equipments: Equipment[],
 	) {
@@ -39,9 +39,9 @@ export abstract class Origin<
 		this.applyBenefits(transaction);
 	}
 
-	abstract serialize(): SerializedSheetOrigin<So>;
+	abstract serialize(): SerializedSheetOrigin<SerializedOrigin>;
 
-	protected serializeBenefits(): Sb[] {
+	protected serializeBenefits(): Array<SerializedOriginBenefit<SerializedBenefit>> {
 		return this.chosenBenefits.map(benefit => benefit.serialize());
 	}
 

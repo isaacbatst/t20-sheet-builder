@@ -1,12 +1,12 @@
-import {type Equipment, type EquipmentName} from '../../Inventory';
+import {type Equipment} from '../../Inventory';
 import {type GeneralPowerName, OriginPowerName} from '../../Power';
 import {type SkillName} from '../../Skill';
 import {Origin} from '../Origin';
-import {type SerializedOriginBenefitsAmnesic} from '../OriginBenefit';
+import {type SerializedGradualMemories} from '../OriginBenefit';
 import {OriginName} from '../OriginName';
 import {type SerializedAmnesic} from '../SerializedOrigin';
 
-export class Amnesic extends Origin<SerializedOriginBenefitsAmnesic, SerializedAmnesic> {
+export class Amnesic extends Origin<SerializedGradualMemories, SerializedAmnesic> {
 	static equipments = 'Um ou mais itens (somando até T$ 500), aprovados pelo mestre, que podem ser uma pista misteriosa do seu passado.';
 	static skills: SkillName[] = [];
 	static generalPowers: GeneralPowerName[] = [];

@@ -14,7 +14,7 @@ export type SerializedChosenChurchMember = {
 	name: OriginPowerName.churchMember;
 };
 
-export class Acolyte extends Origin<SerializedOriginBenefitsAcolyte, SerializedAcolyte> {
+export class Acolyte extends Origin<SerializedChurchMember, SerializedAcolyte> {
 	static readonly originName = OriginName.acolyte;
 	static equipments = 'Símbolo sagrado, traje de sacerdote.';
 	static skills: SkillName[] = [SkillName.cure, SkillName.religion, SkillName.will];

@@ -5,13 +5,13 @@ import {OriginPowerName} from '../../Power/OriginPower/OriginPowerName';
 import {SkillName} from '../../Skill/SkillName';
 import {Origin} from '../Origin';
 import type {OriginBenefit} from '../OriginBenefit/OriginBenefit';
-import {type SerializedOriginBenefitsAnimalsFriend, type SerializedSpecialFriend} from '../OriginBenefit/SerializedOriginBenefit';
+import {type SerializedSpecialFriend} from '../OriginBenefit/SerializedOriginBenefit';
 import {OriginName} from '../OriginName';
 import {type SerializedAnimalsFriend} from '../SerializedOrigin';
 
 export type AnimalsFriendEquipments = EquipmentName.hound | EquipmentName.horse | EquipmentName.pony | EquipmentName.trobo;
 
-export class AnimalsFriend extends Origin<SerializedOriginBenefitsAnimalsFriend, SerializedAnimalsFriend> {
+export class AnimalsFriend extends Origin<SerializedSpecialFriend, SerializedAnimalsFriend> {
 	static readonly originName = OriginName.animalsFriend;
 	static equipments = 'Cão de caça, cavalo, pônei ou trobo (escolha um).';
 	static skills: SkillName[] = [SkillName.animalHandling, SkillName.animalRide];
