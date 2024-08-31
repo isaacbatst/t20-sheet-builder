@@ -1,8 +1,10 @@
-import {OriginPower, OriginPowerName} from '..';
+import {OriginPower} from '../OriginPower';
+import {OriginPowerName} from '../OriginPowerName';
 import {AbilityEffects} from '../../../Ability';
 import {AbilityEffectsStatic} from '../../../Ability/AbilityEffectsStatic';
-import {OriginName, type SerializedGradualMemories} from '../../../Origin';
 import {GradualMemoriesEffect} from './GradualMemoriesEffect';
+import {OriginName} from '../../../Origin/OriginName';
+import {type SerializedGradualMemories} from '../../../Origin/OriginBenefit/SerializedOriginBenefit';
 
 export class GradualMemories extends OriginPower<SerializedGradualMemories> {
 	static readonly powerName = OriginPowerName.gradualMemories;

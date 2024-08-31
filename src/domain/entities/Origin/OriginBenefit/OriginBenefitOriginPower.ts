@@ -6,9 +6,9 @@ import type {Transaction} from '../../Sheet/Transaction';
 import {type TranslatableName} from '../../Translator';
 import {OriginBenefit} from './OriginBenefit';
 import {type OriginBenefits} from './OriginBenefits';
-import {type SerializedOriginPower} from './SerializedOriginBenefit';
+import {type SerializedOriginBenefit, type SerializedOriginPowers} from './SerializedOriginBenefit';
 
-export class OriginBenefitOriginPower<S extends SerializedOriginPower> extends OriginBenefit<S> {
+export class OriginBenefitOriginPower<S extends SerializedOriginPowers> extends OriginBenefit<S> {
 	override name: OriginPowerName;
 	constructor(
 		readonly power: OriginPowerInterface<S>,
@@ -33,7 +33,7 @@ export class OriginBenefitOriginPower<S extends SerializedOriginPower> extends O
 		}
 	}
 
-	override serialize(): S {
+	override serialize(): SerializedOriginBenefit<S> {
 		return this.power.serialize();
 	}
 }
