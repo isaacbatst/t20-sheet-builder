@@ -1,13 +1,10 @@
 import {SheetBuilderError} from '../../../errors';
-import {GeneralPowerFactory, OriginPowerFactory, OriginPowerName, SpecialFriend} from '../../Power';
+import {WeaponFactory} from '../../Inventory/Equipment/Weapon/WeaponFactory';
 import {Acolyte} from '../Acolyte/Acolyte';
+import {Amnesic} from '../Amnesic/Amnesic';
 import {AnimalsFriend} from '../AnimalsFriend/AnimalsFriend';
 import {OriginBenefitFactoryAcolyte} from '../OriginBenefit/OriginBenefitFactory/OriginBenefitFactoryAcolyte';
 import {OriginBenefitFactoryAnimalsFriend} from '../OriginBenefit/OriginBenefitFactory/OriginBenefitFactoryAnimalsFriend';
-import {OriginBenefitGeneralPower} from '../OriginBenefit/OriginBenefitGeneralPower';
-import {OriginBenefitOriginPower} from '../OriginBenefit/OriginBenefitOriginPower';
-import {OriginBenefitSkill} from '../OriginBenefit/OriginBenefitSkill';
-import {type SerializedOriginBenefit} from '../OriginBenefit/SerializedOriginBenefit';
 import {OriginName} from '../OriginName';
 import {type SerializedOrigins, type SerializedSheetOrigin} from '../SerializedOrigin';
 
@@ -25,26 +22,15 @@ export class OriginFactory {
 			return new AnimalsFriend(benefits, serialized.chosenAnimal);
 		}
 
-		throw new SheetBuilderError('UNKNOWN_ORIGIN');
-	}
-
-	static makeBenefitsFromSerialized(serialized: SerializedOriginBenefit) {
-		if (serialized.type === 'generalPowers') {
-			return new OriginBenefitGeneralPower(GeneralPowerFactory.make({name: serialized.name}));
-		}
-
-		if (serialized.type === 'skills') {
-			return new OriginBenefitSkill(serialized.name);
-		}
-
-		if (serialized.type === 'originPower') {
-			if (serialized.name === OriginPowerName.specialFriend) {
-				return new OriginBenefitOriginPower(new SpecialFriend(serialized.skill));
+		if (serialized.name === OriginName.amnesic) {
+			if (!serialized.equipments.some(e => !(e.name in WeaponFactory.weapons))) {
+				throw new SheetBuilderError('ORIGIN_AMNESIC_SUPPORTS_ONLY_WEAPONS');
 			}
 
-			return new OriginBenefitOriginPower(OriginPowerFactory.make({power: serialized.name}));
+			const equipments = serialized.equipments.map(e => WeaponFactory.make(e.name));
+			return new Amnesic(equipments);
 		}
 
-		throw new SheetBuilderError('UNKNOWN_ORIGIN_BENEFIT_TYPE');
+		throw new SheetBuilderError('UNKNOWN_ORIGIN');
 	}
 }

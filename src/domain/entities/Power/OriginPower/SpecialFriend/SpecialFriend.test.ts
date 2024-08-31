@@ -1,10 +1,7 @@
-import {AddFixedModifierToSkill} from '../../Action/AddFixedModifierToSkill';
-import {FixedModifier} from '../../Modifier/FixedModifier/FixedModifier';
-import {OriginName} from '../../Origin';
-import {BuildingSheet} from '../../Sheet/BuildingSheet/BuildingSheet';
-import {Transaction} from '../../Sheet/Transaction';
-import {SkillName} from '../../Skill/SkillName';
-import {OriginPowerName} from './OriginPowerName';
+import {BuildingSheet} from '../../../Sheet/BuildingSheet/BuildingSheet';
+import {Transaction} from '../../../Sheet/Transaction';
+import {SkillName} from '../../../Skill/SkillName';
+import {OriginPowerName} from '../OriginPowerName';
 import {SpecialFriend} from './SpecialFriend';
 
 describe('SpecialFriend', () => {

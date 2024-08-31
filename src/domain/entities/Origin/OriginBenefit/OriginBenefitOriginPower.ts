@@ -1,14 +1,14 @@
-import {PickOriginPower} from '../../Action/PickOriginPower';
 import {SheetBuilderError} from '../../../errors/SheetBuilderError';
+import {PickOriginPower} from '../../Action/PickOriginPower';
 import {type OriginPowerName} from '../../Power';
 import type {OriginPowerInterface} from '../../Power/OriginPower/OriginPower';
 import type {Transaction} from '../../Sheet/Transaction';
 import {type TranslatableName} from '../../Translator';
 import {OriginBenefit} from './OriginBenefit';
 import {type OriginBenefits} from './OriginBenefits';
-import {type SerializedOriginPowers} from './SerializedOriginBenefit';
+import {type SerializedOriginPower} from './SerializedOriginBenefit';
 
-export class OriginBenefitOriginPower<S extends SerializedOriginPowers> extends OriginBenefit<S> {
+export class OriginBenefitOriginPower<S extends SerializedOriginPower> extends OriginBenefit<S> {
 	override name: OriginPowerName;
 	constructor(
 		readonly power: OriginPowerInterface<S>,

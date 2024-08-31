@@ -25,11 +25,11 @@ export abstract class Origin<
 	So extends SerializedOrigins = SerializedOrigins,
 > implements OriginInterface<Sb, So> {
 	abstract name: OriginName;
-	abstract equipments: Equipment[];
 
 	constructor(
 		readonly chosenBenefits: Array<OriginBenefit<Sb>>,
 		readonly benefits: OriginBenefits,
+		readonly equipments: Equipment[],
 	) {
 		this.validateChosenBenefits();
 	}
@@ -49,6 +49,16 @@ export abstract class Origin<
 		return this.equipments.map(equipment => equipment.serialize());
 	}
 
+	protected validateChosenBenefits() {
+		if (this.chosenBenefits.length !== 2) {
+			throw new SheetBuilderError('INVALID_ORIGIN_BENEFITS');
+		}
+
+		this.chosenBenefits.forEach(benefit => {
+			benefit.validate(this.benefits);
+		});
+	}
+
 	private applyBenefits(transaction: TransactionInterface) {
 		this.chosenBenefits.forEach(benefit => {
 			benefit.apply(transaction, this.name);
@@ -64,16 +74,6 @@ export abstract class Origin<
 				},
 				transaction,
 			}));
-		});
-	}
-
-	private validateChosenBenefits() {
-		if (this.chosenBenefits.length !== 2) {
-			throw new SheetBuilderError('INVALID_ORIGIN_BENEFITS');
-		}
-
-		this.chosenBenefits.forEach(benefit => {
-			benefit.validate(this.benefits);
 		});
 	}
 }

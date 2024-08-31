@@ -8,7 +8,7 @@ import {Origin} from '../Origin';
 import type {OriginBenefit} from '../OriginBenefit/OriginBenefit';
 import {type SerializedOriginBenefitsAnimalsFriend} from '../OriginBenefit/SerializedOriginBenefit';
 import {OriginName} from '../OriginName';
-import {type SerializedAnimalsFriend, type SerializedOrigin} from '../SerializedOrigin';
+import {type SerializedAnimalsFriend, type SerializedOriginBasic} from '../SerializedOrigin';
 
 export type AnimalsFriendEquipments = EquipmentName.hound | EquipmentName.horse | EquipmentName.pony | EquipmentName.trobo;
 
@@ -20,8 +20,6 @@ export class AnimalsFriend extends Origin<SerializedOriginBenefitsAnimalsFriend,
 	static originPower = OriginPowerName.specialFriend;
 
 	readonly name = AnimalsFriend.originName;
-	equipments: Equipment[];
-
 	constructor(
 		override chosenBenefits: Array<OriginBenefit<SerializedOriginBenefitsAnimalsFriend>>,
 		readonly chosenAnimal: AnimalsFriendEquipments,
@@ -30,8 +28,9 @@ export class AnimalsFriend extends Origin<SerializedOriginBenefitsAnimalsFriend,
 			skills: AnimalsFriend.skills,
 			generalPowers: AnimalsFriend.generalPowers,
 			originPower: AnimalsFriend.originPower,
-		});
-		this.equipments = [new EquipmentAnimal(chosenAnimal)];
+		}, [
+			new EquipmentAnimal(chosenAnimal),
+		]);
 	}
 
 	override serialize(): SerializedAnimalsFriend {

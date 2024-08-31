@@ -23,17 +23,15 @@ export class Acolyte extends Origin<SerializedOriginBenefitsAcolyte, SerializedA
 
 	readonly name = Acolyte.originName;
 
-	equipments = [
-		new EquipmentAdventure(EquipmentName.sacredSymbol),
-		new EquipmentClothing(EquipmentName.priestCostume),
-	];
-
 	constructor(chosenBenefits: Array<OriginBenefit<SerializedOriginBenefitsAcolyte>>) {
 		super(chosenBenefits, {
 			skills: Acolyte.skills,
 			generalPowers: Acolyte.generalPowers,
 			originPower: Acolyte.originPower,
-		});
+		}, [
+			new EquipmentAdventure(EquipmentName.sacredSymbol),
+			new EquipmentClothing(EquipmentName.priestCostume),
+		]);
 	}
 
 	override serialize(): SerializedAcolyte {

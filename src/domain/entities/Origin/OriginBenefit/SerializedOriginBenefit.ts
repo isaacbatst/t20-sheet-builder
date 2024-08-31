@@ -14,29 +14,39 @@ export type SerializedOriginBenefitSkill = {
 };
 
 export type SerializedOriginBenefit<OriginPower extends SerializedOriginPowers = SerializedOriginPowers> =
-	SerializedOriginBenefitSkill | SerializedOriginBenefitGeneralPower | OriginPower;
+	SerializedOriginBenefitSkill | SerializedOriginBenefitGeneralPower | SerializedOriginPower<OriginPower>;
 
 export type SerializedChurchMember = {
-	type: 'originPower';
 	name: OriginPowerName.churchMember;
 };
 
 export type SerializedSpecialFriend = {
-	type: 'originPower';
 	name: OriginPowerName.specialFriend;
 	skill: SkillName;
 };
 
-export type SerializedOriginPowers = (SerializedChurchMember | SerializedSpecialFriend);
+export type SerializedGradualMemories = {
+	name: OriginPowerName.gradualMemories;
+};
 
-export type SerializedOriginPower<T extends SerializedOriginPowers = SerializedOriginPowers> = T & {
+export type SerializedOriginPowers =
+  | SerializedChurchMember
+  | SerializedSpecialFriend
+  | SerializedGradualMemories;
+
+export type SerializedOriginPowerBasic = {
 	abilityType: 'power';
+	type: 'originPower';
+	name: OriginPowerName;
 	effects: SerializedSheetAbilityEffect[];
 };
 
+export type SerializedOriginPower<T extends SerializedOriginPowers = SerializedOriginPowers> = SerializedOriginPowerBasic & T;
 export type SerializedOriginBenefitsAcolyte = SerializedOriginBenefit<SerializedChurchMember>;
 export type SerializedOriginBenefitsAnimalsFriend = SerializedOriginBenefit<SerializedSpecialFriend>;
+export type SerializedOriginBenefitsAmnesic = SerializedOriginBenefit<SerializedGradualMemories>;
 
 export type SerializedOriginBenefits =
-SerializedOriginBenefitsAcolyte
-| SerializedOriginBenefitsAnimalsFriend;
+ | SerializedOriginBenefitsAcolyte
+ | SerializedOriginBenefitsAnimalsFriend
+ | SerializedOriginBenefitsAmnesic;

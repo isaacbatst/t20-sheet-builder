@@ -1,5 +1,5 @@
-import {RolePlayEffect} from '../../Ability';
-import {OriginPowerName} from './OriginPowerName';
+import {RolePlayEffect} from '../../../Ability';
+import {OriginPowerName} from '../OriginPowerName';
 
 export class ChurchMemberEffect extends RolePlayEffect {
 	static readonly description = 'Você consegue hospedagem confortável e informação'
