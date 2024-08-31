@@ -29,10 +29,15 @@ export type SerializedGradualMemories = {
 	name: OriginPowerName.gradualMemories;
 };
 
+export type SerializedBlueBlood = {
+	name: OriginPowerName.blueBlood;
+};
+
 export type SerializedOriginPowers =
   | SerializedChurchMember
   | SerializedSpecialFriend
-  | SerializedGradualMemories;
+  | SerializedGradualMemories
+  | SerializedBlueBlood;
 
 export type SerializedOriginPowerBasic = {
 	abilityType: 'power';

@@ -14,10 +14,12 @@ export type SerializedAnimalsFriend = SerializedOriginBasic<SerializedOriginBene
 	chosenAnimal: AnimalsFriendEquipments;
 };
 export type SerializedAmnesic = SerializedOriginBasic<SerializedOriginBenefitsAmnesic, OriginName.amnesic>;
+export type SerializedAristocrat = SerializedOriginBasic<SerializedOriginBenefit, OriginName.aristocrat>;
 
 export type SerializedOrigins =
   | SerializedAcolyte
   | SerializedAnimalsFriend
-  | SerializedAmnesic;
+  | SerializedAmnesic
+  | SerializedAristocrat;
 
 export type SerializedSheetOrigin<T extends SerializedOrigins = SerializedOrigins> = T;

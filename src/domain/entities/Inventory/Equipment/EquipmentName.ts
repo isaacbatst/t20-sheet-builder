@@ -59,4 +59,5 @@ export enum EquipmentName {
 	bomb = 'bomb',
 	loveElixir = 'loveElixir',
 	sickle = 'sickle',
+	familyJewel = 'familyJewel',
 }
