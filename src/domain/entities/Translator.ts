@@ -190,6 +190,10 @@ export class Translator {
 		analyticMind: 'Mente Analítica',
 		emptyMind: 'Mente Vazia',
 		linWuTradition: 'Tradição de Lin-Wu',
+		blueBlood: 'Sangue Azul',
+		command: 'Comandar',
+		gradualMemories: 'Memórias Graduais',
+		fruitsOfLabor: 'Frutos do Trabalho',
 	};
 
 	private static readonly visionsTranslation: Record<Vision, string> = {
@@ -294,6 +298,8 @@ export class Translator {
 	private static readonly originsTranslation: Record<OriginName, string> = {
 		acolyte: 'Acólito',
 		animalsFriend: 'Amigo dos Animais',
+		amnesic: 'Amnésico',
+		aristocrat: 'Aristocrata',
 	};
 
 	private static readonly equipmentsTranslation: Record<EquipmentName, string> = {
@@ -357,6 +363,7 @@ export class Translator {
 		bomb: 'Bomba',
 		loveElixir: 'Elixir do Amor',
 		sickle: 'Foice',
+		familyJewel: 'Joia de Família',
 	};
 
 	private static readonly arcanistPathsTranslation: Record<ArcanistPathName, string> = {

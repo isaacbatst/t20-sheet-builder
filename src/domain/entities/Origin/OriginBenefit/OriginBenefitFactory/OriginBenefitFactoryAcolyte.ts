@@ -1,10 +1,10 @@
-import {type OriginPower} from '../../../Power';
+import {type OriginPowerName, type OriginPower} from '../../../Power';
 import {ChurchMember} from '../../../Power/OriginPower/ChurchMember/ChurchMember';
-import {type SerializedChurchMember} from '../SerializedOriginBenefit';
+import {type SerializedOriginPowerBasic, type SerializedOriginPowers} from '../SerializedOriginBenefit';
 import {OriginBenefitFactory} from './OriginBenefitFactory';
 
-export class OriginBenefitFactoryAcolyte extends OriginBenefitFactory<SerializedChurchMember> {
-	protected override makeOriginPower(serialized: SerializedChurchMember): OriginPower {
+export class OriginBenefitFactoryAcolyte extends OriginBenefitFactory<SerializedOriginPowers['churchMember']> {
+	protected override makeOriginPower(serialized: SerializedOriginPowerBasic<OriginPowerName.churchMember>): OriginPower<SerializedOriginPowerBasic<OriginPowerName.churchMember>> {
 		return new ChurchMember();
 	}
 }

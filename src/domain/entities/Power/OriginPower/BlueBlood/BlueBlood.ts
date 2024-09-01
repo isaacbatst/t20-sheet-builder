@@ -1,11 +1,11 @@
-import {AbilityEffects, AbilityEffectsInterface} from '../../../Ability';
+import {AbilityEffects} from '../../../Ability';
 import {AbilityEffectsStatic} from '../../../Ability/AbilityEffectsStatic';
-import {OriginName, type SerializedBlueBlood} from '../../../Origin';
+import {OriginName, type SerializedOriginPowers} from '../../../Origin';
 import {OriginPower} from '../OriginPower';
 import {OriginPowerName} from '../OriginPowerName';
 import {BlueBloodEffect} from './BlueBloodEffect';
 
-export class BlueBlood extends OriginPower<SerializedBlueBlood> {
+export class BlueBlood extends OriginPower<SerializedOriginPowers['blueBlood']> {
 	static readonly powerName = OriginPowerName.blueBlood;
 	static readonly effects = new AbilityEffectsStatic({
 		roleplay: {
@@ -24,9 +24,7 @@ export class BlueBlood extends OriginPower<SerializedBlueBlood> {
 		super(BlueBlood.powerName);
 	}
 
-	override serializeSpecific(): SerializedBlueBlood {
-		return {
-			name: BlueBlood.powerName,
-		};
+	override serialize() {
+		return this.serializeBasic();
 	}
 }

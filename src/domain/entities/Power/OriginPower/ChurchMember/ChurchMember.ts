@@ -1,12 +1,12 @@
 import {AbilityEffects} from '../../../Ability/AbilityEffects';
 import {AbilityEffectsStatic} from '../../../Ability/AbilityEffectsStatic';
-import {type SerializedChurchMember, type SerializedOriginPower} from '../../../Origin/OriginBenefit/SerializedOriginBenefit';
+import {type SerializedOriginPowerBasic, type SerializedOriginPowers} from '../../../Origin/OriginBenefit/SerializedOriginBenefit';
 import {OriginName} from '../../../Origin/OriginName';
-import {ChurchMemberEffect} from './ChurchMemberEffect';
 import {OriginPower} from '.././OriginPower';
 import {OriginPowerName} from '../OriginPowerName';
+import {ChurchMemberEffect} from './ChurchMemberEffect';
 
-export class ChurchMember extends OriginPower<SerializedChurchMember> {
+export class ChurchMember extends OriginPower<SerializedOriginPowers['churchMember']> {
 	static readonly powerName = OriginPowerName.churchMember;
 	static readonly effects = new AbilityEffectsStatic({
 		roleplay: {
@@ -25,9 +25,7 @@ export class ChurchMember extends OriginPower<SerializedChurchMember> {
 		super(OriginPowerName.churchMember);
 	}
 
-	override serializeSpecific(): SerializedChurchMember {
-		return {
-			name: OriginPowerName.churchMember,
-		};
+	override serialize(): SerializedOriginPowerBasic<OriginPowerName.churchMember> {
+		return this.serializeBasic();
 	}
 }

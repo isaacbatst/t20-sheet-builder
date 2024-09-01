@@ -6,10 +6,10 @@ import {AnimalsFriend} from '../AnimalsFriend/AnimalsFriend';
 import {OriginBenefitFactoryAcolyte} from '../OriginBenefit/OriginBenefitFactory/OriginBenefitFactoryAcolyte';
 import {OriginBenefitFactoryAnimalsFriend} from '../OriginBenefit/OriginBenefitFactory/OriginBenefitFactoryAnimalsFriend';
 import {OriginName} from '../OriginName';
-import {type SerializedOrigins, type SerializedSheetOrigin} from '../SerializedOrigin';
+import {type SerializedOrigin, type SerializedSheetOrigin} from '../SerializedOrigin';
 
 export class OriginFactory {
-	static makeFromSerialized<T extends SerializedOrigins>(serialized: SerializedSheetOrigin<T>) {
+	static makeFromSerialized<T extends SerializedOrigin>(serialized: SerializedSheetOrigin<T>) {
 		if (serialized.name === OriginName.acolyte) {
 			const benefitFactory = new OriginBenefitFactoryAcolyte();
 			const benefits = serialized.chosenBenefits.map(benefitFactory.makeFromSerialized);

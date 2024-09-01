@@ -1,14 +1,14 @@
 import type {AbilityEffectsInterface} from '../../../Ability/AbilityEffects';
 import {AbilityEffects} from '../../../Ability/AbilityEffects';
 import {AbilityEffectsStatic} from '../../../Ability/AbilityEffectsStatic';
-import {type SerializedSpecialFriend} from '../../../Origin/OriginBenefit/SerializedOriginBenefit';
+import {type SerializedOriginPowerBasic, type SerializedOriginPowers} from '../../../Origin';
 import {OriginName} from '../../../Origin/OriginName';
 import {type SkillName} from '../../../Skill/SkillName';
 import {OriginPower} from '../OriginPower';
 import {OriginPowerName} from '../OriginPowerName';
 import {SpecialFriendEffect} from './SpecialFriendEffect';
 
-export class SpecialFriend extends OriginPower<SerializedSpecialFriend> {
+export class SpecialFriend extends OriginPower<SerializedOriginPowers['specialFriend']> {
 	static readonly powerName = OriginPowerName.specialFriend;
 	static readonly effects = new AbilityEffectsStatic({
 		passive: {
@@ -32,9 +32,9 @@ export class SpecialFriend extends OriginPower<SerializedSpecialFriend> {
 		});
 	}
 
-	override serializeSpecific(): SerializedSpecialFriend {
+	override serialize(): SerializedOriginPowerBasic<OriginPowerName.specialFriend> & {skill: SkillName} {
 		return {
-			name: SpecialFriend.powerName,
+			...this.serializeBasic(),
 			skill: this.effects.passive.default.skill,
 		};
 	}

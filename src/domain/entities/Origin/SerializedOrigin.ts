@@ -1,25 +1,31 @@
 import {type SerializedSheetEquipment} from '../Sheet';
 import {type AnimalsFriendEquipments} from './AnimalsFriend/AnimalsFriend';
-import {type SerializedOriginBenefit, type SerializedOriginBenefitsAcolyte, type SerializedOriginBenefitsAmnesic, type SerializedOriginBenefitsAnimalsFriend} from './OriginBenefit/SerializedOriginBenefit';
+import {type SerializedOriginBenefit, type SerializedOriginPower, type SerializedOriginPowers} from './OriginBenefit/SerializedOriginBenefit';
 import {type OriginName} from './OriginName';
 
-export type SerializedOriginBasic<B extends SerializedOriginBenefit = SerializedOriginBenefit, N extends OriginName = OriginName> = {
-	name: N;
-	equipments: SerializedSheetEquipment[];
-	chosenBenefits: B[];
+type SerializedOriginMeta<
+	Name extends OriginName,
+	OriginPower extends SerializedOriginPower,
+	// eslint-disable-next-line @typescript-eslint/ban-types
+	AdditionalData = {},
+> = {
+	origin: {
+		name: Name;
+		equipments: SerializedSheetEquipment[];
+		chosenBenefits: Array<SerializedOriginBenefit<OriginPower>>;
+	} & AdditionalData;
+	benefits: SerializedOriginBenefit<OriginPower>;
+	originPower: OriginPower;
 };
 
-export type SerializedAcolyte = SerializedOriginBasic<SerializedOriginBenefitsAcolyte, OriginName.acolyte>;
-export type SerializedAnimalsFriend = SerializedOriginBasic<SerializedOriginBenefitsAnimalsFriend, OriginName.animalsFriend> & {
-	chosenAnimal: AnimalsFriendEquipments;
+export type SerializedOrigins = {
+	acolyte: SerializedOriginMeta<OriginName.acolyte, SerializedOriginPowers['churchMember']>;
+	animalsFriend: SerializedOriginMeta<OriginName.animalsFriend, SerializedOriginPowers['specialFriend'], {chosenAnimal: AnimalsFriendEquipments}>;
+	amnesic: SerializedOriginMeta<OriginName.amnesic, SerializedOriginPowers['gradualMemories']>;
+	aristocrat: SerializedOriginMeta<OriginName.aristocrat, SerializedOriginPowers['blueBlood']>;
+	artisan: SerializedOriginMeta<OriginName.artisan, SerializedOriginPowers['fruitsOfLabor']>;
 };
-export type SerializedAmnesic = SerializedOriginBasic<SerializedOriginBenefitsAmnesic, OriginName.amnesic>;
-export type SerializedAristocrat = SerializedOriginBasic<SerializedOriginBenefit, OriginName.aristocrat>;
 
-export type SerializedOrigins =
-  | SerializedAcolyte
-  | SerializedAnimalsFriend
-  | SerializedAmnesic
-  | SerializedAristocrat;
-
-export type SerializedSheetOrigin<T extends SerializedOrigins = SerializedOrigins> = T;
+export type SerializedOriginTypes = SerializedOrigins[keyof SerializedOrigins];
+export type SerializedOrigin = SerializedOriginTypes['origin'];
+export type SerializedSheetOrigin<T extends SerializedOriginTypes['origin']> = T;

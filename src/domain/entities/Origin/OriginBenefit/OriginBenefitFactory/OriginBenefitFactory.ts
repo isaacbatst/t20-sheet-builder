@@ -3,10 +3,10 @@ import {type OriginBenefit} from '../OriginBenefit';
 import {OriginBenefitGeneralPower} from '../OriginBenefitGeneralPower';
 import {OriginBenefitOriginPower} from '../OriginBenefitOriginPower';
 import {OriginBenefitSkill} from '../OriginBenefitSkill';
-import {type SerializedOriginPower, type SerializedOriginPowers, type SerializedOriginBenefit} from '../SerializedOriginBenefit';
+import {type SerializedOriginBenefit, type SerializedOriginPower} from '../SerializedOriginBenefit';
 
-export abstract class OriginBenefitFactory<S extends SerializedOriginPowers> {
-	makeFromSerialized(serialized: SerializedOriginBenefit<SerializedOriginPower<S>>): OriginBenefit<S> {
+export abstract class OriginBenefitFactory<S extends SerializedOriginPower> {
+	makeFromSerialized(serialized: SerializedOriginBenefit<S>): OriginBenefit<S> {
 		if (serialized.type === 'generalPowers') {
 			return new OriginBenefitGeneralPower(GeneralPowerFactory.make({name: serialized.name}));
 		}
@@ -20,6 +20,6 @@ export abstract class OriginBenefitFactory<S extends SerializedOriginPowers> {
 		return new OriginBenefitOriginPower(originPower);
 	}
 
-	protected abstract makeOriginPower(serialized: S): OriginPower;
+	protected abstract makeOriginPower(serialized: S): OriginPower<S>;
 }
 

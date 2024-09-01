@@ -3,4 +3,5 @@ export enum OriginPowerName {
 	churchMember = 'churchMember',
 	gradualMemories = 'gradualMemories',
 	blueBlood = 'blueBlood',
+	fruitsOfLabor = 'fruitsOfLabor',
 }

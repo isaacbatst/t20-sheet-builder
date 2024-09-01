@@ -3,11 +3,11 @@ import {EquipmentClothing} from '../../Inventory/Equipment/EquipmentClothing/Equ
 import {GeneralPowerName, OriginPowerName} from '../../Power';
 import {SkillName} from '../../Skill';
 import {Origin} from '../Origin';
-import {type SerializedBlueBlood, type OriginBenefit} from '../OriginBenefit';
+import {type OriginBenefit} from '../OriginBenefit';
 import {OriginName} from '../OriginName';
-import {type SerializedAristocrat} from '../SerializedOrigin';
+import {type SerializedOrigins} from '../SerializedOrigin';
 
-export class Aristocrat extends Origin<SerializedBlueBlood, SerializedAristocrat> {
+export class Aristocrat extends Origin<SerializedOrigins['aristocrat']> {
 	static readonly originName = OriginName.aristocrat;
 	static equipments = 'Joia de família no valor de T$ 300, traje da corte.';
 	static skills: SkillName[] = [SkillName.diplomacy, SkillName.cheat, SkillName.nobility];
@@ -15,7 +15,7 @@ export class Aristocrat extends Origin<SerializedBlueBlood, SerializedAristocrat
 	static originPower = OriginPowerName.blueBlood;
 
 	readonly name = Aristocrat.originName;
-	constructor(chosenBenefits: Array<OriginBenefit<SerializedBlueBlood>>) {
+	constructor(chosenBenefits: Array<OriginBenefit<SerializedOrigins['aristocrat']['originPower']>>) {
 		super(chosenBenefits, {
 			skills: Aristocrat.skills,
 			generalPowers: Aristocrat.generalPowers,
@@ -25,7 +25,7 @@ export class Aristocrat extends Origin<SerializedBlueBlood, SerializedAristocrat
 		]);
 	}
 
-	override serialize(): SerializedAristocrat {
+	override serialize(): SerializedOrigins['aristocrat']['origin'] {
 		return {
 			name: this.name,
 			chosenBenefits: this.serializeBenefits(),

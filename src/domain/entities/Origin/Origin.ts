@@ -4,30 +4,28 @@ import type {Equipment} from '../Inventory/Equipment/Equipment';
 import {type TransactionInterface} from '../Sheet/TransactionInterface';
 import type {OriginBenefit} from './OriginBenefit/OriginBenefit';
 import {type OriginBenefits} from './OriginBenefit/OriginBenefits';
-import {type SerializedOriginBenefit, type SerializedOriginPowers} from './OriginBenefit/SerializedOriginBenefit';
+import {type SerializedOriginBenefit} from './OriginBenefit/SerializedOriginBenefit';
 import type {OriginName} from './OriginName';
-import {type SerializedOrigins, type SerializedSheetOrigin} from './SerializedOrigin';
+import {type SerializedOriginTypes, type SerializedSheetOrigin} from './SerializedOrigin';
 
 export type OriginInterface<
-	Sb extends SerializedOriginPowers = SerializedOriginPowers,
-	So extends SerializedOrigins = SerializedOrigins,
+	Serialized extends SerializedOriginTypes = SerializedOriginTypes,
 > = {
 	name: OriginName;
 	equipments: Equipment[];
-	chosenBenefits: Array<OriginBenefit<Sb>>;
+	chosenBenefits: Array<OriginBenefit<Serialized['originPower']>>;
 	benefits: OriginBenefits;
 	addToSheet(transaction: TransactionInterface): void;
-	serialize(): So;
+	serialize(): Serialized['origin'];
 };
 
 export abstract class Origin<
-	SerializedBenefit extends SerializedOriginPowers = SerializedOriginPowers,
-	SerializedOrigin extends SerializedOrigins = SerializedOrigins,
-> implements OriginInterface<SerializedBenefit, SerializedOrigin> {
+	Serialized extends SerializedOriginTypes = SerializedOriginTypes,
+> implements OriginInterface<Serialized> {
 	abstract name: OriginName;
 
 	constructor(
-		readonly chosenBenefits: Array<OriginBenefit<SerializedBenefit>>,
+		readonly chosenBenefits: Array<OriginBenefit<Serialized['originPower']>>,
 		readonly benefits: OriginBenefits,
 		readonly equipments: Equipment[],
 	) {
@@ -39,9 +37,9 @@ export abstract class Origin<
 		this.applyBenefits(transaction);
 	}
 
-	abstract serialize(): SerializedSheetOrigin<SerializedOrigin>;
+	abstract serialize(): SerializedSheetOrigin<Serialized['origin']>;
 
-	protected serializeBenefits(): Array<SerializedOriginBenefit<SerializedBenefit>> {
+	protected serializeBenefits(): Array<SerializedOriginBenefit<Serialized['originPower']>> {
 		return this.chosenBenefits.map(benefit => benefit.serialize());
 	}
 

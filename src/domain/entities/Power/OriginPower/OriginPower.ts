@@ -1,16 +1,18 @@
-import {type SerializedOriginPowerBasic, type SerializedOriginPower, type SerializedOriginPowers} from '../../Origin/OriginBenefit/SerializedOriginBenefit';
+import {type SerializedOriginPower, type SerializedOriginPowerBasic} from '../../Origin/OriginBenefit/SerializedOriginBenefit';
 import type {OriginName} from '../../Origin/OriginName';
 import type {PowerInterface} from '../Power';
 import {Power} from '../Power';
 import {type OriginPowerName} from './OriginPowerName';
 
-export type OriginPowerInterface<S extends SerializedOriginPowers = SerializedOriginPowers> = PowerInterface & {
+export type OriginPowerInterface<S extends SerializedOriginPower = SerializedOriginPower> = PowerInterface & {
 	source: OriginName;
 	name: OriginPowerName;
-	serialize(): SerializedOriginPower<S>;
+	serialize(): S;
 };
 
-export abstract class OriginPower<S extends SerializedOriginPowers = SerializedOriginPowers> extends Power implements OriginPowerInterface<S> {
+export abstract class OriginPower<
+	S extends SerializedOriginPower = SerializedOriginPower,
+> extends Power implements OriginPowerInterface<S> {
 	abstract source: OriginName;
 
 	constructor(
@@ -19,7 +21,9 @@ export abstract class OriginPower<S extends SerializedOriginPowers = SerializedO
 		super(name, 'origin');
 	}
 
-	serializeBasic(): SerializedOriginPowerBasic {
+	abstract serialize(): S;
+
+	protected serializeBasic(): SerializedOriginPowerBasic<S['name']> {
 		return {
 			abilityType: 'power',
 			name: this.name,
@@ -27,12 +31,4 @@ export abstract class OriginPower<S extends SerializedOriginPowers = SerializedO
 			type: 'originPower',
 		};
 	}
-
-	serialize(): SerializedOriginPower<S> {
-		return {
-			...this.serializeBasic(),
-			...this.serializeSpecific(),
-		};
-	}
-	abstract serializeSpecific(): S;
 }
