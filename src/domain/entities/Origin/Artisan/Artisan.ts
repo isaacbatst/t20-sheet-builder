@@ -2,7 +2,8 @@ import {OriginPowerName} from '../../Power';
 import {type SerializedSheetEquipment} from '../../Sheet';
 import {SkillName} from '../../Skill';
 import {Origin} from '../Origin';
-import {type SerializedOriginBenefit, type SerializedOriginPowerBasic, type OriginBenefit} from '../OriginBenefit';
+import {type OriginBenefit, type SerializedOriginBenefit, type SerializedOriginPowerBasic} from '../OriginBenefit';
+import {OriginBenefitFactoryArtisan} from '../OriginBenefit/OriginBenefitFactory/OriginBenefitFactoryArtisan';
 import {OriginName} from '../OriginName';
 import {type SerializedOrigins} from '../SerializedOrigin';
 
@@ -12,6 +13,12 @@ export class Artisan extends Origin<SerializedOrigins['artisan']> {
 	static skills: SkillName[] = [SkillName.craft, SkillName.will];
 	static generalPowers = [];
 	static originPower = OriginPowerName.fruitsOfLabor;
+
+	static fromSerialized(serialized: SerializedOrigins['artisan']['origin']): Artisan {
+		const benefitsFactory = new OriginBenefitFactoryArtisan();
+		const benefits = serialized.chosenBenefits.map(benefitsFactory.makeFromSerialized);
+		return new Artisan(benefits);
+	}
 
 	readonly name = Artisan.originName;
 

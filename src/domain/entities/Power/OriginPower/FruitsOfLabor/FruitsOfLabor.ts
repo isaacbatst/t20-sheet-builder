@@ -1,7 +1,9 @@
-import {OriginPower, OriginPowerName} from '..';
 import {AbilityEffects, type AbilityEffectsInterface} from '../../../Ability';
 import {AbilityEffectsStatic} from '../../../Ability/AbilityEffectsStatic';
-import {OriginName, type SerializedOriginPowerBasic, type SerializedOriginPowers} from '../../../Origin';
+import {type SerializedOriginPowerBasic, type SerializedOriginPowers} from '../../../Origin/OriginBenefit/SerializedOriginBenefit';
+import {OriginName} from '../../../Origin/OriginName';
+import {OriginPower} from '../OriginPower';
+import {OriginPowerName} from '../OriginPowerName';
 import {FruitsOfLaborEffect} from './FruitsOfLaborEffect';
 
 export class FruitsOfLabor extends OriginPower<SerializedOriginPowers['fruitsOfLabor']> {

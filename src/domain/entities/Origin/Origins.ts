@@ -1,6 +1,9 @@
 import {Acolyte} from './Acolyte/Acolyte';
 import {Amnesic} from './Amnesic/Amnesic';
 import {AnimalsFriend} from './AnimalsFriend/AnimalsFriend';
+import {Aristocrat} from './Aristocrat';
+import {Artisan} from './Artisan/Artisan';
+import {Origin} from './Origin';
 import {OriginName} from './OriginName';
 import {type OriginStatic} from './OriginStatic';
 
@@ -17,5 +20,7 @@ export class Origins {
 		[OriginName.acolyte]: Acolyte,
 		[OriginName.animalsFriend]: AnimalsFriend,
 		[OriginName.amnesic]: Amnesic,
+		[OriginName.artisan]: Artisan,
+		[OriginName.aristocrat]: Aristocrat,
 	};
 }

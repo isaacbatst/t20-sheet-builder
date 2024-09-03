@@ -4,6 +4,7 @@ import {GeneralPowerName, OriginPowerName} from '../../Power';
 import {SkillName} from '../../Skill';
 import {Origin} from '../Origin';
 import {type OriginBenefit} from '../OriginBenefit';
+import {OriginBenefitFactoryAristocrat} from '../OriginBenefit/OriginBenefitFactory/OriginBenefitFactoryAristocrat';
 import {OriginName} from '../OriginName';
 import {type SerializedOrigins} from '../SerializedOrigin';
 
@@ -13,6 +14,12 @@ export class Aristocrat extends Origin<SerializedOrigins['aristocrat']> {
 	static skills: SkillName[] = [SkillName.diplomacy, SkillName.cheat, SkillName.nobility];
 	static generalPowers: GeneralPowerName[] = [GeneralPowerName.command];
 	static originPower = OriginPowerName.blueBlood;
+
+	static fromSerialized(serialized: SerializedOrigins['aristocrat']['origin']): Aristocrat {
+		const benefitsFactory = new OriginBenefitFactoryAristocrat();
+		const benefits = serialized.chosenBenefits.map(benefitsFactory.makeFromSerialized);
+		return new Aristocrat(benefits);
+	}
 
 	readonly name = Aristocrat.originName;
 	constructor(chosenBenefits: Array<OriginBenefit<SerializedOrigins['aristocrat']['originPower']>>) {

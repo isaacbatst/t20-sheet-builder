@@ -1,12 +1,12 @@
-import {OriginPower} from '../OriginPower';
-import {OriginPowerName} from '../OriginPowerName';
 import {AbilityEffects} from '../../../Ability';
 import {AbilityEffectsStatic} from '../../../Ability/AbilityEffectsStatic';
-import {GradualMemoriesEffect} from './GradualMemoriesEffect';
+import {type SerializedOrigins} from '../../../Origin';
 import {OriginName} from '../../../Origin/OriginName';
-import {type SerializedGradualMemories} from '../../../Origin/OriginBenefit/SerializedOriginBenefit';
+import {OriginPower} from '../OriginPower';
+import {OriginPowerName} from '../OriginPowerName';
+import {GradualMemoriesEffect} from './GradualMemoriesEffect';
 
-export class GradualMemories extends OriginPower<SerializedGradualMemories> {
+export class GradualMemories extends OriginPower<SerializedOrigins['amnesic']['originPower']> {
 	static readonly powerName = OriginPowerName.gradualMemories;
 
 	static readonly effects = new AbilityEffectsStatic({
@@ -26,9 +26,7 @@ export class GradualMemories extends OriginPower<SerializedGradualMemories> {
 		super(GradualMemories.powerName);
 	}
 
-	override serializeSpecific(): SerializedGradualMemories {
-		return {
-			name: OriginPowerName.gradualMemories,
-		};
+	override serialize() {
+		return this.serializeBasic();
 	}
 }
