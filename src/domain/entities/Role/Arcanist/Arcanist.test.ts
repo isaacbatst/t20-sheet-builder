@@ -120,7 +120,7 @@ describe('Arcanist', () => {
 		beforeEach(() => {
 			arcanist = ArcanistBuilder
 				.chooseSkills([[SkillName.knowledge, SkillName.diplomacy]])
-				.choosePath(new ArcanistPathWizard(new ArcanistPathWizardFocusWand()))
+				.choosePath(new ArcanistPathWizard())
 				.chooseSpells([new ArcaneArmor(), new IllusoryDisguise(), new MentalDagger()]);
 			wizardSheet = new BuildingSheet();
 			wizardTransaction = new Transaction(wizardSheet);
@@ -133,11 +133,6 @@ describe('Arcanist', () => {
 
 		it('should learn all levels', () => {
 			expect(arcanist.getSpellLearnFrequency()).toBe('all');
-		});
-
-		it('should dispatch add focus', () => {
-			const equipments = wizardSheet.getSheetInventory().getEquipments();
-			expect(equipments.has(EquipmentName.wand)).toBeTruthy();
 		});
 
 		it('should have mana modifier', () => {

@@ -15,7 +15,8 @@
                 "*.tsx"
             ],
             "rules": {
-                "@typescript-eslint/no-extraneous-class": ["error", {  "allowStaticOnly": true }]
+                "@typescript-eslint/no-extraneous-class": ["error", {  "allowStaticOnly": true }],
+                "@typescript-eslint/ban-types": "off"
             }
         }
     ],

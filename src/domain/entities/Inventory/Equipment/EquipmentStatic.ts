@@ -9,4 +9,5 @@ export type EquipamentStatic<
 > = Static<E, {
 	readonly equipmentName: N;
 	readonly price: number;
+	readonly description: string;
 }> & D;

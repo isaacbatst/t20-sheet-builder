@@ -1,17 +1,7 @@
 import {Equipment} from '../Equipment';
-import {EquipmentImprovementCategory} from '../EquipmentImprovement/EquipmentImprovementCategory';
-import type {EquipmentName} from '../EquipmentName';
+import {type EquipmentClothingData} from './EquipmentClothingData';
+import {type EquipmentClothingName} from './EquipmentClothingName';
 
-export class EquipmentClothing extends Equipment {
-	override categoryForImprovement: EquipmentImprovementCategory = EquipmentImprovementCategory.toolsAndClothing;
-	get isWieldable() {
-		return false;
-	}
-
-	constructor(
-		readonly name: EquipmentName,
-		readonly price = 0,
-	) {
-		super();
-	}
-}
+export class EquipmentClothing extends Equipment<
+EquipmentClothingName,
+EquipmentClothingData> {}
