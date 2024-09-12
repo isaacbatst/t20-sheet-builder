@@ -1,8 +1,10 @@
 import {Equipment} from '../Equipment';
-import {type EquipmentAlchemicCategory} from './EquipmentAlchemicCategory';
+import {type EquipmentAlchemicData} from './EquipmentAlchemicData';
+import {type EquipmentAlchemicName} from './EquipmentAlchemicName';
 
-export abstract class EquipmentAlchemic extends Equipment {
-	override categoryForImprovement = null;
-	abstract alchemicCategory: EquipmentAlchemicCategory;
-	abstract description: string;
-}
+export class EquipmentAlchemic<
+	N extends EquipmentAlchemicName = EquipmentAlchemicName,
+> extends Equipment<
+	N,
+	EquipmentAlchemicData<N>
+	> {}

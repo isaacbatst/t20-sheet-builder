@@ -6,7 +6,6 @@ import {type OriginName} from './OriginName';
 type SerializedOriginMeta<
 	Name extends OriginName,
 	OriginPower extends SerializedOriginPower,
-	// eslint-disable-next-line @typescript-eslint/ban-types
 	AdditionalData = {},
 > = {
 	origin: {
@@ -28,4 +27,6 @@ export type SerializedOrigins = {
 
 export type SerializedOriginTypes = SerializedOrigins[keyof SerializedOrigins];
 export type SerializedOrigin = SerializedOriginTypes['origin'];
-export type SerializedSheetOrigin<T extends SerializedOriginTypes['origin']> = T;
+export type SerializedSheetOrigin<
+	T extends SerializedOriginTypes['origin'] = SerializedOriginTypes['origin'],
+> = T;

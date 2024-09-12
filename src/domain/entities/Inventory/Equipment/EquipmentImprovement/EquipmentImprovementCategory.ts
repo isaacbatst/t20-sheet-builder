@@ -1,4 +1,4 @@
-export enum EquipmentImprovementCategory {
+export enum ImprovementCategory {
 	weapon = 'weapon',
 	armorAndShield = 'armorAndShield',
 	esoteric = 'esoteric',

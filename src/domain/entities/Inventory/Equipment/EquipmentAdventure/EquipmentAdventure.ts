@@ -1,13 +1,4 @@
 import {Equipment} from '../Equipment';
-import type {EquipmentName} from '../EquipmentName';
+import {type EquipmentAdventureName} from './EquipmentAdventureName';
 
-export class EquipmentAdventure extends Equipment {
-	override categoryForImprovement = null;
-	constructor(
-		readonly name: EquipmentName,
-		readonly isWieldable = false,
-		readonly price = 0,
-	) {
-		super();
-	}
-}
+export class EquipmentAdventure extends Equipment<EquipmentAdventureName> {}

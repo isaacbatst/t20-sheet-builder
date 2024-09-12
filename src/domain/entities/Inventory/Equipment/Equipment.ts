@@ -1,22 +1,49 @@
 import {type CharacterModifiers} from '../../Character/CharacterModifiers';
-import {type SerializedSheetEquipment} from '../../Sheet';
+import {type SerializedSheetEquipment} from '../../Sheet/SerializedSheet/SerializedSheetInterface';
+import {type EquipmentData} from './EquipmentData';
 import {type EquipmentImprovement} from './EquipmentImprovement/EquipmentImprovement';
-import {EquipmentImprovementCategory} from './EquipmentImprovement/EquipmentImprovementCategory';
+import {ImprovementCategory} from './EquipmentImprovement/EquipmentImprovementCategory';
 import type {EquipmentName} from './EquipmentName';
+import {EquipmentsData} from './EquipmentsData';
 
-export abstract class Equipment<T extends EquipmentName = EquipmentName> {
+export abstract class Equipment<
+	N extends EquipmentName = EquipmentName,
+	D extends EquipmentData<N> = EquipmentData<N>,
+> {
 	static improvementPrices = [300, 3000, 9000, 18000];
 
+	readonly data: D;
 	readonly improvements: EquipmentImprovement[] = [];
-	abstract readonly name: T;
-	abstract readonly isWieldable: boolean;
-	abstract price: number;
-	// eslint-disable-next-line @typescript-eslint/ban-types
-	abstract readonly categoryForImprovement: EquipmentImprovementCategory | null;
+
+	constructor(
+		name: N,
+	) {
+		this.data = EquipmentsData.get(name) as D;
+	}
+
+	get name(): N {
+		return this.data.equipmentName;
+	}
+
+	get description(): string {
+		return this.data.description;
+	}
+
+	get price(): number {
+		return this.data.price;
+	}
+
+	get improvementCategory(): ImprovementCategory | null {
+		return this.data.improvementCategory;
+	}
+
+	get isWieldable(): boolean {
+		return this.data.usageLimitType === 'wield';
+	}
 
 	addImprovement(improvement: EquipmentImprovement): void {
-		if (improvement.category !== EquipmentImprovementCategory.all
-		&& improvement.category !== this.categoryForImprovement) {
+		if (improvement.category !== ImprovementCategory.all
+		&& improvement.category !== this.improvementCategory) {
 			throw new Error(`Improvement ${improvement.name} is not compatible with ${this.name}`);
 		}
 
@@ -34,7 +61,7 @@ export abstract class Equipment<T extends EquipmentName = EquipmentName> {
 		}, 0);
 	}
 
-	serialize(): SerializedSheetEquipment<T> {
+	serialize(): SerializedSheetEquipment<N> {
 		return {
 			name: this.name,
 		};

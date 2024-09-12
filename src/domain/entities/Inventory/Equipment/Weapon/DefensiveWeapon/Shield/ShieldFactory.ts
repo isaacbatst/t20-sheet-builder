@@ -1,8 +1,8 @@
+import {Shield} from './Shield';
 import {type ShieldName} from './ShieldName';
-import {Shields} from './Shields';
 
 export class ShieldFactory {
 	static make(name: ShieldName) {
-		return new (Shields.map[name])();
+		return new Shield(name);
 	}
 }

@@ -2,7 +2,7 @@ import {type GeneralPowerName} from '../../Power';
 import {type Attribute} from '../../Sheet';
 import {type SpellName} from '../../Spell';
 import {type RoleName} from '../RoleName';
-import {type ArcanistPathName, type ArcanisPathWizardFocusName, type ArcanistLineageType, type ArcanistLineageDraconicDamageType} from './ArcanistPath';
+import {type ArcanistLineageDraconicDamageType, type ArcanistLineageType, type ArcanistPathName} from './ArcanistPath';
 
 export type SerializedArcanistPath = SerializedArcanistWizard | SerializedArcanistSorcerer | SerializedArcanistMage;
 
@@ -20,7 +20,6 @@ export type SerializedArcanistMage = {
 
 export type SerializedArcanistWizard = {
 	name: ArcanistPathName.wizard;
-	focus: ArcanisPathWizardFocusName;
 };
 
 export type SerializedArcanistLineage = SerializedArcanistLineageDraconic | SerializedArcanistLineageFaerie | SerializedArcanistLineageRed;
