@@ -3,8 +3,8 @@ import {EquipmentAlchemicCategory} from './EquipmentAlchemicCategory';
 import {EquipmentAlchemicData} from './EquipmentAlchemicData';
 import {type EquipmentAlchemicName} from './EquipmentAlchemicName';
 
-export class EquipmentsAlchemicData {
-	static readonly map: {
+export class EquipmentAlchemicCatalog {
+	static readonly items: {
 		[N in EquipmentAlchemicName]: EquipmentAlchemicData<N>;
 	} = {
 			acid: new EquipmentAlchemicData({

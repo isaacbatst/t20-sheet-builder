@@ -3,8 +3,8 @@ import {ImprovementCategory} from '../EquipmentImprovement/EquipmentImprovementC
 import {EquipmentName} from '../EquipmentName';
 import {type EquipmentToolName} from './EquipmentToolName';
 
-export class EquipmentsToolData {
-	static map: {
+export class EquipmentToolCatalog {
+	static items: {
 		[N in EquipmentToolName]: EquipmentData<N>;
 	} = {
 			disguiseKit: new EquipmentData({

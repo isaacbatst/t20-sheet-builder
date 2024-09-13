@@ -1,11 +1,9 @@
-import {EquipmentData} from '../EquipmentData';
-import {ImprovementCategory} from '../EquipmentImprovement/EquipmentImprovementCategory';
 import {EquipmentName} from '../EquipmentName';
 import {EquipmentClothingData} from './EquipmentClothingData';
 import {type EquipmentClothingName} from './EquipmentClothingName';
 
-export class EquipmentsClothingData {
-	static map: {
+export class EquipmentsClothingCatalog {
+	static items: {
 		[N in EquipmentClothingName]: EquipmentClothingData<N>;
 	} = {
 			travelerCostume: new EquipmentClothingData({
@@ -15,16 +13,14 @@ export class EquipmentsClothingData {
 				equipmentName: EquipmentName.travelerCostume,
 				price: 10,
 				translatedName: 'Traje de Viajante',
-				improvementCategory: null,
 				slots: null,
 				usageLimitType: null,
 			}),
-			priestCostume: new EquipmentData({
+			priestCostume: new EquipmentClothingData({
 				description: 'Traje fornecido pela origem Acólito.',
 				equipmentName: EquipmentName.priestCostume,
 				price: 0,
 				translatedName: 'Traje de Sacerdote',
-				improvementCategory: null,
 				slots: null,
 				usageLimitType: null,
 			}),

@@ -2,8 +2,8 @@ import {EquipmentData} from '../EquipmentData';
 import {EquipmentName} from '../EquipmentName';
 import {type EquipmentAdventureName} from './EquipmentAdventureName';
 
-export class EquipmentsAdventureData {
-	static readonly map: {
+export class EquipmentAdventureCatalog {
+	static readonly items: {
 		[N in EquipmentAdventureName]: EquipmentData<N>;
 	} = {
 			sacredSymbol: new EquipmentData({

@@ -3,8 +3,8 @@ import {EquipmentName} from '../EquipmentName';
 import {EquipmentAnimalData} from './EquipmentAnimalData';
 import {type EquipmentAnimalName} from './EquipmentAnimalName';
 
-export class EquipmentsAnimalData {
-	static readonly map: {
+export class EquipmentsAnimalCatalog {
+	static readonly items: {
 		[N in EquipmentAnimalName]: EquipmentData<N>;
 	} = {
 			horse: new EquipmentAnimalData({

@@ -2,10 +2,12 @@ import {Proficiency} from '../../../../../Sheet/Proficiency';
 import {OffensiveWeapon} from '../OffensiveWeapon';
 import {type MartialWeaponName} from './MartialWeaponName';
 
-export abstract class MartialWeapon extends OffensiveWeapon<MartialWeaponName> {
-	abstract override name: MartialWeaponName;
-
-	constructor() {
-		super(Proficiency.martial);
+export class MartialWeapon<
+	N extends MartialWeaponName = MartialWeaponName,
+> extends OffensiveWeapon<N> {
+	constructor(
+		name: N,
+	) {
+		super(name, Proficiency.martial);
 	}
 }
