@@ -4,7 +4,7 @@ import {type EquipmentData} from './EquipmentData';
 import {type EquipmentImprovement} from './EquipmentImprovement/EquipmentImprovement';
 import {ImprovementCategory} from './EquipmentImprovement/EquipmentImprovementCategory';
 import type {EquipmentName} from './EquipmentName';
-import {EquipmentsData} from './EquipmentsData';
+import {EquipmentCatalog} from './EquipmentCatalog';
 
 export abstract class Equipment<
 	N extends EquipmentName = EquipmentName,
@@ -18,7 +18,7 @@ export abstract class Equipment<
 	constructor(
 		name: N,
 	) {
-		this.data = EquipmentsData.get(name) as D;
+		this.data = EquipmentCatalog.get(name) as D;
 	}
 
 	get name(): N {

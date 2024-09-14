@@ -6,7 +6,6 @@ type EquipmentClothingParams<
 	N extends EquipmentClothingName,
 > = Omit<EquipmentDataParams<N>, 'improvementCategory' | 'slots' | 'usageLimitType'> & {
 	slots?: number | null;
-	improvementCategory?: ImprovementCategory | null;
 	usageLimitType?: UsageLimitType | null;
 };
 
@@ -16,9 +15,7 @@ export class EquipmentClothingData<N extends EquipmentClothingName = EquipmentCl
 	) {
 		super({
 			...params,
-			improvementCategory: typeof params.improvementCategory === 'undefined'
-				? ImprovementCategory.toolsAndClothing
-				: params.improvementCategory,
+			improvementCategory: ImprovementCategory.toolsAndClothing,
 			slots: typeof params.slots === 'undefined'
 				? 1
 				: params.slots,

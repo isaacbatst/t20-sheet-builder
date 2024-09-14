@@ -4,7 +4,7 @@ import {type DefensiveWeaponName} from './DefensiveWeaponName';
 import {ShieldCatalog} from './Shield/ShieldCatalog';
 
 export class DefensiveWeaponCatalog {
-	static map: {
+	static items: {
 		[N in DefensiveWeaponName]: DefensiveWeaponData<N>;
 	} = {
 			...ArmorCatalog.items,
