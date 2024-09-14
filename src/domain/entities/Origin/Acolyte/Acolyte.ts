@@ -6,7 +6,6 @@ import {OriginPowerName} from '../../Power/OriginPower/OriginPowerName';
 import {SkillName} from '../../Skill/SkillName';
 import {Origin} from '../Origin';
 import type {OriginBenefit} from '../OriginBenefit/OriginBenefit';
-import {type SerializedChurchMember} from '../OriginBenefit/SerializedOriginBenefit';
 import {OriginName} from '../OriginName';
 import {type SerializedOrigins} from '../SerializedOrigin';
 
@@ -21,17 +20,19 @@ export class Acolyte extends Origin<SerializedOrigins['acolyte']> {
 	static generalPowers: GeneralPowerName[] = [GeneralPowerName.medicine, GeneralPowerName.ironWill];
 	static originPower = OriginPowerName.churchMember;
 
-	readonly name = Acolyte.originName;
-
 	constructor(chosenBenefits: Array<OriginBenefit<SerializedOrigins['acolyte']['originPower']>>) {
-		super(chosenBenefits, {
-			skills: Acolyte.skills,
-			generalPowers: Acolyte.generalPowers,
-			originPower: Acolyte.originPower,
-		}, [
-			new EquipmentAdventure(EquipmentName.sacredSymbol),
-			new EquipmentClothing(EquipmentName.priestCostume),
-		]);
+		super(
+			Acolyte.originName,
+			chosenBenefits,
+			{
+				skills: Acolyte.skills,
+				generalPowers: Acolyte.generalPowers,
+				originPower: Acolyte.originPower,
+			},
+			[
+				new EquipmentAdventure(EquipmentName.sacredSymbol),
+				new EquipmentClothing(EquipmentName.priestCostume),
+			]);
 	}
 
 	override serialize(): SerializedOrigins['acolyte']['origin'] {

@@ -48,6 +48,7 @@ export type SerializedOriginPowers = {
 	gradualMemories: SerializedOriginPowerBasic<OriginPowerName.gradualMemories>;
 	blueBlood: SerializedOriginPowerBasic<OriginPowerName.blueBlood>;
 	fruitsOfLabor: SerializedOriginPowerBasic<OriginPowerName.fruitsOfLabor>;
+	artisticDomain: SerializedOriginPowerBasic<OriginPowerName.artisticDomain>;
 };
 
 export type SerializedOriginPower = SerializedOriginPowers[keyof SerializedOriginPowers];

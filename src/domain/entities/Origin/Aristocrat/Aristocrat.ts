@@ -1,4 +1,4 @@
-import {EquipmentName} from '../../Inventory';
+import {Equipment, EquipmentName} from '../../Inventory';
 import {EquipmentClothing} from '../../Inventory/Equipment/EquipmentClothing/EquipmentClothing';
 import {GeneralPowerName, OriginPowerName} from '../../Power';
 import {SkillName} from '../../Skill';
@@ -21,15 +21,18 @@ export class Aristocrat extends Origin<SerializedOrigins['aristocrat']> {
 		return new Aristocrat(benefits);
 	}
 
-	readonly name = Aristocrat.originName;
 	constructor(chosenBenefits: Array<OriginBenefit<SerializedOrigins['aristocrat']['originPower']>>) {
-		super(chosenBenefits, {
-			skills: Aristocrat.skills,
-			generalPowers: Aristocrat.generalPowers,
-			originPower: Aristocrat.originPower,
-		}, [
-			new EquipmentClothing(EquipmentName.familyJewel, 300),
-		]);
+		super(
+			OriginName.aristocrat,
+			chosenBenefits,
+			{
+				skills: Aristocrat.skills,
+				generalPowers: Aristocrat.generalPowers,
+				originPower: Aristocrat.originPower,
+			},
+			[
+				new Equipment(EquipmentName.familyJewel),
+			]);
 	}
 
 	override serialize(): SerializedOrigins['aristocrat']['origin'] {

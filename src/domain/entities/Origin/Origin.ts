@@ -5,6 +5,8 @@ import {type TransactionInterface} from '../Sheet/TransactionInterface';
 import type {OriginBenefit} from './OriginBenefit/OriginBenefit';
 import {type OriginBenefits} from './OriginBenefit/OriginBenefits';
 import {type SerializedOriginBenefit} from './OriginBenefit/SerializedOriginBenefit';
+import {OriginCatalog} from './OriginCatalog';
+import {type OriginData} from './OriginData';
 import type {OriginName} from './OriginName';
 import {type SerializedOriginTypes, type SerializedSheetOrigin} from './SerializedOrigin';
 
@@ -15,6 +17,7 @@ export type OriginInterface<
 	equipments: Equipment[];
 	chosenBenefits: Array<OriginBenefit<Serialized['originPower']>>;
 	benefits: OriginBenefits;
+	data: OriginData;
 	addToSheet(transaction: TransactionInterface): void;
 	serialize(): Serialized['origin'];
 };
@@ -22,13 +25,15 @@ export type OriginInterface<
 export abstract class Origin<
 	Serialized extends SerializedOriginTypes = SerializedOriginTypes,
 > implements OriginInterface<Serialized> {
-	abstract name: OriginName;
+	readonly data: OriginData;
 
 	constructor(
+		readonly name: Serialized['origin']['name'],
 		readonly chosenBenefits: Array<OriginBenefit<Serialized['originPower']>>,
 		readonly benefits: OriginBenefits,
 		readonly equipments: Equipment[],
 	) {
+		this.data = OriginCatalog.items[this.name];
 		this.validateChosenBenefits();
 	}
 

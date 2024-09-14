@@ -23,6 +23,7 @@ export type SerializedOrigins = {
 	amnesic: SerializedOriginMeta<OriginName.amnesic, SerializedOriginPowers['gradualMemories']>;
 	aristocrat: SerializedOriginMeta<OriginName.aristocrat, SerializedOriginPowers['blueBlood']>;
 	artisan: SerializedOriginMeta<OriginName.artisan, SerializedOriginPowers['fruitsOfLabor']>;
+	artist: SerializedOriginMeta<OriginName.artist, SerializedOriginPowers['artisticDomain']>;
 };
 
 export type SerializedOriginTypes = SerializedOrigins[keyof SerializedOrigins];

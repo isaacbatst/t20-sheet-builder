@@ -4,4 +4,5 @@ export enum OriginName {
 	amnesic = 'amnesic',
 	aristocrat = 'aristocrat',
 	artisan = 'artisan',
+	artist = 'artist',
 }

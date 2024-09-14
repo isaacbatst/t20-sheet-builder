@@ -17,18 +17,21 @@ export class AnimalsFriend extends Origin<SerializedOrigins['animalsFriend']> {
 	static generalPowers: GeneralPowerName[] = [];
 	static originPower = OriginPowerName.specialFriend;
 
-	readonly name = AnimalsFriend.originName;
 	constructor(
 		override chosenBenefits: Array<OriginBenefit<SerializedOrigins['animalsFriend']['originPower']>>,
 		readonly chosenAnimal: AnimalsFriendEquipments,
 	) {
-		super(chosenBenefits, {
-			skills: AnimalsFriend.skills,
-			generalPowers: AnimalsFriend.generalPowers,
-			originPower: AnimalsFriend.originPower,
-		}, [
-			new EquipmentAnimal(chosenAnimal),
-		]);
+		super(
+			OriginName.animalsFriend,
+			chosenBenefits,
+			{
+				skills: AnimalsFriend.skills,
+				generalPowers: AnimalsFriend.generalPowers,
+				originPower: AnimalsFriend.originPower,
+			},
+			[
+				new EquipmentAnimal(chosenAnimal),
+			]);
 	}
 
 	override serialize(): SerializedOrigins['animalsFriend']['origin'] {

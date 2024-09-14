@@ -1,16 +1,18 @@
-import {type EquipmentName, type Equipment} from '../Inventory';
+import {type EquipmentName} from '../Inventory';
 import {type GeneralPowerName, type OriginPowerName} from '../Power';
 import {type SkillName} from '../Skill';
+import {type OriginName} from './OriginName';
 
 type OriginDataParams = {
-	equipments: EquipmentName[];
+	equipments: string;
 	skills: SkillName[];
 	generalPowers: GeneralPowerName[];
 	originPower: OriginPowerName;
+	originName: OriginName;
 };
 
 export class OriginData {
-	readonly equipments: EquipmentName[];
+	readonly equipments: string;
 	readonly skills: SkillName[];
 	readonly generalPowers: GeneralPowerName[];
 	readonly originPower: OriginPowerName;

@@ -11,12 +11,10 @@ export class Amnesic extends Origin<SerializedOrigins['amnesic']> {
 	static generalPowers: GeneralPowerName[] = [];
 	static readonly originPower = OriginPowerName.gradualMemories;
 
-	override readonly name = OriginName.amnesic;
-
 	constructor(
 		equipments: Equipment[],
 	) {
-		super([], {
+		super(OriginName.amnesic, [], {
 			skills: Amnesic.skills,
 			generalPowers: Amnesic.generalPowers,
 			originPower: Amnesic.originPower,

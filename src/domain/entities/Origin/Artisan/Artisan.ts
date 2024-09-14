@@ -20,14 +20,16 @@ export class Artisan extends Origin<SerializedOrigins['artisan']> {
 		return new Artisan(benefits);
 	}
 
-	readonly name = Artisan.originName;
-
 	constructor(chosenBenefits: Array<OriginBenefit<SerializedOrigins['artisan']['originPower']>>) {
-		super(chosenBenefits, {
-			skills: Artisan.skills,
-			generalPowers: Artisan.generalPowers,
-			originPower: Artisan.originPower,
-		}, []);
+		super(
+			OriginName.artisan,
+			chosenBenefits,
+			{
+				skills: Artisan.skills,
+				generalPowers: Artisan.generalPowers,
+				originPower: Artisan.originPower,
+			},
+			[]);
 	}
 
 	override serialize(): {name: OriginName.artisan; equipments: SerializedSheetEquipment[]; chosenBenefits: Array<SerializedOriginBenefit<SerializedOriginPowerBasic<OriginPowerName.fruitsOfLabor>>>} {

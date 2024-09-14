@@ -4,4 +4,5 @@ export enum OriginPowerName {
 	gradualMemories = 'gradualMemories',
 	blueBlood = 'blueBlood',
 	fruitsOfLabor = 'fruitsOfLabor',
+	artisticDomain = 'artisticDomain',
 }

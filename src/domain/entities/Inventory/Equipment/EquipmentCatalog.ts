@@ -23,7 +23,7 @@ export class EquipmentCatalog {
 				description: 'Uma joia de família, que pode ser vendida por T$300',
 				equipmentName: EquipmentName.familyJewel,
 				improvementCategory: null,
-				price: 1000,
+				price: 300,
 				translatedName: 'Jóia de Família',
 				usageLimitType: null,
 			}),
