@@ -4,7 +4,7 @@ import {EquipmentName} from '../../Inventory/Equipment/EquipmentName';
 import {GeneralPowerName, OriginPowerName} from '../../Power';
 import {IronWill} from '../../Power/GeneralPower/DestinyPower/IronWill/IronWill';
 import {Medicine} from '../../Power/GeneralPower/DestinyPower/Medicine/Medicine';
-import {ChurchMember} from '../../Power/OriginPower/ChurchMember';
+import {ChurchMember} from '../../Power/OriginPower/ChurchMember/ChurchMember';
 import {BuildingSheet} from '../../Sheet';
 import {Transaction} from '../../Sheet/Transaction';
 import {SkillName} from '../../Skill/SkillName';

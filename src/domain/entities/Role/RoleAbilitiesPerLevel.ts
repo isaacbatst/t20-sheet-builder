@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import {type Level} from '../Sheet';
 import {type RoleAbility} from './RoleAbility';
 

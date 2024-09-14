@@ -1,22 +1,25 @@
 import {type CharacterModifiers} from '../../../../Character/CharacterModifiers';
 import {FixedModifier} from '../../../../Modifier';
-import {type EquipmentName} from '../../EquipmentName';
-import type {WeaponType} from '../Weapon';
+import {type Proficiency} from '../../../../Sheet/Proficiency';
 import {Weapon} from '../Weapon';
+import {type DefensiveWeaponData} from './DefensiveWeaponData';
+import {type DefensiveWeaponName} from './DefensiveWeaponName';
 
-export abstract class DefensiveWeapon<T extends EquipmentName = EquipmentName> extends Weapon<T> {
-	abstract defenseBonus: number;
-	abstract armorPenalty: number;
-	abstract slots: number;
-
-	get type(): WeaponType {
-		return 'defensive';
-	}
-
+export abstract class DefensiveWeapon<
+	N extends DefensiveWeaponName = DefensiveWeaponName,
+	D extends DefensiveWeaponData<N> = DefensiveWeaponData<N>,
+> extends Weapon<N, D> {
 	private modifierIndex: number | undefined;
 
+	constructor(
+		name: N,
+		proficiency: Proficiency,
+	) {
+		super(name, proficiency, 'defensive');
+	}
+
 	override onEquip(modifiers: CharacterModifiers): void {
-		const modifier = new FixedModifier(this.name, this.defenseBonus);
+		const modifier = new FixedModifier(this.name, this.data.defenseBonus);
 		this.modifierIndex = modifiers.defense.fixed.add(modifier);
 	}
 

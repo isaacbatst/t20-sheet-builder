@@ -4,4 +4,5 @@ export enum GeneralPowerName {
 	medicine = 'medicine',
 	ironWill = 'ironWill',
 	shell = 'shell',
+	command = 'command',
 }

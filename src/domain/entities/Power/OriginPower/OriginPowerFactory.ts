@@ -1,6 +1,7 @@
 import {SheetBuilderError} from '../../../errors';
 import {type SkillName} from '../../Skill';
 import {ChurchMember} from './ChurchMember';
+import {GradualMemories} from './GradualMemories';
 import {type OriginPower} from './OriginPower';
 import {OriginPowerName} from './OriginPowerName';
 import {type OriginPowerStatic} from './OriginPowerStatic';
@@ -31,5 +32,6 @@ export class OriginPowerFactory {
 	private static readonly map: Record<OriginPowerName, OriginPowerStatic> = {
 		churchMember: ChurchMember,
 		specialFriend: SpecialFriend,
+		gradualMemories: GradualMemories,
 	};
 }

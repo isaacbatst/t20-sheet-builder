@@ -1,17 +1,8 @@
 import {Equipment} from '../Equipment';
-import type {EquipmentName} from '../EquipmentName';
+import {type EquipmentAnimalData} from './EquipmentAnimalData';
+import {type EquipmentAnimalName} from './EquipmentAnimalName';
 
-export class EquipmentAnimal extends Equipment {
-	override categoryForImprovement = null;
-
-	get isWieldable() {
-		return false;
-	}
-
-	constructor(
-		readonly name: EquipmentName,
-		readonly price = 0,
-	) {
-		super();
-	}
-}
+export class EquipmentAnimal extends Equipment<
+EquipmentAnimalName,
+EquipmentAnimalData<EquipmentAnimalName>
+> {}

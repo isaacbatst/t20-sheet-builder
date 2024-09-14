@@ -1,36 +1,39 @@
-import {AddEquipment} from '../Action/AddEquipment';
 import {SheetBuilderError} from '../../errors/SheetBuilderError';
+import {AddEquipment} from '../Action/AddEquipment';
 import type {Equipment} from '../Inventory/Equipment/Equipment';
 import {type TransactionInterface} from '../Sheet/TransactionInterface';
 import type {OriginBenefit} from './OriginBenefit/OriginBenefit';
 import {type OriginBenefits} from './OriginBenefit/OriginBenefits';
-import {type SerializedOriginBenefit, type SerializedOriginBenefits} from './OriginBenefit/SerializedOriginBenefit';
+import {type SerializedOriginBenefit} from './OriginBenefit/SerializedOriginBenefit';
+import {OriginCatalog} from './OriginCatalog';
+import {type OriginData} from './OriginData';
 import type {OriginName} from './OriginName';
-import {type SerializedSheetOrigin, type SerializedOrigins} from './SerializedOrigin';
+import {type SerializedOriginTypes, type SerializedSheetOrigin} from './SerializedOrigin';
 
 export type OriginInterface<
-	Sb extends SerializedOriginBenefit = SerializedOriginBenefits,
-	So extends SerializedOrigins = SerializedOrigins,
+	Serialized extends SerializedOriginTypes = SerializedOriginTypes,
 > = {
 	name: OriginName;
 	equipments: Equipment[];
-	chosenBenefits: Array<OriginBenefit<Sb>>;
+	chosenBenefits: Array<OriginBenefit<Serialized['originPower']>>;
 	benefits: OriginBenefits;
+	data: OriginData;
 	addToSheet(transaction: TransactionInterface): void;
-	serialize(): So;
+	serialize(): Serialized['origin'];
 };
 
 export abstract class Origin<
-	Sb extends SerializedOriginBenefit = SerializedOriginBenefit,
-	So extends SerializedOrigins = SerializedOrigins,
-> implements OriginInterface<Sb, So> {
-	abstract name: OriginName;
-	abstract equipments: Equipment[];
+	Serialized extends SerializedOriginTypes = SerializedOriginTypes,
+> implements OriginInterface<Serialized> {
+	readonly data: OriginData;
 
 	constructor(
-		readonly chosenBenefits: Array<OriginBenefit<Sb>>,
+		readonly name: Serialized['origin']['name'],
+		readonly chosenBenefits: Array<OriginBenefit<Serialized['originPower']>>,
 		readonly benefits: OriginBenefits,
+		readonly equipments: Equipment[],
 	) {
+		this.data = OriginCatalog.items[this.name];
 		this.validateChosenBenefits();
 	}
 
@@ -39,14 +42,24 @@ export abstract class Origin<
 		this.applyBenefits(transaction);
 	}
 
-	abstract serialize(): SerializedSheetOrigin<So>;
+	abstract serialize(): SerializedSheetOrigin<Serialized['origin']>;
 
-	protected serializeBenefits(): Sb[] {
+	protected serializeBenefits(): Array<SerializedOriginBenefit<Serialized['originPower']>> {
 		return this.chosenBenefits.map(benefit => benefit.serialize());
 	}
 
 	protected serializeEquipments() {
 		return this.equipments.map(equipment => equipment.serialize());
+	}
+
+	protected validateChosenBenefits() {
+		if (this.chosenBenefits.length !== 2) {
+			throw new SheetBuilderError('INVALID_ORIGIN_BENEFITS');
+		}
+
+		this.chosenBenefits.forEach(benefit => {
+			benefit.validate(this.benefits);
+		});
 	}
 
 	private applyBenefits(transaction: TransactionInterface) {
@@ -64,16 +77,6 @@ export abstract class Origin<
 				},
 				transaction,
 			}));
-		});
-	}
-
-	private validateChosenBenefits() {
-		if (this.chosenBenefits.length !== 2) {
-			throw new SheetBuilderError('INVALID_ORIGIN_BENEFITS');
-		}
-
-		this.chosenBenefits.forEach(benefit => {
-			benefit.validate(this.benefits);
 		});
 	}
 }

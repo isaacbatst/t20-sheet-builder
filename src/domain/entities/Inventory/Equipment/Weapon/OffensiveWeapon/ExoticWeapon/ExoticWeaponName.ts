@@ -1,9 +1,15 @@
-import {type EquipmentName} from '../../../EquipmentName';
+import {EquipmentName} from '../../../EquipmentName';
 
-export type ExoticWeaponName =
-    EquipmentName.whip |
-    EquipmentName.bastardSword |
-    EquipmentName.katana |
-    EquipmentName.dwarfAxe |
-    EquipmentName.chainofThorns |
-    EquipmentName.tauricAxe;
+const exoticWeaponNames = [
+	EquipmentName.whip,
+	EquipmentName.bastardSword,
+	EquipmentName.katana,
+	EquipmentName.dwarfAxe,
+	EquipmentName.chainofThorns,
+	EquipmentName.tauricAxe,
+] as const;
+
+export type ExoticWeaponName = typeof exoticWeaponNames[number];
+
+export const isExoticWeaponName = (name: string): name is ExoticWeaponName =>
+	exoticWeaponNames.includes(name as ExoticWeaponName);

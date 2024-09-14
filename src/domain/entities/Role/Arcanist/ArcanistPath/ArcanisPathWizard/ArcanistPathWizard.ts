@@ -3,7 +3,6 @@ import type {Attribute} from '../../../../Sheet';
 import type {SpellLearnFrequency} from '../../../SpellsAbility';
 import {type SerializedArcanistPath} from '../../SerializedArcanist';
 import {ArcanistPath, ArcanistPathName} from '../ArcanistPath';
-import {type ArcanistPathWizardFocus} from './ArcanistPathWizardFocus';
 import {ArcanistPathWizardFocusEffect} from './ArcanistPathWizardFocusEffect';
 
 export class ArcanistPathWizard extends ArcanistPath {
@@ -11,28 +10,23 @@ export class ArcanistPathWizard extends ArcanistPath {
 	spellLearnFrequency: SpellLearnFrequency = 'all';
 	readonly pathName = ArcanistPathName.wizard;
 	override effects: AbilityEffectsInterface & {
-		passive: {
+		roleplay: {
 			focus: ArcanistPathWizardFocusEffect;
 		};
 	};
 
-	constructor(readonly focus: ArcanistPathWizardFocus) {
+	constructor() {
 		super();
 		this.effects = new AbilityEffects({
-			passive: {
-				focus: new ArcanistPathWizardFocusEffect(focus),
+			roleplay: {
+				focus: new ArcanistPathWizardFocusEffect(),
 			},
 		});
-	}
-
-	getFocus() {
-		return this.effects.passive.focus.focus;
 	}
 
 	override serializePath(): SerializedArcanistPath {
 		return {
 			name: this.pathName,
-			focus: this.focus.equipment.name,
 		};
 	}
 }

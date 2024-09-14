@@ -13,30 +13,45 @@ export type SerializedOriginBenefitSkill = {
 	name: SkillName;
 };
 
-export type SerializedOriginBenefit<OriginPower extends SerializedOriginPowers = SerializedOriginPowers> =
-	SerializedOriginBenefitSkill | SerializedOriginBenefitGeneralPower | OriginPower;
-
 export type SerializedChurchMember = {
-	type: 'originPower';
 	name: OriginPowerName.churchMember;
 };
 
 export type SerializedSpecialFriend = {
-	type: 'originPower';
 	name: OriginPowerName.specialFriend;
 	skill: SkillName;
 };
 
-export type SerializedOriginPowers = (SerializedChurchMember | SerializedSpecialFriend);
+export type SerializedGradualMemories = {
+	name: OriginPowerName.gradualMemories;
+};
 
-export type SerializedOriginPower<T extends SerializedOriginPowers = SerializedOriginPowers> = T & {
+export type SerializedBlueBlood = {
+	name: OriginPowerName.blueBlood;
+};
+
+// Frutos do Trabalho
+export type SerializedFruitsOfLabor = {
+	name: OriginPowerName.fruitsOfLabor;
+};
+
+export type SerializedOriginPowerBasic<Name extends OriginPowerName> = {
 	abilityType: 'power';
+	type: 'originPower';
+	name: Name;
 	effects: SerializedSheetAbilityEffect[];
 };
 
-export type SerializedOriginBenefitsAcolyte = SerializedOriginBenefit<SerializedChurchMember>;
-export type SerializedOriginBenefitsAnimalsFriend = SerializedOriginBenefit<SerializedSpecialFriend>;
+export type SerializedOriginPowers = {
+	churchMember: SerializedOriginPowerBasic<OriginPowerName.churchMember>;
+	specialFriend: SerializedOriginPowerBasic<OriginPowerName.specialFriend> & {skill: SkillName};
+	gradualMemories: SerializedOriginPowerBasic<OriginPowerName.gradualMemories>;
+	blueBlood: SerializedOriginPowerBasic<OriginPowerName.blueBlood>;
+	fruitsOfLabor: SerializedOriginPowerBasic<OriginPowerName.fruitsOfLabor>;
+	artisticDomain: SerializedOriginPowerBasic<OriginPowerName.artisticDomain>;
+};
 
-export type SerializedOriginBenefits =
-SerializedOriginBenefitsAcolyte
-| SerializedOriginBenefitsAnimalsFriend;
+export type SerializedOriginPower = SerializedOriginPowers[keyof SerializedOriginPowers];
+
+export type SerializedOriginBenefit<OriginPower extends SerializedOriginPower = SerializedOriginPower> =
+	SerializedOriginBenefitSkill | SerializedOriginBenefitGeneralPower | OriginPower;

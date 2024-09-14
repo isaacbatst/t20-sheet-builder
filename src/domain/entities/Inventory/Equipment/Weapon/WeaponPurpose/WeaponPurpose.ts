@@ -3,7 +3,7 @@ import {type SkillName} from '../../../../Skill';
 
 export type WeaponPurposeParams = {
 	penalty?: number;
-	customTestAttributes?: Set<Attribute>;
+	customTestAttributes?: Attribute | Set<Attribute>;
 	damageAttribute?: Attribute;
 	defaultSkill: SkillName;
 };
@@ -15,7 +15,9 @@ export abstract class WeaponPurpose {
 
 	constructor(params: WeaponPurposeParams) {
 		this.penalty = params.penalty ?? 0;
-		this.customTestAttributes = params.customTestAttributes ?? new Set();
+		this.customTestAttributes = params.customTestAttributes instanceof Set
+			? params.customTestAttributes
+			: new Set(params.customTestAttributes ? [params.customTestAttributes] : []);
 		this.damageAttribute = params.damageAttribute;
 		this.defaultSkill = params.defaultSkill;
 	}

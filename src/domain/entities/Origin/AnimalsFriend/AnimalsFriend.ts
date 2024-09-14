@@ -1,4 +1,3 @@
-import type {Equipment} from '../../Inventory/Equipment/Equipment';
 import {EquipmentAnimal} from '../../Inventory/Equipment/EquipmentAnimal/EquipmentAnimal';
 import type {EquipmentName} from '../../Inventory/Equipment/EquipmentName';
 import type {GeneralPowerName} from '../../Power';
@@ -6,35 +5,36 @@ import {OriginPowerName} from '../../Power/OriginPower/OriginPowerName';
 import {SkillName} from '../../Skill/SkillName';
 import {Origin} from '../Origin';
 import type {OriginBenefit} from '../OriginBenefit/OriginBenefit';
-import {type SerializedOriginBenefitsAnimalsFriend} from '../OriginBenefit/SerializedOriginBenefit';
 import {OriginName} from '../OriginName';
-import {type SerializedAnimalsFriend, type SerializedOrigin} from '../SerializedOrigin';
+import {type SerializedOrigins} from '../SerializedOrigin';
 
 export type AnimalsFriendEquipments = EquipmentName.hound | EquipmentName.horse | EquipmentName.pony | EquipmentName.trobo;
 
-export class AnimalsFriend extends Origin<SerializedOriginBenefitsAnimalsFriend, SerializedAnimalsFriend> {
+export class AnimalsFriend extends Origin<SerializedOrigins['animalsFriend']> {
 	static readonly originName = OriginName.animalsFriend;
 	static equipments = 'Cão de caça, cavalo, pônei ou trobo (escolha um).';
 	static skills: SkillName[] = [SkillName.animalHandling, SkillName.animalRide];
 	static generalPowers: GeneralPowerName[] = [];
 	static originPower = OriginPowerName.specialFriend;
 
-	readonly name = AnimalsFriend.originName;
-	equipments: Equipment[];
-
 	constructor(
-		override chosenBenefits: Array<OriginBenefit<SerializedOriginBenefitsAnimalsFriend>>,
+		override chosenBenefits: Array<OriginBenefit<SerializedOrigins['animalsFriend']['originPower']>>,
 		readonly chosenAnimal: AnimalsFriendEquipments,
 	) {
-		super(chosenBenefits, {
-			skills: AnimalsFriend.skills,
-			generalPowers: AnimalsFriend.generalPowers,
-			originPower: AnimalsFriend.originPower,
-		});
-		this.equipments = [new EquipmentAnimal(chosenAnimal)];
+		super(
+			OriginName.animalsFriend,
+			chosenBenefits,
+			{
+				skills: AnimalsFriend.skills,
+				generalPowers: AnimalsFriend.generalPowers,
+				originPower: AnimalsFriend.originPower,
+			},
+			[
+				new EquipmentAnimal(chosenAnimal),
+			]);
 	}
 
-	override serialize(): SerializedAnimalsFriend {
+	override serialize(): SerializedOrigins['animalsFriend']['origin'] {
 		return {
 			name: this.name,
 			chosenBenefits: this.serializeBenefits(),

@@ -1,5 +1,6 @@
 import {Dodge} from './CombatPower/Dodge/Dodge';
 import {OneWeaponStyle} from './CombatPower/FightStyle';
+import {Command} from './DestinyPower/Command';
 import {IronWill} from './DestinyPower/IronWill/IronWill';
 import {Medicine} from './DestinyPower/Medicine/Medicine';
 import type {GeneralPower} from './GeneralPower';
@@ -17,6 +18,7 @@ export class GeneralPowerFactory {
 		medicine: Medicine,
 		oneWeaponStyle: OneWeaponStyle,
 		shell: Shell,
+		command: Command,
 	};
 
 	static make(params: Params) {
