@@ -5,4 +5,8 @@ export class FireArmWeaponFactory {
 	static	makeFromSerialized(serialized: SerializedSheetEquipment<FireArmWeaponName>): FireArmWeapon {
 		return new FireArmWeapon(serialized.name);
 	}
+
+	static make<N extends FireArmWeaponName>(name: N): FireArmWeapon<N> {
+		return new FireArmWeapon(name);
+	}
 }

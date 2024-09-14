@@ -6,7 +6,7 @@ import {ImprovementCategory} from './EquipmentImprovement/EquipmentImprovementCa
 import type {EquipmentName} from './EquipmentName';
 import {EquipmentCatalog} from './EquipmentCatalog';
 
-export abstract class Equipment<
+export class Equipment<
 	N extends EquipmentName = EquipmentName,
 	D extends EquipmentData<N> = EquipmentData<N>,
 > {

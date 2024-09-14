@@ -1,3 +1,8 @@
-import {type EquipmentName} from '../../../EquipmentName';
+import {EquipmentName} from '../../../EquipmentName';
 
-export type ShieldName = EquipmentName.heavyShield | EquipmentName.lightShield;
+const shieldNames = [EquipmentName.heavyShield, EquipmentName.lightShield] as const;
+
+export type ShieldName = typeof shieldNames[number];
+
+export const isShieldName = (name: string): name is ShieldName => shieldNames.includes(name as ShieldName);
+

@@ -1,6 +1,6 @@
 import {EquipmentName} from '../../../../EquipmentName';
 
-const heavyArmorNames = [
+export const heavyArmorNames = [
 	EquipmentName.fullPlate,
 	EquipmentName.chainMail,
 	EquipmentName.brunea,

@@ -3,7 +3,6 @@ import {Amnesic} from './Amnesic/Amnesic';
 import {AnimalsFriend} from './AnimalsFriend/AnimalsFriend';
 import {Aristocrat} from './Aristocrat';
 import {Artisan} from './Artisan/Artisan';
-import {Origin} from './Origin';
 import {OriginName} from './OriginName';
 import {type OriginStatic} from './OriginStatic';
 

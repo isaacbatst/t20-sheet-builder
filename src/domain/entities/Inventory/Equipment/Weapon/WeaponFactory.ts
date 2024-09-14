@@ -1,23 +1,20 @@
-import {type EquipmentName} from '../EquipmentName';
-import {Armors} from './DefensiveWeapon/Armor/Armors';
-import {Shields} from './DefensiveWeapon/Shield/Shields';
-import {OffensiveWeapons} from './OffensiveWeapon/OffensiveWeapons';
+import {isDefensiveWeaponName} from './DefensiveWeapon';
+import {DefensiveWeaponFactory} from './DefensiveWeapon/DefensiveWeaponFactory';
+import {OffensiveWeaponFactory} from './OffensiveWeapon/OffensiveWeaponFactory';
+import {isOffensiveWeaponName} from './OffensiveWeapon/OffensiveWeaponName';
+import {type Weapon} from './Weapon';
+import {type WeaponName} from './WeaponName';
 
 export class WeaponFactory {
-	static readonly weapons = {
-		...OffensiveWeapons.map,
-		...Armors.map,
-		...Shields.map,
-	};
-
-	static make(name: EquipmentName) {
-		// eslint-disable-next-line @typescript-eslint/naming-convention
-		const Weapon = WeaponFactory.weapons[name as keyof typeof WeaponFactory.weapons];
-
-		if (!Weapon) {
-			throw new Error('WEAPON_NOT_FOUND');
+	static make<N extends WeaponName>(name: N): Weapon<N> {
+		if (isOffensiveWeaponName(name)) {
+			return OffensiveWeaponFactory.make(name);
 		}
 
-		return new Weapon();
+		if (isDefensiveWeaponName(name)) {
+			return DefensiveWeaponFactory.make(name);
+		}
+
+		throw new Error(`Invalid weapon name: ${name}`);
 	}
 }
